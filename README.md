@@ -1,1 +1,46 @@
-# fly_high
+# 🎈 Fly High (Roblox Game)
+
+> **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
+
+## 📖 Ringkasan Game
+
+**Fly High** adalah game petualangan kooperatif 1–3 pemain di Roblox di mana para pemain menaiki balon udara bersama-sama di dalam satu ruang udara global (*shared sky*) yang luas. Seluruh kru harus bekerja sama membagi tugas mengemudikan balon, menembak rintangan terbang, menambal kebocoran kubah menggunakan tali pengaman dan katrol winch, hingga mencapai Istana Awan (*Cloud Palace*) di ketinggian 10.000 km.
+
+---
+
+## 🚀 Fitur Utama
+
+- **Ruang Udara Global (*Shared Sky*) & Safe Takeoff Zone 6x Lipat (0 – 1.200 km)**:
+  - Seluruh balon terbang di ruang udara bersama dan dapat saling melihat balon tim lain.
+  - Safe Takeoff Zone lapang (0 - 1.200 km) bebas rintangan untuk mencegah tabrakan dan memberikan waktu menyebar formasi.
+- **Keranjang Balon Lapang (2x Lipat)**:
+  - Keranjang gondola dirancang lega untuk kebebasan gerak 1–3 pemain.
+  - Fasilitas kemudi fisik (*HelmSeat*), 2 rak senjata, stasiun tali pengaman & katrol winch, serta sirine peringatan.
+- **Pembagian Peran Dinamis**:
+  - **Pilot**: Navigasi horizontal (WASD) dan tombol UI khusus `[ 🔥 GAS / NAIK ]`.
+  - **Gunner**: Menembak burung liar dan bongkahan es dengan Pistol (8 peluru) atau AK-47 Master (30 peluru) + mobile aim assist.
+  - **Engineer**: Memasang tali pengaman berdurabilitas (100 HP, -5 HP/s di luar keranjang), naik ke kubah dengan katrol winch, dan menambal robekan balon (1.5s Solo / 2.0s Duo / 3.0s Trio).
+  - **Ghost Spotter**: Pemain yang gugur dapat memunculkan beacon 3D (*tactical ping*) untuk mendeteksi bahaya bagi kru yang masih hidup.
+- **Sistem Kerusakan 5 Lubang & Clutch Save**:
+  - Setiap lubang mengurangi gaya angkat vertikal. Pada 5 lubang, balon terjun bebas ke tanah.
+  - Pemakaian *Emergency Repair Kit* saat terjun bebas memicu **Clutch Save** (memulihkan 0 lubang + shield kebal 60 detik).
+- **5 Bioma Estetik Setiap 2.000 km**:
+  - `0 - 2.000 km`: Breezy Dawn Archipelago
+  - `2.000 - 4.000 km`: Indigo Thundercloud
+  - `4.000 - 6.000 km`: Sunset of Forgotten Sky Isles
+  - `6.000 - 8.000 km`: Bioluminescent Cosmic Exosphere
+  - `8.000 - 10.000 km`: The Celestial Gateway of Elysium
+- **Puncak Kemenangan (10.000 km)**:
+  - Mendarat di dermaga Istana Awan kristal, photo spot dengan penyembunyi HUD, papan rekor, dan portal pulang.
+
+---
+
+## 📂 Struktur Proyek
+
+- `Fly High.rbxl`: File tempat Roblox Studio utama (Lobby 5 Pod, Balon Udara, Rintangan, Senjata, Skrip Server & Client).
+- `PRD_Fly_High.md`: Dokumen Spesifikasi Produk (PRD) lengkap dan komprehensif.
+
+---
+
+## 🛠️ Dokumentasi Lengkap
+Untuk detail mendalam mengenai seluruh formula fisika, tabel kerusakan, arsitektur skrip, dan sistem monetisasi, silakan baca [PRD_Fly_High.md](./PRD_Fly_High.md).

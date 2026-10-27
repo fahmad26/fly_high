@@ -1,0 +1,8 @@
+# Roblox Studio lock and temporary files
+*.lock
+*.rbxl.lock
+*.tmp
+
+# IDE / Editor configuration
+.vscode/
+.idea/
