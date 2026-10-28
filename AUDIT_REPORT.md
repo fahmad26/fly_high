@@ -1,5 +1,5 @@
 # Audit teknis Fly High — 28 Oktober 2026
-Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti lolos regresi lokal. **Belum dinyatakan siap rilis publik** karena konfigurasi monetisasi, pengujian cloud/multiplayer, dan beberapa aset PRD masih belum lengkap.
+Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti lolos regresi lokal. **Belum dinyatakan siap rilis publik** karena pengujian monetisasi/cloud/multiplayer dan beberapa aset PRD masih belum lengkap.
 
 ## Lingkup dan bukti
 - Membaca lengkap PRD_Fly_High.md dan HANDOVER.md; memeriksa 13 skrip awal, seluruh template balon/senjata/rintangan, lobby, koridor, dan istana pada Studio yang terhubung.
@@ -8,7 +8,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 - Place lokal yang diaudit: PlaceId=0, GameId=0. Tidak memublikasikan experience dan tidak melakukan transaksi Robux atau mengubah profil cloud.
 - Backup sebelum perubahan: `audit/Fly High.before-audit.rbxl`.
 - SHA256 backup: `C3D8D13DB1F95387B44D5B0E1C1E147853A09034AFC29E4D8D43E562D81BD21F`.
-- SHA256 hasil terbaru setelah revisi kontrol, spawn dan tabrakan: `AE5CDFB950C13A933E959F4C499371E7288F3DDD8E20ADF4587700080B035E7F`.
+- SHA256 hasil terbaru setelah konfigurasi Developer Products: `CA21C09AB353ADC7D1A94E4D57DC02113481054E5DD3C7F5D805FEE370E49550`.
 - Ekspor seluruh skrip di `audit/sources/` diverifikasi cocok dengan Source di Edit DataModel (15/15).
 - Harness dan script QA hanya dimasukkan ke DataModel Play. Tidak terdapat AuditHarness/test fixture di place yang disimpan.
 
@@ -82,7 +82,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 
 | Bagian | Status akhir |
 | --- | --- |
-| Developer Products | PRODUCT_IDS.EmergencyKit dan AK47Upgrade masih **0**. Pemilik perlu memasukkan ID produk milik universe dan memverifikasi harga di Creator Dashboard. |
+| Developer Products | **Dikonfigurasi 29 Oktober 2026:** EmergencyKit=3723339056 (29 Robux), AK47Upgrade=3723339246 (79 Robux). Harga dan status jual terverifikasi; transaksi pada universe tujuan masih perlu diuji. |
 | Persistensi/monetisasi live | Wajib uji pada universe terpisah sebelum rilis; belum ada bukti transaksi atau penyimpanan cloud dari audit lokal ini. |
 | Model musuh dan hazard per segmen | Scheduler dan profil mekanik dasar tersedia, tetapi beberapa musuh memakai ulang model WildBird dengan warna/nama baru; hazard memakai volume telegraph sederhana. Belum setara visual/mechanic bespoke PRD (drone penembak paku, labirin reruntuhan, laser kilat, kombinasi badai klimaks). |
 | Lima biome | Lima transisi Lighting tersedia beserta efek dasar. Pemandangan pulau melayang/air terjun, aurora animasi dan komposisi bintang sesuai PRD belum lengkap. |
@@ -159,3 +159,17 @@ Bukti QA disimpan di audit/flight-controls-results.json. Uji server/client lokal
 - Regresi akhir: **5/5 armada** kembali lulus; **21/21 skrip** lolos kompilasi dan snapshot Source cocok. Uji input keyboard native dengan kamera menghadap +Z (180° dari arah awal) + Up menghasilkan perpindahan +32,50 stud pada Z; Z lalu H menghasilkan gas otomatis aktif dan pilot sudah tidak duduk. Konsol hanya berisi informasi mock data serta reset kamera QA, tanpa error/warning.
 
 - Deteksi daratan juga memakai raycast di bawah gondola pada 5 Hz, sehingga balon yang berhenti di atas bukit/batu tidak lolos dari penghitung. Fixture permukaan tinggi terdeteksi; setelah diangkat 15 stud, status berubah menjadi mengudara. Raycast daratan mengecualikan air, balon lain dan karakter.
+
+## Konfigurasi Developer Products — 29 Oktober 2026
+
+- EmergencyKit: **3723339056**, Emergency Repair & Shield, harga dasar terverifikasi **29 Robux**.
+- AK47Upgrade: **3723339246**, AK-47 Tactical Upgrade, harga dasar terverifikasi **79 Robux**.
+- Kedua produk dilaporkan IsForSale=true oleh MarketplaceService:GetProductInfoAsync. Hubungan produk dengan universe tujuan belum dapat diverifikasi dari file lokal (PlaceId=0, GameId=0).
+- FlyHighConfig.PRODUCT_IDS terisi; UI toko mengambil harga melalui GetProductInfoAsync pada client dan memperbarui label saat toko dibuka (cache 60 detik). Harga perkiraan ~30/~75 dihapus. Pembatalan prompt mengembalikan tombol; client tidak memberikan item.
+- GrantReceipt kini mengembalikan status sukses dan penanda receipt baru. Receipt duplikat tetap PurchaseGranted setelah ledger terverifikasi, tetapi tidak memicu pemasangan AK-47 lagi atau mengonsumsi kredit berikutnya.
+- Marketplace.ProcessReceipt memakai handler server FlyHighShopManager.ProcessReceipt yang sama dengan jalur QA. Unknown product, pemain hilang dan penyimpanan gagal tetap NotProcessedYet.
+- QA lokal: **14/14 pemeriksaan receipt lulus** memakai adapter penyimpanan mock dan handler receipt produksi. Meliputi grant satu kit/kredit, idempotensi, gagal simpan tanpa grant, retry, mapping kedua ID, receipt duplikat AK dan kasus pending.
+- UI Play menampilkan 29 dan 79 Robux dari API; request toko pada unpublished place menghasilkan instruksi publikasi dan tombol kembali normal. **21 skrip lolos kompilasi; konsol 0 error/0 warning.**
+- Tidak ada pembelian Robux, pengujian DataStore cloud, publikasi experience atau perubahan produk di Creator Dashboard pada sesi ini. Adapter/mock/harness hanya di Play, tidak dimasukkan ke place akhir.
+- Langkah berikutnya: unggah/publikasikan versi place ini ke experience yang memiliki kedua Developer Products, kemudian lakukan uji end-to-end pembelian/pembatalan dan persistensi pada universe uji sebelum rilis.
+- Backup: audit/Fly High.before-products.rbxl. Bukti: audit/product-results.json. Harness: audit/product_receipt_playtest.luau dan audit/product_data_qa_adapter.luau.

@@ -5,7 +5,7 @@ local FlyHighConfig = {
 	GROUND_Y = 12.5,
 	STUDS_PER_KM = 0.25,
 	CORRIDOR_CENTER_LIMIT = 120,
-	PRODUCT_IDS = { EmergencyKit = 0, AK47Upgrade = 0 }, -- Configure owned Developer Products before publishing
+	PRODUCT_IDS = { EmergencyKit = 3723339056, AK47Upgrade = 3723339246 }, -- Prices are fetched from Roblox, not hard-coded
 	TACTICAL_MESSAGES = {"Gas Api Sekarang!", "Awas Tornado Menghindar!", "Tali Saya Mau Habis!", "Saya yang Perbaiki!", "Fokus Tembak Rintangan!"},
 	BASE_FLIGHT_DURATION_SEC = 600, -- 10 minutes without delay
 	MILESTONE_STEP_KM = 1000,

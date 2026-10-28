@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "count": 14,
+  "checks": [
+    "kit grants exactly one",
+    "duplicate kit is idempotent",
+    "AK grants exactly one credit",
+    "duplicate AK is idempotent",
+    "failed persistence grants nothing",
+    "retry after save failure grants once",
+    "unknown item rejected",
+    "unpublished receipt stays pending",
+    "kit ID routes to EmergencyKit",
+    "AK ID routes to AK47Upgrade",
+    "duplicate AK receipt cannot reactivate upgrade",
+    "unknown product stays pending",
+    "missing player stays pending",
+    "receipt is pending when persistence fails"
+  ],
+  "mode": "mock persistence and real receipt handler; no Robux transaction",
+  "ui": {
+    "kitPrice": 29,
+    "akButton": "Beli Upgrade • 79 Robux (Master)",
+    "akPrice": 79,
+    "kitButton": "Beli 1 Kit • 29 Robux"
+  },
+  "date": "2026-10-29",
+  "products": {
+    "EmergencyKit": {
+      "id": 3723339056,
+      "name": "Emergency Repair & Shield",
+      "basePriceRobux": 29,
+      "isForSale": true
+    },
+    "AK47Upgrade": {
+      "id": 3723339246,
+      "name": "AK-47 Tactical Upgrade",
+      "basePriceRobux": 79,
+      "isForSale": true
+    }
+  },
+  "place": {
+    "placeId": 0,
+    "universeId": 0
+  },
+  "compiledScripts": 21,
+  "console": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "livePurchaseTested": false,
+  "cloudPersistenceTested": false
+}

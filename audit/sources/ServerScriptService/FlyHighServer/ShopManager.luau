@@ -5,6 +5,8 @@ local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
 local U=require(script.Parent.ServerUtils)
 local remote=RS.FlyHigh.Remotes.ShopPurchaseEvent
 local rate=U.RateLimiter(1)
+local Manager={}
+_G.FlyHighShopManager=Manager
 local function master(p)
  local fd=U.Flight(p)
  if fd then return fd.master==p and U.Alive(p,fd) end
@@ -33,19 +35,25 @@ remote.OnServerEvent:Connect(function(p,item)
   end
  end
  local id=Config.PRODUCT_IDS[item]
- if id<=0 or game.GameId==0 then
+ if id<=0 then
   remote:FireClient(p,"Pembelian belum tersedia: Developer Product belum dikonfigurasi.") return
+ end
+ if game.GameId==0 then
+  remote:FireClient(p,"Produk siap. Publikasikan place ke experience Fly High untuk menguji pembelian.") return
  end
  local ok=pcall(function() Marketplace:PromptProductPurchase(p,id) end)
  if not ok then remote:FireClient(p,"Toko belum dapat dibuka. Silakan coba kembali.") end
 end)
-Marketplace.ProcessReceipt=function(receipt)
+function Manager.ProcessReceipt(receipt)
  local p=Players:GetPlayerByUserId(receipt.PlayerId)
  if not p or not _G.FlyHighDataManager then return Enum.ProductPurchaseDecision.NotProcessedYet end
  local item
  for name,id in pairs(Config.PRODUCT_IDS) do if id>0 and id==receipt.ProductId then item=name break end end
- if not item or not _G.FlyHighDataManager.GrantReceipt(p,tostring(receipt.PurchaseId),item) then return Enum.ProductPurchaseDecision.NotProcessedYet end
- if item=="AK47Upgrade" then upgrade(p) end
+ if not item then return Enum.ProductPurchaseDecision.NotProcessedYet end
+ local granted,isNew=_G.FlyHighDataManager.GrantReceipt(p,tostring(receipt.PurchaseId),item)
+ if not granted then return Enum.ProductPurchaseDecision.NotProcessedYet end
+ if isNew and item=="AK47Upgrade" then upgrade(p) end
  remote:FireClient(p,item=="EmergencyKit" and "Emergency Kit ditambahkan ke stok." or "Upgrade diterima. Kredit tersimpan bila belum dipasang.")
  return Enum.ProductPurchaseDecision.PurchaseGranted
 end
+Marketplace.ProcessReceipt=Manager.ProcessReceipt

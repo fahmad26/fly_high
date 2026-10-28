@@ -249,8 +249,8 @@ stateDiagram-v2
 
 | Item Pembelian | Efek Utama | Harga Estimasi | Siapa yang Bisa Beli/Pakai? | Aturan, Batasan & Proteksi |
 | :--- | :--- | :---: | :---: | :--- |
-| **Emergency Repair & Shield** *(Kit Perbaikan Darurat)* | • Memulihkan **seluruh lubang seketika** (0 lubang)<br>• Memberikan **Kebal Serangan 1 Menit (60 Detik)**<br>• Dapat digunakan untuk **Clutch Save pada 5 lubang** | **Terjangkau**<br>(~25 - 35 Robux) | **Dapat dibeli dan dipakai oleh SIAPA SAJA** | • **1x pemakaian per pemain per penerbangan** (Maks 3x per tim).<br>• **Anti-Waste Cooldown:** Selama Shield 60 detik dari satu pemain sedang aktif, tombol Emergency Repair rekan setim lainnya otomatis dikunci sementara (`"🛡️ Shield Tim Sedang Aktif!"`) agar tidak terpakai ganda secara tidak sengaja.<br>• Masuk inventori data pemain, sisa stok aman untuk penerbangan berikutnya. |
-| **AK-47 Tactical Upgrade** | • Menggantikan rak pistol default menjadi AK-47<br>• 30 peluru per magazine (vs 8 di pistol)<br>• Tembakan beruntun & amunisi tak terbatas | **Lebih Premium**<br>(~65 - 85 Robux) | **HANYA DAPAT DISEDIAKAN OLEH GAME MASTER** | • Maksimal **2 AK-47 per penerbangan**.<br>• Diatur/dibeli oleh Master di toko sebelum atau saat penerbangan. |
+| **Emergency Repair & Shield** *(Kit Perbaikan Darurat)* | • Memulihkan **seluruh lubang seketika** (0 lubang)<br>• Memberikan **Kebal Serangan 1 Menit (60 Detik)**<br>• Dapat digunakan untuk **Clutch Save pada 5 lubang** | **29 Robux**<br>(harga dasar) | **Dapat dibeli dan dipakai oleh SIAPA SAJA** | • **1x pemakaian per pemain per penerbangan** (Maks 3x per tim).<br>• **Anti-Waste Cooldown:** Selama Shield 60 detik dari satu pemain sedang aktif, tombol Emergency Repair rekan setim lainnya otomatis dikunci sementara (`"🛡️ Shield Tim Sedang Aktif!"`) agar tidak terpakai ganda secara tidak sengaja.<br>• Masuk inventori data pemain, sisa stok aman untuk penerbangan berikutnya. |
+| **AK-47 Tactical Upgrade** | • Menggantikan rak pistol default menjadi AK-47<br>• 30 peluru per magazine (vs 8 di pistol)<br>• Tembakan beruntun & amunisi tak terbatas | **79 Robux**<br>(harga dasar) | **HANYA DAPAT DISEDIAKAN OLEH GAME MASTER** | • Maksimal **2 AK-47 per penerbangan**.<br>• Diatur/dibeli oleh Master di toko sebelum atau saat penerbangan. |
 
 ---
 
@@ -419,3 +419,12 @@ Belum diimplementasikan. Pada ketinggian tertentu, akan muncul rintangan besar y
 - Pemain yang memanjat, berada di kubah/area perbaikan atau sedang memperbaiki lubang tidak dapat melompat.
 - Pemain yang memegang senjata, sudah memasang tali tetapi masih di gondola, atau sedang bebas/tidak beraktivitas dapat melompat.
 - Ketinggian kemunculan, ukuran rintangan, telegraph, besarnya penurunan per loncatan, cooldown, pembatasan exploit dan balancing solo/duo/trio akan ditentukan pada implementasi berikutnya.
+
+## Developer Products Final — 29 Oktober 2026
+
+| Produk | Product ID | Harga dasar |
+| --- | --- | --- |
+| Emergency Repair & Shield (EmergencyKit) | 3723339056 | 29 Robux |
+| AK-47 Tactical Upgrade (AK47Upgrade) | 3723339246 | 79 Robux |
+
+Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca harga aktual melalui API Roblox pada client, sehingga dapat mengikuti harga regional. Satu pembelian EmergencyKit memberi satu kit tersimpan; satu pembelian AK47Upgrade memberi satu kredit upgrade untuk kedua rak pada satu penerbangan. Receipt yang sama tidak boleh memberikan item atau memicu pemasangan upgrade dua kali.

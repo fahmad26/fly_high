@@ -119,7 +119,7 @@ Namun, tepat sebelum handover ini, User meminta **2 pembaruan spesifikasi yang b
 - Altitude menggunakan 0,25 stud/km dari groundY=12,5; batas flight root=2512,5. Istana berada di atas ceiling penerbangan (CloudIsland Y=2580, Z=0), dengan docking bertahap ke CloudHavenDock.
 - Koridor diganti menjadi delapan Part yang menjangkau tanah sampai Y=2600, tepi ±150; pusat balon dibatasi ±120.
 - Katrol bergerak halus; tersedia kontrol HUD pasang/isi tali, naik, turun dan tahan tambal. F naik, Q turun.
-- Shop sekarang menggunakan ProcessReceipt. **PRODUCT_IDS masih 0**; pembelian nyata dinonaktifkan sampai pemilik mengonfigurasi produk. Mock data hanya untuk Studio unpublished.
+- Shop sekarang menggunakan ProcessReceipt. PRODUCT_IDS kini terisi (lihat bagian 9); pembelian pada file lokal unpublished tetap dinonaktifkan. Mock data hanya untuk Studio unpublished.
 - Regresi otomatis: **43/43 lulus**, 15 skrip dapat dikompilasi; sesi terakhir **0 error / 0 warning**.
 - Pengujian lokal mengonfirmasi Clutch Save, interaksi rigging, raycast/ammo server, Victory + Summit dan Ground Crash. Multiplayer nyata, cloud DataStore/receipts, mobile/controller fisik dan run natural 600 detik belum diverifikasi.
 - Audio sirine, Hall of Fame persisten, dekor biome lengkap dan model/efek unik semua hazard masih terbuka.
@@ -165,3 +165,14 @@ Namun, tepat sebelum handover ini, User meminta **2 pembaruan spesifikasi yang b
 - U.Flight mengabaikan model yang sudah dilepas dari DataModel agar callback Destroying yang tertunda tidak menahan relaunch.
 - Tantangan besar dan efek loncatan **hanya dokumentasi/backlog**, belum ada fitur runtime baru terkait loncatan.
 - Backup sebelum revisi: audit/Fly High.before-flight-controls.rbxl. Bukti pengujian tambahan dan batasannya: audit/flight-controls-results.json serta AUDIT_REPORT.md.
+
+## 9. Developer Products Terpasang (29 Oktober 2026)
+
+| Key FlyHighConfig.PRODUCT_IDS | Product ID | Harga dasar terverifikasi |
+| --- | --- | --- |
+| EmergencyKit | 3723339056 | 29 Robux |
+| AK47Upgrade | 3723339246 | 79 Robux |
+
+ShopClientController membaca harga dari MarketplaceService:GetProductInfoAsync pada client; nominal perkiraan lama sudah dihapus. Prompt selesai/batal mengembalikan tombol tanpa memberikan item. Handler server _G.FlyHighShopManager.ProcessReceipt menjadi callback MarketplaceService.ProcessReceipt. DataManager.GrantReceipt mengembalikan (granted, isNew); hanya receipt AK baru yang boleh mencoba memasang upgrade otomatis.
+
+Jumlah skrip tetap 21. QA receipt 14/14 lulus dengan penyimpanan mock; harga dan UI berhasil diperiksa di Play, konsol tanpa error/warning. Place masih lokal (GameId=0): transaksi Robux dan DataStore cloud belum diuji. Publikasikan/unggah file terbaru ke experience pemilik produk untuk pengujian berikutnya. Detail: audit/product-results.json dan AUDIT_REPORT.md.

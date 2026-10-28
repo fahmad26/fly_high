@@ -109,7 +109,7 @@ function Manager.GrantReceipt(p,id,item)
  if not s or offline then return false end
  while s.busy do task.wait(0.05) end
  if sessions[p]~=s then return false end
- if s.data.Receipts[id] then return true end
+ if s.data.Receipts[id] then return true,false end
  s.busy=true
  local d=snapshot(s.data)
  d.Receipts[id]=true
@@ -120,7 +120,7 @@ function Manager.GrantReceipt(p,id,item)
   s.data.Receipts=d.Receipts s.data.EmergencyKits=d.EmergencyKits s.data.AKCredits=d.AKCredits
   attributes(p,s.data)
  end
- s.busy=false return ok
+ s.busy=false return ok,ok
 end
 Players.PlayerAdded:Connect(added)
 for _,p in ipairs(Players:GetPlayers()) do task.spawn(added,p) end
