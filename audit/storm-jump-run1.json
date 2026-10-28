@@ -1,0 +1,241 @@
+{
+  "ok": false,
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "1 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "1 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.1129150390625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.1129150390625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.1129150390625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "non-crew cannot cause jump drop"
+    },
+    {
+      "passed": true,
+      "name": "2 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "2 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.44561767578125,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.44561767578125,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.44561767578125,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "3 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "3 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.084381103515625,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.084381103515625,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.084381103515625,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "pilot jump disabled on client and server"
+    },
+    {
+      "passed": true,
+      "name": "space does not eject pilot or create drop"
+    },
+    {
+      "passed": true,
+      "name": "leaving helm restores jump"
+    },
+    {
+      "passed": true,
+      "name": "gunner equipped"
+    },
+    {
+      "passed": true,
+      "name": "tether attached on basket"
+    },
+    {
+      "passed": true,
+      "name": "free gunner and tethered crew can all jump"
+    },
+    {
+      "passed": true,
+      "name": "equipment does not change crew balance"
+    },
+    {
+      "passed": true,
+      "name": "winch blocks jumping"
+    },
+    {
+      "passed": true,
+      "name": "engineer outside basket cannot jump"
+    },
+    {
+      "passed": true,
+      "name": "engineer cannot create impulse"
+    },
+    {
+      "passed": true,
+      "name": "returning to gondola restores jump"
+    },
+    {
+      "passed": true,
+      "name": "storm rejected below 1200 km"
+    },
+    {
+      "passed": true,
+      "name": "one shared storm per zone"
+    },
+    {
+      "passed": true,
+      "name": "wall is not shootable"
+    },
+    {
+      "passed": false,
+      "name": "other team receives warning"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 52.539784600026906,
+  "logs": [],
+  "balance": [
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.1129150390625,
+      "accepted": 1,
+      "crew": 1
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.44561767578125,
+      "accepted": 2,
+      "crew": 2
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.084381103515625,
+      "accepted": 3,
+      "crew": 3
+    }
+  ],
+  "players": [
+    {
+      "logs": [],
+      "userId": -1,
+      "name": "Player1"
+    },
+    {
+      "logs": [],
+      "userId": -2,
+      "name": "Player2"
+    },
+    {
+      "logs": [],
+      "userId": -3,
+      "name": "Player3"
+    }
+  ],
+  "error": "ServerScriptService.StormQAServer:13: other team receives warning: nil\nServerScriptService.StormQAServer:13\nServerScriptService.StormQAServer:43\n",
+  "waves": []
+}

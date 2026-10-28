@@ -1,0 +1,65 @@
+{
+  "ok": false,
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "1 crew are allowed to jump"
+    },
+    {
+      "passed": false,
+      "name": "1 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 0,
+        "actualDescent": 3.074493408203125,
+        "accepted": 0,
+        "crew": 1
+      }
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 27.319923500006553,
+  "logs": [],
+  "balance": [
+    {
+      "totalDrop": 0,
+      "actualDescent": 3.074493408203125,
+      "accepted": 0,
+      "crew": 1
+    }
+  ],
+  "players": [
+    {
+      "logs": [],
+      "userId": -1,
+      "name": "Player1"
+    },
+    {
+      "logs": [],
+      "userId": -2,
+      "name": "Player2"
+    },
+    {
+      "logs": [],
+      "userId": -3,
+      "name": "Player3"
+    }
+  ],
+  "error": "ServerScriptService.StormQAServer:13: 1 crew actual jumps counted: table: 0x8abc756e455c14ce\nServerScriptService.StormQAServer:13\nServerScriptService.StormQAServer:43\n",
+  "waves": []
+}

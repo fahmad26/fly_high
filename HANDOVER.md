@@ -185,3 +185,19 @@ Jumlah skrip tetap 21. QA receipt 14/14 lulus dengan penyimpanan mock; harga dan
 - WeaponClientController diperbaiki agar tidak mengakses TetherStation/HoleSlots/PatchPrompt sebelum child model direplikasi. Ini satu-satunya perubahan runtime pada sesi multiplayer ini; jumlah tetap 21 skrip.
 - Bukti final: audit/multiplayer-results.json; log server dan tiga client kosong dari error/warning. Backup: audit/Fly High.before-multiplayer.rbxl. Harness native tersimpan di audit/ dan sudah dihapus dari DataModel produksi.
 - Posisi skenario diatur server; hold patch memakai engineer stationary; timeout dipercepat. Ini simulasi lokal Studio, belum menggantikan uji manusia, perangkat nyata, latency atau server publik. Pembelian/cloud tetap ditunda. Fitur rintangan besar + loncat tetap dokumentasi.
+
+## 11. Dinding Badai dan Loncatan Kru (29 Oktober 2026)
+
+Fitur yang sebelumnya berupa backlog kini diimplementasikan. Total skrip produksi menjadi **24**.
+
+- JumpManager (ServerScriptService.FlyHighServer): izin lompat menurut peran, penyimpanan/restorasi JumpPower/JumpHeight/state, observasi grounded/takeoff, cooldown, landed rearm, pembagian jatah turun dan cleanup koneksi Humanoid.
+- LargeChallengeManager (server): scheduler lima milestone, gelombang global per zone, peringatan personal bagi pendatang, swept-volume hit, satu hit per flight, deduplikasi milestone serta cleanup model.
+- FlightJumpController (StarterPlayerScripts): menegakkan state lompat lokal karena SetStateEnabled server tidak direplikasi, tombol lompat lintas input, cooldown dan panel instruksi badai yang responsif.
+- Remote baru FlightJumpEvent hanya menerima Request; server tidak menerima jumlah penurunan dari client. LargeChallengeEvent dipakai server untuk Warning/Ended.
+- FlyHighConfig memuat JUMP_* dan LARGE_* untuk balancing. BalloonManager mengonsumsi jumpDropRemaining dalam integrasi vertikal; EndFlight dan Emergency Kit mengosongkan jatah. Lima lubang tetap memakai kecepatan jatuh darurat.
+- ObstacleManager menunda spawn reguler yang menarget peserta selama largeChallengeUntil dan memprediksi auto gas juga.
+- Template visual: ReplicatedStorage.FlyHigh.Templates.Obstacles.StormCurtain, dengan 5 bank/wisp CSG, petir pada dua sisi dan core transparan. Collision gameplay dihitung server, bukan collider fisik awan.
+- Nilai awal: 6 detik warning, volume 360×120×32, speed 60 stud/detik, milestone 1800/3600/5400/7200/9000 km. Jatah lompat 18/eligibleCrew stud, konsumsi maksimal 22 stud/detik, cap 36, cooldown 1,05 detik.
+- Native QA menggunakan tiga client: solo/duo/trio, gunner/tethered jump, blokir pilot/katrol/kubah, anti-spam, global wave, damage dan avoidance serta milestone repeat prevention. Bukti: audit/storm-jump-results.json.
+- Backup: audit/Fly High.before-storm-jumps.rbxl. Build visual: audit/build_storm_curtain.luau. Harness baru: audit/storm_jump_server_playtest.luau dan storm_jump_client_playtest.luau; tidak dipasang ke place produksi.
+- Pembelian/cloud tetap ditunda. Perangkat sentuh/gamepad fisik, jaringan internet dan human playtest belum dijalankan.

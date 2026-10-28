@@ -34,6 +34,7 @@ function Manager.EndFlight(fd,victory)
  fd.isVictory=victory==true fd.isGameOver=not victory
  fd.pilot=nil fd.pilotSteer=Vector3.zero fd.isGasActive=false fd.autoGas=false
  fd.balloon:SetAttribute("AutoGas",false)
+ fd.jumpDropRemaining=0
  _G.FlyHighTetherManager.CleanupBalloon(fd.balloon)
  _G.FlyHighWeaponManager.CleanupBalloon(fd.balloon)
  for _,p in ipairs(fd.players) do
@@ -200,7 +201,7 @@ function Manager.UseEmergencyKit(p)
  if fd.isFreefalling and (fd.altitudeKm<=0 or fd.root.Position.Y<=fd.groundY+0.1) then return false end
  if not _G.FlyHighDataManager.ModifyEmergencyKits(p,-1) then return false end
  fd.usedKits[p.UserId]=true p:SetAttribute("UsedEmergencyKitThisFlight",true)
- fd.holes=0 fd.holeSet={} fd.isFreefalling=false
+ fd.holes=0 fd.holeSet={} fd.isFreefalling=false fd.jumpDropRemaining=0
  fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime
  fd.targetPosition=fd.root.Position fd.alignPos.Position=fd.targetPosition fd.root.AssemblyLinearVelocity=Vector3.zero
  renderHoles(fd) sync(fd) return true
@@ -271,7 +272,12 @@ RunService.Heartbeat:Connect(function(dt)
   fd.burnerFlame.Size=burning and fd.holes<5 and 14 or 6
   fd.burnerLight.Brightness=burning and fd.holes<5 and 5 or 2
   local maxY=Config.GROUND_Y+Config.MAX_ALTITUDE_KM*Config.STUDS_PER_KM
-  local y=math.clamp(fd.targetPosition.Y+speed*Config.STUDS_PER_KM*math.min(dt,0.1),Config.GROUND_Y,maxY)
+  local jumpStep=0
+  if fd.holes<5 then
+   jumpStep=math.min(fd.jumpDropRemaining or 0,Config.JUMP_DESCENT_STUDS_PER_SEC*math.min(dt,.1))
+   fd.jumpDropRemaining=math.max(0,(fd.jumpDropRemaining or 0)-jumpStep)
+  else fd.jumpDropRemaining=0 end
+  local y=math.clamp(fd.targetPosition.Y+speed*Config.STUDS_PER_KM*math.min(dt,0.1)-jumpStep,Config.GROUND_Y,maxY)
   local steer=fd.pilotSteer
   if os.clock()<(fd.reverseUntil or 0) then steer=-steer end
   local push=os.clock()<(fd.windUntil or 0) and (fd.wind or Vector3.zero) or Vector3.zero

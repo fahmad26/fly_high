@@ -8,7 +8,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 - Place lokal yang diaudit: PlaceId=0, GameId=0. Tidak memublikasikan experience dan tidak melakukan transaksi Robux atau mengubah profil cloud.
 - Backup sebelum perubahan: `audit/Fly High.before-audit.rbxl`.
 - SHA256 backup: `C3D8D13DB1F95387B44D5B0E1C1E147853A09034AFC29E4D8D43E562D81BD21F`.
-- SHA256 hasil terbaru setelah perbaikan HUD multiplayer: `CE66A8E25E3C33ED8839E051472AAF964E91296659785899D0B6D5C36DA326CE`.
+- SHA256 hasil terbaru setelah Dinding Badai dan loncatan kru: `70BBC2E0F5EA3E8DB37358EAC41F43BDBD4B8F31F4C3750E6DEA5A3C50E36211`.
 - Ekspor seluruh skrip di `audit/sources/` diverifikasi cocok dengan Source di Edit DataModel (15/15).
 - Harness dan script QA hanya dimasukkan ke DataModel Play. Tidak terdapat AuditHarness/test fixture di place yang disimpan.
 
@@ -197,3 +197,35 @@ Batasan: tiga client simulasi pada satu komputer; tidak ada tiga manusia/perangk
 Artefak: audit/multiplayer-results.json (hasil akhir), audit/multiplayer-run1.json sampai run3.json (diagnostik), audit/multiplayer_server_playtest.luau dan multiplayer_client_playtest.luau. Backup: audit/Fly High.before-multiplayer.rbxl. Seluruh Script/LocalScript/Remote QA sudah dihapus dari place. **21 skrip produksi lolos kompilasi**; smoke Play setelah cleanup juga tanpa error/warning.
 
 Referensi API: [StudioTestService](https://create.roblox.com/docs/reference/engine/classes/StudioTestService) dan [VirtualInput](https://create.roblox.com/docs/reference/engine/classes/VirtualInput).
+
+## Implementasi Dinding Badai dan Loncatan Kru — 29 Oktober 2026
+
+Backlog loncatan dan rintangan besar kini menjadi fitur runtime, dengan tiga skrip baru: JumpManager, LargeChallengeManager dan FlightJumpController. **Jumlah produksi: 24 skrip.**
+
+- Dinding Badai muncul pada milestone 1.800/3.600/5.400/7.200/9.000 km. Volume 360×120×32 stud menyapu seluruh koridor dari Z=-260 ke Z=260 pada 60 stud/detik setelah warning 6 detik. Objek global dibagi oleh seluruh tim di area; satu wave per milestone, maksimal dua aktif.
+- Wujud berupa bank awan/wisp CSG dengan 30 segmen kilat di dua sisi serta penunjuk dunia. Percobaan generasi mesh tidak tersedia pada sesi ini; model native dibuat dengan build_storm_curtain.luau sehingga place tidak bergantung pada aset hasil generasi tersebut.
+- Awan tidak bisa ditembak, tidak menjadi platform fisik, dan menggunakan swept volume server untuk mendeteksi balon. Maksimal satu puncture per wave per flight; shield/grace tetap dihormati. Flight yang baru masuk menerima warning personal. Peserta menunda spawn obstacle reguler selama tantangan; milestone yang ditandai tidak dipicu ulang saat turun lalu naik.
+- Pilot yang masih duduk, engineer di katrol/kubah dan pemain yang sedang repair tidak bisa melompat. Gunner, kru bebas dan pemain bertali di gondola tetap bisa. Power/height/state asli disimpan dan dipulihkan, baik pada pergantian peran, akhir flight maupun respawn.
+- Client Request tidak memuat jumlah drop yang dipercaya. Server memeriksa kru hidup, posisi gondola, pijakan, perpindahan/kecepatan takeoff, Jumping event, cooldown 1,05 detik serta landing sebelum menghitung ulang. Koneksi Humanoid dibersihkan pada perubahan karakter/flight dan PlayerRemoving.
+- Satu loncatan memberi jatah 18/eligibleCrew stud, dikonsumsi halus maksimal 22 stud/detik dengan antrean maksimum 36. Jika semua kru yang eligible melompat sekali, totalnya 18 stud untuk solo/duo/trio. Gas dan efek lubang tetap memengaruhi perpindahan aktual.
+- Lima lubang mempertahankan kecepatan freefall lama; efek lompat tambahan diabaikan. Clutch Save dan EndFlight mengosongkan sisa jatah turun.
+- HUD baru menampilkan tombol Space/A/touch, alasan blokir, cooldown, countdown dan jarak ke posisi aman. Peringatan menggantikan panel status biasa sementara, menampilkan jumlah lubang dan tidak menutupi Emergency Kit; panel status dipulihkan setelah tantangan. Responsiveness dan prioritas panel diperiksa secara visual.
+
+### Bukti pengujian fitur baru
+
+**51/51 pemeriksaan native tiga client lulus**, log server dan ketiga client pada iterasi akhir kosong dari error/warning. Client memakai VirtualInput Space dan automatic avatar network ownership.
+
+- Satu putaran loncatan: solo 1 jump, duo 2, trio 3; masing-masing total jatah **18 stud**. Penurunan terukur sekitar 21,4–21,8 stud karena ditambah descent pasif selama jendela sampel.
+- 100 request tanpa loncatan tidak menambah efek; pemain di luar flight ditolak. Pilot tidak keluar kursi ketika Space ditekan; kembali dari helm/katrol memulihkan izin lompat.
+- Gunner dan pemain bertali dapat melompat. Engineer di kubah tidak memberikan impulse.
+- Safe zone menolak spawn, satu model dibagi dua tim, warning tidak merusak. Kedua tim di sisi koridor yang tetap tinggi mendapat masing-masing satu lubang.
+- Solo/duo/trio melakukan empat putaran lompat dengan gas off; turun sekitar 83 stud dan melewati sapuan penuh tanpa lubang.
+- Scheduler milestone, penandaan anti-retrigger, cleanup wave dan pemulihan lompat di lobby lulus.
+
+Regresi multiplayer sebelumnya dijalankan lagi: **50/50 lulus**, termasuk Master handoff, pembagian peran, repair, Clutch Save, timeout daratan, okupansi lintas dermaga, collision, proteksi lintas tim dan disconnect cleanup. Total sesi final: **101 pemeriksaan lulus**.
+
+Iterasi antara disimpan: run1 membaca visibility banner sebelum heartbeat UI berikutnya; fixture diberi jeda replikasi. Run2 tidak menghasilkan hop saat key hold 0,08 detik pada client simulasi; driver memakai hold 0,25 detik dan server memperkuat observasi takeoff lewat Jumping event/kecepatan fisik. Run3 meluluskan seluruh skenario gameplay tetapi satu client menangkap error bawaan CoreGui CreatorType. Pengulangan final dan regresi berikutnya bersih; sumber error tersebut bukan skrip Fly High.
+
+Batasan: posisi awal diatur server; tiga client adalah simulasi Studio pada satu komputer. Uji avoidance memakai gas off, empat putaran lompat; belum merupakan human playtest atau tuning kesulitan akhir. Perangkat sentuh/gamepad fisik, latency/packet loss, pembelian Robux dan persistensi cloud tetap belum diuji. Tidak memublikasikan experience.
+
+Artefak: audit/storm-jump-results.json, audit/storm-jump-regression.json, audit/storm-jump-run1.json sampai run3.json, audit/storm_jump_server_playtest.luau, audit/storm_jump_client_playtest.luau, audit/build_storm_curtain.luau dan audit/storm-jump-preview.jpg. Backup: audit/Fly High.before-storm-jumps.rbxl. Harness hanya digunakan untuk QA dan dihapus dari DataModel akhir.

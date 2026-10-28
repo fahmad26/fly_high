@@ -1,0 +1,381 @@
+{
+  "ok": true,
+  "balance": [
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.805267333984375,
+      "accepted": 1,
+      "crew": 1
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.4127197265625,
+      "accepted": 2,
+      "crew": 2
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.413848876953125,
+      "accepted": 3,
+      "crew": 3
+    }
+  ],
+  "players": [
+    {
+      "logs": [],
+      "userId": -1,
+      "name": "Player1"
+    },
+    {
+      "logs": [],
+      "userId": -2,
+      "name": "Player2"
+    },
+    {
+      "logs": [],
+      "userId": -3,
+      "name": "Player3"
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "1 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "1 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.805267333984375,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.805267333984375,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.805267333984375,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "non-crew cannot cause jump drop"
+    },
+    {
+      "passed": true,
+      "name": "2 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "2 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.4127197265625,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.4127197265625,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.4127197265625,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "3 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "3 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.413848876953125,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.413848876953125,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.413848876953125,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "pilot jump disabled on client and server"
+    },
+    {
+      "passed": true,
+      "name": "space does not eject pilot or create drop"
+    },
+    {
+      "passed": true,
+      "name": "leaving helm restores jump"
+    },
+    {
+      "passed": true,
+      "name": "gunner equipped"
+    },
+    {
+      "passed": true,
+      "name": "tether attached on basket"
+    },
+    {
+      "passed": true,
+      "name": "free gunner and tethered crew can all jump"
+    },
+    {
+      "passed": true,
+      "name": "equipment does not change crew balance"
+    },
+    {
+      "passed": true,
+      "name": "winch blocks jumping"
+    },
+    {
+      "passed": true,
+      "name": "engineer outside basket cannot jump"
+    },
+    {
+      "passed": true,
+      "name": "engineer cannot create impulse"
+    },
+    {
+      "passed": true,
+      "name": "returning to gondola restores jump"
+    },
+    {
+      "passed": true,
+      "name": "storm rejected below 1200 km"
+    },
+    {
+      "passed": true,
+      "name": "one shared storm per zone"
+    },
+    {
+      "passed": true,
+      "name": "wall is not shootable"
+    },
+    {
+      "passed": true,
+      "name": "other team receives warning",
+      "detail": {
+        "logs": [],
+        "jumpEnabled": true,
+        "health": 100,
+        "stormVisible": true,
+        "jumpVisible": true,
+        "reason": "Lompat bersama untuk turun",
+        "allowed": true,
+        "accepted": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "warning does not deal damage"
+    },
+    {
+      "passed": true,
+      "name": "wall hits left boundary team",
+      "detail": 1
+    },
+    {
+      "passed": true,
+      "name": "wall hits right boundary team",
+      "detail": 1
+    },
+    {
+      "passed": true,
+      "name": "global wave cleans up"
+    },
+    {
+      "passed": true,
+      "name": "1 crew can reach safe height",
+      "detail": {
+        "safeY": 426.307373046875,
+        "rootY": 383.39080810546875
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew avoid curtain without damage",
+      "detail": {
+        "drop": 82.91656494140625,
+        "holes": 0,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew can reach safe height",
+      "detail": {
+        "safeY": 426.3054504394531,
+        "rootY": 383.3882751464844
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew avoid curtain without damage",
+      "detail": {
+        "drop": 82.91717529296875,
+        "holes": 0,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew can reach safe height",
+      "detail": {
+        "safeY": 426.3094177246094,
+        "rootY": 383.2789001464844
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew avoid curtain without damage",
+      "detail": {
+        "drop": 83.030517578125,
+        "holes": 0,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "scheduled wave spawns at threshold"
+    },
+    {
+      "passed": true,
+      "name": "milestone marked once"
+    },
+    {
+      "passed": true,
+      "name": "same flight cannot retrigger cleared milestone"
+    },
+    {
+      "passed": true,
+      "name": "Player1 jump restored in lobby"
+    },
+    {
+      "passed": true,
+      "name": "Player2 jump restored in lobby"
+    },
+    {
+      "passed": true,
+      "name": "Player3 jump restored in lobby"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 120.64537869999185,
+  "logs": [],
+  "waves": [
+    {
+      "drop": 82.91656494140625,
+      "holes": 0,
+      "crew": 1
+    },
+    {
+      "drop": 82.91717529296875,
+      "holes": 0,
+      "crew": 2
+    },
+    {
+      "drop": 83.030517578125,
+      "holes": 0,
+      "crew": 3
+    }
+  ],
+  "date": "2026-10-29",
+  "checkCount": 51,
+  "mode": "3 native Studio clients with automatic character ownership and virtual Space input",
+  "limitations": [
+    "Three simulated clients on one computer; no public server or human/device playtest",
+    "Test positions arranged on server; global waves run at full warning/sweep timing",
+    "Solo/duo/trio avoidance tested with gas off and four coordinated jump rounds",
+    "Cloud persistence and real Robux transactions deferred",
+    "Physical touch/gamepad devices and network packet loss not tested"
+  ],
+  "compiledScripts": 24,
+  "sourceSnapshotsMatch": true,
+  "buildSha256": "70BBC2E0F5EA3E8DB37358EAC41F43BDBD4B8F31F4C3750E6DEA5A3C50E36211",
+  "savedPlaceBytes": 828169,
+  "uiReview": {
+    "stormVisible": true,
+    "originalStatusHiddenDuringWarning": true,
+    "emergencyKitVisible": true,
+    "stormBottom": 157,
+    "emergencyKitTop": 210,
+    "noOverlap": true
+  }
+}

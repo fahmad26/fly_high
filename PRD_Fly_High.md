@@ -411,14 +411,35 @@ Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
 - **Dermaga terhalang:** pemeriksaan ruang berada pada API peluncuran server dan panel dermaga. Balon dari dermaga mana pun dapat memblokir peluncuran jika masih berada dalam ruang spawn dermaga tujuan (60 stud horizontal dan 64 stud vertikal). Tidak dapat memunculkan balon baru di ruang yang bertabrakan. Pemeriksaan dan pendaftaran penerbangan dilakukan tanpa yield.
 - **Batas daratan:** balon yang berada dekat daratan secara terus-menerus selama 60 detik mengalami Game Over dan seluruh kru gugur. Penghitung ditampilkan pada HUD, direset setelah terangkat dari daratan (root di atas batas dasar dan raycast 4 stud di bawah gondola tidak lagi menyentuh daratan), dan dimulai lagi saat kembali ke daratan. Model dibersihkan melalui lifecycle Game Over.
 
-### Backlog — tantangan besar dan loncatan kru (dokumentasi saja)
+### Tantangan Dinding Badai dan Loncatan Kru — Diimplementasikan 29 Oktober 2026
 
-Belum diimplementasikan. Pada ketinggian tertentu, akan muncul rintangan besar yang mencakup area luas dan sangat sulit ditembak maupun dihindari dengan gerak horizontal. Tim dapat membuat balon turun dengan melompat-lompat di gondola untuk melewati bawah rintangan.
+**Dinding Badai** adalah bank awan besar yang menyapu seluruh lebar koridor pada milestone **1.800, 3.600, 5.400, 7.200 dan 9.000 km**. Satu gelombang dibagi oleh tim di area ketinggian yang sama; bukan obstacle terpisah per client.
 
-- Pemain yang memegang kemudi tidak dapat melompat.
-- Pemain yang memanjat, berada di kubah/area perbaikan atau sedang memperbaiki lubang tidak dapat melompat.
-- Pemain yang memegang senjata, sudah memasang tali tetapi masih di gondola, atau sedang bebas/tidak beraktivitas dapat melompat.
-- Ketinggian kemunculan, ukuran rintangan, telegraph, besarnya penurunan per loncatan, cooldown, pembatasan exploit dan balancing solo/duo/trio akan ditentukan pada implementasi berikutnya.
+| Aturan | Nilai awal |
+| --- | --- |
+| Peringatan | 6 detik, HUD instruksi dan lampu sirine |
+| Ukuran volume bahaya | 360 × 120 × 32 stud |
+| Sapuan | Z=-260 menuju Z=260, 60 stud/detik; aktif sekitar 8,67 detik |
+| Cara menghindar | Turunkan balon ke bawah awan; HUD menampilkan sisa penurunan yang diperlukan |
+| Kerusakan | Maksimal 1 lubang per gelombang per balon; grace period dan shield tetap berlaku |
+| Senjata | Awan tidak dapat dihancurkan dengan tembakan |
+| Pengulangan | Milestone yang sudah diperingatkan tidak dipicu ulang oleh flight yang sama saat turun lalu naik |
+| Batas global | Satu gelombang aktif per milestone, maksimal dua gelombang bersamaan |
+
+Gerak kiri/kanan tidak melewati lebar dinding, dan sapuan mencapai batas maju/mundur koridor. Tim baru yang memasuki area saat gelombang berjalan tetap mendapat masa peringatan sendiri. Spawn rintangan reguler untuk peserta ditunda selama tantangan besar; rintangan lama di dunia tetap mengikuti lifecycle biasa. Seluruh rintangan lingkungan tetap tidak muncul di bawah 1.200 km.
+
+**Loncatan kru:**
+
+- Pemain yang memegang kemudi tidak dapat melompat; lepas kemudi dengan H / tombol HUD terlebih dahulu.
+- Pemain yang berada di katrol, di kubah/area perbaikan, atau sedang menambal tidak dapat melompat. Turun ke gondola dengan Q / tombol HUD.
+- Pemain bebas, gunner dan pemain bertali yang masih di gondola dapat melompat.
+- Space, gamepad A dan tombol LOMPAT pada HUD menggunakan loncatan Humanoid biasa.
+- Server mendeteksi pijakan dan gerakan lepas dari pijakan; request client saja tidak memberikan efek turun.
+- Setiap loncatan sah menambah jatah turun **18 / jumlah kru yang saat itu boleh melompat** stud. Jika semuanya melompat satu kali, total jatah tetap 18 stud: solo 18; dua pemain masing-masing 9; tiga pemain masing-masing 6. Pilot/engineer yang sedang tidak boleh melompat tidak ikut pembagi.
+- Jatah diterapkan halus dengan batas **22 stud/detik**, antrean maksimal 36 stud, cooldown efek 1,05 detik per pemain dan wajib mendarat sebelum dihitung lagi. Perubahan ketinggian aktual juga dipengaruhi gas dan kondisi lubang.
+- Lima lubang tetap memakai jatuh darurat 2.000/3 km/detik dan tidak menerima tambahan efek loncatan. Emergency Kit membatalkan sisa jatah turun ketika menyelamatkan balon.
+- HUD menunjukkan izin lompat, cooldown, hitung mundur badai, jarak ke posisi aman dan instruksi mematikan gas otomatis bila perlu.
+- Setelan ini merupakan balancing awal; pengujian solo/duo/trio native Studio lulus. Perangkat fisik dan latency internet masih memerlukan pengujian lanjutan.
 
 ## Developer Products Final — 29 Oktober 2026
 

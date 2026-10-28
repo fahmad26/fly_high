@@ -48,9 +48,9 @@ local function add(model,pos,velocity,shootable,name,color,effect,delayTime)
 end
 function Manager.SpawnBand(index,fd,hazard)
  local spec=bands[index]
- if not spec or not Manager.GetBand(fd.altitudeKm) or #Manager.activeObstacles>=60 then return nil end
+ if not spec or (fd.largeChallengeUntil and os.clock()<fd.largeChallengeUntil) or not Manager.GetBand(fd.altitudeKm) or #Manager.activeObstacles>=60 then return nil end
  local center=fd.balloon.Envelope.Position
- local predicted=center+Vector3.new(0,fd.isGasActive and 12.5 or 0,0)
+ local predicted=center+Vector3.new(0,(fd.isGasActive or fd.autoGas) and 12.5 or 0,0)
  if not hazard then
   local template=spec.enemy=="Hailstone" and templates.Hailstone or templates.WildBird
   local pos=predicted+Vector3.new((math.random()-0.5)*90,10,-95)
