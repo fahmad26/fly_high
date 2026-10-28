@@ -345,6 +345,7 @@ local function cancelRepair()
  if holdingRepair then holdingRepair=nil repairRemote:FireServer("Cancel") end
 end
 local attachButton=button("AttachButton","PASANG / ISI TALI [E]",UDim2.new(0.5,-75,1,-165),function() tetherEvent:FireServer("Attach") end)
+local detachButton=button("DetachButton","LEPAS TALI [T]",UDim2.new(0.5,-75,1,-255),function()tetherEvent:FireServer("Detach")end)
 local climbButton=button("ClimbButton","NAIK KE KUBAH [F]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Climb") end)
 local descendButton=button("DescendButton","TURUN [Q]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Descend") end)
 local repairButton=button("RepairButton","TAHAN TAMBAL [E]",UDim2.new(0.5,-75,1,-165),function() end)
@@ -354,7 +355,8 @@ end)
 tetherEvent.OnClientEvent:Connect(function(data) tethered=data.isTethered==true outside=data.insideBasket==false end)
 UserInputService.InputBegan:Connect(function(input,gpe)
  if UserInputService:GetFocusedTextBox() then return end
- if input.KeyCode==Enum.KeyCode.Q then tetherEvent:FireServer("Descend")
+ if input.KeyCode==Enum.KeyCode.T or input.KeyCode==Enum.KeyCode.ButtonL2 then tetherEvent:FireServer("Detach")
+ elseif input.KeyCode==Enum.KeyCode.Q then tetherEvent:FireServer("Descend")
  elseif input.KeyCode==Enum.KeyCode.F then tetherEvent:FireServer("Climb")
  elseif input.KeyCode==Enum.KeyCode.E then
   if tethered and outside then beginRepair() else tetherEvent:FireServer("Attach") end
@@ -369,6 +371,7 @@ RunService.RenderStepped:Connect(function()
  local b=ref and ref.Value
  local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
  attachButton.Visible=b~=nil and b.Parent~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-b.TetherStation.Position).Magnitude<=10 and not outside
+ detachButton.Visible=tethered and localPlayer:GetAttribute("InFlight")==true
  climbButton.Visible=tethered and not outside and attachButton.Visible
  descendButton.Visible=tethered and outside
  repairButton.Visible=nearestHole()~=nil

@@ -6,7 +6,7 @@ end
 function U.Flight(p,finished)
  local m=_G.FlyHighBalloonManager
  for _,fd in ipairs(m and m.activeFlights or {}) do
-  if table.find(fd.players,p) and (finished or (not fd.isGameOver and not fd.isVictory)) then return fd end
+  if fd.balloon.Parent and table.find(fd.players,p) and (finished or (not fd.isGameOver and not fd.isVictory)) then return fd end
  end
 end
 function U.Alive(p,fd)

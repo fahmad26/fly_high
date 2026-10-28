@@ -150,3 +150,18 @@ Namun, tepat sebelum handover ini, User meminta **2 pembaruan spesifikasi yang b
 - Total terbaru 19 skrip; Source lengkap diekspor ke audit/sources. Lima peluncuran API produksi lulus; peluncuran Pod_C melalui prompt juga diuji. Konsol terakhir 0 error/0 warning.
 - Bukti: audit/fleet-results.json, audit/fleet_playtest.luau, audit/fleet-assets.json, audit/five-fleets-preview.jpg. Backup: audit/Fly High.before-five-fleets.rbxl.
 - Skrip build di audit/ adalah catatan rekonstruksi Edit, bukan script runtime. Aset hasil generasi disimpan di place; normalisasi/segmentasi/tekstur memerlukan cache aset tersebut.
+
+## 8. Spawn dan Kontrol Penerbangan Terbaru
+
+- ArrivalGarden menggantikan pad spawn putih secara visual; LobbySpawn tetap menjadi SpawnLocation tersembunyi.
+- FlightControlMath (ReplicatedStorage.FlyHigh.Modules) memetakan input ke arah kamera horizontal. FlightSpace (ServerScriptService.FlyHighServer) menangani ruang spawn dan batas antarpusat balon. Total terbaru: 21 skrip.
+- RemoteEvent baru FlightActionEvent menerima ReleaseHelm dan AutoGas. Server memvalidasi kru hidup, pilot untuk menyalakan gas, tipe boolean dan rate limit. Server mengatur AutoGas pada state serta attribute balon.
+- Kontrol: H/Y lepas kemudi; Z/L1 gas otomatis; G/B kembalikan senjata; T/L2 lepas tali. Seluruhnya tersedia melalui tombol HUD juga. E pasang/isi tali, F naik, Q turun dan R reload tetap berlaku.
+- TetherEvent menerima Detach dan membersihkan rope/attachment serta mengembalikan status humanoid/anchor saat katrol dibatalkan.
+- Collider antarbalon diaktifkan; ResolveCollisions membatasi posisi target pada server dan menandai satu kerusakan per kontak. Clearance 60 stud horizontal, 64 vertikal. Semua jalur LaunchBalloon memeriksa okupansi lintas dermaga.
+- ApplyPuncture(fd,cause) mendukung Collision/SelfShot di bawah 1.200 km. Rintangan masih tunduk SAFE_TAKEOFF_KM; Shield/grace damage tetap dihormati. WeaponManager membiarkan raycast mengenai proxy kubah sendiri dan mengecualikan balon tim lain.
+- Lima lubang turun pada 2.000/3 km/detik. Server memindahkan balon dan kru yang masih berada di gondola/bertali secara konsisten agar dek tidak meninggalkan kru akibat percepatan mendadak. Clutch Save tetap aktif sebelum tanah.
+- GROUNDED_TIMEOUT_SEC=60; penghitung server ditampilkan pada HUD. Ground crash/AFK memakai lifecycle EndFlight dan cleanup yang sama.
+- U.Flight mengabaikan model yang sudah dilepas dari DataModel agar callback Destroying yang tertunda tidak menahan relaunch.
+- Tantangan besar dan efek loncatan **hanya dokumentasi/backlog**, belum ada fitur runtime baru terkait loncatan.
+- Backup sebelum revisi: audit/Fly High.before-flight-controls.rbxl. Bukti pengujian tambahan dan batasannya: audit/flight-controls-results.json serta AUDIT_REPORT.md.

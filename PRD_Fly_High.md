@@ -81,7 +81,7 @@ Di atas kepala setiap karakter pemain terdapat `BillboardGui` dinamis yang menam
 * **Ruang Udara Bersama (*Shared Global Airspace*) & Safe Takeoff Zone 6x Lipat:**
   * Seluruh tim yang lepas landas terbang di dalam kolom udara global yang sama.
   * Tim yang sedang terbang **dapat melihat balon udara milik tim lain** yang sedang naik di bawah, di samping, atau di atas mereka, menciptakan suasana kompetitif dan sosial yang hidup.
-  * **Pencegahan Tabrakan Balon (Collision Prevention):** Karena multi-balon dapat terbang bersamaan dalam satu ruang udara pandang, **Safe Takeoff Zone diralat dan diperluas menjadi 6x lipat (ketinggian 0 s.d. 1.200 km)**. Zona lepas landas yang sangat lapang dan bebas rintangan ini memberikan waktu transisi yang sangat cukup (~72 detik pertama) bagi seluruh balon dari 5 kotak untuk menyebar dan mengatur jarak terbang vertikal/horizontal secara aman tanpa risiko tabrakan atau kepanikan awal.
+  * **Pencegahan Tabrakan Balon (Collision Prevention):** Karena multi-balon dapat terbang bersamaan dalam satu ruang udara pandang, **Safe Takeoff Zone diralat dan diperluas menjadi 6x lipat (ketinggian 0 s.d. 1.200 km)**. Zona bebas rintangan ini memberi waktu transisi (~72 detik pertama) untuk menyebar dan mengatur jarak. Tabrakan antarbalon dan tembakan ke balon sendiri tetap menghasilkan kerusakan mulai 0 km; pemeriksaan okupansi dermaga mencegah summon yang overlap.
 
 ### 4.2 Kotak Antrean (5 Launch Pods)
 * Terdapat **5 zona kotak fisik** (*Kotak A, Kotak B, Kotak C, Kotak D, Kotak E*) yang ditata membentuk busur (*arc*) di pulau awal.
@@ -224,7 +224,7 @@ stateDiagram-v2
 | **2 Lubang** | **Tidak bisa naik sama sekali**. Harus menahan tombol gas terus-menerus hanya untuk menahan posisi (*hover*). | Jika gas dilepas/mati, turun dengan **kecepatan 1.2x lipat**. | Bisa diperbaiki manual |
 | **3 Lubang** | Tidak bisa naik. Gas aktif hanya memperlambat laju penurunan (*mitigasi*). | Turun dengan **kecepatan 1.5x lipat**. | Bisa diperbaiki manual |
 | **4 Lubang** | Tidak bisa naik. Gas aktif hanya sedikit menahan laju jatuh yang deras. | Turun dengan **kecepatan 2.5x lipat**. | Bisa diperbaiki manual (Kritis) |
-| **5 Lubang** | **Gagal Struktur Total**. Balon terjun bebas vertikal dengan kecepatan tinggi ke tanah. | Terjun bebas tak terkendali. | **TIDAK BISA DITAMBAL MANUAL** |
+| **5 Lubang** | **Gagal Struktur Total**. Balon terjun bebas vertikal pada 2.000/3 km/detik (2.000 km dalam sekitar 3 detik). | Terjun bebas tak terkendali. | **TIDAK BISA DITAMBAL MANUAL** |
 
 ### 6.2 Mekanika "Clutch Save" pada 5 Lubang:
 > [!IMPORTANT]
@@ -236,7 +236,7 @@ stateDiagram-v2
 > 4. Kontrol normal kembali aktif, memberi kesempatan kedua bagi tim untuk melanjutkan perjalanan.
 
 ### 6.3 Dua Kondisi Game Over:
-1. **Kondisi 1 — Menghantam Tanah (Crash):** Balon mengalami 5 lubang setelah lepas landas dan terjun bebas hingga menyentuh permukaan darat (`0 km`) tanpa adanya *Clutch Save*. Seluruh anggota tim di balon tewas dan sesi berakhir.
+1. **Kondisi 1 — Menghantam Tanah (Crash):** Balon mengalami 5 lubang dan menyentuh permukaan darat (`0 km`) tanpa adanya *Clutch Save*. Seluruh anggota tim di balon tewas dan sesi berakhir.
 2. **Kondisi 2 — Seluruh Kru Gugur (*Total Crew Wipe*):** Seluruh pemain di dalam tim mati (0 pemain hidup tersisa, misalnya karena tali pengaman putus dan jatuh ke jurang), meskipun jumlah lubang balon belum mencapai 5. Balon tanpa awak otomatis dihentikan/dihancurkan dan sesi penerbangan berakhir.
 
 ### 6.4 Grace Period Invulnerability Pasif (5 Detik)
@@ -279,7 +279,7 @@ Untuk rintangan bertipe **hazard lingkungan yang tidak dapat ditembak** (seperti
 * **Zona Lepas Landas Aman Diperluas 6x Lipat (0 – 1.200 km):**
   * Balon mulai lepas landas dari permukaan darat pulau awal (`0 km`).
   * Karena sistem menggunakan ruang udara global di mana pemain dapat melihat balon tim lain, **Safe Takeoff Zone diralat dan diperluas menjadi 6x lipat (dari baseline 200 km menjadi 1.200 km)**.
-  * Di bawah ketinggian **1.200 km, SAMA SEKALI TIDAK ADA RINTANGAN** yang muncul (~72 detik pertama penerbangan tanpa gangguan). Hal ini menjamin seluruh balon dari 5 kotak keberangkatan memiliki ruang ketinggian dan waktu yang sangat leluasa untuk mengatur jarak aman, menyebar posisi penerbangan, dan mengeliminasi risiko tabrakan antar balon maupun kerumunan di fase awal.
+  * Di bawah ketinggian **1.200 km, SAMA SEKALI TIDAK ADA RINTANGAN** yang muncul (~72 detik pertama penerbangan tanpa gangguan). Ruang ini membantu tim menyebar; collision antarbalon tetap aktif dan dapat memberikan satu lubang. Peluncuran baru diblokir jika ruang dermaga masih ditempati balon mana pun.
 * **Laju Normal:** 10 menit (600 detik) jika terbang mulus tanpa gangguan = **1.000 km setiap 60 detik (1 menit)**.
 
 ```mermaid
@@ -296,7 +296,7 @@ flowchart TD
 ```
 
 ### Detail Rintangan Global per Segmen:
-1. **0 – 1.200 km (Safe Takeoff Zone - 6x Diperluas):** Bebas total dari segala ancaman/rintangan agar seluruh tim dapat lepas landas dari darat, menyebar formasi, dan menghindari tabrakan antar balon.
+1. **0 – 1.200 km (Safe Takeoff Zone - 6x Diperluas):** Bebas seluruh rintangan lingkungan agar tim dapat menyebar formasi. Tabrakan antarbalon dan tembakan ke balon sendiri tetap berlaku.
 2. **1.200 – 2.000 km (Lower Troposphere Initial Encounters & Wind Shear):** Kawanan Burung Camar & Elang mulai muncul bersamaan dengan ancaman **Angin Topan (Tornado)**. Tornado **tidak dapat ditembak**, memicu **Alert 3 detik** sebelum melintas. Pilot wajib bermanuver WASD menghindar.
 3. **2.000 – 3.000 km (Thunder Ridge):** Kelelawar Badai + **Awan Petir** (Unshootable, **Alert 3 detik** + garis laser telegraph sebelum kilat menyambar).
 5. **3.000 – 4.000 km (Jetstream Crosswind):** **Angin Jetstream Lateral** (Alert 3s sebelum hembusan angin mendorong balon ke samping) + Bongkahan Es Runcing yang berjatuhan (dapat ditembak).
@@ -395,3 +395,27 @@ Kelima antrean menggunakan dermaga bundar kayu/batu, satu panel status yang muda
 | E | Lentera Istana | Lentera ivory dengan mahkota pagoda marun/emas, gondola paviliun terbuka dan rumbai. |
 
 Setiap armada mempertahankan lantai 28×28 stud, lima titik kerusakan, helm, dua rak senjata, stasiun tali dan aturan penerbangan yang sama. Animasi merupakan kosmetik pada client.
+
+## Revisi Gameplay dan Spawn (28 Oktober 2026, pembaruan lanjutan)
+
+Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
+
+- **Spawn:** pelataran kayu bundar, lapisan batu pesisir, kompas kuningan, tanaman dan papan sambutan; SpawnLocation teknis tidak terlihat.
+- **Lima lubang:** jatuh vertikal pada kecepatan tetap **2.000/3 km per detik**, setara 166,67 stud/detik pada skala 0,25 stud/km. Turun 2.000 km memerlukan sekitar 3 detik; 10.000 km sekitar 15 detik, selama jalur bebas. Menyentuh tanah tanpa Clutch Save mengakhiri penerbangan dan membunuh kru. Penambalan manual tetap terkunci; Emergency Kit masih bisa dipakai sebelum menyentuh tanah.
+- **Lepas peran:** kemudi dapat dilepas dengan H/tombol LEPAS KEMUDI (gamepad Y); senjata dikembalikan ke rak dengan G/tombol DROP (gamepad B); tali dilepas dengan T/tombol LEPAS TALI (gamepad L2). Melepas tali di luar gondola menghilangkan perlindungan tali.
+- **Arah kontrol:** WASD, tombol panah, joystick sentuh dan gamepad memakai arah kamera yang diproyeksikan pada bidang horizontal. Atas/maju selalu menuju arah pandang horizontal kamera.
+- **Gas otomatis:** pilot menyalakan/mematikan dengan Z/tombol GAS OTOMATIS (gamepad L1). Gas tetap berjalan setelah kemudi dilepas; kru hidup dapat mematikannya lewat tombol yang tetap tersedia. Gas tidak membatalkan efek lima lubang.
+- **Tabrakan:** balon memiliki collision fisik dan pemisahan posisi pada server. Batas ruang konservatif adalah 60 stud horizontal dan 64 stud vertikal antarpusat root. Kontak memberikan satu lubang pada masing-masing balon; kontak yang sama tidak terus menambah lubang sampai keduanya berpisah. Grace period kerusakan 5 detik dan Shield Emergency tetap berlaku.
+- **Aturan tembak:** pemain dapat menembak kubah balon tim sendiri untuk menciptakan lubang. Tembakan tidak merusak balon tim lain. Raycast, asal laras, amunisi dan validasi kepemilikan tetap ditentukan server.
+- **Zona aman 0–1.200 km:** tetap bebas seluruh rintangan. Kerusakan dari tabrakan dan tembakan balon sendiri tetap berlaku di zona ini, sesuai keputusan pengguna.
+- **Dermaga terhalang:** pemeriksaan ruang berada pada API peluncuran server dan panel dermaga. Balon dari dermaga mana pun dapat memblokir peluncuran jika masih berada dalam ruang spawn dermaga tujuan (60 stud horizontal dan 64 stud vertikal). Tidak dapat memunculkan balon baru di ruang yang bertabrakan. Pemeriksaan dan pendaftaran penerbangan dilakukan tanpa yield.
+- **Batas daratan:** balon yang berada dekat daratan secara terus-menerus selama 60 detik mengalami Game Over dan seluruh kru gugur. Penghitung ditampilkan pada HUD, direset setelah terangkat dari daratan (root di atas batas dasar dan raycast 4 stud di bawah gondola tidak lagi menyentuh daratan), dan dimulai lagi saat kembali ke daratan. Model dibersihkan melalui lifecycle Game Over.
+
+### Backlog — tantangan besar dan loncatan kru (dokumentasi saja)
+
+Belum diimplementasikan. Pada ketinggian tertentu, akan muncul rintangan besar yang mencakup area luas dan sangat sulit ditembak maupun dihindari dengan gerak horizontal. Tim dapat membuat balon turun dengan melompat-lompat di gondola untuk melewati bawah rintangan.
+
+- Pemain yang memegang kemudi tidak dapat melompat.
+- Pemain yang memanjat, berada di kubah/area perbaikan atau sedang memperbaiki lubang tidak dapat melompat.
+- Pemain yang memegang senjata, sudah memasang tali tetapi masih di gondola, atau sedang bebas/tidak beraktivitas dapat melompat.
+- Ketinggian kemunculan, ukuran rintangan, telegraph, besarnya penurunan per loncatan, cooldown, pembatasan exploit dan balancing solo/duo/trio akan ditentukan pada implementasi berikutnya.

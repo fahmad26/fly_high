@@ -8,7 +8,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 - Place lokal yang diaudit: PlaceId=0, GameId=0. Tidak memublikasikan experience dan tidak melakukan transaksi Robux atau mengubah profil cloud.
 - Backup sebelum perubahan: `audit/Fly High.before-audit.rbxl`.
 - SHA256 backup: `C3D8D13DB1F95387B44D5B0E1C1E147853A09034AFC29E4D8D43E562D81BD21F`.
-- SHA256 hasil terbaru setelah lima armada: `01276844CB57EC27D6D70FDA3BD14942ADB8AA2C34B391C43F567B2A47C51866`.
+- SHA256 hasil terbaru setelah revisi kontrol, spawn dan tabrakan: `AE5CDFB950C13A933E959F4C499371E7288F3DDD8E20ADF4587700080B035E7F`.
 - Ekspor seluruh skrip di `audit/sources/` diverifikasi cocok dengan Source di Edit DataModel (15/15).
 - Harness dan script QA hanya dimasukkan ke DataModel Play. Tidak terdapat AuditHarness/test fixture di place yang disimpan.
 
@@ -142,3 +142,20 @@ Pulau mendapat pepohonan dan palem dengan siluet bercabang/berdaun, pakis mesh, 
 - Ornamen tidak menambah collision. Lantai, collider utama dan mekanika identik antartema; bentuk visual koi/cincin bersifat dekoratif.
 - File tersimpan: Fly High.rbxl (529.324 byte). Tidak ada model review/tekstur sementara atau harness QA di Edit DataModel akhir.
 - Bukti: audit/fleet-results.json, audit/fleet-assets.json, audit/five-fleets-preview.jpg. Harness runtime: audit/fleet_playtest.luau. Backup sebelum perubahan: audit/Fly High.before-five-fleets.rbxl.
+
+## Tindak lanjut: spawn, kontrol, tabrakan dan daratan
+
+- Spawn putih diganti pelataran kayu/batu dengan inlay kompas kuningan, pakis dan papan sambutan yang diperkecil/dipindahkan ke samping.
+- Kontrol relatif kamera memakai satu fungsi bersama untuk WASD/panah/touch/gamepad. Ditambah aksi lepas kemudi, lepas tali, serta gas otomatis yang tidak bergantung pada pilot tetap duduk. Senjata tetap dapat dikembalikan ke rak.
+- Clearance antarpusat balon 60 stud horizontal/64 vertikal diterapkan server. Collision group antarbalon diaktifkan; kontak memberi satu lubang pada kedua balon dan tidak berulang selama kontak yang sama. Okupansi lintas dermaga diperiksa pada API LaunchBalloon dan ditampilkan pada panel.
+- Balon sendiri dapat ditembak; balon tim lain dikecualikan dari raycast damage. Asal tembakan palsu tetap diabaikan. Damage Collision/SelfShot berlaku mulai 0 km; rintangan tetap tidak ada di bawah 1.200 km. Shield dan grace period lama tetap berlaku.
+- Lima lubang kini turun 666,67 km/detik, dengan pemindahan kru yang masih di gondola/bertali mengikuti dek. Clutch Save menghentikan jatuh dan memulihkan lubang sebelum tanah.
+- Penghitung daratan 60 detik berada pada server, disinkronkan ke HUD dan memicu EndFlight, kematian kru serta cleanup. Saat menguji, umur penghitung dipercepat menjadi 59,8 detik; bukan menunggu satu menit nyata.
+- Race lifecycle tambahan diperbaiki: U.Flight tidak lagi mengembalikan flight yang modelnya sudah tidak memiliki Parent ketika callback Destroying masih tertunda.
+- Backlog tantangan rintangan besar dan loncatan kru ditambahkan ke PRD; **tidak diimplementasikan pada runtime**.
+
+Bukti QA disimpan di audit/flight-controls-results.json. Uji server/client lokal mencakup arah kamera pada 0/90/180/270 derajat, gas otomatis + keluar kursi, pasang/lepas tali, ambil/kembalikan pistol, tembakan sendiri (1 lubang dan amunisi 8→7), tembakan ke fixture balon tim lain (0 lubang), Clutch Save, jatuh 2.000 km sekitar 3,02 detik dan kematian saat tanah, expiry daratan, serta fixture tabrakan/okupansi lintas dermaga. Fixture tabrakan memakai dua model dan state server; ini **bukan multiplayer dengan dua pemain nyata**. Input sentuh/gamepad fisik, latency dan soak test masih belum diuji. Produk dan cloud live tetap terbuka sebagaimana laporan awal.
+
+- Regresi akhir: **5/5 armada** kembali lulus; **21/21 skrip** lolos kompilasi dan snapshot Source cocok. Uji input keyboard native dengan kamera menghadap +Z (180° dari arah awal) + Up menghasilkan perpindahan +32,50 stud pada Z; Z lalu H menghasilkan gas otomatis aktif dan pilot sudah tidak duduk. Konsol hanya berisi informasi mock data serta reset kamera QA, tanpa error/warning.
+
+- Deteksi daratan juga memakai raycast di bawah gondola pada 5 Hz, sehingga balon yang berhenti di atas bukit/batu tidak lolos dari penghitung. Fixture permukaan tinggi terdeteksi; setelah diangkat 15 stud, status berubah menjadi mengudara. Raycast daratan mengecualikan air, balon lain dan karakter.

@@ -30,11 +30,18 @@ for _, podModel in ipairs(podsFolder:GetChildren()) do
 	end
 end
 
+local Space=require(script.Parent.FlightSpace)
+local function blocked(data)
+ local bm=_G.FlyHighBalloonManager
+ return bm and Space.Blocker(Space.SpawnPosition(data.pad.Position),bm.activeFlights)~=nil
+end
 local Themes=require(ReplicatedStorage.FlyHigh.Modules.BalloonThemes)
 local function updatePodVisuals(data)
  local gui=data.statusGui
  local count=#data.players
  local theme=Themes.Get(data.model.Name)
+ local busy=blocked(data)
+ data.model:SetAttribute("LaunchBlocked",busy==true)
  local color=data.isStarting and Color3.fromRGB(235,185,83) or (count>0 and Color3.fromRGB(112,191,147) or theme.Accent)
  local countLabel=gui:FindFirstChild("CountLabel")
  if countLabel then countLabel.Text=string.format("%d / %d KRU",count,FlyHighConfig.MAX_PLAYERS_PER_POD) countLabel.TextColor3=color end
@@ -42,7 +49,7 @@ local function updatePodVisuals(data)
  if master then master.Text=data.master and ("MASTER • "..data.master.DisplayName) or "MASTER • Belum ada" end
  local label=gui:FindFirstChild("StatusLabel")
  if label then
-  label.Text=data.isStarting and "Menyiapkan balon..." or (count>0 and "Siap berangkat bersama Master" or "Masuk ke dermaga untuk bergabung")
+  label.Text=data.isStarting and "Menyiapkan balon..." or (busy and "Tunggu balon di depan dermaga menjauh" or nil) or (count>0 and "Siap berangkat bersama Master" or "Masuk ke dermaga untuk bergabung")
   label.TextColor3=color
  end
  for i=1,FlyHighConfig.MAX_PLAYERS_PER_POD do
@@ -100,11 +107,7 @@ for name,data in pairs(podStates) do
   if data.master~=p then return end
   local bm=_G.FlyHighBalloonManager
   if not bm then return end
-  for _,fd in ipairs(bm.activeFlights) do
-   local a=fd.root.Position
-   local delta=Vector2.new(a.X-data.pad.Position.X,a.Z-data.pad.Position.Z)
-   if delta.Magnitude<26 and a.Y<60 then return end
-  end
+  if blocked(data)then return end
   data.isStarting=true data.prompt.Enabled=false updatePodVisuals(data)
   local fd=bm.LaunchBalloon(data.players,data.master,data.pad.Position,name)
   if fd then

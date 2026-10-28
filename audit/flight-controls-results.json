@@ -1,0 +1,350 @@
+{
+  "compiledScripts": 21,
+  "sourceSnapshotsMatch": true,
+  "rapidFall": {
+    "duration": 3.023267099983059,
+    "samples": [
+      {
+        "elapsed": 0.1152208999847062,
+        "health": 100,
+        "y": 495.4978942871094
+      },
+      {
+        "elapsed": 0.21676839998690411,
+        "health": 100,
+        "y": 478.99005126953125
+      },
+      {
+        "elapsed": 0.3338751000119373,
+        "health": 100,
+        "y": 459.47052001953125
+      },
+      {
+        "elapsed": 0.4491703999810852,
+        "health": 100,
+        "y": 440.2386169433594
+      },
+      {
+        "elapsed": 0.5492595999967307,
+        "health": 100,
+        "y": 423.4195251464844
+      },
+      {
+        "elapsed": 0.6506672999821603,
+        "health": 100,
+        "y": 406.9198303222656
+      },
+      {
+        "elapsed": 0.7661655999836512,
+        "health": 100,
+        "y": 387.3314514160156
+      },
+      {
+        "elapsed": 0.8831503000110388,
+        "health": 100,
+        "y": 367.9490661621094
+      },
+      {
+        "elapsed": 0.9998878999613225,
+        "health": 100,
+        "y": 348.6072998046875
+      },
+      {
+        "elapsed": 1.116888899996411,
+        "health": 100,
+        "y": 328.7692565917969
+      },
+      {
+        "elapsed": 1.2326895999722183,
+        "health": 100,
+        "y": 309.5879821777344
+      },
+      {
+        "elapsed": 1.333127899968531,
+        "health": 100,
+        "y": 292.86883544921875
+      },
+      {
+        "elapsed": 1.4493056999635883,
+        "health": 100,
+        "y": 273.3094787597656
+      },
+      {
+        "elapsed": 1.549952699977439,
+        "health": 100,
+        "y": 256.51727294921875
+      },
+      {
+        "elapsed": 1.6668559999670833,
+        "health": 100,
+        "y": 237.21229553222656
+      },
+      {
+        "elapsed": 1.7833327999687754,
+        "health": 100,
+        "y": 217.8482666015625
+      },
+      {
+        "elapsed": 1.900025699986145,
+        "health": 100,
+        "y": 198.4749298095703
+      },
+      {
+        "elapsed": 2.0154197000083514,
+        "health": 100,
+        "y": 179.0086669921875
+      },
+      {
+        "elapsed": 2.116917299979832,
+        "health": 100,
+        "y": 162.4798583984375
+      },
+      {
+        "elapsed": 2.2331237999605946,
+        "health": 100,
+        "y": 142.65464782714844
+      },
+      {
+        "elapsed": 2.3488816999597475,
+        "health": 100,
+        "y": 123.271728515625
+      },
+      {
+        "elapsed": 2.4653163999901153,
+        "health": 100,
+        "y": 104.07303619384766
+      },
+      {
+        "elapsed": 2.5667992999660783,
+        "health": 100,
+        "y": 87.40841674804688
+      },
+      {
+        "elapsed": 2.6832098999875598,
+        "health": 100,
+        "y": 67.60314178466797
+      },
+      {
+        "elapsed": 2.7997240999829955,
+        "health": 100,
+        "y": 48.5311279296875
+      },
+      {
+        "elapsed": 2.915408100001514,
+        "health": 100,
+        "y": 28.89739227294922
+      },
+      {
+        "elapsed": 3.0232592999818735,
+        "health": 0,
+        "y": 12.499992370605469
+      }
+    ],
+    "final": {
+      "autoGas": false,
+      "seat": "nil",
+      "holes": 5,
+      "y": 12.499992370605469,
+      "held": false,
+      "health": 0,
+      "pilot": false,
+      "attached": false,
+      "gameOver": true,
+      "victory": false,
+      "burning": false
+    }
+  },
+  "groundTimeout": {
+    "autoGas": false,
+    "seat": "nil",
+    "holes": 0,
+    "y": 12.5,
+    "held": false,
+    "health": 0,
+    "pilot": false,
+    "victory": false,
+    "attached": false,
+    "gameOver": true,
+    "burning": false
+  },
+  "selfShot": {
+    "autoGas": false,
+    "seat": "nil",
+    "ammo": 7,
+    "holes": 1,
+    "y": 12.5,
+    "held": true,
+    "health": 100,
+    "pilot": false,
+    "attached": false,
+    "victory": false,
+    "gameOver": false,
+    "burning": false
+  },
+  "enemyShot": {
+    "enemyHoles": 0,
+    "own": {
+      "autoGas": false,
+      "seat": "nil",
+      "ammo": 7,
+      "holes": 0,
+      "y": 12.5,
+      "held": true,
+      "health": 100,
+      "pilot": false,
+      "attached": false,
+      "victory": false,
+      "gameOver": false,
+      "burning": false
+    }
+  },
+  "collision": {
+    "ok": true,
+    "result": {
+      "noOverlapDistance": 60,
+      "crossDockBlocked": true,
+      "clearance": 60,
+      "collisionBothDamaged": true,
+      "oneDamagePerContact": true
+    }
+  },
+  "fleetRegression": {
+    "ok": true,
+    "results": [
+      {
+        "repair": true,
+        "floor": "28, 1.2000000476837158, 28",
+        "serverOwned": true,
+        "connectedAssembly": true,
+        "name": "Penjelajah Fajar",
+        "safeZone": true,
+        "launchDrift": 9.747098148136374e-14,
+        "theme": "A",
+        "parts": 376
+      },
+      {
+        "repair": true,
+        "floor": "28, 1.2000000476837158, 28",
+        "serverOwned": true,
+        "connectedAssembly": true,
+        "name": "Taman Mengapung",
+        "safeZone": true,
+        "launchDrift": 0,
+        "theme": "B",
+        "parts": 492
+      },
+      {
+        "repair": true,
+        "floor": "28, 1.2000000476837158, 28",
+        "serverOwned": true,
+        "connectedAssembly": true,
+        "name": "Koi Langit",
+        "safeZone": true,
+        "launchDrift": 1.3042338883146806e-14,
+        "theme": "C",
+        "parts": 311
+      },
+      {
+        "repair": true,
+        "floor": "28, 1.2000000476837158, 28",
+        "serverOwned": true,
+        "connectedAssembly": true,
+        "name": "Pengelana Saturnus",
+        "safeZone": true,
+        "launchDrift": 1.0434850954230829e-13,
+        "theme": "D",
+        "parts": 284
+      },
+      {
+        "repair": true,
+        "floor": "28, 1.2000000476837158, 28",
+        "serverOwned": true,
+        "connectedAssembly": true,
+        "name": "Lentera Istana",
+        "safeZone": true,
+        "launchDrift": 1.0392187327692981e-12,
+        "theme": "E",
+        "parts": 280
+      }
+    ]
+  },
+  "cameraMath": [
+    {
+      "angle": 0,
+      "forwardDot": 1,
+      "magnitude": 1
+    },
+    {
+      "angle": 90,
+      "forwardDot": 1,
+      "magnitude": 1
+    },
+    {
+      "angle": 180,
+      "forwardDot": 1,
+      "magnitude": 1
+    },
+    {
+      "angle": 270,
+      "forwardDot": 1,
+      "magnitude": 1
+    }
+  ],
+  "interactions": {
+    "nativeWeaponPickup": true,
+    "weaponReturned": true,
+    "tetherAttachedThenDetached": true,
+    "helmReleasedViaRemote": true,
+    "autoGasContinuedAfterRelease": true,
+    "autoGasStoppedByCrew": true,
+    "clutchSave": {
+      "rescued": true,
+      "holes": 0,
+      "health": 100,
+      "heightAfterRescue": 362.237
+    }
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "limitations": [
+    "One real player in local Play session",
+    "Second balloon uses model/state fixture, not a second real player",
+    "Ground timeout accelerated by setting groundedSince to 59.8 seconds ago",
+    "No physical touch/gamepad, latency or soak test"
+  ],
+  "deferred": "Large altitude-wide obstacle and jump-to-descend mechanics documented only",
+  "actualCamera180UpArrow": {
+    "forwardProgress": 32.503173828125,
+    "passed": true,
+    "delta": "0, -6.0193023681640625, 32.503173828125"
+  },
+  "actualKeyboardAutoGasAndRelease": {
+    "autoGas": true,
+    "seat": "nil",
+    "holes": 0,
+    "y": 117.37699890136719,
+    "held": false,
+    "health": 100,
+    "pilot": false,
+    "victory": false,
+    "attached": false,
+    "gameOver": false,
+    "burning": true
+  },
+  "raisedGround": {
+    "airborneNotGrounded": true,
+    "raisedSurfaceDetected": true
+  },
+  "verticalCollision": {
+    "ok": true,
+    "result": {
+      "noOverlapDistance": 60,
+      "crossDockBlocked": true,
+      "clearance": 60,
+      "collisionBothDamaged": true,
+      "oneDamagePerContact": true
+    }
+  }
+}

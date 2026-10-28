@@ -93,9 +93,18 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target)
  local spread=CFrame.lookAt(Vector3.zero,direction)*CFrame.Angles(math.rad((math.random()-0.5)*1.5),math.rad((math.random()-0.5)*1.5),0)
  direction=spread.LookVector
  local params=RaycastParams.new()
- params.FilterType=Enum.RaycastFilterType.Exclude params.FilterDescendantsInstances={p.Character,fd.balloon}
+ params.FilterType=Enum.RaycastFilterType.Exclude
+ local excluded={p.Character}
+ for _,other in ipairs(_G.FlyHighBalloonManager.activeFlights)do
+  if other~=fd then table.insert(excluded,other.balloon)end
+ end
+ for _,piece in ipairs(fd.balloon:GetDescendants())do
+  if piece:IsA("BasePart")and piece~=fd.balloon.Envelope then table.insert(excluded,piece)end
+ end
+ params.FilterDescendantsInstances=excluded
  local hit=workspace:Raycast(origin,direction*500,params)
  local part=hit and hit.Instance
+ if part==fd.balloon.Envelope then _G.FlyHighBalloonManager.ApplyPuncture(fd,"SelfShot")end
  local model=part and part:FindFirstAncestorOfClass("Model")
  if model and model:GetAttribute("IsObstacle") and model:GetAttribute("Shootable")==true then
   local hp=(model:GetAttribute("Health") or 50)-s.cfg.Damage

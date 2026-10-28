@@ -13,6 +13,10 @@ local FlyHighConfig = {
 
 	-- Hot Air Balloon
 	MAX_HOLES = 5,
+	FREEFALL_KM_PER_SEC = 2000/3,
+	GROUNDED_TIMEOUT_SEC = 60,
+	BALLOON_CLEARANCE_DISTANCE = 60,
+	BALLOON_CLEARANCE_HEIGHT = 64,
 	PASSIVE_INVULN_DURATION = 5, -- 5 seconds grace period after damage
 	CLUTCH_SAVE_INVULN_DURATION = 60, -- 1 minute emergency shield
 

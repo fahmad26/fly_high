@@ -10,6 +10,9 @@ local playerGui = localPlayer:WaitForChild("PlayerGui")
 local remotes = ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local flightSyncEvent = remotes:WaitForChild("FlightStateSyncEvent")
 local pilotControlEvent = remotes:WaitForChild("PilotControlEvent")
+local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
+local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
+local autoGas=false
 local emergencyKitEvent = remotes:WaitForChild("EmergencyKitEvent")
 local hazardAlertEvent = remotes:WaitForChild("HazardAlertEvent")
 local tacticalPingEvent = remotes:WaitForChild("TacticalPingEvent")
@@ -207,6 +210,20 @@ alertDesc.Font = Enum.Font.GothamBold
 alertDesc.TextSize = 14
 alertDesc.Parent = alertBanner
 
+local function flightButton(name,text,offset,callback)
+ local b=Instance.new("TextButton")b.Name=name b.Text=text b.Size=UDim2.fromOffset(160,48)
+ b.Position=UDim2.new(1,-180,1,-offset)b.BackgroundColor3=Color3.fromRGB(35,65,85)
+ b.TextColor3=Color3.new(1,1,1)b.Font=Enum.Font.GothamBold b.TextSize=13 b.TextWrapped=true b.Visible=false b.Parent=screenGui
+ local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(0,10)corner.Parent=b
+ b.Activated:Connect(callback)return b
+end
+local autoGasButton=flightButton("AutoGasButton","GAS OTOMATIS: OFF [Z]",200,function()flightActionEvent:FireServer("AutoGas",not autoGas)end)
+local releaseHelmButton=flightButton("ReleaseHelmButton","LEPAS KEMUDI [H]",255,function()flightActionEvent:FireServer("ReleaseHelm")end)
+local groundNotice=Instance.new("TextLabel")groundNotice.Name="GroundedCountdown"groundNotice.Size=UDim2.fromOffset(420,28)
+groundNotice.Position=UDim2.new(.5,-210,0,65)groundNotice.BackgroundColor3=Color3.fromRGB(79,47,34)
+groundNotice.TextColor3=Color3.fromRGB(255,225,164)groundNotice.TextSize=14 groundNotice.Font=Enum.Font.GothamBold
+groundNotice.Visible=false groundNotice.Parent=screenGui
+
 -- State tracking
 local isGasHeld = false
 local steerVector = Vector3.zero
@@ -241,6 +258,11 @@ end)
 
 -- Server Flight State Listener
 flightSyncEvent.OnClientEvent:Connect(function(data)
+	autoGas=data.autoGas==true
+	autoGasButton.Text=autoGas and "GAS OTOMATIS: ON [Z]" or "GAS OTOMATIS: OFF [Z]"
+	autoGasButton.BackgroundColor3=autoGas and Color3.fromRGB(35,130,94)or Color3.fromRGB(35,65,85)
+	groundNotice.Visible=data.groundedRemaining~=nil and not data.isGameOver and not data.isVictory
+	groundNotice.Text=data.groundedRemaining and string.format("LEPAS LANDAS! Balon hancur dalam %d detik",math.ceil(data.groundedRemaining))or ""
 	local altKm = data.altitudeKm or 0
 	local holes = data.holes or 0
 	local invuln = data.invulnTime or 0
@@ -343,7 +365,10 @@ UserInputService.InputEnded:Connect(function(input)
 end)
 UserInputService.WindowFocusReleased:Connect(function() setGas(false) end)
 UserInputService.InputBegan:Connect(function(input)
- if input.KeyCode==Enum.KeyCode.ButtonR1 and gasBtn.Visible then setGas(true) end
+ if UserInputService:GetFocusedTextBox()then return end
+ if input.KeyCode==Enum.KeyCode.ButtonR1 and gasBtn.Visible then setGas(true)
+ elseif input.KeyCode==Enum.KeyCode.H or input.KeyCode==Enum.KeyCode.ButtonY then flightActionEvent:FireServer("ReleaseHelm")
+ elseif input.KeyCode==Enum.KeyCode.Z or input.KeyCode==Enum.KeyCode.ButtonL1 then flightActionEvent:FireServer("AutoGas",not autoGas)end
 end)
 local controls
 task.spawn(function()
@@ -361,20 +386,25 @@ RunService.RenderStepped:Connect(function()
 	local hum = char and char:FindFirstChildOfClass("Humanoid")
 	local seat = hum and hum.SeatPart
 	local isSeatedInHelm = (seat ~= nil and seat.Name == "HelmSeat")
+ releaseHelmButton.Visible=isSeatedInHelm
+ autoGasButton.Visible=localPlayer:GetAttribute("InFlight")==true and localPlayer:GetAttribute("FlightGhost")~=true and (isSeatedInHelm or autoGas)
 
 	if isSeatedInHelm then
 		gasBtn.Visible = true
 
 		local moveX = 0
 		local moveZ = 0
-		if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveZ = moveZ - 1 end
-		if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveZ = moveZ + 1 end
-		if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveX = moveX - 1 end
-		if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveX = moveX + 1 end
+		if (UserInputService:IsKeyDown(Enum.KeyCode.W) or UserInputService:IsKeyDown(Enum.KeyCode.Up)) then moveZ = moveZ - 1 end
+		if (UserInputService:IsKeyDown(Enum.KeyCode.S) or UserInputService:IsKeyDown(Enum.KeyCode.Down)) then moveZ = moveZ + 1 end
+		if (UserInputService:IsKeyDown(Enum.KeyCode.A) or UserInputService:IsKeyDown(Enum.KeyCode.Left)) then moveX = moveX - 1 end
+		if (UserInputService:IsKeyDown(Enum.KeyCode.D) or UserInputService:IsKeyDown(Enum.KeyCode.Right)) then moveX = moveX + 1 end
 
 		steerVector = Vector3.new(moveX, 0, moveZ)
-		if controls and (UserInputService.TouchEnabled or UserInputService.GamepadEnabled) then steerVector = controls:GetMoveVector() end
+		local lastInput=UserInputService:GetLastInputType()
+		if controls and (lastInput==Enum.UserInputType.Touch or string.find(lastInput.Name,"Gamepad")) then steerVector = controls:GetMoveVector() end
 
+		if UserInputService:GetFocusedTextBox()then steerVector=Vector3.zero end
+		steerVector=ControlMath.CameraSteer(steerVector,workspace.CurrentCamera.CFrame)
 		local now = os.clock()
 		local stateChanged = (steerVector ~= lastSentSteer) or (isGasHeld ~= lastSentGas)
 		if now - lastSendTime >= 0.1 then

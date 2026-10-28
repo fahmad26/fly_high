@@ -122,6 +122,9 @@ remotes.TetherEvent.OnServerEvent:Connect(function(p,action)
   return
  end
  if not fd or not t or t.balloon~=fd.balloon then return end
+ if action=="Detach"then
+  Manager.CleanupPlayer(p)return
+ end
  if action=="Climb" and U.CrewNear(p,fd.balloon,fd.balloon.TetherStation,10) then travel(p,fd.balloon,Vector3.new(0,21.6,-20))
  elseif action=="Descend" and U.Alive(p,fd) and not U.InBasket(t.hrp,fd.balloon.BasketFloor) and U.Near(p,fd.balloon.EnvelopeWalkway,28) then
   travel(p,fd.balloon,Vector3.new(0,4,8))
