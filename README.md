@@ -39,6 +39,7 @@
 
 - `Fly High.rbxl`: File tempat Roblox Studio utama (Lobby 5 Pod, Balon Udara, Rintangan, Senjata, Skrip Server & Client).
 - `PRD_Fly_High.md`: Dokumen Spesifikasi Produk (PRD) lengkap dan komprehensif.
+- `HANDOVER.md`: Dokumen panduan handover, peta arsitektur DataModel, dan checklist audit teknis untuk reviewer/developer.
 
 ---
 
