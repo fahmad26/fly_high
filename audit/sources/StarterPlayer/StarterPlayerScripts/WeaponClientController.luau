@@ -323,9 +323,12 @@ local function nearestHole()
  local b=ref and ref.Value
  local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
  if not b or not b.Parent or not root or not tethered or not outside then return nil end
+ local slots=b:FindFirstChild("HoleSlots")
+ if not slots then return nil end
  local best local distance=10
- for _,hole in ipairs(b.HoleSlots:GetChildren()) do
-  if hole.PatchPrompt.Enabled then
+ for _,hole in ipairs(slots:GetChildren()) do
+  local prompt=hole:FindFirstChild("PatchPrompt")
+  if hole:IsA("BasePart") and prompt and prompt.Enabled then
    local d=(hole.Position-root.Position).Magnitude
    if d<distance then best=hole distance=d end
   end
@@ -370,7 +373,9 @@ RunService.RenderStepped:Connect(function()
  local ref=localPlayer:FindFirstChild("FlightBalloon")
  local b=ref and ref.Value
  local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
- attachButton.Visible=b~=nil and b.Parent~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-b.TetherStation.Position).Magnitude<=10 and not outside
+ -- The flight reference can arrive before the model's descendants on a busy client.
+ local station=b and b.Parent and b:FindFirstChild("TetherStation")
+ attachButton.Visible=station~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-station.Position).Magnitude<=10 and not outside
  detachButton.Visible=tethered and localPlayer:GetAttribute("InFlight")==true
  climbButton.Visible=tethered and not outside and attachButton.Visible
  descendButton.Visible=tethered and outside

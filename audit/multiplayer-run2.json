@@ -1,0 +1,69 @@
+{
+  "players": [
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three connected players"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "three crew on dock"
+    },
+    {
+      "passed": true,
+      "name": "first arrival is master"
+    },
+    {
+      "passed": true,
+      "name": "master transfers when leader steps away"
+    },
+    {
+      "passed": true,
+      "name": "returning player keeps current master"
+    },
+    {
+      "passed": false,
+      "name": "native prompt launches trio"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 36.56080420000944,
+  "serverLogs": [],
+  "purchasesTested": false,
+  "metrics": [],
+  "ok": false,
+  "mode": "3 native Studio clients",
+  "error": "ServerScriptService.MultiplayerQAServer:17: native prompt launches trio: nil\nServerScriptService.MultiplayerQAServer:17\nServerScriptService.MultiplayerQAServer:53\n",
+  "cloudTested": false
+}

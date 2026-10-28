@@ -176,3 +176,12 @@ Namun, tepat sebelum handover ini, User meminta **2 pembaruan spesifikasi yang b
 ShopClientController membaca harga dari MarketplaceService:GetProductInfoAsync pada client; nominal perkiraan lama sudah dihapus. Prompt selesai/batal mengembalikan tombol tanpa memberikan item. Handler server _G.FlyHighShopManager.ProcessReceipt menjadi callback MarketplaceService.ProcessReceipt. DataManager.GrantReceipt mengembalikan (granted, isNew); hanya receipt AK baru yang boleh mencoba memasang upgrade otomatis.
 
 Jumlah skrip tetap 21. QA receipt 14/14 lulus dengan penyimpanan mock; harga dan UI berhasil diperiksa di Play, konsol tanpa error/warning. Place masih lokal (GameId=0): transaksi Robux dan DataStore cloud belum diuji. Publikasikan/unggah file terbaru ke experience pemilik produk untuk pengujian berikutnya. Detail: audit/product-results.json dan AUDIT_REPORT.md.
+
+## 10. Hasil QA Multiplayer Native (29 Oktober 2026)
+
+- StudioTestService menjalankan tiga client terpisah dengan Player serta koneksi replikasi asli. Dua tim simultan (duo vs solo) diuji, selain satu flight trio.
+- **50/50 pemeriksaan lulus**: antrean dan handoff Master, prompt start, pilot lepas + auto gas, gunner/engineer, replikasi perlengkapan, repair, Clutch Save, timeout daratan, okupansi lintas dermaga, collision, pembatasan akses lintas tim, tembakan dan disconnect cleanup.
+- Collision selama 8 detik menghasilkan tepat satu lubang pada kedua tim dengan jarak root minimum 60,00023 stud; server tetap memegang physics ownership.
+- WeaponClientController diperbaiki agar tidak mengakses TetherStation/HoleSlots/PatchPrompt sebelum child model direplikasi. Ini satu-satunya perubahan runtime pada sesi multiplayer ini; jumlah tetap 21 skrip.
+- Bukti final: audit/multiplayer-results.json; log server dan tiga client kosong dari error/warning. Backup: audit/Fly High.before-multiplayer.rbxl. Harness native tersimpan di audit/ dan sudah dihapus dari DataModel produksi.
+- Posisi skenario diatur server; hold patch memakai engineer stationary; timeout dipercepat. Ini simulasi lokal Studio, belum menggantikan uji manusia, perangkat nyata, latency atau server publik. Pembelian/cloud tetap ditunda. Fitur rintangan besar + loncat tetap dokumentasi.

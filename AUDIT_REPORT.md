@@ -8,7 +8,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 - Place lokal yang diaudit: PlaceId=0, GameId=0. Tidak memublikasikan experience dan tidak melakukan transaksi Robux atau mengubah profil cloud.
 - Backup sebelum perubahan: `audit/Fly High.before-audit.rbxl`.
 - SHA256 backup: `C3D8D13DB1F95387B44D5B0E1C1E147853A09034AFC29E4D8D43E562D81BD21F`.
-- SHA256 hasil terbaru setelah konfigurasi Developer Products: `CA21C09AB353ADC7D1A94E4D57DC02113481054E5DD3C7F5D805FEE370E49550`.
+- SHA256 hasil terbaru setelah perbaikan HUD multiplayer: `CE66A8E25E3C33ED8839E051472AAF964E91296659785899D0B6D5C36DA326CE`.
 - Ekspor seluruh skrip di `audit/sources/` diverifikasi cocok dengan Source di Edit DataModel (15/15).
 - Harness dan script QA hanya dimasukkan ke DataModel Play. Tidak terdapat AuditHarness/test fixture di place yang disimpan.
 
@@ -73,7 +73,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 
 ### Batas verifikasi
 - Skenario akselerasi altitude memakai fixture; belum melakukan satu penerbangan natural penuh 600 detik.
-- Kapasitas/durasi solo/duo/trio diuji lewat template setup; belum ada 2–3 pemain nyata atau lima tim simultan.
+- Kapasitas solo/duo/trio telah diuji melalui template dan tiga client native Studio (lihat QA multiplayer 29 Oktober). Lima tim simultan serta playtest manusia/server publik belum diuji.
 - Belum dilakukan soak test panjang, profiling memori, simulasi latency/packet loss, perangkat mobile fisik, atau controller nyata.
 - ProcessReceipt, DataStore live, kegagalan jaringan cloud dan retry lintas server belum dijalankan pada universe uji terpublikasi.
 - Portal dan photobooth telah diperiksa dari kode; interaksi pemain pada keduanya belum masuk skenario regresi yang lulus.
@@ -173,3 +173,27 @@ Bukti QA disimpan di audit/flight-controls-results.json. Uji server/client lokal
 - Tidak ada pembelian Robux, pengujian DataStore cloud, publikasi experience atau perubahan produk di Creator Dashboard pada sesi ini. Adapter/mock/harness hanya di Play, tidak dimasukkan ke place akhir.
 - Langkah berikutnya: unggah/publikasikan versi place ini ke experience yang memiliki kedua Developer Products, kemudian lakukan uji end-to-end pembelian/pembatalan dan persistensi pada universe uji sebelum rilis.
 - Backup: audit/Fly High.before-products.rbxl. Bukti: audit/product-results.json. Harness: audit/product_receipt_playtest.luau dan audit/product_data_qa_adapter.luau.
+
+## QA multiplayer native — 29 Oktober 2026
+
+Sesi menggunakan StudioTestService:ExecuteMultiplayerTestAsync(3, ...) dengan tiga client Studio dan Player1/Player2/Player3 (UserId -1/-2/-3), bukan dua model fixture. Client mengirim event gameplay melalui koneksi masing-masing. Start/pickup menggunakan VirtualInput untuk tombol proximity prompt; avatar memakai automatic network ownership. Posisi awal skenario diatur server.
+
+- **Hasil akhir: 50/50 pemeriksaan lulus**; durasi suite 64,59 detik setelah mulai sesi; log runtime server serta tiga client tidak memiliki error/warning.
+- Antrean tiga kru, pemindahan Master ketika pemimpin keluar pad, urutan bergabung kembali, dan peluncuran trio lewat prompt berhasil.
+- Pilot dapat melepas kursi sementara gas otomatis tetap naik; client lain mengambil pistol dan memasang tali. Semua client melihat Tool dan SafetyRope kru lain.
+- Tembakan sendiri menghabiskan 1 peluru dan membuat 1 lubang. Konfigurasi trio: 2 tali, hold repair 3 detik; climb, repair, descend, detach dan pengembalian senjata lulus. Fixture engineer di-anchor saat hold untuk mengisolasi timing dari gerak berjalan.
+- Clutch Save melalui remote client memulihkan balon dan menyelamatkan ketiga kru. Kit disediakan dalam inventori mock Studio; tidak ada pembelian. Timeout daratan membunuh ketiga kru dan membersihkan flight; clock dipercepat menjadi 59,7 detik, bukan menunggu satu menit penuh.
+- Tim A berisi dua pemain dan tim B satu pemain. Balon dari A yang diparkir di E memblokir summon E; A kembali tersedia setelah balon menjauh. Team B bisa meluncur setelah clearance.
+- Dua pilot client mengarahkan balon saling mendekat selama 8 detik: kedua tim mendapat **tepat 1 lubang**, tidak terus rusak selama kontak yang sama, jarak minimum root **60,00023 stud**, ownership fisika tetap server.
+- Prompt tim lain tersembunyi. Percobaan pickup paksa pada rak tim lain tetap ditolak server; tether lintas tim ditolak; tembakan tidak merusak balon lawan.
+- Client ketiga keluar melalui StudioTestService:LeaveTest; PlayerRemoving, cleanup tali/perlengkapan dan penghancuran flight solo terkonfirmasi. Dua kru di tim tersisa tetap hidup dan flight berlanjut.
+
+**Bug produksi yang diperbaiki:** WeaponClientController mengakses b.TetherStation pada RenderStepped saat referensi balon sudah direplikasi tetapi child tersebut belum tiba pada client. Run awal menangkap error ini di Player1. Guard FindFirstChild ditambahkan untuk TetherStation, HoleSlots dan PatchPrompt agar HUD aman terhadap replikasi parsial dan cleanup. Pengujian akhir tidak menangkap error tersebut lagi.
+
+Run antara disimpan untuk transparansi: run1 juga berhenti ketika fixture memposisikan avatar di luar sisi kanan basket (rack X=12 ditambah offset +3 menghasilkan X=15 di luar setengah lantai 14). Fixture dipindahkan ke sisi dalam. Run2/run3 menemukan driver InputHoldBegin kurang andal untuk client simulasi; driver beralih ke VirtualInput:SendKey dan menempatkan avatar antrean terpisah serta kamera menghadap console. Ini perubahan harness, bukan perubahan aturan gameplay.
+
+Batasan: tiga client simulasi pada satu komputer; tidak ada tiga manusia/perangkat nyata, server publik, simulasi packet loss/latency, pengujian cloud atau transaksi Robux. Tantangan besar dan mekanika loncat tetap backlog dokumentasi.
+
+Artefak: audit/multiplayer-results.json (hasil akhir), audit/multiplayer-run1.json sampai run3.json (diagnostik), audit/multiplayer_server_playtest.luau dan multiplayer_client_playtest.luau. Backup: audit/Fly High.before-multiplayer.rbxl. Seluruh Script/LocalScript/Remote QA sudah dihapus dari place. **21 skrip produksi lolos kompilasi**; smoke Play setelah cleanup juga tanpa error/warning.
+
+Referensi API: [StudioTestService](https://create.roblox.com/docs/reference/engine/classes/StudioTestService) dan [VirtualInput](https://create.roblox.com/docs/reference/engine/classes/VirtualInput).

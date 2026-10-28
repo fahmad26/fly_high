@@ -1,0 +1,94 @@
+{
+  "players": [
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three connected players"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "three crew on dock"
+    },
+    {
+      "passed": true,
+      "name": "first arrival is master"
+    },
+    {
+      "passed": true,
+      "name": "master transfers when leader steps away"
+    },
+    {
+      "passed": true,
+      "name": "returning player keeps current master"
+    },
+    {
+      "passed": true,
+      "name": "native prompt launches trio"
+    },
+    {
+      "passed": true,
+      "name": "trio rope and repair configuration"
+    },
+    {
+      "passed": true,
+      "name": "pilot seated"
+    },
+    {
+      "passed": true,
+      "name": "gas persists after pilot release"
+    },
+    {
+      "passed": true,
+      "name": "balloon ascends without seated pilot"
+    },
+    {
+      "passed": false,
+      "name": "second client picks weapon"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 35.6171636999934,
+  "serverLogs": [],
+  "purchasesTested": false,
+  "metrics": {
+    "startPrompt": {
+      "enabled": true,
+      "distance": 3.3304152488708496
+    }
+  },
+  "ok": false,
+  "mode": "3 native Studio clients",
+  "error": "ServerScriptService.MultiplayerQAServer:17: second client picks weapon: nil\nServerScriptService.MultiplayerQAServer:17\nServerScriptService.MultiplayerQAServer:53\n",
+  "cloudTested": false
+}
