@@ -36,4 +36,3 @@ local ok,err=xpcall(function()
  end
 end,debug.traceback)
 result.Value=Http:JSONEncode({ok=ok,error=ok and nil or err,results=results})
-

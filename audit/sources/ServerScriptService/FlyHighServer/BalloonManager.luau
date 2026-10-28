@@ -229,5 +229,3 @@ RunService.Heartbeat:Connect(function(dt)
   end
  end
 end)
-
-

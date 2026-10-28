@@ -15,7 +15,7 @@ local FlyHighConfig = {
 	MAX_HOLES = 5,
 	PASSIVE_INVULN_DURATION = 5, -- 5 seconds grace period after damage
 	CLUTCH_SAVE_INVULN_DURATION = 60, -- 1 minute emergency shield
-	
+
 	-- Matchmaking Pods
 	MAX_PLAYERS_PER_POD = 3,
 	COUNTDOWN_DURATION = 0,
@@ -24,7 +24,7 @@ local FlyHighConfig = {
 	ROPE_MAX_DURABILITY = 100,
 	ROPE_DECAY_PER_SEC = 5,
 	ROPE_REPAIR_RATE_PER_SEC = 25,
-	
+
 	-- Weapons
 	WEAPONS = {
 		Pistol = {

@@ -8,7 +8,7 @@ Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti 
 - Place lokal yang diaudit: PlaceId=0, GameId=0. Tidak memublikasikan experience dan tidak melakukan transaksi Robux atau mengubah profil cloud.
 - Backup sebelum perubahan: `audit/Fly High.before-audit.rbxl`.
 - SHA256 backup: `C3D8D13DB1F95387B44D5B0E1C1E147853A09034AFC29E4D8D43E562D81BD21F`.
-- SHA256 hasil terbaru setelah lima armada: `82C0D638DE973734C67B1DE5BA193AC5BBE669506AAD05C579543244CF3620C8`.
+- SHA256 hasil terbaru setelah lima armada: `01276844CB57EC27D6D70FDA3BD14942ADB8AA2C34B391C43F567B2A47C51866`.
 - Ekspor seluruh skrip di `audit/sources/` diverifikasi cocok dengan Source di Edit DataModel (15/15).
 - Harness dan script QA hanya dimasukkan ke DataModel Play. Tidak terdapat AuditHarness/test fixture di place yang disimpan.
 
@@ -140,5 +140,5 @@ Pulau mendapat pepohonan dan palem dengan siluet bercabang/berdaun, pakis mesh, 
 - Interaksi native StartPrompt pada Pod_C berhasil memilih SkyKoi; panel menampilkan jumlah kru dan Master dengan benar. Client menemukan lima panel dan lima miniatur.
 - Konsol sesi terakhir: **0 error, 0 warning**; satu pesan informasi mock data pada place unpublished. Pengujian ini tidak menggantikan multiplayer nyata, soak test atau transaksi cloud yang masih terbuka di atas.
 - Ornamen tidak menambah collision. Lantai, collider utama dan mekanika identik antartema; bentuk visual koi/cincin bersifat dekoratif.
-- File tersimpan: Fly High.rbxl (529.326 byte). Tidak ada model review/tekstur sementara atau harness QA di Edit DataModel akhir.
+- File tersimpan: Fly High.rbxl (529.324 byte). Tidak ada model review/tekstur sementara atau harness QA di Edit DataModel akhir.
 - Bukti: audit/fleet-results.json, audit/fleet-assets.json, audit/five-fleets-preview.jpg. Harness runtime: audit/fleet_playtest.luau. Backup sebelum perubahan: audit/Fly High.before-five-fleets.rbxl.
