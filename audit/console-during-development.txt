@@ -1,0 +1,33 @@
+[DataManager] Unpublished Studio: isolated mock data; purchases disabled.
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'ServerScriptService.AuditHarness', Line 99
+Stack End
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'AssistantCommand', Line 1
+Stack End
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'ServerScriptService.AuditHarness', Line 99
+Stack End
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'AssistantCommand', Line 1
+Stack End
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'ServerScriptService.AuditHarness', Line 99
+Stack End
+ServerScriptService.AuditHarness:99: attempt to index nil with 'balloon'
+Stack Begin
+Script 'AssistantCommand', Line 1
+Stack End
+TetherStation is not a valid member of Model "Workspace.Balloon_Fikki2621"
+Stack Begin
+Script 'Players.Fikki2621.PlayerScripts.WeaponClientController', Line 371
+Stack End
+TetherStation is not a valid member of Model "Workspace.Balloon_Fikki2621"
+Stack Begin
+Script 'Players.Fikki2621.PlayerScripts.WeaponClientController', Line 371
+Stack End

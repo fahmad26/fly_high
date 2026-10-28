@@ -1,0 +1,145 @@
+{
+  "finalRigging": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"tether\":{\"durability\":100,\"inUse\":1,\"pos\":\"-0.0029296875, 390.0732421875, -30.001953125\",\"winch\":false,\"attached\":true,\"inside\":true},\"state\":{\"kits\":1,\"shield\":0,\"velocity\":\"0, 0, 0\",\"holes\":0,\"invuln\":0,\"holeSet\":[],\"used\":true,\"freefall\":false,\"dead\":false},\"rack\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "weaponAfterDropPickup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"held\":true,\"ammo\":7,\"occupied\":false,\"tool\":\"Pistol\"}"
+      }
+    ],
+    "isError": false
+  },
+  "reloadDropObservationIncomplete": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"during\":[],\"after\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "console": "[DataManager] Unpublished Studio: isolated mock data; purchases disabled.",
+  "inventory": {
+    "sounds": [],
+    "palace": [
+      "CloudIsland",
+      "GoldenRim",
+      "CloudHavenDock",
+      "CastleKeep",
+      "GoldenDome",
+      "TowerLeft",
+      "SpireL",
+      "TowerRight",
+      "SpireR",
+      "PhotoboothSpot",
+      "ReturnPortal"
+    ],
+    "lighting": [
+      {
+        "name": "Sky",
+        "class": "Sky"
+      },
+      {
+        "name": "Bloom",
+        "class": "BloomEffect"
+      },
+      {
+        "name": "SunRays",
+        "class": "SunRaysEffect"
+      },
+      {
+        "name": "Atmosphere",
+        "class": "Atmosphere"
+      },
+      {
+        "name": "DepthOfField",
+        "class": "DepthOfFieldEffect"
+      }
+    ],
+    "scripts": [
+      {
+        "hash": 1283025877,
+        "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+        "length": 14837
+      },
+      {
+        "hash": 1219432284,
+        "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+        "length": 17293
+      },
+      {
+        "hash": 1463716061,
+        "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+        "length": 7129
+      },
+      {
+        "hash": 1429444367,
+        "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+        "length": 2563
+      },
+      {
+        "hash": 2119758353,
+        "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+        "length": 1773
+      },
+      {
+        "hash": 1723823724,
+        "path": "ServerScriptService.FlyHighServer.DataManager",
+        "length": 5536
+      },
+      {
+        "hash": 1319695563,
+        "path": "ServerScriptService.FlyHighServer.OverheadManager",
+        "length": 4229
+      },
+      {
+        "hash": 763568386,
+        "path": "ServerScriptService.FlyHighServer.PodManager",
+        "length": 4780
+      },
+      {
+        "hash": 2092300896,
+        "path": "ServerScriptService.FlyHighServer.BalloonManager",
+        "length": 11910
+      },
+      {
+        "hash": 2077844961,
+        "path": "ServerScriptService.FlyHighServer.WeaponManager",
+        "length": 5148
+      },
+      {
+        "hash": 103982041,
+        "path": "ServerScriptService.FlyHighServer.TetherManager",
+        "length": 8583
+      },
+      {
+        "hash": 278392060,
+        "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+        "length": 6059
+      },
+      {
+        "hash": 388575137,
+        "path": "ServerScriptService.FlyHighServer.ShopManager",
+        "length": 2644
+      },
+      {
+        "hash": 27357436,
+        "path": "ServerScriptService.FlyHighServer.ServerUtils",
+        "length": 1635
+      },
+      {
+        "hash": 1223483117,
+        "path": "ServerScriptService.FlyHighServer.PalaceManager",
+        "length": 777
+      }
+    ]
+  }
+}

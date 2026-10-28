@@ -1,0 +1,37 @@
+{
+  "templates": [
+    {
+      "name": "PalmTree",
+      "modelAssetId": "85991542206861"
+    },
+    {
+      "name": "BroadleafTree",
+      "modelAssetId": "105736598153277"
+    },
+    {
+      "name": "Fern",
+      "modelAssetId": "93001800039852"
+    },
+    {
+      "name": "Chicken",
+      "modelAssetId": "100055459405810",
+      "supplement": "sculpt_nature_details.luau"
+    },
+    {
+      "name": "Butterfly",
+      "modelAssetId": "98923659235834"
+    },
+    {
+      "name": "Boulder",
+      "modelAssetId": "127538538588108"
+    },
+    {
+      "name": "Flower",
+      "source": "Native CSG sculpted petals, stem and leaves",
+      "script": "sculpt_flowers.luau"
+    }
+  ],
+  "location": "ReplicatedStorage.FlyHigh.EnvironmentAssets",
+  "scene": "Workspace.FlyHighLobby.IslandNature",
+  "notes": "Mesh templates created for this project; prop instances contain no embedded scripts. Saved .rbxl is authoritative."
+}

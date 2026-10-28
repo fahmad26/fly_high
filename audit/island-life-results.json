@@ -1,0 +1,76 @@
+{
+  "chickenMotion": [
+    {
+      "name": "Hen_3",
+      "distance": 7.974361888004976,
+      "state": "Walk",
+      "updates": 120
+    },
+    {
+      "name": "Hen_1",
+      "distance": 11.736784707807823,
+      "state": "Peck",
+      "updates": 140
+    },
+    {
+      "name": "Hen_2",
+      "distance": 8.195371925684638,
+      "state": "Peck",
+      "updates": 100
+    },
+    {
+      "name": "Hen_4",
+      "distance": 9.979826343993757,
+      "state": "Walk",
+      "updates": 140
+    },
+    {
+      "name": "Hen_6",
+      "distance": 4.141572233694764,
+      "state": "Walk",
+      "updates": 140
+    },
+    {
+      "name": "Hen_5",
+      "distance": 5.752580122391456,
+      "state": "Walk",
+      "updates": 140
+    }
+  ],
+  "clientAnimation": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"animatedLegs\":3,\"butterflies\":14,\"chickens\":6,\"butterfliesMoving\":14}"
+      }
+    ],
+    "isError": false
+  },
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"spawned\":true,\"health\":100,\"rootY\":12.5}"
+      }
+    ],
+    "isError": false
+  },
+  "inventory": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"embeddedScripts\":0,\"meshParts\":584,\"baseParts\":1097,\"sculptedUnions\":112,\"counts\":{\"Butterflies\":14,\"Chickens\":6,\"Trees\":20,\"Details\":121,\"Flowers\":56,\"Plants\":60,\"Rocks\":12},\"world\":{\"1\":\"Camera\",\"4\":\"CloudPalace\",\"3\":\"FlyHighLobby\",\"2\":\"Terrain\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "[DataManager] Unpublished Studio: isolated mock data; purchases disabled."
+      }
+    ],
+    "isError": false
+  }
+}

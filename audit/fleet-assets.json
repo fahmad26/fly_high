@@ -1,0 +1,17 @@
+{
+  "generatedModels": {
+    "A": "110748676141107",
+    "B": "129375209906819",
+    "C": "113521361210774",
+    "D": "105781403596192",
+    "E": "127599663788651"
+  },
+  "koi": {
+    "bodyMesh": "71616483738210",
+    "tailMesh": "91001714599396",
+    "leftFinMesh": "124128719735333",
+    "rightFinMesh": "75308691855803",
+    "paintedBodyTexture": "126045955203268"
+  },
+  "notes": "Generated artwork is cached under BalloonSkins; gameplay variants under BalloonVariants. Lotus petals, rings, stars, docks and gondola details use native Roblox CSG/parts. Cosmetic meshes are noncolliding; all variants share the existing flight collision proxy."
+}

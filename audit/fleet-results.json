@@ -1,0 +1,75 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "repair": true,
+      "floor": "28, 1.2000000476837158, 28",
+      "serverOwned": true,
+      "connectedAssembly": true,
+      "name": "Penjelajah Fajar",
+      "safeZone": true,
+      "launchDrift": 8.472765539299307e-15,
+      "theme": "A",
+      "parts": 376
+    },
+    {
+      "repair": true,
+      "floor": "28, 1.2000000476837158, 28",
+      "serverOwned": true,
+      "connectedAssembly": true,
+      "name": "Taman Mengapung",
+      "safeZone": true,
+      "launchDrift": 2.6966526308778906e-15,
+      "theme": "B",
+      "parts": 492
+    },
+    {
+      "repair": true,
+      "floor": "28, 1.2000000476837158, 28",
+      "serverOwned": true,
+      "connectedAssembly": true,
+      "name": "Koi Langit",
+      "safeZone": true,
+      "launchDrift": 1.4207312989208125e-18,
+      "theme": "C",
+      "parts": 311
+    },
+    {
+      "repair": true,
+      "floor": "28, 1.2000000476837158, 28",
+      "serverOwned": true,
+      "connectedAssembly": true,
+      "name": "Pengelana Saturnus",
+      "safeZone": true,
+      "launchDrift": 1.245155881342535e-14,
+      "theme": "D",
+      "parts": 284
+    },
+    {
+      "repair": true,
+      "floor": "28, 1.2000000476837158, 28",
+      "serverOwned": true,
+      "connectedAssembly": true,
+      "name": "Lentera Istana",
+      "safeZone": true,
+      "launchDrift": 2.711348493694075e-16,
+      "theme": "E",
+      "parts": 280
+    }
+  ],
+  "scriptsCompiled": 19,
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "info": "Unpublished Studio: isolated mock data; purchases disabled."
+  },
+  "nativePodCLaunch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"assemblyRoot\":\"RootPart\",\"spawned\":true,\"anchoredParts\":0,\"networkOwner\":\"nil\",\"root\":\"-9.059092075633813e-20, 12.5, -56\",\"pod\":\"Pod_C\",\"theme\":\"C\",\"catwalk\":true}"
+      }
+    ],
+    "isError": false
+  }
+}

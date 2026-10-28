@@ -73,6 +73,7 @@ Di atas kepala setiap karakter pemain terdapat `BillboardGui` dinamis yang menam
 ### 4.1 Pulau Awal, Lautan, & Batas Koridor Udara (*World Boundaries*)
 * **Pulau Awal Kompak:** Pulau keberangkatan memiliki ukuran yang pas dan tidak terlalu luas (radius ~150 stud dari titik pusat `X=0, Z=0`), sehingga seluruh aktivitas pemain terpusat dan terlihat ramai.
 * **Hamparan Laut Biru:** Area di luar batas pulau awal merupakan lautan biru luas (*Ocean*) yang memberikan kontras visual indah saat balon mulai naik ke angkasa.
+* **Vegetasi & Kehidupan Pulau:** Pulau dihiasi pohon berbatang bercabang, palem, pakis, tanaman kecil, bunga, batu berfaset dan kerikil pesisir dengan bentuk organik bergaya low-poly. Ayam berkeliaran, berhenti dan mematuk; kupu-kupu terbang serta mengepakkan sayap di sekitar tanaman. Bentuk dekorasi harus terbaca jelas sebagai objek alaminya, bukan sekadar kumpulan kotak atau bola. Jalur spawn, antrean dan area lepas landas tetap lapang.
 * **Invisible Wall Silinder Vertikal (Flight Corridor):**
   * Di sekeliling batas tepi pulau awal dipasang **Invisible Wall (Dinding Pembatas Tak Terlihat)** berbentuk silinder/kotak vertikal dengan radius ~150 stud yang menjulang dari permukaan tanah (`0 km`) lurus hingga ke Istana Awan (`10.000 km`).
   * Fungsi di Darat: Mencegah pemain jatuh atau berenang keluar dari pulau awal.
@@ -380,3 +381,17 @@ Saat balon menyentuh ketinggian **10.000 km**:
 5. **Emergency Kit Button (Dengan Anti-Waste Lock):** Menampilkan jumlah stok kit darurat pemain; otomatis terkunci sementara jika Shield 60 detik rekan setim sedang aktif.
 6. **Gauge Tali Pengaman:** Muncul saat pemain memasang tali pengaman dan menggunakan katrol naik ke kubah balon.
 7. **Weapon HUD & Kontrol Mobile:** Indikator amunisi (Pistol 8 atau AK-47 30) dengan cadangan tak terbatas, auto-aim soft-lock kamera, serta tombol tembak manual.
+
+## Pembaruan Visual Dermaga A–E (28 Oktober 2026)
+
+Kelima antrean menggunakan dermaga bundar kayu/batu, satu panel status yang mudah dibaca, tiga indikator kru dan miniatur balon pilihan. Tema ditentukan oleh dermaga tanpa perbedaan keuntungan gameplay.
+
+| Dermaga | Armada | Bentuk dan karakter visual |
+| --- | --- | --- |
+| A | Penjelajah Fajar | Kubah klasik memanjang merah bata/krem, gondola anyaman kayu dan perlengkapan kuningan. |
+| B | Taman Mengapung | Kuncup teratai merah muda dengan kelopak berlapis, rok daun hijau sage dan gondola botani. |
+| C | Koi Langit | Ikan koi putih/jingga dengan sirip dan ekor bergerak halus; gondola beraksen perahu serta gelombang. |
+| D | Pengelana Saturnus | Planet biru malam/ungu, cincin miring, bintang mengorbit dan gondola observatorium. |
+| E | Lentera Istana | Lentera ivory dengan mahkota pagoda marun/emas, gondola paviliun terbuka dan rumbai. |
+
+Setiap armada mempertahankan lantai 28×28 stud, lima titik kerusakan, helm, dua rak senjata, stasiun tali dan aturan penerbangan yang sama. Animasi merupakan kosmetik pada client.

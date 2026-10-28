@@ -1,0 +1,289 @@
+{
+  "core": [
+    {
+      "test": "No obstacle spawn below 1200",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "No hazard spawn below 1200",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "No damage below 1200",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "First obstacle at 1200",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "First puncture at 1200",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Passive 5 second grace",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Manual repair active hole",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Duplicate hole repair blocked",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Repair middle hole",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hole count matches visuals after out-of-order repair",
+      "expected": 3,
+      "pass": true,
+      "actual": 3
+    },
+    {
+      "test": "Five holes causes freefall",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Five holes blocks manual repair",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Clutch Save allowed during passive grace",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Clutch Save clears all holes",
+      "expected": 0,
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "test": "Clutch Save grants sixty seconds",
+      "expected": 60,
+      "pass": true,
+      "actual": 60
+    },
+    {
+      "test": "Clutch Save cancels freefall",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Clutch Save cancels downward velocity",
+      "expected": 0,
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "test": "Second emergency activation blocked",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Blocked activation preserves stock",
+      "expected": 0,
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "test": "One kit per player per flight",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "1200 km equals seventy-two seconds",
+      "expected": 72,
+      "pass": true,
+      "actual": 72
+    },
+    {
+      "test": "Rope capacity crew 1",
+      "expected": 1,
+      "pass": true,
+      "actual": 1
+    },
+    {
+      "test": "Repair hold crew 1",
+      "expected": 1.5,
+      "pass": true,
+      "actual": 1.5
+    },
+    {
+      "test": "Rope capacity crew 2",
+      "expected": 1,
+      "pass": true,
+      "actual": 1
+    },
+    {
+      "test": "Repair hold crew 2",
+      "expected": 2,
+      "pass": true,
+      "actual": 2
+    },
+    {
+      "test": "Rope capacity crew 3",
+      "expected": 2,
+      "pass": true,
+      "actual": 2
+    },
+    {
+      "test": "Repair hold crew 3",
+      "expected": 3,
+      "pass": true,
+      "actual": 3
+    },
+    {
+      "test": "Basket width doubled",
+      "expected": 28,
+      "pass": true,
+      "actual": 28
+    },
+    {
+      "test": "Basket depth doubled",
+      "expected": 28,
+      "pass": true,
+      "actual": 28
+    },
+    {
+      "test": "Basket corner is inside",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Dome is outside basket",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Reject NaN vector",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Reject infinite vector",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Reject non-vector",
+      "expected": false,
+      "pass": true,
+      "actual": false
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 1",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 2",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 3",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 4",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 5",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 6",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 7",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 8",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    },
+    {
+      "test": "Hazard telegraph 3 seconds band 9",
+      "expected": true,
+      "pass": true,
+      "actual": true
+    }
+  ],
+  "rigging": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"state\":{\"kits\":0,\"shield\":0,\"velocity\":\"0, 0, 0\",\"holes\":0,\"invuln\":0,\"holeSet\":[],\"used\":false,\"freefall\":false,\"dead\":false},\"tether\":{\"durability\":100,\"inUse\":1,\"pos\":\"-0.0029296875, 390.0732421875, -30.001953125\",\"winch\":false,\"attached\":true,\"inside\":true}}"
+      }
+    ],
+    "isError": false
+  },
+  "victory": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"pos\":\"-4, 2593, 62\",\"dock\":\"0, 2588, 70\",\"status\":{\"tethers\":0,\"ready\":true,\"holes\":0,\"obstacles\":0,\"altitude\":10000,\"victory\":true,\"gameOver\":false,\"flights\":1,\"target\":\"0, 2512.333251953125, -38\",\"gas\":false,\"pos\":\"0, 2589.699951171875, 70\",\"pilot\":\"nil\"},\"anchored\":false,\"record\":10000,\"summits\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "crash": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"crashed\":true,\"health\":0,\"rootY\":12.5,\"groundY\":12.5,\"holes\":5}"
+      }
+    ],
+    "isError": false
+  }
+}

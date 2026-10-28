@@ -2,6 +2,8 @@
 
 Dokumen ini disiapkan sebagai panduan komprehensif bagi AI Reviewer / Developer selanjutnya untuk memeriksa, mengaudit, dan melanjutkan pengembangan game Roblox **Fly High**.
 
+> **Pembaruan audit 28 Oktober 2026:** Dua revisi PRD sudah diterapkan dan place lokal sudah disimpan. Bagian arsitektur/status awal di bawah adalah baseline historis; gunakan bagian 5 dan [AUDIT_REPORT.md](./AUDIT_REPORT.md) untuk keadaan terbaru dan batas verifikasi.
+
 ---
 
 ## 1. Informasi Repositori & Berkas Utama
@@ -104,3 +106,47 @@ Namun, tepat sebelum handover ini, User meminta **2 pembaruan spesifikasi yang b
    - Pastikan pembersihan objek (*memory leak prevention*) saat balon hancur atau pemain keluar dari server.
 4. **Uji Coba Playtest di Roblox Studio**:
    - Jalankan *Playtest* dan pastikan konsol bersih dari error/warning.
+
+---
+
+## 5. Hasil Audit 28 Oktober 2026
+
+- Safe Takeoff Zone 1.200 km diterapkan pada spawn, pergerakan obstacle dan validasi damage.
+- Gondola menjadi 28×28 stud (panjang/lebar masing-masing 2×); pagar, helm, rak, stasiun, tiang dan deteksi tali ikut disesuaikan. Boarding digeser 18 stud ke belakang pad.
+- Ditambahkan ServerUtils (ModuleScript) dan PalaceManager (Script), sehingga total 15 skrip. Source dapat ditinjau di `audit/sources/`.
+- Amunisi/raycast/reload dikendalikan server; validasi kru, remote, repair hold, kit, lifecycle tali dan status terminal diperbaiki.
+- Rintangan memakai scheduler global per segmen dan profil dasar sembilan zona. Beberapa model dan efek masih prototipe.
+- Altitude menggunakan 0,25 stud/km dari groundY=12,5; batas flight root=2512,5. Istana berada di atas ceiling penerbangan (CloudIsland Y=2580, Z=0), dengan docking bertahap ke CloudHavenDock.
+- Koridor diganti menjadi delapan Part yang menjangkau tanah sampai Y=2600, tepi ±150; pusat balon dibatasi ±120.
+- Katrol bergerak halus; tersedia kontrol HUD pasang/isi tali, naik, turun dan tahan tambal. F naik, Q turun.
+- Shop sekarang menggunakan ProcessReceipt. **PRODUCT_IDS masih 0**; pembelian nyata dinonaktifkan sampai pemilik mengonfigurasi produk. Mock data hanya untuk Studio unpublished.
+- Regresi otomatis: **43/43 lulus**, 15 skrip dapat dikompilasi; sesi terakhir **0 error / 0 warning**.
+- Pengujian lokal mengonfirmasi Clutch Save, interaksi rigging, raycast/ammo server, Victory + Summit dan Ground Crash. Multiplayer nyata, cloud DataStore/receipts, mobile/controller fisik dan run natural 600 detik belum diverifikasi.
+- Audio sirine, Hall of Fame persisten, dekor biome lengkap dan model/efek unik semua hazard masih terbuka.
+- **Tindak lanjut laut selesai:** terrain rumput luar pulau diganti air Terrain 4096×4096 stud pada Y=0, dengan pesisir berpasir dan pusat lobby tetap Y=10. Sampling luar pulau kini Water; antrean dan peluncuran balon berhasil diuji. Backup di `audit/Fly High.before-ocean.rbxl`; detail di `audit/ocean-results.json`.
+- Backup: `audit/Fly High.before-audit.rbxl`. Harness QA tidak dimasukkan ke place tersimpan. Detail temuan dan bukti ada di [AUDIT_REPORT.md](./AUDIT_REPORT.md).
+
+## 6. Pembaruan Vegetasi dan Fauna Pulau
+
+- Scene: `Workspace.FlyHighLobby.IslandNature`, dengan folder Trees, Plants, Flowers, Rocks, Details, Chickens dan Butterflies.
+- Template mesh khusus: `ReplicatedStorage.FlyHigh.EnvironmentAssets` (PalmTree, BroadleafTree, Fern, Boulder, Chicken, Butterfly dan Flower).
+- Jumlah: 20 pohon, 60 pakis/tanaman, 56 bunga, 12 batu besar, 114 kerikil + 7 batu pijakan, 6 ayam, 14 kupu-kupu.
+- Pohon, pakis, batu, ayam dan kupu-kupu memakai mesh dengan siluet khusus. Bunga memakai geometri CSG berkelopak dan berdaun; bukan bola kecil sebagai kelopak.
+- Terrain mendapat bukit kecil, jalur tanah dan material LeafyGrass di area lobby; tinggi fasilitas inti tetap dipertahankan. Spawn, jalur pod dan radius landasan dikecualikan dari dekorasi besar.
+- `ServerScriptService.FlyHighServer.IslandWildlifeController`: ayam memilih tujuan aman di sekitar Home, berjalan, diam dan mematuk. Menghindari laut, pohon, batu, pemain dan area pod. Server hanya mereplikasi transform root pada 20 Hz.
+- `StarterPlayer.StarterPlayerScripts.IslandNatureAnimator`: gerak kaki/kepala ayam, penerbangan/kepakan kupu-kupu serta goyangan daun; berjalan di client pada 30 Hz dengan pembatasan jarak.
+- Total terbaru: 17 skrip. Model dekorasi tidak membawa skrip bawaan dari aset.
+- QA: enam ayam berpindah posisi; 14/14 kupu-kupu bergerak; gerak kaki teramati; 17 skrip lolos kompilasi; playtest tanpa error/warning; API peluncuran balon berhasil pada root Y=12,5.
+- Backup: `audit/Fly High.before-island-life.rbxl`. Manifest aset: `audit/nature-assets.json`; hasil QA: `audit/island-life-results.json`.
+
+## 7. Lima Dermaga dan Armada Balon
+
+- Pod_A: Penjelajah Fajar; Pod_B: Taman Mengapung; Pod_C: Koi Langit; Pod_D: Pengelana Saturnus; Pod_E: Lentera Istana.
+- Pod lama menjadi dek bundar kayu/batu dengan panel SurfaceGui tunggal, indikator tiga kru, lampu status dan miniatur armada berputar. FloorPad deteksi serta StartPrompt tetap dipakai PodManager.
+- ModuleScript baru: ReplicatedStorage.FlyHigh.Modules.BalloonThemes. Template mekanik dasar tetap HotAirBalloon; lima varian berada di Templates.BalloonVariants, kulit mesh di BalloonSkins, CSG di FleetGeometry.
+- BalloonManager.LaunchBalloon menerima argumen opsional keempat podName; PodManager mengirim nama pod sehingga pilihan armada berasal dari server.
+- Semua armada mempertahankan lantai 28×28, collider penerbangan yang sama, lima titik kerusakan, helm, dua rak dan stasiun tali. Ornamen tidak memiliki collision; seluruh bagian tersambung ke satu assembly milik server.
+- LocalScript baru BalloonFleetAnimator menggerakkan miniatur, ekor/sirip koi, bintang orbit dan rumbai. Prompt dibatasi konteks kru lokal; validasi server tetap berlaku.
+- Total terbaru 19 skrip; Source lengkap diekspor ke audit/sources. Lima peluncuran API produksi lulus; peluncuran Pod_C melalui prompt juga diuji. Konsol terakhir 0 error/0 warning.
+- Bukti: audit/fleet-results.json, audit/fleet_playtest.luau, audit/fleet-assets.json, audit/five-fleets-preview.jpg. Backup: audit/Fly High.before-five-fleets.rbxl.
+- Skrip build di audit/ adalah catatan rekonstruksi Edit, bukan script runtime. Aset hasil generasi disimpan di place; normalisasi/segmentasi/tekstur memerlukan cache aset tersebut.

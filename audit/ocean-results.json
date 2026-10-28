@@ -1,0 +1,30 @@
+{
+  "terrain": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"1\":{\"y\":10,\"x\":0,\"material\":\"Grass\",\"z\":0},\"8\":{\"y\":0,\"x\":1500,\"material\":\"Water\",\"z\":0},\"3\":{\"y\":6.218269348144531,\"x\":116,\"material\":\"Grass\",\"z\":0},\"2\":{\"y\":9.720703125,\"x\":75,\"material\":\"Grass\",\"z\":70},\"5\":{\"y\":0,\"x\":300,\"material\":\"Water\",\"z\":0},\"4\":{\"y\":0,\"x\":150,\"material\":\"Water\",\"z\":0},\"7\":{\"y\":0,\"x\":1000,\"material\":\"Water\",\"z\":0},\"6\":{\"y\":0,\"x\":800,\"material\":\"Water\",\"z\":800}}"
+      }
+    ],
+    "isError": false
+  },
+  "playtest": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"balloonSpawned\":true,\"inFlight\":true,\"health\":100,\"rootY\":12.5}"
+      }
+    ],
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "[DataManager] Unpublished Studio: isolated mock data; purchases disabled."
+      }
+    ],
+    "isError": false
+  },
+  "savedPlaceSHA256": "AD3EBFE3D571534C93E1CAA6BAD097A8741DAA7DBC6BC49992CD76878D237B54"
+}

@@ -2,6 +2,10 @@
 
 > **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
 
+**Status audit 28 Oktober 2026:** Safe Takeoff Zone 1.200 km dan gondola 28×28 stud sudah diterapkan. Regresi lokal 43/43 lulus; konfigurasi produk Robux, uji cloud/multiplayer serta beberapa aset visual/audio masih perlu diselesaikan sebelum rilis. Lihat [laporan audit lengkap](./AUDIT_REPORT.md).
+
+**Pulau hidup:** laut Terrain, pesisir berpasir, 20 pohon, 60 rumpun tanaman, 56 bunga, batu/kerikil, 6 ayam berkeliaran dan 14 kupu-kupu beranimasi sudah ditambahkan. Jalur lobby tetap terbuka.
+
 ## 📖 Ringkasan Game
 
 **Fly High** adalah game petualangan kooperatif 1–3 pemain di Roblox di mana para pemain menaiki balon udara bersama-sama di dalam satu ruang udara global (*shared sky*) yang luas. Seluruh kru harus bekerja sama membagi tugas mengemudikan balon, menembak rintangan terbang, menambal kebocoran kubah menggunakan tali pengaman dan katrol winch, hingga mencapai Istana Awan (*Cloud Palace*) di ketinggian 10.000 km.
@@ -45,3 +49,6 @@
 
 ## 🛠️ Dokumentasi Lengkap
 Untuk detail mendalam mengenai seluruh formula fisika, tabel kerusakan, arsitektur skrip, dan sistem monetisasi, silakan baca [PRD_Fly_High.md](./PRD_Fly_High.md).
+
+
+Pembaruan 28 Oktober 2026 mencakup audit gameplay, zona aman 1.200 km, gondola 28×28, laut Terrain, vegetasi/fauna bergerak serta lima dermaga dan armada balon bertema. Lihat [laporan audit dan batas pengujian](./AUDIT_REPORT.md) serta [preview lima armada](./audit/five-fleets-preview.jpg).
