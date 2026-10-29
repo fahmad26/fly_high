@@ -1,6 +1,7 @@
 -- One layout owner: scale positions and dimensions together, never touch hitboxes.
 local Layout = {}
 local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
+local riggingActions = {"AttachButton", "RepairRopeButton", "DetachButton", "ClimbButton", "RepairButton", "DescendButton"}
 
 local function box(object, x, y, w, h)
  object.AnchorPoint = Vector2.zero
@@ -146,6 +147,16 @@ function Layout.Start(gui, player)
      f.TextSize = 14
      row += 1
     end
+   end
+  end
+  if not compact then
+   -- Stack only visible rigging actions. Attach/rope repair and
+   -- patch/descend can be available together and must never share a slot.
+   local visible={}
+   for _,name in riggingActions do local f=get(name)if f and f.Visible then table.insert(visible,name)end end
+   for i,name in visible do
+    local bw,bh=math.max(150*scale,Input.TouchEnabled and 150 or 0),math.max(42*scale,Input.TouchEnabled and 44 or 0)
+    place(name,(w-bw)/2,h-120*scale-(#visible-i)*(bh+8),bw,bh)
    end
   end
   if compact then

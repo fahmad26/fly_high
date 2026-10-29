@@ -240,3 +240,11 @@ Sesuai koreksi pengguna, AutoGasButton dikeluarkan dari daftar AKSI di HUDLayout
 - QA final: **49 audio + 40 rigging + 50 multiplayer = 139 lulus**, log server/seluruh client bersih. Pemutaran audio diverifikasi IsLoaded, TimePosition serta PlaybackLoudness >0. Uji HP simulator memastikan mute/unmute berhasil dan kontrol gas/kemudi tetap di HUD utama.
 - Semua 26 skrip terkompilasi; lima snapshot source cocok dengan Studio. Driver/remote QA sementara dihapus, viewport default, place disimpan. Backup: audit/Fly High.before-warning-audio.rbxl.
 - Bukti: audit/warning-audio-results.json serta warning-audio-native/rigging/multiplayer-results.json. Run1–8 menyimpan diagnostik, termasuk fixture dan CoreGui CreatorType. Human listening review, perangkat fisik, jaringan publik, pembelian serta cloud masih belum diuji/dilanjutkan.
+
+## 16. Tata Letak Interaksi Tali — 29 Oktober 2026
+
+- Empat prompt TetherStation dibagi menjadi dua baris native (UIOffset Y=-48/+48; jarak 96 piksel). Berlaku pada template dasar, lima varian fleet, dan SetupBalloonTethers. Saat terpasang hanya Lepas/Naik; saat dilepas hanya Pasang/Perbaiki bila tersedia.
+- BalloonFleetAnimator menyembunyikan prompt yang baru direplikasi sebelum pemeriksaan visibilitas pertama, mencegah semua aksi sempat tampil bersama. Validasi server dan durasi hold tetap berlaku.
+- HUDLayout menyusun aksi tali desktop/tablet berdasarkan tombol yang terlihat, sehingga Pasang/Perbaiki serta Tambal/Turun/Lepas memiliki slot terpisah. Mode ringkas tetap memakai daftar AKSI dengan target 44 piksel; gas otomatis dan lepas kemudi tetap langsung di HUD utama.
+- Pemeriksaan simulator: iPad Pro M5 (13in), LandscapeSensor, GUI 1373×971; Pasang dan Perbaiki masing-masing 150×44 dengan gap 8 piksel. Galaxy A06 GUI 705×279; Lepas/Naik masing-masing 224×44 pada baris AKSI terpisah. Pemeriksaan visual jendela Studio mengonfirmasi prompt stasiun pada dua baris; capture viewport MCP tidak menyertakan BillboardGui native.
+- Regresi native tiga client: **40/40 lulus**, log server dan semua client bersih. Semua **26 skrip produksi** terkompilasi; driver/remote QA dihapus, simulator dihentikan dan Studio kembali Edit/default viewport. Bukti: audit/prompt-layout-results.json. Backup: audit/Fly High.before-prompt-layout.rbxl.

@@ -332,3 +332,9 @@ Bukti: audit/warning-audio-results.json, warning-audio-native-results.json, warn
 Human listening review, kenyamanan volume di HP/controller fisik, latency internet, pembelian Robux dan cloud tetap belum diuji. Tidak menerbitkan experience.
 
 Build tersimpan **837808 byte**; SHA256 **34C9563D4747D3DB7EF0F2A90185871EB7E3CC37A4336C7B6BC3F64E63A55C3A**.
+
+## Perbaikan overlap interaksi tali — 29 Oktober 2026
+
+Prompt bawaan Pasang/Lepas dan Naik/Perbaiki memakai UIOffset dua baris terpisah 96 piksel pada keenam template dan setup runtime. Prompt baru dimask sebelum pass visibilitas pertama. HUD desktop/tablet mengalokasikan baris berdasarkan aksi tali yang terlihat, sehingga Pasang/Perbaiki dan Tambal/Turun/Lepas tidak memakai koordinat sama.
+
+Simulator iPad Pro M5 mengukur Pasang/Perbaiki masing-masing 150×44 dengan gap 8 piksel; Galaxy A06 mengukur Lepas/Naik 224×44 pada baris AKSI terpisah. Native BillboardGui ditinjau lewat jendela Studio karena capture viewport MCP menghilangkannya. Game tetap LandscapeSensor; gas otomatis dan lepas kemudi tetap di HUD utama. **40/40 regresi tali tiga client lulus**, log server/client bersih; seluruh 26 skrip terkompilasi. Bukti: audit/prompt-layout-results.json. Driver/remote QA dihapus dan simulator dikembalikan default. Perangkat fisik belum diuji.

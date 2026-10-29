@@ -12,7 +12,10 @@ local function register(model)
  local entry={model=model,prompts={},motors={},connections={}}
  flights[model]=entry
  local function add(o)
-  if o:IsA("ProximityPrompt") then entry.prompts[o]=true
+  if o:IsA("ProximityPrompt") then
+   -- Mask new prompts before the first visibility pass; otherwise every
+   -- server-enabled station action briefly appears during replication.
+   o.Enabled=false entry.prompts[o]=true
   elseif o:IsA("Motor6D") and o:GetAttribute("BalloonMotion") then entry.motors[o]=true end
  end
  for _,o in ipairs(model:GetDescendants()) do add(o) end

@@ -1,0 +1,389 @@
+{
+  "date": "2026-10-29",
+  "nativeRigging": {
+    "logs": [],
+    "ok": true,
+    "players": [
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player1",
+        "userId": -1
+      },
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player2",
+        "userId": -2
+      },
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player3",
+        "userId": -3
+      }
+    ],
+    "checks": [
+      {
+        "passed": true,
+        "name": "three native clients"
+      },
+      {
+        "passed": true,
+        "name": "Player1 ready"
+      },
+      {
+        "passed": true,
+        "name": "Player2 ready"
+      },
+      {
+        "passed": true,
+        "name": "Player3 ready"
+      },
+      {
+        "passed": true,
+        "name": "native interaction attaches rope"
+      },
+      {
+        "passed": true,
+        "name": "rope does not join physics mechanisms"
+      },
+      {
+        "passed": true,
+        "name": "balloon remains server owned"
+      },
+      {
+        "passed": true,
+        "name": "full rope cannot be repaired while worn"
+      },
+      {
+        "passed": true,
+        "name": "attach does not refill worn rope"
+      },
+      {
+        "passed": true,
+        "name": "manual detach before climbing"
+      },
+      {
+        "passed": true,
+        "name": "reattach preserves slot durability"
+      },
+      {
+        "passed": true,
+        "name": "premature repair finish rejected"
+      },
+      {
+        "passed": true,
+        "name": "unworn rope repairs through native hold"
+      },
+      {
+        "passed": true,
+        "name": "attached crew follows ascent and lateral motion",
+        "detail": {
+          "rise": 25.550628662109375,
+          "maxRelativeDrift": 0.007018566131591797
+        }
+      },
+      {
+        "passed": true,
+        "name": "climb follows moving balloon"
+      },
+      {
+        "passed": true,
+        "name": "avatar ownership restored after winch"
+      },
+      {
+        "passed": true,
+        "name": "hole 1 repaired through interaction",
+        "detail": {
+          "relative": "-0.0031738507095724344, 20.563159942626953, -20.14056968688965",
+          "remaining": 3,
+          "stage": "Catwalk",
+          "prompt": {
+            "enabled": false,
+            "key": "E",
+            "triggered": true,
+            "distance": 1.443547248840332,
+            "health": 100
+          }
+        }
+      },
+      {
+        "passed": true,
+        "name": "hole 2 repaired through interaction",
+        "detail": {
+          "relative": "18.808231353759766, 20.561296463012695, -6.825134754180908",
+          "remaining": 2,
+          "stage": "Catwalk",
+          "prompt": {
+            "enabled": false,
+            "key": "E",
+            "triggered": true,
+            "distance": 1.6027950048446655,
+            "health": 100
+          }
+        }
+      },
+      {
+        "passed": true,
+        "name": "hole 3 repaired through interaction",
+        "detail": {
+          "relative": "12.1768798828125, 20.563003540039062, 15.79162883758545",
+          "remaining": 1,
+          "stage": "Catwalk",
+          "prompt": {
+            "enabled": false,
+            "key": "E",
+            "triggered": true,
+            "distance": 1.5454024076461792,
+            "health": 100
+          }
+        }
+      },
+      {
+        "passed": true,
+        "name": "hole 4 repaired through interaction",
+        "detail": {
+          "relative": "-10.719545364379883, 20.56314468383789, 16.7813777923584",
+          "remaining": 0,
+          "stage": "Catwalk",
+          "prompt": {
+            "enabled": false,
+            "key": "E",
+            "triggered": true,
+            "distance": 1.8703031539916992,
+            "health": 100
+          }
+        }
+      },
+      {
+        "passed": true,
+        "name": "all four holes repaired on moving catwalk"
+      },
+      {
+        "passed": true,
+        "name": "descent automatically releases rope"
+      },
+      {
+        "passed": true,
+        "name": "descent leaves living mobile crew in basket"
+      },
+      {
+        "passed": true,
+        "name": "rope wear persists after automatic release",
+        "detail": 13.095904397778213
+      },
+      {
+        "passed": true,
+        "name": "repair begins only at station while unworn"
+      },
+      {
+        "passed": true,
+        "name": "early finish cannot refill"
+      },
+      {
+        "passed": true,
+        "name": "walking away cancels rope repair"
+      },
+      {
+        "passed": true,
+        "name": "noncrew repair denied"
+      },
+      {
+        "passed": true,
+        "name": "trio receives two persistent ropes"
+      },
+      {
+        "passed": true,
+        "name": "two crew can wear separate ropes"
+      },
+      {
+        "passed": true,
+        "name": "third crew cannot overbook ropes"
+      },
+      {
+        "passed": true,
+        "name": "repair reserves a free worn slot"
+      },
+      {
+        "passed": true,
+        "name": "reserved rope cannot be attached by another crew"
+      },
+      {
+        "passed": true,
+        "name": "cancelled repair releases slot without refilling"
+      },
+      {
+        "passed": true,
+        "name": "two engineers reach separate catwalk landings"
+      },
+      {
+        "passed": true,
+        "name": "winch collision groups restored after landing"
+      },
+      {
+        "passed": true,
+        "name": "two engineers descend and release without overlap"
+      },
+      {
+        "passed": true,
+        "name": "winch cancellation restores anchor state"
+      },
+      {
+        "passed": true,
+        "name": "winch cancellation restores collision and safe position"
+      },
+      {
+        "passed": true,
+        "name": "balloon cleanup removes ropes and pools"
+      }
+    ],
+    "clientLogCount": 0,
+    "duration": 60.446924999996554,
+    "motion": [
+      {
+        "relative": "2, 5.226563453674316, 10.999999046325684",
+        "time": 0.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563453674316, 10.999999046325684",
+        "time": 1,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563453674316, 10.999999046325684",
+        "time": 1.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563930511475, 10.999999046325684",
+        "time": 2,
+        "owner": "Player1"
+      },
+      {
+        "relative": "1.9999998807907104, 5.219544887542725, 10.999999046325684",
+        "time": 2.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "1.9999998807907104, 5.226563930511475, 10.999999046325684",
+        "time": 3,
+        "owner": "Player1"
+      },
+      {
+        "relative": "1.9999998807907104, 5.226563930511475, 10.999999046325684",
+        "time": 3.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "1.9999998807907104, 5.226563930511475, 10.999999046325684",
+        "time": 4,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563930511475, 10.999999046325684",
+        "time": 4.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563930511475, 10.999999046325684",
+        "time": 5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "1.9999998807907104, 5.226563930511475, 10.999999046325684",
+        "time": 5.5,
+        "owner": "Player1"
+      },
+      {
+        "relative": "2, 5.226563930511475, 10.999999046325684",
+        "time": 6,
+        "owner": "Player1"
+      }
+    ]
+  },
+  "compiled": 26,
+  "compileErrors": [],
+  "tabletWorn": {
+    "prompts": {
+      "1": {
+        "name": "RepairRopePrompt",
+        "y": 48
+      },
+      "2": {
+        "name": "TetherPrompt",
+        "y": -48
+      }
+    },
+    "overlaps": [],
+    "buttons": {
+      "1": {
+        "y": 799,
+        "h": 44,
+        "name": "AttachButton",
+        "parent": "FlyHighHUD",
+        "w": 150,
+        "x": 612
+      },
+      "2": {
+        "y": 851,
+        "h": 44,
+        "name": "RepairRopeButton",
+        "parent": "FlyHighHUD",
+        "w": 150,
+        "x": 612
+      }
+    },
+    "compact": false,
+    "visible": {
+      "1": "AttachButton",
+      "2": "RepairRopeButton"
+    },
+    "gui": "1373, 971"
+  },
+  "phoneAttached": {
+    "prompts": {
+      "1": {
+        "name": "ClimbPrompt",
+        "y": 48
+      },
+      "2": {
+        "name": "DetachTetherPrompt",
+        "y": -48
+      }
+    },
+    "overlaps": [],
+    "buttons": {
+      "1": {
+        "y": 66,
+        "h": 44,
+        "name": "DetachButton",
+        "parent": "FlightActionTray",
+        "w": 224,
+        "x": 241
+      },
+      "2": {
+        "y": 16,
+        "h": 44,
+        "name": "ClimbButton",
+        "parent": "FlightActionTray",
+        "w": 224,
+        "x": 241
+      }
+    },
+    "compact": true,
+    "visible": {
+      "1": "DetachButton",
+      "2": "ClimbButton"
+    },
+    "gui": "705, 279"
+  },
+  "visualReview": "Studio window confirms separate native BillboardGui prompt rows; MCP viewport capture omits native BillboardGuis.",
+  "nativePromptGap": 96,
+  "templatePromptCount": 24,
+  "build": {
+    "bytes": 838196,
+    "sha256": "e9a05b48fc4d821855e5451d50044e75619ed231d87ecda0ef5bab59fc175c92"
+  }
+}

@@ -159,6 +159,9 @@ function Manager.SetupBalloonTethers(b,count)
  local detach=prompt("DetachTetherPrompt","Lepas Tali Pengaman",Enum.KeyCode.T,0)detach.GamepadKeyCode=Enum.KeyCode.ButtonL2
  local ropeRepair=prompt("RepairRopePrompt","Perbaiki Tali yang Dilepas",Enum.KeyCode.C,Config.ROPE_MAX_DURABILITY/Config.ROPE_REPAIR_RATE_PER_SEC)
  ropeRepair.GamepadKeyCode=Enum.KeyCode.ButtonR3
+ -- Two simultaneous station actions need separate native prompt rows.
+ for _,p in {station.TetherPrompt,detach}do p.UIOffset=Vector2.new(0,-48)end
+ for _,p in {station.ClimbPrompt,ropeRepair}do p.UIOffset=Vector2.new(0,48)end
  walkway.DescendPrompt.ActionText="Turun ke Gondola & Lepas Tali"
  walkway.DescendPrompt.MaxActivationDistance=28 walkway.DescendPrompt.RequiresLineOfSight=false
  local folder=Instance.new("Folder")folder.Name="RopeSlots"folder.Parent=station
