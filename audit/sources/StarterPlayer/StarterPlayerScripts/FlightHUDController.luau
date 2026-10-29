@@ -438,16 +438,5 @@ task.spawn(function()
   task.delay(8,function() if version==photoVersion then screenGui.Enabled=true end end)
  end)
 end)
-local function fit()
- local viewport=workspace.CurrentCamera.ViewportSize
- local scale=math.clamp(math.min(viewport.X/1100,viewport.Y/720),0.55,1)
- for _,child in ipairs(screenGui:GetChildren()) do
-  if child:IsA("GuiObject") then
-   local ui=child:FindFirstChild("ResponsiveScale") or Instance.new("UIScale",child)
-   ui.Name="ResponsiveScale" ui.Scale=scale
-  end
- end
-end
-workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fit)
-screenGui.ChildAdded:Connect(function() task.defer(fit) end)
-fit()
+-- Shared layout keeps touch targets usable and accounts for the safe GUI area.
+require(ReplicatedStorage.FlyHigh.Modules:WaitForChild("HUDLayout")).Start(screenGui, localPlayer)

@@ -1,0 +1,451 @@
+{
+  "players": [
+    {
+      "logs": [
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module TopBar.\nRequested module experienced an error while loading",
+          "kind": "MessageWarning"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module PlayerListManager.\nRequested module experienced an error while loading",
+          "kind": "MessageWarning"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Script Context.StarterScript:507: Invalid value for enum CreatorType",
+          "kind": "MessageError"
+        }
+      ],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three connected players"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "three crew on dock"
+    },
+    {
+      "passed": true,
+      "name": "first arrival is master"
+    },
+    {
+      "passed": true,
+      "name": "master transfers when leader steps away"
+    },
+    {
+      "passed": true,
+      "name": "returning player keeps current master"
+    },
+    {
+      "passed": true,
+      "name": "native prompt launches trio"
+    },
+    {
+      "passed": true,
+      "name": "trio rope and repair configuration"
+    },
+    {
+      "passed": true,
+      "name": "pilot seated"
+    },
+    {
+      "passed": true,
+      "name": "gas persists after pilot release"
+    },
+    {
+      "passed": true,
+      "name": "balloon ascends without seated pilot"
+    },
+    {
+      "passed": true,
+      "name": "second client picks weapon",
+      "detail": {
+        "health": 100,
+        "position": "-9.000871658325195, 26.394777297973633, -59.99749755859375",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 2.998775005340576,
+          "health": 100
+        },
+        "inFlight": true,
+        "rack": "-12.000848770141602, 26.323490142822266, -59.99753952026367"
+      }
+    },
+    {
+      "passed": true,
+      "name": "third client attaches tether"
+    },
+    {
+      "passed": true,
+      "name": "Player1 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module TopBar.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module PlayerListManager.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Script Context.StarterScript:507: Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          }
+        ],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "own shot creates hole and spends ammo"
+    },
+    {
+      "passed": true,
+      "name": "engineer reaches catwalk"
+    },
+    {
+      "passed": true,
+      "name": "three-second repair accepted"
+    },
+    {
+      "passed": true,
+      "name": "weapon and tether release"
+    },
+    {
+      "passed": true,
+      "name": "clutch restores holes and shield"
+    },
+    {
+      "passed": true,
+      "name": "Player1 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "Player2 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "Player3 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "ground timeout ends flight"
+    },
+    {
+      "passed": true,
+      "name": "Player1 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "Player2 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "Player3 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "occupied A rejects third player summon"
+    },
+    {
+      "passed": true,
+      "name": "A balloon blocks E dock"
+    },
+    {
+      "passed": true,
+      "name": "A dock clears when balloon leaves"
+    },
+    {
+      "passed": true,
+      "name": "second team launches after clearance"
+    },
+    {
+      "passed": true,
+      "name": "both real teams receive one collision hole",
+      "detail": {
+        "a": 1,
+        "b": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "collision stays separated",
+      "detail": 59.9996337890625
+    },
+    {
+      "passed": true,
+      "name": "server retains ownership"
+    },
+    {
+      "passed": true,
+      "name": "Player1 foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "Player2 foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "third client foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "foreign pickup denied on server"
+    },
+    {
+      "passed": true,
+      "name": "foreign tether denied"
+    },
+    {
+      "passed": true,
+      "name": "own team weapon pickup allowed",
+      "detail": {
+        "distance": 3.065908432006836,
+        "health": 100,
+        "inFlight": true
+      }
+    },
+    {
+      "passed": true,
+      "name": "enemy balloon ignores bullets"
+    },
+    {
+      "passed": true,
+      "name": "solo tether attached before disconnect"
+    },
+    {
+      "passed": true,
+      "name": "native client can disconnect"
+    },
+    {
+      "passed": true,
+      "name": "player leaves server"
+    },
+    {
+      "passed": true,
+      "name": "departed flight cleaned"
+    },
+    {
+      "passed": true,
+      "name": "departed equipment cleaned"
+    },
+    {
+      "passed": true,
+      "name": "remaining team continues"
+    }
+  ],
+  "clientLogCount": 15,
+  "duration": 53.74640459998045,
+  "serverLogs": [],
+  "purchasesTested": false,
+  "metrics": {
+    "minimumCollisionDistance": 59.9996337890625,
+    "firstPickup": {
+      "enabled": false,
+      "key": "E",
+      "triggered": true,
+      "distance": 2.998775005340576,
+      "health": 100
+    },
+    "startPrompt": {
+      "enabled": true,
+      "distance": 3.330615282058716
+    }
+  },
+  "ok": false,
+  "mode": "3 native Studio clients",
+  "error": "Console errors or warnings captured",
+  "cloudTested": false
+}

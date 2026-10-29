@@ -60,7 +60,7 @@ remote.OnClientEvent:Connect(function(token,action,data)
    local states={}for _,p in ipairs(Players:GetPlayers())do
     states[p.Name]={tool=p.Character and p.Character:FindFirstChildOfClass("Tool")~=nil,rope=p.Character and p.Character:FindFirstChild("SafetyRope",true)~=nil}
    end
-   return {own=b and b.Name,autoGas=b and b:GetAttribute("AutoGas"),autoButton=gui and gui.AutoGasButton.Visible,
+   return {own=b and b.Name,autoGas=b and b:GetAttribute("AutoGas"),autoButton=gui and gui:FindFirstChild("AutoGasButton",true).Visible,
     enemyHelm=foreign and foreign.HelmSeat.HelmPrompt.Enabled,enemyRack=foreign and foreign.WeaponRack2.PickupPrompt.Enabled,
     players=states,logs=logs}
   elseif action=="Leave"then

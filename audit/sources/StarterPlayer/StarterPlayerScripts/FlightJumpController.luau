@@ -36,7 +36,11 @@ local function request()
 end
 Input.JumpRequest:Connect(request)
 button.Activated:Connect(function()
- if p:GetAttribute("FlightJumpAllowed")==true and hum then request()hum.Jump=true end
+ if p:GetAttribute("FlightJumpAllowed")==true and hum and hum.Health>0 and hum.FloorMaterial~=Enum.Material.Air and hum:GetStateEnabled(Enum.HumanoidStateType.Jumping) then
+  request()
+  -- TouchJump resets Humanoid.Jump each frame; enter the normal state immediately.
+  hum.Jump=true hum:ChangeState(Enum.HumanoidStateType.Jumping)
+ end
 end)
 challengeEvent.OnClientEvent:Connect(function(data)
  if data.kind=="Ended"then if active and active.id==data.id then active=nil end
@@ -45,15 +49,6 @@ end)
 local elapsed=0
 Run.Heartbeat:Connect(function(dt)
  elapsed+=dt if elapsed<.05 then return end elapsed=0
- local camera=workspace.CurrentCamera
- if camera then
-  local small=camera.ViewportSize.X<600
-  for f,scale in pairs({[panel]=small and .85 or 1,[storm]=math.clamp((camera.ViewportSize.X-24)/490,.55,1)})do
-   local s=f:FindFirstChild("ResponsiveScale")or Instance.new("UIScale")s.Name="ResponsiveScale"
-   s.Scale=scale s.Parent=f
-  end
-  hint.TextSize=small and 14 or 12 button.TextSize=small and 14 or 12 detail.TextSize=small and 16 or 13
- end
  local inFlight=p:GetAttribute("InFlight")==true and p:GetAttribute("FlightGhost")~=true
  local allowed=not inFlight or p:GetAttribute("FlightJumpAllowed")==true
  local enable=allowed and originalJump

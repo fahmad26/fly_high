@@ -54,3 +54,5 @@ Untuk detail mendalam mengenai seluruh formula fisika, tabel kerusakan, arsitekt
 Pembaruan 28 Oktober 2026 mencakup audit gameplay, zona aman 1.200 km, gondola 28×28, laut Terrain, vegetasi/fauna bergerak serta lima dermaga dan armada balon bertema. Lihat [laporan audit dan batas pengujian](./AUDIT_REPORT.md) serta [preview lima armada](./audit/five-fleets-preview.jpg).
 
 Pembaruan berikutnya menambahkan Dinding Badai pada lima milestone dan loncatan kru untuk menurunkan balon. Pilot/engineer dibatasi sesuai peran; efek turun dibagi agar solo, duo dan trio seimbang. Rincian balancing dan hasil QA ada di PRD serta AUDIT_REPORT.
+
+QA perangkat 29 Oktober 2026 memperbaiki tata letak HP dan tombol lompat sentuh. HUD ringkas menyediakan panel AKSI, menu toko dapat digulir, dan tombol sentuh minimal 44 piksel. Regresi tiga client 101/101 lulus; hasil serta batas pengujian ada di [laporan audit](./AUDIT_REPORT.md), [hasil QA perangkat](./audit/device-qa-results.json), dan [preview HP](./audit/device-phone-preview.jpg).

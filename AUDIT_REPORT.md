@@ -229,3 +229,36 @@ Iterasi antara disimpan: run1 membaca visibility banner sebelum heartbeat UI ber
 Batasan: posisi awal diatur server; tiga client adalah simulasi Studio pada satu komputer. Uji avoidance memakai gas off, empat putaran lompat; belum merupakan human playtest atau tuning kesulitan akhir. Perangkat sentuh/gamepad fisik, latency/packet loss, pembelian Robux dan persistensi cloud tetap belum diuji. Tidak memublikasikan experience.
 
 Artefak: audit/storm-jump-results.json, audit/storm-jump-regression.json, audit/storm-jump-run1.json sampai run3.json, audit/storm_jump_server_playtest.luau, audit/storm_jump_client_playtest.luau, audit/build_storm_curtain.luau dan audit/storm-jump-preview.jpg. Backup: audit/Fly High.before-storm-jumps.rbxl. Harness hanya digunakan untuk QA dan dihapus dari DataModel akhir.
+
+## QA Perangkat dan Kenyamanan HUD — 29 Oktober 2026
+
+Dua masalah konkret ditemukan saat interaksi simulator: tata letak layar kecil keluar batas dan tombol LOMPAT HUD menerima klik tanpa menghasilkan lompatan. Keduanya diperbaiki di place dan snapshot source.
+
+### Perbaikan
+
+- Skala lama mengecilkan ukuran tanpa memperbaiki offset. Pada GUI Galaxy A06 705×279, ShopModal berada Y=-40,5; JumpPanel pada Y=265 dengan tinggi 72 melewati layar. HUDLayout kini menjadi satu pemilik layout, memetakan posisi/dimensi secara konsisten dan memakai ukuran area aman ScreenGui.
+- Mode ringkas menempatkan informasi utama di atas dan LOMPAT/AKSI di bawah tengah. Kontrol peran tambahan berada dalam tray yang dapat digulir; GAS/TEMBAK tetap tampil sesuai peran. Mode desktop/tablet mempertahankan penataan sebelumnya dengan offset yang ikut diskalakan.
+- Tombol sentuh minimal 44 piksel, termasuk tombol toko/ping tablet. ShopModal menjadi ScrollingFrame sehingga seluruh produk tetap dapat dijangkau; close memakai huruf X yang terbaca dan hitbox 44×44.
+- FlightJumpController tidak lagi menimpa skala HUD sendiri. Pada mode sentuh, setelan Humanoid.Jump sesaat ditimpa controller bawaan; tombol kini memasuki state Jumping biasa setelah pemeriksaan local role/health/grounded. Tidak ada tambahan velocity buatan atau efek drop yang dipercaya dari client. Pembatasan server tidak diubah.
+
+### Verifikasi
+
+| Profil simulator | Area GUI yang diukur | Panel keluar batas | Tombol root <44 px |
+| --- | --- | --- | --- |
+| Samsung Galaxy A06 | 705×279 | 0 | 0 |
+| iPhone 17 Pro | 748×323 | 0 | 0 |
+| iPad Pro M5 13in | 1373×971 | 0 | 0 |
+
+StarterGui.ScreenOrientation tetap LandscapeSensor, sehingga portrait tidak termasuk orientasi yang didukung. FlyHighHUD menggunakan CoreUISafeInsets; [referensi Roblox](https://create.roblox.com/docs/reference/engine/enums/ScreenInsets) menyatakan mode ini mencakup area aman perangkat serta UI inti.
+
+Klik nyata melalui input simulator memverifikasi tombol LOMPAT (JumpCount server bertambah dari 0 menjadi 1), AKSI buka/tutup, gas otomatis tetap aktif setelah lepas kemudi, serta menu toko yang dapat digulir (CanvasPosition.Y=127). Tombol beli tetap tinggi 44 dan close 44×44; tidak menjalankan transaksi.
+
+Regresi produksi dijalankan ulang memakai tiga client native: **50/50 multiplayer** dan **51/51 badai/lompat**, total **101/101**, dengan **0 error/0 warning** pada server dan semua client di sesi final. Jatah solo/duo/trio tetap 18 stud per putaran bersama; avoidance menghasilkan penurunan sekitar 83 stud dan 0 lubang. Semua **25 skrip produksi** dapat dikompilasi.
+
+Run antara pertama memerlukan pembaruan lookup harness AutoGasButton menjadi rekursif agar mendukung reparent ke tray. Dua run selanjutnya lulus seluruh 50 skenario gameplay, tetapi masing-masing menangkap CoreGui CreatorType (15 log client) dan warning unduh asset HTTP 502 (1 log). Keduanya disimpan tanpa menyembunyikan log. Pengulangan akhir bersih; tidak ada perubahan CoreGui atau publikasi untuk mengatasi kondisi lingkungan ini.
+
+Artefak final: audit/device-qa-results.json, audit/device-multiplayer-results.json, audit/device-storm-results.json, audit/device-phone-preview.jpg. Diagnostik: audit/device-multiplayer-coregui-run.json dan audit/device-multiplayer-cdn-run.json. Driver reproducible: audit/device_review_server.luau dan audit/device_layout_probe.luau; semuanya berada di luar place produksi. Backup: audit/Fly High.before-device-qa.rbxl.
+
+Batas pengujian: simulator pada satu komputer, klik mouse dalam mode sentuh, posisi flight disiapkan server. Belum mengukur kenyamanan pemain manusia, touchscreen/gamepad fisik, latency/packet loss internet atau sesi natural panjang. Pembelian Robux, penyimpanan cloud dan publikasi tetap ditunda sesuai permintaan pengguna. Studio berakhir Edit dengan viewport default; seluruh driver/remote QA sementara telah dihapus.
+
+Build tersimpan: Fly High.rbxl **831.155 byte**, SHA256 **08BD6AAB900F416323099504292405523FE6A8202EC45FF7B68D687CFE8E7AA2**.

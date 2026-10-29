@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-29",
+  "placeHash": "08BD6AAB900F416323099504292405523FE6A8202EC45FF7B68D687CFE8E7AA2",
+  "placeBytes": 831155,
+  "productionScripts": 25,
+  "orientation": "LandscapeSensor",
+  "screenInsets": "CoreUISafeInsets",
+  "deviceModes": [
+    {
+      "name": "Samsung Galaxy A06",
+      "visible": {
+        "1": {
+          "y": 4,
+          "x": 202,
+          "name": "AltimeterFrame",
+          "height": 44,
+          "width": 379
+        },
+        "2": {
+          "y": 56,
+          "x": 8,
+          "name": "StatusFrame",
+          "height": 92,
+          "width": 186
+        },
+        "3": {
+          "y": 4,
+          "x": 8,
+          "name": "EmergencyKitButton",
+          "height": 44,
+          "width": 186
+        },
+        "4": {
+          "y": 223,
+          "x": 247,
+          "name": "JumpPanel",
+          "height": 48,
+          "width": 100
+        },
+        "5": {
+          "y": 223,
+          "x": 359,
+          "name": "FlightActionsButton",
+          "height": 48,
+          "width": 108
+        },
+        "6": {
+          "y": 4,
+          "x": 589,
+          "name": "ShopToggleButton",
+          "height": 44,
+          "width": 108
+        }
+      },
+      "compact": true,
+      "outside": [],
+      "smallButtons": [],
+      "size": {
+        "1": 705,
+        "2": 279
+      }
+    },
+    {
+      "name": "iPhone 17 Pro",
+      "visible": {
+        "1": {
+          "y": 4,
+          "x": 202,
+          "name": "AltimeterFrame",
+          "height": 44,
+          "width": 422
+        },
+        "2": {
+          "y": 56,
+          "x": 8,
+          "name": "StatusFrame",
+          "height": 92,
+          "width": 186
+        },
+        "3": {
+          "y": 4,
+          "x": 8,
+          "name": "EmergencyKitButton",
+          "height": 44,
+          "width": 186
+        },
+        "4": {
+          "y": 4,
+          "x": 632,
+          "name": "ShopToggleButton",
+          "height": 44,
+          "width": 108
+        }
+      },
+      "compact": true,
+      "outside": [],
+      "smallButtons": [],
+      "size": {
+        "1": 748,
+        "2": 323
+      }
+    },
+    {
+      "name": "iPad Pro M5 (13in)",
+      "visible": {
+        "1": {
+          "y": 15,
+          "x": 476.5,
+          "name": "AltimeterFrame",
+          "height": 48,
+          "width": 420
+        },
+        "2": {
+          "y": 85,
+          "x": 20,
+          "name": "StatusFrame",
+          "height": 110,
+          "width": 260
+        },
+        "3": {
+          "y": 210,
+          "x": 20,
+          "name": "EmergencyKitButton",
+          "height": 44,
+          "width": 260
+        },
+        "4": {
+          "y": 816,
+          "x": 20,
+          "name": "PingButton",
+          "height": 44,
+          "width": 150
+        },
+        "5": {
+          "y": 15,
+          "x": 1193,
+          "name": "ShopToggleButton",
+          "height": 44,
+          "width": 160
+        }
+      },
+      "compact": false,
+      "outside": [],
+      "smallButtons": [],
+      "size": {
+        "1": 1373,
+        "2": 971
+      }
+    }
+  ],
+  "interactions": {
+    "hudJumpClickAccepted": true,
+    "actionTrayOpenClose": true,
+    "autoGasPersistsAfterRelease": true,
+    "shopScrollPositionY": 127,
+    "shopBuyHeight": 44,
+    "shopCloseSize": [
+      44,
+      44
+    ]
+  },
+  "regression": {
+    "multiplayer": {
+      "passed": 50,
+      "ok": true,
+      "serverLogs": 0,
+      "clientLogs": 0
+    },
+    "storm": {
+      "passed": 51,
+      "ok": true,
+      "serverLogs": 0,
+      "clientLogs": 0
+    }
+  },
+  "limits": {
+    "simulatorOnly": true,
+    "humanPlaytest": false,
+    "physicalTouchOrController": false,
+    "internetLatencyTested": false,
+    "cloudTested": false,
+    "purchasesTested": false
+  },
+  "intermediateRuns": [
+    "device-multiplayer-coregui-run.json",
+    "device-multiplayer-cdn-run.json"
+  ],
+  "studioEndState": "Edit; default viewport restored; temporary QA removed"
+}

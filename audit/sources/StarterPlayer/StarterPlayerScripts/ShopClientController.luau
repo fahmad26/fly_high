@@ -32,10 +32,14 @@ sBtnCorner.CornerRadius = UDim.new(0, 10)
 sBtnCorner.Parent = shopToggleBtn
 
 -- Shop Modal Frame
-local shopModal = Instance.new("Frame")
+local shopModal = Instance.new("ScrollingFrame")
+shopModal.CanvasSize = UDim2.fromOffset(0, 390)
+shopModal.ScrollBarThickness = 5
+shopModal.ScrollingDirection = Enum.ScrollingDirection.Y
+shopModal.ClipsDescendants = true
 shopModal.Name = "ShopModal"
-shopModal.Size = UDim2.new(0, 440, 0, 360)
-shopModal.Position = UDim2.new(0.5, -220, 0.5, -180)
+shopModal.Size = UDim2.new(0, 440, 0, 390)
+shopModal.Position = UDim2.new(0.5, -220, 0.5, -195)
 shopModal.BackgroundColor3 = Color3.fromRGB(25, 30, 40)
 shopModal.BorderSizePixel = 0
 shopModal.Visible = false
@@ -47,7 +51,8 @@ modalCorner.Parent = shopModal
 
 local modalTitle = Instance.new("TextLabel")
 modalTitle.Name = "ModalTitle"
-modalTitle.Size = UDim2.new(1, 0, 0, 44)
+modalTitle.Size = UDim2.new(1, -64, 0, 44)
+modalTitle.TextWrapped = true
 modalTitle.Position = UDim2.new(0, 0, 0, 8)
 modalTitle.BackgroundTransparency = 1
 modalTitle.Text = "🎈 TOKO PERLENGKAPAN FLY HIGH"
@@ -58,10 +63,10 @@ modalTitle.Parent = shopModal
 
 local closeBtn = Instance.new("TextButton")
 closeBtn.Name = "CloseButton"
-closeBtn.Size = UDim2.new(0, 32, 0, 32)
-closeBtn.Position = UDim2.new(1, -40, 0, 10)
+closeBtn.Size = UDim2.new(0, 44, 0, 44)
+closeBtn.Position = UDim2.new(1, -52, 0, 4)
 closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-closeBtn.Text = "✕"
+closeBtn.Text = "X"
 closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 closeBtn.Font = Enum.Font.FredokaOne
 closeBtn.TextSize = 16
@@ -75,7 +80,7 @@ closeCorner.Parent = closeBtn
 -- Card 1: Emergency Kit
 local card1 = Instance.new("Frame")
 card1.Name = "Card1"
-card1.Size = UDim2.new(1, -30, 0, 125)
+card1.Size = UDim2.new(1, -30, 0, 135)
 card1.Position = UDim2.new(0, 15, 0, 60)
 card1.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
 card1.BorderSizePixel = 0
@@ -110,7 +115,7 @@ c1Desc.Parent = card1
 
 local buyKitBtn = Instance.new("TextButton")
 buyKitBtn.Name="BuyEmergencyKitButton"
-buyKitBtn.Size = UDim2.new(1, -20, 0, 34)
+buyKitBtn.Size = UDim2.new(1, -20, 0, 44)
 buyKitBtn.Position = UDim2.new(0, 10, 0, 80)
 buyKitBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 120)
 buyKitBtn.Text = "Dapatkan Emergency Kit (Klik Beli)"
@@ -127,8 +132,8 @@ bKitCorner.Parent = buyKitBtn
 -- Card 2: AK-47 Upgrade
 local card2 = Instance.new("Frame")
 card2.Name = "Card2"
-card2.Size = UDim2.new(1, -30, 0, 125)
-card2.Position = UDim2.new(0, 15, 0, 195)
+card2.Size = UDim2.new(1, -30, 0, 135)
+card2.Position = UDim2.new(0, 15, 0, 205)
 card2.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
 card2.BorderSizePixel = 0
 card2.Parent = shopModal
@@ -162,7 +167,7 @@ c2Desc.Parent = card2
 
 local buyAKBtn = Instance.new("TextButton")
 buyAKBtn.Name="BuyAK47Button"
-buyAKBtn.Size = UDim2.new(1, -20, 0, 34)
+buyAKBtn.Size = UDim2.new(1, -20, 0, 44)
 buyAKBtn.Position = UDim2.new(0, 10, 0, 80)
 buyAKBtn.BackgroundColor3 = Color3.fromRGB(210, 120, 20)
 buyAKBtn.Text = "Beli AK-47 Upgrade (Khusus Master)"
@@ -178,7 +183,7 @@ bAKCorner.Parent = buyAKBtn
 
 -- Prices are retrieved on the client so regional prices match Roblox checkout.
 local feedback=Instance.new("TextLabel",shopModal)
-feedback.Name="ShopFeedback" feedback.Size=UDim2.new(1,-20,0,30) feedback.Position=UDim2.new(0,10,1,-35)
+feedback.Name="ShopFeedback" feedback.Size=UDim2.new(1,-20,0,30) feedback.Position=UDim2.fromOffset(10,348)
 feedback.BackgroundTransparency=1 feedback.TextColor3=Color3.fromRGB(255,230,140) feedback.TextSize=12 feedback.TextWrapped=true feedback.Text=""
 local prices={}local busy={}local loading=false local refreshedAt=-math.huge
 local function price(item)

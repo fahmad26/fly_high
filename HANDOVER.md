@@ -201,3 +201,15 @@ Fitur yang sebelumnya berupa backlog kini diimplementasikan. Total skrip produks
 - Native QA menggunakan tiga client: solo/duo/trio, gunner/tethered jump, blokir pilot/katrol/kubah, anti-spam, global wave, damage dan avoidance serta milestone repeat prevention. Bukti: audit/storm-jump-results.json.
 - Backup: audit/Fly High.before-storm-jumps.rbxl. Build visual: audit/build_storm_curtain.luau. Harness baru: audit/storm_jump_server_playtest.luau dan storm_jump_client_playtest.luau; tidak dipasang ke place produksi.
 - Pembelian/cloud tetap ditunda. Perangkat sentuh/gamepad fisik, jaringan internet dan human playtest belum dijalankan.
+
+## 12. QA Perangkat dan Perbaikan HUD — 29 Oktober 2026
+
+- Jumlah produksi menjadi **25 skrip**, termasuk ModuleScript baru ReplicatedStorage.FlyHigh.Modules.HUDLayout. FlightHUDController memulai satu pengelola layout; FlightJumpController tidak lagi menimpa UIScale secara terpisah.
+- Ditemukan skala lama mengecilkan objek tanpa mengoreksi offset posisinya: pada GUI 705×279, menu toko berada Y=-40,5 dan JumpPanel melewati bagian bawah layar. Layout baru memakai area aman GUI, posisi/dimensi yang konsisten, mode ringkas dan panel AKSI yang dapat digulir.
+- ShopClientController memakai ScrollingFrame dengan tombol beli/tutup 44 piksel; harga dan alur receipt tidak diubah.
+- Bug tombol lompat mode sentuh diperbaiki: Humanoid.Jump yang disetel saat Activated ditimpa TouchJump bawaan sebelum simulasi fisik. Tombol kini memasuki state Jumping biasa segera setelah validasi local grounded/role/health. Server tetap memvalidasi takeoff nyata; satu klik simulator menghasilkan JumpCount=1.
+- Device Simulator: Galaxy A06, iPhone 17 Pro dan iPad Pro M5 (13in), landscape. Tidak ada panel terlihat di luar layar dan tidak ada tombol root sentuh di bawah 44 piksel pada hasil akhir.
+- Regresi tiga client: **50/50 multiplayer + 51/51 badai/lompat lulus**; log server dan seluruh client pada sesi final bersih. Semua 25 skrip dapat dikompilasi. Driver QA dan remote sementara sudah dihapus; Studio kembali Edit/default viewport.
+- Artefak: audit/device-qa-results.json, device-multiplayer-results.json, device-storm-results.json, device-phone-preview.jpg, device_review_server.luau, device_layout_probe.luau. Backup: audit/Fly High.before-device-qa.rbxl.
+- Dua run antara meluluskan 50 skenario gameplay tetapi mencatat CoreGui CreatorType atau satu warning asset HTTP 502; raw log disimpan. Lookup harness untuk tombol AutoGas kini rekursif karena tombol dipindah ke panel AKSI pada mode ringkas.
+- Ini tetap pengujian otomatis dan interaksi simulator; belum human playtest, HP/controller fisik atau latency internet. Cloud/pembelian/publikasi tetap ditunda.
