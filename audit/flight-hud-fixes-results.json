@@ -1,0 +1,516 @@
+{
+  "date": "2026-10-30",
+  "regression": {
+    "players": [
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player1",
+        "userId": -1
+      },
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player2",
+        "userId": -2
+      },
+      {
+        "logs": [],
+        "hud": true,
+        "name": "Player3",
+        "userId": -3
+      }
+    ],
+    "checks": [
+      {
+        "passed": true,
+        "name": "three connected players"
+      },
+      {
+        "passed": true,
+        "name": "Player1 ready"
+      },
+      {
+        "passed": true,
+        "name": "Player2 ready"
+      },
+      {
+        "passed": true,
+        "name": "Player3 ready"
+      },
+      {
+        "passed": true,
+        "name": "three crew on dock"
+      },
+      {
+        "passed": true,
+        "name": "first arrival is master"
+      },
+      {
+        "passed": true,
+        "name": "master transfers when leader steps away"
+      },
+      {
+        "passed": true,
+        "name": "returning player keeps current master"
+      },
+      {
+        "passed": true,
+        "name": "native prompt launches trio"
+      },
+      {
+        "passed": true,
+        "name": "trio rope and repair configuration"
+      },
+      {
+        "passed": true,
+        "name": "pilot seated"
+      },
+      {
+        "passed": true,
+        "name": "PING matches rounded warning button",
+        "detail": {
+          "players": {
+            "Player1": {
+              "tool": false,
+              "rope": false
+            },
+            "Player3": {
+              "tool": false,
+              "rope": false
+            },
+            "Player2": {
+              "tool": false,
+              "rope": false
+            }
+          },
+          "autoGas": false,
+          "autoButton": true,
+          "soundRadius": 10,
+          "pingRadius": 10,
+          "logs": [],
+          "speedText": "DIAM 0.0 km/dtk",
+          "own": "Balloon_Player2",
+          "autoParent": "FlyHighHUD",
+          "speedFits": true
+        }
+      },
+      {
+        "passed": true,
+        "name": "pilot auto gas stays directly on HUD"
+      },
+      {
+        "passed": true,
+        "name": "native vehicle speedometer disabled"
+      },
+      {
+        "passed": true,
+        "name": "welcome sign text faces new arrivals"
+      },
+      {
+        "passed": true,
+        "name": "passenger cannot switch auto gas off"
+      },
+      {
+        "passed": true,
+        "name": "other passenger cannot switch auto gas off"
+      },
+      {
+        "passed": true,
+        "name": "gas persists after pilot release"
+      },
+      {
+        "passed": true,
+        "name": "balloon ascends without seated pilot"
+      },
+      {
+        "passed": true,
+        "name": "former pilot cannot remotely switch auto gas off"
+      },
+      {
+        "passed": true,
+        "name": "former pilot keyboard toggle is ignored"
+      },
+      {
+        "passed": true,
+        "name": "auto gas hidden from former pilot and passenger"
+      },
+      {
+        "passed": true,
+        "name": "ascent telemetry is positive",
+        "detail": 16.79141835207905
+      },
+      {
+        "passed": true,
+        "name": "ascent indicator shows live value",
+        "detail": "NAIK +16.8 km/dtk"
+      },
+      {
+        "passed": true,
+        "name": "new pilot takes helm"
+      },
+      {
+        "passed": true,
+        "name": "seated replacement pilot can stop auto gas"
+      },
+      {
+        "passed": true,
+        "name": "descent telemetry is negative",
+        "detail": -6.731257365536491
+      },
+      {
+        "passed": true,
+        "name": "descent indicator shows live value",
+        "detail": "TURUN -6.6 km/dtk"
+      },
+      {
+        "passed": true,
+        "name": "replacement pilot can restart auto gas"
+      },
+      {
+        "passed": true,
+        "name": "second client picks weapon",
+        "detail": {
+          "health": 100,
+          "position": "-8.958939552307129, 38.61933517456055, -59.99068832397461",
+          "prompt": {
+            "enabled": false,
+            "key": "E",
+            "triggered": true,
+            "distance": 3.037386894226074,
+            "health": 100
+          },
+          "inFlight": true,
+          "rack": "-11.998052597045898, 38.55124282836914, -59.99863815307617"
+        }
+      },
+      {
+        "passed": true,
+        "name": "third client attaches tether"
+      },
+      {
+        "passed": true,
+        "name": "Player1 sees crew equipment",
+        "detail": {
+          "players": {
+            "Player1": {
+              "tool": false,
+              "rope": false
+            },
+            "Player3": {
+              "tool": false,
+              "rope": true
+            },
+            "Player2": {
+              "tool": true,
+              "rope": false
+            }
+          },
+          "autoGas": true,
+          "autoButton": false,
+          "soundRadius": 10,
+          "pingRadius": 10,
+          "logs": [],
+          "speedText": "NAIK +16.9 km/dtk",
+          "own": "Balloon_Player2",
+          "autoParent": "FlyHighHUD",
+          "speedFits": true
+        }
+      },
+      {
+        "passed": true,
+        "name": "Player2 sees crew equipment",
+        "detail": {
+          "players": {
+            "Player1": {
+              "tool": false,
+              "rope": false
+            },
+            "Player3": {
+              "tool": false,
+              "rope": true
+            },
+            "Player2": {
+              "tool": true,
+              "rope": false
+            }
+          },
+          "autoGas": true,
+          "autoButton": false,
+          "soundRadius": 10,
+          "pingRadius": 10,
+          "logs": [],
+          "speedText": "NAIK +16.4 km/dtk",
+          "own": "Balloon_Player2",
+          "autoParent": "FlyHighHUD",
+          "speedFits": true
+        }
+      },
+      {
+        "passed": true,
+        "name": "Player3 sees crew equipment",
+        "detail": {
+          "players": {
+            "Player1": {
+              "tool": false,
+              "rope": false
+            },
+            "Player3": {
+              "tool": false,
+              "rope": true
+            },
+            "Player2": {
+              "tool": true,
+              "rope": false
+            }
+          },
+          "autoGas": true,
+          "autoButton": false,
+          "soundRadius": 10,
+          "pingRadius": 10,
+          "logs": [],
+          "speedText": "NAIK +16.5 km/dtk",
+          "own": "Balloon_Player2",
+          "autoParent": "FlyHighHUD",
+          "speedFits": true
+        }
+      },
+      {
+        "passed": true,
+        "name": "own shot creates hole and spends ammo"
+      },
+      {
+        "passed": true,
+        "name": "engineer reaches catwalk"
+      },
+      {
+        "passed": true,
+        "name": "three-second repair accepted"
+      },
+      {
+        "passed": true,
+        "name": "weapon and tether release"
+      },
+      {
+        "passed": true,
+        "name": "hover telemetry settles at zero",
+        "detail": 0
+      },
+      {
+        "passed": true,
+        "name": "hover indicator shows stationary",
+        "detail": "DIAM 0.0 km/dtk"
+      },
+      {
+        "passed": true,
+        "name": "freefall telemetry measures PivotTo descent",
+        "detail": -666.4775667813019
+      },
+      {
+        "passed": true,
+        "name": "freefall indicator stays readable",
+        "detail": "TURUN -667.6 km/dtk"
+      },
+      {
+        "passed": true,
+        "name": "clutch restores holes and shield"
+      },
+      {
+        "passed": true,
+        "name": "Player1 survives clutch"
+      },
+      {
+        "passed": true,
+        "name": "Player2 survives clutch"
+      },
+      {
+        "passed": true,
+        "name": "Player3 survives clutch"
+      },
+      {
+        "passed": true,
+        "name": "ground timeout ends flight"
+      },
+      {
+        "passed": true,
+        "name": "Player1 dies on timeout"
+      },
+      {
+        "passed": true,
+        "name": "Player2 dies on timeout"
+      },
+      {
+        "passed": true,
+        "name": "Player3 dies on timeout"
+      },
+      {
+        "passed": true,
+        "name": "ended flight resets speed indicator",
+        "detail": "DIAM 0.0 km/dtk"
+      },
+      {
+        "passed": true,
+        "name": "occupied A rejects third player summon"
+      },
+      {
+        "passed": true,
+        "name": "A balloon blocks E dock"
+      },
+      {
+        "passed": true,
+        "name": "A dock clears when balloon leaves"
+      },
+      {
+        "passed": true,
+        "name": "second team launches after clearance"
+      },
+      {
+        "passed": true,
+        "name": "both real teams receive one collision hole",
+        "detail": {
+          "a": 1,
+          "b": 1
+        }
+      },
+      {
+        "passed": true,
+        "name": "collision stays separated",
+        "detail": 60.0003662109375
+      },
+      {
+        "passed": true,
+        "name": "server retains ownership"
+      },
+      {
+        "passed": true,
+        "name": "Player1 foreign prompts hidden"
+      },
+      {
+        "passed": true,
+        "name": "Player2 foreign prompts hidden"
+      },
+      {
+        "passed": true,
+        "name": "third client foreign prompts hidden"
+      },
+      {
+        "passed": true,
+        "name": "foreign pickup denied on server"
+      },
+      {
+        "passed": true,
+        "name": "foreign tether denied"
+      },
+      {
+        "passed": true,
+        "name": "own team weapon pickup allowed",
+        "detail": {
+          "distance": 3.0845582485198975,
+          "health": 100,
+          "inFlight": true
+        }
+      },
+      {
+        "passed": true,
+        "name": "enemy balloon ignores bullets"
+      },
+      {
+        "passed": true,
+        "name": "solo tether attached before disconnect"
+      },
+      {
+        "passed": true,
+        "name": "native client can disconnect"
+      },
+      {
+        "passed": true,
+        "name": "player leaves server"
+      },
+      {
+        "passed": true,
+        "name": "departed flight cleaned"
+      },
+      {
+        "passed": true,
+        "name": "departed equipment cleaned"
+      },
+      {
+        "passed": true,
+        "name": "remaining team continues"
+      }
+    ],
+    "clientLogCount": 0,
+    "duration": 60.01742489996832,
+    "serverLogs": [],
+    "purchasesTested": false,
+    "metrics": {
+      "minimumCollisionDistance": 60.0003662109375,
+      "firstPickup": {
+        "enabled": false,
+        "key": "E",
+        "triggered": true,
+        "distance": 3.037386894226074,
+        "health": 100
+      },
+      "startPrompt": {
+        "enabled": true,
+        "distance": 3.329899311065674
+      }
+    },
+    "ok": true,
+    "mode": "3 native Studio clients",
+    "cloudTested": false
+  },
+  "models": {
+    "seatHUDsDisabled": 6,
+    "decorMoved": 4,
+    "face": "Front",
+    "facingSpawn": 1,
+    "cframe": "-15, 14, 35, 0, 0, -1, 0, 1, -0, 1, 0, -0"
+  },
+  "phoneUp": {
+    "gui": "705, 279",
+    "gasSize": "140, 48",
+    "auto": true,
+    "autoText": "GAS OTOMATIS: ON [Z]",
+    "text": "NAIK +16.8 km/dtk",
+    "fits": true,
+    "autoVisible": true,
+    "speedSize": "122, 16"
+  },
+  "phoneRelease": {
+    "speed": "NAIK +16.7 km/dtk",
+    "releaseVisible": false,
+    "autoVisible": false,
+    "auto": true
+  },
+  "tabletButtons": {
+    "orientation": "LandscapeSensor",
+    "buttons": {
+      "1": {
+        "parent": "FlyHighHUD",
+        "corner": 10,
+        "name": "PingButton",
+        "size": "150, 44"
+      },
+      "2": {
+        "parent": "FlyHighHUD",
+        "corner": 10,
+        "name": "WarningAudioToggleButton",
+        "size": "150, 44"
+      }
+    }
+  },
+  "simulatorStopped": true,
+  "cloudTested": false,
+  "physicalDevicesTested": false,
+  "validation": {
+    "compiled": 26,
+    "qa": [],
+    "errors": []
+  },
+  "build": {
+    "bytes": 838727,
+    "sha256": "1dbebcafe865e6724121c41a7a5a57d77cf82fdb65a5c6df459c0d6dedf2fd54"
+  }
+}

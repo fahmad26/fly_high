@@ -338,3 +338,15 @@ Build tersimpan **837808 byte**; SHA256 **34C9563D4747D3DB7EF0F2A90185871EB7E3CC
 Prompt bawaan Pasang/Lepas dan Naik/Perbaiki memakai UIOffset dua baris terpisah 96 piksel pada keenam template dan setup runtime. Prompt baru dimask sebelum pass visibilitas pertama. HUD desktop/tablet mengalokasikan baris berdasarkan aksi tali yang terlihat, sehingga Pasang/Perbaiki dan Tambal/Turun/Lepas tidak memakai koordinat sama.
 
 Simulator iPad Pro M5 mengukur Pasang/Perbaiki masing-masing 150×44 dengan gap 8 piksel; Galaxy A06 mengukur Lepas/Naik 224×44 pada baris AKSI terpisah. Native BillboardGui ditinjau lewat jendela Studio karena capture viewport MCP menghilangkannya. Game tetap LandscapeSensor; gas otomatis dan lepas kemudi tetap di HUD utama. **40/40 regresi tali tiga client lulus**, log server/client bersih; seluruh 26 skrip terkompilasi. Bukti: audit/prompt-layout-results.json. Driver/remote QA dihapus dan simulator dikembalikan default. Perangkat fisik belum diuji.
+
+## Empat Perbaikan HUD dan Spawn — 30 Oktober 2026
+
+PING kini memakai sudut membulat 10 piksel seperti SUARA PERINGATAN. Izin gas otomatis diperketat: hanya pemain hidup yang tercatat sebagai pilot dan benar-benar menghuni HelmSeat boleh mengubahnya. Tombol Z/L1/HUD diblokir saat tidak mengemudi, termasuk mantan pilot; gas yang sudah ON tetap menyala setelah lepas kemudi. Pilot pengganti dapat mematikan atau menyalakannya kembali. Petunjuk badai mengikuti izin baru.
+
+Angka 0 lama berasal dari HUD kendaraan bawaan VehicleSeat, bukan kecepatan vertikal. HUD bawaan dinonaktifkan pada enam template dan setiap launch. Server mengirim verticalSpeedKmPerSec dari delta ketinggian/waktu nyata; VerticalSpeedLabel menampilkan NAIK, TURUN atau DIAM dalam km/detik. Pendekatan ini tetap mengukur terjun bebas berbasis PivotTo meskipun AssemblyLinearVelocity dibersihkan. Sampel direset saat Clutch Save dan akhir flight. Progress ketinggian tetap tersedia di samping label.
+
+WelcomeSign memakai sisi Front dan normal tepat menuju spawn (dot product=1); empat bagian tiang/bingkai mengikuti rotasinya. Build script juga diperbarui. Tampilan papan diverifikasi dari arah kedatangan.
+
+**71/71 skenario tiga client lulus**, log server/semua client bersih. Angka sampel: naik +16,79, turun -6,73, hover 0, terjun bebas -666,48 km/detik. Mencakup penolakan remote dan keyboard tanpa kemudi, pilot pengganti, keterbacaan label, Clutch Save, Game Over dan regresi tabrakan/senjata/tali/disconnect. Smoke Galaxy A06 memakai klik aktual untuk menyalakan gas dan melepas kemudi: gas tetap ON, kontrol disembunyikan, label tetap bergerak. Tablet mengonfirmasi radius dan ukuran kedua tombol sama. Semua 26 skrip terkompilasi; seluruh driver QA dihapus sebelum save, simulator default. Perangkat fisik, cloud/pembelian/publikasi masih ditunda.
+
+Bukti: audit/flight-hud-fixes-results.json, flight-hud-speed-phone.jpg, spawn-sign-facing-player.jpg. Backup: audit/Fly High.before-flight-hud-fixes.rbxl.

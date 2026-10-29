@@ -1,0 +1,77 @@
+-- Temporary Studio-only native multiplayer driver. Not shipped in the place.
+if not game:GetService("RunService"):IsStudio()then return end
+local Players=game:GetService("Players")local RS=game:GetService("ReplicatedStorage")
+local player=Players.LocalPlayer local remote=RS.FlyHigh.Remotes:WaitForChild("MultiplayerQAEvent")
+local remotes=RS.FlyHigh.Remotes local logs={}
+game:GetService("LogService").MessageOut:Connect(function(message,kind)
+ if kind==Enum.MessageType.MessageError or kind==Enum.MessageType.MessageWarning then table.insert(logs,{message=message,kind=kind.Name})end
+end)
+local function mine()local r=player:FindFirstChild("FlightBalloon")return r and r.Value end
+local function prompt(modelName,path,force)
+ local model=modelName and workspace:WaitForChild(modelName,10)or mine()
+ local o=model
+ for n in path:gmatch("[^.]+")do o=o:WaitForChild(n,10)assert(o,"missing "..n)end
+ if force then o.Enabled=true end
+ local cam=workspace.CurrentCamera local oldType=cam.CameraType
+ local root=player.Character.HumanoidRootPart
+ cam.CameraType=Enum.CameraType.Scriptable
+ cam.CFrame=CFrame.lookAt(root.Position+Vector3.new(0,5,9),o.Parent.Position)
+ local fired=false local connection=o.Triggered:Connect(function()fired=true end)
+ task.wait(.3)
+ local before=(root.Position-o.Parent.Position).Magnitude
+ local input=game:GetService("UserInputService"):CreateVirtualInput()
+ input:SendKey(true,o.KeyboardKeyCode,false)task.wait(math.max(.5,o.HoldDuration+.3))input:SendKey(false,o.KeyboardKeyCode,false)
+ task.wait(.2)connection:Disconnect()cam.CameraType=oldType
+ return {enabled=o.Enabled,triggered=fired,key=o.KeyboardKeyCode.Name,distance=before,health=player.Character.Humanoid.Health}
+end
+remote.OnClientEvent:Connect(function(token,action,data)
+ local ok,value=xpcall(function()
+  if action=="Ping"then
+   local gui=player.PlayerGui:WaitForChild("FlyHighHUD",20)
+   return {name=player.Name,userId=player.UserId,hud=gui~=nil}
+  elseif action=="Start"then
+   local pod=workspace.FlyHighLobby.MatchmakingPods[data.pod]
+   local o=pod.Console.StartPrompt
+   assert(o.Enabled,"start prompt disabled")
+   local cam=workspace.CurrentCamera local oldType=cam.CameraType
+   local root=player.Character.HumanoidRootPart
+   cam.CameraType=Enum.CameraType.Scriptable cam.CFrame=CFrame.lookAt(root.Position+Vector3.new(0,4,8),o.Parent.Position)
+   task.wait(.2)
+   local before={distance=(root.Position-o.Parent.Position).Magnitude,enabled=o.Enabled}
+   local input=game:GetService("UserInputService"):CreateVirtualInput()
+   input:SendKey(true,o.KeyboardKeyCode,false)task.wait(math.max(.5,o.HoldDuration+.3))input:SendKey(false,o.KeyboardKeyCode,false)
+   cam.CameraType=oldType return before
+  elseif action=="Prompt"then return prompt(data.model,data.path,data.force)
+  elseif action=="AutoKey"then
+   local input=game:GetService("UserInputService"):CreateVirtualInput()input:SendKey(true,Enum.KeyCode.Z,false)task.wait(.2)input:SendKey(false,Enum.KeyCode.Z,false)return true
+  elseif action=="Action"then remotes.FlightActionEvent:FireServer(data.action,data.value)return true
+  elseif action=="Tether"then remotes.TetherEvent:FireServer(data.action)return true
+  elseif action=="Drop"then remotes.WeaponDropEvent:FireServer()return true
+  elseif action=="Shoot"then remotes.WeaponFireEvent:FireServer(Vector3.new(999999,999999,999999),data.target)return true
+  elseif action=="Repair"then
+   remotes.RepairHoleEvent:FireServer("Begin",data.hole)task.wait(data.duration+.2)
+   remotes.RepairHoleEvent:FireServer("Finish")return true
+  elseif action=="Kit"then remotes.EmergencyKitEvent:FireServer()return true
+  elseif action=="Drive"then
+   local endTime=os.clock()+data.duration
+   repeat remotes.PilotControlEvent:FireServer(Vector3.new(data.x,0,data.z or 0),data.gas==true)task.wait(.1)until os.clock()>=endTime
+   remotes.PilotControlEvent:FireServer(Vector3.zero,false)return true
+  elseif action=="Snapshot"then
+   local b=mine()local foreign=data and data.foreign and workspace:FindFirstChild(data.foreign)
+   local gui=player.PlayerGui:FindFirstChild("FlyHighHUD")
+   local states={}for _,p in ipairs(Players:GetPlayers())do
+    states[p.Name]={tool=p.Character and p.Character:FindFirstChildOfClass("Tool")~=nil,rope=p.Character and p.Character:FindFirstChild("SafetyRope",true)~=nil}
+   end
+   local ping=gui and gui:FindFirstChild("PingButton",true)local sound=gui and gui:FindFirstChild("WarningAudioToggleButton",true)
+   local speed=gui and gui.AltimeterFrame:FindFirstChild("VerticalSpeedLabel")
+   return {speedText=speed and speed.Text,speedFits=speed and speed.TextFits,pingRadius=ping and ping:FindFirstChildOfClass("UICorner")and ping:FindFirstChildOfClass("UICorner").CornerRadius.Offset,soundRadius=sound and sound:FindFirstChildOfClass("UICorner")and sound:FindFirstChildOfClass("UICorner").CornerRadius.Offset,autoParent=gui and gui:FindFirstChild("AutoGasButton",true).Parent.Name,own=b and b.Name,autoGas=b and b:GetAttribute("AutoGas"),autoButton=gui and gui:FindFirstChild("AutoGasButton",true).Visible,
+    enemyHelm=foreign and foreign.HelmSeat.HelmPrompt.Enabled,enemyRack=foreign and foreign.WeaponRack2.PickupPrompt.Enabled,
+    players=states,logs=logs}
+  elseif action=="Leave"then
+   local sts=game:GetService("StudioTestService")local can=sts:CanLeaveTest()
+   if can then task.delay(.4,function()sts:LeaveTest()end)end return {canLeave=can}
+  end
+  error("unknown command "..action)
+ end,debug.traceback)
+ remote:FireServer("reply",token,ok,value)
+end)

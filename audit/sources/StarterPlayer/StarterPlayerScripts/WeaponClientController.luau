@@ -240,6 +240,8 @@ local function button(name,text,position,callback)
  local b=Instance.new("TextButton") b.Name=name b.Text=text b.Size=UDim2.fromOffset(150,42)
  b.Position=position b.BackgroundColor3=Color3.fromRGB(35,65,85) b.TextColor3=Color3.new(1,1,1)
  b.TextWrapped=true b.TextSize=13 b.Font=Enum.Font.GothamBold b.Parent=screenGui b.Activated:Connect(callback)
+ b.BorderSizePixel=0
+ local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(0,10)corner.Parent=b
  return b
 end
 local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),function() wheel.Visible=not wheel.Visible end)

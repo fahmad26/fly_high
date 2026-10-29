@@ -376,7 +376,7 @@ Saat balon menyentuh ketinggian **10.000 km**:
 
 1. **Altimeter & Progress Bar:** Indikator ketinggian (0 - 10.000 km) dan persentase perjalanan.
 2. **Banner Peringatan Dini (Alert 3s):** Muncul berkedip dengan arah ancaman yang tidak dapat ditembak.
-3. **Status Lubang:** Visual 5 ikon lubang + peringatan kecepatan turun/naik.
+3. **Status Lubang:** Visual 5 ikon lubang + peringatan kecepatan turun/naik. Altimeter juga menampilkan kecepatan vertikal aktual dalam km/detik: NAIK (+), TURUN (-), atau DIAM; dihitung server dari perubahan ketinggian balon, termasuk gerak terjun bebas. Speedometer bawaan VehicleSeat dinonaktifkan. Angka kembali nol saat flight berakhir.
 4. **Tombol UI Gas / Naik (Khusus Pilot):** Hanya tampil di layar pemain yang sedang menduduki kursi kemudi (*Helm*).
 5. **Emergency Kit Button (Dengan Anti-Waste Lock):** Menampilkan jumlah stok kit darurat pemain; otomatis terkunci sementara jika Shield 60 detik rekan setim sedang aktif.
 6. **Gauge Tali Pengaman:** Muncul saat pemain memasang tali pengaman dan menggunakan katrol naik ke kubah balon.
@@ -404,7 +404,7 @@ Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
 - **Lima lubang:** jatuh vertikal pada kecepatan tetap **2.000/3 km per detik**, setara 166,67 stud/detik pada skala 0,25 stud/km. Turun 2.000 km memerlukan sekitar 3 detik; 10.000 km sekitar 15 detik, selama jalur bebas. Menyentuh tanah tanpa Clutch Save mengakhiri penerbangan dan membunuh kru. Penambalan manual tetap terkunci; Emergency Kit masih bisa dipakai sebelum menyentuh tanah.
 - **Lepas peran:** kemudi dapat dilepas dengan H/tombol LEPAS KEMUDI (gamepad Y); senjata dikembalikan ke rak dengan G/tombol DROP (gamepad B); tali dilepas dengan T/tombol LEPAS TALI (gamepad L2). Melepas tali di luar gondola menghilangkan perlindungan tali.
 - **Arah kontrol:** WASD, tombol panah, joystick sentuh dan gamepad memakai arah kamera yang diproyeksikan pada bidang horizontal. Atas/maju selalu menuju arah pandang horizontal kamera.
-- **Gas otomatis:** pilot menyalakan/mematikan dengan Z/tombol GAS OTOMATIS (gamepad L1). Gas tetap berjalan setelah kemudi dilepas; kru hidup dapat mematikannya lewat tombol yang tetap tersedia. Gas tidak membatalkan efek lima lubang.
+- **Gas otomatis:** hanya pemain yang sedang duduk di kemudi dapat menyalakan/mematikan dengan Z/tombol GAS OTOMATIS (gamepad L1). Gas tetap berjalan setelah kemudi dilepas; untuk mengubahnya pemain harus memegang kemudi kembali. Penumpang, termasuk mantan pilot yang sudah melepas kemudi, tidak dapat mengubah gas otomatis. Server memvalidasi pilot dan penghuni kursi pada kedua arah toggle. Gas tidak membatalkan efek lima lubang.
 - **Tabrakan:** balon memiliki collision fisik dan pemisahan posisi pada server. Batas ruang konservatif adalah 60 stud horizontal dan 64 stud vertikal antarpusat root. Kontak memberikan satu lubang pada masing-masing balon; kontak yang sama tidak terus menambah lubang sampai keduanya berpisah. Grace period kerusakan 5 detik dan Shield Emergency tetap berlaku.
 - **Aturan tembak:** pemain dapat menembak kubah balon tim sendiri untuk menciptakan lubang. Tembakan tidak merusak balon tim lain. Raycast, asal laras, amunisi dan validasi kepemilikan tetap ditentukan server.
 - **Zona aman 0–1.200 km:** tetap bebas seluruh rintangan. Kerusakan dari tabrakan dan tembakan balon sendiri tetap berlaku di zona ini, sesuai keputusan pengguna.
@@ -454,12 +454,12 @@ Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca har
 
 - Orientasi permainan tetap LandscapeSensor. HUD menggunakan area aman CoreUISafeInsets untuk menghindari notch dan kontrol Roblox.
 - Pada area GUI yang lebarnya di bawah 760 piksel atau tingginya di bawah 600 piksel, gunakan tata letak ringkas: ketinggian, kit dan toko di atas; LOMPAT serta AKSI di bawah tengah. GAS/TEMBAK tetap tersedia sesuai peran.
-- AKSI membuka daftar yang dapat digulir untuk lepas kemudi, pasang/isi/lepas tali, naik/turun, tambal, reload, drop dan ping. Hanya aksi yang relevan dengan kondisi pemain yang ditampilkan. Tap AKSI lagi atau area luar untuk menutup.
+- AKSI membuka daftar yang dapat digulir untuk pasang/perbaiki/lepas tali, naik/turun, tambal, reload, drop, ping dan suara peringatan. LEPAS KEMUDI dan GAS OTOMATIS tersedia langsung di HUD utama khusus pilot yang sedang memegang kemudi. Hanya aksi yang relevan dengan kondisi pemain yang ditampilkan. Tap AKSI lagi atau area luar untuk menutup.
 - Tombol sentuh minimal 44×44 piksel. Menu toko digulir secara vertikal agar tombol beli tidak mengecil; tidak ada perubahan harga atau aturan pemberian item.
 - Tombol LOMPAT menjalankan state Jumping Humanoid biasa ketika berpijak, hidup dan diizinkan perannya. Pemeriksaan fisik, cooldown dan pembagian efek turun di server tetap berlaku; tombol tidak memberikan efek turun langsung.
 - Pengujian simulator Galaxy A06, iPhone 17 Pro dan iPad Pro M5 lulus pemeriksaan batas layar dan ukuran tombol. Perangkat fisik dan penilaian kenyamanan oleh manusia tetap belum diuji.
 
-- **Koreksi akses gas otomatis:** GAS OTOMATIS berada langsung di HUD utama, di antara LOMPAT dan AKSI pada mode ringkas, dengan ukuran 140×48 piksel. Tombol muncul saat menjadi pilot dan tetap tersedia selama gas otomatis aktif meskipun kemudi dilepas. Nyalakan/matikan cukup satu tap tanpa membuka AKSI.
+- **Koreksi akses gas otomatis:** GAS OTOMATIS berada langsung di HUD utama pada mode ringkas, dengan ukuran 140×48 piksel. Tombol hanya muncul saat pemain memegang kemudi. Nyalakan/matikan cukup satu tap tanpa membuka AKSI; gas yang sudah aktif tetap menyala ketika kemudi dilepas.
 
 ## Alur Interaksi Tali dan Akses Kemudi Terbaru
 

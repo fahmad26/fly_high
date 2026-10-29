@@ -12,10 +12,20 @@ _G.FlyHighBalloonManager=Manager
 pcall(function() PhysicsService:RegisterCollisionGroup("FlyHighBalloons") end)
 PhysicsService:CollisionGroupSetCollidable("FlyHighBalloons","FlyHighBalloons",true)
 local function sync(fd)
+ -- Sample altitude rather than assembly velocity: freefall moves with PivotTo.
+ local now=os.clock()
+ if fd.isGameOver or fd.isVictory then
+  fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=now fd.velocitySampleY=fd.root.Position.Y
+ elseif fd.velocitySampleAt and now-fd.velocitySampleAt>=.05 then
+  fd.verticalSpeedKmPerSec=(fd.root.Position.Y-fd.velocitySampleY)/Config.STUDS_PER_KM/(now-fd.velocitySampleAt)
+  fd.velocitySampleAt=now fd.velocitySampleY=fd.root.Position.Y
+ elseif not fd.velocitySampleAt then
+  fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=now fd.velocitySampleY=fd.root.Position.Y
+ end
  for _,p in ipairs(fd.players) do
   if p.Parent==Players then
    remotes.FlightStateSyncEvent:FireClient(p,{
-    altitudeKm=fd.altitudeKm,holes=fd.holes,invulnTime=fd.invulnTime,shieldTime=fd.shieldTime,
+    altitudeKm=fd.altitudeKm,verticalSpeedKmPerSec=fd.verticalSpeedKmPerSec or 0,holes=fd.holes,invulnTime=fd.invulnTime,shieldTime=fd.shieldTime,
     autoGas=fd.autoGas==true,groundedRemaining=fd.groundedSince and math.max(0,Config.GROUNDED_TIMEOUT_SEC-(os.clock()-fd.groundedSince)) or nil,
     isGasActive=fd.isGasActive,isFreefalling=fd.isFreefalling,isGameOver=fd.isGameOver,isVictory=fd.isVictory,
     usedEmergencyKit=fd.usedKits[p.UserId] or false})
@@ -131,6 +141,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   end))
  end
  local helm=b.HelmSeat
+ helm.HeadsUpDisplay=false
  helm.HelmPrompt.Triggered:Connect(function(p)
   if U.CrewNear(p,b,helm,7) and not helm.Occupant then helm:Sit(p.Character:FindFirstChildOfClass("Humanoid")) end
  end)
@@ -204,6 +215,7 @@ function Manager.UseEmergencyKit(p)
  fd.holes=0 fd.holeSet={} fd.isFreefalling=false fd.jumpDropRemaining=0
  fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime
  fd.targetPosition=fd.root.Position fd.alignPos.Position=fd.targetPosition fd.root.AssemblyLinearVelocity=Vector3.zero
+ fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=os.clock()fd.velocitySampleY=fd.root.Position.Y
  renderHoles(fd) sync(fd) return true
 end
 remotes.EmergencyKitEvent.OnServerEvent:Connect(function(p) if kitRate(p) then Manager.UseEmergencyKit(p) end end)
@@ -228,7 +240,8 @@ function Manager.FlightAction(p,action,value)
   task.delay(.75,function()if seat.Parent then seat.Disabled=false end end)
   return true
  elseif action=="AutoGas"then
-  if type(value)~="boolean"or(value and fd.pilot~=p)then return false end
+  local hum=p.Character and p.Character:FindFirstChildOfClass("Humanoid")
+  if type(value)~="boolean"or fd.pilot~=p or not hum or fd.balloon.HelmSeat.Occupant~=hum or hum.SeatPart~=fd.balloon.HelmSeat then return false end
   fd.autoGas=value fd.balloon:SetAttribute("AutoGas",value)sync(fd)return true
  end
  return false

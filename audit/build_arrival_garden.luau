@@ -34,7 +34,8 @@ for _,x in ipairs({-12.5,12.5})do
  for _,p in ipairs(fern:GetDescendants())do if p:IsA("BasePart")then p.Anchored=true p.CanCollide=false p.CanQuery=false p.CanTouch=false end end
 end
 local sign=lobby.WelcomeSign
-sign.Size=Vector3.new(11,4.3,.55)sign.CFrame=CFrame.new(-15,14,35)*CFrame.Angles(0,math.rad(-65),0)
+sign.Size=Vector3.new(11,4.3,.55)sign.CFrame=CFrame.lookAt(Vector3.new(-15,14,35),Vector3.new(spawn.Position.X,14,spawn.Position.Z))
+sign.SurfaceGui.Face=Enum.NormalId.Front
 sign.Color=Color3.fromRGB(42,77,71)sign.Material=Enum.Material.Wood sign.CanCollide=true
 local label=sign:FindFirstChildWhichIsA("TextLabel",true)
 if label then label.Text="FLY HIGH\nPilih dermaga • Bentuk kru • Terbang!"label.TextColor3=Color3.fromRGB(249,222,157)label.BackgroundTransparency=1 label.TextScaled=true

@@ -70,7 +70,9 @@ Run.Heartbeat:Connect(function(dt)
    title.TextColor3=holes>=4 and Color3.fromRGB(255,150,134)or Color3.fromRGB(242,235,211)
    storm.BackgroundColor3=safe and Color3.fromRGB(31,98,77)or Color3.fromRGB(31,57,76)
    local countdown=math.max(0,active.warningEndsAt-now)
-   detail.Text=(countdown>0 and string.format("Mulai menyapu dalam %.1f detik. ",countdown)or "Badai sedang menyapu koridor! ")..(safe and ((balloon and balloon:GetAttribute("AutoGas"))and "Pertahankan posisi: matikan GAS OTOMATIS [Z]."or "Pertahankan posisi di bawah awan.")or string.format("Turun lagi %d km. %s",math.ceil(drop/C.STUDS_PER_KM),allowed and ((balloon and balloon:GetAttribute("AutoGas"))and "Lompat; matikan GAS OTOMATIS [Z]."or "Lompat bersama!")or(p:GetAttribute("FlightJumpReason")or "Kembali ke gondola")))
+   local pilot=hum and balloon and hum.SeatPart==balloon:FindFirstChild("HelmSeat")
+   local gasHint=pilot and "Matikan GAS OTOMATIS [Z]."or "Pilot perlu mematikan GAS OTOMATIS di kemudi."
+   detail.Text=(countdown>0 and string.format("Mulai menyapu dalam %.1f detik. ",countdown)or "Badai sedang menyapu koridor! ")..(safe and ((balloon and balloon:GetAttribute("AutoGas"))and "Pertahankan posisi. "..gasHint or "Pertahankan posisi di bawah awan.")or string.format("Turun lagi %d km. %s",math.ceil(drop/C.STUDS_PER_KM),allowed and ((balloon and balloon:GetAttribute("AutoGas"))and "Lompat bersama! "..gasHint or "Lompat bersama!")or(p:GetAttribute("FlightJumpReason")or "Kembali ke gondola")))
   end
  end
  local status=gui:FindFirstChild("StatusFrame")

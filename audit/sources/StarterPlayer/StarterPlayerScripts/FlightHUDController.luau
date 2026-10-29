@@ -55,7 +55,7 @@ altLabel.Parent = altFrame
 
 local barBg = Instance.new("Frame")
 barBg.Name = "BarBg"
-barBg.Size = UDim2.new(1, -20, 0, 10)
+barBg.Size = UDim2.new(1, -150, 0, 10)
 barBg.Position = UDim2.new(0, 10, 0, 28)
 barBg.BackgroundColor3 = Color3.fromRGB(40, 45, 60)
 barBg.BorderSizePixel = 0
@@ -75,6 +75,13 @@ barFill.Parent = barBg
 local fillCorner = Instance.new("UICorner")
 fillCorner.CornerRadius = UDim.new(0, 5)
 fillCorner.Parent = barFill
+
+local speedLabel=Instance.new("TextLabel")
+speedLabel.Name="VerticalSpeedLabel"
+speedLabel.Position=UDim2.new(1,-132,0,26)speedLabel.Size=UDim2.fromOffset(122,16)
+speedLabel.BackgroundTransparency=1 speedLabel.Font=Enum.Font.GothamBold speedLabel.TextSize=12
+speedLabel.TextColor3=Color3.fromRGB(210,220,235)speedLabel.Text="DIAM 0.0 km/dtk"
+speedLabel.Parent=altFrame
 
 -- Left Hole Status Frame
 local statusFrame = Instance.new("Frame")
@@ -217,7 +224,16 @@ local function flightButton(name,text,offset,callback)
  local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(0,10)corner.Parent=b
  b.Activated:Connect(callback)return b
 end
-local autoGasButton=flightButton("AutoGasButton","GAS OTOMATIS: OFF [Z]",200,function()flightActionEvent:FireServer("AutoGas",not autoGas)end)
+local function canUseHelm()
+ local ref=localPlayer:FindFirstChild("FlightBalloon")local b=ref and ref.Value
+ local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+ local seat=b and b:FindFirstChild("HelmSeat")
+ return localPlayer:GetAttribute("InFlight")==true and localPlayer:GetAttribute("FlightGhost")~=true and hum and hum.Health>0 and seat and hum.SeatPart==seat and seat.Occupant==hum
+end
+local function toggleAutoGas()
+ if canUseHelm()then flightActionEvent:FireServer("AutoGas",not autoGas)end
+end
+local autoGasButton=flightButton("AutoGasButton","GAS OTOMATIS: OFF [Z]",200,toggleAutoGas)
 local releaseHelmButton=flightButton("ReleaseHelmButton","LEPAS KEMUDI [H]",255,function()flightActionEvent:FireServer("ReleaseHelm")end)
 local groundNotice=Instance.new("TextLabel")groundNotice.Name="GroundedCountdown"groundNotice.Size=UDim2.fromOffset(420,28)
 groundNotice.Position=UDim2.new(.5,-210,0,65)groundNotice.BackgroundColor3=Color3.fromRGB(79,47,34)
@@ -278,6 +294,10 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 	local pct = math.clamp(altKm / 10000, 0, 1)
 	altLabel.Text = string.format("Ketinggian: %d km / 10.000 km (%.1f%%)", math.floor(altKm), pct * 100)
 	barFill.Size = UDim2.new(pct, 0, 1, 0)
+	local speed=data.verticalSpeedKmPerSec or 0
+	if data.isGameOver or data.isVictory or math.abs(speed)<.05 then speed=0 end
+	speedLabel.Text=speed>0 and string.format("NAIK +%.1f km/dtk",speed)or(speed<0 and string.format("TURUN %.1f km/dtk",speed)or "DIAM 0.0 km/dtk")
+	speedLabel.TextColor3=speed>0 and Color3.fromRGB(120,255,185)or(speed<0 and Color3.fromRGB(255,175,115)or Color3.fromRGB(210,220,235))
 
 	-- Update Hole Visuals
 	local icons = ""
@@ -368,7 +388,7 @@ UserInputService.InputBegan:Connect(function(input)
  if UserInputService:GetFocusedTextBox()then return end
  if input.KeyCode==Enum.KeyCode.ButtonR1 and gasBtn.Visible then setGas(true)
  elseif input.KeyCode==Enum.KeyCode.H or input.KeyCode==Enum.KeyCode.ButtonY then flightActionEvent:FireServer("ReleaseHelm")
- elseif input.KeyCode==Enum.KeyCode.Z or input.KeyCode==Enum.KeyCode.ButtonL1 then flightActionEvent:FireServer("AutoGas",not autoGas)end
+ elseif input.KeyCode==Enum.KeyCode.Z or input.KeyCode==Enum.KeyCode.ButtonL1 then toggleAutoGas()end
 end)
 local controls
 task.spawn(function()
@@ -387,7 +407,7 @@ RunService.RenderStepped:Connect(function()
 	local seat = hum and hum.SeatPart
 	local isSeatedInHelm = (seat ~= nil and seat.Name == "HelmSeat")
  releaseHelmButton.Visible=isSeatedInHelm
- autoGasButton.Visible=localPlayer:GetAttribute("InFlight")==true and localPlayer:GetAttribute("FlightGhost")~=true and (isSeatedInHelm or autoGas)
+ autoGasButton.Visible=canUseHelm()==true
 
 	if isSeatedInHelm then
 		gasBtn.Visible = true
