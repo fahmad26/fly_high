@@ -1,0 +1,349 @@
+{
+  "logs": [],
+  "ok": false,
+  "players": [
+    {
+      "name": "Player1",
+      "logs": []
+    },
+    {
+      "name": "Player2",
+      "logs": []
+    },
+    {
+      "name": "Player3",
+      "logs": []
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player1 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player1 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "healthy flight is silent"
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm produces playback signal",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 51.736749708652496,
+        "progress": 0.751
+      }
+    },
+    {
+      "passed": true,
+      "name": "other team does not hear private hazard"
+    },
+    {
+      "passed": true,
+      "name": "duplicate warnings do not restart every packet",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 0
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 8.238873910158873,
+        "progress": 1.033
+      }
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm stops at expiry"
+    },
+    {
+      "passed": true,
+      "name": "worn rope in basket stays silent"
+    },
+    {
+      "passed": true,
+      "name": "climb completes"
+    },
+    {
+      "passed": false,
+      "name": "engineer remains on catwalk while idle",
+      "detail": {
+        "relative": "12.347596168518066, -343.3224792480469, -84.786376953125",
+        "hip": 0.9730010032653809,
+        "rig": "R15"
+      }
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 23.635264899989124,
+  "error": "ServerScriptService.WarningAudioServerQA:13: engineer remains on catwalk while idle: table: 0xdca6ed5542a32bb6\nServerScriptService.WarningAudioServerQA:13\nServerScriptService.WarningAudioServerQA:26\n",
+  "metrics": []
+}

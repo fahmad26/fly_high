@@ -274,8 +274,14 @@ tetherEvent.OnClientEvent:Connect(function(data)
  tetherFrame.Visible=data.isTethered==true
  local dur=math.clamp(data.durability or 0,0,100)
  tetherLabel.Text=string.format("Tali Pengaman: %d%%",math.floor(dur))
+ local low=Config.AUDIO_WARNINGS.ROPE_LOW_PERCENT
+ local critical=Config.AUDIO_WARNINGS.ROPE_CRITICAL_PERCENT
+ if data.insideBasket==false and data.stage~="Descending"then
+  if dur<=critical then tetherLabel.Text=string.format("TALI %d%% | SEGERA TURUN [Q]",math.floor(dur))
+  elseif dur<=low then tetherLabel.Text=string.format("TALI MENIPIS: %d%%",math.floor(dur))end
+ end
  tBarFill.Size=UDim2.fromScale(dur/100,1)
- tBarFill.BackgroundColor3=dur<25 and Color3.fromRGB(255,40,40) or Color3.fromRGB(255,215,0)
+ tBarFill.BackgroundColor3=dur<=critical and Color3.fromRGB(255,40,40)or(dur<=low and Color3.fromRGB(255,160,55)or Color3.fromRGB(255,215,0))
 end)
 ghostSpotBtn.Activated:Connect(function()
  tacticalPingEvent:FireServer("GhostSpot",targetPosition(),"")

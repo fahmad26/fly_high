@@ -1,6 +1,6 @@
 -- One layout owner: scale positions and dimensions together, never touch hitboxes.
 local Layout = {}
-local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "ReloadButton", "DropButton", "PingButton"}
+local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
 
 local function box(object, x, y, w, h)
  object.AnchorPoint = Vector2.zero
@@ -54,6 +54,10 @@ function Layout.Start(gui, player)
  end)
  local function get(name) return gui:FindFirstChild(name) or tray:FindFirstChild(name) end
  local function remember(f)
+  local owner=f:FindFirstChild("ControllerOwner")
+  if owner and owner:IsA("ObjectValue")and(not owner.Value or not owner.Value:IsDescendantOf(player.PlayerScripts))then
+   originals[f]=nil f:Destroy()return
+  end
   if not originals[f] then
    originals[f] = {position=f.Position, size=f.Size, anchor=f.AnchorPoint}
    local s = f:FindFirstChild("ResponsiveScale")
@@ -90,6 +94,8 @@ function Layout.Start(gui, player)
     if Input.TouchEnabled and f:IsA("GuiButton") then
      f.Size = UDim2.fromOffset(math.max(original.size.X.Offset, 44 / scale), math.max(original.size.Y.Offset, 44 / scale))
     end
+   else
+    originals[f]=nil
    end
   end
   local function place(name, x, y, bw, bh)

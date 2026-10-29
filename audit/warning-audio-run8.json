@@ -1,0 +1,514 @@
+{
+  "logs": [],
+  "ok": false,
+  "players": [
+    {
+      "name": "Player1",
+      "logs": []
+    },
+    {
+      "name": "Player2",
+      "logs": []
+    },
+    {
+      "name": "Player3",
+      "logs": []
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player1 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player1 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "healthy flight is silent"
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm produces playback signal",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 52.18500457704067,
+        "progress": 0.657
+      }
+    },
+    {
+      "passed": true,
+      "name": "other team does not hear private hazard"
+    },
+    {
+      "passed": true,
+      "name": "duplicate warnings do not restart every packet",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 0
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 11.330781038850546,
+        "progress": 1.033
+      }
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm stops at expiry"
+    },
+    {
+      "passed": true,
+      "name": "worn rope in basket stays silent"
+    },
+    {
+      "passed": true,
+      "name": "climb completes"
+    },
+    {
+      "passed": false,
+      "name": "engineer remains on catwalk while idle",
+      "detail": {
+        "relative": "27.270994186401367, -424.533935546875, -109.72163391113281",
+        "hip": 0.9730010032653809,
+        "rig": "R15"
+      }
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 23.041420499968808,
+  "error": "ServerScriptService.WarningAudioServerQA:13: engineer remains on catwalk while idle: table: 0x7a32755dc7bc684d\nServerScriptService.WarningAudioServerQA:13\nServerScriptService.WarningAudioServerQA:26\n",
+  "metrics": {
+    "landing": [
+      {
+        "move": "0, 0, 0",
+        "angular": "0, 0, 0",
+        "walkway": "5.587935447692871e-07, 18.000019073486328, -20.0000057220459",
+        "relative": "-0.1724679321050644, 26.04206657409668, -12.315153121948242",
+        "floor": "Air",
+        "velocity": "0, -19.00967025756836, 0"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-6.144771575927734, -0.004532903432846069, -0.04234209656715393",
+        "walkway": "5.21540641784668e-08, 18.000015258789062, -19.999998092651367",
+        "relative": "-0.0143499244004488, 5.364591598510742, -26.068466186523438",
+        "floor": "Air",
+        "velocity": "0.8348650336265564, -128.6524200439453, -84.83534240722656"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-6.078907489776611, -0.001041267765685916, -0.06354126334190369",
+        "walkway": "0.0000018947175703942776, 18.000024795532227, -20.000003814697266",
+        "relative": "0.15967410802841187, -21.212350845336914, -45.746978759765625",
+        "floor": "Air",
+        "velocity": "0.8350892066955566, -168.94544982910156, -84.8818359375"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-6.011053562164307, -0.02756546065211296, -0.06618454307317734",
+        "walkway": "0.000003703637048602104, 17.999996185302734, -19.999998092651367",
+        "relative": "0.4141896367073059, -60.367828369140625, -69.74214172363281",
+        "floor": "Air",
+        "velocity": "0.8353098034858704, -212.96107482910156, -84.87438201904297"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-5.943439483642578, -0.03192782402038574, -0.028699401766061783",
+        "walkway": "-0.0000011534430086612701, 18.000019073486328, -19.999996185302734",
+        "relative": "0.8009361028671265, -108.08068084716797, -94.1055679321289",
+        "floor": "Air",
+        "velocity": "0.8352717757225037, -257.00665283203125, -84.93238067626953"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-9.820722579956055, -0.17454743385314941, 0.015829775482416153",
+        "walkway": "0.0000032195821404457092, 17.999984741210938, -20.000003814697266",
+        "relative": "1.359435796737671, -158.15188598632812, -107.2173843383789",
+        "floor": "Air",
+        "velocity": "0.7290207147598267, -258.9251708984375, 37.7470588684082"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-9.720405578613281, -0.19914162158966064, -0.04920332133769989",
+        "walkway": "-0.0000013187527656555176, 17.9999942779541, -19.999996185302734",
+        "relative": "2.4659435749053955, -218.36965942382812, -106.67989349365234",
+        "floor": "Air",
+        "velocity": "0.7253668904304504, -298.900146484375, 37.420074462890625"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-9.628437995910645, -0.2890625, 0.007873342372477055",
+        "walkway": "-0.000001695007085800171, 18.00000762939453, -19.9999942779541",
+        "relative": "4.61054801940918, -277.296875, -106.45060729980469",
+        "floor": "Air",
+        "velocity": "0.7311610579490662, -334.8231201171875, 37.6363525390625"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-9.525461196899414, -0.13208329677581787, 0.1396131068468094",
+        "walkway": "-0.0000029802322387695312, 17.999990463256836, -20.000001907348633",
+        "relative": "10.554450988769531, -349.2156982421875, -107.45118713378906",
+        "floor": "Air",
+        "velocity": "0.7266185879707336, -377.6815185546875, 37.53839874267578"
+      },
+      {
+        "move": "0, 0, 0",
+        "angular": "-9.437159538269043, -0.0021070875227451324, -0.14198647439479828",
+        "walkway": "0.000001296401023864746, 17.999990463256836, -20.000001907348633",
+        "relative": "27.270994186401367, -424.533935546875, -109.72163391113281",
+        "floor": "Air",
+        "velocity": "0.722161591053009, -413.2214050292969, 37.59042739868164"
+      }
+    ],
+    "characterParts": [
+      {
+        "group": "Default",
+        "name": "HumanoidRootPart",
+        "size": "2, 2, 1"
+      },
+      {
+        "group": "Default",
+        "name": "RightLowerArm",
+        "size": "0.646792471408844, 0.9205955862998962, 1.104837417602539"
+      },
+      {
+        "group": "Default",
+        "name": "LeftUpperArm",
+        "size": "0.45610129833221436, 0.48287415504455566, 0.34158992767333984"
+      },
+      {
+        "group": "Default",
+        "name": "RightUpperArm",
+        "size": "0.45610129833221436, 0.48287415504455566, 0.34158992767333984"
+      },
+      {
+        "group": "Default",
+        "name": "LeftHand",
+        "size": "0.7013558745384216, 1.1866557598114014, 0.29341328144073486"
+      },
+      {
+        "group": "Default",
+        "name": "LeftLowerLeg",
+        "size": "0.34835171699523926, 0.31547439098358154, 0.34158992767333984"
+      },
+      {
+        "group": "Default",
+        "name": "LeftUpperLeg",
+        "size": "0.3812256455421448, 1.0498523712158203, 0.6911071538925171"
+      },
+      {
+        "group": "Default",
+        "name": "LeftLowerArm",
+        "size": "0.646792471408844, 0.9205955862998962, 1.104837417602539"
+      },
+      {
+        "group": "Default",
+        "name": "RightLowerLeg",
+        "size": "0.34835171699523926, 0.31547439098358154, 0.34158992767333984"
+      },
+      {
+        "group": "Default",
+        "name": "RightUpperLeg",
+        "size": "0.3812256455421448, 1.0498523712158203, 0.6911071538925171"
+      },
+      {
+        "group": "Default",
+        "name": "LeftFoot",
+        "size": "0.2925121784210205, 0.1561409831047058, 0.2935052216053009"
+      },
+      {
+        "group": "Default",
+        "name": "UpperTorso",
+        "size": "1.2762185335159302, 1.3140075206756592, 0.9694348573684692"
+      },
+      {
+        "group": "Default",
+        "name": "LowerTorso",
+        "size": "1.2762185335159302, 0.8404562473297119, 0.9694348573684692"
+      },
+      {
+        "group": "Default",
+        "name": "RightHand",
+        "size": "0.7013558745384216, 1.1866557598114014, 0.29341328144073486"
+      },
+      {
+        "group": "Default",
+        "name": "RightFoot",
+        "size": "0.2925121784210205, 0.1561409831047058, 0.2935052216053009"
+      }
+    ],
+    "idleInput": {
+      "hip": 0.9730010032653809,
+      "moveBefore": "0, 0, 0",
+      "rig": "R15"
+    }
+  }
+}

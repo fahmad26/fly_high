@@ -1,0 +1,328 @@
+{
+  "players": [
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three connected players"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "three crew on dock"
+    },
+    {
+      "passed": true,
+      "name": "first arrival is master"
+    },
+    {
+      "passed": true,
+      "name": "master transfers when leader steps away"
+    },
+    {
+      "passed": true,
+      "name": "returning player keeps current master"
+    },
+    {
+      "passed": true,
+      "name": "native prompt launches trio"
+    },
+    {
+      "passed": true,
+      "name": "trio rope and repair configuration"
+    },
+    {
+      "passed": true,
+      "name": "pilot seated"
+    },
+    {
+      "passed": true,
+      "name": "gas persists after pilot release"
+    },
+    {
+      "passed": true,
+      "name": "balloon ascends without seated pilot"
+    },
+    {
+      "passed": true,
+      "name": "second client picks weapon",
+      "detail": {
+        "health": 100,
+        "position": "-8.96994400024414, 26.59248161315918, -59.99763870239258",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 3.0295441150665283,
+          "health": 100
+        },
+        "inFlight": true,
+        "rack": "-12.0011625289917, 26.52079963684082, -59.99767303466797"
+      }
+    },
+    {
+      "passed": true,
+      "name": "third client attaches tether"
+    },
+    {
+      "passed": true,
+      "name": "Player1 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 sees crew equipment",
+      "detail": {
+        "players": {
+          "Player1": {
+            "tool": false,
+            "rope": false
+          },
+          "Player3": {
+            "tool": false,
+            "rope": true
+          },
+          "Player2": {
+            "tool": true,
+            "rope": false
+          }
+        },
+        "autoGas": true,
+        "autoButton": true,
+        "logs": [],
+        "own": "Balloon_Player2"
+      }
+    },
+    {
+      "passed": true,
+      "name": "own shot creates hole and spends ammo"
+    },
+    {
+      "passed": true,
+      "name": "engineer reaches catwalk"
+    },
+    {
+      "passed": true,
+      "name": "three-second repair accepted"
+    },
+    {
+      "passed": true,
+      "name": "weapon and tether release"
+    },
+    {
+      "passed": true,
+      "name": "clutch restores holes and shield"
+    },
+    {
+      "passed": true,
+      "name": "Player1 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "Player2 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "Player3 survives clutch"
+    },
+    {
+      "passed": true,
+      "name": "ground timeout ends flight"
+    },
+    {
+      "passed": true,
+      "name": "Player1 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "Player2 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "Player3 dies on timeout"
+    },
+    {
+      "passed": true,
+      "name": "occupied A rejects third player summon"
+    },
+    {
+      "passed": true,
+      "name": "A balloon blocks E dock"
+    },
+    {
+      "passed": true,
+      "name": "A dock clears when balloon leaves"
+    },
+    {
+      "passed": true,
+      "name": "second team launches after clearance"
+    },
+    {
+      "passed": true,
+      "name": "both real teams receive one collision hole",
+      "detail": {
+        "a": 1,
+        "b": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "collision stays separated",
+      "detail": 60.000205993652344
+    },
+    {
+      "passed": true,
+      "name": "server retains ownership"
+    },
+    {
+      "passed": true,
+      "name": "Player1 foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "Player2 foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "third client foreign prompts hidden"
+    },
+    {
+      "passed": true,
+      "name": "foreign pickup denied on server"
+    },
+    {
+      "passed": true,
+      "name": "foreign tether denied"
+    },
+    {
+      "passed": true,
+      "name": "own team weapon pickup allowed",
+      "detail": {
+        "distance": 3.0242562294006348,
+        "health": 100,
+        "inFlight": true
+      }
+    },
+    {
+      "passed": true,
+      "name": "enemy balloon ignores bullets"
+    },
+    {
+      "passed": true,
+      "name": "solo tether attached before disconnect"
+    },
+    {
+      "passed": true,
+      "name": "native client can disconnect"
+    },
+    {
+      "passed": true,
+      "name": "player leaves server"
+    },
+    {
+      "passed": true,
+      "name": "departed flight cleaned"
+    },
+    {
+      "passed": true,
+      "name": "departed equipment cleaned"
+    },
+    {
+      "passed": true,
+      "name": "remaining team continues"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 53.47257270000409,
+  "serverLogs": [],
+  "purchasesTested": false,
+  "metrics": {
+    "minimumCollisionDistance": 60.000205993652344,
+    "firstPickup": {
+      "enabled": false,
+      "key": "E",
+      "triggered": true,
+      "distance": 3.0295441150665283,
+      "health": 100
+    },
+    "startPrompt": {
+      "enabled": true,
+      "distance": 3.3306667804718018
+    }
+  },
+  "ok": true,
+  "mode": "3 native Studio clients",
+  "cloudTested": false
+}

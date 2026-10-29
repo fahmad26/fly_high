@@ -1,0 +1,195 @@
+{
+  "logs": [],
+  "ok": false,
+  "players": [
+    {
+      "name": "Player1",
+      "logs": [
+        {
+          "message": "Infinite yield possible on 'Players.Player1.PlayerScripts:WaitForChild(\"PlayerModule\")'",
+          "kind": "MessageWarning"
+        }
+      ]
+    },
+    {
+      "name": "Player2",
+      "logs": []
+    },
+    {
+      "name": "Player3",
+      "logs": []
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player1 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player1 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    }
+  ],
+  "clientLogCount": 1,
+  "duration": 38.2562097000191,
+  "error": "ServerScriptService.WarningAudioServerQA:11: client timeout\nServerScriptService.WarningAudioServerQA:11\nServerScriptService.WarningAudioServerQA:26\n",
+  "metrics": []
+}

@@ -296,3 +296,39 @@ Artefak: audit/rigging-flow-results.json, rigging-native-results.json, rigging-m
 Seluruh driver/remote QA sementara dihapus dari place; Studio kembali Edit dan viewport default. Pengujian perangkat fisik, manusia, jaringan internet, Robux/cloud tetap belum dilakukan; tidak memublikasikan experience.
 
 Build tersimpan: 833464 byte; SHA256 **7F90136DF83732E2FEC33BAB36FF2312A0574BB67287B707016F2BC28587EF5B**.
+
+## Audio Peringatan dan Handoff Katrol — 29 Oktober 2026
+
+Audio kini tersedia untuk tali menipis/kritis, Dinding Badai, empat/lima lubang dan warning hazard reguler. Implementasi lokal tidak memengaruhi validasi gameplay atau memberikan item berbayar.
+
+### Implementasi
+
+- WarningAudioController memakai dua aset gratis Creator Store: [Warning Tone Beep — BunnyNabbit](https://create.roblox.com/store/asset/17761221095) (0,2666 detik) dan [siren alarm — baba_kakat](https://create.roblox.com/store/asset/129496339606661) (1,0449 detik). Keduanya dimuat dan diputar di Studio dengan kemajuan TimePosition serta PlaybackLoudness positif. Manifest: audit/warning-audio-assets.json. Fallback volume_slider.ogg berasal dari konten bawaan Roblox.
+- Audio hanya untuk kru penerima event. Urutan prioritas 5 lubang > tali ≤15% > badai > 4 lubang > hazard reguler > tali ≤30%. Satu voice, jadwal beep/sirine dibatasi cadence; paket duplikat tidak mereset siklus setiap frame.
+- Tali berhenti mengingatkan saat Descending, di basket atau dilepas. Badai berhenti untuk tim yang sudah di bawah batas aman, atau setelah event Ended/expiry. Perbaikan/Clutch Save, death, ghost, game over, victory dan pergantian flight membersihkan status yang selesai. Controller memiliki pool tetap berisi tiga Sound (termasuk fallback) dan satu SoundGroup.
+- Opsi SUARA PERINGATAN di AKSI hanya mematikan kanal tersebut; preferensi tetap selama sesi/respawn. Primary controls LEPAS KEMUDI/GAS OTOMATIS tidak dipindah. Label tali mendapat peringatan visual amber/merah dan instruksi turun.
+- Pool diparent ke controller agar otomatis terhapus saat script dihapus. Tombol memiliki ObjectValue ControllerOwner; HUDLayout membersihkan tombol orphan dan referensi original GUI yang telah dihancurkan. Ini mengatasi cleanup saat pengembangan tanpa membuat janitor atau pool baru setiap flight.
+- Aset Sound tidak perlu berada di SoundService untuk pemutaran global: [referensi Sound Roblox](https://create.roblox.com/docs/reference/engine/classes/Sound) menjelaskan suara yang bukan child BasePart/Attachment bersifat global. Penempatan di controller telah diverifikasi menghasilkan sinyal pemutaran.
+- Volume/ambang/cadence berada di FlyHighConfig.AUDIO_WARNINGS. Panduan konfigurasi Roblox ditinjau; konfigurasi cloud dan eksperimen tidak ditambahkan karena sesi tetap file lokal dan publikasi masih ditunda.
+
+### Masalah katrol yang ditemukan saat sampling audio
+
+Avatar yang diam setelah katrol dapat terdorong dari ring: bagian tubuh masih bertabrakan ketika pose dipindahkan melewati kubah dan kendali fisika dikembalikan sebelum pose akhir stabil. Diagnostik mencatat kecepatan menyamping sekitar 85 stud/detik meskipun MoveDirection nol. Menambah clearance saja tidak menyelesaikannya.
+
+Perbaikan memakai collision group sementara FlyHighWinching selama perjalanan; seluruh collision group karakter semula disimpan/dipulihkan. Gerak 1,3 detik diikuti hold pose akhir 0,3 detik sebelum unanchor/ownership, sehingga total durasi tetap 1,6 detik. Kecepatan sudut dibersihkan dan tidak lagi memberi MoveTo menuju koordinat dunia yang sudah tertinggal. Cancel mengembalikan pemain ke titik aman asal sebelum memulihkan tabrakan. Tinggi pijakan memakai HipHeight dan ukuran root; untuk R6 ditambah tinggi kaki sesuai [rumus resmi Humanoid.HipHeight](https://create.roblox.com/docs/reference/engine/classes/Humanoid).
+
+Dua engineer memakai titik landing yang berbeda (depan/belakang ring; X=-4/+4 saat turun). Native QA mengonfirmasi dua engineer dapat naik dan turun bersamaan, grup collision pulih, tali otomatis dilepas, dan cancel tidak meninggalkan anchor/grup sementara. Sampel idle akhir tetap pada ring (Y relatif sekitar 20,56, Z sekitar -20,12) dengan FloorMaterial WoodPlanks, bukan terlempar.
+
+### Verifikasi dan batasnya
+
+**139/139 lulus:** 49 audio, 40 alur tali dan 50 multiplayer. Tiga client native, log final server dan semua client kosong dari error/warning. Semua **26 skrip produksi** terkompilasi dan lima source yang berubah cocok antara disk/Studio.
+
+Uji audio meliputi muatan/sinyal kedua aset, silent lobby/healthy flight, isolasi antar-tim, 20 event duplikat, prioritas tali kritis, suppression ketika turun, sirine 4/5 lubang, Clutch Save, mute/unmute tanpa mematikan audio rekan, badai global/posisi aman/Ended, ghost/death, relaunch tanpa stale alert atau pertambahan pool, dan penghapusan controller. Pengamatan suara aktif maksimum satu. Smoke Galaxy A06 memakai klik tombol aktual: mute mengatur volume 0 dan label OFF, unmute kembali 0,4; hitbox 224×44 dan dua primary control tetap di FlyHighHUD.
+
+Run1–8 dipertahankan untuk diagnostik: awalnya fixture kehilangan pijakan ketika sampling tali, pembersihan script sendiri belum menghapus objek eksternal, satu client mengalami CoreGui CreatorType, dan fixture PlayerModule lama tidak tersedia pada native client. Fixture diperbaiki tanpa menghapus log; pengujian akhir memakai avatar berfisika normal di ring dan input netral selama idle, bukan mengunci posisi karakter. Status HP/posisi awal tetap diatur server untuk mencapai kasus uji. R15 diuji secara fisik; dukungan tinggi R6 mengikuti rumus API dan belum merupakan human playtest R6.
+
+Bukti: audit/warning-audio-results.json, warning-audio-native-results.json, warning-audio-rigging-results.json, warning-audio-multiplayer-results.json; diagnostik warning-audio-run1.json sampai run8.json. Driver: audit/warning_audio_client_playtest.luau dan warning_audio_server_playtest.luau; rigging driver diperluas untuk dua engineer. Semua driver/remote QA telah dihapus dari DataModel produksi. Backup: audit/Fly High.before-warning-audio.rbxl.
+
+Human listening review, kenyamanan volume di HP/controller fisik, latency internet, pembelian Robux dan cloud tetap belum diuji. Tidak menerbitkan experience.
+
+Build tersimpan **837808 byte**; SHA256 **34C9563D4747D3DB7EF0F2A90185871EB7E3CC37A4336C7B6BC3F64E63A55C3A**.

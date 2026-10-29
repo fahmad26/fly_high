@@ -56,3 +56,5 @@ Pembaruan 28 Oktober 2026 mencakup audit gameplay, zona aman 1.200 km, gondola 2
 Pembaruan berikutnya menambahkan Dinding Badai pada lima milestone dan loncatan kru untuk menurunkan balon. Pilot/engineer dibatasi sesuai peran; efek turun dibagi agar solo, duo dan trio seimbang. Rincian balancing dan hasil QA ada di PRD serta AUDIT_REPORT.
 
 QA perangkat 29 Oktober 2026 memperbaiki tata letak HP dan tombol lompat sentuh. HUD ringkas menyediakan panel AKSI, menu toko dapat digulir, dan tombol sentuh minimal 44 piksel. Regresi tiga client 101/101 lulus; hasil serta batas pengujian ada di [laporan audit](./AUDIT_REPORT.md), [hasil QA perangkat](./audit/device-qa-results.json), dan [preview HP](./audit/device-phone-preview.jpg).
+
+Audio peringatan tali, badai dan balon kritis kini tersedia dengan mute lokal lewat AKSI. Pendaratan katrol juga distabilkan; dua engineer memakai titik landing berbeda. QA akhir 139/139 lulus. Lihat [hasil audio](./audit/warning-audio-results.json) dan [laporan audit](./AUDIT_REPORT.md).

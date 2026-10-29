@@ -20,6 +20,21 @@ local FlyHighConfig = {
 	PASSIVE_INVULN_DURATION = 5, -- 5 seconds grace period after damage
 	CLUTCH_SAVE_INVULN_DURATION = 60, -- 1 minute emergency shield
 
+	-- Local warning mix/pacing; does not alter damage or rope durability.
+	AUDIO_WARNINGS = {
+		VOLUME = 0.4,
+		ROPE_LOW_PERCENT = 30,
+		ROPE_CRITICAL_PERCENT = 15,
+		PROFILES = {
+			Freefall = { priority=60, asset="WarningSiren", gain=1, interval=1, notes={{at=0,pitch=1.3,length=.85}} },
+			RopeCritical = { priority=50, asset="WarningTone", gain=.45, interval=1.2, notes={{at=0,pitch=1.5,length=.22},{at=.24,pitch=1.5,length=.22}} },
+			Storm = { priority=40, asset="WarningSiren", gain=.9, interval=1.8, notes={{at=0,pitch=1,length=1.1}} },
+			Critical = { priority=30, asset="WarningTone", gain=.4, interval=2.6, notes={{at=0,pitch=.8,length=.36},{at=.38,pitch=1,length=.3}} },
+			Hazard = { priority=20, asset="WarningSiren", gain=.7, interval=1.5, notes={{at=0,pitch=1.1,length=1}} },
+			RopeLow = { priority=10, asset="WarningTone", gain=.35, interval=3, notes={{at=0,pitch=1.1,length=.3}} },
+		},
+	},
+
 	-- Crew jump impulses and shared storm curtain challenges
  JUMP_DROP_STUDS = 18,
  JUMP_MAX_PENDING_STUDS = 36,
@@ -45,6 +60,8 @@ local FlyHighConfig = {
 	ROPE_MAX_DURABILITY = 100,
 	ROPE_DECAY_PER_SEC = 5,
 	ROPE_REPAIR_RATE_PER_SEC = 25,
+	WINCH_MOVE_DURATION_SEC = 1.3,
+	WINCH_SETTLE_DURATION_SEC = 0.3,
 
 	-- Weapons
 	WEAPONS = {

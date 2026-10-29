@@ -1,0 +1,24 @@
+[
+  {
+    "name": "WarningTone",
+    "assetId": 17761221095,
+    "creator": "BunnyNabbit",
+    "source": "Creator Store, free",
+    "url": "https://create.roblox.com/store/asset/17761221095",
+    "duration": 0.26660416666666664
+  },
+  {
+    "name": "WarningSiren",
+    "assetId": 129496339606661,
+    "creator": "baba_kakat",
+    "source": "Creator Store, free",
+    "url": "https://create.roblox.com/store/asset/129496339606661",
+    "duration": 1.0448979591836736
+  },
+  {
+    "name": "Fallback",
+    "soundId": "rbxasset://sounds/volume_slider.ogg",
+    "source": "Roblox bundled sound",
+    "duration": 0.8454166666666667
+  }
+]

@@ -472,3 +472,22 @@ Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca har
 Tali juga dapat dilepas langsung dengan [T] / L2 / interaksi stasiun tanpa naik ke kubah. Perbaikan dibatalkan jika pemain pergi dari stasiun, karakter berganti/gugur atau flight berakhir. Jumlah tali tetap satu untuk solo/duo dan dua untuk trio; durabilitas berkurang 5 HP/detik di luar gondola. Slot yang sedang diperbaiki dicadangkan agar tidak dipakai bersamaan.
 
 LEPAS KEMUDI kini langsung berada di HUD utama bersama GAS OTOMATIS, masing-masing 140×48 piksel pada mode ringkas. Saat menjadi pilot, panel lompat disembunyikan karena pilot tidak dapat melompat; setelah melepas kemudi panel lompat kembali.
+
+## Audio Peringatan dan Stabilitas Katrol — 29 Oktober 2026
+
+Audio peringatan dimainkan secara lokal untuk kru yang relevan. Satu kanal memberi prioritas kepada bahaya paling mendesak, sehingga alarm tidak bertumpuk atau dimulai ulang pada setiap sinkronisasi status.
+
+| Kondisi | Bunyi dan pengulangan |
+| --- | --- |
+| Tali ≤30% saat di luar gondola | Satu beep setiap 3 detik |
+| Tali ≤15% | Dua beep cepat setiap 1,2 detik |
+| Dinding Badai, posisi masih tidak aman | Sirine pendek setiap 1,8 detik |
+| Empat lubang | Dua nada peringatan setiap 2,6 detik |
+| Lima lubang / terjun bebas | Sirine lebih cepat setiap 1 detik |
+| Peringatan hazard reguler | Sirine pendek selama jendela peringatan |
+
+Urutan prioritas: lima lubang → tali kritis → badai → empat lubang → hazard reguler → tali menipis. Peringatan tali berhenti saat mulai turun, kembali ke gondola atau melepas tali. Sirine badai berhenti setelah posisi aman atau gelombang berakhir. Clutch Save, kematian, spectator dan akhir flight menghentikan peringatan yang tidak lagi berlaku.
+
+Volume awal kanal 40%; opsi **SUARA PERINGATAN: ON/OFF** ada di AKSI, berlaku hanya untuk audio peringatan pemain tersebut dan bertahan sepanjang sesi, termasuk respawn. HUD tali tetap menampilkan indikator visual ketika suara dimatikan. Kemudi dan gas otomatis tetap langsung di HUD utama.
+
+Katrol tetap berdurasi total sekitar 1,6 detik: perjalanan 1,3 detik dan stabilisasi pose 0,3 detik sebelum kendali fisika avatar dikembalikan. Tabrakan tubuh dinonaktifkan selama katrol dan dipulihkan setelah mendarat/dibatalkan. Dua slot tali memakai sisi titian serta titik turun berbeda agar dua engineer tidak mendarat bertumpuk. Perhitungan tinggi pijakan mendukung bentuk R15 dan rumus tinggi kaki R6.

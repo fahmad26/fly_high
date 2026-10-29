@@ -4,6 +4,10 @@ local RS=game:GetService("ReplicatedStorage")
 local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
 local U=require(script.Parent.ServerUtils)
 local remotes=RS.FlyHigh.Remotes
+local Physics=game:GetService("PhysicsService")
+pcall(function()Physics:RegisterCollisionGroup("FlyHighBalloons")end)
+pcall(function()Physics:RegisterCollisionGroup("FlyHighWinching")end)
+for _,name in {"Default","FlyHighBalloons","FlyHighWinching"}do Physics:CollisionGroupSetCollidable("FlyHighWinching",name,false)end
 local Manager={activeTethers={},attachHandlers=setmetatable({},{__mode="k"}),ropePools=setmetatable({},{__mode="k"}),ropeRepairs=setmetatable({},{__mode="k"})}
 _G.FlyHighTetherManager=Manager
 
@@ -33,6 +37,10 @@ local function independentOwner(t,automatic)
   elseif t.player.Parent==Players then t.hrp:SetNetworkOwner(t.player)end
  end
 end
+local function restoreCollisions(t)
+ for part,group in pairs(t.collisionGroups or {})do if part.Parent then part.CollisionGroup=group end end
+ t.collisionGroups=nil
+end
 
 function Manager.CancelRopeRepair(p)
  local repair=Manager.ropeRepairs[p]
@@ -54,7 +62,12 @@ function Manager.CleanupPlayer(p)
  local t=Manager.activeTethers[p.UserId]
  if not t then return end
  Manager.activeTethers[p.UserId]=nil
- if t.hrp.Parent and t.winch then t.hrp.Anchored=t.oldAnchored end
+ if t.hrp.Parent and t.winch then
+  local root=t.balloon.PrimaryPart
+  if root and root.Parent then t.hrp.CFrame=root.CFrame*CFrame.new(t.winch.from)t.hrp.AssemblyLinearVelocity=root.AssemblyLinearVelocity end
+  t.hrp.AssemblyAngularVelocity=Vector3.zero t.hrp.Anchored=t.oldAnchored
+ end
+ restoreCollisions(t)
  if t.hum.Parent and t.winch then t.hum.AutoRotate=t.oldAutoRotate end
  t.rope:Destroy()t.attChar:Destroy()
  if t.slot.holder==p then
@@ -120,9 +133,12 @@ local function travel(p,b,descending)
  local t=Manager.activeTethers[p.UserId]
  if not t or t.balloon~=b or t.winch or not U.Alive(p,U.Flight(p))then return false end
  U.Unseat(p)
- local standing=t.hum.HipHeight+t.hrp.Size.Y/2+.1
- local destination=descending and Vector3.new(0,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,18.6+standing,-20)
+ local leg=t.hum.RigType==Enum.HumanoidRigType.R6 and p.Character:FindFirstChild("Left Leg")
+ local standing=t.hum.HipHeight+t.hrp.Size.Y/2+(leg and leg.Size.Y or 0)+math.max(.1,t.hrp.Size.Y/2)
+ local destination=descending and Vector3.new(t.slot.index==2 and 4 or -4,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,18.6+standing,t.slot.index==2 and 20 or -20)
  t.oldAnchored=t.hrp.Anchored t.oldAutoRotate=t.hum.AutoRotate
+ t.collisionGroups={}
+ for _,part in p.Character:GetDescendants()do if part:IsA("BasePart")then t.collisionGroups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end
  t.hrp.Anchored=true t.hum.AutoRotate=false t.repair=nil
  t.stage=descending and "Descending"or "Climbing"
  t.winch={from=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position),to=destination,elapsed=0,detach=descending}
@@ -249,12 +265,14 @@ RunService.Heartbeat:Connect(function(dt)
   if t.repair and(t.winch or not t.repair.hole.Parent or not U.Near(p,t.repair.hole,10)or fd.holes>=5)then t.repair=nil end
   if t.winch then
    local w=t.winch w.elapsed+=dt
-   local alpha=math.clamp(w.elapsed/1.6,0,1)local eased=alpha*alpha*(3-2*alpha)
+   local alpha=math.clamp(w.elapsed/Config.WINCH_MOVE_DURATION_SEC,0,1)local eased=alpha*alpha*(3-2*alpha)
    -- Re-evaluate against the moving balloon, never against a cached world altitude.
    t.hrp.CFrame=t.balloon.PrimaryPart.CFrame*CFrame.new(w.from:Lerp(w.to,eased))
-   if alpha>=1 then
-    t.hrp.Anchored=t.oldAnchored t.hrp.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity
-    t.hum.AutoRotate=t.oldAutoRotate t.hum:MoveTo(t.hrp.Position)t.winch=nil
+   -- Replicate the settled landing pose before returning physics ownership.
+   if w.elapsed>=Config.WINCH_MOVE_DURATION_SEC+Config.WINCH_SETTLE_DURATION_SEC then
+    t.hrp.Anchored=t.oldAnchored t.hrp.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity t.hrp.AssemblyAngularVelocity=Vector3.zero
+    restoreCollisions(t)
+    t.hum.AutoRotate=t.oldAutoRotate t.hum:Move(Vector3.zero,false)t.winch=nil
     independentOwner(t,false)
     if w.detach then Manager.CleanupPlayer(p)continue end
     t.stage="Catwalk"

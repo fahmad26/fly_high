@@ -1,0 +1,544 @@
+{
+  "logs": [],
+  "ok": false,
+  "players": [
+    {
+      "name": "Player1",
+      "logs": []
+    },
+    {
+      "name": "Player2",
+      "logs": []
+    },
+    {
+      "name": "Player3",
+      "logs": [
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module TopBar.\nRequested module experienced an error while loading",
+          "kind": "MessageWarning"
+        },
+        {
+          "message": "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "kind": "MessageError"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module PlayerListManager.\nRequested module experienced an error while loading",
+          "kind": "MessageWarning"
+        },
+        {
+          "message": "[Roblox][Script Context.StarterScript] Script Context.StarterScript:507: Invalid value for enum CreatorType",
+          "kind": "MessageError"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player1 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player1 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player2 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 data ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 two audio assets loaded",
+      "detail": {
+        "WarningSiren": {
+          "loaded": true,
+          "length": 1.0448979591836736
+        },
+        "Fallback": {
+          "loaded": true,
+          "length": 0.8454166666666667
+        },
+        "WarningTone": {
+          "loaded": true,
+          "length": 0.26660416666666664
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player3 lobby silent",
+      "detail": {
+        "notes": 0,
+        "loaded": 2,
+        "fallback": false,
+        "state": "",
+        "folder": true,
+        "logs": [
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module TopBar.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module PlayerListManager.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Script Context.StarterScript:507: Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          }
+        ],
+        "cues": 0,
+        "muted": false,
+        "volume": 0.4000000059604645,
+        "toggle": true,
+        "assets": {
+          "WarningSiren": {
+            "loaded": true,
+            "length": 1.0448979591836736
+          },
+          "Fallback": {
+            "loaded": true,
+            "length": 0.8454166666666667
+          },
+          "WarningTone": {
+            "loaded": true,
+            "length": 0.26660416666666664
+          }
+        },
+        "children": 4,
+        "playing": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "healthy flight is silent"
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm produces playback signal",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 54.43498119711876,
+        "progress": 0.681
+      }
+    },
+    {
+      "passed": true,
+      "name": "other team does not hear private hazard"
+    },
+    {
+      "passed": true,
+      "name": "duplicate warnings do not restart every packet",
+      "detail": {
+        "last": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 0
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 1,
+          "loaded": 2,
+          "fallback": false,
+          "state": "Hazard",
+          "folder": true,
+          "logs": [],
+          "cues": 1,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 11.895174626260996,
+        "progress": 1.033
+      }
+    },
+    {
+      "passed": true,
+      "name": "hazard alarm stops at expiry"
+    },
+    {
+      "passed": true,
+      "name": "worn rope in basket stays silent"
+    },
+    {
+      "passed": true,
+      "name": "climb completes"
+    },
+    {
+      "passed": true,
+      "name": "low rope warns outside basket"
+    },
+    {
+      "passed": true,
+      "name": "critical rope escalates warning"
+    },
+    {
+      "passed": true,
+      "name": "critical rope preempts hazard without overlapping",
+      "detail": {
+        "last": {
+          "notes": 6,
+          "loaded": 2,
+          "fallback": false,
+          "state": "RopeCritical",
+          "folder": true,
+          "logs": [],
+          "cues": 5,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 0
+        },
+        "maxPlaying": 1,
+        "first": {
+          "notes": 6,
+          "loaded": 2,
+          "fallback": false,
+          "state": "RopeCritical",
+          "folder": true,
+          "logs": [],
+          "cues": 5,
+          "muted": false,
+          "volume": 0.4000000059604645,
+          "toggle": true,
+          "assets": {
+            "WarningSiren": {
+              "loaded": true,
+              "length": 1.0448979591836736
+            },
+            "Fallback": {
+              "loaded": true,
+              "length": 0.8454166666666667
+            },
+            "WarningTone": {
+              "loaded": true,
+              "length": 0.26660416666666664
+            }
+          },
+          "children": 4,
+          "playing": 1
+        },
+        "peak": 40.22230580449104,
+        "progress": 0.256
+      }
+    },
+    {
+      "passed": false,
+      "name": "descent starts",
+      "detail": {
+        "durability": 8.591807476244867,
+        "relative": "-7.1649885177612305, -464.116455078125, -71.95387268066406",
+        "stage": "Catwalk"
+      }
+    }
+  ],
+  "clientLogCount": 15,
+  "duration": 24.201025300018955,
+  "error": "ServerScriptService.WarningAudioServerQA:13: descent starts: table: 0x564ea37590b7868a\nServerScriptService.WarningAudioServerQA:13\nServerScriptService.WarningAudioServerQA:26\n",
+  "metrics": []
+}

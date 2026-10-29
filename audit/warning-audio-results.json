@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-29",
+  "productionScripts": 26,
+  "audio": {
+    "passed": 49,
+    "ok": true,
+    "clientLogs": 0,
+    "serverLogs": 0
+  },
+  "rigging": {
+    "passed": 40,
+    "ok": true
+  },
+  "multiplayer": {
+    "passed": 50,
+    "ok": true
+  },
+  "phoneMute": {
+    "state": "Critical",
+    "muted": true,
+    "buttonSize": "224, 44",
+    "releaseHelmParent": "FlyHighHUD",
+    "volume": 0,
+    "buttonText": "SUARA PERINGATAN: OFF",
+    "autoGasParent": "FlyHighHUD"
+  },
+  "phoneUnmute": {
+    "state": "Critical",
+    "loaded": 2,
+    "muted": false,
+    "volume": 0.4000000059604645
+  },
+  "assetPlayback": {
+    "1": {
+      "name": "WarningTone",
+      "progress": 0.256,
+      "length": 0.26660416666666664,
+      "peak": 273.1707990169525,
+      "loaded": true
+    },
+    "2": {
+      "name": "WarningSiren",
+      "progress": 0.597,
+      "length": 1.0448979591836736,
+      "peak": 54.63960021734238,
+      "loaded": true
+    },
+    "3": {
+      "loaded": true,
+      "length": 0.8454166666666667,
+      "name": "Fallback"
+    }
+  },
+  "studioEndState": "Edit; viewport default; QA removed",
+  "cloudTested": false,
+  "purchasesTested": false,
+  "physicalDeviceTested": false,
+  "humanListeningReview": false,
+  "build": {
+    "hash": "34C9563D4747D3DB7EF0F2A90185871EB7E3CC37A4336C7B6BC3F64E63A55C3A",
+    "bytes": 837808
+  },
+  "totalPassed": 139
+}
