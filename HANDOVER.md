@@ -251,6 +251,8 @@ Sesuai koreksi pengguna, AutoGasButton dikeluarkan dari daftar AKSI di HUDLayout
 
 ## 17. Kontrol Gas, Kecepatan Vertikal, dan Papan Spawn — 30 Oktober 2026
 
+**Aturan cleanup QA dari pengguna:** setelah tes multiplayer, kembalikan jumlah client Server & Clients ke **1** dan mode toolbar ke **Test** (Play biasa), selain menghentikan tes, membersihkan driver, dan memulihkan viewport. ExecuteMultiplayerTestAsync dapat meninggalkan pilihan tiga client di toolbar; jangan meninggalkan pengaturan ini untuk playtest pengguna. Pengaturan sudah dipulihkan dan tombol Play biasa diverifikasi membuka tepat satu pemain.
+
 - Button factory WeaponClientController memakai UICorner 10 piksel dan BorderSizePixel=0, sehingga PING konsisten dengan SUARA PERINGATAN dan tombol aksi lain.
 - Menggantikan izin lama pada bagian 8/13: hanya penghuni HelmSeat yang hidup dan tercatat sebagai pilot boleh menyalakan maupun mematikan gas otomatis. BalloonManager memvalidasi fd.pilot, SeatPart, dan Occupant pada kedua arah toggle. FlightHUDController menyembunyikan tombol saat kemudi dilepas dan memblokir input Z/L1 dari penumpang. Gas yang sudah aktif tetap berjalan ketika kemudi kosong; pengganti pilot dapat mengambil alih. Petunjuk badai disesuaikan agar kru meminta pilot mematikan gas.
 - Semua enam template VehicleSeat menonaktifkan HeadsUpDisplay; LaunchBalloon juga menegakkan properti ini. Speedometer kendaraan bawaan diganti VerticalSpeedLabel di samping progress altimeter. FlightStateSyncEvent menyertakan verticalSpeedKmPerSec, disampel dari delta ketinggian aktual per waktu server dan skala STUDS_PER_KM, termasuk PivotTo saat lima lubang. Tampilan NAIK/TURUN/DIAM; EndFlight dan Clutch Save mereset sampel. Tidak ada RemoteEvent produksi tambahan.
