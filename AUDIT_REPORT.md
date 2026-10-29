@@ -262,3 +262,7 @@ Artefak final: audit/device-qa-results.json, audit/device-multiplayer-results.js
 Batas pengujian: simulator pada satu komputer, klik mouse dalam mode sentuh, posisi flight disiapkan server. Belum mengukur kenyamanan pemain manusia, touchscreen/gamepad fisik, latency/packet loss internet atau sesi natural panjang. Pembelian Robux, penyimpanan cloud dan publikasi tetap ditunda sesuai permintaan pengguna. Studio berakhir Edit dengan viewport default; seluruh driver/remote QA sementara telah dihapus.
 
 Build tersimpan: Fly High.rbxl **831.155 byte**, SHA256 **08BD6AAB900F416323099504292405523FE6A8202EC45FF7B68D687CFE8E7AA2**.
+
+## Koreksi Akses Gas Otomatis
+
+Pengguna meminta GAS OTOMATIS tersedia tanpa membuka AKSI. AutoGasButton kini tetap menjadi child FlyHighHUD; mode ringkas menempatkannya di bawah tengah (140×48), di antara LOMPAT dan AKSI dengan jarak 8 piksel. Pengujian klik nyata pada simulator Galaxy A06 memastikan satu tap menyalakan, tombol tetap terlihat dan gas aktif setelah kemudi dilepas, lalu satu tap langsung mematikan. Tombol tidak berada di tray; konsol bersih. Ini pemeriksaan terarah atas perubahan layout; suite 101 skenario tidak dijalankan ulang untuk koreksi posisi ini. Bukti: audit/direct-autogas-results.json.

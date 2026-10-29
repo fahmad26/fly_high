@@ -1,0 +1,22 @@
+{
+  "device": "Samsung Galaxy A06 simulator",
+  "autoGasParent": "FlyHighHUD",
+  "insideActions": false,
+  "buttonSize": [
+    140,
+    48
+  ],
+  "buttonPosition": [
+    279,
+    223
+  ],
+  "oneTapEnabled": true,
+  "persistsAfterRelease": true,
+  "visibleAfterRelease": true,
+  "oneTapDisabled": true,
+  "actionsClosedForToggle": true,
+  "consoleErrors": 0,
+  "consoleWarnings": 0,
+  "physicalDeviceTested": false,
+  "cloudTested": false
+}

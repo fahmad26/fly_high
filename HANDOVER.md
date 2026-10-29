@@ -213,3 +213,7 @@ Fitur yang sebelumnya berupa backlog kini diimplementasikan. Total skrip produks
 - Artefak: audit/device-qa-results.json, device-multiplayer-results.json, device-storm-results.json, device-phone-preview.jpg, device_review_server.luau, device_layout_probe.luau. Backup: audit/Fly High.before-device-qa.rbxl.
 - Dua run antara meluluskan 50 skenario gameplay tetapi mencatat CoreGui CreatorType atau satu warning asset HTTP 502; raw log disimpan. Lookup harness untuk tombol AutoGas kini rekursif karena tombol dipindah ke panel AKSI pada mode ringkas.
 - Ini tetap pengujian otomatis dan interaksi simulator; belum human playtest, HP/controller fisik atau latency internet. Cloud/pembelian/publikasi tetap ditunda.
+
+## 13. Gas Otomatis di HUD Utama
+
+Sesuai koreksi pengguna, AutoGasButton dikeluarkan dari daftar AKSI di HUDLayout. Pada mode ringkas tombol 140×48 berada di antara LOMPAT dan AKSI; ketiganya diposisikan ulang agar tidak overlap. Tampilan desktop dan validasi otorisasi server tetap mengikuti aturan pilot/kru sebelumnya. Playtest Galaxy A06: satu klik menyalakan, gas bertahan setelah lepas kemudi, lalu satu klik pada HUD utama mematikan; tombol tidak ada di tray, konsol tanpa error/warning. Viewport dikembalikan default dan driver runtime QA tidak disimpan.

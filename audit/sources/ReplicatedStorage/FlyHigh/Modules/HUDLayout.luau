@@ -1,6 +1,6 @@
 -- One layout owner: scale positions and dimensions together, never touch hitboxes.
 local Layout = {}
-local actions = {"ReleaseHelmButton", "AutoGasButton", "AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "ReloadButton", "DropButton", "PingButton"}
+local actions = {"ReleaseHelmButton", "AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "ReloadButton", "DropButton", "PingButton"}
 
 local function box(object, x, y, w, h)
  object.AnchorPoint = Vector2.zero
@@ -160,12 +160,16 @@ function Layout.Start(gui, player)
     status.HolePenalty.Size = UDim2.new(1, -16, 0, 26)
    end
    place("GroundedCountdown", 202, 51, math.max(220, w - 326), 30)
-   local jump = place("JumpPanel", w / 2 - 106, h - 56, 100, 48)
+   -- Auto gas is a primary flight control and must be reachable in one tap.
+   local autoGas = get("AutoGasButton")
+   local showAutoGas = autoGas and autoGas.Visible
+   local jump = place("JumpPanel", w / 2 - (showAutoGas and 182 or 106), h - 56, 100, 48)
    if jump then
     jump.JumpHint.Visible = false
     box(jump.JumpButton, 0, 0, 100, 48)
    end
-   box(toggle, w / 2 + 6, h - 56, 108, 48)
+   place("AutoGasButton", w / 2 - 74, h - 56, 140, 48)
+   box(toggle, w / 2 + (showAutoGas and 74 or 6), h - 56, 108, 48)
    box(tray, w / 2 - 120, 8, 240, h - 72)
    tray.CanvasSize = UDim2.fromOffset(0, row * 50 + 8)
    place("GasButton", w - 116, 58, 108, 64)

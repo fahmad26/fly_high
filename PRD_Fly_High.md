@@ -454,7 +454,9 @@ Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca har
 
 - Orientasi permainan tetap LandscapeSensor. HUD menggunakan area aman CoreUISafeInsets untuk menghindari notch dan kontrol Roblox.
 - Pada area GUI yang lebarnya di bawah 760 piksel atau tingginya di bawah 600 piksel, gunakan tata letak ringkas: ketinggian, kit dan toko di atas; LOMPAT serta AKSI di bawah tengah. GAS/TEMBAK tetap tersedia sesuai peran.
-- AKSI membuka daftar yang dapat digulir untuk lepas kemudi, gas otomatis, pasang/isi/lepas tali, naik/turun, tambal, reload, drop dan ping. Hanya aksi yang relevan dengan kondisi pemain yang ditampilkan. Tap AKSI lagi atau area luar untuk menutup.
+- AKSI membuka daftar yang dapat digulir untuk lepas kemudi, pasang/isi/lepas tali, naik/turun, tambal, reload, drop dan ping. Hanya aksi yang relevan dengan kondisi pemain yang ditampilkan. Tap AKSI lagi atau area luar untuk menutup.
 - Tombol sentuh minimal 44×44 piksel. Menu toko digulir secara vertikal agar tombol beli tidak mengecil; tidak ada perubahan harga atau aturan pemberian item.
 - Tombol LOMPAT menjalankan state Jumping Humanoid biasa ketika berpijak, hidup dan diizinkan perannya. Pemeriksaan fisik, cooldown dan pembagian efek turun di server tetap berlaku; tombol tidak memberikan efek turun langsung.
 - Pengujian simulator Galaxy A06, iPhone 17 Pro dan iPad Pro M5 lulus pemeriksaan batas layar dan ukuran tombol. Perangkat fisik dan penilaian kenyamanan oleh manusia tetap belum diuji.
+
+- **Koreksi akses gas otomatis:** GAS OTOMATIS berada langsung di HUD utama, di antara LOMPAT dan AKSI pada mode ringkas, dengan ukuran 140×48 piksel. Tombol muncul saat menjadi pilot dan tetap tersedia selama gas otomatis aktif meskipun kemudi dilepas. Nyalakan/matikan cukup satu tap tanpa membuka AKSI.
