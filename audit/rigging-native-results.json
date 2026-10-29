@@ -1,0 +1,287 @@
+{
+  "logs": [],
+  "ok": true,
+  "players": [
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three native clients"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "native interaction attaches rope"
+    },
+    {
+      "passed": true,
+      "name": "rope does not join physics mechanisms"
+    },
+    {
+      "passed": true,
+      "name": "balloon remains server owned"
+    },
+    {
+      "passed": true,
+      "name": "full rope cannot be repaired while worn"
+    },
+    {
+      "passed": true,
+      "name": "attach does not refill worn rope"
+    },
+    {
+      "passed": true,
+      "name": "manual detach before climbing"
+    },
+    {
+      "passed": true,
+      "name": "reattach preserves slot durability"
+    },
+    {
+      "passed": true,
+      "name": "premature repair finish rejected"
+    },
+    {
+      "passed": true,
+      "name": "unworn rope repairs through native hold"
+    },
+    {
+      "passed": true,
+      "name": "attached crew follows ascent and lateral motion",
+      "detail": {
+        "rise": 25.478912353515625,
+        "maxRelativeDrift": 0.000030040740966796875
+      }
+    },
+    {
+      "passed": true,
+      "name": "climb follows moving balloon"
+    },
+    {
+      "passed": true,
+      "name": "avatar ownership restored after winch"
+    },
+    {
+      "passed": true,
+      "name": "hole 1 repaired through interaction",
+      "detail": {
+        "relative": "-4.2606201171875, 20.624744415283203, -22.0769100189209",
+        "remaining": 3,
+        "stage": "Catwalk",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 5.360194206237793,
+          "health": 100
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "hole 2 repaired through interaction",
+      "detail": {
+        "relative": "18.668804168701172, 20.563894271850586, -6.988674163818359",
+        "remaining": 2,
+        "stage": "Catwalk",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 1.6856778860092163,
+          "health": 100
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "hole 3 repaired through interaction",
+      "detail": {
+        "relative": "12.277706146240234, 20.563098907470703, 15.684176445007324",
+        "remaining": 1,
+        "stage": "Catwalk",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 1.606889009475708,
+          "health": 100
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "hole 4 repaired through interaction",
+      "detail": {
+        "relative": "-11.569214820861816, 20.563018798828125, 16.317874908447266",
+        "remaining": 0,
+        "stage": "Catwalk",
+        "prompt": {
+          "enabled": false,
+          "key": "E",
+          "triggered": true,
+          "distance": 1.4559376239776611,
+          "health": 100
+        }
+      }
+    },
+    {
+      "passed": true,
+      "name": "all four holes repaired on moving catwalk"
+    },
+    {
+      "passed": true,
+      "name": "descent automatically releases rope"
+    },
+    {
+      "passed": true,
+      "name": "descent leaves living mobile crew in basket"
+    },
+    {
+      "passed": true,
+      "name": "rope wear persists after automatic release",
+      "detail": 11.339467004872859
+    },
+    {
+      "passed": true,
+      "name": "repair begins only at station while unworn"
+    },
+    {
+      "passed": true,
+      "name": "early finish cannot refill"
+    },
+    {
+      "passed": true,
+      "name": "walking away cancels rope repair"
+    },
+    {
+      "passed": true,
+      "name": "noncrew repair denied"
+    },
+    {
+      "passed": true,
+      "name": "trio receives two persistent ropes"
+    },
+    {
+      "passed": true,
+      "name": "two crew can wear separate ropes"
+    },
+    {
+      "passed": true,
+      "name": "third crew cannot overbook ropes"
+    },
+    {
+      "passed": true,
+      "name": "repair reserves a free worn slot"
+    },
+    {
+      "passed": true,
+      "name": "reserved rope cannot be attached by another crew"
+    },
+    {
+      "passed": true,
+      "name": "cancelled repair releases slot without refilling"
+    },
+    {
+      "passed": true,
+      "name": "winch cancellation restores anchor state"
+    },
+    {
+      "passed": true,
+      "name": "balloon cleanup removes ropes and pools"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 55.07895970001118,
+  "motion": [
+    {
+      "relative": "2, 5.226563453674316, 10.999999046325684",
+      "time": 0.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563453674316, 10.999999046325684",
+      "time": 1,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563453674316, 10.999999046325684",
+      "time": 1.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 2,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.22653341293335, 10.999999046325684",
+      "time": 2.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 3,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 3.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 4,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 4.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 5.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 6,
+      "owner": "Player1"
+    }
+  ]
+}

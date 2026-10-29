@@ -266,3 +266,33 @@ Build tersimpan: Fly High.rbxl **831.155 byte**, SHA256 **08BD6AAB900F4163230995
 ## Koreksi Akses Gas Otomatis
 
 Pengguna meminta GAS OTOMATIS tersedia tanpa membuka AKSI. AutoGasButton kini tetap menjadi child FlyHighHUD; mode ringkas menempatkannya di bawah tengah (140×48), di antara LOMPAT dan AKSI dengan jarak 8 piksel. Pengujian klik nyata pada simulator Galaxy A06 memastikan satu tap menyalakan, tombol tetap terlihat dan gas aktif setelah kemudi dilepas, lalu satu tap langsung mematikan. Tombol tidak berada di tray; konsol bersih. Ini pemeriksaan terarah atas perubahan layout; suite 101 skenario tidak dijalankan ulang untuk koreksi posisi ini. Bukti: audit/direct-autogas-results.json.
+
+## Alur Tali dan LEPAS KEMUDI — 29 Oktober 2026
+
+LEPAS KEMUDI dipindah dari AKSI ke HUD utama (140×48 piksel pada mode ringkas), bersama GAS OTOMATIS. Panel lompat disembunyikan saat pemain duduk sebagai pilot dan muncul kembali setelah melepas kemudi.
+
+### Temuan dan perbaikan
+
+- RopeConstraint lama menggabungkan avatar dan balon dalam satu mekanisme fisika. Repro dua client menunjukkan avatar berpindah ke ownership server dan posisi relatifnya bergeser dari X≈2 menjadi X≈−12 saat balon bergerak. [Dokumentasi network ownership Roblox](https://create.roblox.com/docs/physics/network-ownership) menjelaskan bahwa ownership berlaku bagi seluruh assembly dalam mekanisme. Visual kini memakai Beam agar avatar tetap client-owned dan balon tetap server-owned; tidak menyatukan karakter dengan assembly balon.
+- Katrol menghitung transform dari CFrame balon terkini setiap frame. Setelah perjalanan selesai, anchor/AutoRotate/ownership karakter dipulihkan. Pembersihan ownership memeriksa IsDescendantOf(workspace), termasuk saat pemain disconnect, sehingga tidak memanggil API pada karakter yang sudah dilepas dari Workspace.
+- Durabilitas dipindah ke slot tali persisten selama flight (satu solo/duo, dua trio). Memasang ulang tidak menambah HP. Tali yang dilepas tetap aus; hanya interaksi PERBAIKI TALI di stasiun saat pemain tidak memakai tali yang dapat memulihkannya. Hold empat detik memakai konfigurasi 100/25 yang sudah ada.
+- Server mencadangkan slot saat diperbaiki; pemain lain tidak bisa mengambilnya. Worn-slot, noncrew, jarak jauh, karakter berganti/mati, finish tanpa begin, finish terlalu cepat serta pemain menjauh ditolak/dibatalkan. Cancel tidak diblokir cooldown request awal, sehingga hold singkat tidak meninggalkan reservasi.
+- Turun ke gondola otomatis melepas tali setelah katrol tiba. Pemain juga dapat melepas tali tanpa naik. Stage Basket/Climbing/Catwalk/Descending membatasi tambal pada titian dan menyembunyikan interaksi yang belum valid.
+- Prompt tambal memerlukan jarak server 10 stud tetapi tidak memerlukan line of sight kamera, karena kubah/ornamen sendiri menutupi ray prompt. Pengujian interaksi asli menemukan masalah ini; perbaikannya diterapkan ke template dasar dan lima varian. Prompt turun menjangkau ring 28 stud. Shortcut: E pasang/tambal, F naik, Q turun+lepas, T/L2 lepas, C/R3 tahan perbaiki tali.
+- Hold HUD mengikat pembatalan ke input yang memulainya, sehingga sentuhan jari lain tidak membatalkan tambal/perbaikan. Hold singkat membatalkan reservasi; hold penuh memulihkan satu slot ke 100.
+
+### Hasil pengujian
+
+**137/137 pemeriksaan gameplay lulus:** 36 pemeriksaan alur tali, 50 regresi multiplayer dan 51 badai/lompat. Ketiga suite memakai tiga client native; server dan seluruh client pada hasil akhir bersih dari error/warning.
+
+Pengujian alur tali menggunakan prompt asli dan berjalan dengan Humanoid di sepanjang ring. Solo menambal empat lubang satu per satu saat balon bergerak, lalu turun dan otomatis lepas; tidak memindahkan karakter/menahan anchor untuk bagian berjalan dan menambal ini. Tali tersisa sekitar 11,34 HP. Pemeriksaan gerak enam detik mencatat kenaikan balon 25,48 stud dan drift relatif maksimum sekitar 0,00003 stud, dengan avatar tetap client-owned. Pembatasan 5 lubang, durasi tambal tim dan decay 5 HP/detik tetap berlaku.
+
+Smoke Galaxy A06 (simulator) memverifikasi LEPAS KEMUDI satu klik tanpa AKSI, gas otomatis tetap berjalan, panel lompat kembali setelah unseat, dan tombol PERBAIKI TALI HUD: hold 4,4 detik mengubah HP 50→100; hold 0,1 detik mempertahankan HP 50 dan membebaskan reservasi. Semua 25 skrip produksi terkompilasi dan lima snapshot source yang diubah cocok dengan Studio.
+
+Run diagnostik disimpan: prompt tambal tertutup line of sight; error cleanup ownership pada karakter yang keluar Workspace; satu warning asset CDN HTTP 502. Dua masalah kode diperbaiki, dan pengulangan multiplayer akhir bersih.
+
+Artefak: audit/rigging-flow-results.json, rigging-native-results.json, rigging-multiplayer-results.json, rigging-storm-results.json; repro sebelum/isolasi Beam di tether-motion-before.json dan tether-motion-beam-isolation.json; diagnostik rigging-hole-los-run.json, rigging-cleanup-run.json, rigging-cdn-run.json. Driver ada di audit/rigging_flow_server_playtest.luau, rigging_flow_client_playtest.luau dan tether_motion_repro.luau. Backup: audit/Fly High.before-rigging-flow.rbxl.
+
+Seluruh driver/remote QA sementara dihapus dari place; Studio kembali Edit dan viewport default. Pengujian perangkat fisik, manusia, jaringan internet, Robux/cloud tetap belum dilakukan; tidak memublikasikan experience.
+
+Build tersimpan: 833464 byte; SHA256 **7F90136DF83732E2FEC33BAB36FF2312A0574BB67287B707016F2BC28587EF5B**.

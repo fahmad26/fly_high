@@ -54,7 +54,7 @@ Run.Heartbeat:Connect(function(dt)
  local enable=allowed and originalJump
  if hum and hum.Parent and lastEnabled~=enable then hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,enable)lastEnabled=enable end
  if hum and not allowed then hum.Jump=false end
- panel.Visible=inFlight
+ panel.Visible=inFlight and not (hum and hum.SeatPart and hum.SeatPart.Name=="HelmSeat")
  local remaining=math.max(0,(p:GetAttribute("FlightJumpReadyAt")or 0)-workspace:GetServerTimeNow())
  button.Active=allowed button.AutoButtonColor=allowed button.BackgroundTransparency=allowed and 0 or .6
  hint.Text=not allowed and (p:GetAttribute("FlightJumpReason")or "Tunggu gondola")or(remaining>0 and string.format("Efek turun siap\ndalam %.1f detik",remaining)or "LOMPAT BERSAMA\nTurunkan balon untuk menghindari badai")

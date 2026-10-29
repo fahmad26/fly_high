@@ -1,0 +1,359 @@
+{
+  "ok": true,
+  "balance": [
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.2779541015625,
+      "accepted": 1,
+      "crew": 1
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.277435302734375,
+      "accepted": 2,
+      "crew": 2
+    },
+    {
+      "totalDrop": 18,
+      "actualDescent": 21.30950927734375,
+      "accepted": 3,
+      "crew": 3
+    }
+  ],
+  "players": [
+    {
+      "logs": [],
+      "userId": -1,
+      "name": "Player1"
+    },
+    {
+      "logs": [],
+      "userId": -2,
+      "name": "Player2"
+    },
+    {
+      "logs": [],
+      "userId": -3,
+      "name": "Player3"
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three clients join"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "1 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "1 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.2779541015625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.2779541015625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.2779541015625,
+        "accepted": 1,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "non-crew cannot cause jump drop"
+    },
+    {
+      "passed": true,
+      "name": "2 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "2 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.277435302734375,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.277435302734375,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.277435302734375,
+        "accepted": 2,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "3 crew are allowed to jump"
+    },
+    {
+      "passed": true,
+      "name": "3 crew actual jumps counted",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.30950927734375,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew share same total impulse",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.30950927734375,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew descend",
+      "detail": {
+        "totalDrop": 18,
+        "actualDescent": 21.30950927734375,
+        "accepted": 3,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew remote spam adds no drop"
+    },
+    {
+      "passed": true,
+      "name": "pilot jump disabled on client and server"
+    },
+    {
+      "passed": true,
+      "name": "space does not eject pilot or create drop"
+    },
+    {
+      "passed": true,
+      "name": "leaving helm restores jump"
+    },
+    {
+      "passed": true,
+      "name": "gunner equipped"
+    },
+    {
+      "passed": true,
+      "name": "tether attached on basket"
+    },
+    {
+      "passed": true,
+      "name": "free gunner and tethered crew can all jump"
+    },
+    {
+      "passed": true,
+      "name": "equipment does not change crew balance"
+    },
+    {
+      "passed": true,
+      "name": "winch blocks jumping"
+    },
+    {
+      "passed": true,
+      "name": "engineer outside basket cannot jump"
+    },
+    {
+      "passed": true,
+      "name": "engineer cannot create impulse"
+    },
+    {
+      "passed": true,
+      "name": "returning to gondola restores jump"
+    },
+    {
+      "passed": true,
+      "name": "storm rejected below 1200 km"
+    },
+    {
+      "passed": true,
+      "name": "one shared storm per zone"
+    },
+    {
+      "passed": true,
+      "name": "wall is not shootable"
+    },
+    {
+      "passed": true,
+      "name": "other team receives warning",
+      "detail": {
+        "logs": [],
+        "jumpEnabled": true,
+        "health": 100,
+        "stormVisible": true,
+        "jumpVisible": true,
+        "reason": "Lompat bersama untuk turun",
+        "allowed": true,
+        "accepted": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "warning does not deal damage"
+    },
+    {
+      "passed": true,
+      "name": "wall hits left boundary team",
+      "detail": 1
+    },
+    {
+      "passed": true,
+      "name": "wall hits right boundary team",
+      "detail": 1
+    },
+    {
+      "passed": true,
+      "name": "global wave cleans up"
+    },
+    {
+      "passed": true,
+      "name": "1 crew can reach safe height",
+      "detail": {
+        "safeY": 426.3070983886719,
+        "rootY": 383.3049621582031
+      }
+    },
+    {
+      "passed": true,
+      "name": "1 crew avoid curtain without damage",
+      "detail": {
+        "drop": 83.00213623046875,
+        "holes": 0,
+        "crew": 1
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew can reach safe height",
+      "detail": {
+        "safeY": 426.33251953125,
+        "rootY": 383.47247314453125
+      }
+    },
+    {
+      "passed": true,
+      "name": "2 crew avoid curtain without damage",
+      "detail": {
+        "drop": 82.86004638671875,
+        "holes": 0,
+        "crew": 2
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew can reach safe height",
+      "detail": {
+        "safeY": 426.3326416015625,
+        "rootY": 383.361572265625
+      }
+    },
+    {
+      "passed": true,
+      "name": "3 crew avoid curtain without damage",
+      "detail": {
+        "drop": 82.9710693359375,
+        "holes": 0,
+        "crew": 3
+      }
+    },
+    {
+      "passed": true,
+      "name": "scheduled wave spawns at threshold"
+    },
+    {
+      "passed": true,
+      "name": "milestone marked once"
+    },
+    {
+      "passed": true,
+      "name": "same flight cannot retrigger cleared milestone"
+    },
+    {
+      "passed": true,
+      "name": "Player1 jump restored in lobby"
+    },
+    {
+      "passed": true,
+      "name": "Player2 jump restored in lobby"
+    },
+    {
+      "passed": true,
+      "name": "Player3 jump restored in lobby"
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 110.62197199999355,
+  "logs": [],
+  "waves": [
+    {
+      "drop": 83.00213623046875,
+      "holes": 0,
+      "crew": 1
+    },
+    {
+      "drop": 82.86004638671875,
+      "holes": 0,
+      "crew": 2
+    },
+    {
+      "drop": 82.9710693359375,
+      "holes": 0,
+      "crew": 3
+    }
+  ]
+}

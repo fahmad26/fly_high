@@ -316,7 +316,9 @@ end)
 -- Accessible rigging controls also work when a 3D prompt is outside the camera.
 local tethered=false
 local outside=false
+local travelling=false
 local holdingRepair
+local holdingRopeRepair
 local repairRemote=remotes:WaitForChild("RepairHoleEvent")
 local function nearestHole()
  local ref=localPlayer:FindFirstChild("FlightBalloon")
@@ -335,49 +337,80 @@ local function nearestHole()
  end
  return best
 end
-local function beginRepair()
+local function beginRepair(input)
  if holdingRepair then return end
  local hole=nearestHole() if not hole then return end
- local token={} holdingRepair=token
+ local token={input=input} holdingRepair=token
  repairRemote:FireServer("Begin",tonumber(hole.Name:match("%d+")))
  task.delay(hole.PatchPrompt.HoldDuration+0.15,function()
   if holdingRepair==token then repairRemote:FireServer("Finish") holdingRepair=nil end
  end)
 end
-local function cancelRepair()
- if holdingRepair then holdingRepair=nil repairRemote:FireServer("Cancel") end
+local function matches(input,token)
+ return not input or not token.input or input==token.input or (input.KeyCode~=Enum.KeyCode.Unknown and input.KeyCode==token.input.KeyCode)
 end
-local attachButton=button("AttachButton","PASANG / ISI TALI [E]",UDim2.new(0.5,-75,1,-165),function() tetherEvent:FireServer("Attach") end)
+local function cancelRepair(input)
+ if holdingRepair and matches(input,holdingRepair) then holdingRepair=nil repairRemote:FireServer("Cancel") end
+end
+local attachButton=button("AttachButton","PASANG TALI [E]",UDim2.new(0.5,-75,1,-165),function() tetherEvent:FireServer("Attach") end)
 local detachButton=button("DetachButton","LEPAS TALI [T]",UDim2.new(0.5,-75,1,-255),function()tetherEvent:FireServer("Detach")end)
 local climbButton=button("ClimbButton","NAIK KE KUBAH [F]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Climb") end)
-local descendButton=button("DescendButton","TURUN [Q]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Descend") end)
+local descendButton=button("DescendButton","TURUN & LEPAS TALI [Q]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Descend") end)
 local repairButton=button("RepairButton","TAHAN TAMBAL [E]",UDim2.new(0.5,-75,1,-165),function() end)
-repairButton.InputBegan:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRepair() end
+local repairRopeButton=button("RepairRopeButton","TAHAN PERBAIKI TALI [C]",UDim2.new(0.5,-75,1,-165),function()end)
+local function beginRopeRepair(input)
+ if holdingRopeRepair or tethered then return end
+ local ref=localPlayer:FindFirstChild("FlightBalloon")local b=ref and ref.Value
+ local station=b and b:FindFirstChild("TetherStation")local prompt=station and station:FindFirstChild("RepairRopePrompt")
+ if not prompt then return end
+ local token={input=input,start=os.clock(),duration=prompt.HoldDuration}holdingRopeRepair=token
+ tetherEvent:FireServer("BeginRopeRepair")
+ task.delay(prompt.HoldDuration+.15,function()
+  if holdingRopeRepair==token then tetherEvent:FireServer("FinishRopeRepair")holdingRopeRepair=nil end
+ end)
+end
+local function cancelRopeRepair(input)
+ if holdingRopeRepair and matches(input,holdingRopeRepair)then
+  local complete=os.clock()-holdingRopeRepair.start>=holdingRopeRepair.duration
+  holdingRopeRepair=nil tetherEvent:FireServer(complete and "FinishRopeRepair"or "CancelRopeRepair")
+ end
+end
+repairRopeButton.InputBegan:Connect(function(input)
+ if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRopeRepair(input)end
 end)
-tetherEvent.OnClientEvent:Connect(function(data) tethered=data.isTethered==true outside=data.insideBasket==false end)
+repairButton.InputBegan:Connect(function(input)
+ if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRepair(input) end
+end)
+tetherEvent.OnClientEvent:Connect(function(data)
+ tethered=data.isTethered==true outside=data.insideBasket==false travelling=data.stage=="Climbing"or data.stage=="Descending"
+ if not tethered then holdingRepair=nil end
+ if data.isRepairingRope==false then holdingRopeRepair=nil end
+end)
 UserInputService.InputBegan:Connect(function(input,gpe)
  if UserInputService:GetFocusedTextBox() then return end
  if input.KeyCode==Enum.KeyCode.T or input.KeyCode==Enum.KeyCode.ButtonL2 then tetherEvent:FireServer("Detach")
  elseif input.KeyCode==Enum.KeyCode.Q then tetherEvent:FireServer("Descend")
  elseif input.KeyCode==Enum.KeyCode.F then tetherEvent:FireServer("Climb")
+ elseif input.KeyCode==Enum.KeyCode.C or input.KeyCode==Enum.KeyCode.ButtonR3 then beginRopeRepair(input)
  elseif input.KeyCode==Enum.KeyCode.E then
-  if tethered and outside then beginRepair() else tetherEvent:FireServer("Attach") end
+  if tethered and outside then beginRepair(input) else tetherEvent:FireServer("Attach") end
  end
 end)
 UserInputService.InputEnded:Connect(function(input)
- if input.KeyCode==Enum.KeyCode.E or input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then cancelRepair() end
+ cancelRepair(input)cancelRopeRepair(input)
 end)
-UserInputService.WindowFocusReleased:Connect(cancelRepair)
+UserInputService.WindowFocusReleased:Connect(function()cancelRepair()cancelRopeRepair()end)
 RunService.RenderStepped:Connect(function()
  local ref=localPlayer:FindFirstChild("FlightBalloon")
  local b=ref and ref.Value
  local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
  -- The flight reference can arrive before the model's descendants on a busy client.
  local station=b and b.Parent and b:FindFirstChild("TetherStation")
- attachButton.Visible=station~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-station.Position).Magnitude<=10 and not outside
- detachButton.Visible=tethered and localPlayer:GetAttribute("InFlight")==true
- climbButton.Visible=tethered and not outside and attachButton.Visible
- descendButton.Visible=tethered and outside
- repairButton.Visible=nearestHole()~=nil
+ local nearStation=station~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-station.Position).Magnitude<=10 and not outside
+ attachButton.Visible=nearStation and not tethered and localPlayer:GetAttribute("RopeRepairing")~=true and (station:GetAttribute("AvailableRopes")or 0)>0
+ repairRopeButton.Visible=nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
+ detachButton.Visible=tethered and not travelling and localPlayer:GetAttribute("InFlight")==true
+ climbButton.Visible=tethered and not outside and nearStation and not travelling
+ descendButton.Visible=tethered and outside and not travelling
+ repairButton.Visible=not travelling and nearestHole()~=nil
 end)

@@ -217,3 +217,14 @@ Fitur yang sebelumnya berupa backlog kini diimplementasikan. Total skrip produks
 ## 13. Gas Otomatis di HUD Utama
 
 Sesuai koreksi pengguna, AutoGasButton dikeluarkan dari daftar AKSI di HUDLayout. Pada mode ringkas tombol 140×48 berada di antara LOMPAT dan AKSI; ketiganya diposisikan ulang agar tidak overlap. Tampilan desktop dan validasi otorisasi server tetap mengikuti aturan pilot/kru sebelumnya. Playtest Galaxy A06: satu klik menyalakan, gas bertahan setelah lepas kemudi, lalu satu klik pada HUD utama mematikan; tombol tidak ada di tray, konsol tanpa error/warning. Viewport dikembalikan default dan driver runtime QA tidak disimpan.
+
+## 14. Perbaikan Gerak dan Alur Tali
+
+- LEPAS KEMUDI keluar dari AKSI dan tersedia langsung di HUD; GAS OTOMATIS tetap langsung tersedia. Panel lompat disembunyikan saat pilot duduk.
+- TetherManager memakai Beam untuk visual tali, sehingga avatar tidak lagi menjadi satu mekanisme fisika dengan balon server-owned. Repro dua client membuktikan owner avatar lama menjadi server dan karakter bergeser relatif ke balon; sesudah perbaikan avatar tetap client-owned dan mengikuti gerak balon. Balon tetap server-owned.
+- Slot tali persisten per flight: TetherStation.RopeSlots.Rope1/Rope2 (NumberValue), HolderUserId/RepairUserId, AvailableRopes dan RepairableRopes. Pasang ulang tidak memulihkan HP; tali aus dipulihkan dengan hold 4 detik saat dilepas. Server memvalidasi kru, jarak, lokasi gondola, durasi dan reservasi slot.
+- Prompt baru DetachTetherPrompt (T/L2) dan RepairRopePrompt (C/R3); aksi remote BeginRopeRepair/FinishRopeRepair/CancelRopeRepair. Turun via Q otomatis membersihkan tali setelah mendarat. Stage Basket/Climbing/Catwalk/Descending mengatur validasi tambal dan visibilitas prompt/HUD.
+- Prompt tambal tidak lagi membutuhkan line of sight karena ornamen/kubah menutup ray dari kamera; server tetap memerlukan stage Catwalk dan jarak 10 stud. DescendPrompt menjangkau seluruh ring (28 stud). Enam template mendapat prompt/setting yang sama.
+- QA: 36 alur tali native + 50 regresi multiplayer + 51 badai/lompat = 137 lulus. Solo berjalan di ring dan menambal empat lubang tanpa teleport saat flow berlangsung, lalu turun dan otomatis lepas; HP tersisa sekitar 11%. Uji HP mengonfirmasi lepas kemudi satu tap dan hold perbaikan tali selesai/dibatalkan dengan benar.
+- Kesalahan cleanup NetworkOwnership saat karakter sudah di luar Workspace diperbaiki. Log CDN 502 pada run antara disimpan; sesi akhir server dan client bersih. Semua 25 skrip terkompilasi. Bukti: audit/rigging-flow-results.json dan rigging-*-results.json. Backup: audit/Fly High.before-rigging-flow.rbxl. Driver hanya di audit, tidak disimpan di place.
+- Cloud/pembelian/publikasi tetap ditunda; perangkat fisik dan latency internet belum diuji.

@@ -1,0 +1,166 @@
+{
+  "logs": [],
+  "ok": false,
+  "players": [
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player2",
+      "userId": -2
+    },
+    {
+      "logs": [],
+      "hud": true,
+      "name": "Player3",
+      "userId": -3
+    }
+  ],
+  "checks": [
+    {
+      "passed": true,
+      "name": "three native clients"
+    },
+    {
+      "passed": true,
+      "name": "Player1 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player2 ready"
+    },
+    {
+      "passed": true,
+      "name": "Player3 ready"
+    },
+    {
+      "passed": true,
+      "name": "native interaction attaches rope"
+    },
+    {
+      "passed": true,
+      "name": "rope does not join physics mechanisms"
+    },
+    {
+      "passed": true,
+      "name": "balloon remains server owned"
+    },
+    {
+      "passed": true,
+      "name": "full rope cannot be repaired while worn"
+    },
+    {
+      "passed": true,
+      "name": "attach does not refill worn rope"
+    },
+    {
+      "passed": true,
+      "name": "manual detach before climbing"
+    },
+    {
+      "passed": true,
+      "name": "reattach preserves slot durability"
+    },
+    {
+      "passed": true,
+      "name": "premature repair finish rejected"
+    },
+    {
+      "passed": true,
+      "name": "unworn rope repairs through native hold"
+    },
+    {
+      "passed": true,
+      "name": "attached crew follows ascent and lateral motion",
+      "detail": {
+        "rise": 25.483734130859375,
+        "maxRelativeDrift": 0.015655040740966797
+      }
+    },
+    {
+      "passed": true,
+      "name": "climb follows moving balloon"
+    },
+    {
+      "passed": true,
+      "name": "avatar ownership restored after winch"
+    },
+    {
+      "passed": false,
+      "name": "hole 1 repaired through interaction",
+      "detail": {
+        "remaining": 4
+      }
+    }
+  ],
+  "clientLogCount": 0,
+  "duration": 34.99406130000716,
+  "error": "ServerScriptService.TetherMotionReproQA:13: hole 1 repaired through interaction: table: 0x02d97d11b627caae\nServerScriptService.TetherMotionReproQA:13\nServerScriptService.TetherMotionReproQA:29\n",
+  "motion": [
+    {
+      "relative": "2, 5.226563453674316, 10.999999046325684",
+      "time": 0.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563453674316, 10.999999046325684",
+      "time": 1,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 1.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 2,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.21090841293335, 10.999999046325684",
+      "time": 2.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 3,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.225709438323975, 10.999999046325684",
+      "time": 3.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 4,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 4.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 5.5,
+      "owner": "Player1"
+    },
+    {
+      "relative": "2, 5.226563930511475, 10.999999046325684",
+      "time": 6,
+      "owner": "Player1"
+    }
+  ]
+}

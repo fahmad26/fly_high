@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-29",
+  "productionScripts": 25,
+  "rigging": {
+    "passed": 36,
+    "ok": true
+  },
+  "multiplayer": {
+    "passed": 50,
+    "ok": true
+  },
+  "storm": {
+    "passed": 51,
+    "ok": true
+  },
+  "phone": {
+    "releaseHelm": {
+      "parent": "FlyHighHUD",
+      "size": [
+        140,
+        48
+      ],
+      "insideActions": false,
+      "oneTapReleased": true,
+      "autoGasPersisted": true
+    },
+    "ropeRepair": {
+      "durability": 100,
+      "attached": false,
+      "repairing": false
+    },
+    "shortHold": {
+      "durability": 50,
+      "attached": false,
+      "repairing": false
+    }
+  },
+  "limits": {
+    "nativeStudioClients": 3,
+    "physicalTouchOrController": false,
+    "cloudTested": false,
+    "purchasesTested": false
+  },
+  "build": {
+    "bytes": 833464,
+    "hash": "7F90136DF83732E2FEC33BAB36FF2312A0574BB67287B707016F2BC28587EF5B"
+  },
+  "qaRemoved": true,
+  "studioEndState": "Edit; default viewport"
+}

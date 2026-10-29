@@ -159,11 +159,11 @@ flowchart LR
 * **Mekanisme Memanjat dengan Sistem Katrol (*Zipline / Winch Hook*):**
   * Setelah tali pengaman terpasang, stasiun/tiang balon menyediakan prompt interaksi **`[Panjat ke Kubah Balon]`**.
   * Menekan prompt tersebut akan mengaktifkan katrol (*winch*) yang menarik karakter secara mulus naik ke bagian tepi kubah balon (*Envelope Platform*) sehingga pemain dapat berjalan mengelilingi kubah untuk menghampiri titik lubang.
-  * Untuk turun kembali ke keranjang, pemain cukup menekan tombol **`[Turun ke Keranjang]`** atau melompat turun ke dalam gondola.
+  * Untuk turun kembali, pemain berinteraksi **`[Turun ke Gondola & Lepas Tali]`** ([Q] / tombol HUD). Katrol mengikuti balon yang bergerak dan tali otomatis dilepas setelah pemain tiba di gondola.
 * **Durabilitas Tali & Risiko Kematian:**
   * Selama pemain berada di luar keranjang / di atas kubah balon, durabilitas tali berkurang konstan **-5 HP/detik** (dari 100%).
   * **Rope Snap:** Jika pemain terlalu lama di atas kubah hingga durabilitas menyentuh **0%**, tali akan **PUTUS**. Pemain terpental jatuh ke jurang dan langsung tewas (*permadeath session*).
-  * **Recharge Tali:** Begitu pemain kembali masuk ke dalam keranjang gondola, durabilitas tali dapat diisi ulang kembali ke 100% di stasiun tali.
+  * **Perbaikan Tali:** Durabilitas disimpan pada setiap slot tali di stasiun selama penerbangan. Lepas-pasang dan kembali ke gondola tidak mengisi ulang durabilitas. Pemain yang tidak memakai tali dapat menahan interaksi **[Perbaiki Tali] ([C] / R3 / tombol HUD)** selama 4 detik di stasiun untuk memulihkan satu tali yang sedang dilepas ke 100%. Tali yang dipakai atau sedang diperbaiki tidak dapat diambil/diperbaiki pemain lain.
 * **Kecepatan Tambal Lubang Berdasarkan Jumlah Pemain Tim (*Repair Scaling*):**
   * Agar adil bagi pemain yang bermain Solo maupun Trio di tengah rintangan global, durasi menahan tombol `[Repair]` pada robekan balon menyesuaikan jumlah anggota tim saat lepas landas:
     | Ukuran Tim Saat Mulai | Durasi Tahan `[Repair]` per Lubang |
@@ -460,3 +460,15 @@ Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca har
 - Pengujian simulator Galaxy A06, iPhone 17 Pro dan iPad Pro M5 lulus pemeriksaan batas layar dan ukuran tombol. Perangkat fisik dan penilaian kenyamanan oleh manusia tetap belum diuji.
 
 - **Koreksi akses gas otomatis:** GAS OTOMATIS berada langsung di HUD utama, di antara LOMPAT dan AKSI pada mode ringkas, dengan ukuran 140×48 piksel. Tombol muncul saat menjadi pilot dan tetap tersedia selama gas otomatis aktif meskipun kemudi dilepas. Nyalakan/matikan cukup satu tap tanpa membuka AKSI.
+
+## Alur Interaksi Tali dan Akses Kemudi Terbaru
+
+1. Interaksi PASANG TALI [E] di stasiun gondola.
+2. Interaksi NAIK KE KUBAH [F].
+3. Berjalan di titian dan interaksi TAMBAL pada setiap lubang yang perlu diperbaiki; durasi tetap 1,5/2/3 detik sesuai ukuran tim. Lima lubang tetap memakai aturan Clutch Save.
+4. Interaksi TURUN & LEPAS TALI [Q]; tali otomatis terlepas setelah katrol tiba di gondola.
+5. Jika tali aus, interaksi PERBAIKI TALI [C] selama 4 detik ketika tali sudah dilepas.
+
+Tali juga dapat dilepas langsung dengan [T] / L2 / interaksi stasiun tanpa naik ke kubah. Perbaikan dibatalkan jika pemain pergi dari stasiun, karakter berganti/gugur atau flight berakhir. Jumlah tali tetap satu untuk solo/duo dan dua untuk trio; durabilitas berkurang 5 HP/detik di luar gondola. Slot yang sedang diperbaiki dicadangkan agar tidak dipakai bersamaan.
+
+LEPAS KEMUDI kini langsung berada di HUD utama bersama GAS OTOMATIS, masing-masing 140×48 piksel pada mode ringkas. Saat menjadi pilot, panel lompat disembunyikan karena pilot tidak dapat melompat; setelah melepas kemudi panel lompat kembali.
