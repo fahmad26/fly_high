@@ -3,6 +3,7 @@ local RS=game:GetService("ReplicatedStorage")
 local Debris=game:GetService("Debris")
 local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
 local U=require(script.Parent.ServerUtils)
+local RackArt=require(script.Parent.WeaponRackPresentation)
 local remotes=RS.FlyHigh.Remotes
 local Manager={held={},racks=setmetatable({},{__mode="k"})}
 _G.FlyHighWeaponManager=Manager
@@ -14,32 +15,23 @@ function Manager.CleanupPlayer(p)
  local s=Manager.held[p]
  if not s then return end
  Manager.held[p]=nil
+ if s.unequipped then s.unequipped:Disconnect() end
+ if p.Parent==Players then p:SetAttribute("CrewRole",nil) end
  s.tool:Destroy()
  if s.rack.Parent then
   s.rack:SetAttribute("StoredAmmo",s.ammo)
   s.rack:SetAttribute("StoredLastShot",s.lastShot)
   s.rack:SetAttribute("StoredReloadEnds",s.reloadEnds or 0)
   s.rack:SetAttribute("IsOccupied",true) s.rack.PickupPrompt.Enabled=true
+  RackArt.Update(s.rack)
  end
 end
 function Manager.CleanupBalloon(b)
  for p,s in pairs(table.clone(Manager.held)) do if s.balloon==b then Manager.CleanupPlayer(p) end end
 end
-function Manager.SetupWeaponRacks(b,upgrade)
- for i=1,2 do
-  local rack=b:FindFirstChild("WeaponRack"..i)
-  local kind=upgrade and "AK47" or "Pistol"
-  if rack:GetAttribute("CurrentWeapon")~=kind then
-   rack:SetAttribute("StoredAmmo",nil) rack:SetAttribute("StoredReloadEnds",nil) rack:SetAttribute("StoredLastShot",nil)
-  end
-  rack:SetAttribute("CurrentWeapon",kind)
-  local prompt=rack:FindFirstChild("PickupPrompt") or Instance.new("ProximityPrompt",rack)
-  prompt.Name="PickupPrompt" prompt.ActionText="Ambil "..kind prompt.ObjectText="Rak Senjata "..i
-  prompt.HoldDuration=0.2 prompt.MaxActivationDistance=8 prompt.RequiresLineOfSight=false
-  if Manager.racks[rack] then continue end
-  Manager.racks[rack]=true rack:SetAttribute("IsOccupied",true)
-  prompt.Triggered:Connect(function(p)
-   if not U.CrewNear(p,b,rack,10) or Manager.held[p] or not rack:GetAttribute("IsOccupied") then return end
+function Manager.TryEquip(p,b,rack)
+ local prompt=rack.PickupPrompt
+   if not U.CrewNear(p,b,rack,10) or not U.CanStartRole(p) or not rack:GetAttribute("IsOccupied") then return end
    local weaponType=rack:GetAttribute("CurrentWeapon")
    local cfg=Config.WEAPONS[weaponType]
    local tool=RS.FlyHigh.Templates.Weapons[weaponType]:Clone()
@@ -56,8 +48,32 @@ function Manager.SetupWeaponRacks(b,upgrade)
    elseif deadline>0 then s.ammo=cfg.MagSize end
    Manager.held[p]=s state(s)
    rack:SetAttribute("IsOccupied",false) prompt.Enabled=false
-   tool.Parent=p.Character
-  end)
+   RackArt.Update(rack)
+   p:SetAttribute("CrewRole","Gunner")
+   tool.Parent=p.Backpack
+   p.Character:FindFirstChildOfClass("Humanoid"):EquipTool(tool)
+   -- Roblox's number key/backpack unequip must return the gun to its rack too.
+   s.unequipped=tool.Unequipped:Connect(function()
+    task.defer(function()if Manager.held[p]==s and tool.Parent~=p.Character then Manager.CleanupPlayer(p)end end)
+   end)
+ return true
+end
+function Manager.SetupWeaponRacks(b,upgrade)
+ for i=1,2 do
+  local rack=b:FindFirstChild("WeaponRack"..i)
+  local kind=upgrade and "AK47" or "Pistol"
+  if rack:GetAttribute("CurrentWeapon")~=kind then
+   rack:SetAttribute("StoredAmmo",nil) rack:SetAttribute("StoredReloadEnds",nil) rack:SetAttribute("StoredLastShot",nil)
+  end
+  rack:SetAttribute("CurrentWeapon",kind)
+  RackArt.Build(rack,kind)
+  local prompt=rack:FindFirstChild("PickupPrompt") or Instance.new("ProximityPrompt",rack)
+  prompt.Name="PickupPrompt" prompt.ActionText="Ambil "..kind prompt.ObjectText="Rak Senjata "..i
+  prompt.KeyboardKeyCode=Enum.KeyCode.E prompt.GamepadKeyCode=Enum.KeyCode.ButtonX
+  prompt.HoldDuration=0.2 prompt.MaxActivationDistance=8 prompt.RequiresLineOfSight=false
+  if Manager.racks[rack] then continue end
+  Manager.racks[rack]=true rack:SetAttribute("IsOccupied",true)
+  prompt.Triggered:Connect(function(p)Manager.TryEquip(p,b,rack)end)
  end
 end
 local dropRate=U.RateLimiter(0.2)

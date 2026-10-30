@@ -50,7 +50,7 @@ function Manager.EndFlight(fd,victory)
  _G.FlyHighTetherManager.CleanupBalloon(fd.balloon)
  _G.FlyHighWeaponManager.CleanupBalloon(fd.balloon)
  for _,p in ipairs(fd.players) do
-  p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false)
+  p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false) p:SetAttribute("CrewRole",nil)
   if victory and U.Alive(p,fd) then _G.FlyHighDataManager.AddSummit(p) end
  end
  if victory then
@@ -139,7 +139,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   fd.boarding[p]={root=hrp,anchored=hrp.Anchored,token=game:GetService("HttpService"):GenerateGUID(false),offset=Vector3.new((i-2)*5,4,0)}
   hrp.Anchored=true p:SetAttribute("BoardingFlight",true)
   table.insert(fd.connections,p.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
-   fd.dead[p]=true p:SetAttribute("FlightGhost",true)
+   fd.dead[p]=true p:SetAttribute("FlightGhost",true) p:SetAttribute("CrewRole",nil)
    if fd.pilot==p then fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero end
    _G.FlyHighTetherManager.CleanupPlayer(p)
    _G.FlyHighWeaponManager.CleanupPlayer(p)
@@ -147,14 +147,34 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  end
  local helm=b.HelmSeat
  helm.HeadsUpDisplay=false
+ helm.CanTouch=false -- Acquire steering through the prompt, not incidental contact.
  helm.HelmPrompt.Triggered:Connect(function(p)
-  if U.CrewNear(p,b,helm,7) and not helm.Occupant then helm:Sit(p.Character:FindFirstChildOfClass("Humanoid")) end
+  if U.CrewNear(p,b,helm,7) and U.CanStartRole(p) and not helm.Occupant then
+   helm:Sit(p.Character:FindFirstChildOfClass("Humanoid"))
+  end
  end)
  helm:GetPropertyChangedSignal("Occupant"):Connect(function()
   local hum=helm.Occupant
   local p=hum and Players:GetPlayerFromCharacter(hum.Parent)
-  if p and table.find(fd.players,p) and U.Alive(p,fd) and not fd.isGameOver and not fd.isVictory then fd.pilot=p
-  else fd.pilot=nil if hum then hum.Sit=false end end
+  local oldPilot=fd.pilot
+  local role=p and U.Role(p,true)
+  if p and table.find(fd.players,p) and U.Alive(p,fd) and not fd.boarding and not fd.isGameOver and not fd.isVictory and (not role or role=="Pilot") then
+   fd.pilot=p p:SetAttribute("CrewRole","Pilot")
+  else
+   fd.pilot=nil
+   if hum then
+    -- Defer removal until Roblox has finished creating the seat joint/state.
+    -- Removing it synchronously inside Occupant leaves a stale SeatPart.
+    task.delay(.1,function()
+     if not helm.Parent or helm.Occupant~=hum then return end
+     helm.Disabled=true
+     if p then U.Unseat(p) remotes.FlightActionEvent:FireClient(p,"ReleaseRejectedHelm",b)
+     else hum.Sit=false end
+     task.delay(.75,function()if helm.Parent then helm.Disabled=false end end)
+    end)
+   end
+  end
+  if oldPilot and oldPilot~=fd.pilot and oldPilot:GetAttribute("CrewRole")=="Pilot" then oldPilot:SetAttribute("CrewRole",nil) end
   fd.isGasActive=false fd.pilotSteer=Vector3.zero
   helm.HelmPrompt.Enabled=fd.pilot==nil
  end)
@@ -266,6 +286,7 @@ function Manager.FlightAction(p,action,value)
   p.Character.HumanoidRootPart.CFrame=seat.CFrame*CFrame.new(4,2,0)
   p.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.GettingUp)
   fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero
+  p:SetAttribute("CrewRole",nil)
   task.delay(.75,function()if seat.Parent then seat.Disabled=false end end)
   return true
  elseif action=="AutoGas"then

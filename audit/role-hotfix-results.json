@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"initial helm prompt seats free crew\",\"detail\":{\"enabled\":false,\"key\":\"E\",\"triggered\":true,\"distance\":2.1413984298706056,\"health\":100}},{\"passed\":true,\"name\":\"native E prompt equips pistol\",\"detail\":{\"enabled\":false,\"key\":\"E\",\"triggered\":true,\"distance\":3.016230344772339,\"health\":100}},{\"passed\":true,\"name\":\"gun is physically attached to hand\"},{\"passed\":true,\"name\":\"first person on equip\"},{\"passed\":true,\"name\":\"gunner role replicated\"},{\"passed\":true,\"name\":\"held gun disappears from rack\"},{\"passed\":true,\"name\":\"gunner cannot attach rope through remote\"},{\"passed\":true,\"name\":\"gunner cannot repair detached rope\"},{\"passed\":true,\"name\":\"gunner physical seat bypass rejected\"},{\"passed\":true,\"name\":\"backpack unequip returns gun and frees role\"},{\"passed\":true,\"name\":\"camera restored after backpack unequip\"},{\"passed\":true,\"name\":\"pistol can be equipped again\",\"detail\":{\"role\":\"Gunner\",\"occupied\":false,\"canStart\":false,\"prompt\":{\"enabled\":false,\"key\":\"E\",\"triggered\":true,\"distance\":3.0168936252593996,\"health\":100},\"attribute\":\"Gunner\",\"near\":true}},{\"passed\":true,\"name\":\"server fires equipped pistol\"},{\"passed\":true,\"name\":\"drop returns rack display\"},{\"passed\":true,\"name\":\"free crew attaches engineer rope\"},{\"passed\":true,\"name\":\"engineer cannot take pistol server-side\"},{\"passed\":true,\"name\":\"engineer physical seat bypass rejected\"},{\"passed\":true,\"name\":\"detach frees engineer role\"},{\"passed\":true,\"name\":\"detached rope repair acquires engineer role\"},{\"passed\":true,\"name\":\"rope repair blocks another role\"},{\"passed\":true,\"name\":\"cancel repair releases role\"},{\"passed\":true,\"name\":\"free player can use native helm prompt\",\"detail\":{\"role\":\"Pilot\",\"sit\":true,\"prompt\":{\"enabled\":false,\"key\":\"E\",\"triggered\":true,\"distance\":2.14505934715271,\"health\":100},\"occupant\":true,\"seat\":\"HelmSeat\"}},{\"passed\":true,\"name\":\"pilot cannot equip weapon\"},{\"passed\":true,\"name\":\"pilot cannot attach rope\"},{\"passed\":true,\"name\":\"pilot cannot repair rope\"},{\"passed\":true,\"name\":\"release helm frees role\"},{\"passed\":true,\"name\":\"AK remains equipable\"},{\"passed\":true,\"name\":\"death clears role and weapon\"},{\"passed\":true,\"name\":\"client console clean\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "notes": [
+    "28 checks passed; final server and client logs clean",
+    "Single native client; production test scripts/remotes removed",
+    "No physical-device or public-latency QA",
+    "Generated handgun download failed twice; used inert mesh geometry from free Creator Store asset 3554395880 (enzogobbo). Imported scripts discarded.",
+    "Generated segmented hen asset 137084515560002; walking/pecking controller preserved."
+  ],
+  "sourceChecks": [
+    {
+      "path": "ServerScriptService/FlyHighServer/BalloonManager",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/ServerUtils",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/TetherManager",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/WeaponManager",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/WeaponRackPresentation",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/FlightHUDController",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/IslandNatureAnimator",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/WeaponClientController",
+      "match": true
+    }
+  ],
+  "build": {
+    "bytes": 882771,
+    "sha256": "16E7A7AF98D8DB85D4E36D1B7BC048F636A121E97F4E54B241E1F45BB5345CD9",
+    "scriptsCompiled": 28,
+    "studioClients": 1,
+    "studioMode": "Test / Edit"
+  },
+  "diagnosticSummary": [
+    "Early runs: native initial pistol equip passed but forced-seat rejection left stale SeatPart and blocked re-equip.",
+    "After stale-seat checks: equip/unequip/re-equip and all gunner/engineer exclusions passed; re-entering helm still failed.",
+    "One temporary diagnostic probe produced missing argument #1 by calling tostring on a function returning no values; the probe was removed.",
+    "Waiting for seat cooldown and immediate/task.defer rejection did not resolve the stale state.",
+    "Deferring forced-seat removal by 0.1 seconds resolved the issue; final run passes 28 checks with no server/client warnings or errors."
+  ]
+}

@@ -316,8 +316,16 @@ weaponFireEvent.OnClientEvent:Connect(function(_,origin,target)
  local tracer=Instance.new("Part")
  tracer.Name="BulletTracer" tracer.Material=Enum.Material.Neon tracer.Color=Color3.fromRGB(255,230,80)
  tracer.CanCollide=false tracer.CanTouch=false tracer.CanQuery=false tracer.Anchored=true
- tracer.Size=Vector3.new(0.1,0.1,dist) tracer.CFrame=CFrame.lookAt(origin,target)*CFrame.new(0,0,-dist/2)
- tracer.Parent=Workspace game:GetService("Debris"):AddItem(tracer,0.06)
+ -- A short moving streak, not a 500-stud yellow laser rod.
+ local length=math.min(1.8,dist)
+ tracer.Size=Vector3.new(.035,.035,length)
+ tracer.Color=Color3.fromRGB(255,219,157) tracer.Transparency=.25
+ local direction=(target-origin).Unit
+ tracer.CFrame=CFrame.lookAt(origin+direction*length/2,target+direction*length)
+ tracer.Parent=Workspace
+ local duration=math.clamp(dist/1800,.025,.16)
+ local tween=game:GetService("TweenService"):Create(tracer,TweenInfo.new(duration,Enum.EasingStyle.Linear),{CFrame=CFrame.lookAt(target-direction*length/2,target+direction),Transparency=1})
+ tween:Play() game:GetService("Debris"):AddItem(tracer,duration+.05)
 end)
 tacticalPingEvent.OnClientEvent:Connect(function(pos,message,name)
  local marker=Instance.new("Part") marker.Name="TeamSpotterMarker" marker.Shape=Enum.PartType.Ball
@@ -409,7 +417,7 @@ UserInputService.InputBegan:Connect(function(input,gpe)
  elseif input.KeyCode==Enum.KeyCode.F then tetherEvent:FireServer("Climb")
  elseif input.KeyCode==Enum.KeyCode.C or input.KeyCode==Enum.KeyCode.ButtonR3 then beginRopeRepair(input)
  elseif input.KeyCode==Enum.KeyCode.E then
-  if tethered and outside then beginRepair(input) else tetherEvent:FireServer("Attach") end
+  if tethered and outside then beginRepair(input) end -- Native E prompt owns attach/pickup/helm; do not send a second action.
  end
 end)
 UserInputService.InputEnded:Connect(function(input)
@@ -423,8 +431,10 @@ RunService.RenderStepped:Connect(function()
  -- The flight reference can arrive before the model's descendants on a busy client.
  local station=b and b.Parent and b:FindFirstChild("TetherStation")
  local nearStation=station~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-station.Position).Magnitude<=10 and not outside
- attachButton.Visible=nearStation and not tethered and localPlayer:GetAttribute("RopeRepairing")~=true and (station:GetAttribute("AvailableRopes")or 0)>0
- repairRopeButton.Visible=nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
+ local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+ local free=not currentWeapon and hum and not hum.Sit and localPlayer:GetAttribute("CrewRole")==nil and localPlayer:GetAttribute("BoardingFlight")~=true
+ attachButton.Visible=free and nearStation and not tethered and localPlayer:GetAttribute("RopeRepairing")~=true and (station:GetAttribute("AvailableRopes")or 0)>0
+ repairRopeButton.Visible=(free or localPlayer:GetAttribute("RopeRepairing")==true) and nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
  detachButton.Visible=tethered and not travelling and localPlayer:GetAttribute("InFlight")==true
  climbButton.Visible=tethered and not outside and nearStation and not travelling
  descendButton.Visible=tethered and outside and not travelling

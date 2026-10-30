@@ -14,6 +14,18 @@ local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
 local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
 local preparingBoarding={}
 flightActionEvent.OnClientEvent:Connect(function(action,balloon,token)
+ if action=="ReleaseRejectedHelm"then
+  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+  task.spawn(function()
+   -- The seat weld and the rejection remote may replicate in either order.
+   for _=1,8 do
+    if not hum or not hum.Parent or localPlayer:GetAttribute("CrewRole")=="Pilot"then break end
+    hum.Sit=false hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+    task.wait(.1)
+   end
+  end)
+  return
+ end
  if action~="PrepareBoarding"or preparingBoarding[token]then return end
  preparingBoarding[token]=true
  task.spawn(function()

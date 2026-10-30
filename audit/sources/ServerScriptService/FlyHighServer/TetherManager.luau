@@ -53,6 +53,7 @@ function Manager.CancelRopeRepair(p)
  stationText(repair.pool)
  if p.Parent==Players then
   p:SetAttribute("RopeRepairing",false)
+  p:SetAttribute("CrewRole",nil)
   remotes.TetherEvent:FireClient(p,{isTethered=false,isRepairingRope=false})
  end
 end
@@ -62,6 +63,7 @@ function Manager.CleanupPlayer(p)
  local t=Manager.activeTethers[p.UserId]
  if not t then return end
  Manager.activeTethers[p.UserId]=nil
+ if p.Parent==Players then p:SetAttribute("CrewRole",nil) end
  if t.hrp.Parent and t.winch then
   local root=t.balloon.PrimaryPart
   if root and root.Parent then t.hrp.CFrame=root.CFrame*CFrame.new(t.winch.from)t.hrp.AssemblyLinearVelocity=root.AssemblyLinearVelocity end
@@ -97,7 +99,7 @@ local function stationContext(p)
 end
 
 function Manager.BeginRopeRepair(p)
- if Manager.activeTethers[p.UserId]or Manager.ropeRepairs[p]then return false end
+ if not U.CanStartRole(p) then return false end
  local fd,pool=stationContext(p)
  if not fd then return false end
  local selected
@@ -109,6 +111,7 @@ function Manager.BeginRopeRepair(p)
  selected.repair=repair Manager.ropeRepairs[p]=repair
  selected.value:SetAttribute("RepairUserId",p.UserId)
  p:SetAttribute("RopeRepairing",true)
+ p:SetAttribute("CrewRole","Engineer")
  stationText(pool)
  remotes.TetherEvent:FireClient(p,{isTethered=false,isRepairingRope=true,repairDuration=repair.duration})
  return true
@@ -175,9 +178,9 @@ function Manager.SetupBalloonTethers(b,count)
  b.Destroying:Connect(function()Manager.CleanupBalloon(b)end)
  local function attach(p)
   local fd,ownPool=stationContext(p)
-  if not fd or fd.balloon~=b or ownPool~=pool or Manager.activeTethers[p.UserId]or Manager.ropeRepairs[p]then return false end
+  if not fd or fd.balloon~=b or ownPool~=pool or not U.CanStartRole(p) then return false end
   local root=p.Character.HumanoidRootPart local hum=p.Character:FindFirstChildOfClass("Humanoid")
-  if root.Anchored or hum.SeatPart then return false end
+  if root.Anchored or hum.Sit then return false end
   local selected
   for _,slot in pool.slots do
    if not slot.holder and not slot.repair and slot.value.Value>0 and(not selected or slot.value.Value>selected.value.Value)then selected=slot end
@@ -191,6 +194,7 @@ function Manager.SetupBalloonTethers(b,count)
   local t={player=p,balloon=b,pool=pool,slot=selected,station=station,hrp=root,hum=hum,rope=rope,attChar=ac,durability=selected.value.Value,stage="Basket"}
   selected.holder=p selected.value:SetAttribute("HolderUserId",p.UserId)
   Manager.activeTethers[p.UserId]=t
+  p:SetAttribute("CrewRole","Engineer")
   independentOwner(t,false)
   stationText(pool)syncTether(t,true)
   return true

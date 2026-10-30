@@ -78,7 +78,8 @@ RunService.Heartbeat:Connect(function(dt)
  local own=ref and ref.Value
  local active=player:GetAttribute("InFlight")==true
  for model,entry in pairs(flights) do
-  local crew=alive and active and own==model
+  local crew=alive and active and own==model and player:GetAttribute("BoardingFlight")~=true
+  local free=player:GetAttribute("CrewRole")==nil and hum and not hum.Sit and not char:FindFirstChildOfClass("Tool")
   local inside=crew and inBasket(char,model)
   for prompt in pairs(entry.prompts) do
    if not prompt.Parent then entry.prompts[prompt]=nil
@@ -86,14 +87,14 @@ RunService.Heartbeat:Connect(function(dt)
     local enabled=false
     if crew then
      if prompt.Name=="HelmPrompt" then
-      local seat=model:FindFirstChild("HelmSeat") enabled=seat~=nil and seat.Occupant==nil
-     elseif prompt.Name=="TetherPrompt" then enabled=inside and not attached and player:GetAttribute("RopeRepairing")~=true and (prompt.Parent:GetAttribute("AvailableRopes")or 0)>0
+      local seat=model:FindFirstChild("HelmSeat") enabled=free and seat~=nil and seat.Occupant==nil
+     elseif prompt.Name=="TetherPrompt" then enabled=free and inside and not attached and player:GetAttribute("RopeRepairing")~=true and (prompt.Parent:GetAttribute("AvailableRopes")or 0)>0
      elseif prompt.Name=="DetachTetherPrompt" then enabled=inside and attached and not travelling
-     elseif prompt.Name=="RepairRopePrompt" then enabled=inside and not attached and ((prompt.Parent:GetAttribute("RepairableRopes")or 0)>0 or player:GetAttribute("RopeRepairing")==true)
+     elseif prompt.Name=="RepairRopePrompt" then enabled=(free or player:GetAttribute("RopeRepairing")==true) and inside and not attached and ((prompt.Parent:GetAttribute("RepairableRopes")or 0)>0 or player:GetAttribute("RopeRepairing")==true)
      elseif prompt.Name=="ClimbPrompt" then enabled=attached and inside and not travelling
      elseif prompt.Name=="DescendPrompt" then enabled=attached and not inside and not travelling
      elseif prompt.Name=="PatchPrompt" then enabled=attached and not inside and not travelling and holes<5 and prompt.Parent.Transparency<0.5
-     elseif prompt.Name=="PickupPrompt" then enabled=prompt.Parent:GetAttribute("IsOccupied")==true and char:FindFirstChildOfClass("Tool")==nil end
+     elseif prompt.Name=="PickupPrompt" then enabled=free and prompt.Parent:GetAttribute("IsOccupied")==true and char:FindFirstChildOfClass("Tool")==nil end
     end
     prompt.Enabled=enabled==true
    end

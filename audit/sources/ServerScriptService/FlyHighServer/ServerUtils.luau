@@ -27,6 +27,7 @@ function U.Unseat(p)
  if not hum then return end
  local seat=hum.SeatPart
  hum.Sit=false
+ hum:ChangeState(Enum.HumanoidStateType.GettingUp)
  local weld=seat and seat:FindFirstChild("SeatWeld")
  if weld then weld:Destroy() end
 end
@@ -41,5 +42,18 @@ function U.RateLimiter(interval)
   if now-(last[p] or -math.huge)<interval then return false end
   last[p]=now return true
  end
+end
+-- One authoritative role, derived from the managers (never trust client attributes).
+function U.Role(p,ignoreSeat)
+ local w=_G.FlyHighWeaponManager local t=_G.FlyHighTetherManager
+ if w and w.held[p] then return "Gunner" end
+ if t and (t.activeTethers[p.UserId] or t.ropeRepairs[p]) then return "Engineer" end
+ local fd=U.Flight(p)
+ local hum=p.Character and p.Character:FindFirstChildOfClass("Humanoid")
+ if fd and fd.pilot==p or (not ignoreSeat and hum and hum.Sit and hum.SeatPart and hum.SeatPart.Occupant==hum) then return "Pilot" end
+end
+function U.CanStartRole(p)
+ local fd=U.Flight(p)
+ return fd and U.Alive(p,fd) and not fd.boarding and not U.Role(p)
 end
 return U

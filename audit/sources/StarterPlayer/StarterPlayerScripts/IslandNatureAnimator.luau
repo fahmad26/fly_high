@@ -62,10 +62,10 @@ RunService.RenderStepped:Connect(function(dt)
    if string.find(segment,"leg") then
     local side=string.find(segment,"left") and 1 or -1
     local stride=walking and math.sin(phase)*side or 0
-    local point=Vector3.new(rest.X,1.12*scale,-0.24*scale)
+    local point=Vector3.new(rest.X,(model:GetAttribute("LegPivotY")or 1.12)*scale,-0.24*scale)
     pose=CFrame.new(0,math.max(0,stride)*0.12*scale,0)*hinge(rest,point,CFrame.Angles(stride*0.42,0,0))
    elseif segment=="head" then
-    pose=CFrame.new(0,bob,0)*hinge(rest,Vector3.new(0,2.2*scale,-0.65*scale),CFrame.Angles(-peck,0,0))
+    pose=CFrame.new(0,bob,0)*hinge(rest,Vector3.new(0,(model:GetAttribute("HeadPivotY")or 2.2)*scale,(model:GetAttribute("HeadPivotZ")or -.65)*scale),CFrame.Angles(-peck,0,0))
    elseif string.find(segment,"wing") then
     pose=CFrame.new(0,bob,0)*rest*CFrame.Angles(0,0,math.sin(time*3+e.phase)*0.018)
    else pose=CFrame.new(0,bob,0)*rest end
