@@ -135,7 +135,7 @@ local function travel(p,b,descending)
  U.Unseat(p)
  local leg=t.hum.RigType==Enum.HumanoidRigType.R6 and p.Character:FindFirstChild("Left Leg")
  local standing=t.hum.HipHeight+t.hrp.Size.Y/2+(leg and leg.Size.Y or 0)+math.max(.1,t.hrp.Size.Y/2)
- local destination=descending and Vector3.new(t.slot.index==2 and 4 or -4,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,18.6+standing,t.slot.index==2 and 20 or -20)
+ local destination=descending and Vector3.new(t.slot.index==2 and 4 or -4,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,18.6+standing,t.slot.index==2 and 16 or -16)
  t.oldAnchored=t.hrp.Anchored t.oldAutoRotate=t.hum.AutoRotate
  t.collisionGroups={}
  for _,part in p.Character:GetDescendants()do if part:IsA("BasePart")then t.collisionGroups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end

@@ -1,0 +1,368 @@
+{
+  "finalRun": {
+    "logs": [],
+    "ok": true,
+    "checks": [
+      {
+        "passed": true,
+        "name": "fourth player cannot join full dock"
+      },
+      {
+        "passed": true,
+        "name": "fourth player physically leaves dock"
+      },
+      {
+        "passed": true,
+        "name": "boarding holds players before replica acknowledgement"
+      },
+      {
+        "passed": true,
+        "name": "forged boarding acknowledgement denied"
+      },
+      {
+        "passed": true,
+        "name": "all clients acknowledge replicated balloon"
+      },
+      {
+        "passed": true,
+        "name": "Player1 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player2 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player3 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "foreign crew cannot ride other balloon"
+      },
+      {
+        "passed": true,
+        "name": "foreign weapon interaction rejected"
+      },
+      {
+        "passed": true,
+        "name": "handgun equips for own crew"
+      },
+      {
+        "passed": true,
+        "name": "equipped weapon locks first person"
+      },
+      {
+        "passed": true,
+        "name": "desktop uses centred auto aim",
+        "detail": 975
+      },
+      {
+        "passed": true,
+        "name": "drop restores normal camera"
+      },
+      {
+        "passed": true,
+        "name": "AK47 model equips in first person"
+      },
+      {
+        "passed": true,
+        "name": "winch lands on smaller service deck"
+      },
+      {
+        "passed": true,
+        "name": "puncture reveals cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "cloth hole reachable from smaller deck"
+      },
+      {
+        "passed": true,
+        "name": "repair hides cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "compact deck descent releases rope"
+      },
+      {
+        "passed": true,
+        "name": "service deck narrowed"
+      },
+      {
+        "passed": true,
+        "name": "Player1 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player2 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player3 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player4 clean client console",
+        "detail": []
+      }
+    ]
+  },
+  "priorRun": {
+    "logs": [],
+    "ok": true,
+    "checks": [
+      {
+        "passed": true,
+        "name": "fourth player cannot join full dock"
+      },
+      {
+        "passed": true,
+        "name": "fourth player physically leaves dock"
+      },
+      {
+        "passed": true,
+        "name": "boarding holds players before replica acknowledgement"
+      },
+      {
+        "passed": true,
+        "name": "forged boarding acknowledgement denied"
+      },
+      {
+        "passed": true,
+        "name": "all clients acknowledge replicated balloon"
+      },
+      {
+        "passed": true,
+        "name": "Player1 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player2 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player3 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "foreign crew cannot ride other balloon"
+      },
+      {
+        "passed": true,
+        "name": "foreign weapon interaction rejected"
+      },
+      {
+        "passed": true,
+        "name": "handgun equips for own crew"
+      },
+      {
+        "passed": true,
+        "name": "equipped weapon locks first person"
+      },
+      {
+        "passed": true,
+        "name": "desktop uses centred auto aim",
+        "detail": 975
+      },
+      {
+        "passed": true,
+        "name": "drop restores normal camera"
+      },
+      {
+        "passed": true,
+        "name": "AK47 model equips in first person"
+      },
+      {
+        "passed": true,
+        "name": "puncture reveals cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "repair hides cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "service deck narrowed"
+      },
+      {
+        "passed": true,
+        "name": "Player1 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player2 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player3 clean client console",
+        "detail": []
+      },
+      {
+        "passed": true,
+        "name": "Player4 clean client console",
+        "detail": []
+      }
+    ]
+  },
+  "diagnosticRun": {
+    "logs": [],
+    "ok": false,
+    "error": "ServerScriptService.CrewQA:7: Player1 clean client console\nServerScriptService.CrewQA:7\nServerScriptService.CrewQA:10\n",
+    "checks": [
+      {
+        "passed": true,
+        "name": "fourth player cannot join full dock"
+      },
+      {
+        "passed": true,
+        "name": "fourth player physically leaves dock"
+      },
+      {
+        "passed": true,
+        "name": "boarding holds players before replica acknowledgement"
+      },
+      {
+        "passed": true,
+        "name": "forged boarding acknowledgement denied"
+      },
+      {
+        "passed": true,
+        "name": "all clients acknowledge replicated balloon"
+      },
+      {
+        "passed": true,
+        "name": "Player1 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player2 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "Player3 lands inside basket"
+      },
+      {
+        "passed": true,
+        "name": "foreign crew cannot ride other balloon"
+      },
+      {
+        "passed": true,
+        "name": "foreign weapon interaction rejected"
+      },
+      {
+        "passed": true,
+        "name": "handgun equips for own crew"
+      },
+      {
+        "passed": true,
+        "name": "equipped weapon locks first person"
+      },
+      {
+        "passed": true,
+        "name": "drop restores normal camera"
+      },
+      {
+        "passed": true,
+        "name": "puncture reveals cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "repair hides cloth frays"
+      },
+      {
+        "passed": true,
+        "name": "service deck narrowed"
+      },
+      {
+        "passed": false,
+        "name": "Player1 clean client console",
+        "detail": [
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module TopBar.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+            "kind": "MessageError"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Failure to Start CoreScript module PlayerListManager.\nRequested module experienced an error while loading",
+            "kind": "MessageWarning"
+          },
+          {
+            "message": "[Roblox][Script Context.StarterScript] Script Context.StarterScript:507: Invalid value for enum CreatorType",
+            "kind": "MessageError"
+          }
+        ]
+      }
+    ]
+  },
+  "reach": {
+    "maxReach": 9.198969725044254,
+    "errors": []
+  },
+  "compiled": 27,
+  "date": "2026-10-30",
+  "notes": [
+    "Native four-client QA; physical devices and Internet latency not tested",
+    "First diagnostic run hit Roblox CoreGui CreatorType errors; later runs clean",
+    "Hole art is a surface tear effect, not a boolean cut through envelope meshes"
+  ],
+  "build": {
+    "bytes": 837704,
+    "sha256": "204676bd70974203d1aefb4c2750ef40b5d338b760711cb5646782933aafc78b"
+  },
+  "studioDefaults": {
+    "players": 1,
+    "mode": "Test"
+  }
+}

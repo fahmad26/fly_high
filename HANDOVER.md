@@ -261,3 +261,18 @@ Sesuai koreksi pengguna, AutoGasButton dikeluarkan dari daftar AKSI di HUDLayout
 - Verifikasi: **71/71 native tiga client lulus**, log server dan semua client bersih. Mencakup penolakan toggle RemoteEvent dari dua penumpang/mantan pilot, keyboard Z mantan pilot, pilot pengganti, angka +16,8 / -6,7 / 0 / sekitar -666,5 km/detik serta reset saat Game Over. Semua 26 skrip terkompilasi.
 - Galaxy A06 (LandscapeSensor, GUI 705×279): satu klik GAS OTOMATIS 140×48 menyalakan; satu klik LEPAS KEMUDI menyembunyikan kedua kontrol, gas tetap ON dan balon tetap naik. Label kecepatan muat di 122×16 piksel. iPad Pro M5: PING dan SUARA PERINGATAN sama-sama 150×44, radius 10. Konsol smoke bersih; simulator dihentikan.
 - Bukti: audit/flight-hud-fixes-results.json, flight-hud-speed-phone.jpg dan spawn-sign-facing-player.jpg. Perangkat fisik, cloud, pembelian dan publikasi tetap belum dilanjutkan.
+
+## 18. Boarding dan Akses Kru, Visual, Kamera Senjata
+
+- Dermaga maksimal tiga pemain: anggota yang sudah masuk mempertahankan tempat, pemain berikutnya ditolak dan dipindahkan ke sisi luar pad.
+- Boarding menggunakan konfirmasi kesiapan model client dengan token per anggota; karakter ditahan sebelum teleport, kemudian dilepas setelah pose gondola stabil. Model balon Persistent; timeout 20 detik mengakhiri flight dan memulihkan anchor.
+- Kru tidak boleh berdiri/menumpang pada gondola maupun kubah balon tim lain. Server memindahkan penyusup ke balon sendiri atau spawn jika belum memiliki flight.
+- Kamera otomatis LockFirstPerson saat handgun/AK47 dipakai, kembali ke mode sebelumnya ketika senjata dilepas atau karakter mati. Tembakan tetap dipicu tombol/manual; penargetan memakai auto aim di sekitar pusat kamera pada PC, HP dan gamepad. Tap lokasi dunia tidak menentukan arah peluru. Jika tidak ada target auto aim, tembakan mengikuti pusat kamera, sehingga menembak balon sendiri tetap dimungkinkan.
+- Titian servis lebih ringkas: radius 16 stud (sebelumnya 20), lebar 3 stud, lantai 0,55 stud; titik katrol disesuaikan. Lima titik kerusakan mengikuti hasil proyeksi permukaan visual, dengan pusat gelap dan serabut kain yang hanya tampak saat rusak. Ini efek visual sobekan, bukan lubang tembus hasil potong mesh.
+- Ayam memakai proporsi dada/leher/kepala terpisah, sayap berlapis, ekor kipas, jengger, pial dan kaki berjari; tetap berjalan/mematuk. Handgun dan AK47 memakai model dekoratif yang lebih rinci (slide/receiver, laras, sight, trigger guard, stock kayu dan magazen melengkung).
+
+Produksi bertambah menjadi 27 skrip; CrewAccessGuard baru memeriksa penyusup tiap 0,1 detik. FlightActionEvent dipakai dua arah untuk PrepareBoarding/BoardReady; validasi token, karakter, anggota dan timeout tetap di server. Backup audit/Fly High.before-crew-and-art-refresh.rbxl. Generator art: audit/refresh_crew_art.luau dan refresh_repair_deck.luau.
+
+QA: 25/25 pemeriksaan empat client native lulus, log server/seluruh client bersih. Termasuk pemain keempat, boarding tiga kru, penolakan token palsu, kru asing dikembalikan ke balonnya, first person handgun/AK47, auto aim desktop (HP obstacle 1000→975), restore kamera, naik/tambal/turun pada radius 16 dan fray visibility. Pemeriksaan geometri 25 titik pada lima varian: jangkauan maksimum 9,20 stud. Run awal mencatat error CoreGui CreatorType; raw laporan disimpan, dua run berikutnya bersih. Driver/remote QA dihapus. Perangkat fisik/latency publik belum diuji.
+
+Studio dikembalikan ke jumlah client 1 dan mode Test/Play biasa setelah QA; tidak ada driver tes atau preview sementara di place produksi.

@@ -12,6 +12,18 @@ local flightSyncEvent = remotes:WaitForChild("FlightStateSyncEvent")
 local pilotControlEvent = remotes:WaitForChild("PilotControlEvent")
 local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
 local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
+local preparingBoarding={}
+flightActionEvent.OnClientEvent:Connect(function(action,balloon,token)
+ if action~="PrepareBoarding"or preparingBoarding[token]then return end
+ preparingBoarding[token]=true
+ task.spawn(function()
+  if balloon and balloon.Parent and balloon:WaitForChild("BasketFloor",8)and balloon:WaitForChild("RootPart",8)and balloon:WaitForChild("TetherStation",8)then
+   RunService.RenderStepped:Wait()RunService.RenderStepped:Wait()
+   flightActionEvent:FireServer("BoardReady",token)
+  end
+  preparingBoarding[token]=nil
+ end)
+end)
 local autoGas=false
 local emergencyKitEvent = remotes:WaitForChild("EmergencyKitEvent")
 local hazardAlertEvent = remotes:WaitForChild("HazardAlertEvent")

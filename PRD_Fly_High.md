@@ -491,3 +491,12 @@ Urutan prioritas: lima lubang → tali kritis → badai → empat lubang → haz
 Volume awal kanal 40%; opsi **SUARA PERINGATAN: ON/OFF** ada di AKSI, berlaku hanya untuk audio peringatan pemain tersebut dan bertahan sepanjang sesi, termasuk respawn. HUD tali tetap menampilkan indikator visual ketika suara dimatikan. Kemudi dan gas otomatis tetap langsung di HUD utama.
 
 Katrol tetap berdurasi total sekitar 1,6 detik: perjalanan 1,3 detik dan stabilisasi pose 0,3 detik sebelum kendali fisika avatar dikembalikan. Tabrakan tubuh dinonaktifkan selama katrol dan dipulihkan setelah mendarat/dibatalkan. Dua slot tali memakai sisi titian serta titik turun berbeda agar dua engineer tidak mendarat bertumpuk. Perhitungan tinggi pijakan mendukung bentuk R15 dan rumus tinggi kaki R6.
+
+## Pembaruan Kru, Boarding, dan Senjata — 30 Oktober 2026
+
+- Dermaga maksimal tiga pemain: anggota yang sudah masuk mempertahankan tempat, pemain berikutnya ditolak dan dipindahkan ke sisi luar pad.
+- Boarding menggunakan konfirmasi kesiapan model client dengan token per anggota; karakter ditahan sebelum teleport, kemudian dilepas setelah pose gondola stabil. Model balon Persistent; timeout 20 detik mengakhiri flight dan memulihkan anchor.
+- Kru tidak boleh berdiri/menumpang pada gondola maupun kubah balon tim lain. Server memindahkan penyusup ke balon sendiri atau spawn jika belum memiliki flight.
+- Kamera otomatis LockFirstPerson saat handgun/AK47 dipakai, kembali ke mode sebelumnya ketika senjata dilepas atau karakter mati. Tembakan tetap dipicu tombol/manual; penargetan memakai auto aim di sekitar pusat kamera pada PC, HP dan gamepad. Tap lokasi dunia tidak menentukan arah peluru. Jika tidak ada target auto aim, tembakan mengikuti pusat kamera, sehingga menembak balon sendiri tetap dimungkinkan.
+- Titian servis lebih ringkas: radius 16 stud (sebelumnya 20), lebar 3 stud, lantai 0,55 stud; titik katrol disesuaikan. Lima titik kerusakan mengikuti hasil proyeksi permukaan visual, dengan pusat gelap dan serabut kain yang hanya tampak saat rusak. Ini efek visual sobekan, bukan lubang tembus hasil potong mesh.
+- Ayam memakai proporsi dada/leher/kepala terpisah, sayap berlapis, ekor kipas, jengger, pial dan kaki berjari; tetap berjalan/mematuk. Handgun dan AK47 memakai model dekoratif yang lebih rinci (slide/receiver, laras, sight, trigger guard, stock kayu dan magazen melengkung).

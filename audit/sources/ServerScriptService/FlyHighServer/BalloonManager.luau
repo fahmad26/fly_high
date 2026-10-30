@@ -36,12 +36,14 @@ local function renderHoles(fd)
  for i=1,Config.MAX_HOLES do
   local h=fd.balloon.HoleSlots:FindFirstChild("Hole"..i)
   h.Transparency=fd.holeSet[i] and 0 or 1
+  for _,p in h:GetDescendants()do if p:IsA("BasePart")then p.Transparency=h.Transparency end end
   h.PatchPrompt.Enabled=fd.holeSet[i]==true and fd.holes<Config.MAX_HOLES and not fd.isVictory and not fd.isGameOver
  end
 end
 function Manager.EndFlight(fd,victory)
  if fd.isGameOver or fd.isVictory then return end
  fd.isVictory=victory==true fd.isGameOver=not victory
+ for p,item in pairs(fd.boarding or {})do if item.root.Parent then item.root.Anchored=item.anchored end p:SetAttribute("BoardingFlight",nil)end fd.boarding=nil
  fd.pilot=nil fd.pilotSteer=Vector3.zero fd.isGasActive=false fd.autoGas=false
  fd.balloon:SetAttribute("AutoGas",false)
  fd.jumpDropRemaining=0
@@ -111,6 +113,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  b:SetAttribute("BalloonThemeName",theme.Name)
  b:SetAttribute("SourcePod",podName or "Pod_A")
  b.Name="Balloon_"..master.Name
+  b.ModelStreamingMode=Enum.ModelStreamingMode.Persistent
   b:PivotTo(CFrame.new(start)) b.Parent=workspace
  for _,part in ipairs(b:GetDescendants()) do if part:IsA("BasePart") then part.CollisionGroup="FlyHighBalloons" end end
  local root=b.PrimaryPart
@@ -120,7 +123,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
   holes=0,holeSet={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
-  usedKits={},targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+3}
+  usedKits={},targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+20,boarding={},boardingDeadline=os.clock()+20}
  fd.alignPos.Position=start fd.alignOri.CFrame=CFrame.identity
  b:SetAttribute("AutoGas",false)
  -- Only the invisible envelope proxy is a shot target; cosmetic parts do not block weapons.
@@ -132,7 +135,9 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   p:SetAttribute("FlightGhost",false) p:SetAttribute("UsedEmergencyKitThisFlight",false)
   local ref=p:FindFirstChild("FlightBalloon") or Instance.new("ObjectValue",p)
   ref.Name="FlightBalloon" ref.Value=b
-  p.Character:PivotTo(CFrame.new(start+Vector3.new((i-2)*5,4,0)))
+  local hrp=p.Character.HumanoidRootPart
+  fd.boarding[p]={root=hrp,anchored=hrp.Anchored,token=game:GetService("HttpService"):GenerateGUID(false),offset=Vector3.new((i-2)*5,4,0)}
+  hrp.Anchored=true p:SetAttribute("BoardingFlight",true)
   table.insert(fd.connections,p.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
    fd.dead[p]=true p:SetAttribute("FlightGhost",true)
    if fd.pilot==p then fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero end
@@ -157,7 +162,14 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  _G.FlyHighWeaponManager.SetupWeaponRacks(b,master:GetAttribute("BoughtAK47")==true)
  master:SetAttribute("BoughtAK47",false)
  _G.FlyHighTetherManager.SetupBalloonTethers(b,#players)
+ task.spawn(function()
+  while b.Parent and fd.boarding and not fd.isGameOver do
+   for p,item in pairs(fd.boarding)do if p.Parent==Players then remotes.FlightActionEvent:FireClient(p,"PrepareBoarding",b,item.token)end end
+   task.wait(.5)
+  end
+ end)
  b.Destroying:Connect(function()
+  for p,item in pairs(fd.boarding or {})do if item.root.Parent then item.root.Anchored=item.anchored end p:SetAttribute("BoardingFlight",nil)end fd.boarding=nil
   _G.FlyHighTetherManager.CleanupBalloon(b) _G.FlyHighWeaponManager.CleanupBalloon(b)
   for _,c in ipairs(fd.connections) do c:Disconnect() end
   for _,p in ipairs(fd.players) do
@@ -230,6 +242,23 @@ local actionRate=U.RateLimiter(.2)
 function Manager.FlightAction(p,action,value)
  local fd=U.Flight(p)
  if not fd or not U.Alive(p,fd)then return false end
+ if action=="BoardReady"then
+  local item=fd.boarding and fd.boarding[p]
+  if not item or value~=item.token or p.Character~=fd.characters[p]then return false end
+  item.ready=true
+  local all=true for _,x in pairs(fd.boarding)do if not x.ready then all=false end end
+  if all and not fd.boardingSettling then
+   fd.boardingSettling=true
+   for crew,x in pairs(fd.boarding)do crew.Character:PivotTo(fd.root.CFrame*CFrame.new(x.offset))x.root.AssemblyLinearVelocity=Vector3.zero end
+   task.delay(.3,function()
+    if not fd.boarding or not fd.balloon.Parent or fd.isGameOver then return end
+    for crew,x in pairs(fd.boarding)do if x.root.Parent then crew.Character:PivotTo(fd.root.CFrame*CFrame.new(x.offset))x.root.Anchored=x.anchored x.root.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity end crew:SetAttribute("BoardingFlight",nil)end
+    fd.boarding=nil fd.boardingUntil=os.clock()+3
+   end)
+  end
+  return true
+ end
+ if fd.boarding then return false end
  if action=="ReleaseHelm"then
   if fd.pilot~=p or fd.balloon.HelmSeat.Occupant~=p.Character:FindFirstChildOfClass("Humanoid")then return false end
   local seat=fd.balloon.HelmSeat
@@ -250,10 +279,23 @@ remotes.FlightActionEvent.OnServerEvent:Connect(function(p,action,value)
  if actionRate(p)then Manager.FlightAction(p,action,value)end
 end)
 
-Players.PlayerRemoving:Connect(function(p) local fd=U.Flight(p) if fd then fd.dead[p]=true end end)
+Players.PlayerRemoving:Connect(function(p)
+ local fd=U.Flight(p)if not fd then return end fd.dead[p]=true
+ local item=fd.boarding and fd.boarding[p]
+ if item then
+  if item.root.Parent then item.root.Anchored=item.anchored end fd.boarding[p]=nil
+  local crew,nextItem=next(fd.boarding)
+  if not crew then Manager.EndFlight(fd,false)
+  elseif nextItem.ready then Manager.FlightAction(crew,"BoardReady",nextItem.token)end
+ end
+end)
 RunService.Heartbeat:Connect(function(dt)
  for _,fd in ipairs(table.clone(Manager.activeFlights)) do
   if fd.isGameOver or fd.isVictory then continue end
+  if fd.boarding then
+   if os.clock()>fd.boardingDeadline then Manager.EndFlight(fd,false)end
+   continue
+  end
   local alive=0
   for _,p in ipairs(fd.players) do
    if U.Alive(p,fd) then

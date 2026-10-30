@@ -172,6 +172,8 @@ local Config=require(ReplicatedStorage.FlyHigh.Modules.FlyHighConfig)
 local reloadRemote=remotes:WaitForChild("WeaponReloadEvent")
 local attrConnections={}
 local lastShot=0
+local previousCameraMode
+local reticle=Instance.new("TextLabel")reticle.Name="WeaponReticle"reticle.Size=UDim2.fromOffset(28,28)reticle.AnchorPoint=Vector2.new(.5,.5)reticle.Position=UDim2.fromScale(.5,.5)reticle.BackgroundTransparency=1 reticle.Text="+"reticle.TextColor3=Color3.new(1,1,1)reticle.TextStrokeTransparency=.4 reticle.TextSize=26 reticle.Visible=false reticle.Parent=screenGui
 local function updateAmmoUI()
  if not currentWeapon then return end
  currentAmmo=currentWeapon:GetAttribute("CurrentMag") or 0
@@ -183,6 +185,11 @@ end
 local function setWeapon(tool)
  for _,c in ipairs(attrConnections) do c:Disconnect() end attrConnections={}
  currentWeapon=tool isFiringAuto=false
+ reticle.Visible=tool~=nil
+ if tool then
+  if previousCameraMode==nil then previousCameraMode=localPlayer.CameraMode end
+  localPlayer.CameraMode=Enum.CameraMode.LockFirstPerson
+ elseif previousCameraMode~=nil then localPlayer.CameraMode=previousCameraMode previousCameraMode=nil end
  weaponFrame.Visible=tool~=nil mobileShootBtn.Visible=tool~=nil
  if tool then
   for _,key in ipairs({"CurrentMag","Reloading"}) do table.insert(attrConnections,tool:GetAttributeChangedSignal(key):Connect(updateAmmoUI)) end
@@ -192,7 +199,7 @@ end
 local function targetPosition()
  local camera=Workspace.CurrentCamera
  local pos
- if UserInputService.TouchEnabled or UserInputService.GamepadEnabled then
+ do
   local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2)
   pos=ray.Origin+ray.Direction*500
   local folder=Workspace:FindFirstChild("FlyHighObstacles")
@@ -205,7 +212,7 @@ local function targetPosition()
     if visible and distance<best and (part.Position-camera.CFrame.Position).Magnitude<500 then pos=part.Position best=distance end
    end
   end
- else pos=mouse.Hit.Position end
+ end
  return pos
 end
 local function fireShot()
@@ -264,6 +271,7 @@ UserInputService.InputBegan:Connect(function(input,gpe)
 end)
 local function onCharacter(char)
  setWeapon(nil)
+ local hum=char:WaitForChild("Humanoid")hum.Died:Connect(function()setWeapon(nil)end)
  char.ChildAdded:Connect(function(child)
   if child:IsA("Tool") and Config.WEAPONS[child.Name] then setWeapon(child) end
  end)

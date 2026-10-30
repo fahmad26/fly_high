@@ -84,7 +84,19 @@ local function playersOnPad(data)
  local newcomers={}
  for p in pairs(found) do table.insert(newcomers,p) end
  table.sort(newcomers,function(a,b) return a.UserId<b.UserId end)
- for _,p in ipairs(newcomers) do if #ordered<FlyHighConfig.MAX_PLAYERS_PER_POD then table.insert(ordered,p) end end
+ for _,p in ipairs(newcomers) do
+  if #ordered<FlyHighConfig.MAX_PLAYERS_PER_POD then table.insert(ordered,p)
+  else
+   local root=p.Character and p.Character:FindFirstChild("HumanoidRootPart")
+   if root then
+    local v=data.pad.CFrame:PointToObjectSpace(root.Position)
+    local edge=data.pad.Size/2+Vector3.new(4,0,4)
+    local axis=math.abs(v.X)/edge.X>math.abs(v.Z)/edge.Z
+    local exit=axis and Vector3.new(v.X<0 and -edge.X or edge.X,4,v.Z)or Vector3.new(v.X,4,v.Z<0 and -edge.Z or edge.Z)
+    p.Character:PivotTo(data.pad.CFrame*CFrame.new(exit))root.AssemblyLinearVelocity=Vector3.zero
+   end
+  end
+ end
  return ordered
 end
 local function refresh(data,name)

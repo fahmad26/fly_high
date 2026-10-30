@@ -350,3 +350,11 @@ WelcomeSign memakai sisi Front dan normal tepat menuju spawn (dot product=1); em
 **71/71 skenario tiga client lulus**, log server/semua client bersih. Angka sampel: naik +16,79, turun -6,73, hover 0, terjun bebas -666,48 km/detik. Mencakup penolakan remote dan keyboard tanpa kemudi, pilot pengganti, keterbacaan label, Clutch Save, Game Over dan regresi tabrakan/senjata/tali/disconnect. Smoke Galaxy A06 memakai klik aktual untuk menyalakan gas dan melepas kemudi: gas tetap ON, kontrol disembunyikan, label tetap bergerak. Tablet mengonfirmasi radius dan ukuran kedua tombol sama. Semua 26 skrip terkompilasi; seluruh driver QA dihapus sebelum save, simulator default. Perangkat fisik, cloud/pembelian/publikasi masih ditunda.
 
 Bukti: audit/flight-hud-fixes-results.json, flight-hud-speed-phone.jpg, spawn-sign-facing-player.jpg. Backup: audit/Fly High.before-flight-hud-fixes.rbxl.
+
+## Kru dan visual — 30 Oktober 2026
+
+Boarding memakai model Persistent dan token kesiapan client sebelum karakter dipindah dan anchor dilepas; timeout serta cleanup/disconnect memulihkan anchor. Dermaga mengeluarkan pemain keempat. CrewAccessGuard mengusir penyusup dari gondola/kubah tim lain. Kamera first person aktif hanya saat memegang senjata; auto aim terpusat berlaku di semua jenis input dan tidak menggunakan mouse.Hit/tap dunia untuk arah peluru. Tembakan tetap manual.
+
+Model ayam dan kedua senjata dirinci ulang. Radius titian turun dari 20 menjadi 16 stud, lebar 3, tebal 0,55. Lubang diproyeksikan ke badan utama visual, dengan pusat gelap dan sobekan kain; satelit/cincin/fin tidak dijadikan permukaan utama. Posisi yang tak terjangkau dipindah ke permukaan terdekat yang dapat dicapai. Ini efek permukaan dan belum merupakan lubang tembus mesh.
+
+25/25 skenario empat client native lulus, konsol server/empat client bersih. Seluruh 27 skrip terkompilasi. Lima varian × lima lubang diperiksa secara geometri; jarak perbaikan terjauh sekitar 9,20 stud (batas 10). Boarding, kapasitas dock, akses tim, kedua senjata, auto aim desktop dan flow naik/tambal/turun diverifikasi. Run pertama memiliki error Roblox CoreGui CreatorType, dua run berikutnya bersih. Bukti audit/crew-refresh-results.json dan harness crew_access_*_playtest.luau. Perangkat fisik, kondisi internet dan penilaian artistik manusia belum diuji.
