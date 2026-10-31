@@ -173,6 +173,8 @@ local reloadRemote=remotes:WaitForChild("WeaponReloadEvent")
 local attrConnections={}
 local lastShot=0
 local previousCameraMode
+local savedZoomMin,savedZoomMax
+local cameraToken=0
 local reticle=Instance.new("TextLabel")reticle.Name="WeaponReticle"reticle.Size=UDim2.fromOffset(28,28)reticle.AnchorPoint=Vector2.new(.5,.5)reticle.Position=UDim2.fromScale(.5,.5)reticle.BackgroundTransparency=1 reticle.Text="+"reticle.TextColor3=Color3.new(1,1,1)reticle.TextStrokeTransparency=.4 reticle.TextSize=26 reticle.Visible=false reticle.Parent=screenGui
 local function updateAmmoUI()
  if not currentWeapon then return end
@@ -184,12 +186,23 @@ local function updateAmmoUI()
 end
 local function setWeapon(tool)
  for _,c in ipairs(attrConnections) do c:Disconnect() end attrConnections={}
+ local hadWeapon=currentWeapon~=nil
  currentWeapon=tool isFiringAuto=false
+ cameraToken+=1 local token=cameraToken
  reticle.Visible=tool~=nil
  if tool then
-  if previousCameraMode==nil then previousCameraMode=localPlayer.CameraMode end
+  if previousCameraMode==nil then previousCameraMode=localPlayer.CameraMode if savedZoomMin==nil then savedZoomMin=localPlayer.CameraMinZoomDistance savedZoomMax=localPlayer.CameraMaxZoomDistance end end
   localPlayer.CameraMode=Enum.CameraMode.LockFirstPerson
- elseif previousCameraMode~=nil then localPlayer.CameraMode=previousCameraMode previousCameraMode=nil end
+ elseif hadWeapon then
+  localPlayer.CameraMode=Enum.CameraMode.Classic
+  local maximum=math.max(savedZoomMax or 128,10)
+  localPlayer.CameraMaxZoomDistance=maximum localPlayer.CameraMinZoomDistance=10
+  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+  local camera=workspace.CurrentCamera
+  if camera and hum and hum.Health>0 then camera.CameraType=Enum.CameraType.Custom camera.CameraSubject=hum end
+  task.delay(.25,function()if token==cameraToken and not currentWeapon then localPlayer.CameraMinZoomDistance=savedZoomMin or .5 localPlayer.CameraMaxZoomDistance=maximum savedZoomMin=nil savedZoomMax=nil end end)
+  previousCameraMode=nil
+ end
  weaponFrame.Visible=tool~=nil mobileShootBtn.Visible=tool~=nil
  if tool then
   for _,key in ipairs({"CurrentMag","Reloading"}) do table.insert(attrConnections,tool:GetAttributeChangedSignal(key):Connect(updateAmmoUI)) end
@@ -312,22 +325,8 @@ RunService.RenderStepped:Connect(function()
  end
  wasGhost=ghost
 end)
-weaponFireEvent.OnClientEvent:Connect(function(_,origin,target)
- local dist=(target-origin).Magnitude if dist<0.01 then return end
- local tracer=Instance.new("Part")
- tracer.Name="BulletTracer" tracer.Material=Enum.Material.Neon tracer.Color=Color3.fromRGB(255,230,80)
- tracer.CanCollide=false tracer.CanTouch=false tracer.CanQuery=false tracer.Anchored=true
- -- A short moving streak, not a 500-stud yellow laser rod.
- local length=math.min(1.8,dist)
- tracer.Size=Vector3.new(.035,.035,length)
- tracer.Color=Color3.fromRGB(255,219,157) tracer.Transparency=.25
- local direction=(target-origin).Unit
- tracer.CFrame=CFrame.lookAt(origin+direction*length/2,target+direction*length)
- tracer.Parent=Workspace
- local duration=math.clamp(dist/1800,.025,.16)
- local tween=game:GetService("TweenService"):Create(tracer,TweenInfo.new(duration,Enum.EasingStyle.Linear),{CFrame=CFrame.lookAt(target-direction*length/2,target+direction),Transparency=1})
- tween:Play() game:GetService("Debris"):AddItem(tracer,duration+.05)
-end)
+require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script)
+
 tacticalPingEvent.OnClientEvent:Connect(function(pos,message,name)
  local marker=Instance.new("Part") marker.Name="TeamSpotterMarker" marker.Shape=Enum.PartType.Ball
  marker.Size=Vector3.new(3,3,3) marker.Position=pos marker.Material=Enum.Material.Neon marker.Color=Color3.fromRGB(255,230,50)

@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"pistol equipped\"},{\"passed\":true,\"name\":\"weapon locks first person\"},{\"passed\":true,\"name\":\"accepted shot damages target\"},{\"passed\":true,\"name\":\"shooter sees tracer on screen\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":144,\"playing\":true,\"loudness\":77.91369408369065,\"flash\":true}},{\"passed\":true,\"name\":\"shooter sees muzzle flash\"},{\"passed\":true,\"name\":\"gunshot asset loads\"},{\"passed\":true,\"name\":\"gunshot plays with nonzero loudness\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":144,\"playing\":true,\"loudness\":77.91369408369065,\"flash\":true}},{\"passed\":true,\"name\":\"teammate receives shot visuals\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":592,\"playing\":true,\"loudness\":77.91369408369065,\"flash\":true}},{\"passed\":true,\"name\":\"teammate hears spatial gunshot\"},{\"passed\":true,\"name\":\"drop restores Classic mode\"},{\"passed\":true,\"name\":\"drop zooms camera out of first person\",\"detail\":{\"minZoom\":0.5,\"mode\":\"Classic\",\"distance\":9.999955177307129}},{\"passed\":true,\"name\":\"backpack unequip also restores third person\",\"detail\":{\"minZoom\":0.5,\"mode\":\"Classic\",\"distance\":9.999961853027344}},{\"passed\":true,\"name\":\"rapid re-equip preserves normal zoom range\",\"detail\":{\"minZoom\":0.5,\"mode\":\"Classic\",\"distance\":9.999797821044922}},{\"passed\":true,\"name\":\"AK still equips\"},{\"passed\":true,\"name\":\"AK has visual and audible feedback\"},{\"passed\":true,\"name\":\"winch lands on bamboo walkway\"},{\"passed\":true,\"name\":\"full circle walk uses normal character physics\"},{\"passed\":true,\"name\":\"repair still reachable from bamboo\"},{\"passed\":true,\"name\":\"descent still lands and detaches\"},{\"passed\":true,\"name\":\"temporary flash and tracer cleaned\"},{\"passed\":true,\"name\":\"Player1 clean console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "priorPassing": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"pistol equipped\"},{\"passed\":true,\"name\":\"weapon locks first person\"},{\"passed\":true,\"name\":\"accepted shot damages target\"},{\"passed\":true,\"name\":\"shooter sees tracer on screen\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":128,\"playing\":true,\"loudness\":77.06844806671143,\"flash\":true}},{\"passed\":true,\"name\":\"shooter sees muzzle flash\"},{\"passed\":true,\"name\":\"gunshot asset loads\"},{\"passed\":true,\"name\":\"gunshot plays with nonzero loudness\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":128,\"playing\":true,\"loudness\":77.06844806671143,\"flash\":true}},{\"passed\":true,\"name\":\"teammate receives shot visuals\",\"detail\":{\"visible\":true,\"tracer\":true,\"loaded\":136,\"playing\":true,\"loudness\":77.06844806671143,\"flash\":true}},{\"passed\":true,\"name\":\"teammate hears spatial gunshot\"},{\"passed\":true,\"name\":\"drop restores Classic mode\"},{\"passed\":true,\"name\":\"drop zooms camera out of first person\",\"detail\":{\"minZoom\":0.5,\"mode\":\"Classic\",\"distance\":9.999958992004395}},{\"passed\":true,\"name\":\"backpack unequip also restores third person\",\"detail\":{\"minZoom\":0.5,\"mode\":\"Classic\",\"distance\":9.999994277954102}},{\"passed\":true,\"name\":\"AK still equips\"},{\"passed\":true,\"name\":\"AK has visual and audible feedback\"},{\"passed\":true,\"name\":\"winch lands on bamboo walkway\"},{\"passed\":true,\"name\":\"full circle walk uses normal character physics\"},{\"passed\":true,\"name\":\"repair still reachable from bamboo\"},{\"passed\":true,\"name\":\"descent still lands and detaches\"},{\"passed\":true,\"name\":\"temporary flash and tracer cleaned\"},{\"passed\":true,\"name\":\"Player1 clean console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "scriptsCompiled": 29,
+  "geometry": {
+    "templates": 6,
+    "polesPerTemplate": 32,
+    "envelopeTiesPerTemplate": 8,
+    "walkingSurfaceWidth": 3,
+    "walkingSurfaceTopY": 18.6
+  },
+  "audio": {
+    "assetId": 132539859090895,
+    "creator": "MrAudio6",
+    "url": "https://create.roblox.com/store/asset/132539859090895",
+    "poolPerClient": 8
+  },
+  "limitations": [
+    "No physical-device or human sound/comfort review"
+  ],
+  "sourceChecks": [
+    {
+      "path": "ReplicatedStorage/FlyHigh/Modules/WeaponPresentation",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/WeaponClientController",
+      "match": true
+    }
+  ],
+  "build": {
+    "bytes": 892286,
+    "sha256": "23BE51B91953DFC699C48C97DF76476D8D9BE75C59CCFE236C4A0A62B832C69F",
+    "studioClients": 1,
+    "mode": "Test",
+    "qaDriversRemoved": true
+  }
+}
