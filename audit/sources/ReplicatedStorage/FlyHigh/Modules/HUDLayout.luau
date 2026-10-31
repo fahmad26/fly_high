@@ -115,40 +115,40 @@ function Layout.Start(gui, player)
 		local margin = compact and 12 or 18
 		local inFlight = player:GetAttribute("InFlight") == true
 
-		-- 1. Altitude Capsule (Top Center Hero HUD - 64px height)
-		local topW = math.clamp(w * 0.48, 440, 540)
-		local topH = compact and 60 or 64
-		place("AltimeterFrame", (w - topW) / 2, 8, topW, topH)
+		-- 1. Altitude Capsule (Top Center Hero HUD)
+		local altY = 8
+		local topW = math.clamp(w * 0.44, 400, 500)
+		local topH = compact and 56 or 62
+		place("AltimeterFrame", (w - topW) / 2, altY, topW, topH)
 
-		-- 2. Grounded Countdown Ribbon (Directly below Altimeter)
-		local noticeW = math.clamp(topW - 40, 320, 440)
-		local noticeH = 32
-		place("GroundedCountdown", (w - noticeW) / 2, topH + 10, noticeW, noticeH)
+		-- 2. Grounded Countdown Ribbon (Strictly below Altimeter with comfortable 12px breathing room)
+		local noticeW = math.clamp(topW - 40, 300, 420)
+		local noticeH = 30
+		local noticeY = altY + topH + 12
+		place("GroundedCountdown", (w - noticeW) / 2, noticeY, noticeW, noticeH)
 
 		-- 3. Hull Condition Card (Top Left)
-		local statusY = (w >= 960 and 8) or (topH + 12)
+		local statusY = (w >= 960 and 8) or (noticeY + noticeH + 10)
 		local statusW = compact and 180 or 196
 		local statusH = 56
 		local status = place("StatusFrame", margin, statusY, statusW, statusH)
 		local storm = get("StormChallengePanel")
 		if status then
 			status.Visible = inFlight and not (storm and storm.Visible)
-		end
+	end
 
-		-- 4. Left Dock Toolbar (Below StatusFrame with clean vertical rhythm)
-		local tileW = 52
-		local tileH = 60
+		-- 4. Left Dock Toolbar (Clean vertical column on left edge)
+		local tileW = 50
+		local tileH = 56
 		local gap = 8
-		local navY = compact and 130 or math.max(statusY + statusH + 14, math.min(180, h * 0.25))
+		local navY = compact and 120 or math.max(statusY + statusH + 14, math.min(180, h * 0.25))
 
 		for i, name in { "ShopToggleButton", "EmergencyKitButton", "PingButton", "WarningAudioToggleButton" } do
-			local col = compact and (i - 1) or 0
-			local row = compact and 0 or (i - 1)
-			place(name, margin + col * (tileW + gap), navY + row * (tileH + gap), tileW, tileH)
+			place(name, margin, navY + (i - 1) * (tileH + gap), tileW, tileH)
 		end
 
 		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
-		local jumpSize = compact and 88 or 92
+		local jumpSize = compact and 84 or 90
 		local jumpMarginR = compact and 24 or 28
 		local jumpMarginB = compact and 24 or 28
 		local jump = place("JumpPanel", w - jumpMarginR - jumpSize, h - jumpMarginB - jumpSize, jumpSize, jumpSize)

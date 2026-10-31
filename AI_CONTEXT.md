@@ -42,37 +42,24 @@ Daftar ini berasal dari source mirror dan jumlah kompilasi snapshot. Bandingkan 
 - Equip senjata memaksa first person; drop kembali third person. Auto aim berdasarkan pusat kamera, tanpa tap arbitrer ke mana saja. Visual proyektil dan suara tembakan sudah diimplementasikan.
 - Loncatan kru/Dinding Badai **sudah diimplementasikan pada iterasi berikutnya**, meskipun instruksi historis pernah meminta dokumentasi saja. Pilot dan pemain di katrol/kubah/repair tidak boleh melompat; gunner dan pemakai tali yang masih di keranjang mengikuti izin server. Ada cooldown efek turun.
 
-## HUD aktif: Sky Arcade Pro Max (Pass 5 — Jump Button & Action Suite Overhaul)
+## HUD aktif: Sky Arcade Pro Max (Pass 6 — Layout Collision Fix & Avionics Isolation)
 
-Pengguna memberikan catatan kritis bahwa tombol Loncat (`JumpButton`) dan kontrol aksi bulat lainnya masih kurang memuaskan jika dilihat dari kacamata UI Designer. Ditemukan akar masalah visual: tombol loncat sebelumnya merender caption pill persegi panjang hitam (`LOMPAT`) yang memotong busur lingkaran bawah seperti stiker tempelan, membuat icon panah terdesak ke atas dan ukuran tombol terasa terlalu mepet ke tepi layar.
+Iterasi Pass 6 menuntaskan umpan balik kritis pengguna terkait cacat visual pada Altimeter atas dan banner peringatan lepas landas (`GroundedCountdown`):
+1. **Pemisahan Vertikal Bersih (Zero Clipping/Overlap)**: Banner peringatan `GroundedCountdown` sebelumnya menabrak dan menimpa border bawah kapsul `AltimeterFrame` karena kalkulasi koordinat `topH + 10` pada `altY = 8`. Diperbaiki pada `HUDLayout.luau` dengan formula dinamis `noticeY = altY + topH + 12`, menjamin celah bernapas (gap) konsisten 12px tanpa overlap border di seluruh resolusi layar.
+2. **Isolasi Progress Bar (Anti-Bleed)**: Pada implementasi sebelumnya, track progress bar hitam `BarBg` memanjang melebihi batas dan menembus ke bawah kotak telemetri kecepatan vertikal (`VerticalSpeedLabel`). Pada `HUDTheme.luau`, lebar bar dihitung ulang secara ketat dengan batas akhir `barEndX = speedX - 12` dan `barW = math.max(60, barEndX - barX)`, menjamin track progress bar berhenti rapi 12px sebelum chip kecepatan dan tidak pernah menabraknya.
+3. **Chip Kecepatan Telemetri Satu Baris (Anti-Wrap)**: Teks kecepatan vertikal diformat ringkas dalam satu baris horizontal (`▲ +16.8 km/s` / `● 0.0 km/s`) dengan `TextWrapped = false`, lebar diperbesar menjadi 96–104px, dan `UIStroke` border bersih tanpa teks terlipat 2 baris ("DIAM 0.0 km/dtk"). Indikator persentase (`0.0%`) ditempatkan terpusat tepat di atas track progress bar.
+4. **Toolbar Kiri Vertikal Rapi**: Tombol navigasi dock samping (`TOKO`, `KIT`, `PING`, `SUARA`) disusun vertikal rapi di tepi kiri layar dengan `gap = 8px`, `tileW = 50px`, `tileH = 56px`, dan label transparan elegan terintegrasi.
+5. **Tombol Jump Arcade Bulat Penuh (Pass 5)**: Mempertahankan tombol lompat bulat murni 84–90px di kanan bawah, ikon panah 58% terpusat, tanpa stiker teks yang memotong lengkungan bawah, serta keycap badge `[SPACE]` khusus PC (`not Input.TouchEnabled`).
 
-Iterasi Pass 5 menyelesaikan masalah ini secara menyeluruh:
-1. **Pembersihan Geometri Tombol Bulat (Pure Iconography)**: Menghilangkan caption pill persegi panjang pada semua kontrol berjenis `round` (`JumpButton`, `MobileShootButton`, `CloseButton`). Tombol aksi kini mengusung pure arcade iconography tanpa stiker teks yang merusak kelengkungan lingkaran.
-2. **Presisi Iconography & Centering**: Icon panah loncat kini di-center sempurna di tengah lingkaran dengan rasio 58% diameter tombol (51–53px), dilengkapi efek 3D embossed drop shadow.
-3. **Ergonomi Touch Target Standar AAA (Blade Ball & Rivals)**: Ukuran tombol loncat ditingkatkan menjadi **88px** (mobile) dan **92px** (desktop/tablet), dengan margin nyaman **24px** (mobile) dan **28px** (desktop) dari tepi bawah-kanan layar.
-4. **Keycap Badge Khusus PC**: Menampilkan hint `[SPACE]` mengambang rapi di sudut atas tombol hanya saat input keyboard aktif (`not Input.TouchEnabled`), dan otomatis tersembunyi pada perangkat sentuh mobile.
-5. **Pembersihan Toolbar Samping Kiri**: Menghilangkan kotak stiker hitam ber-stroke ganda pada tombol dock samping (`TOKO`, `KIT`, `PING`, `SUARA`), menggantinya dengan label transparan vektor terintegrasi yang menyatu elegan di atas gradien glossy tile.
-6. **Harmonisasi Palet Arcade Sapphire**: Meng-upgrade palet biru dari cyan jenuh menjadi saturasi arcade berlapis (Ice Cyan highlight, Cerulean core, Deep Cobalt bevel, dan Midnight outline).
-7. **Penyempurnaan Altimeter & Progress Track**: Melebarkan progress bar menjadi 180–220px dengan chip telemetri kecepatan vertikal di sudut kanan atas.
+Visual playtest terverifikasi Pass 6 tersimpan di `audit/hud-arcade-pass6-fix.jpg`. Visual Pass 5 tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
+- Tipografi seluruh elemen teks menggunakan vector `UIStroke` (`ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual`, ketebalan 1.5–2.5px).
+- Hierarki font Gotham Arcade: `Enum.Font.GothamBlack` untuk hero metric (altitude, ammo, modal headers) dan action verbs (`GAS NAIK`, `OTOMATIS: ON`, `LEPAS`); `Enum.Font.GothamBold` untuk subtitel bioma dan rincian peluru cadangan.
+- Shop Modal menampilkan kartu belanja slate dengan ilustrasi produk transparan tanpa kotak hitam, judul emas `GothamBlack 15px`, bullet point deskripsi `GothamBold 11px`, dan tombol 3D arcade bergradasi.
 
-Visual playtest terverifikasi tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
-   - Seluruh teks kini menggunakan `UIStroke` dengan `ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual` dan ketebalan 1.5–2.5px.
-   - Menonaktifkan stroke lama (`TextStrokeTransparency = 1`), melenyapkan outline miter 1px yang bergerigi dan counter-plugging pada teks ukuran kecil.
-2. **Hierarki Tipografi Gotham Arcade Premium**:
-   - **Hero Metric & Action Verb**: Menggunakan `Enum.Font.GothamBlack` untuk angka ketinggian, judul modal, dan teks aksi tombol (`GAS NAIK`, `OTOMATIS: ON`, `LEPAS`).
-   - **Subtitel & Deskripsi**: Menggunakan `Enum.Font.GothamBold` untuk nama bioma tujuan, rincian peluru cadangan, dan poin-poin penjelasan produk pada shop.
-   - Menghapus ketergantungan `TextScaled = true` pada bounding box pendek yang sebelumnya menciutkan font menjadi mikro-glif; menggantinya dengan fixed TextSize yang lapang dan proporsional.
-3. **Penyempurnaan Chip Kecepatan Avionik (Vertical Speed)**:
-   - Diformat rapi menyerupai instrumen dirgantara: panah dinamis `▲ +24.3 km/dtk` (neon green `#4ade80`), `▼ -2.5 km/dtk` (danger red `#f87171`), atau `● 0.0 km/s` (navy cyan `#93c5fd`).
-   - Dilengkapi atribut `RawSpeed` internal pada instrumen agar parsing status naik/turun tidak ter-reset menjadi "DIAM" oleh render loop per frame.
-4. **Penyempurnaan Tombol Pilot & Layout Responsif**:
-   - Tombol `AutoGasButton` diformat menjadi `OTOMATIS: ON` (hijau) dan `OTOMATIS: OFF` (biru) dengan `GothamBlack 13px`, ikon kemudi/api, dan hint shortcut `[Z]`. Bebas dari glitch line-wrapping kata.
-   - Posisi tombol lompat arcade (`JumpPanel` / `JumpButton`) diletakkan di sudut kanan bawah (zona jempol kanan) dengan format sirkular sempurna 82px.
-   - Shop Modal menampilkan kartu belanja slate dengan ilustrasi produk transparan tanpa kotak hitam, judul emas `GothamBlack 15px`, bullet point deskripsi `GothamBold 11px`, dan tombol 3D arcade bergradasi.
-
-Preview Playtest Aktual Pass 4:
-- In-Flight HUD: `audit/hud-arcade-pass4-flight.jpg`
-- Shop Modal: `audit/hud-arcade-pass4-shop.jpg`
+Preview Playtest Aktual:
+- Pass 6 (Top HUD & Layout Fix): `audit/hud-arcade-pass6-fix.jpg`
+- Pass 5 (Jump Button & Dock Clean): `audit/hud-arcade-pass5-jump.jpg`
+- Pass 4 (In-Flight Flight & Shop): `audit/hud-arcade-pass4-flight.jpg` & `audit/hud-arcade-pass4-shop.jpg`
 - `HUDGlyphs`: ikon berbasis komponen UI Roblox yang dapat diskalakan. Kontrol dan panel inti tidak memerlukan gambar unduhan.
 - `HUDImageAssets`: mempertahankan pemetaan **27 ID** unggahan. Sumber final: `assets/ui/final/compressed_img/`. Manifest kanonik: `assets/ui/asset-manifest.json`; ID sederhana: `assets/ui/final/compressed_img/roblox-asset-ids.json`.
 - Hanya **empat ilustrasi opsional** yang sekarang diminta oleh tema: `balloon_intact`, `emergency_kit`, `weapon_pistol`, `weapon_ak47`. Tidak ada re-upload atau perubahan PNG pada redesign.

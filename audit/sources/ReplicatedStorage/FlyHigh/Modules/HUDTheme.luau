@@ -690,29 +690,7 @@ function Theme.Start(gui, player)
 					box(r.goal, iconSize + 20, 36, 170, 16)
 					applyTextStyle(r.goal, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(186, 230, 253), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
 
-					-- 3. Progress Bar Track (Horizontally aligned with altitude)
-					local barX = iconSize + 180
-					local barW = math.max(90, w - barX - 14)
-					box(bar, barX, 36, barW, 11)
-					bar.ZIndex = z + 3
-					bar.BackgroundColor3 = Color3.fromRGB(6, 16, 32)
-					bar.BackgroundTransparency = 0
-					round(bar, 5)
-					stroke(bar, Color3.fromRGB(18, 38, 70), 1.2)
-
-					local fill = bar:FindFirstChild("BarFill")
-					if fill then
-						fill.BackgroundColor3 = Color3.fromRGB(0, 240, 140)
-						fill.ZIndex = z + 4
-						round(fill, 5)
-					end
-
-					-- Percentage display next to progress bar
-					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
-					box(r.percent, barX, 13, barW, 18)
-					applyTextStyle(r.percent, { font = Enum.Font.GothamBlack, size = 11, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
-
-					-- 4. Speed Indicator Chip (Upper right corner)
+					-- 3. Speed Telemetry Chip (Right side, crisp single line, no wrapping!)
 					local curText = speed.Text
 					if curText:find("NAIK", 1, true) or curText:find("TURUN", 1, true) or curText:find("DIAM", 1, true) then
 						speed:SetAttribute("RawSpeed", curText)
@@ -730,14 +708,44 @@ function Theme.Start(gui, player)
 						speed.Text = "● 0.0 km/s"
 					end
 
-					box(speed, w - 108, 10, 98, h - 20)
+					local speedW = compact and 96 or 104
+					local speedH = 24
+					local speedX = w - speedW - 12
+					local speedY = (h - speedH) / 2
+					box(speed, speedX, speedY, speedW, speedH)
 					local speedColor = vDir == "up" and Color3.fromRGB(74, 222, 128) or (vDir == "down" and Color3.fromRGB(248, 113, 113) or Color3.fromRGB(147, 197, 253))
-					applyTextStyle(speed, { font = Enum.Font.GothamBlack, size = 13, color = speedColor, strokeThickness = 2, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
+					applyTextStyle(speed, { font = Enum.Font.GothamBlack, size = 11, color = speedColor, strokeThickness = 1.8, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
+					speed.TextWrapped = false
 					speed.ZIndex = z + 4
 					speed.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
-					speed.BackgroundTransparency = 0.2
-					round(speed, 8)
-					stroke(speed, Color3.fromRGB(24, 52, 95), 1.5)
+					speed.BackgroundTransparency = 0.25
+					round(speed, 6)
+					local speedStroke = stroke(speed, Color3.fromRGB(28, 54, 96), 1)
+					speedStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+					-- 4. Progress Bar Track (Strictly contained, stops 12px before speed chip!)
+					local barX = iconSize + 168
+					local barEndX = speedX - 12
+					local barW = math.max(60, barEndX - barX)
+					box(bar, barX, 35, barW, 9)
+					bar.ZIndex = z + 3
+					bar.BackgroundColor3 = Color3.fromRGB(6, 16, 32)
+					bar.BackgroundTransparency = 0
+					round(bar, 5)
+					stroke(bar, Color3.fromRGB(18, 38, 70), 1)
+
+					local fill = bar:FindFirstChild("BarFill")
+					if fill then
+						fill.BackgroundColor3 = Color3.fromRGB(0, 240, 140)
+						fill.ZIndex = z + 4
+						round(fill, 5)
+					end
+
+					-- Percentage display directly above progress bar
+					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
+					box(r.percent, barX, 13, barW, 16)
+					applyTextStyle(r.percent, { font = Enum.Font.GothamBlack, size = 10, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
+					r.percent.TextWrapped = false
 
 					r.head.ZIndex = z + 4
 					r.goal.ZIndex = z + 4
