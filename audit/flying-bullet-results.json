@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":true,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":74.42220306396485,\"bullets\":1,\"visibleFrames\":8,\"lastServerDistance\":88.98239135742188,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-59.73952865600586, 19.564760208129883, -128\",\"origin\":\"-60.76231002807617, 14.825139999389648, -39.149810791015625\",\"maxLife\":0.4649868999999853,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"bullet visibly travels toward target\"},{\"passed\":true,\"name\":\"100-stud flight lasts long enough to follow\"},{\"passed\":true,\"name\":\"bullet has trail and readable core\"},{\"passed\":true,\"name\":\"teammate also sees bullet travel\",\"detail\":{\"glow\":true,\"maxTravel\":74.1984634399414,\"bullets\":1,\"visibleFrames\":8,\"lastServerDistance\":88.98239135742188,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-59.73952865600586, 19.564760208129883, -128\",\"origin\":\"-60.76231002807617, 14.825139999389648, -39.149810791015625\",\"maxLife\":0.4634823999999753,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"server damage still authoritative\"},{\"passed\":true,\"name\":\"long-range bullet stays visible longer\",\"detail\":{\"glow\":true,\"playerRoot\":\"-61, 609.3447265625, -37\",\"maxTravel\":170.54879760742188,\"flightRoot\":\"-52, 606.7744140625, -33\",\"bullets\":1,\"visibleFrames\":17,\"lastServerDistance\":183.05006408691407,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-63.347557067871094, 618.170654296875, 148\",\"origin\":\"-61.80147171020508, 613.3408813476562, -34.97980499267578\",\"maxLife\":1.0658988999998656,\"active\":0,\"trail\":true}},{\"passed\":true,\"name\":\"long-range cosmetic has no collision\"},{\"passed\":true,\"name\":\"AK equips\"},{\"passed\":true,\"name\":\"AK renders individual bullets\",\"detail\":{\"glow\":true,\"maxTravel\":170.6078643798828,\"bullets\":3,\"visibleFrames\":51,\"lastServerDistance\":181.58656311035157,\"nonColliding\":true,\"maxConcurrent\":3,\"hit\":\"-59.18842315673828, 608.4627685546875, 148\",\"origin\":\"-61.918697357177734, 606.30615234375, -33.553218841552734\",\"maxLife\":1.0662763000000269,\"active\":0,\"trail\":true}},{\"passed\":true,\"name\":\"active bullet count remains bounded\"},{\"passed\":true,\"name\":\"bullet and trail objects clean up\"},{\"passed\":true,\"name\":\"Player1 clean console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "diagnostics": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.FlyingBulletQA:7: first-person bullet visible over several frames\\nServerScriptService.FlyingBulletQA:7\\nServerScriptService.FlyingBulletQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":false,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":68.85675811767578,\"bullets\":1,\"visibleFrames\":5,\"nonColliding\":true,\"maxConcurrent\":1,\"maxLife\":0.2648328999998739,\"active\":0,\"trail\":true}}]}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.FlyingBulletQA:7: long-range bullet stays visible longer\\nServerScriptService.FlyingBulletQA:7\\nServerScriptService.FlyingBulletQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":true,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":64.07360076904297,\"bullets\":1,\"visibleFrames\":7,\"nonColliding\":true,\"maxConcurrent\":1,\"maxLife\":0.40048730000034996,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"bullet visibly travels toward target\"},{\"passed\":true,\"name\":\"100-stud flight lasts long enough to follow\"},{\"passed\":true,\"name\":\"bullet has trail and readable core\"},{\"passed\":true,\"name\":\"teammate also sees bullet travel\",\"detail\":{\"glow\":true,\"maxTravel\":74.28707122802735,\"bullets\":1,\"visibleFrames\":8,\"nonColliding\":true,\"maxConcurrent\":1,\"maxLife\":0.4644185000001926,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"server damage still authoritative\"},{\"passed\":false,\"name\":\"long-range bullet stays visible longer\",\"detail\":{\"glow\":true,\"maxTravel\":96.30695343017578,\"bullets\":1,\"visibleFrames\":10,\"nonColliding\":true,\"maxConcurrent\":1,\"maxLife\":0.6021031000000221,\"active\":0,\"trail\":true}}]}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.FlyingBulletQA:7: long-range bullet stays visible longer\\nServerScriptService.FlyingBulletQA:7\\nServerScriptService.FlyingBulletQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":true,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":82.66226959228516,\"bullets\":1,\"visibleFrames\":31,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":89.17012023925781,\"maxLife\":0.5163674000000356,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"bullet visibly travels toward target\"},{\"passed\":true,\"name\":\"100-stud flight lasts long enough to follow\"},{\"passed\":true,\"name\":\"bullet has trail and readable core\"},{\"passed\":true,\"name\":\"teammate also sees bullet travel\",\"detail\":{\"glow\":true,\"maxTravel\":74.3093490600586,\"bullets\":1,\"visibleFrames\":8,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":89.17012023925781,\"maxLife\":0.4642682000003333,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"server damage still authoritative\"},{\"passed\":false,\"name\":\"long-range bullet stays visible longer\",\"detail\":{\"glow\":true,\"maxTravel\":105.9803466796875,\"bullets\":1,\"visibleFrames\":40,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":109.0307846069336,\"maxLife\":0.6621509000001424,\"active\":0,\"trail\":true}}]}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.FlyingBulletQA:7: long-range bullet stays visible longer\\nServerScriptService.FlyingBulletQA:7\\nServerScriptService.FlyingBulletQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":true,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":74.47222137451172,\"bullets\":1,\"visibleFrames\":8,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":93.422119140625,\"maxLife\":0.46583600000030858,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"bullet visibly travels toward target\"},{\"passed\":true,\"name\":\"100-stud flight lasts long enough to follow\"},{\"passed\":true,\"name\":\"bullet has trail and readable core\"},{\"passed\":true,\"name\":\"teammate also sees bullet travel\",\"detail\":{\"glow\":true,\"maxTravel\":85.00297546386719,\"bullets\":1,\"visibleFrames\":9,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":93.422119140625,\"maxLife\":0.5329784000000473,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"server damage still authoritative\"},{\"passed\":false,\"name\":\"long-range bullet stays visible longer\",\"detail\":{\"glow\":true,\"maxTravel\":95.93814849853516,\"bullets\":1,\"visibleFrames\":10,\"nonColliding\":true,\"maxConcurrent\":1,\"lastServerDistance\":109.35010528564453,\"maxLife\":0.5993112999999539,\"active\":0,\"trail\":true}}]}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.FlyingBulletQA:7: long-range bullet stays visible longer\\nServerScriptService.FlyingBulletQA:7\\nServerScriptService.FlyingBulletQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"native pistol equip\"},{\"passed\":true,\"name\":\"first-person bullet visible over several frames\",\"detail\":{\"glow\":true,\"maxTravel\":63.948123931884769,\"bullets\":1,\"visibleFrames\":7,\"lastServerDistance\":89.09492492675781,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-60.88526153564453, 19.875465393066406, -128\",\"origin\":\"-60.27410125732422, 14.826422691345215, -39.05035400390625\",\"maxLife\":0.3996300999997402,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"bullet visibly travels toward target\"},{\"passed\":true,\"name\":\"100-stud flight lasts long enough to follow\"},{\"passed\":true,\"name\":\"bullet has trail and readable core\"},{\"passed\":true,\"name\":\"teammate also sees bullet travel\",\"detail\":{\"glow\":true,\"maxTravel\":74.7191162109375,\"bullets\":1,\"visibleFrames\":8,\"lastServerDistance\":89.09492492675781,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-60.88526153564453, 19.875465393066406, -128\",\"origin\":\"-60.27410125732422, 14.826422691345215, -39.05035400390625\",\"maxLife\":0.46700049999981277,\"active\":1,\"trail\":true}},{\"passed\":true,\"name\":\"server damage still authoritative\"},{\"passed\":false,\"name\":\"long-range bullet stays visible longer\",\"detail\":{\"glow\":true,\"playerRoot\":\"-60.96094512939453, 610.7371826171875, -37.000003814697266\",\"maxTravel\":95.98719024658203,\"flightRoot\":\"-52, 608.1669311523438, -33\",\"bullets\":1,\"visibleFrames\":10,\"lastServerDistance\":109.0998306274414,\"nonColliding\":true,\"maxConcurrent\":1,\"hit\":\"-61.09267807006836, 618.7975463867188, -148\",\"origin\":\"-60.127227783203125, 614.0118408203125, -39.009464263916016\",\"maxLife\":0.6005165999999917,\"active\":0,\"trail\":true}}]}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "scriptsCompiled": 29,
+  "limitations": [
+    "Automated native-client tests; no human or physical-device visual review"
+  ],
+  "build": {
+    "bytes": 893318,
+    "sha256": "063125D53222F172E189FCC6DCA0BD8D252A2A43B36451331EF4A14A5FB4C5A0",
+    "sourceMatches": true,
+    "studioClients": 1,
+    "mode": "Test",
+    "qaDriversRemoved": true
+  }
+}

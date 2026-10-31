@@ -529,3 +529,7 @@ Saat senjata dilepas, kamera wajib kembali ke third person dengan jarak awal sek
 ## Tali Putus dan Jatuh Fatal — 31 Oktober 2026
 
 Ketika durabilitas tali mencapai 0, tali putus dan avatar terlebih dahulu terlempar keluar dari balon, kemudian jatuh secara fisik. Kematian terjadi setelah sekitar 1,25 detik (atau lebih cepat bila terkena void/penyebab kematian lain). Sejak tali putus, pemain tidak dapat mengambil role, meminta tarikan penyelamat, atau kembali ke gondola. Timer kematian hanya berlaku untuk karakter yang mengalami kejadian tersebut. Jika putus saat sedang ditarik, role penyelamat dibebaskan dan karakter tidak dikembalikan ke titik awal katrol. Efek ini menggantikan kematian seketika pada HP tali 0.
+
+## Keterbacaan Peluru — 31 Oktober 2026
+
+Setiap tembakan sah menampilkan peluru melayang dengan badan yang terlihat dan jejak pendek. Animasi dari laras menuju titik benturan dibuat cukup lama agar dapat diikuti mata pada first person maupun oleh rekan tim. Peluru kosmetik berhenti di titik benturan yang ditentukan server dan dibersihkan setelah efek jejak berakhir.

@@ -32,20 +32,37 @@ function Presentation.Start(player,remote,owner)
   flash.Color=Color3.fromRGB(255,215,130)flash.Material=Enum.Material.Neon flash.Position=start
   flash.Anchored=true flash.CanCollide=false flash.CanTouch=false flash.CanQuery=false flash.Parent=workspace Debris:AddItem(flash,.07)
   local light=Instance.new("PointLight")light.Color=flash.Color light.Brightness=1.3 light.Range=5 light.Parent=flash
-  local streak=Instance.new("Part")streak.Name="BulletTracer"streak.Size=Vector3.new(.09,.09,math.min(6,distance))
-  streak.Color=Color3.fromRGB(255,211,115)streak.Material=Enum.Material.Neon
-  streak.Anchored=true streak.CanCollide=false streak.CanTouch=false streak.CanQuery=false streak.Parent=workspace
-  local duration=math.clamp(distance/850,.09,.35)
+  local streak=Instance.new("Part")streak.Name="FlyingBullet"streak.Shape=Enum.PartType.Ball streak.Size=Vector3.new(.24,.24,.85)
+  streak.Color=Color3.fromRGB(255,208,86)streak.Material=Enum.Material.Neon
+  streak.Anchored=true streak.CanCollide=false streak.CanTouch=false streak.CanQuery=false
+  streak.CFrame=CFrame.lookAt(start,start+direction)
+  local a0=Instance.new("Attachment",streak)a0.Position=Vector3.new(-.12,0,.3)
+  local a1=Instance.new("Attachment",streak)a1.Position=Vector3.new(.12,0,.3)
+  local trail=Instance.new("Trail",streak)trail.Name="BulletTrail"trail.Attachment0=a0 trail.Attachment1=a1
+  trail.FaceCamera=true trail.Lifetime=.12 trail.MinLength=.05 trail.LightEmission=1
+  trail.Color=ColorSequence.new(streak.Color,Color3.fromRGB(195,116,37))
+  trail.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,.05),NumberSequenceKeypoint.new(1,1)})
+  -- A six-pixel core keeps the moving bullet readable when its 3D body becomes
+  -- subpixel at range. World occlusion still applies; it is not a HUD reticle.
+  local glow=Instance.new("BillboardGui",streak)glow.Name="BulletGlow"glow.Size=UDim2.fromOffset(6,6)glow.AlwaysOnTop=false glow.MaxDistance=520 glow.LightInfluence=0
+  local dot=Instance.new("Frame",glow)dot.Size=UDim2.fromScale(1,1)dot.BackgroundColor3=streak.Color dot.BorderSizePixel=0
+  Instance.new("UICorner",dot).CornerRadius=UDim.new(1,0)
+  streak.Parent=workspace
+  local duration=math.clamp(distance/160,.25,1.8)
   table.insert(active,{part=streak,start=start,direction=direction,distance=distance,elapsed=0,duration=duration})
   if #active>32 then active[1].part:Destroy()table.remove(active,1)end
  end)
  local render=Run.RenderStepped:Connect(function(dt)
   for i=#active,1,-1 do local a=active[i]a.elapsed+=dt
-   if a.elapsed>=a.duration or not a.part.Parent then a.part:Destroy()table.remove(active,i)
+   if not a.part.Parent then table.remove(active,i)
+   elseif a.elapsed>=a.duration then
+    a.part.CFrame=CFrame.lookAt(a.start+a.direction*a.distance,a.start+a.direction*(a.distance+1))
+    a.part.Transparency=1 a.part.BulletGlow.Enabled=false a.part.BulletTrail.Enabled=false
+    Debris:AddItem(a.part,.13)table.remove(active,i)
    else
     local fraction=a.elapsed/a.duration local center=a.start+a.direction*(a.distance*fraction)
     a.part.CFrame=CFrame.lookAt(center,center+a.direction)
-    a.part.Transparency=.1+fraction*.65
+    a.part.Transparency=.02+fraction*.12
    end
   end
  end)
