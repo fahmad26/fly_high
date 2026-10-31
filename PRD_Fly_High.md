@@ -1,6 +1,8 @@
 # Product Requirement Document (PRD)
 # Game Roblox: "Fly High"
 
+> Dokumen ini memuat spesifikasi beserta revisi bertanggal. Untuk **status implementasi, bukti pengujian dan temuan terbuka**, baca `AI_CONTEXT.md` dan `HANDOVER.md`; status tersebut bukan pengganti aturan produk di sini. Desain visual HUD aktif adalah Sky Arcade pada bagian 12; catatan tray AKSI yang lebih lama merupakan riwayat sebelum redesign.
+
 ---
 
 ## 1. Ringkasan Eksekutif & Identitas Game

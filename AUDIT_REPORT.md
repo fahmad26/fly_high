@@ -1,4 +1,6 @@
 # Audit teknis Fly High — 28 Oktober 2026
+
+> **Indeks status aktif — 31 Oktober 2026:** laporan ini merupakan akumulasi historis. Angka 15/29/31 skrip, hashes lama dan detail implementasi awal di bawah tidak mewakili build aktif. Snapshot sekarang memiliki **32 LuaSourceContainer terkompilasi**, HUD Sky Arcade, place SHA-256 `B94CEC7E3591A0B2E2480C8F4B67CECBF909F5843389A94BCCB8457F48AC95FF`, tanpa fixture QA tersimpan. Baca [AI_CONTEXT.md](./AI_CONTEXT.md), [redesign HUD](./audit/HUD_ARCADE_REDESIGN.md), [bukti HUD](./audit/hud-arcade-results.json) dan [ringkasan perjalanan penuh](./audit/full-journey-summary.json). Temuan co-op lateral dan anomali jump dalam fixture setelah pergantian role masih terbuka; tidak ada klaim satu suite end-to-end seluruhnya hijau. Safe zone terbaru hanya membatasi rintangan lingkungan; self-shot dan tabrakan antarbalon tetap dapat merusak di bawah 1.200 km. Pengguna menunda publish/Robux/cloud. Pembaruan indeks ini hanya dokumentasi, bukan run QA baru.
 Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti lolos regresi lokal. **Belum dinyatakan siap rilis publik** karena pengujian monetisasi/cloud/multiplayer dan beberapa aset PRD masih belum lengkap.
 
 ## Lingkup dan bukti
