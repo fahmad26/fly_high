@@ -436,7 +436,7 @@ RunService.RenderStepped:Connect(function()
  local station=b and b.Parent and b:FindFirstChild("TetherStation")
  local nearStation=station~=nil and root~=nil and localPlayer:GetAttribute("InFlight")==true and (root.Position-station.Position).Magnitude<=10 and not outside
  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
- local free=not currentWeapon and hum and not hum.Sit and localPlayer:GetAttribute("CrewRole")==nil and localPlayer:GetAttribute("BoardingFlight")~=true
+ local free=not currentWeapon and hum and localPlayer.Character:GetAttribute("FatalRopeFall")~=true and not hum.Sit and localPlayer:GetAttribute("CrewRole")==nil and localPlayer:GetAttribute("BoardingFlight")~=true
  attachButton.Visible=free and nearStation and not tethered and localPlayer:GetAttribute("RopeRepairing")~=true and (station:GetAttribute("AvailableRopes")or 0)>0
  repairRopeButton.Visible=(free or localPlayer:GetAttribute("RopeRepairing")==true) and nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
  detachButton.Visible=tethered and not travelling and localPlayer:GetAttribute("InFlight")==true

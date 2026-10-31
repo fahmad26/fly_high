@@ -525,3 +525,7 @@ Satu pemain hanya dapat menjalankan satu role aktif: Pilot (memegang kemudi), Gu
 ## Presentasi Senjata dan Titian Reparasi — 31 Oktober 2026
 
 Saat senjata dilepas, kamera wajib kembali ke third person dengan jarak awal sekitar 10 stud dan batas zoom normal dipulihkan. Setiap tembakan sah menghasilkan jejak peluru, kilatan laras dan suara spasial yang dapat dilihat/didengar penembak serta pemain dekatnya. Titian reparasi menggunakan dua bilah bambu pada setiap segmen ring dengan tali penyangga menempel pada badan visual balon; lebar pijakan 3 stud dan ketinggian pendaratan tetap dipertahankan agar berjalan/menambal tidak berubah.
+
+## Tali Putus dan Jatuh Fatal — 31 Oktober 2026
+
+Ketika durabilitas tali mencapai 0, tali putus dan avatar terlebih dahulu terlempar keluar dari balon, kemudian jatuh secara fisik. Kematian terjadi setelah sekitar 1,25 detik (atau lebih cepat bila terkena void/penyebab kematian lain). Sejak tali putus, pemain tidak dapat mengambil role, meminta tarikan penyelamat, atau kembali ke gondola. Timer kematian hanya berlaku untuk karakter yang mengalami kejadian tersebut. Jika putus saat sedang ditarik, role penyelamat dibebaskan dan karakter tidak dikembalikan ke titik awal katrol. Efek ini menggantikan kematian seketika pada HP tali 0.

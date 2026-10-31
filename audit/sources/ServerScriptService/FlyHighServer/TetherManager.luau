@@ -123,6 +123,40 @@ function Manager.CleanupBalloon(b)
  Manager.ropePools[b]=nil
 end
 
+function Manager.BreakRope(p)
+ local t=Manager.activeTethers[p.UserId]local fd=U.Flight(p)
+ if not t or not fd or t.balloon~=fd.balloon or not U.Alive(p,fd)then return false end
+ local character=p.Character local hum=t.hum local root=t.hrp
+ local pose=root.CFrame
+ local offset=root.Position-fd.root.Position
+ local outward=Vector3.new(offset.X,0,offset.Z)
+ outward=outward.Magnitude>.1 and outward.Unit or fd.root.CFrame.LookVector
+ -- Commit the fatal state before cleanup so no prompt/remote can re-equip,
+ -- rescue or transfer this character while its fall animation is playing.
+ character:SetAttribute("FatalRopeFall",true)
+ U.Unseat(p)
+ t.durability=0
+ Manager.CleanupPlayer(p)
+ if _G.FlyHighWeaponManager then _G.FlyHighWeaponManager.CleanupPlayer(p)end
+ root.Anchored=false root.CFrame=pose
+ local groups={}
+ for _,part in character:GetDescendants()do if part:IsA("BasePart")then groups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end
+ hum.Sit=false hum.AutoRotate=false hum.PlatformStand=true
+ hum:ChangeState(Enum.HumanoidStateType.Physics)
+ if root:IsDescendantOf(workspace)then root:SetNetworkOwner(nil)end
+ root.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity+outward*Config.ROPE_BREAK_OUTWARD_SPEED+Vector3.new(0,8,0)
+ root.AssemblyAngularVelocity=Vector3.new(1.5,0,2)
+ remotes.TetherEvent:FireClient(p,{isTethered=false,stage="Broken",fatalFall=true})
+ task.delay(.3,function()
+  for part,group in pairs(groups)do if part.Parent and part:IsDescendantOf(character)then part.CollisionGroup=group end end
+ end)
+ task.delay(Config.ROPE_BREAK_DEATH_DELAY_SEC,function()
+  -- Never kill a replacement character after respawn or touch a departed player.
+  if p.Parent==Players and p.Character==character and hum.Parent and character:IsDescendantOf(workspace)then hum.Health=0 end
+ end)
+ return true
+end
+
 local function stationContext(p)
  local fd=U.Flight(p)
  local pool=fd and Manager.ropePools[fd.balloon]
@@ -363,7 +397,7 @@ RunService.Heartbeat:Connect(function(dt)
    fd.engineerTilt+=Vector3.new(math.clamp(offset.Z*.005,-.12,.12),0,math.clamp(-offset.X*.005,-.12,.12))
   end
   if t.durability<=0 then
-   local hum=t.hum Manager.CleanupPlayer(p)if hum.Parent then hum.Health=0 end
+   Manager.BreakRope(p)
   elseif os.clock()-(t.lastSync or 0)>=.1 then t.lastSync=os.clock()syncTether(t,inside)end
  end
 end)

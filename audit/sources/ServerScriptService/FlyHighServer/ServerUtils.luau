@@ -12,7 +12,7 @@ end
 function U.Alive(p,fd)
  local c=p.Character
  local h=c and c:FindFirstChildOfClass("Humanoid")
- return p.Parent==Players and h and h.Health>0 and (not fd or (fd.characters[p]==c and not fd.dead[p]))
+ return p.Parent==Players and h and h.Health>0 and c:GetAttribute("FatalRopeFall")~=true and (not fd or (fd.characters[p]==c and not fd.dead[p]))
 end
 function U.Near(p,part,range)
  local r=p.Character and p.Character:FindFirstChild("HumanoidRootPart")

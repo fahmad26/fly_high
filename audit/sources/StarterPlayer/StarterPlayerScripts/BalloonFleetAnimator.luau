@@ -73,7 +73,7 @@ local promptElapsed=0
 RunService.Heartbeat:Connect(function(dt)
  promptElapsed+=dt if promptElapsed<0.15 then return end promptElapsed=0
  local char=player.Character local hum=char and char:FindFirstChildOfClass("Humanoid")
- local alive=hum and hum.Health>0 and player:GetAttribute("FlightGhost")~=true
+ local alive=hum and hum.Health>0 and char:GetAttribute("FatalRopeFall")~=true and player:GetAttribute("FlightGhost")~=true
  local ref=player:FindFirstChild("FlightBalloon")
  local own=ref and ref.Value
  local active=player:GetAttribute("InFlight")==true

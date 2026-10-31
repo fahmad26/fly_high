@@ -125,13 +125,7 @@ for _,pod in ipairs(Themes.Order) do
   for _,z in ipairs({-12,12}) do rod(decor,"PavilionCornice",Vector3.new(-12,8.7,z),Vector3.new(12,8.7,z),0.7,theme.Dark,Enum.Material.Wood) end
   for _,x in ipairs({-12,12}) do rod(decor,"PavilionCornice",Vector3.new(x,8.7,-12),Vector3.new(x,8.7,12),0.7,theme.Dark,Enum.Material.Wood) end
  elseif theme.Id=="C" then
-  for _,s in ipairs({-1,1}) do
-   for _,x in ipairs({-6.6,6.6}) do
-    local prow=Instance.new("CornerWedgePart") prow.Name="BoatProw" prow.Size=Vector3.new(13,3.2,6.5)
-    prow.CFrame=CFrame.new(x,-0.2,s*15)*CFrame.Angles(0,(x<0 and math.pi or 0)+(s<0 and math.pi/2 or -math.pi/2),0)
-    prow.Color=theme.Dark prow.Material=Enum.Material.WoodPlanks prow.Anchored=true prow.CanCollide=false prow.CanTouch=false prow.CanQuery=false prow.Parent=decor
-   end
-  end
+  -- Keep the Koi basket floor clean; wave trim carries its boat motif.
   for _,x in ipairs({-14.1,14.1}) do
    for i=0,10 do
     local a=Vector3.new(x,2.4+math.sin(i*0.8)*0.35,-12+i*2.3)

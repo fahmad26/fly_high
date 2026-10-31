@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"live SkyKoi has no oversized prow boards\"},{\"passed\":true,\"name\":\"rope removed as it breaks\"},{\"passed\":true,\"name\":\"broken rope releases anchor\"},{\"passed\":true,\"name\":\"character remains alive during ejection\"},{\"passed\":true,\"name\":\"ejection has outward physical velocity\",\"detail\":\"42.00004196166992, -4.262509346008301, -0.010241210460662842\"},{\"passed\":true,\"name\":\"fall is server owned\"},{\"passed\":true,\"name\":\"fatal fall blocks gameplay roles\"},{\"passed\":true,\"name\":\"fatal fall cannot be rescued\"},{\"passed\":true,\"name\":\"avatar travels away before dying\"},{\"passed\":true,\"name\":\"avatar falls below start\"},{\"passed\":true,\"name\":\"ejected body regains world collision\"},{\"passed\":true,\"name\":\"broken rope durability persists\"},{\"passed\":true,\"name\":\"death follows fall delay\"},{\"passed\":true,\"name\":\"unbroken team continues flying\"},{\"passed\":true,\"name\":\"rescue started for second victim\"},{\"passed\":true,\"name\":\"break cancels helper role\"},{\"passed\":true,\"name\":\"break during rescue releases physics\"},{\"passed\":true,\"name\":\"rescue break does not rewind to winch origin\"},{\"passed\":true,\"name\":\"rescue victim dies after delay\"},{\"passed\":true,\"name\":\"roof break ejects instead of immediate death\"},{\"passed\":true,\"name\":\"old death timer cannot kill respawn\"},{\"passed\":true,\"name\":\"Player1 clean client console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean client console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player3 clean client console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "scriptsCompiled": 29,
+  "geometry": {
+    "removedBoatProwParts": 8,
+    "template": "SkyKoi",
+    "preview": "Pod_C"
+  },
+  "parameters": {
+    "deathDelay": 1.25,
+    "outwardSpeed": 42
+  },
+  "limits": [
+    "No physical-device or human playtest"
+  ],
+  "priorPassing": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"live SkyKoi has no oversized prow boards\"},{\"passed\":true,\"name\":\"rope removed as it breaks\"},{\"passed\":true,\"name\":\"broken rope releases anchor\"},{\"passed\":true,\"name\":\"character remains alive during ejection\"},{\"passed\":true,\"name\":\"ejection has outward physical velocity\",\"detail\":\"41.99996566772461, -2.6275105476379395, -0.009370863437652588\"},{\"passed\":true,\"name\":\"fall is server owned\"},{\"passed\":true,\"name\":\"fatal fall blocks gameplay roles\"},{\"passed\":true,\"name\":\"fatal fall cannot be rescued\"},{\"passed\":true,\"name\":\"avatar travels away before dying\"},{\"passed\":true,\"name\":\"avatar falls below start\"},{\"passed\":true,\"name\":\"broken rope durability persists\"},{\"passed\":true,\"name\":\"death follows fall delay\"},{\"passed\":true,\"name\":\"unbroken team continues flying\"},{\"passed\":true,\"name\":\"rescue started for second victim\"},{\"passed\":true,\"name\":\"break cancels helper role\"},{\"passed\":true,\"name\":\"break during rescue releases physics\"},{\"passed\":true,\"name\":\"rescue break does not rewind to winch origin\"},{\"passed\":true,\"name\":\"rescue victim dies after delay\"},{\"passed\":true,\"name\":\"roof break ejects instead of immediate death\"},{\"passed\":true,\"name\":\"old death timer cannot kill respawn\"},{\"passed\":true,\"name\":\"Player1 clean client console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean client console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player3 clean client console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "build": {
+    "bytes": 892880,
+    "sha256": "17DFDA58FDF965BFAF6ED7AC23B485CFD273A10697052D5A5B8005634C18D898",
+    "studioClients": 1,
+    "mode": "Test",
+    "qaDriversRemoved": true
+  },
+  "sourceChecks": [
+    {
+      "path": "ReplicatedStorage/FlyHigh/Modules/FlyHighConfig",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/ServerUtils",
+      "match": true
+    },
+    {
+      "path": "ServerScriptService/FlyHighServer/TetherManager",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator",
+      "match": true
+    },
+    {
+      "path": "StarterPlayer/StarterPlayerScripts/WeaponClientController",
+      "match": true
+    }
+  ]
+}
