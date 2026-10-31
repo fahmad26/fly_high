@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"cannot pull crew safely in basket\"},{\"passed\":true,\"name\":\"fall enters hanging state\"},{\"passed\":true,\"name\":\"rope catches falling player\"},{\"passed\":true,\"name\":\"station advertises rescue\"},{\"passed\":true,\"name\":\"fallen player cannot self-return via remotes\"},{\"passed\":true,\"name\":\"victim cannot pull self\"},{\"passed\":true,\"name\":\"outsider cannot rescue another team\"},{\"passed\":true,\"name\":\"weapon holder cannot pull\"},{\"passed\":true,\"name\":\"free crew starts rescue using remote\"},{\"passed\":true,\"name\":\"rescue takes exclusive helper role\"},{\"passed\":true,\"name\":\"duplicate rescue rejected\"},{\"passed\":true,\"name\":\"rescue reaches moving basket\"},{\"passed\":true,\"name\":\"victim restored inside basket\"},{\"passed\":true,\"name\":\"rope remains equipped after rescue\"},{\"passed\":true,\"name\":\"helper role released\"},{\"passed\":true,\"name\":\"no false fallen state after landing\"},{\"passed\":true,\"name\":\"native prompt rescues teammate\"},{\"passed\":true,\"name\":\"leaving basket cancels rescue safely\"},{\"passed\":true,\"name\":\"victim detach during rescue restores physics\"},{\"passed\":true,\"name\":\"crew may also pull a repairer from deck\"},{\"passed\":true,\"name\":\"normal roof descent still works\"},{\"passed\":true,\"name\":\"fall from repair deck also requires rescue\"},{\"passed\":true,\"name\":\"deck fall cannot bypass with descend\"},{\"passed\":true,\"name\":\"hanging rope keeps wearing\"},{\"passed\":true,\"name\":\"rope exhaustion kills and cleans up\"},{\"passed\":true,\"name\":\"station clears stale rescue availability\"},{\"passed\":true,\"name\":\"Player1 clean console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean console\",\"detail\":[]},{\"passed\":true,\"name\":\"Player3 clean console\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "diagnostics": [
+    "First run failed in QA fixture when Climb was sent inside the existing 0.3 second remote cooldown. Test timing corrected; no production cooldown change.",
+    "Final run: 29 checks passed; server and all three client logs empty."
+  ],
+  "limits": [
+    "No physical device or internet latency playtest."
+  ],
+  "compiledProductionScripts": 28,
+  "studioDefaults": {
+    "clients": 1,
+    "mode": "Test",
+    "qaDriversRemoved": true
+  }
+}

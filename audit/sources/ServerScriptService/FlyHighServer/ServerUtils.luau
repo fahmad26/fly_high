@@ -47,6 +47,7 @@ end
 function U.Role(p,ignoreSeat)
  local w=_G.FlyHighWeaponManager local t=_G.FlyHighTetherManager
  if w and w.held[p] then return "Gunner" end
+ if t and t.rescuers[p] then return "Rescuer" end
  if t and (t.activeTethers[p.UserId] or t.ropeRepairs[p]) then return "Engineer" end
  local fd=U.Flight(p)
  local hum=p.Character and p.Character:FindFirstChildOfClass("Humanoid")

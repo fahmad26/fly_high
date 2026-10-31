@@ -1,7 +1,7 @@
 -- One layout owner: scale positions and dimensions together, never touch hitboxes.
 local Layout = {}
-local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
-local riggingActions = {"AttachButton", "RepairRopeButton", "DetachButton", "ClimbButton", "RepairButton", "DescendButton"}
+local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "PullCrewButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
+local riggingActions = {"AttachButton", "RepairRopeButton", "PullCrewButton", "DetachButton", "ClimbButton", "RepairButton", "DescendButton"}
 
 local function box(object, x, y, w, h)
  object.AnchorPoint = Vector2.zero

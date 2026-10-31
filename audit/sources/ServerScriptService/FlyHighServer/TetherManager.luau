@@ -8,7 +8,7 @@ local Physics=game:GetService("PhysicsService")
 pcall(function()Physics:RegisterCollisionGroup("FlyHighBalloons")end)
 pcall(function()Physics:RegisterCollisionGroup("FlyHighWinching")end)
 for _,name in {"Default","FlyHighBalloons","FlyHighWinching"}do Physics:CollisionGroupSetCollidable("FlyHighWinching",name,false)end
-local Manager={activeTethers={},attachHandlers=setmetatable({},{__mode="k"}),ropePools=setmetatable({},{__mode="k"}),ropeRepairs=setmetatable({},{__mode="k"})}
+local Manager={rescuers={},activeTethers={},attachHandlers=setmetatable({},{__mode="k"}),ropePools=setmetatable({},{__mode="k"}),ropeRepairs=setmetatable({},{__mode="k"})}
 _G.FlyHighTetherManager=Manager
 
 local function stationText(pool)
@@ -26,6 +26,8 @@ local function stationText(pool)
  station:SetAttribute("RopesInUse",used)
  station:SetAttribute("AvailableRopes",available)
  station:SetAttribute("RepairableRopes",damaged)
+ local waiting=0 for _,slot in pool.slots do local t=slot.holder and Manager.activeTethers[slot.holder.UserId]if t and (t.needsRescue or t.stage=="Catwalk")and not t.winch then waiting+=1 end end
+ station:SetAttribute("RescueWaiting",waiting)
  station.TetherPrompt.ObjectText=string.format("Stasiun Tali (%d/%d siap)",available,#pool.slots)
  station.RepairRopePrompt.Enabled=damaged>0 or repairing>0
 end
@@ -40,6 +42,29 @@ end
 local function restoreCollisions(t)
  for part,group in pairs(t.collisionGroups or {})do if part.Parent then part.CollisionGroup=group end end
  t.collisionGroups=nil
+end
+local function releaseHelper(t)
+ local helper=t.helper
+ if helper and Manager.rescuers[helper]==t then
+  Manager.rescuers[helper]=nil
+  if helper.Parent==Players then helper:SetAttribute("CrewRole",nil)end
+ end
+ t.helper=nil
+end
+local function hang(t)
+ t.repair=nil t.needsRescue=true t.stage="Hanging"
+ local q=t.balloon.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
+ t.hanging={offset=Vector3.new(math.clamp(q.X,-24,24),-10,math.clamp(q.Z,-24,24)),anchored=t.hrp.Anchored,autoRotate=t.hum.AutoRotate}
+ t.hrp.Anchored=true t.hum.AutoRotate=false
+end
+function Manager.CancelPull(t)
+ if not t.helper then return end
+ releaseHelper(t)
+ if t.winch then
+  t.hrp.Anchored=t.oldAnchored t.hum.AutoRotate=t.oldAutoRotate
+  restoreCollisions(t)t.winch=nil
+  hang(t)
+ end
 end
 
 function Manager.CancelRopeRepair(p)
@@ -59,10 +84,17 @@ function Manager.CancelRopeRepair(p)
 end
 
 function Manager.CleanupPlayer(p)
+ if Manager.rescuers[p] then Manager.CancelPull(Manager.rescuers[p])end
  Manager.CancelRopeRepair(p)
  local t=Manager.activeTethers[p.UserId]
  if not t then return end
  Manager.activeTethers[p.UserId]=nil
+ releaseHelper(t)
+ if t.hanging then
+  if t.hrp.Parent then t.hrp.Anchored=t.hanging.anchored end
+  if t.hum.Parent then t.hum.AutoRotate=t.hanging.autoRotate end
+  t.hanging=nil
+ end
  if p.Parent==Players then p:SetAttribute("CrewRole",nil) end
  if t.hrp.Parent and t.winch then
   local root=t.balloon.PrimaryPart
@@ -132,9 +164,17 @@ local function syncTether(t,inside)
  remotes.TetherEvent:FireClient(t.player,{isTethered=true,durability=t.durability,insideBasket=inside,stage=t.stage,ropeSlot=t.slot.index})
 end
 
-local function travel(p,b,descending)
+local function travel(p,b,descending,rescue)
  local t=Manager.activeTethers[p.UserId]
  if not t or t.balloon~=b or t.winch or not U.Alive(p,U.Flight(p))then return false end
+ if t.needsRescue and not rescue then return false end
+ if descending and not rescue then
+  local q=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
+  if t.stage~="Catwalk"or q.Y<17.6 or Vector2.new(q.X,q.Z).Magnitude>21 then return false end
+ end
+ if t.hanging then
+  t.hrp.Anchored=t.hanging.anchored t.hum.AutoRotate=t.hanging.autoRotate t.hanging=nil
+ end
  U.Unseat(p)
  local leg=t.hum.RigType==Enum.HumanoidRigType.R6 and p.Character:FindFirstChild("Left Leg")
  local standing=t.hum.HipHeight+t.hrp.Size.Y/2+(leg and leg.Size.Y or 0)+math.max(.1,t.hrp.Size.Y/2)
@@ -143,10 +183,23 @@ local function travel(p,b,descending)
  t.collisionGroups={}
  for _,part in p.Character:GetDescendants()do if part:IsA("BasePart")then t.collisionGroups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end
  t.hrp.Anchored=true t.hum.AutoRotate=false t.repair=nil
- t.stage=descending and "Descending"or "Climbing"
- t.winch={from=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position),to=destination,elapsed=0,detach=descending}
+ t.stage=rescue and "Rescuing"or(descending and "Descending"or "Climbing")
+ t.winch={from=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position),to=destination,elapsed=0,detach=descending and not rescue,rescue=rescue}
  syncTether(t,U.InBasket(t.hrp,b.BasketFloor))
  return true
+end
+function Manager.PullCrew(p)
+ local fd=U.Flight(p)local root=p.Character and p.Character:FindFirstChild("HumanoidRootPart")
+ if not fd or not root or not U.CanStartRole(p)or p.Character:FindFirstChildOfClass("Tool")or not U.InBasket(root,fd.balloon.BasketFloor)then return false end
+ for _,crew in ipairs(fd.players)do
+  local t=Manager.activeTethers[crew.UserId]
+  if crew~=p and t and t.balloon==fd.balloon and (t.needsRescue or t.stage=="Catwalk")and not t.winch and U.Alive(crew,fd)then
+   Manager.rescuers[p]=t t.helper=p p:SetAttribute("CrewRole","Rescuer")
+   if travel(crew,fd.balloon,true,true)then return true end
+   releaseHelper(t)
+  end
+ end
+ return false
 end
 
 function Manager.SetupBalloonTethers(b,count)
@@ -161,6 +214,9 @@ function Manager.SetupBalloonTethers(b,count)
  prompt("TetherPrompt","Pasang Tali Pengaman",Enum.KeyCode.E,.5)
  local detach=prompt("DetachTetherPrompt","Lepas Tali Pengaman",Enum.KeyCode.T,0)detach.GamepadKeyCode=Enum.KeyCode.ButtonL2
  local ropeRepair=prompt("RepairRopePrompt","Perbaiki Tali yang Dilepas",Enum.KeyCode.C,Config.ROPE_MAX_DURABILITY/Config.ROPE_REPAIR_RATE_PER_SEC)
+ local pull=prompt("PullCrewPrompt","Tarik Rekan ke Keranjang",Enum.KeyCode.B,0)
+ pull.GamepadKeyCode=Enum.KeyCode.ButtonR1 pull.UIOffset=Vector2.new(0,144)
+ pull.Triggered:Connect(Manager.PullCrew)
  ropeRepair.GamepadKeyCode=Enum.KeyCode.ButtonR3
  -- Two simultaneous station actions need separate native prompt rows.
  for _,p in {station.TetherPrompt,detach}do p.UIOffset=Vector2.new(0,-48)end
@@ -249,6 +305,7 @@ local travelRate=U.RateLimiter(.3)
 remotes.TetherEvent.OnServerEvent:Connect(function(p,action)
  if action=="CancelRopeRepair"then Manager.CancelRopeRepair(p)return end
  if not travelRate(p)then return end
+ if action=="PullCrew"then Manager.PullCrew(p)return end
  if action=="BeginRopeRepair"then Manager.BeginRopeRepair(p)return
  elseif action=="FinishRopeRepair"then Manager.FinishRopeRepair(p)return end
  local fd=U.Flight(p)local t=Manager.activeTethers[p.UserId]
@@ -269,6 +326,10 @@ RunService.Heartbeat:Connect(function(dt)
  for _,t in pairs(table.clone(Manager.activeTethers))do
   local p=t.player local fd=U.Flight(p)
   if not fd or fd.balloon~=t.balloon or not U.Alive(p,fd)or not t.hrp.Parent then Manager.CleanupPlayer(p)continue end
+  if t.helper then
+   local h=t.helper local hr=h.Character and h.Character:FindFirstChild("HumanoidRootPart")
+   if not U.Alive(h,fd)or U.Flight(h)~=fd or not hr or not U.InBasket(hr,t.balloon.BasketFloor)or h.Character:FindFirstChildOfClass("Tool")then Manager.CancelPull(t)end
+  end
   if t.repair and(t.winch or not t.repair.hole.Parent or not U.Near(p,t.repair.hole,10)or fd.holes>=5)then t.repair=nil end
   if t.winch then
    local w=t.winch w.elapsed+=dt
@@ -282,11 +343,20 @@ RunService.Heartbeat:Connect(function(dt)
     t.hum.AutoRotate=t.oldAutoRotate t.hum:Move(Vector3.zero,false)t.winch=nil
     independentOwner(t,false)
     if w.detach then Manager.CleanupPlayer(p)continue end
-    t.stage="Catwalk"
+    if w.rescue then t.needsRescue=false t.stage="Basket"releaseHelper(t)
+    else t.stage="Catwalk"end
    end
   end
   local inside=U.InBasket(t.hrp,t.balloon.BasketFloor)
-  if inside and not t.winch then t.stage="Basket"end
+  if not t.winch and not t.needsRescue then
+   local q=t.balloon.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
+   local fell=t.stage=="Catwalk"and(q.Y<17.6 or Vector2.new(q.X,q.Z).Magnitude>21)
+    or t.stage=="Basket"and(q.Y<0 or math.abs(q.X)>t.balloon.BasketFloor.Size.X/2+1 or math.abs(q.Z)>t.balloon.BasketFloor.Size.Z/2+1)
+   if fell then hang(t)elseif inside then t.stage="Basket"end
+  end
+  if t.hanging then t.hrp.CFrame=fd.root.CFrame*CFrame.new(t.hanging.offset)t.hrp.AssemblyLinearVelocity=Vector3.zero inside=false end
+  local rescueCount=0 for _,other in pairs(Manager.activeTethers)do if other.balloon==t.balloon and (other.needsRescue or other.stage=="Catwalk")and not other.winch then rescueCount+=1 end end
+  t.station:SetAttribute("RescueWaiting",rescueCount)
   if not inside then
    t.durability=math.max(0,t.durability-Config.ROPE_DECAY_PER_SEC*dt)
    local offset=fd.root.CFrame:PointToObjectSpace(t.hrp.Position)

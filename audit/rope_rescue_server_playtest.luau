@@ -1,0 +1,77 @@
+local STS=game:GetService("StudioTestService")if STS:GetTestArgs()~="FlyHighRescueQA"then return end
+local P=game.Players local RS=game.ReplicatedStorage local Http=game:GetService("HttpService")local qa=RS.FlyHigh.Remotes.MultiplayerQAEvent
+local report={checks={},logs={}}local pending={}local serial=0
+game:GetService("LogService").MessageOut:Connect(function(m,k)if k==Enum.MessageType.MessageWarning or k==Enum.MessageType.MessageError then table.insert(report.logs,m)end end)
+qa.OnServerEvent:Connect(function(p,kind,id,ok,v)local t=pending[id]if kind=="reply"and t and t.p==p then t.done=true t.ok=ok t.value=v end end)
+local function waitFor(fn,t)local deadline=os.clock()+t repeat local v=fn()if v then return v end task.wait(.05)until os.clock()>deadline end
+local function check(n,v,d)table.insert(report.checks,{name=n,passed=v==true,detail=d})assert(v,n)end
+local function rpc(p,action,data)serial+=1 local id=tostring(serial)pending[id]={p=p}qa:FireClient(p,id,action,data or {})local t=pending[id]assert(waitFor(function()return t.done end,20),"client timeout")pending[id]=nil assert(t.ok,tostring(t.value))return t.value end
+local ok,err=xpcall(function()
+ assert(waitFor(function()return #P:GetPlayers()==3 end,60))
+ local roster=P:GetPlayers()table.sort(roster,function(a,b)return a.Name<b.Name end)
+ for _,p in roster do assert(waitFor(function()return p:GetAttribute("DataReady")and p.Character and p.Character:FindFirstChild("HumanoidRootPart")end,40))rpc(p,"Ping")end
+ local victim,helper,stranger=unpack(roster)
+ local bm=_G.FlyHighBalloonManager local tm=_G.FlyHighTetherManager local wm=_G.FlyHighWeaponManager local U=require(game.ServerScriptService.FlyHighServer.ServerUtils)
+ _G.FlyHighObstacleManager.Paused=true _G.FlyHighLargeChallengeManager.Paused=true
+ local f=assert(bm.LaunchBalloon({victim,helper},victim,workspace.FlyHighLobby.MatchmakingPods.Pod_A.FloorPad.Position,"Pod_A"))
+ assert(waitFor(function()return not f.boarding end,15))f.groundedSince=os.clock()+300
+ local b=f.balloon
+ local function place(p,offset)p.Character:PivotTo(f.root.CFrame*CFrame.new(offset))p.Character.HumanoidRootPart.AssemblyLinearVelocity=Vector3.zero task.wait(.2)end
+ local function attach()tm.ropePools[b].slots[1].value.Value=100 place(victim,Vector3.new(0,4,10))rpc(victim,"Tether",{action="Attach"})assert(waitFor(function()return tm.activeTethers[victim.UserId]end,2))task.wait(.35)end
+ place(helper,Vector3.new(4,4,0))attach()
+ check("cannot pull crew safely in basket",tm.PullCrew(helper)==false)
+ place(victim,Vector3.new(17,4,0))
+ local t=tm.activeTethers[victim.UserId]
+ check("fall enters hanging state",waitFor(function()return t.stage=="Hanging"end,2)~=nil)
+ check("rope catches falling player",t.hrp.Anchored and t.needsRescue and t.hanging~=nil)
+ check("station advertises rescue",b.TetherStation:GetAttribute("RescueWaiting")==1)
+ rpc(victim,"Tether",{action="Descend"})task.wait(.35)rpc(victim,"Tether",{action="Climb"})task.wait(.35)
+ check("fallen player cannot self-return via remotes",t.stage=="Hanging"and not t.winch)
+ check("victim cannot pull self",tm.PullCrew(victim)==false)
+ check("outsider cannot rescue another team",tm.PullCrew(stranger)==false)
+ place(helper,Vector3.new(-9,4,-4))wm.TryEquip(helper,b,b.WeaponRack1)
+ check("weapon holder cannot pull",wm.held[helper]~=nil and tm.PullCrew(helper)==false)
+ wm.CleanupPlayer(helper)place(helper,Vector3.new(4,4,0))
+ rpc(helper,"Tether",{action="PullCrew"})task.wait(.15)
+ check("free crew starts rescue using remote",t.stage=="Rescuing"and t.helper==helper and helper:GetAttribute("CrewRole")=="Rescuer")
+ check("rescue takes exclusive helper role",not U.CanStartRole(helper))
+ check("duplicate rescue rejected",tm.PullCrew(helper)==false)
+ f.autoGas=true
+ check("rescue reaches moving basket",waitFor(function()return t.stage=="Basket"and not t.winch end,4)~=nil)
+ check("victim restored inside basket",U.InBasket(t.hrp,b.BasketFloor)and not t.hrp.Anchored and not t.needsRescue)
+ check("rope remains equipped after rescue",tm.activeTethers[victim.UserId]==t)
+ check("helper role released",helper:GetAttribute("CrewRole")==nil and not tm.rescuers[helper])
+ check("no false fallen state after landing",not t.needsRescue)
+ f.autoGas=false
+ place(victim,Vector3.new(17,4,0))assert(waitFor(function()return t.stage=="Hanging"end,2))
+ place(helper,Vector3.new(0,4,10))
+ rpc(helper,"Prompt",{path="TetherStation.PullCrewPrompt"})
+ check("native prompt rescues teammate",t.stage=="Rescuing"or t.stage=="Basket")
+ assert(waitFor(function()return t.stage=="Basket"and not t.winch end,4))
+ place(victim,Vector3.new(17,4,0))assert(waitFor(function()return t.stage=="Hanging"end,2))
+ place(helper,Vector3.new(0,4,0))assert(tm.PullCrew(helper))place(helper,Vector3.new(18,4,0))task.wait(.2)
+ check("leaving basket cancels rescue safely",t.stage=="Hanging"and t.hrp.Anchored and not t.helper and not tm.rescuers[helper])
+ place(helper,Vector3.new(0,4,0))assert(tm.PullCrew(helper))
+ tm.CleanupPlayer(victim)task.wait(.2)
+ check("victim detach during rescue restores physics",not t.hrp.Anchored and not tm.rescuers[helper]and helper:GetAttribute("CrewRole")==nil)
+ attach()rpc(victim,"Tether",{action="Climb"})assert(waitFor(function()return tm.activeTethers[victim.UserId].stage=="Catwalk"end,4))
+ local roof=tm.activeTethers[victim.UserId]
+ place(helper,Vector3.new(0,4,0))check("crew may also pull a repairer from deck",tm.PullCrew(helper)==true)
+ assert(waitFor(function()return roof.stage=="Basket"and not roof.winch end,4))
+ rpc(victim,"Tether",{action="Climb"})assert(waitFor(function()return roof.stage=="Catwalk"end,4))
+ rpc(victim,"Tether",{action="Descend"})
+ check("normal roof descent still works",waitFor(function()return not tm.activeTethers[victim.UserId]end,4)~=nil)
+ attach()rpc(victim,"Tether",{action="Climb"})assert(waitFor(function()return tm.activeTethers[victim.UserId].stage=="Catwalk"end,4))
+ t=tm.activeTethers[victim.UserId]place(victim,Vector3.new(23,20,0))
+ check("fall from repair deck also requires rescue",t.stage=="Hanging")
+ rpc(victim,"Tether",{action="Descend"})task.wait(.35)
+ check("deck fall cannot bypass with descend",t.stage=="Hanging")
+ local before=t.durability task.wait(.5)check("hanging rope keeps wearing",t.durability<before)
+ t.durability=.1 task.wait(.2)
+ check("rope exhaustion kills and cleans up",victim.Character.Humanoid.Health<=0 and not tm.activeTethers[victim.UserId])
+ check("station clears stale rescue availability",b.TetherStation:GetAttribute("RescueWaiting")==0)
+ for _,p in roster do local snap=rpc(p,"Snapshot")check(p.Name.." clean console",#snap.logs==0,snap.logs)end
+
+end,debug.traceback)
+report.ok=ok and #report.logs==0 report.error=not ok and err or nil
+STS:EndTest(Http:JSONEncode(report))

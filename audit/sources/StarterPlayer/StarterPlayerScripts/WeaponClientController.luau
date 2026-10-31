@@ -284,9 +284,10 @@ tetherEvent.OnClientEvent:Connect(function(data)
  tetherFrame.Visible=data.isTethered==true
  local dur=math.clamp(data.durability or 0,0,100)
  tetherLabel.Text=string.format("Tali Pengaman: %d%%",math.floor(dur))
+ if data.stage=="Hanging"then tetherLabel.Text=string.format("TALI %d%% | MINTA REKAN MENARIK",math.floor(dur))elseif data.stage=="Rescuing"then tetherLabel.Text="SEDANG DITARIK KE KERANJANG"end
  local low=Config.AUDIO_WARNINGS.ROPE_LOW_PERCENT
  local critical=Config.AUDIO_WARNINGS.ROPE_CRITICAL_PERCENT
- if data.insideBasket==false and data.stage~="Descending"then
+ if data.insideBasket==false and data.stage~="Descending"and data.stage~="Hanging"and data.stage~="Rescuing"then
   if dur<=critical then tetherLabel.Text=string.format("TALI %d%% | SEGERA TURUN [Q]",math.floor(dur))
   elseif dur<=low then tetherLabel.Text=string.format("TALI MENIPIS: %d%%",math.floor(dur))end
  end
@@ -341,6 +342,7 @@ end)
 local tethered=false
 local outside=false
 local travelling=false
+local hanging=false
 local holdingRepair
 local holdingRopeRepair
 local repairRemote=remotes:WaitForChild("RepairHoleEvent")
@@ -381,6 +383,7 @@ local detachButton=button("DetachButton","LEPAS TALI [T]",UDim2.new(0.5,-75,1,-2
 local climbButton=button("ClimbButton","NAIK KE KUBAH [F]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Climb") end)
 local descendButton=button("DescendButton","TURUN & LEPAS TALI [Q]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Descend") end)
 local repairButton=button("RepairButton","TAHAN TAMBAL [E]",UDim2.new(0.5,-75,1,-165),function() end)
+local pullButton=button("PullCrewButton","TARIK REKAN [B / R1]",UDim2.new(0.5,-75,1,-300),function()tetherEvent:FireServer("PullCrew")end)
 local repairRopeButton=button("RepairRopeButton","TAHAN PERBAIKI TALI [C]",UDim2.new(0.5,-75,1,-165),function()end)
 local function beginRopeRepair(input)
  if holdingRopeRepair or tethered then return end
@@ -406,12 +409,14 @@ repairButton.InputBegan:Connect(function(input)
  if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRepair(input) end
 end)
 tetherEvent.OnClientEvent:Connect(function(data)
- tethered=data.isTethered==true outside=data.insideBasket==false travelling=data.stage=="Climbing"or data.stage=="Descending"
+ tethered=data.isTethered==true outside=data.insideBasket==false travelling=data.stage=="Climbing"or data.stage=="Descending"or data.stage=="Rescuing"
+ hanging=data.stage=="Hanging"
  if not tethered then holdingRepair=nil end
  if data.isRepairingRope==false then holdingRopeRepair=nil end
 end)
 UserInputService.InputBegan:Connect(function(input,gpe)
  if UserInputService:GetFocusedTextBox() then return end
+ if input.KeyCode==Enum.KeyCode.B or input.KeyCode==Enum.KeyCode.ButtonR1 then tetherEvent:FireServer("PullCrew")end
  if input.KeyCode==Enum.KeyCode.T or input.KeyCode==Enum.KeyCode.ButtonL2 then tetherEvent:FireServer("Detach")
  elseif input.KeyCode==Enum.KeyCode.Q then tetherEvent:FireServer("Descend")
  elseif input.KeyCode==Enum.KeyCode.F then tetherEvent:FireServer("Climb")
@@ -437,6 +442,9 @@ RunService.RenderStepped:Connect(function()
  repairRopeButton.Visible=(free or localPlayer:GetAttribute("RopeRepairing")==true) and nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
  detachButton.Visible=tethered and not travelling and localPlayer:GetAttribute("InFlight")==true
  climbButton.Visible=tethered and not outside and nearStation and not travelling
- descendButton.Visible=tethered and outside and not travelling
- repairButton.Visible=not travelling and nearestHole()~=nil
+ descendButton.Visible=tethered and outside and not travelling and not hanging
+ repairButton.Visible=not travelling and not hanging and nearestHole()~=nil
+ local floor=b and b:FindFirstChild("BasketFloor")
+ local q=floor and root and floor.CFrame:PointToObjectSpace(root.Position)
+ pullButton.Visible=free and q~=nil and math.abs(q.X)<=floor.Size.X/2 and math.abs(q.Z)<=floor.Size.Z/2 and q.Y>=0 and q.Y<=8 and station~=nil and (station:GetAttribute("RescueWaiting")or 0)>0
 end)
