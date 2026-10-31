@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "folder": "assets/ui/ready",
+  "format": "PNG RGBA",
+  "status": "awaiting source files; no uploads performed",
+  "assets": [
+    {
+      "key": "control_circle_normal",
+      "file": "control_circle_normal.png",
+      "width": 512,
+      "height": 512,
+      "assetId": null
+    },
+    {
+      "key": "control_circle_pressed",
+      "file": "control_circle_pressed.png",
+      "width": 512,
+      "height": 512,
+      "assetId": null
+    },
+    {
+      "key": "control_circle_disabled",
+      "file": "control_circle_disabled.png",
+      "width": 512,
+      "height": 512,
+      "assetId": null
+    },
+    {
+      "key": "jump_arrow",
+      "file": "jump_arrow.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "fire_target",
+      "file": "fire_target.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "aim_reticle",
+      "file": "aim_reticle.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "burner_flame",
+      "file": "burner_flame.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "emergency_kit",
+      "file": "emergency_kit.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "helm",
+      "file": "helm.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "helm_release",
+      "file": "helm_release.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "rope_attach",
+      "file": "rope_attach.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "rope_detach",
+      "file": "rope_detach.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "rope_climb",
+      "file": "rope_climb.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "rope_descend",
+      "file": "rope_descend.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "patch_repair",
+      "file": "patch_repair.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "rope_repair",
+      "file": "rope_repair.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "crew_rescue",
+      "file": "crew_rescue.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "shop_supply",
+      "file": "shop_supply.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "team_ping",
+      "file": "team_ping.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "sound_on",
+      "file": "sound_on.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "sound_off",
+      "file": "sound_off.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "warning_badge",
+      "file": "warning_badge.png",
+      "width": 256,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "balloon_intact",
+      "file": "balloon_intact.png",
+      "width": 128,
+      "height": 128,
+      "assetId": null
+    },
+    {
+      "key": "balloon_torn",
+      "file": "balloon_torn.png",
+      "width": 128,
+      "height": 128,
+      "assetId": null
+    },
+    {
+      "key": "weapon_pistol",
+      "file": "weapon_pistol.png",
+      "width": 512,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "weapon_ak47",
+      "file": "weapon_ak47.png",
+      "width": 512,
+      "height": 256,
+      "assetId": null
+    },
+    {
+      "key": "panel_9slice",
+      "file": "panel_9slice.png",
+      "width": 512,
+      "height": 256,
+      "assetId": null
+    }
+  ]
+}
