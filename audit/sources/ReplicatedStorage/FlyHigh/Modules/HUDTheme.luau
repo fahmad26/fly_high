@@ -1,7 +1,6 @@
--- AAA Arcade HUD Theme v4 (Pass 2 Refinement) for "Fly High"
--- Complete overhaul: Fixed ShopModal canvas visibility bug, enriched TacticalPingWheel
--- with per-action color-coded badges, removed duplicate warning emoji, added overlapping
--- championship emblem to Altimeter, segmented glowing hull pips, and smart kit notification.
+-- AAA Arcade HUD Theme (UI Designer Pass) for "Fly High"
+-- Designed with professional UI/UX hierarchy, pure transparent PNG rendering
+-- (zero black/dark box artifacts), balanced typography, and cohesive arcade styling.
 
 local Assets = require(script.Parent.HUDImageAssets)
 local Glyphs = require(script.Parent.HUDGlyphs)
@@ -128,7 +127,15 @@ end
 
 local function round(o, r)
 	local c = o:FindFirstChildOfClass("UICorner") or Instance.new("UICorner", o)
-	c.CornerRadius = UDim.new(r or 0, (r and 0) or 12)
+	if type(r) == "number" then
+		if r <= 1 then
+			c.CornerRadius = UDim.new(r, 0)
+		else
+			c.CornerRadius = UDim.new(0, math.round(r))
+		end
+	else
+		c.CornerRadius = UDim.new(0, 12)
+	end
 	return c
 end
 
@@ -159,45 +166,46 @@ local function surface(parent, circular)
 	local shadow = frame(parent, "HUDShadow")
 	shadow.BackgroundTransparency = 0.55
 	shadow.BackgroundColor3 = Color3.fromRGB(2, 6, 14)
-	shadow.Position = UDim2.fromOffset(0, 5)
+	shadow.Position = UDim2.fromOffset(0, 4)
 	round(shadow, rad)
 
 	-- 2. 3D Bottom Bevel Lip (Darker extrusion)
 	local bevel = frame(parent, "HUDBevel")
 	bevel.BackgroundTransparency = 0
-	bevel.Position = UDim2.fromOffset(0, 4)
+	bevel.Position = UDim2.fromOffset(0, 3)
 	round(bevel, rad)
-	stroke(bevel, Color3.fromRGB(6, 12, 24), 2.5)
+	stroke(bevel, Color3.fromRGB(6, 12, 24), 2.2)
 
-	-- 3. Top Interactive Face (Translates down 4px when pressed)
+	-- 3. Top Interactive Face (Translates down 3px when pressed)
 	local face = frame(parent, "HUDSurface")
+	face.BackgroundColor3 = Color3.new(1, 1, 1)
 	face.BackgroundTransparency = 0
 	face.Position = UDim2.fromOffset(0, 0)
 	round(face, rad)
-	stroke(face, Color3.fromRGB(6, 12, 24), 2.5)
+	stroke(face, Color3.fromRGB(6, 12, 24), 2.2)
 
 	local gradient = Instance.new("UIGradient", face)
 	gradient.Rotation = 90
 
 	-- 4. Inner Bright Highlight Ring (Specular bevel)
 	local inner = frame(face, "HUDInnerRing")
-	inner.Position = UDim2.fromOffset(2, 2)
-	inner.Size = UDim2.new(1, -4, 1, -4)
+	inner.Position = UDim2.fromOffset(1, 1)
+	inner.Size = UDim2.new(1, -2, 1, -2)
 	round(inner, rad)
-	local inStroke = stroke(inner, Color3.new(1, 1, 1), 1.2, 0.45)
+	local inStroke = stroke(inner, Color3.new(1, 1, 1), 1, 0.55)
 	inStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
 	-- 5. Top Specular Gloss Reflection (Juicy Arcade Sheen)
 	local shine = frame(face, "HUDGloss")
-	shine.Position = UDim2.new(0, 3, 0, 2)
-	shine.Size = UDim2.new(1, -6, 0.44, 0)
+	shine.Position = UDim2.new(0, 2, 0, 1)
+	shine.Size = UDim2.new(1, -4, 0.42, 0)
 	shine.BackgroundColor3 = Color3.new(1, 1, 1)
 	round(shine, rad)
 	local glossGrad = Instance.new("UIGradient", shine)
 	glossGrad.Rotation = 90
 	glossGrad.Transparency = NumberSequence.new({
-		NumberSequenceKeypoint.new(0, 0.4),
-		NumberSequenceKeypoint.new(0.65, 0.8),
+		NumberSequenceKeypoint.new(0, 0.45),
+		NumberSequenceKeypoint.new(0.65, 0.85),
 		NumberSequenceKeypoint.new(1, 1.0),
 	})
 
@@ -224,7 +232,7 @@ local function paint(s, paletteKey, z, pressed)
 	})
 
 	-- Physical button depression
-	s.face.Position = UDim2.fromOffset(0, pressed and 4 or 0)
+	s.face.Position = UDim2.fromOffset(0, pressed and 3 or 0)
 	s.shine.Visible = not pressed
 
 	ztree(s.shadow, math.max(1, z))
@@ -236,7 +244,7 @@ function Theme.Start(gui, player)
 	local state = {}
 	local alive = true
 	local records, links, ready = {}, {}, {}
-	gui:SetAttribute("HUDArtDirection", "Sky Arcade Pro Max")
+	gui:SetAttribute("HUDArtDirection", "Sky Arcade Pro Designer")
 
 	local probes = Instance.new("Folder")
 	probes.Name = "HUDImagePreload"
@@ -275,10 +283,12 @@ function Theme.Start(gui, player)
 		return c
 	end
 
+	-- Pure transparent PNG illustration (Zero black background artifact!)
 	local function art(parent)
 		local a = Instance.new("ImageLabel")
 		a.Name = "HUDIllustration"
 		a.BackgroundTransparency = 1
+		a.BorderSizePixel = 0
 		a.Active = false
 		a.Selectable = false
 		a.ScaleType = Enum.ScaleType.Fit
@@ -289,11 +299,15 @@ function Theme.Start(gui, player)
 	end
 
 	local function use(a, key)
-		a.Visible = ready[key] == true
-		if a.Visible then
-			a.Image = Assets[key]
+		local asset = Assets[key]
+		if asset and #asset > 0 then
+			a.Image = asset
+			a.Visible = true
+			return true
 		end
-		return a.Visible
+		a.Image = ""
+		a.Visible = false
+		return false
 	end
 
 	local function build(o, kind, config)
@@ -301,7 +315,7 @@ function Theme.Start(gui, player)
 		local r = { kind = kind, config = config, pressed = false, links = {} }
 		records[o] = r
 
-		-- Skip surface generation for panel and reticle so panel children are never covered
+		-- Skip surface skin for panel and card containers so children are never occluded
 		if kind ~= "reticle" and kind ~= "panel" and kind ~= "card" then
 			r.skin = surface(o, config and config[4] == "round")
 			o.BackgroundTransparency = 1
@@ -314,28 +328,29 @@ function Theme.Start(gui, player)
 			o.AutoButtonColor = false
 
 			r.glyphBox = frame(o, "HUDIconBox")
+			r.glyphBox.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.glyphBox, config[1])
 
-			-- Dedicated pill badge underneath / inside button for title
+			-- Sleek bottom caption ribbon
 			r.captionPill = frame(o, "HUDCaptionPill")
-			r.captionPill.BackgroundColor3 = Color3.fromRGB(8, 14, 26)
-			r.captionPill.BackgroundTransparency = 0.15
-			round(r.captionPill, 6)
-			stroke(r.captionPill, Color3.fromRGB(24, 38, 64), 1.2)
-			r.caption = label(r.captionPill, "HUDCaption", config[4] == "wide" and 15 or 11)
+			r.captionPill.BackgroundColor3 = Color3.fromRGB(6, 12, 24)
+			r.captionPill.BackgroundTransparency = 0.2
+			round(r.captionPill, 4)
+			stroke(r.captionPill, Color3.fromRGB(20, 34, 58), 1)
+			r.caption = label(r.captionPill, "HUDCaption", config[4] == "wide" and 14 or 10)
 
 			-- Keyboard shortcut hint
 			r.hint = label(o, "HUDKeyHint", 10)
-			r.hint.BackgroundTransparency = 0.15
+			r.hint.BackgroundTransparency = 0.2
 			r.hint.BackgroundColor3 = Color3.fromRGB(6, 14, 28)
-			round(r.hint, 4)
+			round(r.hint, 3)
 
 			-- Notification / Cooldown badge
-			r.badge = label(o, "HUDBadge", 12)
+			r.badge = label(o, "HUDBadge", 11)
 			r.badge.BackgroundTransparency = 0
 			r.badge.BackgroundColor3 = Color3.fromRGB(255, 45, 80)
 			round(r.badge, 0.5)
-			stroke(r.badge, Color3.fromRGB(255, 235, 120), 1.8)
+			stroke(r.badge, Color3.fromRGB(255, 235, 120), 1.5)
 
 			local function link(signal, fn)
 				table.insert(r.links, signal:Connect(fn))
@@ -353,44 +368,43 @@ function Theme.Start(gui, player)
 			end)
 
 		elseif kind == "alt" then
-			r.head = label(o, "HUDAltitude", 32)
+			r.head = label(o, "HUDAltitude", 28)
 			r.goal = label(o, "HUDGoal", 11)
 			r.percent = label(o, "HUDProgress", 11)
 
-			-- Overlapping 3D circular emblem badge
+			-- 100% Transparent Emblem Container (No black disc!)
 			r.emblem = frame(o, "HUDEmblem")
-			r.emblem.BackgroundColor3 = Color3.fromRGB(10, 20, 36)
-			r.emblem.BackgroundTransparency = 0
-			round(r.emblem, 0.5)
-			stroke(r.emblem, Color3.fromRGB(255, 215, 60), 2.8)
+			r.emblem.BackgroundTransparency = 1
+			r.emblem.BorderSizePixel = 0
 
 			r.glyph = Glyphs.Draw(r.emblem, "climb")
 			r.art = art(r.emblem)
 
 		elseif kind == "status" then
-			r.head = label(o, "HUDCondition", 13)
-			r.count = label(o, "HUDDamageCount", 14)
-			r.detail = label(o, "HUDConditionDetail", 11)
+			r.head = label(o, "HUDCondition", 12)
+			r.count = label(o, "HUDDamageCount", 13)
+			r.detail = label(o, "HUDConditionDetail", 10)
 			r.pips = {}
 			for i = 1, 5 do
 				local pip = frame(o, "HUDHull" .. i)
 				pip.BackgroundTransparency = 0
-				round(pip, 4)
-				stroke(pip, Color3.fromRGB(6, 12, 24), 1.5)
+				round(pip, 3)
+				stroke(pip, Color3.fromRGB(6, 12, 24), 1.2)
 				local shine = frame(pip, "PipShine")
 				shine.Size = UDim2.new(1, -2, 0.45, 0)
 				shine.Position = UDim2.fromOffset(1, 1)
 				shine.BackgroundColor3 = Color3.new(1, 1, 1)
 				shine.BackgroundTransparency = 0.5
-				round(shine, 3)
+				round(shine, 2)
 				r.pips[i] = pip
 			end
 
 		elseif kind == "weapon" then
 			r.head = label(o, "HUDWeapon", 13)
-			r.ammo = label(o, "HUDAmmo", 30)
+			r.ammo = label(o, "HUDAmmo", 28)
 			r.reserve = label(o, "HUDReserve", 11)
 			r.emblem = frame(o, "HUDWeaponIcon")
+			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "weapon")
 			r.art = art(r.emblem)
 
@@ -398,14 +412,16 @@ function Theme.Start(gui, player)
 			r.head = label(o, "HUDRopeState", 11)
 
 		elseif kind == "countdown" then
-			-- Specialized High-Visibility Hazard Banner for Grounded Notice
+			-- Sleek danger notice ribbon
 			r.emblem = frame(o, "HUDWarningIcon")
+			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "warning")
-			r.notice = label(o, "HUDCountdownNotice", 15)
+			r.notice = label(o, "HUDCountdownNotice", 13)
 			o.TextTransparency = 1
 
 		elseif kind == "alert" then
 			r.emblem = frame(o, "HUDWarningIcon")
+			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "warning")
 
 		elseif kind == "reticle" then
@@ -413,26 +429,24 @@ function Theme.Start(gui, player)
 			r.glyph = Glyphs.Draw(o, "aim")
 
 		elseif kind == "card" then
-			-- Direct Arcade Game Pass Card styling
-			o.BackgroundColor3 = Color3.fromRGB(18, 28, 48)
+			-- Direct Arcade Card styling (No black boxes!)
+			o.BackgroundColor3 = Color3.fromRGB(16, 26, 44)
 			o.BackgroundTransparency = 0.05
-			round(o, 14)
-			stroke(o, Color3.fromRGB(45, 75, 120), 2.2)
+			round(o, 12)
+			stroke(o, Color3.fromRGB(38, 62, 102), 1.8)
 
 			r.artBox = frame(o, "HUDArtFrame")
-			r.artBox.BackgroundColor3 = Color3.fromRGB(10, 16, 30)
-			r.artBox.BackgroundTransparency = 0
-			round(r.artBox, 10)
-			stroke(r.artBox, Color3.fromRGB(60, 100, 160), 1.5)
+			r.artBox.BackgroundTransparency = 1 -- 100% Transparent, no black box!
+			r.artBox.BorderSizePixel = 0
 			r.art = art(r.artBox)
 
 		elseif kind == "panel" then
-			-- Direct Arcade Modal styling (No blocking children!)
-			o.BackgroundColor3 = Color3.fromRGB(12, 18, 32)
+			-- Clean rectangular modal with rounded corners (16px, not an oval!)
+			o.BackgroundColor3 = Color3.fromRGB(11, 18, 32)
 			o.BackgroundTransparency = 0.05
 			o.BorderSizePixel = 0
 			round(o, 16)
-			stroke(o, Color3.fromRGB(40, 70, 120), 3)
+			stroke(o, Color3.fromRGB(42, 74, 126), 2.5)
 		end
 	end
 
@@ -494,8 +508,8 @@ function Theme.Start(gui, player)
 		o.TextStrokeTransparency = 0
 		o.TextScaled = true
 		local c = o:FindFirstChildOfClass("UITextSizeConstraint") or Instance.new("UITextSizeConstraint", o)
-		c.MinTextSize = 10
-		c.MaxTextSize = maxSize or 16
+		c.MinTextSize = 9
+		c.MaxTextSize = maxSize or 15
 	end
 
 	function state.Step()
@@ -552,19 +566,20 @@ function Theme.Start(gui, player)
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
 
-					box(r.glyphBox, 10, (h - 32) / 2, 32, 32)
-					box(r.captionPill, 46, 4, w - 54, h - 8)
+					box(r.glyphBox, 10, (h - 28) / 2, 28, 28)
+					box(r.captionPill, 44, 4, w - 50, h - 8)
 					r.caption.TextXAlignment = Enum.TextXAlignment.Left
-				elseif style == "dock" then
-					-- Left Toolbar Dock Button (Large centered icon + bottom pill label)
-					local iconSize = math.round(math.min(w, h - 18) * 0.72)
-					box(r.glyphBox, (w - iconSize) / 2, 4, iconSize, iconSize)
 
-					r.captionPill.BackgroundTransparency = 0.15
+				elseif style == "dock" then
+					-- Left Toolbar: Icon sits in upper half with ample breathing room!
+					local iconSize = 28
+					box(r.glyphBox, (w - iconSize) / 2, 6, iconSize, iconSize)
+
+					-- Caption ribbon sits cleanly at the bottom without overlapping icon
+					r.captionPill.BackgroundTransparency = 0.2
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then
 						pStroke.Enabled = true
-						-- Thematic accent stroke for each dock button
 						if o.Name == "ShopToggleButton" then
 							pStroke.Color = Color3.fromRGB(255, 190, 40)
 						elseif o.Name == "EmergencyKitButton" then
@@ -576,22 +591,29 @@ function Theme.Start(gui, player)
 						end
 					end
 
-					box(r.captionPill, 0, h - 18, w, 18)
+					box(r.captionPill, 3, h - 17, w - 6, 15)
 					r.caption.TextXAlignment = Enum.TextXAlignment.Center
-				elseif style == "round" then
-					local iconSize = math.round(math.min(w, h) * 0.56)
-					box(r.glyphBox, (w - iconSize) / 2, (h - iconSize) / 2 - 4, iconSize, iconSize)
 
-					r.captionPill.BackgroundTransparency = 0.2
-					box(r.captionPill, 4, h - 22, w - 8, 18)
-					r.caption.TextXAlignment = Enum.TextXAlignment.Center
+				elseif style == "round" then
+					local iconSize = math.round(math.min(w, h) * (#title == 0 and 0.58 or 0.52))
+					box(r.glyphBox, (w - iconSize) / 2, (h - iconSize) / 2 + (#title == 0 and 0 or -3), iconSize, iconSize)
+
+					if #title > 0 then
+						r.captionPill.Visible = true
+						r.captionPill.BackgroundTransparency = 0.25
+						box(r.captionPill, 6, h - 18, w - 12, 15)
+						r.caption.TextXAlignment = Enum.TextXAlignment.Center
+					else
+						r.captionPill.Visible = false
+					end
+
 				else
 					-- Standard square tile button (e.g. Gas, Reload, Drop)
-					local iconSize = math.round(math.min(w, h) * 0.58)
-					box(r.glyphBox, (w - iconSize) / 2, 4, iconSize, iconSize)
+					local iconSize = math.round(math.min(w, h) * 0.52)
+					box(r.glyphBox, (w - iconSize) / 2, 5, iconSize, iconSize)
 
 					r.captionPill.BackgroundTransparency = 0.2
-					box(r.captionPill, 2, h - 18, w - 4, 16)
+					box(r.captionPill, 2, h - 17, w - 4, 15)
 					r.caption.TextXAlignment = Enum.TextXAlignment.Center
 				end
 
@@ -604,20 +626,20 @@ function Theme.Start(gui, player)
 				r.hint.Visible = not Input.TouchEnabled and hint ~= nil and #hint <= 7 and hint ~= "GUNAKAN"
 				if r.hint.Visible then
 					r.hint.Text = hint:match("^%w+") or ""
-					box(r.hint, w - 22, 2, 20, 14)
+					box(r.hint, w - 20, 2, 18, 13)
 				end
 				r.hint.ZIndex = z + 5
 
-				-- Smart Notification / Cooldown Badge:
+				-- Smart Notification Badge
 				local cooldown = math.max(0, (player:GetAttribute("FlightJumpReadyAt") or 0) - workspace:GetServerTimeNow())
 				if o.Name == "EmergencyKitButton" then
 					local kits = player:GetAttribute("EmergencyKits") or 0
 					if kits > 0 then
 						r.badge.Visible = true
 						r.badge.Text = tostring(kits)
-						r.badge.BackgroundColor3 = Color3.fromRGB(36, 212, 85) -- Emerald badge when available
+						r.badge.BackgroundColor3 = Color3.fromRGB(36, 212, 85)
 					else
-						r.badge.Visible = false -- Clean, un-distracted when 0
+						r.badge.Visible = false
 					end
 				elseif o.Name == "JumpButton" and player:GetAttribute("InFlight") == true and cooldown > 0 then
 					r.badge.Visible = true
@@ -628,7 +650,7 @@ function Theme.Start(gui, player)
 				end
 
 				if r.badge.Visible then
-					box(r.badge, w - 20, -5, 24, 24)
+					box(r.badge, w - 18, -4, 22, 22)
 				end
 				r.badge.ZIndex = z + 5
 
@@ -645,27 +667,30 @@ function Theme.Start(gui, player)
 				if original and bar and speed then
 					local altitude = original.Text:match("Ketinggian:%s*(%d+)") or "0"
 					hide(original)
-					r.head.Text = player:GetAttribute("InFlight") and (altitude .. " KM") or "FLY HIGH"
-					box(r.head, 68, 3, w - 180, compact and 26 or 32)
-					r.head.TextXAlignment = Enum.TextXAlignment.Left
 
-					r.goal.Text = "ISTANA AWAN  /  10.000 KM"
-					box(r.goal, 70, compact and 29 or 36, w - 160, 14)
-					r.goal.TextXAlignment = Enum.TextXAlignment.Left
-
-					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
-					box(r.percent, w - 68, h - 17, 56, 12)
-
-					-- Overlapping championship badge on left edge
-					local emblemSize = compact and 46 or 54
-					box(r.emblem, 6, (h - emblemSize) / 2, emblemSize, emblemSize)
+					-- 1. Balloon Icon on Left (Pure transparency, perfectly centered!)
+					local iconSize = compact and 38 or 44
+					box(r.emblem, 10, (h - iconSize) / 2, iconSize, iconSize)
 					local loaded = use(r.art, "balloon_intact")
 					r.glyph.Visible = not loaded
-					ztree(r.emblem, z + 5)
+					ztree(r.emblem, z + 3)
 
-					box(bar, 70, h - 16, w - 144, 8)
+					-- 2. Altitude Number & Mission Subtitle
+					r.head.Text = player:GetAttribute("InFlight") and (altitude .. " KM") or "FLY HIGH"
+					box(r.head, iconSize + 18, 4, 150, compact and 24 or 28)
+					r.head.TextXAlignment = Enum.TextXAlignment.Left
+
+					r.goal.Text = "ISTANA AWAN • 10.000 KM"
+					box(r.goal, iconSize + 20, compact and 28 or 33, 170, 13)
+					r.goal.TextXAlignment = Enum.TextXAlignment.Left
+					r.goal.TextColor3 = Color3.fromRGB(186, 230, 253)
+
+					-- 3. Progress Bar Track (Horizontally aligned with altitude)
+					local barX = iconSize + 195
+					local barW = math.max(60, w - barX - 110)
+					box(bar, barX, (h - 8) / 2 + 6, barW, 8)
 					bar.ZIndex = z + 3
-					bar.BackgroundColor3 = Color3.fromRGB(6, 14, 30)
+					bar.BackgroundColor3 = Color3.fromRGB(6, 16, 32)
 					bar.BackgroundTransparency = 0
 					round(bar, 4)
 
@@ -676,10 +701,20 @@ function Theme.Start(gui, player)
 						round(fill, 4)
 					end
 
-					box(speed, w - 108, 8, 98, 26)
-					textStyle(speed, 12)
+					-- Percentage display next to progress bar
+					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
+					box(r.percent, barX + barW + 8, (h - 14) / 2 + 6, 44, 13)
+					r.percent.TextXAlignment = Enum.TextXAlignment.Left
+					r.percent.TextColor3 = Color3.fromRGB(224, 242, 254)
+
+					-- 4. Speed Indicator Chip (Upper right corner)
+					box(speed, w - 100, 6, 92, 22)
+					textStyle(speed, 11)
 					speed.ZIndex = z + 4
-					speed.TextWrapped = true
+					speed.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
+					speed.BackgroundTransparency = 0.3
+					round(speed, 6)
+					stroke(speed, Color3.fromRGB(14, 40, 75), 1)
 
 					r.head.ZIndex = z + 4
 					r.goal.ZIndex = z + 4
@@ -701,29 +736,29 @@ function Theme.Start(gui, player)
 
 					r.head.Text = holes == 0 and "BALON AMAN" or "KONDISI BALON"
 					r.count.Text = holes .. "/5"
-					box(r.head, 12, 5, w - 64, 16)
-					box(r.count, w - 48, 4, 38, 18)
+					box(r.head, 10, 4, w - 58, 15)
+					box(r.count, w - 44, 3, 34, 16)
 					r.head.TextXAlignment = Enum.TextXAlignment.Left
 
-					local py = compact and 24 or 28
-					local pipW = math.floor((w - 32) / 5)
+					local py = compact and 22 or 25
+					local pipW = math.floor((w - 28) / 5)
 					for i, pip in r.pips do
-						box(pip, 12 + (i - 1) * (pipW + 2), py, pipW, compact and 8 or 12)
+						box(pip, 10 + (i - 1) * (pipW + 2), py, pipW, compact and 8 or 10)
 						local intact = i <= (5 - holes)
 						pip.BackgroundColor3 = intact and Color3.fromRGB(36, 212, 85) or Color3.fromRGB(220, 32, 60)
 						pip.ZIndex = z + 3
 					end
 
 					local details = {
-						[0] = "Naik optimal",
-						[1] = "Naik melambat",
-						[2] = "Tidak bisa naik",
-						[3] = "Bahaya - turun 1.5x",
-						[4] = "Kritis - turun 2.5x",
-						[5] = "TERJUN BEBAS! PAKAI KIT",
+						[0] = "▲ Naik optimal",
+						[1] = "▲ Naik melambat",
+						[2] = "■ Tidak bisa naik",
+						[3] = "▼ Bahaya - turun 1.5x",
+						[4] = "▼ Kritis - turun 2.5x",
+						[5] = "▼ TERJUN BEBAS!",
 					}
 					r.detail.Text = (invuln and invuln.Visible and invuln.Text:gsub("🛡️%s*", "")) or details[holes]
-					box(r.detail, 12, compact and 38 or 46, w - 24, compact and 13 or 16)
+					box(r.detail, 10, compact and 35 or 40, w - 20, 13)
 					r.detail.TextXAlignment = Enum.TextXAlignment.Left
 
 					r.head.ZIndex = z + 3
@@ -747,13 +782,13 @@ function Theme.Start(gui, player)
 					r.ammo.TextXAlignment = Enum.TextXAlignment.Right
 					r.reserve.Text = "CADANGAN: ∞"
 
-					box(r.head, 56, 6, w - 64, 15)
-					box(r.ammo, w - math.min(108, w - 54), compact and 21 or 24, math.min(98, w - 60), compact and 26 or 38)
-					box(r.reserve, 14, h - 16, w - 120, 12)
+					box(r.head, 54, 5, w - 60, 15)
+					box(r.ammo, w - math.min(108, w - 54), compact and 18 or 22, math.min(98, w - 60), compact and 26 or 34)
+					box(r.reserve, 12, h - 16, w - 120, 12)
 					r.reserve.TextXAlignment = Enum.TextXAlignment.Left
 					r.reserve.Visible = w >= 180
 
-					box(r.emblem, 12, compact and 10 or 18, 36, 28)
+					box(r.emblem, 10, compact and 8 or 14, 38, 30)
 					r.glyph.Visible = not use(r.art, weaponName == "AK-47" and "weapon_ak47" or "weapon_pistol")
 					ztree(r.emblem, z + 3)
 
@@ -770,7 +805,7 @@ function Theme.Start(gui, player)
 					r.head.Text = original.Text:gsub("Tali Pengaman: ", "TALI  ")
 					box(r.head, 10, 3, w - 20, 14)
 					r.head.ZIndex = z + 3
-					box(bar, 10, h - 10, w - 20, 6)
+					box(bar, 10, h - 9, w - 20, 5)
 					bar.ZIndex = z + 3
 					round(bar, 3)
 					local fill = bar:FindFirstChild("TBarFill")
@@ -781,47 +816,48 @@ function Theme.Start(gui, player)
 				end
 
 			elseif r.kind == "countdown" then
-				-- High-Impact Grounded Warning Banner
+				-- Sleek danger warning ribbon
 				paint(r.skin, "orange", z, false)
-				stroke(r.skin.face, Color3.fromRGB(255, 215, 60), 2.2)
+				stroke(r.skin.face, Color3.fromRGB(255, 205, 50), 1.8)
 
-				box(r.emblem, 8, (h - 22) / 2, 22, 22)
+				local iconSize = 18
+				box(r.emblem, 10, (h - iconSize) / 2, iconSize, iconSize)
 				ztree(r.emblem, z + 3)
 
 				local rawText = o.Text
 				if rawText and #rawText > 0 then
-					-- Strip duplicate leading warning emoji from string
 					local cleanText = rawText:gsub("^[⚠️%s%p]*", "")
 					r.notice.Text = cleanText
 				else
 					r.notice.Text = ""
 				end
 				box(r.notice, 34, 2, w - 42, h - 4)
-				r.notice.TextColor3 = Color3.fromRGB(255, 245, 230)
+				r.notice.TextColor3 = Color3.fromRGB(255, 250, 240)
 				r.notice.TextXAlignment = Enum.TextXAlignment.Center
 				r.notice.ZIndex = z + 4
 				o.TextTransparency = 1
 
 			elseif r.kind == "alert" then
 				paint(r.skin, o.Name == "AlertBanner" and "red" or "orange", z, false)
-				box(r.emblem, 10, 10, 28, 28)
+				box(r.emblem, 10, 10, 26, 26)
 				ztree(r.emblem, z + 3)
 				local title = o:FindFirstChild("AlertTitle") or o:FindFirstChild("Title")
 				local detail = o:FindFirstChild("AlertDesc") or o:FindFirstChild("Detail")
 				if title then
-					box(title, 46, 6, w - 54, 24)
-					textStyle(title, 16)
+					box(title, 44, 6, w - 50, 22)
+					textStyle(title, 15)
 					title.ZIndex = z + 3
 				end
 				if detail then
-					box(detail, 12, 34, w - 24, h - 40)
-					textStyle(detail, 13)
+					box(detail, 12, 32, w - 24, h - 38)
+					textStyle(detail, 12)
 					detail.ZIndex = z + 3
 				end
 
 			elseif r.kind == "card" then
 				o.ZIndex = z
-				box(r.artBox, 12, 12, 60, 60)
+				-- Pure transparent illustration on left (NO black box!)
+				box(r.artBox, 14, 12, 64, 64)
 				ztree(r.artBox, z + 2)
 				use(r.art, o.Name == "Card1" and "emergency_kit" or "weapon_ak47")
 
@@ -830,21 +866,21 @@ function Theme.Start(gui, player)
 					if child:IsA("TextLabel") and child.Name:sub(1, 3) ~= "HUD" then
 						child.ZIndex = z + 3
 						if child.Position.Y.Offset < 30 then
-							-- Card Title
-							box(child, 84, 10, w - 96, 24)
-							textStyle(child, 16)
-							child.TextColor3 = Color3.fromRGB(255, 225, 120)
+							-- Card Title (Gold FredokaOne)
+							box(child, 88, 10, w - 98, 22)
+							textStyle(child, 15)
+							child.TextColor3 = Color3.fromRGB(255, 225, 100)
 							child.TextXAlignment = Enum.TextXAlignment.Left
 						else
-							-- Card Description
-							box(child, 84, 36, w - 96, 48)
+							-- Card Description (Clean white/cyan wrapped text)
+							box(child, 88, 34, w - 98, 44)
 							textStyle(child, 11)
-							child.TextColor3 = Color3.fromRGB(220, 235, 255)
+							child.TextColor3 = Color3.fromRGB(215, 230, 250)
 							child.TextXAlignment = Enum.TextXAlignment.Left
 						end
 					elseif child:IsA("TextButton") then
 						child.ZIndex = z + 4
-						box(child, 12, h - 46, w - 24, 38)
+						box(child, 88, h - 44, w - 98, 36)
 					end
 				end
 
@@ -855,17 +891,18 @@ function Theme.Start(gui, player)
 				o.ZIndex = z
 				local title = o:FindFirstChild("ModalTitle")
 				if title then
-					title.Text = "PERBEKALAN PENERBANGAN"
-					textStyle(title, 20)
-					title.TextColor3 = Color3.fromRGB(255, 220, 100)
-					box(title, 20, 8, w - 74, 36)
+					title.Text = "🛍️ PERBEKALAN PENERBANGAN"
+					textStyle(title, 17)
+					title.TextColor3 = Color3.fromRGB(255, 220, 90)
+					box(title, 16, 6, w - 60, 32)
+					title.TextXAlignment = Enum.TextXAlignment.Left
 					title.ZIndex = z + 3
 				end
 				local feedback = o:FindFirstChild("ShopFeedback")
 				if feedback then
-					textStyle(feedback, 12)
+					textStyle(feedback, 11)
 					feedback.ZIndex = z + 3
-					box(feedback, 20, h - 32, w - 40, 24)
+					box(feedback, 16, h - 28, w - 32, 22)
 				end
 			end
 		end
