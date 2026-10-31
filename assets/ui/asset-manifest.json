@@ -2,7 +2,7 @@
   "version": 1,
   "folder": "assets/ui/ready",
   "format": "PNG RGBA",
-  "status": "awaiting source files; no uploads performed",
+  "status": "2 generated source files available; remaining sources pending; no uploads performed",
   "assets": [
     {
       "key": "control_circle_normal",
@@ -16,6 +16,9 @@
       "file": "control_circle_pressed.png",
       "width": 512,
       "height": 512,
+      "sourceWidth": 1254,
+      "sourceHeight": 1254,
+      "sourceStatus": "generated; dimensions and alpha verified; not uploaded",
       "assetId": null
     },
     {
@@ -191,6 +194,9 @@
       "file": "panel_9slice.png",
       "width": 512,
       "height": 256,
+      "sourceWidth": 1774,
+      "sourceHeight": 887,
+      "sourceStatus": "generated; dimensions and alpha verified; slice bounds require in-Studio review after import",
       "assetId": null
     }
   ]

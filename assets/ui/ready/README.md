@@ -2,6 +2,13 @@
 
 Taruh file PNG individual dalam folder ini. Daftar mesin: `../asset-manifest.json`. Asset ID masih kosong sampai unggahan benar-benar berhasil; tidak ada unggahan atau pemasangan yang dilakukan hanya dengan membuat daftar ini.
 
+## Dua aset tambahan yang sudah dibuat
+
+- `control_circle_pressed.png`: tombol teal dengan bagian tengah cekung dan bingkai kuningan; sumber hasil imagegen **1254×1254**.
+- `panel_9slice.png`: panel teal kosong dengan bingkai kuningan dan sudut membulat; sumber hasil imagegen **1774×887**.
+
+Keduanya PNG RGBA dengan alpha transparan asli pada bagian luar, dibuat sebagai file individual menggunakan built-in imagegen. Target ukuran pada tabel berikut tetap merupakan rencana ekspor; `sourceWidth`/`sourceHeight` di manifest mencatat resolusi sumber aktual yang lebih besar, dengan rasio yang sama. Prompt lengkap ada di `../concepts/prompts-additional-v1.json`. Keduanya belum diunggah atau dipasang pada HUD. Batas `SliceCenter` panel perlu ditentukan dan diperiksa di Studio setelah impor agar sudut tidak terdistorsi.
+
 | Ukuran sumber | Nama file |
 |---|---|
 | 512×512 | `control_circle_normal.png`, `control_circle_pressed.png`, `control_circle_disabled.png` |
