@@ -42,12 +42,15 @@ Daftar ini berasal dari source mirror dan jumlah kompilasi snapshot. Bandingkan 
 - Equip senjata memaksa first person; drop kembali third person. Auto aim berdasarkan pusat kamera, tanpa tap arbitrer ke mana saja. Visual proyektil dan suara tembakan sudah diimplementasikan.
 - Loncatan kru/Dinding Badai **sudah diimplementasikan pada iterasi berikutnya**, meskipun instruksi historis pernah meminta dokumentasi saja. Pilot dan pemain di katrol/kubah/repair tidak boleh melompat; gunner dan pemakai tali yang masih di keranjang mengikuti izin server. Ada cooldown efek turun.
 
-## HUD aktif: Sky Arcade
+## HUD aktif: Sky Arcade Pro Max (Pass 2)
 
-Pengguna menilai prototipe sebelumnya buruk. Referensi terbarunya adalah HUD Roblox arcade dengan gradasi cerah, ikon ringkas, outline gelap, serta teks putih tebal ber-outline. **Jangan kembali ke panel gelap besar dengan ikon kecil ditempel di samping paragraf.** Penerimaan visual desain baru oleh pengguna **belum dikonfirmasi**; periksa preview dan tanggapan selanjutnya.
-
-- `HUDLayout`: susunan responsif, target sentuh minimal 44 px, kelompok kontrol sesuai role, modal dan area aman.
-- `HUDTheme`: warna, gradasi, outline, kedalaman tombol, tipografi serta presentasi angka/label dinamis.
+Pengguna meminta perbaikan mendalam terhadap visual UI dan penanganan bug pada teks peringatan GroundedCountdown.
+- **Bug Warning Grounded Countdown**: Telah diperbaiki tuntas. Teks `LEPAS LANDAS! Balon hancur dalam %d detik` kini dirender dengan label `HUDCountdownNotice` berz-index tinggi, font `FredokaOne` tebal, outline gelap, aksen hazard emas, dan tanpa duplikasi emoji.
+- **ShopModal & Item Cards**: Bug canvas clipping/occlusion diperbaiki tuntas. Kartu item `Card1` (Emergency Repair & Shield) dan `Card2` (AK-47 Tactical Upgrade) dirender penuh dengan ilustrasi produk, judul emas, deskripsi jelas, dan tombol beli 3D (`BELI 1 KIT • 29 R$` dan `BELI AK-47 • 79 R$`), serta tombol tutup bulat 'X' merah.
+- **TacticalPingWheel**: Diperbarui dengan 5 aksi bertema warna & ikon spesifik (`flame` oranye, `warning` ungu, `rope` emas, `repair` hijau, `aim` merah) untuk keterbacaan instan.
+- **Altimeter**: Dihiasi medali emblem balon sirkular dengan border ring emas 3D di tepi kiri, track neon progres, dan indikator kecepatan chip.
+- **Left Dock Toolbar**: Tombol 3D berbevel taktil dengan stroke aksen tematik per tombol (`TOKO`, `KIT`, `PING`, `SUARA`) dan smart notification badge (badge hijau hanya saat kit tersedia, tidak mengganggu saat 0).
+- **Preview Playtest Aktual**: Tersedia di `audit/hud-arcade-pass2-flight.jpg`, `audit/hud-arcade-pass2-shop.jpg`, dan `audit/hud-arcade-pass2-ping.jpg`.
 - `HUDGlyphs`: ikon berbasis komponen UI Roblox yang dapat diskalakan. Kontrol dan panel inti tidak memerlukan gambar unduhan.
 - `HUDImageAssets`: mempertahankan pemetaan **27 ID** unggahan. Sumber final: `assets/ui/final/compressed_img/`. Manifest kanonik: `assets/ui/asset-manifest.json`; ID sederhana: `assets/ui/final/compressed_img/roblox-asset-ids.json`.
 - Hanya **empat ilustrasi opsional** yang sekarang diminta oleh tema: `balloon_intact`, `emergency_kit`, `weapon_pistol`, `weapon_ak47`. Tidak ada re-upload atau perubahan PNG pada redesign.
