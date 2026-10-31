@@ -257,6 +257,7 @@ local wheel=Instance.new("Frame")
 wheel.Name="TacticalPingWheel" wheel.Size=UDim2.fromOffset(440,310) wheel.Position=UDim2.new(0.5,-220,0.5,-155)
 wheel.BackgroundTransparency=1 wheel.Visible=false wheel.Parent=screenGui
 local function button(name,text,position,callback)
+ if UserInputService.TouchEnabled then text=text:gsub("%s*%[[^%]]+%]","")end
  local b=Instance.new("TextButton") b.Name=name b.Text=text b.Size=UDim2.fromOffset(150,42)
  b.Position=position b.BackgroundColor3=Color3.fromRGB(35,65,85) b.TextColor3=Color3.new(1,1,1)
  b.TextWrapped=true b.TextSize=13 b.Font=Enum.Font.GothamBold b.Parent=screenGui b.Activated:Connect(callback)

@@ -1,0 +1,871 @@
+{
+  "date": "2026-10-31",
+  "ok": true,
+  "profiles": [
+    {
+      "name": "iPad10LandscapeLobby",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "textOverflow": [],
+      "tablet": true,
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "3": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "4": {
+          "y": 644,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1061
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1177,
+        "2": 760
+      }
+    },
+    {
+      "name": "iPad10LandscapeGunner",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 544,
+          "h": 88,
+          "name": "MobileShootButton",
+          "w": 88,
+          "x": 1069
+        },
+        "3": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "4": {
+          "y": 544,
+          "h": 44,
+          "name": "ReloadButton",
+          "w": 120,
+          "x": 937
+        },
+        "5": {
+          "y": 596,
+          "h": 44,
+          "name": "DropButton",
+          "w": 120,
+          "x": 937
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "7": {
+          "y": 644,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1061
+        },
+        "8": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1177,
+        "2": 760
+      }
+    },
+    {
+      "name": "iPad10Pilot",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Pilot",
+      "jump": {
+        "visible": false,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 668,
+          "h": 72,
+          "name": "GasButton",
+          "w": 128,
+          "x": 1029
+        },
+        "3": {
+          "y": 680,
+          "h": 48,
+          "name": "AutoGasButton",
+          "w": 148,
+          "x": 869
+        },
+        "4": {
+          "y": 680,
+          "h": 48,
+          "name": "ReleaseHelmButton",
+          "w": 148,
+          "x": 709
+        },
+        "5": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "7": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1177,
+        "2": 760
+      }
+    },
+    {
+      "name": "iPad10PortraitGunner",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 904,
+          "h": 88,
+          "name": "MobileShootButton",
+          "w": 88,
+          "x": 709
+        },
+        "3": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "4": {
+          "y": 904,
+          "h": 44,
+          "name": "ReloadButton",
+          "w": 120,
+          "x": 577
+        },
+        "5": {
+          "y": 956,
+          "h": 44,
+          "name": "DropButton",
+          "w": 120,
+          "x": 577
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "7": {
+          "y": 1004,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 701
+        },
+        "8": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 817,
+        "2": 1120
+      }
+    },
+    {
+      "name": "iPadProEngineer",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Engineer",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "3": {
+          "y": 1151,
+          "h": 44,
+          "name": "DetachButton",
+          "w": 150,
+          "x": 440
+        },
+        "4": {
+          "y": 1203,
+          "h": 44,
+          "name": "DescendButton",
+          "w": 150,
+          "x": 440
+        },
+        "5": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "6": {
+          "y": 1199,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 914
+        },
+        "7": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1030,
+        "2": 1315
+      }
+    },
+    {
+      "name": "iPadProLandscapeEngineer",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Engineer",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "3": {
+          "y": 747,
+          "h": 44,
+          "name": "DetachButton",
+          "w": 150,
+          "x": 612
+        },
+        "4": {
+          "y": 851,
+          "h": 44,
+          "name": "DescendButton",
+          "w": 150,
+          "x": 612
+        },
+        "5": {
+          "y": 799,
+          "h": 44,
+          "name": "RepairButton",
+          "w": 150,
+          "x": 612
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "7": {
+          "y": 855,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1257
+        },
+        "8": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1373,
+        "2": 971
+      }
+    },
+    {
+      "name": "iPadProLandscapeGunner",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 755,
+          "h": 88,
+          "name": "MobileShootButton",
+          "w": 88,
+          "x": 1265
+        },
+        "3": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "4": {
+          "y": 755,
+          "h": 44,
+          "name": "ReloadButton",
+          "w": 120,
+          "x": 1133
+        },
+        "5": {
+          "y": 807,
+          "h": 44,
+          "name": "DropButton",
+          "w": 120,
+          "x": 1133
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "7": {
+          "y": 855,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1257
+        },
+        "8": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1373,
+        "2": 971
+      }
+    },
+    {
+      "name": "iPhone17GunnerFinal",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": false,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 4,
+          "h": 44,
+          "name": "EmergencyKitButton",
+          "w": 186,
+          "x": 8
+        },
+        "2": {
+          "y": 263,
+          "h": 48,
+          "name": "FlightActionsButton",
+          "w": 108,
+          "x": 544
+        },
+        "3": {
+          "y": 163,
+          "h": 64,
+          "name": "MobileShootButton",
+          "w": 64,
+          "x": 588
+        },
+        "4": {
+          "y": 4,
+          "h": 44,
+          "name": "ShopToggleButton",
+          "w": 108,
+          "x": 632
+        },
+        "5": {
+          "y": 239,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 664
+        }
+      },
+      "compact": true,
+      "size": {
+        "1": 748,
+        "2": 323
+      }
+    },
+    {
+      "name": "iPhone17PilotFinal",
+      "small": [],
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": false,
+      "role": "Pilot",
+      "jump": {
+        "visible": false,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 4,
+          "h": 44,
+          "name": "EmergencyKitButton",
+          "w": 186,
+          "x": 8
+        },
+        "2": {
+          "y": 243,
+          "h": 64,
+          "name": "GasButton",
+          "w": 104,
+          "x": 632
+        },
+        "3": {
+          "y": 259,
+          "h": 48,
+          "name": "AutoGasButton",
+          "w": 140,
+          "x": 480
+        },
+        "4": {
+          "y": 259,
+          "h": 48,
+          "name": "ReleaseHelmButton",
+          "w": 140,
+          "x": 328
+        },
+        "5": {
+          "y": 203,
+          "h": 48,
+          "name": "FlightActionsButton",
+          "w": 140,
+          "x": 480
+        },
+        "6": {
+          "y": 4,
+          "h": 44,
+          "name": "ShopToggleButton",
+          "w": 108,
+          "x": 632
+        }
+      },
+      "compact": true,
+      "size": {
+        "1": 748,
+        "2": 323
+      }
+    },
+    {
+      "name": "DesktopCompactGunner",
+      "small": [],
+      "touch": false,
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "outside": [],
+      "textOverflow": [],
+      "tablet": false,
+      "overlaps": [],
+      "role": "Gunner",
+      "buttons": {
+        "1": {
+          "y": 4,
+          "h": 44,
+          "name": "EmergencyKitButton",
+          "w": 186,
+          "x": 8
+        },
+        "2": {
+          "y": 327,
+          "h": 48,
+          "name": "FlightActionsButton",
+          "w": 108,
+          "x": 358
+        },
+        "3": {
+          "y": 227,
+          "h": 64,
+          "name": "MobileShootButton",
+          "w": 64,
+          "x": 402
+        },
+        "4": {
+          "y": 4,
+          "h": 44,
+          "name": "ShopToggleButton",
+          "w": 108,
+          "x": 446
+        },
+        "5": {
+          "y": 303,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 478
+        }
+      },
+      "compact": true,
+      "size": {
+        "1": 562.4000244140625,
+        "2": 386.79998779296875
+      }
+    },
+    {
+      "name": "Desktop720Gunner",
+      "small": {
+        "1": "EmergencyKitButton",
+        "2": "ShopToggleButton",
+        "3": "PingButton",
+        "4": "WarningAudioToggleButton"
+      },
+      "touch": false,
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 80,
+          "2": 80
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "outside": [],
+      "textOverflow": [],
+      "tablet": false,
+      "overlaps": [],
+      "role": "Gunner",
+      "buttons": {
+        "1": {
+          "y": 191.99998474121094,
+          "h": 40.333335876464844,
+          "name": "EmergencyKitButton",
+          "w": 238.33334350585938,
+          "x": 18
+        },
+        "2": {
+          "y": 468,
+          "h": 80,
+          "name": "MobileShootButton",
+          "w": 80,
+          "x": 1180
+        },
+        "3": {
+          "y": 13,
+          "h": 38.5,
+          "name": "ShopToggleButton",
+          "w": 146.6666717529297,
+          "x": 1115
+        },
+        "4": {
+          "y": 560,
+          "h": 80,
+          "name": "JumpButton",
+          "w": 80,
+          "x": 1180
+        },
+        "5": {
+          "y": 468,
+          "h": 44,
+          "name": "ReloadButton",
+          "w": 120,
+          "x": 1048
+        },
+        "6": {
+          "y": 520,
+          "h": 44,
+          "name": "DropButton",
+          "w": 120,
+          "x": 1048
+        },
+        "7": {
+          "y": 518,
+          "h": 38.5,
+          "name": "PingButton",
+          "w": 137.5,
+          "x": 18
+        },
+        "8": {
+          "y": 565,
+          "h": 40.333335876464844,
+          "name": "WarningAudioToggleButton",
+          "w": 137.5,
+          "x": 18
+        }
+      },
+      "compact": false,
+      "size": {
+        "1": 1280,
+        "2": 660
+      }
+    }
+  ],
+  "interactions": {
+    "lobbyJumpRiseStuds": 5.724814414978027,
+    "tabletFlightJumpAccepted": 1,
+    "phoneSimulatorTapJumpAccepted": 1,
+    "pilotAutoGasTapAccepted": true,
+    "releaseHelmTapAccepted": true,
+    "autoGasPersistsAfterRelease": true,
+    "emergencyKitTapAccepted": true
+  },
+  "respawn": {
+    "customVisible": true,
+    "inFlight": false,
+    "joystick": true,
+    "nativeHidden": true,
+    "health": 100
+  },
+  "fixture": {
+    "players": 1,
+    "balloon": "stationary anchored at 253 km",
+    "hazardsPaused": true,
+    "ropeDurabilityReplenishedForVisualReview": true,
+    "physicsRetested": false,
+    "input": "virtual UI clicks and direct simulator tap; no physical iPad"
+  },
+  "diagnostics": [
+    "An initial manual roof preview exceeded normal rope lifetime; fixture was updated to hold durability for UI inspection.",
+    "Virtual mouse clicks in first-person LockCenter did not activate the phone jump button. A direct simulator tap succeeded and server accepted the jump."
+  ],
+  "finalConsoleWarnings": 0,
+  "finalConsoleErrors": 0,
+  "productionScriptsCompiled": 29,
+  "qaInstancesRemaining": 0,
+  "restored": {
+    "toolbar": "Test",
+    "clients": 1,
+    "device": "Current device desktop"
+  },
+  "imagesCreatedOrUploaded": false,
+  "placeSHA256": "dd0c1df13c0c8b7af9f8fdd35cac81dd597209c547adb7c80c194ebb5a061618"
+}

@@ -176,6 +176,7 @@ emBtn.Size = UDim2.new(0, 260, 0, 44)
 emBtn.Position = UDim2.new(0, 20, 0, 210)
 emBtn.BackgroundColor3 = Color3.fromRGB(30, 110, 200)
 emBtn.Text = "🛡️ Pakai Emergency Kit (1x/Game)"
+emBtn.TextWrapped = true
 emBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 emBtn.Font = Enum.Font.FredokaOne
 emBtn.TextSize = 14
@@ -258,7 +259,7 @@ local function toggleAutoGas()
  if canUseHelm()then flightActionEvent:FireServer("AutoGas",not autoGas)end
 end
 local autoGasButton=flightButton("AutoGasButton","GAS OTOMATIS: OFF [Z]",200,toggleAutoGas)
-local releaseHelmButton=flightButton("ReleaseHelmButton","LEPAS KEMUDI [H]",255,function()flightActionEvent:FireServer("ReleaseHelm")end)
+local releaseHelmButton=flightButton("ReleaseHelmButton",UserInputService.TouchEnabled and "LEPAS KEMUDI"or "LEPAS KEMUDI [H]",255,function()flightActionEvent:FireServer("ReleaseHelm")end)
 local groundNotice=Instance.new("TextLabel")groundNotice.Name="GroundedCountdown"groundNotice.Size=UDim2.fromOffset(420,28)
 groundNotice.Position=UDim2.new(.5,-210,0,65)groundNotice.BackgroundColor3=Color3.fromRGB(79,47,34)
 groundNotice.TextColor3=Color3.fromRGB(255,225,164)groundNotice.TextSize=14 groundNotice.Font=Enum.Font.GothamBold
@@ -299,7 +300,7 @@ end)
 -- Server Flight State Listener
 flightSyncEvent.OnClientEvent:Connect(function(data)
 	autoGas=data.autoGas==true
-	autoGasButton.Text=autoGas and "GAS OTOMATIS: ON [Z]" or "GAS OTOMATIS: OFF [Z]"
+	autoGasButton.Text=(autoGas and "GAS OTOMATIS: ON"or "GAS OTOMATIS: OFF")..(UserInputService.TouchEnabled and ""or " [Z]")
 	autoGasButton.BackgroundColor3=autoGas and Color3.fromRGB(35,130,94)or Color3.fromRGB(35,65,85)
 	groundNotice.Visible=data.groundedRemaining~=nil and not data.isGameOver and not data.isVictory
 	groundNotice.Text=data.groundedRemaining and string.format("LEPAS LANDAS! Balon hancur dalam %d detik",math.ceil(data.groundedRemaining))or ""
@@ -382,7 +383,7 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 		emBtn.Active = true
 	else
 		local totalKits = localPlayer:GetAttribute("EmergencyKits") or 0
-		emBtn.Text = string.format("🛡️ Emergency Kit (Miliki: %d) [GUNAKAN]", totalKits)
+		emBtn.Text = UserInputService.TouchEnabled and string.format("🛡️ EMERGENCY KIT · %d\nGUNAKAN",totalKits)or string.format("🛡️ Emergency Kit (Miliki: %d) [GUNAKAN]", totalKits)
 		emBtn.BackgroundColor3 = Color3.fromRGB(30, 110, 200)
 		emBtn.Active = true
 	end

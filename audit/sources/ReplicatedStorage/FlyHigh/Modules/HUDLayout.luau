@@ -209,6 +209,88 @@ function Layout.Start(gui, player)
    end
    place("AlertBanner", 202, 56, math.max(220, w - 326), 85)
   end
+  -- Tablets need their own touch layout, rather than desktop offsets and key hints.
+  local tablet = Input.TouchEnabled and not compact
+  gui:SetAttribute("TabletLayout",tablet)
+  local margin = compact and 12 or 20
+  if tablet then
+   place("AltimeterFrame",(w-math.min(460,w-32))/2,12,math.min(460,w-32),52)
+   place("StatusFrame",16,80,256,112)
+   place("EmergencyKitButton",16,204,256,52)
+   place("ShopToggleButton",16,268,124,48)
+   place("PingButton",148,268,124,48)
+   place("WarningAudioToggleButton",16,328,256,48)
+   local centerWidth=math.min(520,w-304)
+   local centerX=math.max(288,(w-centerWidth)/2)
+   place("GroundedCountdown",centerX,80,math.min(460,centerWidth),32)
+   place("StormChallengePanel",centerX,144,centerWidth,104)
+   place("AlertBanner",centerX,144,centerWidth,96)
+   place("GhostSpotterFrame",centerX,144,math.min(340,centerWidth),65)
+   place("TetherFrame",(w-300)/2,h-72,300,48)
+   place("GasButton",w-148,h-92,128,72)
+   place("ReleaseHelmButton",w-468,h-80,148,48)
+   place("AutoGasButton",w-308,h-80,148,48)
+  end
+  -- One circular jump target, clear of shoot, inventory and the native thumbstick.
+  local jumpSize=tablet and 96 or(compact and 72 or 80)
+  local jumpY=h-margin-jumpSize
+  local jump=place("JumpPanel",w-margin-jumpSize,jumpY,jumpSize,jumpSize)
+  if jump then
+   jump.BackgroundTransparency=1
+   jump.JumpHint.Visible=false
+   box(jump.JumpButton,0,0,jumpSize,jumpSize)
+   jump.JumpButton.TextSize=compact and 30 or 36
+  end
+  local fireSize=tablet and 88 or(compact and 64 or 80)
+  local fireY=jumpY-12-fireSize
+  local fireX=compact and(w-margin-jumpSize-12-fireSize)or(w-margin-fireSize)
+  place("MobileShootButton",fireX,fireY,fireSize,fireSize)
+  if not compact then
+   place("WeaponFrame",w-margin-240,fireY-92,240,80)
+   place("ReloadButton",w-margin-fireSize-132,fireY,120,44)
+   place("DropButton",w-margin-fireSize-132,fireY+52,120,44)
+  else
+   place("WeaponFrame",w/2-90,h-(Input.TouchEnabled and 128 or 144),180,Input.TouchEnabled and 48 or 80)
+   local pilot=get("ReleaseHelmButton")
+   if pilot and pilot.Visible then
+    place("GasButton",w-116,h-80,104,64)
+    place("AutoGasButton",w-268,h-64,140,48)
+    place("ReleaseHelmButton",w-420,h-64,140,48)
+    box(toggle,w-268,h-120,140,48)
+   else
+    box(toggle,w-margin-jumpSize-120,h-60,108,48)
+   end
+   place("PullCrewButton",w-margin-jumpSize-152,h-116,140,48)
+  end
+  local kit=get("EmergencyKitButton")
+  if kit then kit.TextWrapped=true kit.TextSize=compact and 12 or 14 end
+  local altimeter=get("AltimeterFrame")
+  if altimeter then
+   altimeter.AltLabel.TextScaled=true
+   local limit=altimeter.AltLabel:FindFirstChildOfClass("UITextSizeConstraint")or Instance.new("UITextSizeConstraint",altimeter.AltLabel)
+   limit.MinTextSize=10 limit.MaxTextSize=16
+   altimeter.BarBg.Size=UDim2.new(1,-144,0,10)
+   altimeter.VerticalSpeedLabel.TextScaled=true
+  end
+  if statusPanel then
+   statusPanel.HoleIcons.TextScaled=true
+   statusPanel.HolePenalty.TextWrapped=true
+  end
+  local weapon=get("WeaponFrame")
+  if weapon then
+   weapon.WeaponName.TextSize=compact and 14 or 16
+   weapon.AmmoLabel.TextSize=compact and 14 or 16
+   weapon.DropTip.Visible=not Input.TouchEnabled
+   weapon.AmmoLabel.Size=UDim2.new(1,-20,0,24)
+   if compact and Input.TouchEnabled then
+    box(weapon.WeaponName,8,2,164,20)
+    box(weapon.AmmoLabel,8,24,164,20)
+   else
+    weapon.WeaponName.Position=UDim2.fromOffset(10,6)
+    weapon.WeaponName.Size=UDim2.new(1,-20,0,24)
+    weapon.AmmoLabel.Position=UDim2.fromOffset(10,30)
+   end
+  end
   -- Scroll content instead of shrinking purchase/close targets below 44 pixels.
   if modal then
    place("ShopModal", (w - math.min(440, w - 24)) / 2, 8, math.min(440, w - 24), math.min(390, h - 16))

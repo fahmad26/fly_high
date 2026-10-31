@@ -349,6 +349,8 @@ Saat balon menyentuh ketinggian **10.000 km**:
 
 ## 12. Desain Antarmuka Pengguna (UI / HUD)
 
+**Kontrol sentuh dan HUD tablet:** tombol lompat custom berbentuk lingkaran di kanan bawah, terpisah dari tembak dan aksi senjata; tombol lompat native disembunyikan tanpa mematikan joystick. Tombol custom juga tersedia di lobby dan setelah respawn. Izin lompat pilot/engineer tetap mengikuti aturan role; caption tombol menampilkan sisa cooldown efek turun saat aktif. Tablet memakai layout tersendiri dengan target sentuh minimal 44×44; teks/angka tetap dinamis meskipun ikon atau bingkai nantinya memakai gambar. Rencana aset: UI_IMAGE_ASSET_PLAN.md.
+
 ```
 +-------------------------------------------------------------------------+
 | [Alt: 4.250 km / 10.000 km] =======[=======|-------------] (42.5%)      |
