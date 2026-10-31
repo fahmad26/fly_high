@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-31",
+  "studio": "Fly High.rbxl",
+  "uploaded": 27,
+  "sourceFolder": "assets/ui/final/compressed_img",
+  "dimensionChecksPassed": 27,
+  "hudIntegrationPerformed": false,
+  "dataModelModified": false,
+  "temporaryServersStopped": true,
+  "verification": {
+    "loaded": 7,
+    "pending": 20,
+    "firstProbe": "20 content requests received HTTP 429; 7 Success",
+    "retry": "Sequential PreloadAsync, with initial 15-second delay and 1.2 seconds between assets; same 7 Success / 20 Failure. Do not treat all 27 images as load-verified.",
+    "results": {
+      "weapon_ak47.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://121163530661782"
+      },
+      "warning_badge.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://133110984727781"
+      },
+      "control_circle_normal.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://103129971812686"
+      },
+      "balloon_intact.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://102772330060648"
+      },
+      "panel_9slice.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://119752524819445"
+      },
+      "jump_arrow.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://134915712312480"
+      },
+      "emergency_kit.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://124454343942952"
+      },
+      "burner_flame.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://78927787373191"
+      },
+      "patch_repair.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://129313674817197"
+      },
+      "helm_release.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://129496037588586"
+      },
+      "crew_rescue.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://80037291958003"
+      },
+      "fire_target.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://130345737141401"
+      },
+      "helm.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://103615791844589"
+      },
+      "rope_climb.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://84749963770786"
+      },
+      "team_ping.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://125897278409378"
+      },
+      "aim_reticle.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://92435439695269"
+      },
+      "control_circle_pressed.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://73541054583304"
+      },
+      "rope_descend.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://90768025375567"
+      },
+      "shop_supply.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://130991989483112"
+      },
+      "sound_on.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://135591436991154"
+      },
+      "rope_repair.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://134330609503010"
+      },
+      "rope_detach.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://101141157478051"
+      },
+      "control_circle_disabled.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://83631720689910"
+      },
+      "balloon_torn.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://130748218921310"
+      },
+      "weapon_pistol.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://99082950855244"
+      },
+      "rope_attach.png": {
+        "status": "Failure",
+        "assetId": "rbxassetid://131371711483262"
+      },
+      "sound_off.png": {
+        "status": "Success",
+        "assetId": "rbxassetid://104567673131313"
+      }
+    }
+  },
+  "notes": [
+    "Initial loopback endpoint was inaccessible; first upload call timed out without returning IDs. Host-level loopback endpoint succeeded and returned 27 IDs.",
+    "Do not re-upload to work around load failures; preserve returned IDs and recheck later."
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "folder": "assets/ui/final/compressed_img",
+  "count": 27,
+  "validation": "PNG headers and exact target dimensions verified; no image transformations performed",
+  "files": [
+    {
+      "file": "control_circle_normal.png",
+      "width": 512,
+      "height": 512,
+      "targetWidth": 512,
+      "targetHeight": 512,
+      "bytes": 72708,
+      "sha256": "5b49355232589c5e97a4d5d7b936026015e30d19857159c719901aafe5ecd17b"
+    },
+    {
+      "file": "control_circle_pressed.png",
+      "width": 512,
+      "height": 512,
+      "targetWidth": 512,
+      "targetHeight": 512,
+      "bytes": 72198,
+      "sha256": "c4620a9a3a8d545edeb29558af7a1f0cb6e31cafe8b74383fa41b88a00a0b537"
+    },
+    {
+      "file": "control_circle_disabled.png",
+      "width": 512,
+      "height": 512,
+      "targetWidth": 512,
+      "targetHeight": 512,
+      "bytes": 65954,
+      "sha256": "efe3f39980576a03cb95ef48684d32440f0249f457bde93c2f96d807894e559f"
+    },
+    {
+      "file": "jump_arrow.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 27970,
+      "sha256": "78adf4182a68d2a27d89766614eb099366d470cd5de5118684a7407ceea46f68"
+    },
+    {
+      "file": "fire_target.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 31694,
+      "sha256": "67b9c64de87f50b4568195b1d031c0b7b850fe491ee9b2c161244e2a89912915"
+    },
+    {
+      "file": "aim_reticle.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 18117,
+      "sha256": "deea7f46d5ed67e101ae6ecf52598f16443ffe06b189c78d1ab33056acc81757"
+    },
+    {
+      "file": "burner_flame.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 29909,
+      "sha256": "c571c49bfd67ed550d8186115be79bb59fc80f6bb362b8afd1a2141aa461d6a4"
+    },
+    {
+      "file": "emergency_kit.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 32220,
+      "sha256": "4da076c41d66eda99f8007134755ae290550c1fdcae384de523362653054b942"
+    },
+    {
+      "file": "helm.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 25408,
+      "sha256": "bf58787c261b324adeef50e174e677580e5694e6950065bcfb2f68d6b1405e8c"
+    },
+    {
+      "file": "helm_release.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 24744,
+      "sha256": "5daf1eb453982a199b9a5fe73ba44218192fd5d6a3075c7611da3bd0878f2885"
+    },
+    {
+      "file": "rope_attach.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 26283,
+      "sha256": "fc23c20a7b3a5533bbcc3adee29a55593491f644ee5f2987a59df5af7699b1e4"
+    },
+    {
+      "file": "rope_detach.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 23245,
+      "sha256": "aa1b92f4ec464a0da23dcc0917f5e306440f5b8e7839d6d74f10913efcef5f94"
+    },
+    {
+      "file": "rope_climb.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 15871,
+      "sha256": "a7a392a5d8cefb45e044225110c61e3919569380f9d0ff95d5aaa6886ed34e90"
+    },
+    {
+      "file": "rope_descend.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 15644,
+      "sha256": "9003df096689c9ff58ec00a2307bf58e834b314344789d90aaa5331deeab7fe4"
+    },
+    {
+      "file": "patch_repair.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 34838,
+      "sha256": "63892ab6cd7702b11ec1830a5a991439a061e1c76655cd0f4ac916112024829a"
+    },
+    {
+      "file": "rope_repair.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 36922,
+      "sha256": "0831b5d5e478cc9a30d8415a845668e7f47a0cecca3363036983dd3a4687cb52"
+    },
+    {
+      "file": "crew_rescue.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 20731,
+      "sha256": "7ebb81db2c71ad02ed725598936e2351e97f043e5f141f385e61ddb98e473ef7"
+    },
+    {
+      "file": "shop_supply.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 28041,
+      "sha256": "92395760445c5ca626ba37976ccd4d4f7b13c5f9fe77c217a1f26695821d773a"
+    },
+    {
+      "file": "team_ping.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 22177,
+      "sha256": "9dbfbb77bd04f981e3f9f5d560bb12e6ed395386f266bf898e1b8c84e55f251b"
+    },
+    {
+      "file": "sound_on.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 20335,
+      "sha256": "ab46420e2e90e1858b6ddb7889f9143f76e6bba94497b2c1da8ed44d3e6ece30"
+    },
+    {
+      "file": "sound_off.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 16614,
+      "sha256": "6a58fe2ad89fbd709ac39ec020bddcfaf8b57c025b5ba198bcfe0a0f491a326f"
+    },
+    {
+      "file": "warning_badge.png",
+      "width": 256,
+      "height": 256,
+      "targetWidth": 256,
+      "targetHeight": 256,
+      "bytes": 22452,
+      "sha256": "a076362ecb2b3362da8d81d44a1f7fa6d606ead0068238687a2035100aefa7cf"
+    },
+    {
+      "file": "balloon_intact.png",
+      "width": 128,
+      "height": 128,
+      "targetWidth": 128,
+      "targetHeight": 128,
+      "bytes": 8472,
+      "sha256": "61860cfde70ca42cd8dac172fc7b5fb0ee316fce891b9b7d19d6ba460497a264"
+    },
+    {
+      "file": "balloon_torn.png",
+      "width": 128,
+      "height": 128,
+      "targetWidth": 128,
+      "targetHeight": 128,
+      "bytes": 9164,
+      "sha256": "fd049dc8e251b4165c5be348b7b40f9554d100497ccf0b4c47a06591fd0a08f5"
+    },
+    {
+      "file": "weapon_pistol.png",
+      "width": 512,
+      "height": 256,
+      "targetWidth": 512,
+      "targetHeight": 256,
+      "bytes": 28844,
+      "sha256": "d15c182a9a6df8cc8a36519c05b713a191d803f6fc4b6edce3d26b651aae94a7"
+    },
+    {
+      "file": "weapon_ak47.png",
+      "width": 512,
+      "height": 256,
+      "targetWidth": 512,
+      "targetHeight": 256,
+      "bytes": 28996,
+      "sha256": "a48860279d9e75a7c7698e5ac17a76adeb1de58c22c3673229edad170172fec1"
+    },
+    {
+      "file": "panel_9slice.png",
+      "width": 512,
+      "height": 256,
+      "targetWidth": 512,
+      "targetHeight": 256,
+      "bytes": 37604,
+      "sha256": "04022a2d8328b76a35a4acd4c8c1d56df34953da26d3a6820d9116d8bc8d3382"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # 📋 Dokumen Handover & Panduan Audit Teknis — "Fly High"
 
+> **Aset UI 31 Oktober 2026:** 27 PNG final pengguna dari `assets/ui/final/compressed_img/` sudah diunggah ke Roblox melalui Studio. ID aktual dan hash sumber ada di `assets/ui/asset-manifest.json`. Pemeriksaan pemuatan: 7 Success, 20 Failure setelah respons awal HTTP 429; pengulangan dengan jeda belum mengubah hasil. Lihat `assets/ui/final/compressed_img/upload-report.json`. Integrasi gambar ke HUD belum dilakukan; tidak ada perubahan DataModel/place untuk unggahan ini.
+
 Dokumen ini disiapkan sebagai panduan komprehensif bagi AI Reviewer / Developer selanjutnya untuk memeriksa, mengaudit, dan melanjutkan pengembangan game Roblox **Fly High**.
 
 > **Pembaruan audit 28 Oktober 2026:** Dua revisi PRD sudah diterapkan dan place lokal sudah disimpan. Bagian arsitektur/status awal di bawah adalah baseline historis; gunakan bagian 5 dan [AUDIT_REPORT.md](./AUDIT_REPORT.md) untuk keadaan terbaru dan batas verifikasi.
