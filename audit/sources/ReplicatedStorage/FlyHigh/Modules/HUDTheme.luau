@@ -372,6 +372,19 @@ function Theme.Start(gui, player)
 			r.percent = label(o, "HUDProgress", 11, Enum.Font.GothamBlack, Color3.fromRGB(224, 242, 254), Color3.fromRGB(4, 12, 28), 1.8)
 			r.percent.TextXAlignment = Enum.TextXAlignment.Center
 
+			-- Dedicated Speed Telemetry Pill Box & Label (eliminates duplicate writes and text flapping)
+			r.speedPill = frame(o, "HUDSpeedPill")
+			r.speedPill.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
+			r.speedPill.BackgroundTransparency = 0.25
+			round(r.speedPill, 6)
+			local pillStroke = stroke(r.speedPill, Color3.fromRGB(28, 54, 96), 1)
+			pillStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+			r.speed = label(r.speedPill, "HUDSpeedText", 11, Enum.Font.GothamBlack, Color3.fromRGB(147, 197, 253), Color3.fromRGB(4, 12, 28), 1.8)
+			r.speed.TextXAlignment = Enum.TextXAlignment.Center
+			r.speed.TextYAlignment = Enum.TextYAlignment.Center
+			r.speed.TextWrapped = false
+
 			-- 100% Transparent Emblem Container (No black disc!)
 			r.emblem = frame(o, "HUDEmblem")
 			r.emblem.BackgroundTransparency = 1
@@ -666,9 +679,13 @@ function Theme.Start(gui, player)
 				local bar = o:FindFirstChild("BarBg")
 				local speed = o:FindFirstChild("VerticalSpeedLabel")
 
-				if original and bar and speed then
+				if original and bar then
 					local altitude = original.Text:match("Ketinggian:%s*(%d+)") or "0"
 					hide(original)
+					if speed then
+						hide(speed)
+						speed.BackgroundTransparency = 1
+					end
 
 					-- 1. Balloon Icon on Left (Pure transparency, perfectly centered!)
 					local iconSize = compact and 40 or 46
@@ -690,38 +707,53 @@ function Theme.Start(gui, player)
 					box(r.goal, iconSize + 20, 36, 170, 16)
 					applyTextStyle(r.goal, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(186, 230, 253), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
 
-					-- 3. Speed Telemetry Chip (Right side, crisp single line, no wrapping!)
-					local curText = speed.Text
-					if curText:find("NAIK", 1, true) or curText:find("TURUN", 1, true) or curText:find("DIAM", 1, true) then
-						speed:SetAttribute("RawSpeed", curText)
+					-- 3. Speed Telemetry Chip (Dedicated label, pure single line, no flicker!)
+					local rawVal = o:GetAttribute("VerticalSpeed") or (speed and speed:GetAttribute("VerticalSpeed"))
+					local vVal = rawVal
+					if vVal == nil and speed then
+						local curText = speed.Text
+						local n = tonumber(curText:match("([%-%+]?%s*[%d%.]+)%s*km"))
+						if n then
+							vVal = n
+							if curText:find("TURUN", 1, true) or curText:find("▼", 1, true) then
+								vVal = -math.abs(vVal)
+							end
+						end
 					end
-					local rawSpeed = speed:GetAttribute("RawSpeed") or curText
-					local vVal = tonumber(rawSpeed:match("([%d%.]+)%s*km")) or 0
-					local vDir = (rawSpeed:find("NAIK", 1, true) or rawSpeed:find("▲", 1, true)) and "up" or ((rawSpeed:find("TURUN", 1, true) or rawSpeed:find("▼", 1, true)) and "down" or "still")
-					if vVal <= 0.05 then vDir = "still" end
+					vVal = vVal or 0
 
+					local vDir = "still"
+					if vVal > 0.05 then
+						vDir = "up"
+					elseif vVal < -0.05 then
+						vDir = "down"
+					end
+
+					local speedText
 					if vDir == "up" then
-						speed.Text = string.format("▲ +%.1f km/s", vVal)
+						speedText = string.format("▲ +%.1f km/s", vVal)
 					elseif vDir == "down" then
-						speed.Text = string.format("▼ -%.1f km/s", vVal)
+						speedText = string.format("▼ -%.1f km/s", math.abs(vVal))
 					else
-						speed.Text = "● 0.0 km/s"
+						speedText = "● 0.0 km/s"
+					end
+					r.speed.Text = speedText
+					if speed then
+						speed.Text = speedText
 					end
 
 					local speedW = compact and 96 or 104
 					local speedH = 24
 					local speedX = w - speedW - 12
 					local speedY = (h - speedH) / 2
-					box(speed, speedX, speedY, speedW, speedH)
+					box(r.speedPill, speedX, speedY, speedW, speedH)
+					box(r.speed, 0, 0, speedW, speedH)
+					r.speedPill.ZIndex = z + 4
+					r.speed.ZIndex = z + 5
+
 					local speedColor = vDir == "up" and Color3.fromRGB(74, 222, 128) or (vDir == "down" and Color3.fromRGB(248, 113, 113) or Color3.fromRGB(147, 197, 253))
-					applyTextStyle(speed, { font = Enum.Font.GothamBlack, size = 11, color = speedColor, strokeThickness = 1.8, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
-					speed.TextWrapped = false
-					speed.ZIndex = z + 4
-					speed.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
-					speed.BackgroundTransparency = 0.25
-					round(speed, 6)
-					local speedStroke = stroke(speed, Color3.fromRGB(28, 54, 96), 1)
-					speedStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+					r.speed.TextColor3 = speedColor
+					applyTextStyle(r.speed, { font = Enum.Font.GothamBlack, size = 11, color = speedColor, strokeThickness = 1.8, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
 
 					-- 4. Progress Bar Track (Strictly contained, stops 12px before speed chip!)
 					local barX = iconSize + 168

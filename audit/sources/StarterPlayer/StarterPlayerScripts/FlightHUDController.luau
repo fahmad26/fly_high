@@ -104,7 +104,7 @@ local speedLabel=Instance.new("TextLabel")
 speedLabel.Name="VerticalSpeedLabel"
 speedLabel.Position=UDim2.new(1,-132,0,26)speedLabel.Size=UDim2.fromOffset(122,16)
 speedLabel.BackgroundTransparency=1 speedLabel.Font=Enum.Font.GothamBold speedLabel.TextSize=12
-speedLabel.TextColor3=Color3.fromRGB(210,220,235)speedLabel.Text="DIAM 0.0 km/dtk"
+speedLabel.TextColor3=Color3.fromRGB(147,197,253)speedLabel.Text="● 0.0 km/s"
 speedLabel.Parent=altFrame
 
 -- Left Hole Status Frame
@@ -321,8 +321,10 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 	barFill.Size = UDim2.new(pct, 0, 1, 0)
 	local speed=data.verticalSpeedKmPerSec or 0
 	if data.isGameOver or data.isVictory or math.abs(speed)<.05 then speed=0 end
-	speedLabel.Text=speed>0 and string.format("NAIK +%.1f km/dtk",speed)or(speed<0 and string.format("TURUN %.1f km/dtk",speed)or "DIAM 0.0 km/dtk")
-	speedLabel.TextColor3=speed>0 and Color3.fromRGB(120,255,185)or(speed<0 and Color3.fromRGB(255,175,115)or Color3.fromRGB(210,220,235))
+	altFrame:SetAttribute("VerticalSpeed", speed)
+	speedLabel:SetAttribute("VerticalSpeed", speed)
+	speedLabel.Text=speed>0 and string.format("▲ +%.1f km/s",speed)or(speed<0 and string.format("▼ -%.1f km/s",math.abs(speed))or "● 0.0 km/s")
+	speedLabel.TextColor3=speed>0 and Color3.fromRGB(74,222,128)or(speed<0 and Color3.fromRGB(248,113,113)or Color3.fromRGB(147,197,253))
 
 	-- Update Hole Visuals
 	local icons = ""
