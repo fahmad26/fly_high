@@ -42,30 +42,29 @@ Daftar ini berasal dari source mirror dan jumlah kompilasi snapshot. Bandingkan 
 - Equip senjata memaksa first person; drop kembali third person. Auto aim berdasarkan pusat kamera, tanpa tap arbitrer ke mana saja. Visual proyektil dan suara tembakan sudah diimplementasikan.
 - Loncatan kru/Dinding Badai **sudah diimplementasikan pada iterasi berikutnya**, meskipun instruksi historis pernah meminta dokumentasi saja. Pilot dan pemain di katrol/kubah/repair tidak boleh melompat; gunner dan pemakai tali yang masih di keranjang mengikuti izin server. Ada cooldown efek turun.
 
-## HUD aktif: Sky Arcade Pro Max (Pass 3 — UI Designer Pass)
+## HUD aktif: Sky Arcade Pro Max (Pass 4 — UI Designer Typography & Polish Pass)
 
-Pengguna meminta perbaikan mendalam dari kacamata UI Designer karena HUD sebelumnya masih terasa kurang rapi, terdapat background hitam pada gambar PNG transparan, dan tata letak icon/teks belum seimbang.
+Pengguna memberikan penilaian dari sudut pandang UI Designer bahwa typography dan teks pada UI masih kurang optimal (outline bergerigi/blurry akibat stroke legacy 1px, teks scaled menyusut gepeng pada label sempit, serta hierarki visual metrik yang belum setara game top Roblox arcade seperti *Blade Ball*, *Pet Simulator 99*, dan *Rivals*).
 
-Iterasi Pass 3 (UI Designer Pass) berhasil menyelesaikan seluruh masalah tersebut:
-1. **Pembersihan Background Hitam pada PNG Transparan**:
-   - Kontainer gambar (`HUDArtFrame`, `HUDEmblem`, dll.) kini diset `BackgroundTransparency = 1` dan `BorderSizePixel = 0`.
-   - Gambar hot-air balloon, emergency medical kit, dan senjata AK-47 kini me-render transparansi PNG murni tanpa kotak hitam, lingkaran gelap, maupun artefak backing kotor.
-2. **Perbaikan Proporsi Bentuk Modal (Bug UICorner)**:
-   - Ditemukan bug pada fungsi `round()` yang mengisikan radius pixel ke Scale UDim (`UDim.new(16, 0)` menghasilkan kelengkungan 1600% / elips oval).
-   - Telah diperbaiki menjadi `UDim.new(0, radius)` sehingga `ShopModal` kini berbentuk rounded rectangle modern yang presisi (16px corner) dan kartu item (`Card1`, `Card2`) berbentuk kotak rounded 12px yang elegan.
-3. **Koreksi Saturasi & Kecerahan Gradasi Arcade**:
-   - `HUDSurface.BackgroundColor3` dipastikan `Color3.new(1, 1, 1)` (putih bersih) sebelum diaplikasikan `UIGradient`, mencegah warna gradasi tereduksi oleh abu-abu default Roblox Studio.
-4. **Hierarki & Layout Avionik yang Rapi**:
-   - **Altimeter Kapsul (58px)**: Ketinggian `0 KM` besar & tebal di sebelah emblem balon transparan, subtitel `ISTANA AWAN • 10.000 KM`, horizontal progress bar track neon cyan-emerald dengan persentase `0.0%`, serta chip avionik kecepatan di kanan atas.
-   - **Pita Peringatan Grounded**: Pita hazard 340px proporsional di bawah kapsul (bukan double-decker bar kloningan yang monoton), border hazard gold, ikon peringatan Lucide, dan teks bersih tanpa duplikasi emoji.
-   - **Left Dock Toolbar**: Tombol tile arcade `50x56 px` (`TOKO`, `KIT`, `PING`, `SUARA`). Ikon berpusat di zona atas (28x28) dengan breathing room lapang, pita teks tebal di bawah dengan stroke aksen tematik per tombol. Smart badge hanya muncul jika kit > 0 (tanpa angka merah "0" yang mengganggu).
-   - **Shop Modal & Kartu Belanja**: Jendela modal 450x370 px yang proporsional, tombol close bulat merah di pojok kanan atas, kartu belanja slate dengan ilustrasi produk transparan, judul emas, deskripsi informatif, dan tombol arcade 3D bertingkat (`BELI 1 KIT • 29 R$` hijau emerald dan `BELI AK-47 • 79 R$` kuning amber).
-   - **Tactical Ping Wheel**: 5 baris taktis berlatar warna dan ikon spesifik (`flame`, `warning`, `rope`, `repair`, `aim`).
-   - **Tombol Lompat**: Tombol arcade sirkular 80px di sudut kanan bawah dengan chevron panah ke atas.
+Iterasi Pass 4 (Typography & Polish Pass) berhasil menyempurnakan kualitas grafis teks dan avionik:
+1. **Engine Vector UIStroke Kontekstual Anti-Aliased**:
+   - Seluruh teks kini menggunakan `UIStroke` dengan `ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual` dan ketebalan 1.5–2.5px.
+   - Menonaktifkan stroke lama (`TextStrokeTransparency = 1`), melenyapkan outline miter 1px yang bergerigi dan counter-plugging pada teks ukuran kecil.
+2. **Hierarki Tipografi Gotham Arcade Premium**:
+   - **Hero Metric & Action Verb**: Menggunakan `Enum.Font.GothamBlack` untuk angka ketinggian, judul modal, dan teks aksi tombol (`GAS NAIK`, `OTOMATIS: ON`, `LEPAS`).
+   - **Subtitel & Deskripsi**: Menggunakan `Enum.Font.GothamBold` untuk nama bioma tujuan, rincian peluru cadangan, dan poin-poin penjelasan produk pada shop.
+   - Menghapus ketergantungan `TextScaled = true` pada bounding box pendek yang sebelumnya menciutkan font menjadi mikro-glif; menggantinya dengan fixed TextSize yang lapang dan proporsional.
+3. **Penyempurnaan Chip Kecepatan Avionik (Vertical Speed)**:
+   - Diformat rapi menyerupai instrumen dirgantara: panah dinamis `▲ +24.3 km/dtk` (neon green `#4ade80`), `▼ -2.5 km/dtk` (danger red `#f87171`), atau `● 0.0 km/s` (navy cyan `#93c5fd`).
+   - Dilengkapi atribut `RawSpeed` internal pada instrumen agar parsing status naik/turun tidak ter-reset menjadi "DIAM" oleh render loop per frame.
+4. **Penyempurnaan Tombol Pilot & Layout Responsif**:
+   - Tombol `AutoGasButton` diformat menjadi `OTOMATIS: ON` (hijau) dan `OTOMATIS: OFF` (biru) dengan `GothamBlack 13px`, ikon kemudi/api, dan hint shortcut `[Z]`. Bebas dari glitch line-wrapping kata.
+   - Posisi tombol lompat arcade (`JumpPanel` / `JumpButton`) diletakkan di sudut kanan bawah (zona jempol kanan) dengan format sirkular sempurna 82px.
+   - Shop Modal menampilkan kartu belanja slate dengan ilustrasi produk transparan tanpa kotak hitam, judul emas `GothamBlack 15px`, bullet point deskripsi `GothamBold 11px`, dan tombol 3D arcade bergradasi.
 
-Preview Playtest Aktual Pass 3:
-- In-Flight HUD: `audit/hud-arcade-pass3-flight.jpg`
-- Shop Modal: `audit/hud-arcade-pass3-shop.jpg`
+Preview Playtest Aktual Pass 4:
+- In-Flight HUD: `audit/hud-arcade-pass4-flight.jpg`
+- Shop Modal: `audit/hud-arcade-pass4-shop.jpg`
 - `HUDGlyphs`: ikon berbasis komponen UI Roblox yang dapat diskalakan. Kontrol dan panel inti tidak memerlukan gambar unduhan.
 - `HUDImageAssets`: mempertahankan pemetaan **27 ID** unggahan. Sumber final: `assets/ui/final/compressed_img/`. Manifest kanonik: `assets/ui/asset-manifest.json`; ID sederhana: `assets/ui/final/compressed_img/roblox-asset-ids.json`.
 - Hanya **empat ilustrasi opsional** yang sekarang diminta oleh tema: `balloon_intact`, `emergency_kit`, `weapon_pistol`, `weapon_ak47`. Tidak ada re-upload atau perubahan PNG pada redesign.

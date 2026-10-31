@@ -1,6 +1,6 @@
--- AAA Arcade HUD Theme (UI Designer Pass) for "Fly High"
--- Designed with professional UI/UX hierarchy, pure transparent PNG rendering
--- (zero black/dark box artifacts), balanced typography, and cohesive arcade styling.
+-- AAA Arcade HUD Theme (Typography & Polish Pass 4) for "Fly High"
+-- Professional typography with contextual UIStroke vector rendering, GothamBlack hero metrics,
+-- GothamBold subtitles, pure transparent illustration framing, and balanced arcade palettes.
 
 local Assets = require(script.Parent.HUDImageAssets)
 local Glyphs = require(script.Parent.HUDGlyphs)
@@ -61,6 +61,7 @@ local palettes = {
 	},
 }
 
+-- {1: GlyphKey, 2: FallbackTitle, 3: Palette, 4: Style ("dock", "round", "wide", "tile")}
 local configs = {
 	ShopToggleButton = { "shop", "TOKO", "gold", "dock" },
 	EmergencyKitButton = { "kit", "KIT", "green", "dock" },
@@ -68,8 +69,8 @@ local configs = {
 	WarningAudioToggleButton = { "sound", "SUARA", "purple", "dock" },
 	MobileShootButton = { "fire", "TEMBAK", "red", "round" },
 	JumpButton = { "jump", "LOMPAT", "blue", "round" },
-	GasButton = { "gas", "NAIK", "orange", "tile" },
-	AutoGasButton = { "gas", "OTOMATIS", "blue", "wide" },
+	GasButton = { "gas", "GAS NAIK", "orange", "tile" },
+	AutoGasButton = { "gas", "GAS OTOMATIS", "blue", "wide" },
 	ReleaseHelmButton = { "release", "LEPAS", "dark", "tile" },
 	ReloadButton = { "reload", "ISI", "blue", "tile" },
 	DropButton = { "drop", "LEPAS", "dark", "tile" },
@@ -78,10 +79,10 @@ local configs = {
 	ClimbButton = { "climb", "NAIK KUBAH", "blue", "wide" },
 	DescendButton = { "descend", "TURUN", "blue", "wide" },
 	RepairButton = { "repair", "TAHAN TAMBAL", "green", "wide" },
-	RepairRopeButton = { "rope", "TAHAN PERBAIKI TALI", "green", "wide" },
+	RepairRopeButton = { "rope", "PERBAIKI TALI", "green", "wide" },
 	PullCrewButton = { "rescue", "TARIK REKAN", "orange", "wide" },
 	BuyEmergencyKitButton = { "kit", "BELI 1 KIT • 29 R$", "green", "wide" },
-	BuyAK47Button = { "weapon", "BELI AK-47 • 79 R$", "gold", "wide" },
+	BuyAK47Button = { "weapon", "UPGRADE AK-47 • 79 R$", "gold", "wide" },
 	SpotHazardButton = { "warning", "TANDAI BAHAYA", "purple", "wide" },
 	CloseButton = { "close", "", "red", "round" },
 	Ping1 = { "flame", "Gas Api Sekarang!", "orange", "wide" },
@@ -97,26 +98,8 @@ local function box(o, x, y, w, h)
 	o.Size = UDim2.fromOffset(math.round(w), math.round(h))
 end
 
-local function label(parent, name, maxSize)
-	local l = Instance.new("TextLabel")
-	l.Name = name
-	l.BackgroundTransparency = 1
-	l.TextColor3 = Color3.new(1, 1, 1)
-	l.Font = Enum.Font.FredokaOne
-	l.TextScaled = true
-	l.TextWrapped = true
-	l.TextStrokeColor3 = Color3.fromRGB(6, 12, 24)
-	l.TextStrokeTransparency = 0
-	l.Size = UDim2.fromScale(1, 1)
-	l.Parent = parent
-	local c = Instance.new("UITextSizeConstraint", l)
-	c.MinTextSize = 8
-	c.MaxTextSize = maxSize or 18
-	return l
-end
-
 local function frame(parent, name)
-	local f = Instance.new("Frame")
+	local f = parent:FindFirstChild(name) or Instance.new("Frame")
 	f.Name = name
 	f.BorderSizePixel = 0
 	f.BackgroundTransparency = 1
@@ -146,6 +129,45 @@ local function stroke(o, color, width, transparency)
 	s.Transparency = transparency or 0
 	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	return s
+end
+
+-- Professional Typography Engine: Uses vector UIStroke contextual mode,
+-- eliminates pixelated legacy TextStroke, supports RichText and fixed readable sizes.
+local function applyTextStyle(lbl, opts)
+	if not lbl then return end
+	lbl.Font = opts.font or Enum.Font.GothamBold
+	lbl.TextSize = opts.size or 14
+	lbl.TextScaled = opts.scaled == true
+	lbl.RichText = opts.rich ~= false
+	lbl.TextColor3 = opts.color or Color3.new(1, 1, 1)
+	lbl.TextStrokeTransparency = 1 -- Disable legacy jagged stroke
+	if opts.align then lbl.TextXAlignment = opts.align end
+	if opts.valign then lbl.TextYAlignment = opts.valign end
+	lbl.TextWrapped = opts.wrapped ~= false
+
+	local s = lbl:FindFirstChildOfClass("UIStroke") or Instance.new("UIStroke", lbl)
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	s.Thickness = opts.strokeThickness or 2
+	s.Color = opts.strokeColor or Color3.fromRGB(4, 10, 24)
+	s.Transparency = opts.strokeTransparency or 0
+	s.Enabled = true
+	return s
+end
+
+local function label(parent, name, size, font, color, strokeColor, strokeThickness)
+	local l = parent:FindFirstChild(name) or Instance.new("TextLabel")
+	l.Name = name
+	l.BackgroundTransparency = 1
+	l.Size = UDim2.fromScale(1, 1)
+	l.Parent = parent
+	applyTextStyle(l, {
+		size = size or 14,
+		font = font or Enum.Font.GothamBold,
+		color = color or Color3.new(1, 1, 1),
+		strokeColor = strokeColor or Color3.fromRGB(4, 10, 24),
+		strokeThickness = strokeThickness or 2,
+	})
+	return l
 end
 
 local function ztree(root, z)
@@ -178,7 +200,7 @@ local function surface(parent, circular)
 
 	-- 3. Top Interactive Face (Translates down 3px when pressed)
 	local face = frame(parent, "HUDSurface")
-	face.BackgroundColor3 = Color3.new(1, 1, 1)
+	face.BackgroundColor3 = Color3.new(1, 1, 1) -- Must be pure white for 100% gradient saturation!
 	face.BackgroundTransparency = 0
 	face.Position = UDim2.fromOffset(0, 0)
 	round(face, rad)
@@ -223,7 +245,6 @@ local function paint(s, paletteKey, z, pressed)
 	local c = palettes[paletteKey] or palettes.blue
 	s.face.BackgroundColor3 = Color3.new(1, 1, 1)
 	s.bevel.BackgroundColor3 = c[3]
-
 	local shade = pressed and 0.15 or 0
 	s.gradient.Color = ColorSequence.new({
 		ColorSequenceKeypoint.new(0, c[1]:Lerp(Color3.new(0, 0, 0), shade)),
@@ -243,39 +264,8 @@ end
 function Theme.Start(gui, player)
 	local state = {}
 	local alive = true
-	local records, links, ready = {}, {}, {}
-	gui:SetAttribute("HUDArtDirection", "Sky Arcade Pro Designer")
-
-	local probes = Instance.new("Folder")
-	probes.Name = "HUDImagePreload"
-	probes.Parent = gui
-
-	local wanted = { "balloon_intact", "emergency_kit", "weapon_pistol", "weapon_ak47" }
-	local worker = task.spawn(function()
-		for pass = 1, 2 do
-			for _, key in wanted do
-				if not alive then return end
-				if not ready[key] then
-					local probe = Instance.new("ImageLabel")
-					probe.Name = key
-					probe.Visible = false
-					probe.Image = Assets[key]
-					probe.Parent = probes
-					local status
-					pcall(function()
-						Content:PreloadAsync({ probe }, function(_, result)
-							status = result
-						end)
-					end)
-					ready[key] = status == Enum.AssetFetchStatus.Success or probe.IsLoaded
-					probe:Destroy()
-					gui:SetAttribute("ImageLoaded_" .. key, ready[key] == true)
-					task.wait(1)
-				end
-			end
-			if pass < 2 then task.wait(60) end
-		end
-	end)
+	local records, links = {}, {}
+	gui:SetAttribute("HUDArtDirection", "Sky Arcade Master Designer")
 
 	local function connect(signal, fn)
 		local c = signal:Connect(fn)
@@ -337,20 +327,22 @@ function Theme.Start(gui, player)
 			r.captionPill.BackgroundTransparency = 0.2
 			round(r.captionPill, 4)
 			stroke(r.captionPill, Color3.fromRGB(20, 34, 58), 1)
-			r.caption = label(r.captionPill, "HUDCaption", config[4] == "wide" and 14 or 10)
+
+			r.caption = label(r.captionPill, "HUDCaption", config[4] == "wide" and 13 or 11, Enum.Font.GothamBlack)
+			r.caption.TextXAlignment = Enum.TextXAlignment.Center
 
 			-- Keyboard shortcut hint
-			r.hint = label(o, "HUDKeyHint", 10)
+			r.hint = label(o, "HUDKeyHint", 10, Enum.Font.GothamBlack, Color3.fromRGB(255, 235, 120))
 			r.hint.BackgroundTransparency = 0.2
 			r.hint.BackgroundColor3 = Color3.fromRGB(6, 14, 28)
 			round(r.hint, 3)
 
 			-- Notification / Cooldown badge
-			r.badge = label(o, "HUDBadge", 11)
+			r.badge = label(o, "HUDBadge", 11, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Color3.fromRGB(4, 10, 24), 1.8)
 			r.badge.BackgroundTransparency = 0
-			r.badge.BackgroundColor3 = Color3.fromRGB(255, 45, 80)
+			r.badge.BackgroundColor3 = Color3.fromRGB(36, 212, 85)
 			round(r.badge, 0.5)
-			stroke(r.badge, Color3.fromRGB(255, 235, 120), 1.5)
+			stroke(r.badge, Color3.new(1, 1, 1), 1.5)
 
 			local function link(signal, fn)
 				table.insert(r.links, signal:Connect(fn))
@@ -368,9 +360,17 @@ function Theme.Start(gui, player)
 			end)
 
 		elseif kind == "alt" then
-			r.head = label(o, "HUDAltitude", 28)
-			r.goal = label(o, "HUDGoal", 11)
-			r.percent = label(o, "HUDProgress", 11)
+			-- Altitude Hero Metric (RichText bold number + colored unit)
+			r.head = label(o, "HUDAltitude", 26, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Color3.fromRGB(4, 12, 28), 2.5)
+			r.head.TextXAlignment = Enum.TextXAlignment.Left
+
+			-- Destination Goal Subtitle
+			r.goal = label(o, "HUDGoal", 11, Enum.Font.GothamBold, Color3.fromRGB(186, 230, 253), Color3.fromRGB(4, 12, 28), 1.5)
+			r.goal.TextXAlignment = Enum.TextXAlignment.Left
+
+			-- Progress Bar Percentage
+			r.percent = label(o, "HUDProgress", 11, Enum.Font.GothamBlack, Color3.fromRGB(224, 242, 254), Color3.fromRGB(4, 12, 28), 1.8)
+			r.percent.TextXAlignment = Enum.TextXAlignment.Center
 
 			-- 100% Transparent Emblem Container (No black disc!)
 			r.emblem = frame(o, "HUDEmblem")
@@ -381,9 +381,18 @@ function Theme.Start(gui, player)
 			r.art = art(r.emblem)
 
 		elseif kind == "status" then
-			r.head = label(o, "HUDCondition", 12)
-			r.count = label(o, "HUDDamageCount", 13)
-			r.detail = label(o, "HUDConditionDetail", 10)
+			r.head = label(o, "HUDCondition", 11, Enum.Font.GothamBold, Color3.fromRGB(147, 197, 253), Color3.fromRGB(4, 10, 24), 1.5)
+			r.head.TextXAlignment = Enum.TextXAlignment.Left
+
+			r.count = label(o, "HUDDamageCount", 11, Enum.Font.GothamBlack, Color3.fromRGB(34, 197, 94), Color3.fromRGB(4, 10, 24), 1.5)
+			r.count.BackgroundColor3 = Color3.fromRGB(8, 20, 42)
+			r.count.BackgroundTransparency = 0.2
+			round(r.count, 4)
+			stroke(r.count, Color3.fromRGB(28, 54, 96), 1)
+
+			r.detail = label(o, "HUDConditionDetail", 11, Enum.Font.GothamBold, Color3.fromRGB(74, 222, 128), Color3.fromRGB(4, 10, 24), 1.5)
+			r.detail.TextXAlignment = Enum.TextXAlignment.Left
+
 			r.pips = {}
 			for i = 1, 5 do
 				local pip = frame(o, "HUDHull" .. i)
@@ -400,23 +409,24 @@ function Theme.Start(gui, player)
 			end
 
 		elseif kind == "weapon" then
-			r.head = label(o, "HUDWeapon", 13)
-			r.ammo = label(o, "HUDAmmo", 28)
-			r.reserve = label(o, "HUDReserve", 11)
+			r.head = label(o, "HUDWeapon", 13, Enum.Font.GothamBlack, Color3.fromRGB(255, 220, 90))
+			r.ammo = label(o, "HUDAmmo", 28, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Color3.fromRGB(4, 10, 24), 2.5)
+			r.reserve = label(o, "HUDReserve", 11, Enum.Font.GothamBold, Color3.fromRGB(160, 200, 240))
 			r.emblem = frame(o, "HUDWeaponIcon")
 			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "weapon")
 			r.art = art(r.emblem)
 
 		elseif kind == "tether" then
-			r.head = label(o, "HUDRopeState", 11)
+			r.head = label(o, "HUDRopeState", 11, Enum.Font.GothamBlack, Color3.fromRGB(255, 235, 120))
 
 		elseif kind == "countdown" then
 			-- Sleek danger notice ribbon
 			r.emblem = frame(o, "HUDWarningIcon")
 			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "warning")
-			r.notice = label(o, "HUDCountdownNotice", 13)
+			r.notice = label(o, "HUDCountdownNotice", 13, Enum.Font.GothamBlack, Color3.fromRGB(255, 250, 240), Color3.fromRGB(70, 20, 4), 2)
+			r.notice.TextXAlignment = Enum.TextXAlignment.Center
 			o.TextTransparency = 1
 
 		elseif kind == "alert" then
@@ -501,15 +511,12 @@ function Theme.Start(gui, player)
 		end
 	end
 
-	local function textStyle(o, maxSize)
-		o.Font = Enum.Font.FredokaOne
-		o.TextColor3 = Color3.new(1, 1, 1)
-		o.TextStrokeColor3 = Color3.fromRGB(6, 12, 24)
-		o.TextStrokeTransparency = 0
-		o.TextScaled = true
-		local c = o:FindFirstChildOfClass("UITextSizeConstraint") or Instance.new("UITextSizeConstraint", o)
-		c.MinTextSize = 9
-		c.MaxTextSize = maxSize or 15
+	local function textStyle(o, maxSize, font)
+		applyTextStyle(o, {
+			font = font or Enum.Font.GothamBold,
+			size = maxSize or 14,
+			strokeThickness = 2,
+		})
 	end
 
 	function state.Step()
@@ -518,6 +525,7 @@ function Theme.Start(gui, player)
 			if not o:IsDescendantOf(gui) then
 				for _, c in r.links do c:Disconnect() end
 				records[o] = nil
+
 				continue
 			end
 
@@ -544,7 +552,7 @@ function Theme.Start(gui, player)
 					end
 				elseif o.Name == "AutoGasButton" then
 					local on = o.Text:find(": ON", 1, true) ~= nil
-					title = "OTOMATIS: " .. (on and "ON" or "OFF")
+					title = on and "OTOMATIS: ON" or "OTOMATIS: OFF"
 					palette = on and "green" or "blue"
 				elseif o.Name == "EmergencyKitButton" then
 					if o.Text:find("CLUTCH", 1, true) then
@@ -566,9 +574,16 @@ function Theme.Start(gui, player)
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
 
-					box(r.glyphBox, 10, (h - 28) / 2, 28, 28)
-					box(r.captionPill, 44, 4, w - 50, h - 8)
-					r.caption.TextXAlignment = Enum.TextXAlignment.Left
+					if o.Name == "AutoGasButton" then
+						box(r.glyphBox, 12, (h - 26) / 2, 26, 26)
+						box(r.captionPill, 44, 4, w - 50, h - 8)
+						r.caption.TextWrapped = false
+						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 13, strokeThickness = 2, align = Enum.TextXAlignment.Center })
+					else
+						box(r.glyphBox, 12, (h - 26) / 2, 26, 26)
+						box(r.captionPill, 44, 4, w - 50, h - 8)
+						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 13, strokeThickness = 2, align = Enum.TextXAlignment.Left })
+					end
 
 				elseif style == "dock" then
 					-- Left Toolbar: Icon sits in upper half with ample breathing room!
@@ -591,8 +606,8 @@ function Theme.Start(gui, player)
 						end
 					end
 
-					box(r.captionPill, 3, h - 17, w - 6, 15)
-					r.caption.TextXAlignment = Enum.TextXAlignment.Center
+					box(r.captionPill, 3, h - 19, w - 6, 16)
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, color = Color3.new(1, 1, 1), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 
 				elseif style == "round" then
 					local iconSize = math.round(math.min(w, h) * (#title == 0 and 0.58 or 0.52))
@@ -601,32 +616,32 @@ function Theme.Start(gui, player)
 					if #title > 0 then
 						r.captionPill.Visible = true
 						r.captionPill.BackgroundTransparency = 0.25
-						box(r.captionPill, 6, h - 18, w - 12, 15)
-						r.caption.TextXAlignment = Enum.TextXAlignment.Center
+						box(r.captionPill, 6, h - 20, w - 12, 16)
+						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 					else
 						r.captionPill.Visible = false
 					end
 
 				else
 					-- Standard square tile button (e.g. Gas, Reload, Drop)
-					local iconSize = math.round(math.min(w, h) * 0.52)
-					box(r.glyphBox, (w - iconSize) / 2, 5, iconSize, iconSize)
+					local iconSize = math.round(math.min(w, h) * 0.50)
+					box(r.glyphBox, (w - iconSize) / 2, 6, iconSize, iconSize)
 
 					r.captionPill.BackgroundTransparency = 0.2
-					box(r.captionPill, 2, h - 17, w - 4, 15)
-					r.caption.TextXAlignment = Enum.TextXAlignment.Center
+					box(r.captionPill, 3, h - 20, w - 6, 17)
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 				end
 
 				ztree(r.glyphBox, z + 3)
 				ztree(r.captionPill, z + 4)
 				r.caption.Text = title
-				r.caption.TextColor3 = Color3.new(1, 1, 1)
 
 				local hint = o.Text:match("%[([^%]]+)%]")
 				r.hint.Visible = not Input.TouchEnabled and hint ~= nil and #hint <= 7 and hint ~= "GUNAKAN"
 				if r.hint.Visible then
 					r.hint.Text = hint:match("^%w+") or ""
-					box(r.hint, w - 20, 2, 18, 13)
+					box(r.hint, w - 20, 2, 18, 14)
+					applyTextStyle(r.hint, { font = Enum.Font.GothamBlack, size = 10, color = Color3.fromRGB(255, 235, 120), strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 				end
 				r.hint.ZIndex = z + 5
 
@@ -651,6 +666,7 @@ function Theme.Start(gui, player)
 
 				if r.badge.Visible then
 					box(r.badge, w - 18, -4, 22, 22)
+					applyTextStyle(r.badge, { font = Enum.Font.GothamBlack, size = 11, strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 				end
 				r.badge.ZIndex = z + 5
 
@@ -669,52 +685,73 @@ function Theme.Start(gui, player)
 					hide(original)
 
 					-- 1. Balloon Icon on Left (Pure transparency, perfectly centered!)
-					local iconSize = compact and 38 or 44
-					box(r.emblem, 10, (h - iconSize) / 2, iconSize, iconSize)
+					local iconSize = compact and 40 or 46
+					box(r.emblem, 12, (h - iconSize) / 2, iconSize, iconSize)
 					local loaded = use(r.art, "balloon_intact")
 					r.glyph.Visible = not loaded
 					ztree(r.emblem, z + 3)
 
-					-- 2. Altitude Number & Mission Subtitle
-					r.head.Text = player:GetAttribute("InFlight") and (altitude .. " KM") or "FLY HIGH"
-					box(r.head, iconSize + 18, 4, 150, compact and 24 or 28)
-					r.head.TextXAlignment = Enum.TextXAlignment.Left
+					-- 2. Altitude Hero Metric & Mission Subtitle
+					if player:GetAttribute("InFlight") then
+						r.head.Text = string.format("<font size=\"24\"><b>%s</b></font> <font size=\"13\" color=\"#7dd3fc\"><b>KM</b></font>", altitude)
+					else
+						r.head.Text = "<font size=\"20\"><b>FLY HIGH</b></font>"
+					end
+					box(r.head, iconSize + 18, 4, 150, 32)
+					applyTextStyle(r.head, { font = Enum.Font.GothamBlack, size = 24, rich = true, strokeThickness = 2.5, align = Enum.TextXAlignment.Left })
 
 					r.goal.Text = "ISTANA AWAN • 10.000 KM"
-					box(r.goal, iconSize + 20, compact and 28 or 33, 170, 13)
-					r.goal.TextXAlignment = Enum.TextXAlignment.Left
-					r.goal.TextColor3 = Color3.fromRGB(186, 230, 253)
+					box(r.goal, iconSize + 20, 36, 170, 16)
+					applyTextStyle(r.goal, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(186, 230, 253), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
 
 					-- 3. Progress Bar Track (Horizontally aligned with altitude)
 					local barX = iconSize + 195
-					local barW = math.max(60, w - barX - 110)
-					box(bar, barX, (h - 8) / 2 + 6, barW, 8)
+					local barW = math.max(70, w - barX - 120)
+					box(bar, barX, 35, barW, 10)
 					bar.ZIndex = z + 3
 					bar.BackgroundColor3 = Color3.fromRGB(6, 16, 32)
 					bar.BackgroundTransparency = 0
-					round(bar, 4)
+					round(bar, 5)
+					stroke(bar, Color3.fromRGB(18, 38, 70), 1.2)
 
 					local fill = bar:FindFirstChild("BarFill")
 					if fill then
-						fill.BackgroundColor3 = Color3.fromRGB(0, 235, 140)
+						fill.BackgroundColor3 = Color3.fromRGB(0, 240, 140)
 						fill.ZIndex = z + 4
-						round(fill, 4)
+						round(fill, 5)
 					end
 
 					-- Percentage display next to progress bar
 					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
-					box(r.percent, barX + barW + 8, (h - 14) / 2 + 6, 44, 13)
-					r.percent.TextXAlignment = Enum.TextXAlignment.Left
-					r.percent.TextColor3 = Color3.fromRGB(224, 242, 254)
+					box(r.percent, barX, 12, barW, 18)
+					applyTextStyle(r.percent, { font = Enum.Font.GothamBlack, size = 11, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 
 					-- 4. Speed Indicator Chip (Upper right corner)
-					box(speed, w - 100, 6, 92, 22)
-					textStyle(speed, 11)
+					local curText = speed.Text
+					if curText:find("NAIK", 1, true) or curText:find("TURUN", 1, true) or curText:find("DIAM", 1, true) then
+						speed:SetAttribute("RawSpeed", curText)
+					end
+					local rawSpeed = speed:GetAttribute("RawSpeed") or curText
+					local vVal = tonumber(rawSpeed:match("([%d%.]+)%s*km")) or 0
+					local vDir = (rawSpeed:find("NAIK", 1, true) or rawSpeed:find("▲", 1, true)) and "up" or ((rawSpeed:find("TURUN", 1, true) or rawSpeed:find("▼", 1, true)) and "down" or "still")
+					if vVal <= 0.05 then vDir = "still" end
+
+					if vDir == "up" then
+						speed.Text = string.format("▲ +%.1f km/s", vVal)
+					elseif vDir == "down" then
+						speed.Text = string.format("▼ -%.1f km/s", vVal)
+					else
+						speed.Text = "● 0.0 km/s"
+					end
+
+					box(speed, w - 108, 10, 98, h - 20)
+					local speedColor = vDir == "up" and Color3.fromRGB(74, 222, 128) or (vDir == "down" and Color3.fromRGB(248, 113, 113) or Color3.fromRGB(147, 197, 253))
+					applyTextStyle(speed, { font = Enum.Font.GothamBlack, size = 13, color = speedColor, strokeThickness = 2, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
 					speed.ZIndex = z + 4
 					speed.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
-					speed.BackgroundTransparency = 0.3
-					round(speed, 6)
-					stroke(speed, Color3.fromRGB(14, 40, 75), 1)
+					speed.BackgroundTransparency = 0.2
+					round(speed, 8)
+					stroke(speed, Color3.fromRGB(24, 52, 95), 1.5)
 
 					r.head.ZIndex = z + 4
 					r.goal.ZIndex = z + 4
@@ -734,32 +771,33 @@ function Theme.Start(gui, player)
 						hide(o:FindFirstChild(name))
 					end
 
-					r.head.Text = holes == 0 and "BALON AMAN" or "KONDISI BALON"
-					r.count.Text = holes .. "/5"
-					box(r.head, 10, 4, w - 58, 15)
-					box(r.count, w - 44, 3, 34, 16)
-					r.head.TextXAlignment = Enum.TextXAlignment.Left
+					r.head.Text = holes == 0 and "BALON AMAN" or "KONDISI LAMBUNG"
+					r.count.Text = holes .. " / 5"
+					box(r.head, 12, 5, w - 66, 16)
+					box(r.count, w - 50, 4, 38, 18)
+					applyTextStyle(r.head, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(147, 197, 253), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
+					applyTextStyle(r.count, { font = Enum.Font.GothamBlack, size = 11, color = holes == 0 and Color3.fromRGB(34, 197, 94) or Color3.fromRGB(239, 68, 68), strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 
-					local py = compact and 22 or 25
+					local py = 25
 					local pipW = math.floor((w - 28) / 5)
 					for i, pip in r.pips do
-						box(pip, 10 + (i - 1) * (pipW + 2), py, pipW, compact and 8 or 10)
+						box(pip, 10 + (i - 1) * (pipW + 2), py, pipW, 10)
 						local intact = i <= (5 - holes)
 						pip.BackgroundColor3 = intact and Color3.fromRGB(36, 212, 85) or Color3.fromRGB(220, 32, 60)
 						pip.ZIndex = z + 3
 					end
 
 					local details = {
-						[0] = "▲ Naik optimal",
-						[1] = "▲ Naik melambat",
-						[2] = "■ Tidak bisa naik",
-						[3] = "▼ Bahaya - turun 1.5x",
-						[4] = "▼ Kritis - turun 2.5x",
-						[5] = "▼ TERJUN BEBAS!",
+						[0] = "▲ Kecepatan Naik Optimal",
+						[1] = "▲ Naik Sedikit Melambat",
+						[2] = "■ Diam (Gaya Angkat Seimbang)",
+						[3] = "▼ Bahaya! Kecepatan Turun 1.5x",
+						[4] = "▼ Kritis! Kecepatan Turun 2.5x",
+						[5] = "▼ TERJUN BEBAS KE TANAH!",
 					}
 					r.detail.Text = (invuln and invuln.Visible and invuln.Text:gsub("🛡️%s*", "")) or details[holes]
-					box(r.detail, 10, compact and 35 or 40, w - 20, 13)
-					r.detail.TextXAlignment = Enum.TextXAlignment.Left
+					box(r.detail, 12, 38, w - 24, 14)
+					applyTextStyle(r.detail, { font = Enum.Font.GothamBold, size = 10, color = holes == 0 and Color3.fromRGB(74, 222, 128) or Color3.fromRGB(248, 113, 113), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
 
 					r.head.ZIndex = z + 3
 					r.count.ZIndex = z + 3
@@ -777,15 +815,22 @@ function Theme.Start(gui, player)
 
 					local weaponName = name.Text:find("AK", 1, true) and "AK-47" or "PISTOL"
 					r.head.Text = weaponName
-					r.head.TextXAlignment = Enum.TextXAlignment.Left
-					r.ammo.Text = ammo.Text:match("^(%d+%s*/%s*%d+)") or "MENGISI"
-					r.ammo.TextXAlignment = Enum.TextXAlignment.Right
-					r.reserve.Text = "CADANGAN: ∞"
+					applyTextStyle(r.head, { font = Enum.Font.GothamBlack, size = 12, color = Color3.fromRGB(255, 220, 90), strokeThickness = 1.8, align = Enum.TextXAlignment.Left })
 
-					box(r.head, 54, 5, w - 60, 15)
-					box(r.ammo, w - math.min(108, w - 54), compact and 18 or 22, math.min(98, w - 60), compact and 26 or 34)
-					box(r.reserve, 12, h - 16, w - 120, 12)
-					r.reserve.TextXAlignment = Enum.TextXAlignment.Left
+					local curAmmo, maxAmmo = ammo.Text:match("(%d+)%s*/%s*(%d+)")
+					if curAmmo and maxAmmo then
+						r.ammo.Text = string.format("<font size=\"26\"><b>%s</b></font> <font size=\"14\" color=\"#94a3b8\">/ %s</font>", curAmmo, maxAmmo)
+					else
+						r.ammo.Text = ammo.Text:match("^(%d+%s*/%s*%d+)") or "MENGISI"
+					end
+					applyTextStyle(r.ammo, { font = Enum.Font.GothamBlack, size = 26, rich = true, strokeThickness = 2.5, align = Enum.TextXAlignment.Right })
+
+					r.reserve.Text = "CADANGAN: ∞"
+					applyTextStyle(r.reserve, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(160, 200, 240), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
+
+					box(r.head, 54, 5, w - 60, 16)
+					box(r.ammo, w - math.min(112, w - 54), compact and 18 or 22, math.min(106, w - 60), compact and 28 or 36)
+					box(r.reserve, 12, h - 18, w - 120, 14)
 					r.reserve.Visible = w >= 180
 
 					box(r.emblem, 10, compact and 8 or 14, 38, 30)
@@ -802,8 +847,9 @@ function Theme.Start(gui, player)
 				local bar = o:FindFirstChild("TBarBg")
 				if original and bar then
 					hide(original)
-					r.head.Text = original.Text:gsub("Tali Pengaman: ", "TALI  ")
+					r.head.Text = original.Text:gsub("Tali Pengaman: ", "TALI: ")
 					box(r.head, 10, 3, w - 20, 14)
+					applyTextStyle(r.head, { font = Enum.Font.GothamBlack, size = 11, color = Color3.fromRGB(255, 235, 120), strokeThickness = 1.8 })
 					r.head.ZIndex = z + 3
 					box(bar, 10, h - 9, w - 20, 5)
 					bar.ZIndex = z + 3
@@ -818,10 +864,10 @@ function Theme.Start(gui, player)
 			elseif r.kind == "countdown" then
 				-- Sleek danger warning ribbon
 				paint(r.skin, "orange", z, false)
-				stroke(r.skin.face, Color3.fromRGB(255, 205, 50), 1.8)
+				stroke(r.skin.face, Color3.fromRGB(255, 205, 50), 2)
 
 				local iconSize = 18
-				box(r.emblem, 10, (h - iconSize) / 2, iconSize, iconSize)
+				box(r.emblem, 12, (h - iconSize) / 2, iconSize, iconSize)
 				ztree(r.emblem, z + 3)
 
 				local rawText = o.Text
@@ -831,9 +877,8 @@ function Theme.Start(gui, player)
 				else
 					r.notice.Text = ""
 				end
-				box(r.notice, 34, 2, w - 42, h - 4)
-				r.notice.TextColor3 = Color3.fromRGB(255, 250, 240)
-				r.notice.TextXAlignment = Enum.TextXAlignment.Center
+				box(r.notice, 36, 2, w - 46, h - 4)
+				applyTextStyle(r.notice, { font = Enum.Font.GothamBlack, size = 13, color = Color3.fromRGB(255, 250, 240), strokeColor = Color3.fromRGB(70, 20, 4), strokeThickness = 2, align = Enum.TextXAlignment.Center })
 				r.notice.ZIndex = z + 4
 				o.TextTransparency = 1
 
@@ -845,19 +890,19 @@ function Theme.Start(gui, player)
 				local detail = o:FindFirstChild("AlertDesc") or o:FindFirstChild("Detail")
 				if title then
 					box(title, 44, 6, w - 50, 22)
-					textStyle(title, 15)
+					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 15, strokeThickness = 2 })
 					title.ZIndex = z + 3
 				end
 				if detail then
 					box(detail, 12, 32, w - 24, h - 38)
-					textStyle(detail, 12)
+					applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 12, strokeThickness = 1.5 })
 					detail.ZIndex = z + 3
 				end
 
 			elseif r.kind == "card" then
 				o.ZIndex = z
 				-- Pure transparent illustration on left (NO black box!)
-				box(r.artBox, 14, 12, 64, 64)
+				box(r.artBox, 14, 14, 66, 66)
 				ztree(r.artBox, z + 2)
 				use(r.art, o.Name == "Card1" and "emergency_kit" or "weapon_ak47")
 
@@ -866,21 +911,17 @@ function Theme.Start(gui, player)
 					if child:IsA("TextLabel") and child.Name:sub(1, 3) ~= "HUD" then
 						child.ZIndex = z + 3
 						if child.Position.Y.Offset < 30 then
-							-- Card Title (Gold FredokaOne)
-							box(child, 88, 10, w - 98, 22)
-							textStyle(child, 15)
-							child.TextColor3 = Color3.fromRGB(255, 225, 100)
-							child.TextXAlignment = Enum.TextXAlignment.Left
+							-- Card Title (Gold GothamBlack)
+							box(child, 92, 10, w - 104, 22)
+							applyTextStyle(child, { font = Enum.Font.GothamBlack, size = 15, color = Color3.fromRGB(255, 225, 90), strokeThickness = 2, align = Enum.TextXAlignment.Left })
 						else
-							-- Card Description (Clean white/cyan wrapped text)
-							box(child, 88, 34, w - 98, 44)
-							textStyle(child, 11)
-							child.TextColor3 = Color3.fromRGB(215, 230, 250)
-							child.TextXAlignment = Enum.TextXAlignment.Left
+							-- Card Description (Clean bullet points, GothamBold)
+							box(child, 92, 34, w - 104, 52)
+							applyTextStyle(child, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(215, 230, 250), strokeThickness = 1.2, align = Enum.TextXAlignment.Left })
 						end
 					elseif child:IsA("TextButton") then
 						child.ZIndex = z + 4
-						box(child, 88, h - 44, w - 98, 36)
+						box(child, 92, h - 46, w - 104, 38)
 					end
 				end
 
@@ -891,16 +932,14 @@ function Theme.Start(gui, player)
 				o.ZIndex = z
 				local title = o:FindFirstChild("ModalTitle")
 				if title then
-					title.Text = "🛍️ PERBEKALAN PENERBANGAN"
-					textStyle(title, 17)
-					title.TextColor3 = Color3.fromRGB(255, 220, 90)
-					box(title, 16, 6, w - 60, 32)
-					title.TextXAlignment = Enum.TextXAlignment.Left
+					title.Text = "🛍️ TOKO PERBEKALAN"
+					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 18, color = Color3.fromRGB(255, 220, 80), strokeThickness = 2.5, align = Enum.TextXAlignment.Left })
+					box(title, 18, 8, w - 60, 32)
 					title.ZIndex = z + 3
 				end
 				local feedback = o:FindFirstChild("ShopFeedback")
 				if feedback then
-					textStyle(feedback, 11)
+					applyTextStyle(feedback, { font = Enum.Font.GothamBold, size = 11, strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 					feedback.ZIndex = z + 3
 					box(feedback, 16, h - 28, w - 32, 22)
 				end
@@ -911,8 +950,6 @@ function Theme.Start(gui, player)
 	function state.Destroy()
 		if not alive then return end
 		alive = false
-		if coroutine.status(worker) ~= "dead" then task.cancel(worker) end
-		probes:Destroy()
 		for _, c in links do c:Disconnect() end
 		for _, r in records do
 			for _, c in r.links do c:Disconnect() end
@@ -925,3 +962,4 @@ function Theme.Start(gui, player)
 end
 
 return Theme
+

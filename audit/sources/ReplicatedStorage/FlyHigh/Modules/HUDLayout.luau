@@ -1,4 +1,4 @@
--- Responsive Arcade HUD Layout (UI Designer Pass) for "Fly High"
+-- Responsive Arcade HUD Layout (UI Designer Polish Pass 4) for "Fly High"
 -- Positions all HUD elements with proper hierarchy, visual breathing room,
 -- and clean non-overlapping geometry across mobile, tablet, and desktop.
 
@@ -46,7 +46,44 @@ function Layout.Start(gui, player)
 			local o = get(name)
 			if o then o.Visible = false end
 		end
+		scrim.Visible = false
 	end)
+
+	local function showModal(target)
+		for _, name in { "ShopModal", "TacticalPingWheel" } do
+			local o = get(name)
+			if o and o ~= target then o.Visible = false end
+		end
+		if target then
+			target.Visible = not target.Visible
+			scrim.Visible = target.Visible
+		else
+			scrim.Visible = false
+		end
+	end
+
+	local shopBtn = get("ShopToggleButton")
+	if shopBtn and shopBtn:IsA("GuiButton") then
+		shopBtn.Activated:Connect(function()
+			showModal(get("ShopModal"))
+		end)
+	end
+
+	local pingBtn = get("PingButton")
+	if pingBtn and pingBtn:IsA("GuiButton") then
+		pingBtn.Activated:Connect(function()
+			showModal(get("TacticalPingWheel"))
+		end)
+	end
+
+	local closeBtn = gui:FindFirstChild("CloseButton", true)
+	if closeBtn and closeBtn:IsA("GuiButton") then
+		closeBtn.Activated:Connect(function()
+			local modal = get("ShopModal")
+			if modal then modal.Visible = false end
+			scrim.Visible = false
+		end)
+	end
 
 	local elapsed = 1
 	local connection
@@ -58,7 +95,7 @@ function Layout.Start(gui, player)
 		end
 
 		elapsed = (elapsed or 0) + dt
-		if elapsed < 0.08 then return end
+		if elapsed < 0.04 then return end
 		elapsed = 0
 
 		local w, h = gui.AbsoluteSize.X, gui.AbsoluteSize.Y
@@ -67,7 +104,7 @@ function Layout.Start(gui, player)
 		local compact = h < 520 or w < 760
 		gui:SetAttribute("CompactLayout", compact)
 		gui:SetAttribute("TabletLayout", input.TouchEnabled and not compact)
-		gui:SetAttribute("HUDDesignVersion", 5)
+		gui:SetAttribute("HUDDesignVersion", 6)
 
 		local function place(name, x, y, bw, bh)
 			local o = get(name)
@@ -75,31 +112,32 @@ function Layout.Start(gui, player)
 			return o
 		end
 
-		local margin = compact and 12 or 16
+		local margin = compact and 12 or 18
 		local inFlight = player:GetAttribute("InFlight") == true
 
-		-- Top Center: Hero Flight Dashboard Banner (Sleek 58px capsule)
-		local topW = math.min(compact and 380 or 480, w - 32)
-		local topH = compact and 54 or 58
+		-- 1. Altitude Capsule (Top Center Hero HUD - 64px height)
+		local topW = math.clamp(w * 0.44, 400, 520)
+		local topH = compact and 58 or 64
 		place("AltimeterFrame", (w - topW) / 2, 8, topW, topH)
 
-		-- Grounded Countdown: Narrower sleek hazard ribbon (NOT a cloned double bar!)
-		local noticeW = math.min(340, w - 32)
-		place("GroundedCountdown", (w - noticeW) / 2, topH + 14, noticeW, 28)
+		-- 2. Grounded Countdown Ribbon (Directly below Altimeter)
+		local noticeW = math.clamp(w * 0.36, 320, 420)
+		local noticeH = 32
+		place("GroundedCountdown", (w - noticeW) / 2, topH + 12, noticeW, noticeH)
 
-		-- Top Left: Hull Condition Card (Aligned at Y = 8 with Altimeter)
-		local statusY = (w >= 920 and 8) or (topH + 14)
-		local statusW = compact and 176 or 196
-		local statusH = compact and 48 or 52
+		-- 3. Hull Condition Card (Top Left)
+		local statusY = (w >= 960 and 8) or (topH + 12)
+		local statusW = compact and 180 or 196
+		local statusH = 56
 		local status = place("StatusFrame", margin, statusY, statusW, statusH)
 		local storm = get("StormChallengePanel")
 		if status then
 			status.Visible = inFlight and not (storm and storm.Visible)
 		end
 
-		-- Left Side: Clean Vertical Utility Dock (TOKO, KIT, PING, SUARA)
-		local tileW = 50
-		local tileH = 56
+		-- 4. Left Dock Toolbar (Below StatusFrame with clean vertical rhythm)
+		local tileW = 52
+		local tileH = 60
 		local gap = 8
 		local navY = compact and 130 or math.max(statusY + statusH + 14, math.min(180, h * 0.25))
 
@@ -109,44 +147,49 @@ function Layout.Start(gui, player)
 			place(name, margin + col * (tileW + gap), navY + row * (tileH + gap), tileW, tileH)
 		end
 
-		-- Bottom Right: Circular Arcade Jump Button
-		local jumpSize = compact and 70 or 80
+		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
+		local jumpSize = compact and 72 or 82
 		local jump = place("JumpPanel", w - margin - jumpSize, h - margin - jumpSize, jumpSize, jumpSize)
 		if jump then
 			jump.BackgroundTransparency = 1
-			if jump:FindFirstChild("JumpHint") then
-				jump.JumpHint.Visible = false
-			end
-			box(jump.JumpButton, 0, 0, jumpSize, jumpSize)
+			local btn = jump:FindFirstChild("JumpButton")
+			if btn then box(btn, 0, 0, jumpSize, jumpSize) end
+			local hint = jump:FindFirstChild("JumpHint")
+			if hint then hint.Visible = false end
 		end
 
-		-- Gunner Shoot Button & Utilities
-		local fireSize = compact and 68 or 80
+		-- 6. Gunner Shoot Button & Utilities (Right thumb zone)
+		local fireSize = compact and 70 or 82
 		local fireX = compact and (w - margin - jumpSize - 40 - fireSize) or (w - margin - fireSize)
 		local fireY = h - margin - jumpSize - 16 - fireSize
 		place("MobileShootButton", fireX, fireY, fireSize, fireSize)
 
-		local utility = compact and 44 or 50
-		local utilityY = compact and (h - 130) or (h - 156)
-		place("ReloadButton", compact and math.max(12, w - 290) or (w - 250), utilityY, utility, utility)
-		place("DropButton", compact and math.max(64, w - 238) or (w - 192), utilityY, utility, utility)
+		local utility = compact and 46 or 52
+		local utilityY = compact and (h - 134) or (h - 160)
+		place("ReloadButton", compact and math.max(12, w - 300) or (w - 260), utilityY, utility, utility)
+		place("DropButton", compact and math.max(68, w - 244) or (w - 200), utilityY, utility, utility)
 
-		-- Ammo HUD Card
-		local ammoX = compact and (w < 500 and 12 or math.max(w / 2 + 20, w - 310)) or (w - 360)
-		local ammoW = compact and (w < 500 and math.min(200, w - 24) or math.min(200, w - margin - jumpSize - 10 - ammoX)) or 230
-		place("WeaponFrame", ammoX, h - (w < 500 and 230 or (compact and 60 or 90)), ammoW, compact and 50 or 70)
+		-- 7. Ammo HUD Card (Bottom Right / Center)
+		local ammoX = compact and (w < 500 and 12 or math.max(w / 2 + 20, w - 320)) or (w - 370)
+		local ammoW = compact and (w < 500 and math.min(210, w - 24) or math.min(210, w - margin - jumpSize - 10 - ammoX)) or 240
+		place("WeaponFrame", ammoX, h - (w < 500 and 230 or (compact and 64 or 94)), ammoW, compact and 54 or 72)
 
-		-- Pilot Controls (Gas, AutoGas, Release)
-		place("GasButton", w - margin - (compact and 92 or 104), h - margin - (compact and 76 or 88), compact and 92 or 104, compact and 76 or 88)
-		place("AutoGasButton", w - margin - (compact and 246 or 272), h - margin - 52, compact and 144 or 160, 52)
-		place("ReleaseHelmButton", w - margin - (compact and 310 or 336), h - margin - 52, 52, 52)
+		-- 8. Pilot Controls (Gas, AutoGas, Release)
+		local gasW = compact and 96 or 108
+		local gasH = compact and 80 or 90
+		place("GasButton", w - margin - gasW, h - margin - gasH, gasW, gasH)
+
+		local autoW = compact and 160 or 176
+		local autoH = compact and 54 or 56
+		place("AutoGasButton", w - margin - gasW - 12 - autoW, h - margin - autoH, autoW, autoH)
+		place("ReleaseHelmButton", w - margin - gasW - 12 - autoW - 10 - 54, h - margin - autoH, 54, 54)
 
 		if w < 500 then
-			place("AutoGasButton", margin, h - 140, 160, 52)
-			place("ReleaseHelmButton", margin, h - 76, 52, 52)
+			place("AutoGasButton", margin, h - 144, 160, 54)
+			place("ReleaseHelmButton", margin, h - 80, 54, 54)
 		end
 
-		-- Rigging & Action Buttons (Contextual row)
+		-- 9. Rigging & Action Buttons (Contextual row)
 		local visible = {}
 		for _, name in rigging do
 			local o = get(name)
@@ -154,56 +197,58 @@ function Layout.Start(gui, player)
 				table.insert(visible, o)
 			end
 		end
-		local bw = compact and 136 or 150
-		local bh = compact and 44 or 50
+		local bw = compact and 140 or 156
+		local bh = compact and 46 or 52
 		local perRow = math.min(3, math.max(1, math.floor((w - 220) / (bw + 10))))
 		local rows = math.ceil(#visible / perRow)
 		for i, o in visible do
 			local row = math.floor((i - 1) / perRow)
 			local col = (i - 1) % perRow
 			local count = math.min(perRow, #visible - row * perRow)
-			box(o, (w - (count * bw + (count - 1) * 10)) / 2 + col * (bw + 10), h - 96 - (rows - row - 1) * (bh + 10), bw, bh)
+			box(o, (w - (count * bw + (count - 1) * 10)) / 2 + col * (bw + 10), h - 100 - (rows - row - 1) * (bh + 10), bw, bh)
 		end
 
-		-- Tether Gauge Bar
-		local ropeW = math.min(250, w - jumpSize - 2 * margin - 12)
-		place("TetherFrame", w < 500 and margin or (w - ropeW) / 2, h - 40, ropeW, 28)
+		-- 10. Tether Gauge Bar
+		local ropeW = math.min(260, w - jumpSize - 2 * margin - 12)
+		place("TetherFrame", w < 500 and margin or (w - ropeW) / 2, h - 42, ropeW, 30)
 
-		-- Early Warning Hazards
+		-- 11. Early Warning Hazards
 		local centerX = w < 650 and margin or (compact and 220 or math.max(statusW + margin + 16, (w - 440) / 2))
 		local alertW = math.min(440, w - centerX - (w < 650 and margin or (compact and 80 or 20)))
-		local alertY = w < 650 and 200 or (compact and 76 or 86)
+		local alertY = w < 650 and 200 or (compact and 78 or 88)
 		place("AlertBanner", centerX, alertY, alertW, 68)
 		place("StormChallengePanel", centerX, alertY, alertW, 86)
-		place("GhostSpotterFrame", (w - math.min(320, w - 32)) / 2, compact and 76 or 86, math.min(320, w - 32), 60)
+		place("GhostSpotterFrame", (w - math.min(320, w - 32)) / 2, compact and 78 or 88, math.min(320, w - 32), 60)
 
-		-- Modals: ShopModal (Clean rectangular window, NOT an oval!)
+		-- 12. Modals (ShopModal & TacticalPingWheel)
 		local modal = get("ShopModal")
 		local wheel = get("TacticalPingWheel")
 		scrim.Visible = (modal and modal.Visible) or (wheel and wheel.Visible) or false
 
 		if modal then
-			local mw = math.min(450, w - 24)
-			local mh = math.min(370, h - 20)
+			local mw = math.clamp(w * 0.52, 460, 560)
+			local mh = math.clamp(h * 0.74, 380, 440)
 			box(modal, (w - mw) / 2, (h - mh) / 2, mw, mh)
-			modal.CanvasSize = UDim2.fromOffset(0, 350)
+			modal.CanvasSize = UDim2.fromOffset(0, 360)
 			modal.ZIndex = 22
 
-			local closeBtn = modal:FindFirstChild("CloseButton")
-			if closeBtn then
-				box(closeBtn, mw - 38, 6, 30, 30)
-				closeBtn.ZIndex = 26
+			local cBtn = modal:FindFirstChild("CloseButton", true)
+			if cBtn then
+				box(cBtn, mw - 42, 8, 32, 32)
+				cBtn.ZIndex = 26
 			end
 
 			local card1 = modal:FindFirstChild("Card1")
+			local card2 = modal:FindFirstChild("Card2")
+			local cardW = mw - 32
+			local cardH = 140
+
 			if card1 then
-				box(card1, 14, 48, mw - 28, 138)
+				box(card1, 16, 50, cardW, cardH)
 				card1.ZIndex = 23
 			end
-
-			local card2 = modal:FindFirstChild("Card2")
 			if card2 then
-				box(card2, 14, 196, mw - 28, 138)
+				box(card2, 16, 50 + cardH + 12, cardW, cardH)
 				card2.ZIndex = 23
 			end
 		end
