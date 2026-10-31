@@ -20,6 +20,7 @@ local maxAmmo = 8
 local isReloading = false
 local canFire = true
 local isFiringAuto = false
+local beginFire
 
 -- 1. Create Combat & Tether HUD
 local screenGui = playerGui:WaitForChild("FlyHighHUD", 10) or Instance.new("ScreenGui")
@@ -205,28 +206,78 @@ local function setWeapon(tool)
  end
  weaponFrame.Visible=tool~=nil mobileShootBtn.Visible=tool~=nil
  if tool then
+  table.insert(attrConnections,tool.Activated:Connect(function() if beginFire then beginFire() end end))
+  table.insert(attrConnections,tool.Deactivated:Connect(function() isFiringAuto=false end))
   for _,key in ipairs({"CurrentMag","Reloading"}) do table.insert(attrConnections,tool:GetAttributeChangedSignal(key):Connect(updateAmmoUI)) end
   updateAmmoUI()
+ else
+  reticle.Text="+" reticle.TextColor3=Color3.new(1,1,1) reticle.TextSize=26
  end
 end
-local function targetPosition()
+local function findAutoAimTarget()
  local camera=Workspace.CurrentCamera
- local pos
- do
-  local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2)
-  pos=ray.Origin+ray.Direction*500
-  local folder=Workspace:FindFirstChild("FlyHighObstacles")
-  local best=100
-  for _,model in ipairs(folder and folder:GetChildren() or {}) do
-   local part=model.PrimaryPart
-   if part and model:GetAttribute("Shootable") then
-    local screen,visible=camera:WorldToViewportPoint(part.Position)
-    local distance=(Vector2.new(screen.X,screen.Y)-camera.ViewportSize/2).Magnitude
-    if visible and distance<best and (part.Position-camera.CFrame.Position).Magnitude<500 then pos=part.Position best=distance end
+ if not camera then return nil,nil end
+ local folder=Workspace:FindFirstChild("FlyHighObstacles")
+ if not folder then return nil,nil end
+ local camPos=camera.CFrame.Position
+ local lookVec=camera.CFrame.LookVector
+ local vp=camera.ViewportSize
+ local center=vp/2
+ local minDim=math.min(vp.X,vp.Y)
+ local isTouch=UserInputService.TouchEnabled
+ local maxAngleDeg=isTouch and 28 or 18
+ local minDot=math.cos(math.rad(maxAngleDeg))
+ local maxScreenDist=isTouch and math.max(220,minDim*0.38) or math.max(120,minDim*0.22)
+ local balloonRef=localPlayer:FindFirstChild("FlightBalloon")
+ local balloon=balloonRef and balloonRef.Value
+ local envelope=balloon and balloon:FindFirstChild("Envelope")
+ local bestPos=nil
+ local bestModel=nil
+ local bestScore=math.huge
+ for _,model in ipairs(folder:GetChildren()) do
+  if model:IsA("Model") and model:GetAttribute("Shootable")==true then
+   local part=model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart")
+   if part then
+    local targetPos=part.Position
+    local toTarget=targetPos-camPos
+    local dist=toTarget.Magnitude
+    if dist>2 and dist<600 then
+     local dir=toTarget/dist
+     local dot=lookVec:Dot(dir)
+     if dot>=minDot then
+      local screenPt,inFrustum=camera:WorldToViewportPoint(targetPos)
+      if inFrustum and screenPt.Z>0 then
+       local screenDist=(Vector2.new(screenPt.X,screenPt.Y)-center).Magnitude
+       if screenDist<=maxScreenDist then
+        local score=screenDist+(1-dot)*200
+        local occluded=false
+        if envelope then
+         local p=RaycastParams.new()
+         p.FilterType=Enum.RaycastFilterType.Include
+         p.FilterDescendantsInstances={envelope}
+         local occlHit=workspace:Raycast(camPos,toTarget,p)
+         if occlHit and occlHit.Instance==envelope then occluded=true end
+        end
+        if not occluded and score<bestScore then
+         bestScore=score
+         bestPos=targetPos
+         bestModel=model
+        end
+       end
+      end
+     end
+    end
    end
   end
  end
- return pos
+ return bestPos,bestModel
+end
+local function targetPosition()
+ local camera=Workspace.CurrentCamera
+ local autoPos,autoModel=findAutoAimTarget()
+ if autoPos then return autoPos,autoModel end
+ local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2)
+ return ray.Origin+ray.Direction*500,nil
 end
 local function fireShot()
  local tool=currentWeapon
@@ -237,11 +288,17 @@ local function fireShot()
  if currentAmmo<=0 then reloadRemote:FireServer() return end
  local handle=tool:FindFirstChild("Handle")
  if not handle then return end
- weaponFireEvent:FireServer(handle.Position,targetPosition())
+ local targetPos,targetModel=targetPosition()
+ weaponFireEvent:FireServer(handle.Position,targetPos,targetModel)
  local camera=Workspace.CurrentCamera
+ if UserInputService.TouchEnabled and targetModel and targetPos then
+  local camPos=camera.CFrame.Position
+  local targetLook=CFrame.lookAt(camPos,targetPos)
+  camera.CFrame=camera.CFrame:Lerp(targetLook,0.35)
+ end
  camera.CFrame*=CFrame.Angles(math.rad(0.2),0,0)
 end
-local function beginFire()
+beginFire = function()
  if not currentWeapon or isFiringAuto then return end
  fireShot()
  if currentWeapon and currentWeapon:GetAttribute("IsAutomatic") then isFiringAuto=true end
@@ -314,6 +371,18 @@ end)
 local wasGhost=false
 RunService.RenderStepped:Connect(function()
  if isFiringAuto then fireShot() end
+ if currentWeapon then
+  local targetPos=findAutoAimTarget()
+  if targetPos then
+   reticle.Text="[ + ]"
+   reticle.TextColor3=Color3.fromRGB(255,70,70)
+   reticle.TextSize=28
+  else
+   reticle.Text="+"
+   reticle.TextColor3=Color3.new(1,1,1)
+   reticle.TextSize=26
+  end
+ end
  reloadButton.Visible=currentWeapon~=nil dropButton.Visible=currentWeapon~=nil
  local ghost=localPlayer:GetAttribute("FlightGhost")==true and localPlayer:GetAttribute("InFlight")==true
  ghostFrame.Visible=ghost

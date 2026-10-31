@@ -93,7 +93,7 @@ remotes.WeaponReloadEvent.OnServerEvent:Connect(function(p)
  local s=Manager.held[p]
  if s and U.Alive(p,U.Flight(p)) and reloadRate(p) then reload(p,s) end
 end)
-remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target)
+remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target,clientTargetModel)
  local s=Manager.held[p] local fd=U.Flight(p)
  if not s or not fd or not U.Alive(p,fd) or s.balloon~=fd.balloon or s.tool.Parent~=p.Character or not U.FiniteVector(target) then return end
  if not U.Near(p,fd.root,75) or s.reloading or os.clock()-s.lastShot<s.cfg.FireRate-0.01 then return end
@@ -102,7 +102,12 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target)
  if not handle then return end
  local muzzle=handle:FindFirstChild("MuzzleAttachment")
  local origin=muzzle and muzzle.WorldPosition or handle.Position
- local delta=target-origin
+ local targetPos=target
+ if typeof(clientTargetModel)=="Instance" and clientTargetModel.Parent and clientTargetModel:GetAttribute("IsObstacle") and clientTargetModel:GetAttribute("Shootable")==true then
+  local targetPart=clientTargetModel.PrimaryPart or clientTargetModel:FindFirstChildWhichIsA("BasePart")
+  if targetPart then targetPos=targetPart.Position end
+ end
+ local delta=targetPos-origin
  if delta.Magnitude<0.01 then return end
  s.lastShot=os.clock() s.ammo-=1 state(s)
  local direction=delta.Unit
@@ -119,9 +124,24 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target)
  end
  params.FilterDescendantsInstances=excluded
  local hit=workspace:Raycast(origin,direction*500,params)
+ if not hit or (hit.Instance~=fd.balloon.Envelope and not (hit.Instance:FindFirstAncestorOfClass("Model") and hit.Instance:FindFirstAncestorOfClass("Model"):GetAttribute("Shootable")==true)) then
+  local sphereHit=workspace:Spherecast(origin,2.5,direction*500,params)
+  if sphereHit then
+   if sphereHit.Instance==fd.balloon.Envelope then
+    hit=sphereHit
+   else
+    local sm=sphereHit.Instance:FindFirstAncestorOfClass("Model")
+    if sm and sm:GetAttribute("Shootable")==true then hit=sphereHit end
+   end
+  end
+ end
  local part=hit and hit.Instance
  if part==fd.balloon.Envelope then _G.FlyHighBalloonManager.ApplyPuncture(fd,"SelfShot")end
  local model=part and part:FindFirstAncestorOfClass("Model")
+ if (not model or not model:GetAttribute("Shootable")) and typeof(clientTargetModel)=="Instance" and clientTargetModel.Parent and clientTargetModel:GetAttribute("Shootable")==true and part~=fd.balloon.Envelope then
+  local toModel=(clientTargetModel:GetPivot().Position-origin)
+  if toModel.Magnitude<=500 and direction:Dot(toModel.Unit)>0.82 then model=clientTargetModel end
+ end
  if model and model:GetAttribute("IsObstacle") and model:GetAttribute("Shootable")==true then
   local hp=(model:GetAttribute("Health") or 50)-s.cfg.Damage
   model:SetAttribute("Health",hp)

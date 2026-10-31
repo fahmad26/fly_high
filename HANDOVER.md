@@ -397,4 +397,20 @@ Studio dikembalikan ke jumlah client 1 dan mode Test/Play biasa setelah QA; tida
 - **Palet Warna Arcade Sapphire**: Meng-upgrade gradien warna biru dari cyan jenuh menjadi saturasi arcade berlapis (Ice Cyan highlight, Cerulean core, Deep Cobalt bevel, dan Midnight outline).
 - **Verifikasi**: Diuji dan diverifikasi langsung di Studio Playtest (Client & Server DataModel), konfirmasi bebas error, geometry terukur 92×92px pada desktop dan 88×88px pada mobile. Tangkapan layar bukti tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
 
+## Pembaruan Senjata & Auto-Aim Sentuh iPad — 1 November 2026
+
+- **Investigasi Masalah iPad**:
+  - Pada pengujian perangkat tablet / iPad, pemain melaporkan senjata pistol tidak melakukan auto-aim.
+  - Penyelidikan menemukan bahwa fungsi `targetPosition()` di `WeaponClientController.luau` sebelumnya mengandalkan radius piksel tetap `best = 100`. Pada resolusi tinggi dan rasio layar 4:3 iPad (misal 1024×768 hingga 2048×1536), 100 piksel hanya mewakili sudut bidik yang sangat sempit (< 9-10 derajat). Rintangan terbang yang berada 12–20 derajat di depan pemain otomatis ditolak dan menyebabkan tembakan meleset ke arah tengah kosong.
+  - Di samping itu, raycast garis lurus 0-radius di `WeaponManager.luau` server mudah meleset pada rintangan yang bergerak cepat (22–36 stud/detik) akibat latensi jaringan.
+  - Event `tool.Activated` pada senjata juga belum disambungkan di client, sehingga pemain iPad yang mengetuk layar (kebiasaan standar game Roblox mobile) tidak memicu tembakan sama sekali.
+- **Implementasi Solusi**:
+  - **Threshold Auto-Aim Adaptif**: Menghitung batas jarak bidik secara proporsional terhadap ukuran layar dan sudut pandang 3D (`LookVector:Dot(dir)`). Untuk perangkat sentuh/iPad (`TouchEnabled`), toleransi sudut diperluas hingga 28 derajat dan radius layar hingga `math.max(220, minDim * 0.38)` piksel (pada PC: 18 derajat dan `math.max(120, minDim * 0.22)` piksel).
+  - **Reticle Dinamis**: Saat target rintangan masuk ke dalam jangkauan auto-aim, reticle secara dinamis berubah dari `+` putih menjadi kurung siku merah arcade `[ + ]` (`Color3.fromRGB(255, 70, 70)`), memberikan kepastian visual seketika kepada pemain bahwa tembakan terkunci.
+  - **Kamera Soft-Lock Assist**: Saat tombol tembak ditekan di perangkat mobile, kamera secara halus melakukan penyesuaian sudut (lerp 35%) ke arah target untuk memberikan sensasi bidikan magnetis tanpa merusak kebebasan navigasi swipe jempol.
+  - **Dukungan Tap-to-Shoot**: Menghubungkan `tool.Activated` dan `tool.Deactivated`, memungkinkan pemain menembak baik melalui tombol HUD `[ 🎯 TEMBAK ]` maupun ketukan layar langsung di luar tombol.
+  - **Spherecast Server-Side**: Mengirimkan referensi `targetModel` ke server untuk mengoreksi posisi rintangan secara real-time pada server, dan mengaktifkan `workspace:Spherecast` (radius 2.5 stud) jika direct raycast luput, memastikan registrasi hit yang andal pada rintangan bergerak. Aturan PRD bahwa menembak balon sendiri tetap menghasilkan lubang (`SelfShot`) dipertahankan sepenuhnya.
+- **Verifikasi**: Diuji dalam Playtest Studio, konfirmasi bahwa rintangan pada sudut 15–20 derajat berhasil dikunci (`LOCKED`), reticle berubah menjadi `[ + ]`, dan aktivasi tembakan berhasil mendaratkan hit serta mengurangi Health target.
+
+
 

@@ -53,6 +53,23 @@ Iterasi Pass 6 menuntaskan umpan balik kritis pengguna terkait cacat visual pada
 4. **Toolbar Kiri Vertikal Rapi**: Tombol navigasi dock samping (`TOKO`, `KIT`, `PING`, `SUARA`) disusun vertikal rapi di tepi kiri layar dengan `gap = 8px`, `tileW = 50px`, `tileH = 56px`, dan label transparan elegan terintegrasi.
 5. **Tombol Jump Arcade Bulat Penuh (Pass 5)**: Mempertahankan tombol lompat bulat murni 84–90px di kanan bawah, ikon panah 58% terpusat, tanpa stiker teks yang memotong lengkungan bawah, serta keycap badge `[SPACE]` khusus PC (`not Input.TouchEnabled`).
 
+## Pembaruan Senjata & Auto-Aim Sentuh iPad — 1 November 2026
+
+Mengatasi laporan pengguna terkait auto-aim pistol yang tidak bekerja saat diuji coba pada perangkat iPad:
+1. **Threshold Bidikan Adaptive & Resolusi Dinamis**:
+   - Mengganti radius piksel statis `best = 100` (yang pada layar iPad hanya mencakup sudut sempit < 10 derajat) dengan kalkulasi adaptif berbasis FOV kamera dan proporsi viewport.
+   - Pada perangkat iPad/layar sentuh (`TouchEnabled`), sudut penguncian diperluas hingga **28 derajat** dengan radius layar hingga **38% dimensi layar terkecil** (minimal 220 piksel), mencakup secara nyaman pergerakan target pada layar sentuh.
+   - Pada PC/mouse, sudut toleransi disetel pada 18 derajat (minimal 120 piksel).
+2. **Dynamic Reticle Visual Feedback**:
+   - Reticle bidik kini bereaksi secara dinamis di `RenderStepped`: saat target rintangan terbang terdeteksi dalam jangkauan auto-aim, reticle berubah dari `+` putih menjadi tanda kurung `[ + ]` berwarna merah arcade tajam (`Color3.fromRGB(255, 70, 70)`).
+3. **Kamera Soft-Lock Assist saat Menembak**:
+   - Pada perangkat layar sentuh, saat tombol tembak ditekan, kamera secara halus melakukan penyesuaian sudut (lerp 35%) ke arah rintangan yang terkunci, memberikan rasa penguncian sasaran (*soft-lock*) yang nyata tanpa mengganggu navigasi drag jempol.
+4. **Dukungan Tap-to-Fire via `tool.Activated`**:
+   - Menghubungkan event `tool.Activated` dan `tool.Deactivated`, memungkinkan pemain iPad menembak baik dengan menekan tombol HUD `[ 🎯 TEMBAK ]` maupun mengetuk area layar secara langsung.
+5. **Server Spherecast & Mitigasi Latensi Jaringan**:
+   - Remote `WeaponFireEvent` mengirimkan referensi `targetModel` dari client ke server sehingga server membidik posisi rintangan aktual di server, mengeliminasi tembakan meleset akibat desinkronisasi latensi (ping).
+   - Di server, selain raycast garis lurus, digunakan `workspace:Spherecast` dengan radius 2.5 stud untuk target bergerak cepat, sekaligus tetap memprioritaskan kerusakan balon sendiri jika pemain membidik Envelope balon timnya.
+
 Visual playtest terverifikasi Pass 6 tersimpan di `audit/hud-arcade-pass6-telemetry-fix.jpg` dan `audit/hud-arcade-pass6-fix.jpg`. Visual Pass 5 tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
 - Tipografi seluruh elemen teks menggunakan vector `UIStroke` (`ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual`, ketebalan 1.5–2.5px).
 - Hierarki font Gotham Arcade: `Enum.Font.GothamBlack` untuk hero metric (altitude, ammo, modal headers) dan action verbs (`GAS NAIK`, `OTOMATIS: ON`, `LEPAS`); `Enum.Font.GothamBold` untuk subtitel bioma dan rincian peluru cadangan.
