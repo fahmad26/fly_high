@@ -388,3 +388,14 @@ Studio dikembalikan ke jumlah client 1 dan mode Test/Play biasa setelah QA; tida
 - **Smart Notification Badge**: Badge kit pada tombol dock hanya muncul jika stok kit > 0 (warna hijau) atau saat balon dalam kondisi kritis (peringatan merah), menjaga UI tetap bersih tanpa angka "0" merah yang mengganggu.
 - **Verifikasi & Preview**: Diuji langsung dalam playtest Client & Server Studio pada mode penerbangan sesungguhnya dan terdokumentasi dalam tangkapan layar `audit/hud-arcade-pass2-flight.jpg`, `audit/hud-arcade-pass2-shop.jpg`, dan `audit/hud-arcade-pass2-ping.jpg`. Seluruh **32 source container** terkompilasi bersih tanpa error/warning.
 
+## Overhaul Tombol Loncat & Action Suite (Pass 5 — Pure Iconography & Ergonomi AAA) — 1 November 2026
+
+- **Penghapusan Caption Pill pada Kontrol Bulat**: Mengatasi keluhan pengguna terkait tombol Loncat (`JumpButton`) yang memotong busur lingkaran bawah dengan stiker hitam `LOMPAT`. Untuk semua kontrol berjenis `round` (`JumpButton`, `MobileShootButton`, `CloseButton`), caption pill kini disembunyikan sepenuhnya (`r.captionPill.Visible = false`).
+- **Iconography Presisi & Centering**: Icon panah loncat kini diposisikan tepat di pusat geometris lingkaran tanpa pergeseran vertikal, dengan ukuran proporsional 58% diameter tombol (51–53px) serta bayangan timbul 3D (`HUDIconShadow`).
+- **Ergonomi Touch Target Standar AAA**: Ukuran tombol loncat ditingkatkan menjadi **88px** (mobile) dan **92px** (desktop/tablet), dengan margin nyaman **24px** (mobile) dan **28px** (desktop) dari sudut kanan-bawah layar, memberikan ruang napas ergonomis bagi jempol pemain mobile.
+- **Keycap Hint Desktop Cerdas**: Pada PC/desktop (`not Input.TouchEnabled`), petunjuk shortcut `[SPACE]` ditampilkan rapi mengambang di sudut atas tombol loncat tanpa menutupi permukaan lingkaran. Pada perangkat sentuh mobile, petunjuk ini disembunyikan secara otomatis.
+- **Pembersihan Toolbar Samping Kiri (Pure Transparent Pill)**: Menghapus kotak stiker hitam ber-stroke ganda pada tombol toolbar samping kiri (`TOKO`, `KIT`, `PING`, `SUARA`), menggantinya dengan label transparan vektor terintegrasi yang menyatu elegan di atas gradien glossy tile.
+- **Palet Warna Arcade Sapphire**: Meng-upgrade gradien warna biru dari cyan jenuh menjadi saturasi arcade berlapis (Ice Cyan highlight, Cerulean core, Deep Cobalt bevel, dan Midnight outline).
+- **Verifikasi**: Diuji dan diverifikasi langsung di Studio Playtest (Client & Server DataModel), konfirmasi bebas error, geometry terukur 92×92px pada desktop dan 88×88px pada mobile. Tangkapan layar bukti tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
+
+

@@ -12,10 +12,10 @@ local Theme = {}
 -- Saturated 4-stop arcade palettes: {1: Top Shine, 2: Mid Core, 3: 3D Bevel, 4: Dark Outline}
 local palettes = {
 	blue = {
-		Color3.fromRGB(120, 235, 255),
-		Color3.fromRGB(0, 162, 255),
-		Color3.fromRGB(0, 78, 178),
-		Color3.fromRGB(4, 28, 70),
+		Color3.fromRGB(150, 245, 255),
+		Color3.fromRGB(20, 175, 255),
+		Color3.fromRGB(2, 95, 205),
+		Color3.fromRGB(4, 24, 64),
 	},
 	green = {
 		Color3.fromRGB(160, 255, 110),
@@ -67,8 +67,8 @@ local configs = {
 	EmergencyKitButton = { "kit", "KIT", "green", "dock" },
 	PingButton = { "ping", "PING", "blue", "dock" },
 	WarningAudioToggleButton = { "sound", "SUARA", "purple", "dock" },
-	MobileShootButton = { "fire", "TEMBAK", "red", "round" },
-	JumpButton = { "jump", "LOMPAT", "blue", "round" },
+	MobileShootButton = { "fire", "", "red", "round" },
+	JumpButton = { "jump", "", "blue", "round" },
 	GasButton = { "gas", "GAS NAIK", "orange", "tile" },
 	AutoGasButton = { "gas", "GAS OTOMATIS", "blue", "wide" },
 	ReleaseHelmButton = { "release", "LEPAS", "dark", "tile" },
@@ -563,7 +563,6 @@ function Theme.Start(gui, player)
 
 				if not o.Active then
 					palette = "disabled"
-					if o.Name == "JumpButton" then title = "TERKUNCI" end
 				end
 
 				paint(r.skin, palette, z, r.pressed)
@@ -588,39 +587,21 @@ function Theme.Start(gui, player)
 				elseif style == "dock" then
 					-- Left Toolbar: Icon sits in upper half with ample breathing room!
 					local iconSize = 28
-					box(r.glyphBox, (w - iconSize) / 2, 6, iconSize, iconSize)
+					box(r.glyphBox, (w - iconSize) / 2, 7, iconSize, iconSize)
 
-					-- Caption ribbon sits cleanly at the bottom without overlapping icon
-					r.captionPill.BackgroundTransparency = 0.2
+					-- Pure transparent caption container (No black inner sticker box!)
+					r.captionPill.BackgroundTransparency = 1
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
-					if pStroke then
-						pStroke.Enabled = true
-						if o.Name == "ShopToggleButton" then
-							pStroke.Color = Color3.fromRGB(255, 190, 40)
-						elseif o.Name == "EmergencyKitButton" then
-							pStroke.Color = Color3.fromRGB(40, 220, 110)
-						elseif o.Name == "PingButton" then
-							pStroke.Color = Color3.fromRGB(40, 180, 255)
-						elseif o.Name == "WarningAudioToggleButton" then
-							pStroke.Color = Color3.fromRGB(180, 90, 255)
-						end
-					end
+					if pStroke then pStroke.Enabled = false end
 
-					box(r.captionPill, 3, h - 19, w - 6, 16)
+					box(r.captionPill, 2, h - 19, w - 4, 16)
 					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, color = Color3.new(1, 1, 1), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 
 				elseif style == "round" then
-					local iconSize = math.round(math.min(w, h) * (#title == 0 and 0.58 or 0.52))
-					box(r.glyphBox, (w - iconSize) / 2, (h - iconSize) / 2 + (#title == 0 and 0 or -3), iconSize, iconSize)
-
-					if #title > 0 then
-						r.captionPill.Visible = true
-						r.captionPill.BackgroundTransparency = 0.25
-						box(r.captionPill, 6, h - 20, w - 12, 16)
-						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
-					else
-						r.captionPill.Visible = false
-					end
+					-- Circular action buttons: perfectly centered icon, NO rectangular caption pills!
+					local iconSize = math.round(math.min(w, h) * 0.58)
+					box(r.glyphBox, (w - iconSize) / 2, (h - iconSize) / 2, iconSize, iconSize)
+					r.captionPill.Visible = false
 
 				else
 					-- Standard square tile button (e.g. Gas, Reload, Drop)
@@ -642,6 +623,11 @@ function Theme.Start(gui, player)
 					r.hint.Text = hint:match("^%w+") or ""
 					box(r.hint, w - 20, 2, 18, 14)
 					applyTextStyle(r.hint, { font = Enum.Font.GothamBlack, size = 10, color = Color3.fromRGB(255, 235, 120), strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
+				elseif o.Name == "JumpButton" and not Input.TouchEnabled then
+					r.hint.Visible = true
+					r.hint.Text = "SPACE"
+					box(r.hint, 2, 2, 42, 15)
+					applyTextStyle(r.hint, { font = Enum.Font.GothamBlack, size = 9, color = Color3.fromRGB(255, 235, 120), strokeThickness = 1.2, align = Enum.TextXAlignment.Center })
 				end
 				r.hint.ZIndex = z + 5
 
@@ -705,9 +691,9 @@ function Theme.Start(gui, player)
 					applyTextStyle(r.goal, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(186, 230, 253), strokeThickness = 1.5, align = Enum.TextXAlignment.Left })
 
 					-- 3. Progress Bar Track (Horizontally aligned with altitude)
-					local barX = iconSize + 195
-					local barW = math.max(70, w - barX - 120)
-					box(bar, barX, 35, barW, 10)
+					local barX = iconSize + 180
+					local barW = math.max(90, w - barX - 14)
+					box(bar, barX, 36, barW, 11)
 					bar.ZIndex = z + 3
 					bar.BackgroundColor3 = Color3.fromRGB(6, 16, 32)
 					bar.BackgroundTransparency = 0
@@ -723,7 +709,7 @@ function Theme.Start(gui, player)
 
 					-- Percentage display next to progress bar
 					r.percent.Text = original.Text:match("%((.-)%)") or "0%"
-					box(r.percent, barX, 12, barW, 18)
+					box(r.percent, barX, 13, barW, 18)
 					applyTextStyle(r.percent, { font = Enum.Font.GothamBlack, size = 11, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 
 					-- 4. Speed Indicator Chip (Upper right corner)

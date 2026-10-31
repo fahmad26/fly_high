@@ -42,12 +42,20 @@ Daftar ini berasal dari source mirror dan jumlah kompilasi snapshot. Bandingkan 
 - Equip senjata memaksa first person; drop kembali third person. Auto aim berdasarkan pusat kamera, tanpa tap arbitrer ke mana saja. Visual proyektil dan suara tembakan sudah diimplementasikan.
 - Loncatan kru/Dinding Badai **sudah diimplementasikan pada iterasi berikutnya**, meskipun instruksi historis pernah meminta dokumentasi saja. Pilot dan pemain di katrol/kubah/repair tidak boleh melompat; gunner dan pemakai tali yang masih di keranjang mengikuti izin server. Ada cooldown efek turun.
 
-## HUD aktif: Sky Arcade Pro Max (Pass 4 — UI Designer Typography & Polish Pass)
+## HUD aktif: Sky Arcade Pro Max (Pass 5 — Jump Button & Action Suite Overhaul)
 
-Pengguna memberikan penilaian dari sudut pandang UI Designer bahwa typography dan teks pada UI masih kurang optimal (outline bergerigi/blurry akibat stroke legacy 1px, teks scaled menyusut gepeng pada label sempit, serta hierarki visual metrik yang belum setara game top Roblox arcade seperti *Blade Ball*, *Pet Simulator 99*, dan *Rivals*).
+Pengguna memberikan catatan kritis bahwa tombol Loncat (`JumpButton`) dan kontrol aksi bulat lainnya masih kurang memuaskan jika dilihat dari kacamata UI Designer. Ditemukan akar masalah visual: tombol loncat sebelumnya merender caption pill persegi panjang hitam (`LOMPAT`) yang memotong busur lingkaran bawah seperti stiker tempelan, membuat icon panah terdesak ke atas dan ukuran tombol terasa terlalu mepet ke tepi layar.
 
-Iterasi Pass 4 (Typography & Polish Pass) berhasil menyempurnakan kualitas grafis teks dan avionik:
-1. **Engine Vector UIStroke Kontekstual Anti-Aliased**:
+Iterasi Pass 5 menyelesaikan masalah ini secara menyeluruh:
+1. **Pembersihan Geometri Tombol Bulat (Pure Iconography)**: Menghilangkan caption pill persegi panjang pada semua kontrol berjenis `round` (`JumpButton`, `MobileShootButton`, `CloseButton`). Tombol aksi kini mengusung pure arcade iconography tanpa stiker teks yang merusak kelengkungan lingkaran.
+2. **Presisi Iconography & Centering**: Icon panah loncat kini di-center sempurna di tengah lingkaran dengan rasio 58% diameter tombol (51–53px), dilengkapi efek 3D embossed drop shadow.
+3. **Ergonomi Touch Target Standar AAA (Blade Ball & Rivals)**: Ukuran tombol loncat ditingkatkan menjadi **88px** (mobile) dan **92px** (desktop/tablet), dengan margin nyaman **24px** (mobile) dan **28px** (desktop) dari tepi bawah-kanan layar.
+4. **Keycap Badge Khusus PC**: Menampilkan hint `[SPACE]` mengambang rapi di sudut atas tombol hanya saat input keyboard aktif (`not Input.TouchEnabled`), dan otomatis tersembunyi pada perangkat sentuh mobile.
+5. **Pembersihan Toolbar Samping Kiri**: Menghilangkan kotak stiker hitam ber-stroke ganda pada tombol dock samping (`TOKO`, `KIT`, `PING`, `SUARA`), menggantinya dengan label transparan vektor terintegrasi yang menyatu elegan di atas gradien glossy tile.
+6. **Harmonisasi Palet Arcade Sapphire**: Meng-upgrade palet biru dari cyan jenuh menjadi saturasi arcade berlapis (Ice Cyan highlight, Cerulean core, Deep Cobalt bevel, dan Midnight outline).
+7. **Penyempurnaan Altimeter & Progress Track**: Melebarkan progress bar menjadi 180–220px dengan chip telemetri kecepatan vertikal di sudut kanan atas.
+
+Visual playtest terverifikasi tersimpan di `audit/hud-arcade-pass5-jump.jpg`.
    - Seluruh teks kini menggunakan `UIStroke` dengan `ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual` dan ketebalan 1.5–2.5px.
    - Menonaktifkan stroke lama (`TextStrokeTransparency = 1`), melenyapkan outline miter 1px yang bergerigi dan counter-plugging pada teks ukuran kecil.
 2. **Hierarki Tipografi Gotham Arcade Premium**:

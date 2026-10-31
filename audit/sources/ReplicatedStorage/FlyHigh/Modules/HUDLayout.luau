@@ -116,14 +116,14 @@ function Layout.Start(gui, player)
 		local inFlight = player:GetAttribute("InFlight") == true
 
 		-- 1. Altitude Capsule (Top Center Hero HUD - 64px height)
-		local topW = math.clamp(w * 0.44, 400, 520)
-		local topH = compact and 58 or 64
+		local topW = math.clamp(w * 0.48, 440, 540)
+		local topH = compact and 60 or 64
 		place("AltimeterFrame", (w - topW) / 2, 8, topW, topH)
 
 		-- 2. Grounded Countdown Ribbon (Directly below Altimeter)
-		local noticeW = math.clamp(w * 0.36, 320, 420)
+		local noticeW = math.clamp(topW - 40, 320, 440)
 		local noticeH = 32
-		place("GroundedCountdown", (w - noticeW) / 2, topH + 12, noticeW, noticeH)
+		place("GroundedCountdown", (w - noticeW) / 2, topH + 10, noticeW, noticeH)
 
 		-- 3. Hull Condition Card (Top Left)
 		local statusY = (w >= 960 and 8) or (topH + 12)
@@ -148,8 +148,10 @@ function Layout.Start(gui, player)
 		end
 
 		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
-		local jumpSize = compact and 72 or 82
-		local jump = place("JumpPanel", w - margin - jumpSize, h - margin - jumpSize, jumpSize, jumpSize)
+		local jumpSize = compact and 88 or 92
+		local jumpMarginR = compact and 24 or 28
+		local jumpMarginB = compact and 24 or 28
+		local jump = place("JumpPanel", w - jumpMarginR - jumpSize, h - jumpMarginB - jumpSize, jumpSize, jumpSize)
 		if jump then
 			jump.BackgroundTransparency = 1
 			local btn = jump:FindFirstChild("JumpButton")
@@ -159,9 +161,9 @@ function Layout.Start(gui, player)
 		end
 
 		-- 6. Gunner Shoot Button & Utilities (Right thumb zone)
-		local fireSize = compact and 70 or 82
-		local fireX = compact and (w - margin - jumpSize - 40 - fireSize) or (w - margin - fireSize)
-		local fireY = h - margin - jumpSize - 16 - fireSize
+		local fireSize = compact and 74 or 84
+		local fireX = compact and (w - jumpMarginR - jumpSize - 16 - fireSize) or (w - jumpMarginR - fireSize)
+		local fireY = h - jumpMarginB - jumpSize - 16 - fireSize
 		place("MobileShootButton", fireX, fireY, fireSize, fireSize)
 
 		local utility = compact and 46 or 52
