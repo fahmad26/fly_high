@@ -10,6 +10,7 @@ local function box(object, x, y, w, h)
 end
 
 function Layout.Start(gui, player)
+ local theme = require(script.Parent.HUDTheme).Start(gui, player)
  local Run = game:GetService("RunService")
  local Input = game:GetService("UserInputService")
  gui.ScreenInsets = Enum.ScreenInsets.CoreUISafeInsets
@@ -68,7 +69,7 @@ function Layout.Start(gui, player)
  local elapsed = 1
  local connection
  connection = Run.RenderStepped:Connect(function(dt)
-  if not gui.Parent then connection:Disconnect() return end
+  if not gui.Parent then theme.Destroy() connection:Disconnect() return end
   elapsed += dt
   if elapsed < .1 then return end
   elapsed = 0
@@ -243,7 +244,7 @@ function Layout.Start(gui, player)
   end
   local fireSize=tablet and 88 or(compact and 64 or 80)
   local fireY=jumpY-12-fireSize
-  local fireX=compact and(w-margin-jumpSize-12-fireSize)or(w-margin-fireSize)
+  local fireX=compact and(w-margin-jumpSize-36-fireSize)or(w-margin-fireSize)
   place("MobileShootButton",fireX,fireY,fireSize,fireSize)
   if not compact then
    place("WeaponFrame",w-margin-240,fireY-92,240,80)
@@ -306,6 +307,7 @@ function Layout.Start(gui, player)
     if b then box(b, 0, (i - 1) * 50, bw, 44) b.ZIndex = 22 b.TextSize = 14 end
    end
   end
+  theme.Step()
  end)
 end
 

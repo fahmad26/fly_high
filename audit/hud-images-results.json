@@ -1,0 +1,1181 @@
+{
+  "date": "2026-10-31",
+  "change": "HUD image integration with per-asset fallback",
+  "placeSha256": "B9EBCA735DF8F1419099B0964259209ED65440E84D8F08D02EF5CED879EF49C4",
+  "assetReferences": 27,
+  "imagesLoadVerified": 7,
+  "imagesStillUnavailable": 20,
+  "allImagesVisuallyVerified": false,
+  "onePlayerStationaryFixture": true,
+  "notFlightPhysicsOrPublicServerTest": true,
+  "profiles": [
+    {
+      "profile": "desktop-idle",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://135591436991154",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": false,
+      "compact": false,
+      "outside": [],
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": false
+      },
+      "textOverflow": [],
+      "tablet": false,
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 80,
+          "2": 80
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 202,
+          "h": 42.411109924316406,
+          "name": "EmergencyKitButton",
+          "w": 250.61111450195312,
+          "x": 19
+        },
+        "2": {
+          "y": 545,
+          "h": 40.483333587646484,
+          "name": "PingButton",
+          "w": 144.5833282470703,
+          "x": 19
+        },
+        "3": {
+          "y": 594,
+          "h": 80,
+          "name": "JumpButton",
+          "w": 80,
+          "x": 1990
+        },
+        "4": {
+          "y": 14,
+          "h": 40.483333587646484,
+          "name": "ShopToggleButton",
+          "w": 154.22222900390625,
+          "x": 1917
+        },
+        "5": {
+          "y": 594,
+          "h": 42.411109924316406,
+          "name": "WarningAudioToggleButton",
+          "w": 144.5833282470703,
+          "x": 19
+        }
+      },
+      "small": {
+        "1": "EmergencyKitButton",
+        "2": "PingButton",
+        "3": "ShopToggleButton",
+        "4": "WarningAudioToggleButton"
+      },
+      "size": {
+        "1": 2090,
+        "2": 694
+      }
+    },
+    {
+      "profile": "iPhone17-gunner",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": true,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": false
+      },
+      "compact": true,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 4,
+          "h": 44,
+          "name": "EmergencyKitButton",
+          "w": 186,
+          "x": 8
+        },
+        "2": {
+          "y": 263,
+          "h": 48,
+          "name": "FlightActionsButton",
+          "w": 108,
+          "x": 545
+        },
+        "3": {
+          "y": 163,
+          "h": 64,
+          "name": "MobileShootButton",
+          "w": 64,
+          "x": 589
+        },
+        "4": {
+          "y": 4,
+          "h": 44,
+          "name": "ShopToggleButton",
+          "w": 108,
+          "x": 633
+        },
+        "5": {
+          "y": 239,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 665
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 749,
+        "2": 323
+      }
+    },
+    {
+      "profile": "iPad10-landscape-gunner",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://135591436991154",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": true
+      },
+      "compact": false,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 545,
+          "h": 88,
+          "name": "MobileShootButton",
+          "w": 88,
+          "x": 1071
+        },
+        "3": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "4": {
+          "y": 645,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1063
+        },
+        "5": {
+          "y": 545,
+          "h": 44,
+          "name": "ReloadButton",
+          "w": 120,
+          "x": 939
+        },
+        "6": {
+          "y": 597,
+          "h": 44,
+          "name": "DropButton",
+          "w": 120,
+          "x": 939
+        },
+        "7": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "8": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-landscape-pilot",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://78927787373191",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "8": {
+          "loaded": true,
+          "image": "rbxassetid://104567673131313",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": true
+      },
+      "compact": false,
+      "role": "Pilot",
+      "jump": {
+        "visible": false,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 669,
+          "h": 72,
+          "name": "GasButton",
+          "w": 128,
+          "x": 1031
+        },
+        "3": {
+          "y": 681,
+          "h": 48,
+          "name": "AutoGasButton",
+          "w": 148,
+          "x": 871
+        },
+        "4": {
+          "y": 681,
+          "h": 48,
+          "name": "ReleaseHelmButton",
+          "w": 148,
+          "x": 711
+        },
+        "5": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "7": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-landscape-engineer",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://104567673131313",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": true
+      },
+      "compact": false,
+      "role": "Engineer",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "3": {
+          "y": 645,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1063
+        },
+        "4": {
+          "y": 641,
+          "h": 44,
+          "name": "ClimbButton",
+          "w": 150,
+          "x": 515
+        },
+        "5": {
+          "y": 589,
+          "h": 44,
+          "name": "DetachButton",
+          "w": 150,
+          "x": 515
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "7": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-landscape-engineer-rotation-not-yet-applied",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://104567673131313",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": true
+      },
+      "compact": false,
+      "role": "Engineer",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "3": {
+          "y": 645,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 1063
+        },
+        "4": {
+          "y": 641,
+          "h": 44,
+          "name": "ClimbButton",
+          "w": 150,
+          "x": 515
+        },
+        "5": {
+          "y": 589,
+          "h": 44,
+          "name": "DetachButton",
+          "w": 150,
+          "x": 515
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "7": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 1179,
+        "2": 761
+      },
+      "note": "First rotation click only showed tooltip; portrait verified in subsequent confirmed profile."
+    },
+    {
+      "profile": "iPad10-portrait-engineer-confirmed",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        },
+        "6": {
+          "loaded": true,
+          "image": "rbxassetid://125897278409378",
+          "name": "HUDActionIcon"
+        },
+        "7": {
+          "loaded": true,
+          "image": "rbxassetid://104567673131313",
+          "name": "HUDActionIcon"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": false,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": true
+      },
+      "compact": false,
+      "role": "Engineer",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 96,
+          "2": 96
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 204,
+          "h": 52,
+          "name": "EmergencyKitButton",
+          "w": 256,
+          "x": 16
+        },
+        "2": {
+          "y": 268,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 124,
+          "x": 16
+        },
+        "3": {
+          "y": 1004,
+          "h": 96,
+          "name": "JumpButton",
+          "w": 96,
+          "x": 703
+        },
+        "4": {
+          "y": 1031,
+          "h": 44,
+          "name": "ClimbButton",
+          "w": 150,
+          "x": 335
+        },
+        "5": {
+          "y": 979,
+          "h": 44,
+          "name": "DetachButton",
+          "w": 150,
+          "x": 335
+        },
+        "6": {
+          "y": 268,
+          "h": 48,
+          "name": "PingButton",
+          "w": 124,
+          "x": 148
+        },
+        "7": {
+          "y": 328,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 256,
+          "x": 16
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 819,
+        "2": 1120
+      }
+    },
+    {
+      "profile": "iPhone17-gunner-final",
+      "renderedImages": {
+        "1": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon1"
+        },
+        "2": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon2"
+        },
+        "3": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon3"
+        },
+        "4": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon4"
+        },
+        "5": {
+          "loaded": true,
+          "image": "rbxassetid://102772330060648",
+          "name": "HUDBalloon5"
+        }
+      },
+      "touch": true,
+      "nativeThumbstickVisible": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "imageAttributes": {
+        "ImageLoaded_sound_off": true,
+        "ImageLoaded_burner_flame": true,
+        "ImageLoaded_weapon_pistol": false,
+        "ImageLoaded_rope_climb": false,
+        "ImageLoaded_weapon_ak47": false,
+        "ImageLoaded_team_ping": true,
+        "ImageLoaded_helm_release": false,
+        "ImageLoaded_crew_rescue": false,
+        "ImageLoaded_fire_target": false,
+        "ImageLoaded_patch_repair": true,
+        "ImageLoaded_jump_arrow": false,
+        "ImageLoaded_rope_descend": false,
+        "ImageLoaded_control_circle_pressed": false,
+        "ImageLoaded_control_circle_disabled": false,
+        "ImageLoaded_warning_badge": true,
+        "ImageLoaded_helm": false,
+        "ImageLoaded_rope_detach": false,
+        "ImageLoaded_balloon_torn": false,
+        "ImageLoaded_aim_reticle": false,
+        "CompactLayout": true,
+        "ImageLoaded_panel_9slice": false,
+        "ImageLoaded_balloon_intact": true,
+        "ImageLoaded_control_circle_normal": false,
+        "ImageLoaded_sound_on": true,
+        "ImageLoaded_shop_supply": false,
+        "ImageLoaded_rope_attach": false,
+        "ImageLoaded_rope_repair": false,
+        "ImageLoaded_emergency_kit": false,
+        "HUDImagesLoaded": 7,
+        "TabletLayout": false
+      },
+      "compact": true,
+      "role": "Gunner",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 4,
+          "h": 44,
+          "name": "EmergencyKitButton",
+          "w": 186,
+          "x": 8
+        },
+        "2": {
+          "y": 263,
+          "h": 48,
+          "name": "FlightActionsButton",
+          "w": 108,
+          "x": 545
+        },
+        "3": {
+          "y": 4,
+          "h": 44,
+          "name": "ShopToggleButton",
+          "w": 108,
+          "x": 633
+        },
+        "4": {
+          "y": 239,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 665
+        },
+        "5": {
+          "y": 163,
+          "h": 64,
+          "name": "MobileShootButton",
+          "w": 64,
+          "x": 565
+        }
+      },
+      "small": [],
+      "size": {
+        "1": 749,
+        "2": 323
+      }
+    }
+  ],
+  "interactions": {
+    "soundToggle": {
+      "image": "rbxassetid://104567673131313",
+      "muted": true,
+      "loaded": true,
+      "mode": "LockFirstPerson",
+      "caption": "SUARA PERINGATAN: OFF"
+    },
+    "autoGas": {
+      "jumps": 0,
+      "role": "Pilot",
+      "health": 100,
+      "autoGas": true,
+      "holes": 0
+    },
+    "releaseHelm": {
+      "jumps": 0,
+      "holes": 0,
+      "health": 100,
+      "autoGas": true
+    },
+    "jump": {
+      "jumps": 1,
+      "role": "Gunner",
+      "health": 100,
+      "autoGas": false,
+      "holes": 0
+    }
+  },
+  "compile": {
+    "errors": [],
+    "qa": [],
+    "scripts": 31
+  },
+  "console": "[DataManager] Unpublished Studio: isolated mock data; purchases disabled.",
+  "cleanup": {
+    "temporaryFixtureRemoved": true,
+    "mode": "Edit",
+    "device": "Current device desktop",
+    "testMode": "Test",
+    "productionSourcesMatchMirror": true
+  },
+  "limits": [
+    "20 Roblox image IDs still returned Failure in Studio; image loading remains incomplete. Rendering uses original controls and text for those assets.",
+    "Loaded paths for panel/circular base/weapon art not visually verified with real assets. Physical iPad/phone and public-server latency not tested.",
+    "Final two presentation refinements shorten the hole count to n/5 and move compact fire 24 pixels left to clear native capture controls; final phone gunner profile verifies both. Earlier desktop/iPad profiles preceded these refinements."
+  ]
+}

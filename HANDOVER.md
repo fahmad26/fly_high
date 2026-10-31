@@ -1,5 +1,7 @@
 # 📋 Dokumen Handover & Panduan Audit Teknis — "Fly High"
 
+> **Integrasi HUD 31 Oktober 2026:** `HUDImageAssets` memetakan 27 ID final, `HUDTheme` memasang gambar pada kontrol yang sudah ada, dan `HUDLayout` menjalankan pembaruan presentasi setelah layout. Teks/angka dan handler input tetap milik controller semula. Pemuatan serial memakai ImageLabel, tiga pass dengan jeda, serta fallback native per aset. Playtest satu pemain memeriksa desktop, iPhone 17 Pro, iPad 10 landscape/portrait dan peran gunner/pilot/engineer; log bersih, 31 skrip terkompilasi, fixture QA sudah dihapus. **Baru 7/27 gambar berhasil dimuat; 20 masih Failure, sehingga tampilan seluruh aset belum dapat dinyatakan selesai diverifikasi.** Sumber cocok dengan place yang disimpan. Lihat `audit/hud-images-results.json`. Catatan unggahan di bawah merupakan riwayat sebelum integrasi.
+
 > **Aset UI 31 Oktober 2026:** 27 PNG final pengguna dari `assets/ui/final/compressed_img/` sudah diunggah ke Roblox melalui Studio. ID aktual dan hash sumber ada di `assets/ui/asset-manifest.json`. Pemeriksaan pemuatan: 7 Success, 20 Failure setelah respons awal HTTP 429; pengulangan dengan jeda belum mengubah hasil. Lihat `assets/ui/final/compressed_img/upload-report.json`. Integrasi gambar ke HUD belum dilakukan; tidak ada perubahan DataModel/place untuk unggahan ini.
 
 Dokumen ini disiapkan sebagai panduan komprehensif bagi AI Reviewer / Developer selanjutnya untuk memeriksa, mengaudit, dan melanjutkan pengembangan game Roblox **Fly High**.

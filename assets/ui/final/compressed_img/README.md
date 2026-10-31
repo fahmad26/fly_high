@@ -2,7 +2,7 @@
 
 27 PNG supplied by the user and uploaded to Roblox through the connected Fly High.rbxl Studio on 2026-10-31. All image dimensions match the planned export targets. Source bytes were not modified.
 
-`roblox-asset-ids.json` maps each filename to its returned Roblox image ID. `source-audit.json` records source dimensions, lengths and SHA-256 hashes. The canonical manifest is `../../asset-manifest.json`. HUD integration has not been performed.
+`roblox-asset-ids.json` maps each filename to its returned Roblox image ID. `source-audit.json` records source dimensions, lengths and SHA-256 hashes. The canonical manifest is `../../asset-manifest.json`. All 27 IDs are now wired into HUDImageAssets/HUDTheme in the saved place. Image rendering is conditional on successful loading; 7 images loaded in Studio, while 20 retain original control presentation. See `../../../../audit/hud-images-results.json` for integration checks and limitations. No source images were edited.
 
 | File | Resolution | Roblox image |
 |---|---|---|

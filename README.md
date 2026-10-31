@@ -1,5 +1,7 @@
 # 🎈 Fly High (Roblox Game)
 
+Integrasi gambar HUD 31 Oktober 2026 sudah dipasang di place lokal dengan teks dinamis dan fallback kontrol semula. Playtest desktop/iPad/HP tidak menemukan overlap tombol proyek atau teks terpotong; 31 skrip terkompilasi dan log bersih. **7 dari 27 gambar berhasil dimuat, sedangkan 20 masih memakai fallback**; seluruh tampilan gambar belum terverifikasi. Lihat [hasil integrasi HUD](./audit/hud-images-results.json).
+
 > **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
 
 **Status QA 31 Oktober 2026:** Safe Takeoff Zone 1.200 km, gondola 28×28 stud, role eksklusif, penyelamatan tali, peluru bergerak dan audio tembakan sudah tersedia. ID Developer Product sudah dikonfigurasi; publikasi, transaksi Robux nyata dan penyimpanan cloud tetap ditunda. Hasil pengujian Studio beserta batasnya dicatat dalam [laporan audit](./AUDIT_REPORT.md) dan [prosedur perjalanan penuh](./audit/FULL_JOURNEY_QA.md).
