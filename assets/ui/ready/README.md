@@ -5,9 +5,9 @@ Taruh file PNG individual dalam folder ini. Daftar mesin: `../asset-manifest.jso
 ## Dua aset tambahan yang sudah dibuat
 
 - `control_circle_pressed.png`: tombol teal dengan bagian tengah cekung dan bingkai kuningan; sumber hasil imagegen **1254×1254**.
-- `panel_9slice.png`: panel teal kosong dengan bingkai kuningan dan sudut membulat; sumber hasil imagegen **1774×887**.
+- `panel_9slice.png` versi 2: panel teal penuh dengan bingkai kuningan memenuhi canvas, tanpa pita transparan lebar. Sumber imagegen **1774×887**, rasio **2:1**; target ekspor **512×256**. Seluruh gambar opak (RGB, alpha 255), termasuk bidang tengah, untuk menghilangkan cacat transparansi versi pertama.
 
-Keduanya PNG RGBA dengan alpha transparan asli pada bagian luar, dibuat sebagai file individual menggunakan built-in imagegen. Target ukuran pada tabel berikut tetap merupakan rencana ekspor; `sourceWidth`/`sourceHeight` di manifest mencatat resolusi sumber aktual yang lebih besar, dengan rasio yang sama. Prompt lengkap ada di `../concepts/prompts-additional-v1.json`. Keduanya belum diunggah atau dipasang pada HUD. Batas `SliceCenter` panel perlu ditentukan dan diperiksa di Studio setelah impor agar sudut tidak terdistorsi.
+Keduanya dibuat sebagai PNG individual menggunakan built-in imagegen. Tombol memakai RGBA transparan di luar lingkaran; panel versi 2 sengaja opak dan memenuhi canvas. Target ukuran pada tabel berikut tetap merupakan rencana ekspor, bukan resolusi file sumber aktual; `sourceWidth`/`sourceHeight` di manifest mencatat dimensi aktual. Prompt awal ada di `../concepts/prompts-additional-v1.json`, prompt koreksi panel ada di `../concepts/prompt-panel-v2.json`. Keduanya belum diunggah atau dipasang pada HUD. Batas `SliceCenter` panel perlu ditentukan dan diperiksa di Studio setelah impor agar sudut tidak terdistorsi.
 
 | Ukuran sumber | Nama file |
 |---|---|
@@ -20,7 +20,7 @@ Keduanya PNG RGBA dengan alpha transparan asli pada bagian luar, dibuat sebagai 
 | 256×256 | `shop_supply.png`, `team_ping.png`, `sound_on.png`, `sound_off.png`, `warning_badge.png` |
 | 512×256 | `panel_9slice.png` |
 
-Satu file berisi satu ikon atau satu state tombol. Latar transparan asli (alpha), tanpa checkerboard yang tergambar, tanpa tulisan/angka/harga. Sisakan sekitar 10% ruang tepi. Untuk ikon lompat/tembak/api, jangan gabungkan ikon dengan dasar lingkaran; dasar tombol disediakan terpisah agar state dan ukuran mudah diubah. Lembar konsep 25 gambar bukan file siap impor.
+Satu file berisi satu ikon atau satu state tombol. Ikon memakai latar transparan asli (alpha), tanpa checkerboard yang tergambar, tanpa tulisan/angka/harga. Sisakan sekitar 5–10% ruang tepi untuk ikon; panel boleh memenuhi canvas tanpa padding besar. Untuk ikon lompat/tembak/api, jangan gabungkan ikon dengan dasar lingkaran; dasar tombol disediakan terpisah agar state dan ukuran mudah diubah. Lembar konsep 25 gambar bukan file siap impor.
 
 Boleh mengirim sebagian dulu. Prioritas pertama: tiga dasar lingkaran, `jump_arrow.png`, `fire_target.png`, dan `emergency_kit.png`. File lain tetap opsional sampai tersedia; UI yang belum memperoleh gambar mempertahankan tampilannya yang berfungsi.
 

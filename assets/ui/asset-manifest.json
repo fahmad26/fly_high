@@ -1,7 +1,7 @@
 {
   "version": 1,
   "folder": "assets/ui/ready",
-  "format": "PNG RGBA",
+  "format": "PNG; RGBA for cutout icons, opaque RGB accepted for full-bleed panels",
   "status": "2 generated source files available; remaining sources pending; no uploads performed",
   "assets": [
     {
@@ -196,7 +196,7 @@
       "height": 256,
       "sourceWidth": 1774,
       "sourceHeight": 887,
-      "sourceStatus": "generated; dimensions and alpha verified; slice bounds require in-Studio review after import",
+      "sourceStatus": "v2 generated; 1774x887 source and 2:1 frame proportions verified; fully opaque RGB (alpha 255 throughout); slice bounds require in-Studio review after import",
       "assetId": null
     }
   ]
