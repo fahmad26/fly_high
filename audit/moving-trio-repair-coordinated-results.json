@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 1",
+      "detail": {
+        "interruptions": [],
+        "repairs": 1,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 2",
+      "detail": {
+        "interruptions": [],
+        "repairs": 2,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 3",
+      "detail": {
+        "interruptions": [],
+        "repairs": 3,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 4",
+      "detail": {
+        "interruptions": [],
+        "repairs": 4,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 5",
+      "detail": {
+        "interruptions": [],
+        "repairs": 5,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 6",
+      "detail": {
+        "interruptions": [],
+        "repairs": 6,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 7",
+      "detail": {
+        "interruptions": [],
+        "repairs": 7,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "moving trio repair cycle 8",
+      "detail": {
+        "interruptions": [],
+        "repairs": 8,
+        "rescues": 0
+      }
+    },
+    {
+      "passed": true,
+      "name": "Player4 clean client logs",
+      "detail": []
+    },
+    {
+      "passed": true,
+      "name": "Player5 clean client logs",
+      "detail": []
+    },
+    {
+      "passed": true,
+      "name": "Player6 clean client logs",
+      "detail": []
+    }
+  ],
+  "interruptions": [],
+  "journeys": [],
+  "fixtures": {
+    "roles": "scripted positions inside lobby/basket; native remotes and production manager validations",
+    "continuousAltitude": "normal production integration, no altitude skips or shields",
+    "fatalBranches": "controlled altitude/damage/inventory after full journeys"
+  },
+  "logs": [],
+  "finalState": {
+    "km": 3864.704833984375,
+    "position": "0.059897106140851974, 2.524354934692383, 6.000002861022949",
+    "tether": {
+      "durability": 100,
+      "stage": "Basket"
+    },
+    "holes": 0,
+    "role": "Engineer"
+  },
+  "elapsed": 140.1622508999999,
+  "samples": [],
+  "repairs": 8,
+  "rescues": 0
+}

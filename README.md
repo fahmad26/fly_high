@@ -2,7 +2,7 @@
 
 > **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
 
-**Status audit 28 Oktober 2026:** Safe Takeoff Zone 1.200 km dan gondola 28×28 stud sudah diterapkan. Regresi lokal 43/43 lulus; konfigurasi produk Robux, uji cloud/multiplayer serta beberapa aset visual/audio masih perlu diselesaikan sebelum rilis. Lihat [laporan audit lengkap](./AUDIT_REPORT.md).
+**Status QA 31 Oktober 2026:** Safe Takeoff Zone 1.200 km, gondola 28×28 stud, role eksklusif, penyelamatan tali, peluru bergerak dan audio tembakan sudah tersedia. ID Developer Product sudah dikonfigurasi; publikasi, transaksi Robux nyata dan penyimpanan cloud tetap ditunda. Hasil pengujian Studio beserta batasnya dicatat dalam [laporan audit](./AUDIT_REPORT.md) dan [prosedur perjalanan penuh](./audit/FULL_JOURNEY_QA.md).
 
 **Pulau hidup:** laut Terrain, pesisir berpasir, 20 pohon, 60 rumpun tanaman, 56 bunga, batu/kerikil, 6 ayam berkeliaran dan 14 kupu-kupu beranimasi sudah ditambahkan. Jalur lobby tetap terbuka.
 
@@ -16,7 +16,7 @@
 
 - **Ruang Udara Global (*Shared Sky*) & Safe Takeoff Zone 6x Lipat (0 – 1.200 km)**:
   - Seluruh balon terbang di ruang udara bersama dan dapat saling melihat balon tim lain.
-  - Safe Takeoff Zone lapang (0 - 1.200 km) bebas rintangan untuk mencegah tabrakan dan memberikan waktu menyebar formasi.
+  - Safe Takeoff Zone lapang (0 - 1.200 km) bebas rintangan lingkungan dan memberikan waktu menyebar formasi. Tabrakan antarbalon dan tembakan ke balon sendiri tetap dapat menghasilkan lubang.
 - **Keranjang Balon Lapang (2x Lipat)**:
   - Keranjang gondola dirancang lega untuk kebebasan gerak 1–3 pemain.
   - Fasilitas kemudi fisik (*HelmSeat*), 2 rak senjata, stasiun tali pengaman & katrol winch, serta sirine peringatan.

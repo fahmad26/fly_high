@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-31",
+  "baseCommit": "5c050a7455a950787547b42f6ff2ad913d6f4028",
+  "status": "audit completed with open co-op finding",
+  "singleAllGreenEndToEndSuite": false,
+  "automation": "native Studio scripted clients; human/device feel not assessed",
+  "routes": {
+    "solo": {
+      "reached10000": true,
+      "journey": {
+        "ok": true,
+        "seconds": 708.4549624000001,
+        "name": "solo",
+        "repairs": 34,
+        "interruptions": [],
+        "rescues": 0,
+        "dodges": 0
+      },
+      "source": "full-journey-partial-results.json"
+    },
+    "duo": {
+      "reached10000": true,
+      "repairs": 26,
+      "sourceRawReportPassed": false
+    },
+    "trio": {
+      "reached10000": true,
+      "repairs": 13,
+      "sourceRawReportPassed": false
+    },
+    "coopCeilingSample": {
+      "elapsed": 729.1906536999995,
+      "crews": {
+        "trio": {
+          "done": true,
+          "km": 10000,
+          "holes": 1,
+          "repairs": 13
+        },
+        "duo": {
+          "km": 10000,
+          "holes": 0,
+          "repairs": 26
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    "coopSource": "full-journey-coordinated-results.json",
+    "coopTerminalNote": "repair bot raced Victory cleanup; summit/docking verified separately with controlled terminal fixture"
+  },
+  "verifiedFixtures": {
+    "lighting": {
+      "passed": 12,
+      "total": 12,
+      "source": "biome-lifecycle-results.json"
+    },
+    "coordinatedRepair": {
+      "passed": 11,
+      "total": 11,
+      "controlledAltitudeKm": 2500,
+      "hazardsPaused": true,
+      "source": "moving-trio-repair-coordinated-results.json"
+    },
+    "endingAndCleanup": {
+      "passed": 37,
+      "total": 37,
+      "source": "full-journey-duo-trio-diagnostic.json",
+      "fall2000KmSeconds": 3.0174276999996437,
+      "groundedTimeoutConfiguredSeconds": 60
+    },
+    "victoryHandoff": {
+      "passed": 28,
+      "total": 28,
+      "controlledAltitudeKm": 9995,
+      "naturalFinalAscent": true,
+      "source": "victory-handoff-results.json"
+    }
+  },
+  "productionChanges": [
+    "BiomeLightingController: Dawn reset on Game Over/lobby respawn; invalidate stale fog; preserve active ghost and Victory biome"
+  ],
+  "openFindings": [
+    {
+      "id": "COOP-LATERAL-POSITION",
+      "status": "open",
+      "observation": "rapid horizontal manoeuvres can produce client/server repair-distance disagreement and Hanging",
+      "productionValidatorsRelaxed": false,
+      "exactRootCauseConfirmed": false
+    }
+  ],
+  "deferred": [
+    "publishing",
+    "real Robux/cloud persistence",
+    "public-network latency",
+    "human and physical-device playtest"
+  ],
+  "studio": {
+    "mode": "Edit",
+    "toolbar": "Test",
+    "clients": 1,
+    "productionScriptsCompiled": 29,
+    "qaInstancesRemaining": 0,
+    "placeSaved": true
+  },
+  "placeSHA256": "ea2c5a3c7380a2dd3e27d4c21b81a62f2bd0c157f59688c720625929f333961d"
+}

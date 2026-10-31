@@ -1,6 +1,7 @@
 local Lighting = game:GetService("Lighting")
 local TweenService = game:GetService("TweenService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local localPlayer = game:GetService("Players").LocalPlayer
 
 local remotes = ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local flightSyncEvent = remotes:WaitForChild("FlightStateSyncEvent")
@@ -65,7 +66,17 @@ local function applyBiome(biomeIndex)
 	activeTween:Play()
 end
 
+local function restoreLobbyLighting()
+	fogVersion += 1 -- Invalidate delayed fog restoration from the previous flight.
+	currentBiome = 0
+	applyBiome(1)
+end
+
 flightSyncEvent.OnClientEvent:Connect(function(data)
+	if data.isGameOver then
+		restoreLobbyLighting()
+		return
+	end
 	local altKm = data.altitudeKm or 0
 	local biomeIndex = math.clamp(math.floor(altKm / 2000) + 1, 1, 5)
 	applyBiome(biomeIndex)
@@ -73,6 +84,11 @@ end)
 
 -- Initial Dawn
 applyBiome(1)
+
+localPlayer.CharacterAdded:Connect(function()
+	-- Ghost spotters still belong to the active flight and keep its biome.
+	if not localPlayer:GetAttribute("InFlight") then restoreLobbyLighting() end
+end)
 
 remotes.HazardAlertEvent.OnClientEvent:Connect(function(data)
  if data.effect~="Fog" then return end

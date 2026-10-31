@@ -332,6 +332,8 @@ journey
 4. **Zona 4 (6.000 km – 8.000 km): "Bioluminescent Cosmic Exosphere"** — Ambang luar angkasa malam berbintang, pita aurora borealis hijau-pink.
 5. **Zona 5 (8.000 km – 10.000 km): "The Celestial Gateway"** — Sinar keemasan suci (*God rays*), samudera awan emas, siluet Istana Awan di puncak.
 
+**Lifecycle pencahayaan:** Game Over dan respawn ke lobby mengembalikan suasana Zona 1 (Dawn), termasuk membatalkan pemulihan kabut dari flight sebelumnya. Victory mempertahankan Zona 5 selama di Istana Awan; portal pulang memulihkan Dawn. Ghost Spotter yang masih menjadi bagian dari flight aktif tetap mengikuti bioma timnya saat respawn.
+
 ---
 
 ## 11. Destinasi Akhir: Pulau Awan & Istana Megah (10.000 KM)
