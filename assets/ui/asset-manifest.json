@@ -2,7 +2,7 @@
   "version": 2,
   "folder": "assets/ui/final/compressed_img",
   "format": "PNG; RGBA for cutout icons, opaque RGB accepted for full-bleed panels",
-  "status": "27/27 IDs wired into HUDTheme; 7/27 image loading verified, 20 use native presentation fallback",
+  "status": "Sky Arcade HUD active: code-rendered controls and panels, four optional raster illustrations; original 27 uploaded IDs retained",
   "assets": [
     {
       "key": "control_circle_normal",
@@ -13,8 +13,9 @@
       "sourceWidth": 512,
       "sourceHeight": 512,
       "sourceSha256": "5b49355232589c5e97a4d5d7b936026015e30d19857159c719901aafe5ecd17b",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "control_circle_pressed",
@@ -23,10 +24,11 @@
       "height": 512,
       "sourceWidth": 512,
       "sourceHeight": 512,
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
       "assetId": "rbxassetid://73541054583304",
       "sourceSha256": "c4620a9a3a8d545edeb29558af7a1f0cb6e31cafe8b74383fa41b88a00a0b537",
-      "loadStatus": "Failure"
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "control_circle_disabled",
@@ -37,8 +39,9 @@
       "sourceWidth": 512,
       "sourceHeight": 512,
       "sourceSha256": "efe3f39980576a03cb95ef48684d32440f0249f457bde93c2f96d807894e559f",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "jump_arrow",
@@ -49,8 +52,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "78adf4182a68d2a27d89766614eb099366d470cd5de5118684a7407ceea46f68",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "fire_target",
@@ -61,8 +65,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "67b9c64de87f50b4568195b1d031c0b7b850fe491ee9b2c161244e2a89912915",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "aim_reticle",
@@ -73,8 +78,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "deea7f46d5ed67e101ae6ecf52598f16443ffe06b189c78d1ab33056acc81757",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "burner_flame",
@@ -85,8 +91,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "c571c49bfd67ed550d8186115be79bb59fc80f6bb362b8afd1a2141aa461d6a4",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "emergency_kit",
@@ -97,8 +104,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "4da076c41d66eda99f8007134755ae290550c1fdcae384de523362653054b942",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": true
     },
     {
       "key": "helm",
@@ -109,8 +117,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "bf58787c261b324adeef50e174e677580e5694e6950065bcfb2f68d6b1405e8c",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "helm_release",
@@ -121,8 +130,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "5daf1eb453982a199b9a5fe73ba44218192fd5d6a3075c7611da3bd0878f2885",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "rope_attach",
@@ -133,8 +143,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "fc23c20a7b3a5533bbcc3adee29a55593491f644ee5f2987a59df5af7699b1e4",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "rope_detach",
@@ -145,8 +156,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "aa1b92f4ec464a0da23dcc0917f5e306440f5b8e7839d6d74f10913efcef5f94",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "rope_climb",
@@ -157,8 +169,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "a7a392a5d8cefb45e044225110c61e3919569380f9d0ff95d5aaa6886ed34e90",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "rope_descend",
@@ -169,8 +182,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "9003df096689c9ff58ec00a2307bf58e834b314344789d90aaa5331deeab7fe4",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "patch_repair",
@@ -181,8 +195,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "63892ab6cd7702b11ec1830a5a991439a061e1c76655cd0f4ac916112024829a",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "rope_repair",
@@ -193,8 +208,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "0831b5d5e478cc9a30d8415a845668e7f47a0cecca3363036983dd3a4687cb52",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "crew_rescue",
@@ -205,8 +221,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "7ebb81db2c71ad02ed725598936e2351e97f043e5f141f385e61ddb98e473ef7",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "shop_supply",
@@ -217,8 +234,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "92395760445c5ca626ba37976ccd4d4f7b13c5f9fe77c217a1f26695821d773a",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "team_ping",
@@ -229,8 +247,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "9dbfbb77bd04f981e3f9f5d560bb12e6ed395386f266bf898e1b8c84e55f251b",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "sound_on",
@@ -241,8 +260,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "ab46420e2e90e1858b6ddb7889f9143f76e6bba94497b2c1da8ed44d3e6ece30",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "sound_off",
@@ -253,8 +273,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "6a58fe2ad89fbd709ac39ec020bddcfaf8b57c025b5ba198bcfe0a0f491a326f",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "warning_badge",
@@ -265,8 +286,9 @@
       "sourceWidth": 256,
       "sourceHeight": 256,
       "sourceSha256": "a076362ecb2b3362da8d81d44a1f7fa6d606ead0068238687a2035100aefa7cf",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "balloon_intact",
@@ -277,8 +299,9 @@
       "sourceWidth": 128,
       "sourceHeight": 128,
       "sourceSha256": "61860cfde70ca42cd8dac172fc7b5fb0ee316fce891b9b7d19d6ba460497a264",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Success"
+      "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
+      "loadStatus": "Success",
+      "activeAsHUDIllustration": true
     },
     {
       "key": "balloon_torn",
@@ -289,8 +312,9 @@
       "sourceWidth": 128,
       "sourceHeight": 128,
       "sourceSha256": "fd049dc8e251b4165c5be348b7b40f9554d100497ccf0b4c47a06591fd0a08f5",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     },
     {
       "key": "weapon_pistol",
@@ -301,8 +325,9 @@
       "sourceWidth": 512,
       "sourceHeight": 256,
       "sourceSha256": "d15c182a9a6df8cc8a36519c05b713a191d803f6fc4b6edce3d26b651aae94a7",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": true
     },
     {
       "key": "weapon_ak47",
@@ -313,8 +338,9 @@
       "sourceWidth": 512,
       "sourceHeight": 256,
       "sourceSha256": "a48860279d9e75a7c7698e5ac17a76adeb1de58c22c3673229edad170172fec1",
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
-      "loadStatus": "Failure"
+      "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": true
     },
     {
       "key": "panel_9slice",
@@ -323,21 +349,30 @@
       "height": 256,
       "sourceWidth": 512,
       "sourceHeight": 256,
-      "sourceStatus": "final compressed PNG uploaded and wired to HUD; native presentation retained when the image is unavailable",
+      "sourceStatus": "Uploaded source retained in asset inventory; current arcade controls use resolution-independent glyphs",
       "assetId": "rbxassetid://119752524819445",
       "sourceSha256": "04022a2d8328b76a35a4acd4c8c1d56df34953da26d3a6820d9116d8bc8d3382",
-      "loadStatus": "Failure"
+      "loadStatus": "Failure",
+      "activeAsHUDIllustration": false
     }
   ],
   "uploadDate": "2026-10-31",
   "integration": {
     "date": "2026-10-31",
+    "design": "Sky Arcade",
     "place": "Fly High.rbxl",
-    "module": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
     "theme": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
     "layout": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
-    "assetReferences": 27,
-    "allImagesVisuallyVerified": false,
-    "qaReport": "audit/hud-images-results.json"
+    "glyphs": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+    "uploadedInventoryCount": 27,
+    "coreControlsRequireDownloadedImages": false,
+    "optionalIllustrationKeys": [
+      "balloon_intact",
+      "emergency_kit",
+      "weapon_pistol",
+      "weapon_ak47"
+    ],
+    "qaReport": "audit/hud-arcade-results.json",
+    "preview": "audit/hud-arcade-phone.jpg"
   }
 }

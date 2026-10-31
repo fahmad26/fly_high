@@ -1,6 +1,6 @@
 # 🎈 Fly High (Roblox Game)
 
-Integrasi gambar HUD 31 Oktober 2026 sudah dipasang di place lokal dengan teks dinamis dan fallback kontrol semula. Playtest desktop/iPad/HP tidak menemukan overlap tombol proyek atau teks terpotong; 31 skrip terkompilasi dan log bersih. **7 dari 27 gambar berhasil dimuat, sedangkan 20 masih memakai fallback**; seluruh tampilan gambar belum terverifikasi. Lihat [hasil integrasi HUD](./audit/hud-images-results.json).
+HUD **Sky Arcade** memakai gradasi cerah, outline tegas, angka ketinggian/amunisi besar, serta kontrol kontekstual langsung. Bentuk dasar dan glyph kontrol dirender oleh Roblox sehingga tidak menunggu gambar termuat. Lihat [preview langsung dari Studio](./audit/hud-arcade-phone.jpg) dan [hasil pengujian beserta batasnya](./audit/hud-arcade-results.json). 32 skrip terkompilasi; 12 profil perangkat/kondisi diperiksa. Seluruh 27 sumber dan ID gambar sebelumnya tetap tersimpan.
 
 > **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
 

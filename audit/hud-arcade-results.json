@@ -1,0 +1,1062 @@
+{
+  "date": "2026-10-31",
+  "design": "Sky Arcade",
+  "trigger": "User requested a cohesive polished HUD inspired by their attached bright arcade Roblox references.",
+  "placeSha256": "B94CEC7E3591A0B2E2480C8F4B67CECBF909F5843389A94BCCB8457F48AC95FF",
+  "coreUIRequiresDownloadedImages": false,
+  "optionalIllustrationKeys": [
+    "balloon_intact",
+    "emergency_kit",
+    "weapon_pistol",
+    "weapon_ak47"
+  ],
+  "sourceImagesEdited": false,
+  "newUploadsPerformed": false,
+  "summary": {
+    "profiles": 12,
+    "overlaps": 0,
+    "outside": 0,
+    "visibleTextOverflow": 0,
+    "smallTouchTargets": 0
+  },
+  "profiles": [
+    {
+      "profile": "iPad10-landscape-gunner",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Gunner",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 551,
+          "h": 84,
+          "name": "MobileShootButton",
+          "w": 84,
+          "x": 1075
+        },
+        "4": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "5": {
+          "y": 599,
+          "h": 52,
+          "name": "ReloadButton",
+          "w": 52,
+          "x": 911
+        },
+        "6": {
+          "y": 599,
+          "h": 52,
+          "name": "DropButton",
+          "w": 52,
+          "x": 975
+        },
+        "7": {
+          "y": 653,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 1071
+        },
+        "8": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-shop-open",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Gunner",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 551,
+          "h": 84,
+          "name": "MobileShootButton",
+          "w": 84,
+          "x": 1075
+        },
+        "4": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "5": {
+          "y": 599,
+          "h": 52,
+          "name": "ReloadButton",
+          "w": 52,
+          "x": 911
+        },
+        "6": {
+          "y": 599,
+          "h": 52,
+          "name": "DropButton",
+          "w": 52,
+          "x": 975
+        },
+        "7": {
+          "y": 653,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 1071
+        },
+        "8": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        },
+        "9": {
+          "y": 180,
+          "h": 44,
+          "name": "CloseButton",
+          "w": 44,
+          "x": 768
+        },
+        "10": {
+          "y": 316,
+          "h": 44,
+          "name": "BuyEmergencyKitButton",
+          "w": 410,
+          "x": 385
+        },
+        "11": {
+          "y": 461,
+          "h": 44,
+          "name": "BuyAK47Button",
+          "w": 410,
+          "x": 385
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-landscape-pilot",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": false,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "imageIndependentControls": true,
+      "role": "Pilot",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 653,
+          "h": 88,
+          "name": "GasButton",
+          "w": 104,
+          "x": 1055
+        },
+        "3": {
+          "y": 685,
+          "h": 56,
+          "name": "AutoGasButton",
+          "w": 166,
+          "x": 877
+        },
+        "4": {
+          "y": 685,
+          "h": 56,
+          "name": "ReleaseHelmButton",
+          "w": 56,
+          "x": 809
+        },
+        "5": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "6": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "7": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-critical-four-holes",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "tablet": true,
+      "artDirection": "Sky Arcade",
+      "imageIndependentControls": true,
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "4": {
+          "y": 653,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 1071
+        },
+        "5": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-landscape-engineer",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Engineer",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "4": {
+          "y": 657,
+          "h": 54,
+          "name": "DetachButton",
+          "w": 152,
+          "x": 433
+        },
+        "5": {
+          "y": 657,
+          "h": 54,
+          "name": "ClimbButton",
+          "w": 152,
+          "x": 595
+        },
+        "6": {
+          "y": 653,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 1071
+        },
+        "7": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 1179,
+        "2": 761
+      }
+    },
+    {
+      "profile": "iPad10-portrait-engineer",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Engineer",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "4": {
+          "y": 1016,
+          "h": 54,
+          "name": "DetachButton",
+          "w": 152,
+          "x": 253
+        },
+        "5": {
+          "y": 1016,
+          "h": 54,
+          "name": "ClimbButton",
+          "w": 152,
+          "x": 415
+        },
+        "6": {
+          "y": 1012,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 711
+        },
+        "7": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 819,
+        "2": 1120
+      }
+    },
+    {
+      "profile": "iPad10-portrait-engineer-storm",
+      "small": [],
+      "touch": true,
+      "compact": false,
+      "tablet": true,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Engineer",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 250,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 326,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        },
+        "3": {
+          "y": 326,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "4": {
+          "y": 1016,
+          "h": 54,
+          "name": "DetachButton",
+          "w": 152,
+          "x": 253
+        },
+        "5": {
+          "y": 1016,
+          "h": 54,
+          "name": "ClimbButton",
+          "w": 152,
+          "x": 415
+        },
+        "6": {
+          "y": 1012,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 711
+        },
+        "7": {
+          "y": 250,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 819,
+        "2": 1120
+      }
+    },
+    {
+      "profile": "iPhone17-engineer",
+      "small": [],
+      "touch": true,
+      "compact": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Engineer",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 154,
+          "h": 48,
+          "name": "EmergencyKitButton",
+          "w": 48,
+          "x": 72
+        },
+        "2": {
+          "y": 154,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 48,
+          "x": 188
+        },
+        "3": {
+          "y": 154,
+          "h": 48,
+          "name": "PingButton",
+          "w": 48,
+          "x": 130
+        },
+        "4": {
+          "y": 556,
+          "h": 48,
+          "name": "DetachButton",
+          "w": 138,
+          "x": 132
+        },
+        "5": {
+          "y": 614,
+          "h": 48,
+          "name": "ClimbButton",
+          "w": 138,
+          "x": 132
+        },
+        "6": {
+          "y": 632,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 315
+        },
+        "7": {
+          "y": 154,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 48,
+          "x": 14
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 401,
+        "2": 718
+      }
+    },
+    {
+      "profile": "iPhone17-portrait-gunner",
+      "small": [],
+      "touch": true,
+      "compact": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Gunner",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 154,
+          "h": 48,
+          "name": "EmergencyKitButton",
+          "w": 48,
+          "x": 72
+        },
+        "2": {
+          "y": 154,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 48,
+          "x": 188
+        },
+        "3": {
+          "y": 546,
+          "h": 68,
+          "name": "MobileShootButton",
+          "w": 68,
+          "x": 205
+        },
+        "4": {
+          "y": 154,
+          "h": 48,
+          "name": "PingButton",
+          "w": 48,
+          "x": 130
+        },
+        "5": {
+          "y": 580,
+          "h": 46,
+          "name": "ReloadButton",
+          "w": 46,
+          "x": 87
+        },
+        "6": {
+          "y": 580,
+          "h": 46,
+          "name": "DropButton",
+          "w": 46,
+          "x": 143
+        },
+        "7": {
+          "y": 632,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 315
+        },
+        "8": {
+          "y": 154,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 48,
+          "x": 14
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 401,
+        "2": 718
+      }
+    },
+    {
+      "profile": "iPhone17-landscape-gunner-final",
+      "small": [],
+      "touch": true,
+      "compact": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Gunner",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 154,
+          "h": 48,
+          "name": "EmergencyKitButton",
+          "w": 48,
+          "x": 72
+        },
+        "2": {
+          "y": 154,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 48,
+          "x": 14
+        },
+        "3": {
+          "y": 151,
+          "h": 68,
+          "name": "MobileShootButton",
+          "w": 68,
+          "x": 553
+        },
+        "4": {
+          "y": 154,
+          "h": 48,
+          "name": "PingButton",
+          "w": 48,
+          "x": 130
+        },
+        "5": {
+          "y": 185,
+          "h": 46,
+          "name": "ReloadButton",
+          "w": 46,
+          "x": 435
+        },
+        "6": {
+          "y": 185,
+          "h": 46,
+          "name": "DropButton",
+          "w": 46,
+          "x": 491
+        },
+        "7": {
+          "y": 237,
+          "h": 72,
+          "name": "JumpButton",
+          "w": 72,
+          "x": 663
+        },
+        "8": {
+          "y": 154,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 48,
+          "x": 188
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 749,
+        "2": 323
+      }
+    },
+    {
+      "profile": "iPhone17-landscape-pilot-final",
+      "small": [],
+      "touch": true,
+      "compact": true,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": false,
+        "size": {
+          "1": 72,
+          "2": 72
+        },
+        "corner": 0.5,
+        "active": false
+      },
+      "imageIndependentControls": true,
+      "role": "Pilot",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 154,
+          "h": 48,
+          "name": "EmergencyKitButton",
+          "w": 48,
+          "x": 72
+        },
+        "2": {
+          "y": 231,
+          "h": 78,
+          "name": "GasButton",
+          "w": 94,
+          "x": 641
+        },
+        "3": {
+          "y": 253,
+          "h": 56,
+          "name": "AutoGasButton",
+          "w": 150,
+          "x": 479
+        },
+        "4": {
+          "y": 253,
+          "h": 56,
+          "name": "ReleaseHelmButton",
+          "w": 56,
+          "x": 411
+        },
+        "5": {
+          "y": 154,
+          "h": 48,
+          "name": "ShopToggleButton",
+          "w": 48,
+          "x": 14
+        },
+        "6": {
+          "y": 154,
+          "h": 48,
+          "name": "PingButton",
+          "w": 48,
+          "x": 130
+        },
+        "7": {
+          "y": 154,
+          "h": 48,
+          "name": "WarningAudioToggleButton",
+          "w": 48,
+          "x": 188
+        }
+      },
+      "nativeThumbstickVisible": true,
+      "size": {
+        "1": 749,
+        "2": 323
+      }
+    },
+    {
+      "profile": "desktop-gunner-final",
+      "small": [],
+      "touch": false,
+      "compact": false,
+      "tablet": false,
+      "outside": [],
+      "nativeJumpVisible": false,
+      "artDirection": "Sky Arcade",
+      "jump": {
+        "visible": true,
+        "size": {
+          "1": 88,
+          "2": 88
+        },
+        "corner": 0.5,
+        "active": true
+      },
+      "imageIndependentControls": true,
+      "role": "Gunner",
+      "textOverflow": [],
+      "overlaps": [],
+      "buttons": {
+        "1": {
+          "y": 236,
+          "h": 64,
+          "name": "EmergencyKitButton",
+          "w": 64,
+          "x": 96
+        },
+        "2": {
+          "y": 236,
+          "h": 64,
+          "name": "ShopToggleButton",
+          "w": 64,
+          "x": 20
+        },
+        "3": {
+          "y": 484,
+          "h": 84,
+          "name": "MobileShootButton",
+          "w": 84,
+          "x": 1986
+        },
+        "4": {
+          "y": 312,
+          "h": 64,
+          "name": "PingButton",
+          "w": 64,
+          "x": 20
+        },
+        "5": {
+          "y": 532,
+          "h": 52,
+          "name": "ReloadButton",
+          "w": 52,
+          "x": 1822
+        },
+        "6": {
+          "y": 532,
+          "h": 52,
+          "name": "DropButton",
+          "w": 52,
+          "x": 1886
+        },
+        "7": {
+          "y": 586,
+          "h": 88,
+          "name": "JumpButton",
+          "w": 88,
+          "x": 1982
+        },
+        "8": {
+          "y": 312,
+          "h": 64,
+          "name": "WarningAudioToggleButton",
+          "w": 64,
+          "x": 96
+        }
+      },
+      "nativeThumbstickVisible": false,
+      "size": {
+        "1": 2090,
+        "2": 694
+      }
+    }
+  ],
+  "interactions": {
+    "shopOpenedAndClosedViaNativeClick": true,
+    "autoGas": {
+      "jumps": 0,
+      "role": "Pilot",
+      "health": 100,
+      "autoGas": true,
+      "holes": 0
+    },
+    "releaseHelm": {
+      "jumps": 0,
+      "holes": 0,
+      "health": 100,
+      "autoGas": true
+    },
+    "kitFourHolesCleared": {
+      "jumps": 0,
+      "holes": 0,
+      "health": 100,
+      "autoGas": true
+    },
+    "freshSessionJump": {
+      "jumps": 1,
+      "role": "Gunner",
+      "health": 100,
+      "autoGas": false,
+      "holes": 0
+    }
+  },
+  "console": "[DataManager] Unpublished Studio: isolated mock data; purchases disabled.",
+  "compile": {
+    "errors": [],
+    "qa": [],
+    "scripts": 32
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "device": "Current device desktop",
+    "testMode": "Test",
+    "onePlayerTesting": true,
+    "temporaryFixtureRemoved": true
+  },
+  "preview": "audit/hud-arcade-phone.jpg",
+  "limits": [
+    "Stationary one-player fixture anchors the balloon and pauses hazards; not a new gameplay physics or public-server test.",
+    "Physical touch devices, live purchase and cloud persistence were not tested.",
+    "A role-cycled fixture with auto gas enabled registered a native button activation but did not credit a jump. A fresh session credited the jump. Cause not established; no jump gameplay code changed.",
+    "Two final display-only refinements (cooldown badge/explicit hold caption) and pruning unused illustration requests were compiled and saved after the last live scene. Earlier profile checks preceded the narrow portrait tether-bar shift; the final layout shifts it left to clear jump."
+  ]
+}
