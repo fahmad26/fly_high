@@ -29,9 +29,9 @@ local function flights()
  end
  return out
 end
-local function add(model,pos,velocity,shootable,name,color,effect,delayTime)
+local function add(model,pos,velocity,shootable,name,color,effect,delayTime,health)
  model.Name=name model:SetAttribute("IsObstacle",true) model:SetAttribute("Shootable",shootable)
- model:SetAttribute("Health",shootable and 70 or 0)
+ model:SetAttribute("Health",shootable and health or 0)
  for _,part in ipairs(model:GetDescendants()) do
   if part:IsA("BasePart") then
    part.Anchored=true part.CanCollide=false part.CanTouch=false part.CanQuery=shootable part.Color=color
@@ -48,14 +48,15 @@ local function add(model,pos,velocity,shootable,name,color,effect,delayTime)
 end
 function Manager.SpawnBand(index,fd,hazard)
  local spec=bands[index]
+ local pacing=Config.OBSTACLE_PACING[index]
  if not spec or (fd.largeChallengeUntil and os.clock()<fd.largeChallengeUntil) or not Manager.GetBand(fd.altitudeKm) or #Manager.activeObstacles>=60 then return nil end
  local center=fd.balloon.Envelope.Position
  local predicted=center+Vector3.new(0,(fd.isGasActive or fd.autoGas) and 12.5 or 0,0)
  if not hazard then
   local template=spec.enemy=="Hailstone" and templates.Hailstone or templates.WildBird
   local pos=predicted+Vector3.new((math.random()-0.5)*90,10,-95)
-  local velocity=(predicted-pos).Unit*28
-  return add(template:Clone(),pos,velocity,true,spec.enemy,spec.color,nil,0)
+  local velocity=(predicted-pos).Unit*pacing.speed
+  return add(template:Clone(),pos,velocity,true,spec.enemy,spec.color,nil,0,pacing.health)
  end
  -- Shared telegraph remains fixed in world space, visible to every balloon nearby.
  local pos=predicted+Vector3.new(0,0,-12)
@@ -88,8 +89,10 @@ task.spawn(function()
   for band,crew in pairs(occupied) do
    local fd=crew[math.random(1,#crew)]
    local now=os.clock()
-   if now>=(nextEnemy[band] or 0) then Manager.SpawnBand(band,fd,false) nextEnemy[band]=now+5 end
-   if now>=(nextHazard[band] or 0) then Manager.SpawnBand(band,fd,true) nextHazard[band]=now+20 end
+   local pacing=Config.OBSTACLE_PACING[band]
+   if not nextHazard[band] then nextHazard[band]=now+pacing.hazardInterval end
+   if now>=(nextEnemy[band] or 0) then Manager.SpawnBand(band,fd,false) nextEnemy[band]=now+pacing.enemyInterval end
+   if now>=nextHazard[band] then Manager.SpawnBand(band,fd,true) nextHazard[band]=now+pacing.hazardInterval end
   end
  end
 end)

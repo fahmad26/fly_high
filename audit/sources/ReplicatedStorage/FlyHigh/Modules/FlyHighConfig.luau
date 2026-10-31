@@ -10,6 +10,18 @@ local FlyHighConfig = {
 	BASE_FLIGHT_DURATION_SEC = 600, -- 10 minutes without delay
 	MILESTONE_STEP_KM = 1000,
 	BIOME_STEP_KM = 2000,
+ -- Gradual regular encounters; shared storm curtain pacing stays independent.
+ OBSTACLE_PACING = {
+  [1]={speed=22,health=50,enemyInterval=8,hazardInterval=26},
+  [2]={speed=24,health=50,enemyInterval=7.5,hazardInterval=25},
+  [3]={speed=26,health=70,enemyInterval=7,hazardInterval=24},
+  [4]={speed=28,health=70,enemyInterval=6.5,hazardInterval=23},
+  [5]={speed=29,health=70,enemyInterval=6,hazardInterval=22},
+  [6]={speed=30,health=85,enemyInterval=5.5,hazardInterval=21},
+  [7]={speed=32,health=85,enemyInterval=5,hazardInterval=20},
+  [8]={speed=34,health=100,enemyInterval=4.5,hazardInterval=19},
+  [9]={speed=36,health=100,enemyInterval=4,hazardInterval=18},
+ },
 
 	-- Hot Air Balloon
 	MAX_HOLES = 5,

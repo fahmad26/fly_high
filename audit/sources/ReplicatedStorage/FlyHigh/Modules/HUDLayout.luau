@@ -1,6 +1,6 @@
 -- One layout owner: scale positions and dimensions together, never touch hitboxes.
 local Layout = {}
-local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "PullCrewButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
+local actions = {"AttachButton", "ClimbButton", "DescendButton", "RepairButton", "DetachButton", "RepairRopeButton", "ReloadButton", "DropButton", "PingButton", "WarningAudioToggleButton"}
 local riggingActions = {"AttachButton", "RepairRopeButton", "PullCrewButton", "DetachButton", "ClimbButton", "RepairButton", "DescendButton"}
 
 local function box(object, x, y, w, h)
@@ -108,6 +108,8 @@ function Layout.Start(gui, player)
    end
    return f
   end
+  local rescue=get("PullCrewButton")
+  if rescue then rescue.Parent=gui rescue.ZIndex=2 end
   local jumpPanel = get("JumpPanel")
   if jumpPanel then
    jumpPanel.JumpHint.Visible = true
@@ -182,14 +184,16 @@ function Layout.Start(gui, player)
    local showRelease = release and release.Visible
    local autoGas = get("AutoGasButton")
    local showAutoGas = autoGas and autoGas.Visible
-   local jump = place("JumpPanel", w / 2 - (showAutoGas and 182 or 106), h - 56, 100, 48)
+   local showRescue=rescue and rescue.Visible
+   local jump = place("JumpPanel", w / 2 - ((showAutoGas or showRescue) and 182 or 106), h - 56, 100, 48)
    if jump then
     jump.JumpHint.Visible = false
     box(jump.JumpButton, 0, 0, 100, 48)
    end
    place("ReleaseHelmButton", w / 2 - 202, h - 56, 140, 48)
    place("AutoGasButton", w / 2 - (showRelease and 54 or 74), h - 56, 140, 48)
-   box(toggle, w / 2 + (showRelease and 94 or(showAutoGas and 74 or 6)), h - 56, 108, 48)
+   place("PullCrewButton",w/2-74,h-56,140,48)
+   box(toggle, w / 2 + (showRelease and 94 or((showAutoGas or showRescue) and 74 or 6)), h - 56, 108, 48)
    box(tray, w / 2 - 120, 8, 240, h - 72)
    tray.CanvasSize = UDim2.fromOffset(0, row * 50 + 8)
    place("GasButton", w - 116, 58, 108, 64)

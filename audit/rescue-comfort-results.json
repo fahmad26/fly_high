@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-31",
+  "final": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":true,\"checks\":[{\"passed\":true,\"name\":\"fall at altitude waits for teammate\"},{\"passed\":true,\"name\":\"rescue action directly on main HUD\",\"detail\":{\"visible\":true,\"sizeY\":48,\"parent\":\"FlyHighHUD\",\"compact\":true,\"viewport\":\"1094.40002, 558.400024\",\"inside\":true,\"sizeX\":140,\"overlap\":false}},{\"passed\":true,\"name\":\"rescue target remains at least 44 pixels\"},{\"passed\":true,\"name\":\"rescue action inside safe screen bounds\"},{\"passed\":true,\"name\":\"rescue does not overlap jump or actions\"},{\"passed\":true,\"name\":\"actual HUD click starts rescue\"},{\"passed\":true,\"name\":\"moving rescue lands within basket\"},{\"passed\":true,\"name\":\"balloon ascends during rescue\"},{\"passed\":true,\"name\":\"landing stays stable after physics handoff\",\"detail\":{\"landing\":\"-3.999880790710449, 3.4322192668914795, 8.000055313110352\",\"current\":\"-3.9765625, 2.5702919960021973, 8.007811546325684\"}},{\"passed\":true,\"name\":\"deck fall remains locked from self-return\"},{\"passed\":true,\"name\":\"Q cannot rescue fallen player\"},{\"passed\":true,\"name\":\"B keyboard initiates teammate rescue\"},{\"passed\":true,\"name\":\"main rescue button hides after completion\"},{\"passed\":true,\"name\":\"band 1 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 2 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 3 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 4 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 5 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 6 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 7 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 8 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"band 9 uses configured enemy speed and HP\"},{\"passed\":true,\"name\":\"safe takeoff remains free of encounters\"},{\"passed\":true,\"name\":\"victory altitude has no encounters\"},{\"passed\":true,\"name\":\"hazard telegraph stays three seconds\"},{\"passed\":true,\"name\":\"scheduler starts with shootable encounters\"},{\"passed\":true,\"name\":\"first hazard is staggered after entry\"},{\"passed\":true,\"name\":\"Player1 clean client logs\",\"detail\":[]},{\"passed\":true,\"name\":\"Player2 clean client logs\",\"detail\":[]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "initialDiagnostic": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"logs\":[],\"ok\":false,\"error\":\"ServerScriptService.ComfortQA:7: actual HUD click starts rescue\\nServerScriptService.ComfortQA:7\\nServerScriptService.ComfortQA:9\\n\",\"checks\":[{\"passed\":true,\"name\":\"fall at altitude waits for teammate\"},{\"passed\":true,\"name\":\"rescue action directly on main HUD\",\"detail\":{\"visible\":true,\"sizeY\":48,\"parent\":\"FlyHighHUD\",\"compact\":true,\"viewport\":\"1094.40002, 558.400024\",\"inside\":true,\"sizeX\":140,\"overlap\":false}},{\"passed\":true,\"name\":\"rescue target remains at least 44 pixels\"},{\"passed\":true,\"name\":\"rescue action inside safe screen bounds\"},{\"passed\":true,\"name\":\"rescue does not overlap jump or actions\"},{\"passed\":false,\"name\":\"actual HUD click starts rescue\"}]}"
+      }
+    ],
+    "isError": false
+  },
+  "notes": [
+    "VirtualInput mouse click uses AbsolutePosition plus GuiInset",
+    "Native compact viewport 1094.4 x 558.4; rescue control 140 x 48 on root HUD",
+    "No human two-person comfort review or physical-device test"
+  ],
+  "scriptsCompiled": 28,
+  "build": {
+    "bytes": 884183,
+    "sha256": "B992F846731DE72AAB392919A2B17DDD00DD71E5A9DCE1710DEB9051DFF9B3EA",
+    "clients": 1,
+    "mode": "Test",
+    "qaDriversRemoved": true
+  }
+}
