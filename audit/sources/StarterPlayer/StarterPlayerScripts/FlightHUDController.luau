@@ -431,16 +431,23 @@ local alertVersion=0
 hazardAlertEvent.OnClientEvent:Connect(function(data)
  if data.effect then return end
  alertVersion+=1 local version=alertVersion
- alertBanner:SetAttribute("HUDAlertActive",true)
  alertDesc.Text=(data.hazardName or "Bahaya").." dari "..string.lower(data.direction or "depan")
- local deadline=os.clock()+3
+ local duration=tonumber(data.duration) or 3
+ local deadline=os.clock()+duration
+ alertTitle.Text=string.format("Waspada · %.1f dtk",duration):gsub("%.",",")
+ alertBanner:SetAttribute("HUDAlertActive",true)
  task.spawn(function()
   while version==alertVersion and os.clock()<deadline do
-   alertTitle.Text=string.format("Waspada · %.1f dtk",math.max(0,deadline-os.clock()))
+   alertTitle.Text=string.format("Waspada · %.1f dtk",math.max(0,deadline-os.clock())):gsub("%.",",")
    task.wait(0.1)
   end
   if version==alertVersion then alertBanner:SetAttribute("HUDAlertActive",false) end
  end)
+end)
+localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
+ if localPlayer:GetAttribute("InFlight") then return end
+ alertVersion+=1
+ alertBanner:SetAttribute("HUDAlertActive",false)
 end)
 UserInputService.InputEnded:Connect(function(input)
  if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch or input.KeyCode==Enum.KeyCode.ButtonR1 then setGas(false) end

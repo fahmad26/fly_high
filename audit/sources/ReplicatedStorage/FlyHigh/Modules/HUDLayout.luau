@@ -199,14 +199,30 @@ function Layout.Start(gui, player)
 
 		local weaponView = get("WeaponView")
 		if weaponView then
-			local scale = compact and weaponView:GetAttribute("CompactScale") or 0.68
+			local shoulderMuzzleX = weaponView:GetAttribute("ShoulderMuzzleX")
+			local touchLandscape = shoulderMuzzleX and compact and input.TouchEnabled and not portrait
+			local scale = shoulderMuzzleX and 0.86 or 0.68
+			if compact and not touchLandscape then scale = weaponView:GetAttribute("CompactScale") end
 			local side = math.min(h * scale, w * weaponView:GetAttribute("WidthCap"))
-			local aboveAmmo = ammoAlongsideFire or portrait
-			local gunRight = aboveAmmo and fireX or math.min(fireX, ammoX)
-			local gunBottom = aboveAmmo and ammoY + 4 or h
-			-- Align the visible weapon with the HUD, accounting for viewport padding.
-			local gunLeft = gunRight - 8 - weaponView:GetAttribute("RightEdge") * side
-			box(weaponView, math.max(0, gunLeft), gunBottom - 0.90 * side, side, side)
+			if shoulderMuzzleX then
+				-- Frame the muzzle just right of the reticle and let the stock run below the screen.
+				local muzzleX = w * 0.63
+				if touchLandscape then
+					-- Keep the muzzle above the touch controls on short screens.
+					muzzleX = w * 0.69
+				elseif compact then
+					muzzleX = math.clamp(fireX - 0.33 * side, w * 0.54, w * 0.64)
+				end
+				local bottomAnchor = touchLandscape and 0.93 or 0.80
+				box(weaponView, muzzleX - shoulderMuzzleX * side, h - bottomAnchor * side, side, side)
+			else
+				local aboveAmmo = ammoAlongsideFire or portrait
+				local gunRight = aboveAmmo and fireX or math.min(fireX, ammoX)
+				local gunBottom = aboveAmmo and ammoY + 4 or h
+				-- Align the visible weapon with the HUD, accounting for viewport padding.
+				local gunLeft = gunRight - 8 - weaponView:GetAttribute("RightEdge") * side
+				box(weaponView, math.max(0, gunLeft), gunBottom - 0.90 * side, side, side)
+			end
 		end
 
 		-- 8. Pilot Controls (Gas, AutoGas, Release)

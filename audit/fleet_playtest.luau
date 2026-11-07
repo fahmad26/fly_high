@@ -7,6 +7,7 @@ local ok,err=xpcall(function()
  local p=Players:GetPlayers()[1]or Players.PlayerAdded:Wait()
  repeat task.wait(.1)until p:GetAttribute("DataReady")and p.Character and p.Character:FindFirstChild("HumanoidRootPart")
  local manager=_G.FlyHighBalloonManager
+ local config=require(game.ReplicatedStorage.FlyHigh.Modules.FlyHighConfig)
  _G.FlyHighObstacleManager.Paused=true
  for i,id in ipairs({"A","B","C","D","E"})do
   if p.Character:FindFirstChildOfClass("Humanoid").Health<=0 then p:LoadCharacterAsync()task.wait(1)end
@@ -27,7 +28,7 @@ local ok,err=xpcall(function()
   task.wait(.4)
   local drift=(fd.root.Position-before).Magnitude
   assert(drift<2,"unstable launch")
-  fd.altitudeKm=1199 fd.invulnTime=0 assert(not manager.ApplyPuncture(fd),"safe zone damage")
+  fd.altitudeKm=config.SAFE_TAKEOFF_KM-1 fd.invulnTime=0 assert(not manager.ApplyPuncture(fd),"safe zone damage")
   fd.altitudeKm=1500 fd.invulnTime=0 assert(manager.ApplyPuncture(fd),"puncture")
   assert(fd.holes==1 and manager.RepairHole(fd,1)and fd.holes==0,"repair")
   table.insert(results,{theme=id,name=b:GetAttribute("BalloonThemeName"),floor=tostring(b.BasketFloor.Size),parts=#b:GetDescendants(),launchDrift=drift,serverOwned=true,connectedAssembly=true,safeZone=true,repair=true})

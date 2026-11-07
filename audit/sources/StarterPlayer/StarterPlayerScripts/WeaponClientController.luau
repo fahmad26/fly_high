@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -19,6 +20,9 @@ local currentAmmo = 8
 local isReloading = false
 local canFire = true
 local isFiringAuto = false
+local fireButtonInput
+local lockedTarget
+local lastCameraDrag = -math.huge
 local beginFire
 
 -- 1. Create Combat & Tether HUD
@@ -190,6 +194,8 @@ local function setWeapon(tool)
  for _,c in ipairs(attrConnections) do c:Disconnect() end attrConnections={}
  local hadWeapon=currentWeapon~=nil
  currentWeapon=tool isFiringAuto=false
+ fireButtonInput=nil lockedTarget=nil
+ reticle:SetAttribute("AimLocked",false)
  cameraToken+=1 local token=cameraToken
  reticle.Visible=tool~=nil
  if tool then
@@ -216,8 +222,13 @@ local function setWeapon(tool)
   reticle.Text="+" reticle.TextColor3=Color3.new(1,1,1) reticle.TextSize=26
  end
 end
-local function findAutoAimTarget()
- local camera=Workspace.CurrentCamera
+local function usesTouchAim()
+ local preferred=UserInputService.PreferredInput
+ return preferred==Enum.PreferredInput.Touch
+  or (UserInputService.TouchEnabled and preferred~=Enum.PreferredInput.Gamepad
+   and (fireButtonInput~=nil or not UserInputService.KeyboardEnabled))
+end
+local function findAutoAimTarget(camera,touchAim,weapon)
  if not camera then return nil,nil end
  local folder=Workspace:FindFirstChild("FlyHighObstacles")
  if not folder then return nil,nil end
@@ -226,13 +237,24 @@ local function findAutoAimTarget()
  local vp=camera.ViewportSize
  local center=vp/2
  local minDim=math.min(vp.X,vp.Y)
- local isTouch=UserInputService.TouchEnabled
- local maxAngleDeg=isTouch and 28 or 18
- local minDot=math.cos(math.rad(maxAngleDeg))
- local maxScreenDist=isTouch and math.max(220,minDim*0.38) or math.max(120,minDim*0.22)
+ local minDot=math.cos(math.rad(touchAim and 40 or 18))
+ local desktopRadius=math.max(120,minDim*0.22)
+ local screenRadius=touchAim and Vector2.new(vp.X*0.46,vp.Y*0.45) or Vector2.new(desktopRadius,desktopRadius)
+ if screenRadius.X<1 or screenRadius.Y<1 then return nil,nil end
  local balloonRef=localPlayer:FindFirstChild("FlightBalloon")
  local balloon=balloonRef and balloonRef.Value
  local envelope=balloon and balloon:FindFirstChild("Envelope")
+ local envelopeParams
+ if envelope then
+  envelopeParams=RaycastParams.new()
+  envelopeParams.FilterType=Enum.RaycastFilterType.Include
+  envelopeParams.FilterDescendantsInstances={envelope}
+  -- Looking straight at the envelope preserves a deliberate self-shot.
+  if touchAim and Workspace:Raycast(camPos,lookVec*500,envelopeParams) then return nil,nil end
+ end
+ local handle=touchAim and weapon and weapon:FindFirstChild("Handle")
+ local muzzle=handle and handle:FindFirstChild("MuzzleAttachment")
+ local muzzlePos=muzzle and muzzle.WorldPosition or handle and handle.Position
  local bestPos=nil
  local bestModel=nil
  local bestScore=math.huge
@@ -243,24 +265,19 @@ local function findAutoAimTarget()
     local targetPos=part.Position
     local toTarget=targetPos-camPos
     local dist=toTarget.Magnitude
-    if dist>2 and dist<600 then
+    if dist>2 and dist<500 then
      local dir=toTarget/dist
      local dot=lookVec:Dot(dir)
      if dot>=minDot then
       local screenPt,inFrustum=camera:WorldToViewportPoint(targetPos)
       if inFrustum and screenPt.Z>0 then
-       local screenDist=(Vector2.new(screenPt.X,screenPt.Y)-center).Magnitude
-       if screenDist<=maxScreenDist then
-        local score=screenDist+(1-dot)*200
-        local occluded=false
-        if envelope then
-         local p=RaycastParams.new()
-         p.FilterType=Enum.RaycastFilterType.Include
-         p.FilterDescendantsInstances={envelope}
-         local occlHit=workspace:Raycast(camPos,toTarget,p)
-         if occlHit and occlHit.Instance==envelope then occluded=true end
-        end
-        if not occluded and score<bestScore then
+       local screenDist=((Vector2.new(screenPt.X,screenPt.Y)-center)/screenRadius).Magnitude
+       if screenDist<=1 then
+        local score=screenDist+(1-dot)*0.8+dist*0.00015
+        if touchAim and model==lockedTarget then score*=0.78 end
+        if score<bestScore and (not envelopeParams
+         or (not Workspace:Raycast(camPos,toTarget,envelopeParams)
+          and (not muzzlePos or not Workspace:Raycast(muzzlePos,targetPos-muzzlePos,envelopeParams)))) then
          bestScore=score
          bestPos=targetPos
          bestModel=model
@@ -274,9 +291,11 @@ local function findAutoAimTarget()
  end
  return bestPos,bestModel
 end
-local function targetPosition()
+local function targetPosition(touchAim,weapon)
  local camera=Workspace.CurrentCamera
- local autoPos,autoModel=findAutoAimTarget()
+ if not camera then return nil,nil end
+ if touchAim==nil then touchAim=usesTouchAim() end
+ local autoPos,autoModel=findAutoAimTarget(camera,touchAim,weapon)
  if autoPos then return autoPos,autoModel end
  local ray=camera:ViewportPointToRay(camera.ViewportSize.X/2,camera.ViewportSize.Y/2)
  return ray.Origin+ray.Direction*500,nil
@@ -290,14 +309,10 @@ local function fireShot()
  if currentAmmo<=0 then reloadRemote:FireServer() return end
  local handle=tool:FindFirstChild("Handle")
  if not handle then return end
- local targetPos,targetModel=targetPosition()
+ local targetPos,targetModel=targetPosition(usesTouchAim(),tool)
+ if not targetPos then return end
  weaponFireEvent:FireServer(handle.Position,targetPos,targetModel)
  local camera=Workspace.CurrentCamera
- if UserInputService.TouchEnabled and targetModel and targetPos then
-  local camPos=camera.CFrame.Position
-  local targetLook=CFrame.lookAt(camPos,targetPos)
-  camera.CFrame=camera.CFrame:Lerp(targetLook,0.35)
- end
  camera.CFrame*=CFrame.Angles(math.rad(0.2),0,0)
 end
 beginFire = function()
@@ -306,12 +321,24 @@ beginFire = function()
  if currentWeapon and currentWeapon:GetAttribute("IsAutomatic") then isFiringAuto=true end
 end
 mobileShootBtn.InputBegan:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch then beginFire() end
+ if fireButtonInput or (input.UserInputType~=Enum.UserInputType.MouseButton1 and input.UserInputType~=Enum.UserInputType.Touch) then return end
+ fireButtonInput=input
+ beginFire()
+end)
+UserInputService.TouchMoved:Connect(function(input,processed)
+ if not processed and input~=fireButtonInput and input.Delta.Magnitude>0 then lastCameraDrag=os.clock() end
 end)
 UserInputService.InputEnded:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch or input.KeyCode==Enum.KeyCode.ButtonR2 then isFiringAuto=false end
+ if fireButtonInput then
+  local sameMouse=input.UserInputType==Enum.UserInputType.MouseButton1 and fireButtonInput.UserInputType==input.UserInputType
+  if input~=fireButtonInput and not sameMouse then return end
+  fireButtonInput=nil
+  isFiringAuto=false
+ elseif input.UserInputType==Enum.UserInputType.MouseButton1 or input.KeyCode==Enum.KeyCode.ButtonR2 then
+  isFiringAuto=false
+ end
 end)
-UserInputService.WindowFocusReleased:Connect(function() isFiringAuto=false end)
+UserInputService.WindowFocusReleased:Connect(function() fireButtonInput=nil isFiringAuto=false end)
 local wheel=Instance.new("Frame")
 wheel.Name="TacticalPingWheel" wheel.Size=UDim2.fromOffset(440,310) wheel.Position=UDim2.new(0.5,-220,0.5,-155)
 wheel.BackgroundTransparency=1 wheel.Visible=false wheel.Parent=screenGui
@@ -372,20 +399,28 @@ ghostSpotBtn.Activated:Connect(function()
  tacticalPingEvent:FireServer("GhostSpot",targetPosition(),"")
 end)
 local wasGhost=false
-RunService.RenderStepped:Connect(function()
- if isFiringAuto then fireShot() end
- if currentWeapon then
-  local targetPos=findAutoAimTarget()
-  if targetPos then
-   reticle.Text="[ + ]"
-   reticle.TextColor3=Color3.fromRGB(255,70,70)
-   reticle.TextSize=28
-  else
-   reticle.Text="+"
-   reticle.TextColor3=Color3.new(1,1,1)
-   reticle.TextSize=26
+local aimRenderStep="FlyHighWeaponAim"
+RunService:BindToRenderStep(aimRenderStep,Enum.RenderPriority.Camera.Value+1,function(dt)
+ local camera=Workspace.CurrentCamera
+ if currentWeapon and camera then
+  local center=camera.ViewportSize/2-GuiService:GetGuiInset()
+  reticle.Position=UDim2.fromOffset(center.X,center.Y)
+  local touchAim=usesTouchAim()
+  local targetPos,targetModel=findAutoAimTarget(camera,touchAim,currentWeapon)
+  lockedTarget=targetModel
+  local locked=targetModel~=nil
+  if reticle:GetAttribute("AimLocked")~=locked then
+   reticle:SetAttribute("AimLocked",locked)
+   reticle.Text=locked and "[ + ]" or "+"
+   reticle.TextSize=locked and 24 or 26
+   reticle.TextColor3=locked and Color3.fromRGB(255,90,83) or Color3.new(1,1,1)
+  end
+  if touchAim and targetPos and camera.CameraType==Enum.CameraType.Custom and os.clock()-lastCameraDrag>0.14 then
+   local goal=CFrame.lookAt(camera.CFrame.Position,targetPos)
+   camera.CFrame=camera.CFrame:Lerp(goal,1-math.exp(-7*math.min(dt,0.05)))
   end
  end
+ if isFiringAuto then fireShot() end
  reloadButton.Visible=currentWeapon~=nil dropButton.Visible=currentWeapon~=nil
  local ghost=localPlayer:GetAttribute("FlightGhost")==true and localPlayer:GetAttribute("InFlight")==true
  ghostFrame.Visible=ghost
@@ -398,6 +433,7 @@ RunService.RenderStepped:Connect(function()
  end
  wasGhost=ghost
 end)
+script.Destroying:Connect(function() RunService:UnbindFromRenderStep(aimRenderStep) end)
 
 tacticalPingEvent.OnClientEvent:Connect(function(pos,message,name)
  local marker=Instance.new("Part") marker.Name="TeamSpotterMarker" marker.Shape=Enum.PartType.Ball

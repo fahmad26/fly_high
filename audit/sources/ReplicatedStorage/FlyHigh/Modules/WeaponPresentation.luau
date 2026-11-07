@@ -10,10 +10,12 @@ local viewProfiles = {
 		compactScale = 0.49,
 	},
 	AK47 = {
-		pose = CFrame.lookAt(Vector3.new(-2.95, 2.18, 5.15), Vector3.new(0, 0.47, -0.48)),
-		rightEdge = 0.88,
-		widthCap = 0.39,
-		compactScale = 0.44,
+		pose = CFrame.lookAt(Vector3.new(-1.5, 1.75, 2.55), Vector3.new(0, 0.65, -0.65))
+			* CFrame.Angles(0, 0, math.rad(-15)),
+		fieldOfView = 38,
+		shoulderView = true,
+		widthCap = 0.68,
+		compactScale = 0.69,
 	},
 }
 
@@ -35,10 +37,16 @@ local function createWeaponView(tool, template, hud, profile)
 	view.LightDirection = Vector3.new(0.4, -1, -0.6)
 
 	local viewCamera = Instance.new("Camera")
-	viewCamera.FieldOfView = 35
+	viewCamera.FieldOfView = profile.fieldOfView or 35
 	viewCamera.CFrame = profile.pose
 	viewCamera.Parent = view
 	view.CurrentCamera = viewCamera
+	local muzzle = handle:FindFirstChild("MuzzleAttachment")
+	local muzzleOffset = muzzle and muzzle:IsA("Attachment") and muzzle.Position
+	if profile.shoulderView then
+		local muzzleX = muzzleOffset and viewCamera:WorldToViewportPoint(muzzleOffset).X or 0.20
+		view:SetAttribute("ShoulderMuzzleX", muzzleX)
+	end
 
 	for _, part in template:GetDescendants() do
 		if part:IsA("BasePart") and part.Transparency < 1 then
@@ -86,8 +94,6 @@ local function createWeaponView(tool, template, hud, profile)
 		end
 	end)
 
-	local muzzle = handle:FindFirstChild("MuzzleAttachment")
-	local muzzleOffset = muzzle and muzzle:IsA("Attachment") and muzzle.Position
 	local function muzzleScreenPoint()
 		if not muzzleOffset or not hud.Enabled or view.AbsoluteSize.X <= 0 then return nil end
 		local projected = viewCamera:WorldToViewportPoint(muzzleOffset)
@@ -109,7 +115,7 @@ local function launchTracer(hud, muzzle)
 	marker.Name = "WeaponLaunchTracer"
 	marker.AnchorPoint = Vector2.new(0.5, 0.5)
 	marker.Position = UDim2.fromOffset(math.round(muzzle.X), math.round(muzzle.Y))
-	marker.Size = UDim2.fromOffset(10, 4)
+	marker.Size = UDim2.fromOffset(4, 4)
 	marker.BackgroundColor3 = Color3.fromRGB(255, 213, 116)
 	marker.BorderSizePixel = 0
 	marker.ZIndex = 2
@@ -255,8 +261,10 @@ function Presentation.Start(player,remote,owner,hud)
       local projected=camera:WorldToScreenPoint(center)
       if projected.Z>0 then
        local delta=Vector2.new(projected.X,projected.Y)-a.launch.muzzle
-       local point=a.launch.muzzle+delta*(a.elapsed/LAUNCH_TIME)
+       local launchProgress=a.elapsed/LAUNCH_TIME
+       local point=a.launch.muzzle+delta*launchProgress
        a.launch.marker.Position=UDim2.fromOffset(point.X,point.Y)
+       a.launch.marker.Size=UDim2.fromOffset(4+6*launchProgress,4)
        a.launch.marker.Rotation=math.deg(math.atan2(delta.Y,delta.X))
       end
      end

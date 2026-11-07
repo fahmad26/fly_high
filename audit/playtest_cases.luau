@@ -22,13 +22,16 @@ local function place(km)
  p.Character.HumanoidRootPart.Anchored=true
  p.Character:PivotTo(CFrame.new(pos+Vector3.new(-5,4,0)))
 end
-place(1199.99)
-check("No obstacle spawn below 1200",om.SpawnBand(1,fd,false)==nil,true)
-check("No hazard spawn below 1200",om.SpawnBand(1,fd,true)==nil,true)
-check("No damage below 1200",bm.ApplyPuncture(fd),false)
-place(1200)
-check("First obstacle at 1200",om.SpawnBand(1,fd,false)~=nil,true)
-check("First puncture at 1200",bm.ApplyPuncture(fd),true)
+local safeKm=Config.SAFE_TAKEOFF_KM
+check("Safe takeoff boundary is 300 km",safeKm,300)
+place(safeKm-0.01)
+check("No obstacle spawn below the boundary",om.SpawnBand(1,fd,false)==nil,true)
+check("No hazard spawn below the boundary",om.SpawnBand(1,fd,true)==nil,true)
+check("No obstacle puncture below the boundary",bm.ApplyPuncture(fd),false)
+place(safeKm)
+check("First obstacle at the boundary",om.SpawnBand(1,fd,false)~=nil,true)
+check("First hazard at the boundary",om.SpawnBand(1,fd,true)~=nil,true)
+check("First puncture at the boundary",bm.ApplyPuncture(fd),true)
 check("Passive 5 second grace",bm.ApplyPuncture(fd),false)
 check("Manual repair active hole",bm.RepairHole(fd,1),true)
 check("Duplicate hole repair blocked",bm.RepairHole(fd,1),false)
@@ -52,7 +55,7 @@ check("Blocked activation preserves stock",p:GetAttribute("EmergencyKits"),stock
 fd.shieldTime=0 fd.invulnTime=0
 _G.FlyHighDataManager.ModifyEmergencyKits(p,1)
 check("One kit per player per flight",bm.UseEmergencyKit(p),false)
-check("1200 km equals seventy-two seconds",Config.SAFE_TAKEOFF_KM/(Config.MAX_ALTITUDE_KM/Config.BASE_FLIGHT_DURATION_SEC),72)
+check("300 km equals eighteen seconds at base ascent",safeKm/(Config.MAX_ALTITUDE_KM/Config.BASE_FLIGHT_DURATION_SEC),18)
 for count=1,3 do
  local b=RS.FlyHigh.Templates.HotAirBalloon:Clone() b.RootPart.Anchored=true b.Parent=workspace
  _G.FlyHighTetherManager.SetupBalloonTethers(b,count)
@@ -68,7 +71,7 @@ check("Reject NaN vector",U.FiniteVector(Vector3.new(0/0,0,0)),false)
 check("Reject infinite vector",U.FiniteVector(Vector3.new(math.huge,0,0)),false)
 check("Reject non-vector",U.FiniteVector({}),false)
 for band=1,9 do
- local km=band==1 and 1200 or band*1000
+ local km=band==1 and safeKm or band*1000
  place(km)
  local hazard=om.SpawnBand(band,fd,true)
  check("Hazard telegraph 3 seconds band "..band,math.abs(hazard.activeAt-hazard.born-3)<0.05,true)

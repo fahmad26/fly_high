@@ -36,6 +36,7 @@ function Manager.TryEquip(p,b,rack)
    local cfg=Config.WEAPONS[weaponType]
    local tool=RS.FlyHigh.Templates.Weapons[weaponType]:Clone()
    tool.CanBeDropped=false
+   tool.ManualActivationOnly=true
    for k,v in pairs(cfg) do if k~="Name" then tool:SetAttribute(k,v) end end
    tool:SetAttribute("WeaponType",weaponType)
    local s={tool=tool,ammo=rack:GetAttribute("StoredAmmo") or cfg.MagSize,cfg=cfg,rack=rack,balloon=b,lastShot=rack:GetAttribute("StoredLastShot") or -math.huge}

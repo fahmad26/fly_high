@@ -119,7 +119,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  local root=b.PrimaryPart
  root:SetNetworkOwner(nil)
  local fd={balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
-  burnerFlame=b.Burner.BurnerFlame,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
+  burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
   groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
   holes=0,holeSet={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
@@ -345,8 +345,13 @@ RunService.Heartbeat:Connect(function(dt)
   if fd.holes==5 then speed=-Config.FREEFALL_KM_PER_SEC
   elseif burning then speed=effect.can_ascend and base*effect.ascend_rate or (fd.holes==2 and 0 or -base*0.4*effect.descend_mult*0.5)
   else speed=-base*0.4*effect.descend_mult end
-  fd.burnerFlame.Size=burning and fd.holes<5 and 14 or 6
-  fd.burnerLight.Brightness=burning and fd.holes<5 and 5 or 2
+  local burnerBoost=burning and fd.holes<5
+  if fd.burnerBoost~=burnerBoost then
+   fd.burnerBoost=burnerBoost
+   fd.burnerFlame.Rate=burnerBoost and 66 or 32
+   fd.burnerFlame.Speed=burnerBoost and NumberRange.new(12,16) or NumberRange.new(8,12)
+   fd.burnerLight.Brightness=burnerBoost and 4 or 1.5
+  end
   local maxY=Config.GROUND_Y+Config.MAX_ALTITUDE_KM*Config.STUDS_PER_KM
   local jumpStep=0
   if fd.holes<5 then
@@ -355,8 +360,14 @@ RunService.Heartbeat:Connect(function(dt)
   else fd.jumpDropRemaining=0 end
   local y=math.clamp(fd.targetPosition.Y+speed*Config.STUDS_PER_KM*math.min(dt,0.1)-jumpStep,Config.GROUND_Y,maxY)
   local steer=fd.pilotSteer
-  if os.clock()<(fd.reverseUntil or 0) then steer=-steer end
-  local push=os.clock()<(fd.windUntil or 0) and (fd.wind or Vector3.zero) or Vector3.zero
+  local now = os.clock()
+  if now<(fd.reverseUntil or 0) then steer=-steer end
+  local push = Vector3.zero
+  if fd.wind and now < (fd.windUntil or 0) then
+   local ramp = fd.windSince and (now - fd.windSince) / 0.45 or 1
+   local fade = (fd.windUntil - now) / 0.5
+   push = fd.wind * math.clamp(math.min(ramp, fade), 0, 1)
+  end
   fd.targetPosition=Vector3.new(math.clamp(fd.targetPosition.X+(steer.X*30+push.X)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT),
    y,math.clamp(fd.targetPosition.Z+(steer.Z*30+push.Z)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT))
   local clamped=Manager.ResolveCollisions(fd,fd.targetPosition)

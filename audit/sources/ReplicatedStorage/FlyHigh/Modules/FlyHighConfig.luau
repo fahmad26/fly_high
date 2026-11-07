@@ -1,7 +1,7 @@
 local FlyHighConfig = {
 	-- World & Progression
 	MAX_ALTITUDE_KM = 10000,
-	SAFE_TAKEOFF_KM = 1200,
+	SAFE_TAKEOFF_KM = 300,
 	GROUND_Y = 12.5,
 	STUDS_PER_KM = 0.25,
 	CORRIDOR_CENTER_LIMIT = 120,
@@ -12,15 +12,15 @@ local FlyHighConfig = {
 	BIOME_STEP_KM = 2000,
  -- Gradual regular encounters; shared storm curtain pacing stays independent.
  OBSTACLE_PACING = {
-  [1]={speed=22,health=50,enemyInterval=8,hazardInterval=26},
-  [2]={speed=24,health=50,enemyInterval=7.5,hazardInterval=25},
-  [3]={speed=26,health=70,enemyInterval=7,hazardInterval=24},
-  [4]={speed=28,health=70,enemyInterval=6.5,hazardInterval=23},
-  [5]={speed=29,health=70,enemyInterval=6,hazardInterval=22},
-  [6]={speed=30,health=85,enemyInterval=5.5,hazardInterval=21},
-  [7]={speed=32,health=85,enemyInterval=5,hazardInterval=20},
-  [8]={speed=34,health=100,enemyInterval=4.5,hazardInterval=19},
-  [9]={speed=36,health=100,enemyInterval=4,hazardInterval=18},
+  [1]={speed=22,health=50,enemyInterval=7,enemyWave={1,2,2},hazardInterval=26},
+  [2]={speed=24,health=50,enemyInterval=6.5,enemyWave={1,2,2},hazardInterval=25},
+  [3]={speed=26,health=70,enemyInterval=6,enemyWave={2,2,3},hazardInterval=24},
+  [4]={speed=28,health=70,enemyInterval=6,enemyWave={2,2,3},hazardInterval=23},
+  [5]={speed=29,health=70,enemyInterval=5.5,enemyWave={2,2,3},hazardInterval=22},
+  [6]={speed=30,health=85,enemyInterval=5,enemyWave={2,3,3},hazardInterval=21},
+  [7]={speed=32,health=85,enemyInterval=4.5,enemyWave={2,3,3},hazardInterval=20},
+  [8]={speed=34,health=100,enemyInterval=4.5,enemyWave={2,3,3},hazardInterval=19},
+  [9]={speed=36,health=100,enemyInterval=4,enemyWave={2,3,3},hazardInterval=18},
  },
 
 	-- Hot Air Balloon

@@ -4,6 +4,10 @@
 
 ## 0. Cara membaca status terbaru
 
+Untuk rintangan, baca [status rintangan reguler di PRD](./PRD_Fly_High.md#target-desain-rintangan-reguler-per-segmen) dan catatan Dinding Badai di bagian 11. Place aktif memakai batas 300 km. Playtest Studio memverifikasi bahwa spawn ditolak pada 299,99 km dan Burung Liar mulai muncul lewat jadwal normal pada 300 km. Ambang 200 km dan 1.200 km pada catatan bertanggal di bawah adalah riwayat.
+
+Model rintangan reguler dibuat oleh `ServerScriptService.FlyHighServer.ObstacleArt`. `ObstacleManager` menentukan jadwal, fase peringatan/aktif, lintasan, dan hit di server. Studio memverifikasi spawn kesembilan pasangan, penolakan spawn di bawah 1.200 km, peralihan laser ke sambaran, gerak meteorit, tembakan Drone Penjaga, serta urutan tiga sambaran pada Badai Gerbang Surgawi. Uji memakai posisi terkontrol.
+
 Mulai dari **[AI_CONTEXT.md](./AI_CONTEXT.md)** untuk snapshot aktif 31 Oktober 2026, peta 32 source, batas QA, preferensi pengguna dan temuan terbuka. Desain HUD aktif adalah **Sky Arcade** (`edbd49d`); preview `audit/hud-arcade-phone.jpg`, QA `audit/hud-arcade-results.json`. Bagian arsitektur awal dan laporan bertanggal lebih lama di bawah merupakan riwayat. Prioritaskan snapshot ini untuk status implementasi, dan PRD lengkap untuk aturan produk. Dokumentasi handover tidak mengubah place atau menambahkan pengujian baru.
 
 > **HUD aktif terbaru — Sky Arcade Pro Max (Pass 6, 1 November 2026):** audit visual dan perbaikan layout collision diterapkan untuk menyelesaikan overlap banner, bleed progress bar, dan flapping format telemetri:
@@ -216,9 +220,10 @@ Fitur yang sebelumnya berupa backlog kini diimplementasikan. Total skrip produks
 - Remote baru FlightJumpEvent hanya menerima Request; server tidak menerima jumlah penurunan dari client. LargeChallengeEvent dipakai server untuk Warning/Ended.
 - FlyHighConfig memuat JUMP_* dan LARGE_* untuk balancing. BalloonManager mengonsumsi jumpDropRemaining dalam integrasi vertikal; EndFlight dan Emergency Kit mengosongkan jatah. Lima lubang tetap memakai kecepatan jatuh darurat.
 - ObstacleManager menunda spawn reguler yang menarget peserta selama largeChallengeUntil dan memprediksi auto gas juga.
-- Template visual: ReplicatedStorage.FlyHigh.Templates.Obstacles.StormCurtain, dengan 5 bank/wisp CSG, petir pada dua sisi dan core transparan. Collision gameplay dihitung server, bukan collider fisik awan.
+- Presentasi aktif: server memakai tiga lapis awan dan core transparan dari `ReplicatedStorage.FlyHigh.Templates.Obstacles.StormCurtain`. `StarterPlayerScripts.StormCurtainPresentation` menambahkan palet per milestone, kabut, pita angin, petir, dan penanda batas bawah di client. Server menghitung kontak terhadap volume 360×120×32 stud dan menentukan kerusakan.
 - Nilai awal: 6 detik warning, volume 360×120×32, speed 60 stud/detik, milestone 1800/3600/5400/7200/9000 km. Jatah lompat 18/eligibleCrew stud, konsumsi maksimal 22 stud/detik, cap 36, cooldown 1,05 detik.
 - Native QA menggunakan tiga client: solo/duo/trio, gunner/tethered jump, blokir pilot/katrol/kubah, anti-spam, global wave, damage dan avoidance serta milestone repeat prevention. Bukti: audit/storm-jump-results.json.
+- QA pembaruan visual memakai posisi uji di Studio pada 1.800, 5.400, dan 7.200 km, termasuk emulator iPhone landscape. Satu sapuan yang mengenai balon memberi satu lubang dan gelombang dibersihkan. Balon yang ditempatkan di bawah batas lolos tanpa kerusakan.
 - Backup: audit/Fly High.before-storm-jumps.rbxl. Build visual: audit/build_storm_curtain.luau. Harness baru: audit/storm_jump_server_playtest.luau dan storm_jump_client_playtest.luau; tidak dipasang ke place produksi.
 - Pembelian/cloud tetap ditunda. Perangkat sentuh/gamepad fisik, jaringan internet dan human playtest belum dijalankan.
 
@@ -322,7 +327,8 @@ Studio dikembalikan ke jumlah client 1 dan mode Test/Play biasa setelah QA; tida
 ## Kenyamanan Rescue dan Balancing Awal — 31 Oktober 2026
 
 - PullCrewButton kini langsung di HUD utama pada semua ukuran layar. Mode ringkas memakai ukuran 140×48, posisi di antara LOMPAT dan AKSI; tombol hanya muncul bagi rekan bebas yang bisa menolong. Tombol tidak berada di tray AKSI. Layout desktop tetap menyusun aksi tali tanpa overlap.
-- Pacing rintangan reguler memakai OBSTACLE_PACING per band. Band 1–2: 50 HP (2 tembakan pistol), band 3–5: 70 HP (3), band 6–7: 85 HP (4), band 8–9: 100 HP (4). Speed 22/24/26/28/29/30/32/34/36 stud/detik. Minimum jeda enemy 8/7,5/7/6,5/6/5,5/5/4,5/4 detik; hazard 26/25/24/23/22/21/20/19/18 detik. Scheduler memeriksa setiap 2,5 detik, sehingga jeda aktual dibulatkan ke tick berikutnya.
+- `OBSTACLE_PACING` mengatur gelombang musuh global per band. Band 1–2 mengulang pola 1/2/2 target, band 3–5 memakai 2/2/3, dan band 6–9 memakai 2/3/3. Jeda minimum masing-masing band adalah 7/6,5/6/6/5,5/5/4,5/4,5/4 detik dengan pengecekan tiap 0,5 detik. Target tambahan masuk dari sisi berbeda dengan perkiraan waktu tiba berselang sekitar 0,75 detik per target. Titik lintasan memperhitungkan sedikit momentum balon saat gelombang muncul.
+- Band 1–2 memakai 50 HP (2 tembakan pistol), band 3–5 memakai 70 HP (3), band 6–7 memakai 85 HP (4), dan band 8–9 memakai 100 HP (4). Kecepatan musuh per band adalah 22/24/26/28/29/30/32/34/36 stud/detik. Hazard reguler tetap memakai jeda minimum 26/25/24/23/22/21/20/19/18 detik dan pengecekan tiap 2,5 detik.
 - Hazard pertama pada band yang baru aktif di server dijadwalkan setelah satu interval, sehingga tidak bersamaan dengan enemy pertama. Penjadwalan tetap global per band, bukan per tim. Zona aman 0–1.200 km, batas 10.000 km, peringatan hazard 3 detik dan pacing dinding badai tetap berlaku.
 - Native dua client: **29/29 lulus**, log server/kedua client bersih. Klik mouse melalui VirtualInput pada tombol nyata (dengan koreksi GuiInset), B keyboard, fall dari keranjang/titian pada 2.000 km, rescue saat naik, stabilitas satu detik sesudah handoff, visibilitas/ukuran/layout HUD, sembilan profil actual spawn, zona aman, warning 3 detik, dan stagger scheduler diuji.
 - Viewport native 1094,4×558,4 memakai mode ringkas: tombol 140×48, parent FlyHighHUD, di dalam layar dan tidak overlap. Avatar turun dari posisi landing lokal (-4,3,43,8) ke posisi berdiri sekitar (-3,98,2,57,8,01), tetap di gondola. Ini pengujian otomatis/input simulasi, bukan penilaian rasa kontrol oleh dua manusia atau HP/controller fisik.

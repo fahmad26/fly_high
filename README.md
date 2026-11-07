@@ -18,9 +18,9 @@ HUD **Sky Adventure** memakai gambar utuh untuk kontrol, panel penerbangan, name
 
 ## 🚀 Fitur Utama
 
-- **Ruang Udara Global (*Shared Sky*) & Safe Takeoff Zone 6x Lipat (0 – 1.200 km)**:
+- **Ruang Udara Global (*Shared Sky*) & Safe Takeoff Zone (di bawah 300 km)**
   - Seluruh balon terbang di ruang udara bersama dan dapat saling melihat balon tim lain.
-  - Safe Takeoff Zone lapang (0 - 1.200 km) bebas rintangan lingkungan dan memberikan waktu menyebar formasi. Tabrakan antarbalon dan tembakan ke balon sendiri tetap dapat menghasilkan lubang.
+  - Rintangan lingkungan mulai muncul dari 300 km. Tabrakan antarbalon dan tembakan ke balon sendiri tetap dapat menghasilkan lubang di zona lepas landas.
 - **Keranjang Balon Lapang (2x Lipat)**:
   - Keranjang gondola dirancang lega untuk kebebasan gerak 1–3 pemain.
   - Fasilitas kemudi fisik (*HelmSeat*), 2 rak senjata, stasiun tali pengaman & katrol winch, serta sirine peringatan.

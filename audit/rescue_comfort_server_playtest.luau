@@ -48,13 +48,13 @@ local ok,err=xpcall(function()
  check("main rescue button hides after completion",not rpc(helper,"ComfortUI").visible)
  -- Exercise all regular encounter bands against the real manager, independently of scheduler.
  for band=1,9 do
-  f.altitudeKm=band==1 and 1200 or band*1000
+  f.altitudeKm=band==1 and C.SAFE_TAKEOFF_KM or band*1000
   local o=assert(om.SpawnBand(band,f,false))
   local profile=C.OBSTACLE_PACING[band]
   check("band "..band.." uses configured enemy speed and HP",math.abs(o.velocity.Magnitude-profile.speed)<.01 and o.instance:GetAttribute("Health")==profile.health)
   o.instance:Destroy()
  end
- f.altitudeKm=1199 check("safe takeoff remains free of encounters",om.SpawnBand(1,f,false)==nil and om.SpawnBand(1,f,true)==nil)
+ f.altitudeKm=C.SAFE_TAKEOFF_KM-1 check("safe takeoff remains free of encounters",om.SpawnBand(1,f,false)==nil and om.SpawnBand(1,f,true)==nil)
  f.altitudeKm=10000 check("victory altitude has no encounters",om.GetBand(f.altitudeKm)==nil)
  f.altitudeKm=2000 local o=assert(om.SpawnBand(2,f,true))
  check("hazard telegraph stays three seconds",math.abs(o.activeAt-o.born-3)<.05)

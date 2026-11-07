@@ -63,7 +63,7 @@ api.OnInvoke=function(action,data)
   return out
  elseif action=="BandCheck" then
   local result={}
-  for _,km in ipairs({0,199,200,999,1199,1199.99,1200,1999,2000,3000,4000,5000,6000,7000,8000,9000,9999,10000}) do
+  for _,km in ipairs({0,299,299.99,300,999,1000,1999,2000,3000,4000,5000,6000,7000,8000,9000,9999,10000}) do
    table.insert(result,{km=km,band=o.GetBand(km) or 0})
   end return result
  elseif action=="Helm" then local fd=flight() fd.balloon.HelmSeat:Sit(p.Character:FindFirstChildOfClass("Humanoid")) return true
@@ -80,7 +80,7 @@ api.OnInvoke=function(action,data)
  elseif action=="SafeSpawnAll" then
   local fd=flight() local results={}
   for band=1,9 do
-   local km=band==1 and 1200 or band*1000
+   local km=band==1 and Config.SAFE_TAKEOFF_KM or band*1000
    fd.altitudeKm=km
    local pos=Vector3.new(0,Config.GROUND_Y+km*Config.STUDS_PER_KM,0)
    fd.balloon:PivotTo(CFrame.new(pos)) fd.targetPosition=pos fd.root.Anchored=true

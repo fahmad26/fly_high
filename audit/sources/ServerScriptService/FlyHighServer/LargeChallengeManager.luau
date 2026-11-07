@@ -28,15 +28,20 @@ function Manager.Spawn(zone,fd)
  local template=RS.FlyHigh.Templates.Obstacles:FindFirstChild("StormCurtain")if not template then return nil end
  local bottom=fd.root.Position.Y+C.LARGE_BOTTOM_OFFSET
  local model=template:Clone()model.Name="StormCurtain_"..zone
+ model.ModelStreamingMode=Enum.ModelStreamingMode.Atomic
  local center=Vector3.new(0,bottom+C.LARGE_HEIGHT/2,-C.LARGE_START_Z)
  model:PivotTo(CFrame.new(center))
  local id=Http:GenerateGUID(false)
  model:SetAttribute("ChallengeId",id)model:SetAttribute("ZoneKm",zone)model:SetAttribute("Stage","Warning")
  model:SetAttribute("IsObstacle",true)model:SetAttribute("Shootable",false)
- for _,p in ipairs(model:GetDescendants())do if p:IsA("BasePart")then
-  p.Anchored=true p.CanCollide=false p.CanTouch=false p.CanQuery=false
-  if p~=model.PrimaryPart then p.Transparency=.5 end
- end end
+ for _,p in ipairs(model:GetDescendants())do
+  if p.Name:match("^Lightning_") or p.Name=="StormSign" or p.Name=="CurledCloudWisp" then
+   p:Destroy()
+  elseif p:IsA("BasePart") then
+   p.Anchored=true p.CanCollide=false p.CanTouch=false p.CanQuery=false
+   if p~=model.PrimaryPart then p.Transparency=.42 end
+  end
+ end
  model.Parent=folder
  local now=os.clock()
  local item={id=id,model=model,zone=zone,bottom=bottom,top=bottom+C.LARGE_HEIGHT,
@@ -88,7 +93,6 @@ Run.Heartbeat:Connect(function()
   if now<item.activeAt then continue end
   if not item.activated then
    item.activated=true item.model:SetAttribute("Stage","Active")
-   for _,p in ipairs(item.model:GetDescendants())do if p:IsA("BasePart")and p~=item.model.PrimaryPart then p.Transparency=p.Name:find("Lightning")and .05 or .08 end end
   end
   local z=-C.LARGE_START_Z+C.LARGE_SPEED*(now-item.activeAt)
   item.model:PivotTo(CFrame.new(0,item.bottom+C.LARGE_HEIGHT/2,z))

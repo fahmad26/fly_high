@@ -15,7 +15,7 @@
 | **Kapasitas Pemain** | 1 - 3 Player per Balon (Multi-tim dalam 1 Server Global) |
 | **Durasi Sesi Ideal** | ~10 Menit (Base ascent tanpa hambatan dari 0 km hingga 10.000 km) |
 | **Target Audience** | Komunitas casual-to-midcore Roblox, pemain pecinta kerja sama kelompok (*teamwork*), simulasi petualangan, dan *scenic aesthetic games*. |
-| **Core Hook (USP)** | Pengalaman kooperatif di satu ruang udara global (*shared sky*) di mana tim 1–3 pemain dapat melihat balon tim lain sambil membagi tugas secara dinamis (mengemudi via WASD & tombol gas khusus Pilot, menembak ancaman dengan aim-assist, menambal balon menggunakan katrol & tali berdurabilitas, serta fitur *Ghost Spotter*) di dalam keranjang balon yang 2x lipat lebih lapang dan Safe Takeoff Zone 6x lipat lebih luas (0 - 1.200 km) demi mencapai Istana Awan di ketinggian 10.000 km tanpa tabrakan. |
+| **Core Hook (USP)** | Pengalaman kooperatif di satu ruang udara global (*shared sky*) di mana tim 1–3 pemain dapat melihat balon tim lain sambil membagi tugas secara dinamis (mengemudi via WASD & tombol gas khusus Pilot, menembak ancaman dengan aim-assist, menambal balon menggunakan katrol & tali berdurabilitas, serta fitur *Ghost Spotter*) di dalam keranjang balon yang 2x lipat lebih lapang, dengan zona lepas landas bebas rintangan di bawah 300 km, demi mencapai Istana Awan di ketinggian 10.000 km. |
 
 ---
 
@@ -80,10 +80,10 @@ Di atas kepala setiap karakter pemain terdapat `BillboardGui` dinamis yang menam
   * Di sekeliling batas tepi pulau awal dipasang **Invisible Wall (Dinding Pembatas Tak Terlihat)** berbentuk silinder/kotak vertikal dengan radius ~150 stud yang menjulang dari permukaan tanah (`0 km`) lurus hingga ke Istana Awan (`10.000 km`).
   * Fungsi di Darat: Mencegah pemain jatuh atau berenang keluar dari pulau awal.
   * Fungsi di Udara: Menjaga seluruh balon udara tetap berada di dalam kolom jalur terbang utama menuju Istana Awan sehingga tidak bisa melenceng keluar peta.
-* **Ruang Udara Bersama (*Shared Global Airspace*) & Safe Takeoff Zone 6x Lipat:**
+* **Ruang Udara Bersama (*Shared Global Airspace*) & Safe Takeoff Zone**
   * Seluruh tim yang lepas landas terbang di dalam kolom udara global yang sama.
   * Tim yang sedang terbang **dapat melihat balon udara milik tim lain** yang sedang naik di bawah, di samping, atau di atas mereka, menciptakan suasana kompetitif dan sosial yang hidup.
-  * **Pencegahan Tabrakan Balon (Collision Prevention):** Karena multi-balon dapat terbang bersamaan dalam satu ruang udara pandang, **Safe Takeoff Zone diralat dan diperluas menjadi 6x lipat (ketinggian 0 s.d. 1.200 km)**. Zona bebas rintangan ini memberi waktu transisi (~72 detik pertama) untuk menyebar dan mengatur jarak. Tabrakan antarbalon dan tembakan ke balon sendiri tetap menghasilkan kerusakan mulai 0 km; pemeriksaan okupansi dermaga mencegah summon yang overlap.
+  * **Zona lepas landas.** Di bawah 300 km, kru punya sekitar 18 detik pada laju naik dasar untuk menyebar dan mengatur jarak. Tabrakan antarbalon dan tembakan ke balon sendiri tetap dapat menghasilkan kerusakan mulai 0 km. Pemeriksaan okupansi dermaga mencegah summon yang overlap.
 
 ### 4.2 Kotak Antrean (5 Launch Pods)
 * Terdapat **5 zona kotak fisik** (*Kotak A, Kotak B, Kotak C, Kotak D, Kotak E*) yang ditata membentuk busur (*arc*) di pulau awal.
@@ -258,7 +258,7 @@ stateDiagram-v2
 
 ## 8. Sistem Peringatan Dini (Early Warning Alert - 3 Detik)
 
-Untuk rintangan bertipe **hazard lingkungan yang tidak dapat ditembak** (seperti Tornado/Pusaran Angin, Sambaran Kilat, Hujan Badai Magnetik, dll.), sistem menyiarkan peringatan 3 detik sebelum ancaman aktif:
+Untuk **hazard lingkungan reguler yang tidak dapat ditembak** (seperti Tornado/Pusaran Angin, Sambaran Kilat, atau Anomali Magnetik), sistem menyiarkan peringatan 3 detik sebelum ancaman aktif. Tantangan Dinding Badai punya peringatan tersendiri selama 6 detik.
 
 ```
 +-------------------------------------------------------------------------+
@@ -270,23 +270,24 @@ Untuk rintangan bertipe **hazard lingkungan yang tidak dapat ditembak** (seperti
 1. **Timing Tepat 3 Detik:** Server mendeteksi kemunculan hazard unshootable di zona ketinggian terkait dan mengirimkan event peringatan tepat **3 detik** sebelum hitbox ancaman aktif.
 2. **Komponen Peringatan UI & Audio:** Banner bahaya berkedip dengan arah datangnya ancaman, suara alarm sirine darurat, serta lampu rotator merah di atas keranjang balon.
 
+**Status implementasi:** Banner reguler menampilkan nama hazard, hitung mundur, dan arah kemunculan relatif terhadap balon penerima. Arah bisa depan, belakang, kiri, atau kanan. Sirine dan lampu peringatan pada balon menyertai peringatan.
+
 ---
 
 ## 9. Sistem Rintangan Global Setiap 1.000 KM
 
 * **Sifat Rintangan Global (*Shared World Obstacles*):**
   * Rintangan di-spawn secara **global di dalam koridor udara dunia** berdasarkan zona ketinggian, bukan di-spawn terpisah per balon.
-  * Seluruh balon udara yang berada di ketinggian yang sama akan menghadapi rintangan global yang sama dan dapat saling melihat tim lain menembak atau menghindar.
+  * Rintangan reguler muncul di dekat satu tim yang dipilih dalam segmen. Tim lain dalam jangkauan dapat melihat rintangan yang sama dan ikut menembak atau menghindarinya.
 * **Total Ketinggian:** 0 km hingga 10.000 km.
-* **Zona Lepas Landas Aman Diperluas 6x Lipat (0 – 1.200 km):**
+* **Zona Lepas Landas Aman (di bawah 300 km)**
   * Balon mulai lepas landas dari permukaan darat pulau awal (`0 km`).
-  * Karena sistem menggunakan ruang udara global di mana pemain dapat melihat balon tim lain, **Safe Takeoff Zone diralat dan diperluas menjadi 6x lipat (dari baseline 200 km menjadi 1.200 km)**.
-  * Di bawah ketinggian **1.200 km, SAMA SEKALI TIDAK ADA RINTANGAN** yang muncul (~72 detik pertama penerbangan tanpa gangguan). Ruang ini membantu tim menyebar; collision antarbalon tetap aktif dan dapat memberikan satu lubang. Peluncuran baru diblokir jika ruang dermaga masih ditempati balon mana pun.
+  * Di bawah **300 km**, rintangan lingkungan tidak muncul. Segmen pertama mulai memenuhi syarat spawn pada **300 km**. Tabrakan antarbalon tetap aktif dan dapat memberikan satu lubang. Peluncuran baru diblokir jika ruang dermaga masih ditempati balon mana pun.
 * **Laju Normal:** 10 menit (600 detik) jika terbang mulus tanpa gangguan = **1.000 km setiap 60 detik (1 menit)**.
 
 ```mermaid
 flowchart TD
-    Z0["0 - 1.200 km: Zona Lepas Landas Aman 6x (Bebas Rintangan & Separasi Balon)"] --> Z1["1.200 - 2.000 km: Burung Liar Global + Angin Topan (Alert 3s)"]
+    Z0["Di bawah 300 km: Zona Lepas Landas Aman"] --> Z1["300 - 2.000 km: Burung Liar Global + Angin Topan (Alert 3s)"]
     Z1 --> Z2["2.000 - 3.000 km: Kelelawar Badai + Awan Petir (Alert 3s)"]
     Z2 --> Z3["3.000 - 4.000 km: Hujan Es + Jetstream Crosswind (Alert 3s)"]
     Z3 --> Z4["4.000 - 5.000 km: Puing Kuno Melayang + Drone Penjaga"]
@@ -297,17 +298,20 @@ flowchart TD
     Z8 --> Z9["9.000 - 10.000 km: Inti Badai Gerbang Surgawi (Klimaks)"]
 ```
 
-### Detail Rintangan Global per Segmen:
-1. **0 – 1.200 km (Safe Takeoff Zone - 6x Diperluas):** Bebas seluruh rintangan lingkungan agar tim dapat menyebar formasi. Tabrakan antarbalon dan tembakan ke balon sendiri tetap berlaku.
-2. **1.200 – 2.000 km (Lower Troposphere Initial Encounters & Wind Shear):** Kawanan Burung Camar & Elang mulai muncul bersamaan dengan ancaman **Angin Topan (Tornado)**. Tornado **tidak dapat ditembak**, memicu **Alert 3 detik** sebelum melintas. Pilot wajib bermanuver WASD menghindar.
+### Target desain rintangan reguler per segmen
+
+1. **Di bawah 300 km (Safe Takeoff Zone).** Bebas rintangan lingkungan agar tim dapat menyebar. Tabrakan antarbalon dan tembakan ke balon sendiri tetap berlaku.
+2. **300–2.000 km (Lower Troposphere Initial Encounters & Wind Shear).** Kawanan Burung Camar & Elang dan **Angin Topan (Tornado)** dapat muncul. Angin Topan pertama dijadwalkan setelah satu interval dan memberi peringatan 3 detik sebelum melintas.
 3. **2.000 – 3.000 km (Thunder Ridge):** Kelelawar Badai + **Awan Petir** (Unshootable, **Alert 3 detik** + garis laser telegraph sebelum kilat menyambar).
-5. **3.000 – 4.000 km (Jetstream Crosswind):** **Angin Jetstream Lateral** (Alert 3s sebelum hembusan angin mendorong balon ke samping) + Bongkahan Es Runcing yang berjatuhan (dapat ditembak).
-6. **4.000 – 5.000 km (Floating Sky Ruins):** Puing reruntuhan candi melayang (labirin rintangan) + Drone Penjaga penembak paku sihir (bisa ditembak).
-7. **5.000 – 6.000 km (Solar Flare Layer):** **Gelombang Panas Surya** (Alert 3s) + Lebah Api Raksasa (bisa ditembak).
-8. **6.000 – 7.000 km (Aurora Vortex):** **Badai Anomali Magnetik** (Alert 3s sebelum kontrol kemudi WASD terbalik sementara) + Wyvern Kristal.
-9. **7.000 – 8.000 km (The Twilight Abyss):** Kabut Hampa (jarak pandang pendek) + Phantom Bayangan (bisa ditembak).
-10. **8.000 – 9.000 km (Exosphere Space Debris):** **Hujan Meteorit Mikro** (Alert 3s dengan lintasan bahaya) + Reruntuhan Satelit/Komet beku.
-11. **9.000 – 10.000 km (The Celestial Gateway):** Klimaks gabungan badai pusaran emas (Alert 3s), sambaran kilat beruntun, dan burung phoenix penjaga surga.
+4. **3.000 – 4.000 km (Jetstream Crosswind):** **Angin Jetstream Lateral** (Alert 3s sebelum hembusan angin mendorong balon ke samping) + Bongkahan Es Runcing yang berjatuhan (dapat ditembak).
+5. **4.000 – 5.000 km (Floating Sky Ruins):** Puing reruntuhan candi melayang (labirin rintangan) + Drone Penjaga penembak paku sihir (bisa ditembak).
+6. **5.000 – 6.000 km (Solar Flare Layer):** **Gelombang Panas Surya** (Alert 3s) + Lebah Api Raksasa (bisa ditembak).
+7. **6.000 – 7.000 km (Aurora Vortex):** **Badai Anomali Magnetik** (Alert 3s sebelum kontrol kemudi WASD terbalik sementara) + Wyvern Kristal.
+8. **7.000 – 8.000 km (The Twilight Abyss):** Kabut Hampa (jarak pandang pendek) + Phantom Bayangan (bisa ditembak).
+9. **8.000 – 9.000 km (Exosphere Space Debris):** **Hujan Meteorit Mikro** (Alert 3s dengan lintasan bahaya) + Reruntuhan Satelit/Komet beku.
+10. **9.000 – 10.000 km (The Celestial Gateway):** Klimaks gabungan badai pusaran emas (Alert 3s), sambaran kilat beruntun, dan burung phoenix penjaga surga.
+
+**Status implementasi:** Kesembilan segmen memiliki model musuh dan hazard tersendiri, dengan jadwal global per segmen. Kawanan awal dihitung sebagai satu target. Bongkahan Es menukik dari atas. Drone Penjaga melepaskan satu paku sihir saat balon berada dalam jangkauan, dan puing candi disusun berselang-seling agar bisa dinavigasi. Awan Petir menandai kolom sambaran dengan laser, Meteorit Mikro bergerak dalam tiga jalur paralel, dan Badai Gerbang Surgawi mengaktifkan tiga sambaran bergantian di sekitar pusaran emas. Hazard reguler memberi peringatan 3 detik dan aktif selama 2,5 detik. Angin mendorong balon, anomali membalik arah kemudi, kabut mengurangi jarak pandang, dan kontak dengan hazard perusak dapat memberi satu lubang per balon sesuai proteksi kerusakan.
 
 ---
 
@@ -415,7 +419,7 @@ Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
 - **Gas otomatis:** hanya pemain yang sedang duduk di kemudi dapat menyalakan/mematikan dengan Z/tombol GAS OTOMATIS (gamepad L1). Gas tetap berjalan setelah kemudi dilepas; untuk mengubahnya pemain harus memegang kemudi kembali. Penumpang, termasuk mantan pilot yang sudah melepas kemudi, tidak dapat mengubah gas otomatis. Server memvalidasi pilot dan penghuni kursi pada kedua arah toggle. Gas tidak membatalkan efek lima lubang.
 - **Tabrakan:** balon memiliki collision fisik dan pemisahan posisi pada server. Batas ruang konservatif adalah 60 stud horizontal dan 64 stud vertikal antarpusat root. Kontak memberikan satu lubang pada masing-masing balon; kontak yang sama tidak terus menambah lubang sampai keduanya berpisah. Grace period kerusakan 5 detik dan Shield Emergency tetap berlaku.
 - **Aturan tembak:** pemain dapat menembak kubah balon tim sendiri untuk menciptakan lubang. Tembakan tidak merusak balon tim lain. Raycast, asal laras, amunisi dan validasi kepemilikan tetap ditentukan server.
-- **Zona aman 0–1.200 km:** tetap bebas seluruh rintangan. Kerusakan dari tabrakan dan tembakan balon sendiri tetap berlaku di zona ini, sesuai keputusan pengguna.
+- **Zona aman di bawah 300 km.** Rintangan lingkungan mulai memenuhi syarat spawn pada 300 km. Kerusakan dari tabrakan dan tembakan balon sendiri tetap berlaku di zona aman.
 - **Dermaga terhalang:** pemeriksaan ruang berada pada API peluncuran server dan panel dermaga. Balon dari dermaga mana pun dapat memblokir peluncuran jika masih berada dalam ruang spawn dermaga tujuan (60 stud horizontal dan 64 stud vertikal). Tidak dapat memunculkan balon baru di ruang yang bertabrakan. Pemeriksaan dan pendaftaran penerbangan dilakukan tanpa yield.
 - **Batas daratan:** balon yang berada dekat daratan secara terus-menerus selama 60 detik mengalami Game Over dan seluruh kru gugur. Penghitung ditampilkan pada HUD, direset setelah terangkat dari daratan (root di atas batas dasar dan raycast 4 stud di bawah gondola tidak lagi menyentuh daratan), dan dimulai lagi saat kembali ke daratan. Model dibersihkan melalui lifecycle Game Over.
 
@@ -434,7 +438,19 @@ Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
 | Pengulangan | Milestone yang sudah diperingatkan tidak dipicu ulang oleh flight yang sama saat turun lalu naik |
 | Batas global | Satu gelombang aktif per milestone, maksimal dua gelombang bersamaan |
 
-Gerak kiri/kanan tidak melewati lebar dinding, dan sapuan mencapai batas maju/mundur koridor. Tim baru yang memasuki area saat gelombang berjalan tetap mendapat masa peringatan sendiri. Spawn rintangan reguler untuk peserta ditunda selama tantangan besar; rintangan lama di dunia tetap mengikuti lifecycle biasa. Seluruh rintangan lingkungan tetap tidak muncul di bawah 1.200 km.
+Gerak kiri/kanan tidak melewati lebar dinding, dan sapuan mencapai batas maju/mundur koridor. Tim baru yang memasuki area saat gelombang berjalan tetap mendapat masa peringatan sendiri. Spawn rintangan reguler untuk peserta ditunda selama tantangan besar; rintangan lama di dunia tetap mengikuti lifecycle biasa.
+
+**Visual aktif Dinding Badai**
+
+| Milestone | Nama pada penanda dunia | Palet |
+| --- | --- | --- |
+| 1.800 km | Gugus Topan | Biru kelabu dan petir biru muda |
+| 3.600 km | Arus Es | Biru es dan cyan |
+| 5.400 km | Badai Bara | Merah gelap dan oranye |
+| 7.200 km | Pusaran Aurora | Ungu dan hijau mint |
+| 9.000 km | Badai Gerbang | Ungu dan emas |
+
+Kelima gelombang memakai kabut bergerak, pita angin, dan petir bercabang. Garis dan panah di tepi bawah menunjukkan bahwa bagian atas balon perlu berada di bawah batas tersebut. HUD menampilkan hitung mundur dan jarak turun yang masih diperlukan. Badai Gerbang pada 9.000 km merupakan gelombang Dinding Badai. Hazard reguler bernama Badai Gerbang Surgawi memakai sistem terpisah pada segmen yang sama.
 
 **Loncatan kru:**
 
@@ -524,8 +540,9 @@ Satu pemain hanya dapat menjalankan satu role aktif: Pilot (memegang kemudi), Gu
 ## Kenyamanan Rescue dan Balancing Awal — 31 Oktober 2026
 
 - PullCrewButton kini langsung di HUD utama pada semua ukuran layar. Mode ringkas memakai ukuran 140×48, posisi di antara LOMPAT dan AKSI; tombol hanya muncul bagi rekan bebas yang bisa menolong. Tombol tidak berada di tray AKSI. Layout desktop tetap menyusun aksi tali tanpa overlap.
-- Pacing rintangan reguler memakai OBSTACLE_PACING per band. Band 1–2: 50 HP (2 tembakan pistol), band 3–5: 70 HP (3), band 6–7: 85 HP (4), band 8–9: 100 HP (4). Speed 22/24/26/28/29/30/32/34/36 stud/detik. Minimum jeda enemy 8/7,5/7/6,5/6/5,5/5/4,5/4 detik; hazard 26/25/24/23/22/21/20/19/18 detik. Scheduler memeriksa setiap 2,5 detik, sehingga jeda aktual dibulatkan ke tick berikutnya.
-- Hazard pertama pada band yang baru aktif di server dijadwalkan setelah satu interval, sehingga tidak bersamaan dengan enemy pertama. Penjadwalan tetap global per band, bukan per tim. Zona aman 0–1.200 km, batas 10.000 km, peringatan hazard 3 detik dan pacing dinding badai tetap berlaku.
+- `OBSTACLE_PACING` mengatur gelombang musuh global per band. Band 1–2 mengulang pola 1/2/2 target, band 3–5 memakai 2/2/3, dan band 6–9 memakai 2/3/3. Jeda minimum masing-masing band adalah 7/6,5/6/6/5,5/5/4,5/4,5/4 detik dengan pengecekan tiap 0,5 detik. Target tambahan masuk dari sisi berbeda dengan perkiraan waktu tiba berselang sekitar 0,75 detik per target. Titik lintasan memperhitungkan sedikit momentum balon saat gelombang muncul.
+- Band 1–2 memakai 50 HP (2 tembakan pistol), band 3–5 memakai 70 HP (3), band 6–7 memakai 85 HP (4), dan band 8–9 memakai 100 HP (4). Kecepatan musuh per band adalah 22/24/26/28/29/30/32/34/36 stud/detik. Hazard reguler tetap memakai jeda minimum 26/25/24/23/22/21/20/19/18 detik dan pengecekan tiap 2,5 detik.
+- Hazard pertama pada band yang baru aktif di server dijadwalkan setelah satu interval, sehingga tidak bersamaan dengan enemy pertama. Penjadwalan tetap global per band, bukan per tim.
 - Native dua client: **29/29 lulus**, log server/kedua client bersih. Klik mouse melalui VirtualInput pada tombol nyata (dengan koreksi GuiInset), B keyboard, fall dari keranjang/titian pada 2.000 km, rescue saat naik, stabilitas satu detik sesudah handoff, visibilitas/ukuran/layout HUD, sembilan profil actual spawn, zona aman, warning 3 detik, dan stagger scheduler diuji.
 - Viewport native 1094,4×558,4 memakai mode ringkas: tombol 140×48, parent FlyHighHUD, di dalam layar dan tidak overlap. Avatar turun dari posisi landing lokal (-4,3,43,8) ke posisi berdiri sekitar (-3,98,2,57,8,01), tetap di gondola. Ini pengujian otomatis/input simulasi, bukan penilaian rasa kontrol oleh dua manusia atau HP/controller fisik.
 - Seluruh 28 skrip produksi terkompilasi. Bukti audit/rescue-comfort-results.json; harness rescue_comfort_server/client_playtest.luau. Backup audit/Fly High.before-rescue-comfort.rbxl. Driver/remote QA dihapus, Studio dikembalikan 1 client/Test. Publikasi dan pembelian/cloud tetap ditunda.

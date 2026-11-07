@@ -1006,21 +1006,27 @@ function Theme.Start(gui, player)
 				o.TextTransparency = 1
 
 			elseif r.kind == "alert" then
-				box(r.emblem, 10, 10, 26, 26)
+				box(r.emblem, 10, (h - 26) / 2, 26, 26)
 				ztree(r.emblem, z + 3)
 				r.emblem.Visible = not fullPanel
 				local title = o:FindFirstChild("AlertTitle") or o:FindFirstChild("Title")
 				local detail = o:FindFirstChild("AlertDesc") or o:FindFirstChild("Detail")
 				local alertInset = fullPanel and math.round(math.min(h * 1.04, w * 0.25)) or 44
+				local contentWidth = math.max(1, w - alertInset - 16)
+				local titleHeight, detailHeight = 22 + math.floor(textBoost / 2), 17 + math.floor(textBoost / 2)
+				local top = (h - titleHeight - detailHeight) / 2
 				if title then
-					box(title, alertInset, 6, w - alertInset - 16, 22)
-					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 15, strokeThickness = 2 })
+					box(title, alertInset, top, contentWidth, titleHeight)
+					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, strokeThickness = 2,
+						align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Center, wrapped = false })
+					fitLine(title, textBoost)
 					title.ZIndex = z + 3
 				end
 				if detail then
-					local detailInset = fullPanel and alertInset or 12
-					box(detail, detailInset, 32, w - detailInset - 18, h - 38)
-					applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 12, strokeThickness = 1.5 })
+					box(detail, alertInset, top + titleHeight, contentWidth, detailHeight)
+					applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 14, strokeThickness = 1.5,
+						align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Center, wrapped = false })
+					fitLine(detail, textBoost)
 					detail.ZIndex = z + 3
 				end
 
@@ -1060,6 +1066,9 @@ function Theme.Start(gui, player)
 
 			elseif r.kind == "reticle" then
 				ztree(r.glyph, z + 2)
+				local locked = o:GetAttribute("AimLocked") == true
+				r.glyph.Visible = not locked
+				o.TextTransparency = locked and 0 or 1
 
 			elseif r.kind == "panel" then
 				o.ZIndex = z

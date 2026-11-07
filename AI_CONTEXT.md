@@ -35,7 +35,7 @@ Daftar ini berasal dari source mirror dan jumlah kompilasi snapshot. Bandingkan 
 ## Aturan gameplay yang harus dipertahankan
 
 - Co-op **1–3 pemain**, lima dermaga/armada, ruang udara bersama, tujuan Istana Awan **10.000 km**, lima bioma. Gondola **28×28 stud**.
-- Zona **0–1.200 km** bebas rintangan lingkungan. **Tabrakan antarbalon dan tembakan ke balon sendiri tetap memberi lubang di zona itu**; jangan menerapkan kebal kerusakan menyeluruh. Tembakan tidak merusak balon tim lain.
+- Zona **di bawah 300 km** bebas rintangan lingkungan. Rintangan reguler mulai memenuhi syarat spawn pada 300 km. Tabrakan antarbalon dan tembakan ke balon sendiri tetap dapat memberi lubang sejak 0 km. Tembakan tidak merusak balon tim lain.
 - Maksimum **5 lubang**. Jatuh pada 5 lubang berkecepatan tetap sekitar **666,7 km/detik**: dari 2.000 km sekitar 3 detik; bukan selalu 3 detik dari semua ketinggian. Clutch Save tetap mungkin selama belum terminal.
 - Role **Pilot/Gunner/Engineer/Rescuer eksklusif**. Semua dapat dilepas sesuai alurnya. Hanya pilot yang sedang benar-benar memegang kemudi boleh menyalakan/mematikan gas otomatis; gas yang aktif tetap menyala setelah kemudi dilepas. Kemudi mengikuti arah kamera.
 - Max tiga anggota dermaga dan larangan boarding balon tim lain. Summon dermaga terhalang balon tim mana pun yang belum cukup jauh. Grounded AFK 60 detik menghancurkan balon dan menewaskan kru.

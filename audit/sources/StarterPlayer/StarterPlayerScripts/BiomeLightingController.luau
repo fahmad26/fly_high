@@ -9,6 +9,12 @@ local flightSyncEvent = remotes:WaitForChild("FlightStateSyncEvent")
 local currentBiome = 0
 local activeTween
 local fogVersion = 0
+local fogActive = false
+local fogTween
+local atmosphereTween
+local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+local clearDensity = atmosphere and atmosphere.Density
+local clearHaze = atmosphere and atmosphere.Haze
 
 local BIOME_SETTINGS = {
 	[1] = { -- 0 - 2,000 km: Breezy Dawn Archipelago
@@ -48,6 +54,21 @@ local BIOME_SETTINGS = {
 	}
 }
 
+local function transitionFog(target, seconds, dense)
+	if fogTween then fogTween:Cancel() end
+	local info = TweenInfo.new(seconds, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+	fogTween = TweenService:Create(Lighting, info, {FogEnd = target})
+	fogTween:Play()
+	if atmosphere then
+		if atmosphereTween then atmosphereTween:Cancel() end
+		atmosphereTween = TweenService:Create(atmosphere, info, {
+			Density = dense and math.max(clearDensity, 0.58) or clearDensity,
+			Haze = dense and math.max(clearHaze, 3.5) or clearHaze,
+		})
+		atmosphereTween:Play()
+	end
+end
+
 local function applyBiome(biomeIndex)
 	if currentBiome == biomeIndex then return end
 	currentBiome = biomeIndex
@@ -60,14 +81,15 @@ local function applyBiome(biomeIndex)
 		ClockTime = cfg.ClockTime,
 		Brightness = cfg.Brightness,
 		FogColor = cfg.FogColor,
-		FogEnd = cfg.FogEnd,
 		OutdoorAmbient = cfg.OutdoorAmbient,
 	})
 	activeTween:Play()
+	if not fogActive then transitionFog(cfg.FogEnd, 5, false) end
 end
 
 local function restoreLobbyLighting()
 	fogVersion += 1 -- Invalidate delayed fog restoration from the previous flight.
+	fogActive = false
 	currentBiome = 0
 	applyBiome(1)
 end
@@ -91,12 +113,14 @@ localPlayer.CharacterAdded:Connect(function()
 end)
 
 remotes.HazardAlertEvent.OnClientEvent:Connect(function(data)
- if data.effect~="Fog" then return end
- fogVersion+=1 local version=fogVersion
- if activeTween then activeTween:Cancel() end
- Lighting.FogEnd=80
- task.delay(data.duration or 5,function()
-  if version~=fogVersion then return end
-  local index=currentBiome currentBiome=0 applyBiome(index)
- end)
+	if data.effect ~= "Fog" then return end
+	fogVersion += 1
+	local version = fogVersion
+	fogActive = true
+	transitionFog(80, 0.65, true)
+	task.delay(data.duration or 5, function()
+		if version ~= fogVersion then return end
+		fogActive = false
+		transitionFog(BIOME_SETTINGS[currentBiome].FogEnd, 1.15, false)
+	end)
 end)

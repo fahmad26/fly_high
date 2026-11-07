@@ -1,8 +1,8 @@
 # Rencana gerak rintangan Fly High
 
-**Status: menunggu persetujuan pengguna untuk implementasi.** Rencana ini membahas gerak, keterbacaan bahaya, dan cara mengujinya. Analisis memakai build lokal dengan sembilan segmen rintangan reguler dan zona lepas landas bebas rintangan di bawah 300 km. Lihat bagian rintangan global di [PRD](../../../PRD_Fly_High.md).
+**Status: diimplementasikan di place lokal.** Sembilan segmen rintangan mendapat pola gerak tersendiri. Penanda petir dan meteorit memakai ukuran yang sama dengan pemeriksaan server. Lihat aturan rintangan global di [PRD](../../../PRD_Fly_High.md).
 
-## Kondisi saat ini
+## Kondisi sebelum perubahan
 
 Musuh reguler membidik sekali saat muncul dan kemudian meluncur lurus dengan kecepatan tetap. Bongkahan Es mulai dari posisi yang lebih tinggi, tetapi juga bergerak dengan kecepatan tetap. Dinding Badai menyapu koridor dengan kecepatan tetap dan memberi pemain garis batas bawah untuk membaca jalur aman.
 
@@ -13,7 +13,7 @@ Dua penanda bahaya perlu diselaraskan dengan pemeriksaan server:
 
 Di build lokal, `ObstacleManager` mengatur gerak dan benturan reguler, `ObstacleArt` membangun model dan penanda visual, dan `LargeChallengeManager` mengatur sapuan Dinding Badai.
 
-## Usulan per segmen
+## Pola gerak per segmen
 
 | Ketinggian | Gerak musuh | Gerak hazard |
 | --- | --- | --- |
@@ -29,14 +29,9 @@ Di build lokal, `ObstacleManager` mengatur gerak dan benturan reguler, `Obstacle
 
 Untuk **Dinding Badai**, pertahankan sapuan yang stabil dan garis bawah yang bisa diandalkan pemain. Variasikan gerak kabut dan pusaran di dalam dinding.
 
-## Urutan pengerjaan setelah disetujui
+## Verifikasi di Studio
 
-1. Selaraskan penanda dan area benturan Meteorit Mikro serta Awan Petir. Pastikan celah yang terlihat aman memang bisa dilalui oleh balon.
-2. Prototipe Burung Liar, Kelelawar Badai, dan Drone Penjaga. Bandingkan gerak ketiganya dalam penerbangan untuk memastikan setiap pola mudah dikenali dan bisa direspons.
-3. Terapkan pola yang sama pada musuh dan hazard lainnya. Tambahkan variasi visual di dalam Dinding Badai tanpa menggeser penanda bawah dari batas aman.
-
-## Kriteria uji di Studio
-
-- Coba melintas di dalam dan di luar penanda petir, serta di antara jalur meteorit. Kerusakan harus sesuai dengan area yang terlihat setelah peringatan berakhir.
-- Coba menghindar, membidik, dan menembak tiga musuh prototipe di desktop dan emulator layar sentuh. Gerak harus cukup terbaca bagi pilot dan gunner, termasuk saat balon sedang bermanuver.
-- Uji bahwa paku drone keluar setelah kilatan, serta celah puing dan batas bawah Dinding Badai tetap sesuai dengan area benturan selama objek bergerak.
+- Server memverifikasi gerak kesembilan musuh. Pada Awan Petir, pusat kubah di 18 stud dari pusat sambaran lolos, sedangkan di 16 stud terkena satu lubang setelah peringatan. Balon di celah meteorit lolos, sedangkan balon di tengah jalur terkena satu lubang. Tiga jalur mulai bergerak bergantian.
+- Burung Liar, Kelelawar Badai, dan Drone Penjaga masing-masing terkunci oleh auto-aim dan menerima damage pistol di desktop serta emulator iPhone landscape. Uji mengarahkan kamera dan mengaktifkan Tool lewat skrip Studio.
+- Drone melambat saat mengisi daya dan melepaskan paku sekitar 0,67 detik setelah kilatan mulai. Kepadatan kabut naik bertahap dan pulih setelah efek selesai. Kabut Dinding Badai bergerak, sementara balon yang ditempatkan di bawah batas lolos tanpa kerusakan.
+- Uji ini memakai posisi terkontrol. Kenyamanan menghindar secara manual, performa ramai, dan keseimbangan dalam perjalanan penuh masih perlu diuji.
