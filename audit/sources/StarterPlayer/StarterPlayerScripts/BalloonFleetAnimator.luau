@@ -4,8 +4,11 @@ local RS=game:GetService("ReplicatedStorage")
 local player=Players.LocalPlayer
 local remotes=RS:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local pods=workspace:WaitForChild("FlyHighLobby"):WaitForChild("MatchmakingPods")
-local flights={} local previews={} local attached=false local holes=0 local travelling=false local hanging=false
-remotes.TetherEvent.OnClientEvent:Connect(function(data) attached=data.isTethered==true travelling=data.stage=="Climbing"or data.stage=="Descending"or data.stage=="Rescuing" hanging=data.stage=="Hanging"end)
+local flights={} local previews={} local attached=false local holes=0 local tetherStage
+remotes.TetherEvent.OnClientEvent:Connect(function(data)
+ attached = data.isTethered == true
+ tetherStage = data.stage
+end)
 remotes.FlightStateSyncEvent.OnClientEvent:Connect(function(data) holes=data.holes or 0 if data.isGameOver or data.isVictory then attached=false end end)
 local function register(model)
  if not model:IsA("Model") or flights[model] or not model:GetAttribute("BalloonThemeId") or model:GetAttribute("IsFleetPreview") then return end
@@ -88,13 +91,11 @@ RunService.Heartbeat:Connect(function(dt)
     if crew then
      if prompt.Name=="HelmPrompt" then
       local seat=model:FindFirstChild("HelmSeat") enabled=free and seat~=nil and seat.Occupant==nil
-     elseif prompt.Name=="TetherPrompt" then enabled=free and inside and not attached and player:GetAttribute("RopeRepairing")~=true and (prompt.Parent:GetAttribute("AvailableRopes")or 0)>0
-     elseif prompt.Name=="DetachTetherPrompt" then enabled=inside and attached and not travelling
-     elseif prompt.Name=="RepairRopePrompt" then enabled=(free or player:GetAttribute("RopeRepairing")==true) and inside and not attached and ((prompt.Parent:GetAttribute("RepairableRopes")or 0)>0 or player:GetAttribute("RopeRepairing")==true)
-     elseif prompt.Name=="ClimbPrompt" then enabled=attached and inside and not travelling
-     elseif prompt.Name=="DescendPrompt" then enabled=attached and not inside and not travelling and not hanging
-     elseif prompt.Name=="PatchPrompt" then enabled=attached and not inside and not travelling and not hanging and holes<5 and prompt.Parent.Transparency<0.5
-     elseif prompt.Name=="PullCrewPrompt"then enabled=free and inside and (prompt.Parent:GetAttribute("RescueWaiting")or 0)>0
+     elseif prompt.Name=="RepairRopePrompt" then
+      local repairing = player:GetAttribute("RopeRepairing") == true
+      enabled = inside and not attached and (repairing or (free and (prompt.Parent:GetAttribute("RepairableRopes") or 0) > 0))
+     elseif prompt.Name=="PatchPrompt" then
+      enabled = attached and tetherStage == "Catwalk" and not inside and holes < 5 and prompt.Parent.Transparency < 0.5
      elseif prompt.Name=="PickupPrompt" then enabled=free and prompt.Parent:GetAttribute("IsOccupied")==true and char:FindFirstChildOfClass("Tool")==nil end
     end
     prompt.Enabled=enabled==true

@@ -1,5 +1,7 @@
 # Rencana aset gambar UI Fly High
 
+> **Aset aktif per 7 November 2026.** Pakai [katalog Sky Arcade PNG](./assets/ui/sky-arcade/README.md) untuk nama, ukuran, dan ID aset aktif. Daftar kandidat dan jalur PNG lama di bawah merupakan riwayat. File PNG lama sudah dihapus dari proyek.
+
 > **Status terbaru 31 Oktober 2026:** daftar di bawah adalah riwayat kandidat aset sebelum desain Sky Arcade. Semua 27 PNG final pengguna sudah diunggah dan ID-nya dipertahankan pada `assets/ui/asset-manifest.json`. HUD aktif kini membangun panel/gradasi/outline/glyph melalui UI Roblox agar tampil utuh tanpa menunggu gambar; `balloon_intact`, `emergency_kit`, `weapon_pistol`, dan `weapon_ak47` merupakan ilustrasi opsional. Preview: `audit/hud-arcade-phone.jpg`. Tidak diperlukan ekspor ulang di image editor untuk memakai desain baru.
 
 Daftar ini merupakan spesifikasi kandidat aset. Preview konsep pertama berisi 25 ikon/tombol sudah dibuat di assets/ui/concepts/fly-high-ui-kit-v1.png menggunakan imagegen; prompt dan peta ikon disimpan di folder yang sama. Preview belum menjadi aset individual siap produksi dan belum diunggah/dipasang ke Roblox. UI sekarang tetap berfungsi tanpa menunggu aset gambar.

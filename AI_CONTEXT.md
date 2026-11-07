@@ -1,11 +1,13 @@
 # Konteks aktif untuk AI berikutnya — Fly High
 
+> **HUD aktif per 7 November 2026 adalah Sky Adventure, versi 11.** Mulai dari [katalog aset dan verifikasi Studio](./assets/ui/sky-adventure/README.md). Place lokal tersimpan dan 35 source container terkompilasi. Catatan HUD, hash place, dan status PNG lama di snapshot Oktober merupakan riwayat.
+
 Snapshot dokumentasi: **31 Oktober 2026**. Dokumen ini menyatukan keadaan terbaru; bagian bertanggal lebih lama pada PRD, HANDOVER, dan laporan audit tetap disimpan sebagai riwayat.
 
 ## Mulai dari sini
 
 1. Baca `PRD_Fly_High.md` lengkap untuk aturan produk, kemudian dokumen ini dan `HANDOVER.md` lengkap.
-2. Untuk HUD aktif, baca `audit/HUD_ARCADE_REDESIGN.md`, `audit/hud-arcade-results.json`, dan lihat **`audit/hud-arcade-phone.jpg`**. Preview ini capture Playtest asli, bukan mockup AI.
+2. Untuk HUD aktif, baca [catatan Sky Adventure](./assets/ui/sky-adventure/README.md) dan [desain yang disetujui](./design/features/hud-generated-art/design.md). Laporan `audit/hud-arcade-results.json` dan preview lama adalah riwayat.
 3. Untuk status perjalanan penuh dan masalah co-op, baca `audit/FULL_JOURNEY_QA.md` dan `audit/full-journey-summary.json`.
 4. `AUDIT_REPORT.md` menyimpan temuan serta hasil pengujian dari banyak iterasi. Jangan menganggap semua angka/hashes di laporan lama mewakili build terbaru.
 

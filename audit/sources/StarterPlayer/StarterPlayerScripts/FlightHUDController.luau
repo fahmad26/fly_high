@@ -110,6 +110,7 @@ speedLabel.Parent=altFrame
 -- Left Hole Status Frame
 local statusFrame = Instance.new("Frame")
 statusFrame.Name = "StatusFrame"
+statusFrame:SetAttribute("HoleCount", 0)
 statusFrame.Size = UDim2.new(0, 260, 0, 110)
 statusFrame.Position = UDim2.new(0, 20, 0, 85)
 statusFrame.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
@@ -138,7 +139,7 @@ holeIcons.Name = "HoleIcons"
 holeIcons.Size = UDim2.new(1, -16, 0, 26)
 holeIcons.Position = UDim2.new(0, 10, 0, 30)
 holeIcons.BackgroundTransparency = 1
-holeIcons.Text = "💚 💚 💚 💚 💚 (0/5 Lubang)"
+holeIcons.Text = "💚 💚 💚 💚 💚 (5/5 Kesehatan)"
 holeIcons.TextColor3 = Color3.fromRGB(100, 255, 120)
 holeIcons.Font = Enum.Font.GothamBold
 holeIcons.TextSize = 16
@@ -167,6 +168,7 @@ invulnLabel.TextColor3 = Color3.fromRGB(255, 220, 50)
 invulnLabel.Font = Enum.Font.FredokaOne
 invulnLabel.TextSize = 14
 invulnLabel.TextXAlignment = Enum.TextXAlignment.Left
+invulnLabel.Visible = false
 invulnLabel.Parent = statusFrame
 
 -- Emergency Repair Button
@@ -294,18 +296,47 @@ end)
 
 -- Emergency Button Trigger
 emBtn.MouseButton1Click:Connect(function()
-	emergencyKitEvent:FireServer()
+	if emBtn.Active and localPlayer:GetAttribute("InFlight") == true then
+		emergencyKitEvent:FireServer()
+	end
 end)
+
+local kitBlocked
+local function updateKit()
+	local kits = localPlayer:GetAttribute("EmergencyKits")
+	local inFlight = localPlayer:GetAttribute("InFlight") == true
+	local reason = kitBlocked
+	if kits == nil or not screenGui:GetAttribute("FlightHUDReady") then
+		reason = "Memuat kit"
+	elseif kits <= 0 then
+		reason = "Kit habis"
+	end
+	emBtn:SetAttribute("HUDLockReason", reason)
+	emBtn.Active = inFlight and localPlayer:GetAttribute("FlightGhost") ~= true and reason == nil
+end
+localPlayer:GetAttributeChangedSignal("EmergencyKits"):Connect(updateKit)
+localPlayer:GetAttributeChangedSignal("FlightGhost"):Connect(updateKit)
+localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
+	if not localPlayer:GetAttribute("InFlight") then
+		screenGui:SetAttribute("FlightHUDReady", false)
+		screenGui:SetAttribute("HUDGroundedSeconds", nil)
+		kitBlocked = nil
+	end
+	updateKit()
+end)
+updateKit()
 
 -- Server Flight State Listener
 flightSyncEvent.OnClientEvent:Connect(function(data)
+	screenGui:SetAttribute("FlightHUDReady", not data.isGameOver and not data.isVictory)
 	autoGas=data.autoGas==true
 	autoGasButton.Text=(autoGas and "GAS OTOMATIS: ON"or "GAS OTOMATIS: OFF")..(UserInputService.TouchEnabled and ""or " [Z]")
 	autoGasButton.BackgroundColor3=autoGas and Color3.fromRGB(35,130,94)or Color3.fromRGB(35,65,85)
-	groundNotice.Visible=data.groundedRemaining~=nil and not data.isGameOver and not data.isVictory
-	groundNotice.Text=data.groundedRemaining and string.format("LEPAS LANDAS! Balon hancur dalam %d detik",math.ceil(data.groundedRemaining))or ""
+	local groundedSeconds = not data.isGameOver and not data.isVictory and data.groundedRemaining
+	screenGui:SetAttribute("HUDGroundedSeconds", groundedSeconds and math.ceil(groundedSeconds) or nil)
 	local altKm = data.altitudeKm or 0
-	local holes = data.holes or 0
+	local holes = math.clamp(math.floor(tonumber(data.holes) or 0), 0, 5)
+	statusFrame:SetAttribute("HoleCount", holes)
 	local invuln = data.invulnTime or 0
 	local isFreefalling = data.isFreefalling or false
 	local usedKit = data.usedEmergencyKit or false
@@ -335,7 +366,7 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 			icons = icons .. "💚 "
 		end
 	end
-	holeIcons.Text = string.format("%s (%d/5 Lubang)", icons, holes)
+	holeIcons.Text = string.format("%s (%d/5 Kesehatan)", icons, 5 - holes)
 
 	-- Hole penalty text
 	if data.isGameOver then
@@ -371,6 +402,10 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 	end
 
 	-- Emergency Button update
+	kitBlocked = (data.isGameOver or data.isVictory) and "Penerbangan selesai"
+		or usedKit and "Kit terpakai"
+		or (data.shieldTime or 0) > 0 and "Perisai aktif"
+		or nil
 	if usedKit then
 		emBtn.Text = "🛡️ Emergency Kit: Sudah Digunakan"
 		emBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
@@ -389,22 +424,22 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 		emBtn.BackgroundColor3 = Color3.fromRGB(30, 110, 200)
 		emBtn.Active = true
 	end
+	updateKit()
 end)
 
 local alertVersion=0
 hazardAlertEvent.OnClientEvent:Connect(function(data)
  if data.effect then return end
  alertVersion+=1 local version=alertVersion
- alertBanner.Visible=true
- alertDesc.Text=string.upper(data.hazardName or "BAHAYA").." DARI "..string.upper(data.direction or "DEPAN")
+ alertBanner:SetAttribute("HUDAlertActive",true)
+ alertDesc.Text=(data.hazardName or "Bahaya").." dari "..string.lower(data.direction or "depan")
  local deadline=os.clock()+3
  task.spawn(function()
   while version==alertVersion and os.clock()<deadline do
-   alertTitle.Text=string.format("⚠️ PERINGATAN: %.1fs ⚠️",math.max(0,deadline-os.clock()))
-   alertBanner.BackgroundColor3=math.floor(os.clock()*6)%2==0 and Color3.fromRGB(255,40,40) or Color3.fromRGB(255,180,0)
+   alertTitle.Text=string.format("Waspada · %.1f dtk",math.max(0,deadline-os.clock()))
    task.wait(0.1)
   end
-  if version==alertVersion then alertBanner.Visible=false end
+  if version==alertVersion then alertBanner:SetAttribute("HUDAlertActive",false) end
  end)
 end)
 UserInputService.InputEnded:Connect(function(input)

@@ -16,7 +16,6 @@ local tacticalPingEvent = remotes:WaitForChild("TacticalPingEvent")
 
 local currentWeapon = nil
 local currentAmmo = 8
-local maxAmmo = 8
 local isReloading = false
 local canFire = true
 local isFiringAuto = false
@@ -60,7 +59,7 @@ ammoLabel.Name = "AmmoLabel"
 ammoLabel.Size = UDim2.new(1, -20, 0, 24)
 ammoLabel.Position = UDim2.new(0, 10, 0, 30)
 ammoLabel.BackgroundTransparency = 1
-ammoLabel.Text = "8 / 8  |  ∞ Cadangan"
+ammoLabel.Text = "8 / ∞"
 ammoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 ammoLabel.Font = Enum.Font.GothamBold
 ammoLabel.TextSize = 18
@@ -176,14 +175,16 @@ local lastShot=0
 local previousCameraMode
 local savedZoomMin,savedZoomMax
 local cameraToken=0
+local setWeaponPresentation
 local reticle=Instance.new("TextLabel")reticle.Name="WeaponReticle"reticle.Size=UDim2.fromOffset(28,28)reticle.AnchorPoint=Vector2.new(.5,.5)reticle.Position=UDim2.fromScale(.5,.5)reticle.BackgroundTransparency=1 reticle.Text="+"reticle.TextColor3=Color3.new(1,1,1)reticle.TextStrokeTransparency=.4 reticle.TextSize=26 reticle.Visible=false reticle.Parent=screenGui
 local function updateAmmoUI()
  if not currentWeapon then return end
  currentAmmo=currentWeapon:GetAttribute("CurrentMag") or 0
- maxAmmo=currentWeapon:GetAttribute("MagSize") or 8
+ local magazineCapacity=currentWeapon:GetAttribute("MagSize") or Config.WEAPONS[currentWeapon.Name].MagSize
  isReloading=currentWeapon:GetAttribute("Reloading")==true
  wNameLabel.Text=currentWeapon.Name
- ammoLabel.Text=isReloading and "RELOADING..." or string.format("%d / %d | ∞ Cadangan",currentAmmo,maxAmmo)
+ ammoLabel:SetAttribute("MagazineCapacity",magazineCapacity)
+ ammoLabel.Text=isReloading and "RELOADING..." or string.format("%d / ∞",currentAmmo)
 end
 local function setWeapon(tool)
  for _,c in ipairs(attrConnections) do c:Disconnect() end attrConnections={}
@@ -204,11 +205,12 @@ local function setWeapon(tool)
   task.delay(.25,function()if token==cameraToken and not currentWeapon then localPlayer.CameraMinZoomDistance=savedZoomMin or .5 localPlayer.CameraMaxZoomDistance=maximum savedZoomMin=nil savedZoomMax=nil end end)
   previousCameraMode=nil
  end
+ setWeaponPresentation(tool)
  weaponFrame.Visible=tool~=nil mobileShootBtn.Visible=tool~=nil
  if tool then
   table.insert(attrConnections,tool.Activated:Connect(function() if beginFire then beginFire() end end))
   table.insert(attrConnections,tool.Deactivated:Connect(function() isFiringAuto=false end))
-  for _,key in ipairs({"CurrentMag","Reloading"}) do table.insert(attrConnections,tool:GetAttributeChangedSignal(key):Connect(updateAmmoUI)) end
+  for _,key in ipairs({"CurrentMag","MagSize","Reloading"}) do table.insert(attrConnections,tool:GetAttributeChangedSignal(key):Connect(updateAmmoUI)) end
   updateAmmoUI()
  else
   reticle.Text="+" reticle.TextColor3=Color3.new(1,1,1) reticle.TextSize=26
@@ -349,6 +351,7 @@ local function onCharacter(char)
  char.ChildRemoved:Connect(function(child) if child==currentWeapon then setWeapon(nil) end end)
  for _,child in ipairs(char:GetChildren()) do if child:IsA("Tool") and Config.WEAPONS[child.Name] then setWeapon(child) end end
 end
+setWeaponPresentation=require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script,screenGui)
 if localPlayer.Character then onCharacter(localPlayer.Character) end
 localPlayer.CharacterAdded:Connect(onCharacter)
 tetherEvent.OnClientEvent:Connect(function(data)
@@ -395,7 +398,6 @@ RunService.RenderStepped:Connect(function()
  end
  wasGhost=ghost
 end)
-require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script)
 
 tacticalPingEvent.OnClientEvent:Connect(function(pos,message,name)
  local marker=Instance.new("Part") marker.Name="TeamSpotterMarker" marker.Shape=Enum.PartType.Ball
@@ -412,92 +414,30 @@ local tethered=false
 local outside=false
 local travelling=false
 local hanging=false
-local holdingRepair
-local holdingRopeRepair
-local repairRemote=remotes:WaitForChild("RepairHoleEvent")
-local function nearestHole()
- local ref=localPlayer:FindFirstChild("FlightBalloon")
- local b=ref and ref.Value
- local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
- if not b or not b.Parent or not root or not tethered or not outside then return nil end
- local slots=b:FindFirstChild("HoleSlots")
- if not slots then return nil end
- local best local distance=10
- for _,hole in ipairs(slots:GetChildren()) do
-  local prompt=hole:FindFirstChild("PatchPrompt")
-  if hole:IsA("BasePart") and prompt and prompt.Enabled then
-   local d=(hole.Position-root.Position).Magnitude
-   if d<distance then best=hole distance=d end
-  end
- end
- return best
-end
-local function beginRepair(input)
- if holdingRepair then return end
- local hole=nearestHole() if not hole then return end
- local token={input=input} holdingRepair=token
- repairRemote:FireServer("Begin",tonumber(hole.Name:match("%d+")))
- task.delay(hole.PatchPrompt.HoldDuration+0.15,function()
-  if holdingRepair==token then repairRemote:FireServer("Finish") holdingRepair=nil end
- end)
-end
-local function matches(input,token)
- return not input or not token.input or input==token.input or (input.KeyCode~=Enum.KeyCode.Unknown and input.KeyCode==token.input.KeyCode)
-end
-local function cancelRepair(input)
- if holdingRepair and matches(input,holdingRepair) then holdingRepair=nil repairRemote:FireServer("Cancel") end
-end
 local attachButton=button("AttachButton","PASANG TALI [E]",UDim2.new(0.5,-75,1,-165),function() tetherEvent:FireServer("Attach") end)
 local detachButton=button("DetachButton","LEPAS TALI [T]",UDim2.new(0.5,-75,1,-255),function()tetherEvent:FireServer("Detach")end)
 local climbButton=button("ClimbButton","NAIK KE KUBAH [F]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Climb") end)
 local descendButton=button("DescendButton","TURUN & LEPAS TALI [Q]",UDim2.new(0.5,-75,1,-210),function() tetherEvent:FireServer("Descend") end)
-local repairButton=button("RepairButton","TAHAN TAMBAL [E]",UDim2.new(0.5,-75,1,-165),function() end)
 local pullButton=button("PullCrewButton","TARIK REKAN [B / R1]",UDim2.new(0.5,-75,1,-300),function()tetherEvent:FireServer("PullCrew")end)
-local repairRopeButton=button("RepairRopeButton","TAHAN PERBAIKI TALI [C]",UDim2.new(0.5,-75,1,-165),function()end)
-local function beginRopeRepair(input)
- if holdingRopeRepair or tethered then return end
- local ref=localPlayer:FindFirstChild("FlightBalloon")local b=ref and ref.Value
- local station=b and b:FindFirstChild("TetherStation")local prompt=station and station:FindFirstChild("RepairRopePrompt")
- if not prompt then return end
- local token={input=input,start=os.clock(),duration=prompt.HoldDuration}holdingRopeRepair=token
- tetherEvent:FireServer("BeginRopeRepair")
- task.delay(prompt.HoldDuration+.15,function()
-  if holdingRopeRepair==token then tetherEvent:FireServer("FinishRopeRepair")holdingRopeRepair=nil end
- end)
-end
-local function cancelRopeRepair(input)
- if holdingRopeRepair and matches(input,holdingRopeRepair)then
-  local complete=os.clock()-holdingRopeRepair.start>=holdingRopeRepair.duration
-  holdingRopeRepair=nil tetherEvent:FireServer(complete and "FinishRopeRepair"or "CancelRopeRepair")
- end
-end
-repairRopeButton.InputBegan:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRopeRepair(input)end
-end)
-repairButton.InputBegan:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1 then beginRepair(input) end
-end)
 tetherEvent.OnClientEvent:Connect(function(data)
  tethered=data.isTethered==true outside=data.insideBasket==false travelling=data.stage=="Climbing"or data.stage=="Descending"or data.stage=="Rescuing"
  hanging=data.stage=="Hanging"
- if not tethered then holdingRepair=nil end
- if data.isRepairingRope==false then holdingRopeRepair=nil end
 end)
-UserInputService.InputBegan:Connect(function(input,gpe)
- if UserInputService:GetFocusedTextBox() then return end
- if input.KeyCode==Enum.KeyCode.B or input.KeyCode==Enum.KeyCode.ButtonR1 then tetherEvent:FireServer("PullCrew")end
- if input.KeyCode==Enum.KeyCode.T or input.KeyCode==Enum.KeyCode.ButtonL2 then tetherEvent:FireServer("Detach")
- elseif input.KeyCode==Enum.KeyCode.Q then tetherEvent:FireServer("Descend")
- elseif input.KeyCode==Enum.KeyCode.F then tetherEvent:FireServer("Climb")
- elseif input.KeyCode==Enum.KeyCode.C or input.KeyCode==Enum.KeyCode.ButtonR3 then beginRopeRepair(input)
- elseif input.KeyCode==Enum.KeyCode.E then
-  if tethered and outside then beginRepair(input) end -- Native E prompt owns attach/pickup/helm; do not send a second action.
+UserInputService.InputBegan:Connect(function(input, processed)
+ if processed or UserInputService:GetFocusedTextBox() then return end
+ local key = input.KeyCode
+ if attachButton.Visible and key == Enum.KeyCode.E then
+  tetherEvent:FireServer("Attach")
+ elseif pullButton.Visible and (key == Enum.KeyCode.B or key == Enum.KeyCode.ButtonR1) then
+  tetherEvent:FireServer("PullCrew")
+ elseif detachButton.Visible and (key == Enum.KeyCode.T or key == Enum.KeyCode.ButtonL2) then
+  tetherEvent:FireServer("Detach")
+ elseif descendButton.Visible and key == Enum.KeyCode.Q then
+  tetherEvent:FireServer("Descend")
+ elseif climbButton.Visible and key == Enum.KeyCode.F then
+  tetherEvent:FireServer("Climb")
  end
 end)
-UserInputService.InputEnded:Connect(function(input)
- cancelRepair(input)cancelRopeRepair(input)
-end)
-UserInputService.WindowFocusReleased:Connect(function()cancelRepair()cancelRopeRepair()end)
 RunService.RenderStepped:Connect(function()
  local ref=localPlayer:FindFirstChild("FlightBalloon")
  local b=ref and ref.Value
@@ -508,11 +448,10 @@ RunService.RenderStepped:Connect(function()
  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
  local free=not currentWeapon and hum and localPlayer.Character:GetAttribute("FatalRopeFall")~=true and not hum.Sit and localPlayer:GetAttribute("CrewRole")==nil and localPlayer:GetAttribute("BoardingFlight")~=true
  attachButton.Visible=free and nearStation and not tethered and localPlayer:GetAttribute("RopeRepairing")~=true and (station:GetAttribute("AvailableRopes")or 0)>0
- repairRopeButton.Visible=(free or localPlayer:GetAttribute("RopeRepairing")==true) and nearStation and not tethered and ((station:GetAttribute("RepairableRopes")or 0)>0 or localPlayer:GetAttribute("RopeRepairing")==true)
- detachButton.Visible=tethered and not travelling and localPlayer:GetAttribute("InFlight")==true
+ local inFlight = localPlayer:GetAttribute("InFlight") == true
+ detachButton.Visible = inFlight and tethered and not outside and not travelling
  climbButton.Visible=tethered and not outside and nearStation and not travelling
- descendButton.Visible=tethered and outside and not travelling and not hanging
- repairButton.Visible=not travelling and not hanging and nearestHole()~=nil
+ descendButton.Visible = inFlight and tethered and outside and not travelling and not hanging
  local floor=b and b:FindFirstChild("BasketFloor")
  local q=floor and root and floor.CFrame:PointToObjectSpace(root.Position)
  pullButton.Visible=free and q~=nil and math.abs(q.X)<=floor.Size.X/2 and math.abs(q.Z)<=floor.Size.Z/2 and q.Y>=0 and q.Y<=8 and station~=nil and (station:GetAttribute("RescueWaiting")or 0)>0

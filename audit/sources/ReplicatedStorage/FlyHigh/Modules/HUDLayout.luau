@@ -3,14 +3,18 @@
 -- and clean non-overlapping geometry across mobile, tablet, and desktop.
 
 local Layout = {}
+local preferredTextGrowth = {
+	[Enum.PreferredTextSize.Medium] = 0,
+	[Enum.PreferredTextSize.Large] = 2,
+	[Enum.PreferredTextSize.Larger] = 4,
+	[Enum.PreferredTextSize.Largest] = 6,
+}
 
 local rigging = {
 	"AttachButton",
-	"RepairRopeButton",
 	"PullCrewButton",
 	"DetachButton",
 	"ClimbButton",
-	"RepairButton",
 	"DescendButton",
 }
 
@@ -23,7 +27,9 @@ end
 
 function Layout.Start(gui, player)
 	local theme = require(script.Parent.HUDTheme).Start(gui, player)
+	local assets = require(script.Parent.HUDImageAssets)
 	local input = game:GetService("UserInputService")
+	local guiService = game:GetService("GuiService")
 	gui.ScreenInsets = Enum.ScreenInsets.CoreUISafeInsets
 
 	local scrim = Instance.new("TextButton")
@@ -36,6 +42,7 @@ function Layout.Start(gui, player)
 	scrim.Visible = false
 	scrim.ZIndex = 20
 	scrim.Parent = gui
+	local scrimImage = assets.Mount(scrim, "meter_scrim")
 
 	local function get(name)
 		return gui:FindFirstChild(name)
@@ -49,42 +56,7 @@ function Layout.Start(gui, player)
 		scrim.Visible = false
 	end)
 
-	local function showModal(target)
-		for _, name in { "ShopModal", "TacticalPingWheel" } do
-			local o = get(name)
-			if o and o ~= target then o.Visible = false end
-		end
-		if target then
-			target.Visible = not target.Visible
-			scrim.Visible = target.Visible
-		else
-			scrim.Visible = false
-		end
-	end
-
-	local shopBtn = get("ShopToggleButton")
-	if shopBtn and shopBtn:IsA("GuiButton") then
-		shopBtn.Activated:Connect(function()
-			showModal(get("ShopModal"))
-		end)
-	end
-
-	local pingBtn = get("PingButton")
-	if pingBtn and pingBtn:IsA("GuiButton") then
-		pingBtn.Activated:Connect(function()
-			showModal(get("TacticalPingWheel"))
-		end)
-	end
-
-	local closeBtn = gui:FindFirstChild("CloseButton", true)
-	if closeBtn and closeBtn:IsA("GuiButton") then
-		closeBtn.Activated:Connect(function()
-			local modal = get("ShopModal")
-			if modal then modal.Visible = false end
-			scrim.Visible = false
-		end)
-	end
-
+	local activeModal
 	local elapsed = 1
 	local connection
 	connection = game:GetService("RunService").RenderStepped:Connect(function(dt)
@@ -102,9 +74,12 @@ function Layout.Start(gui, player)
 		if w < 1 or h < 1 then return end
 
 		local compact = h < 520 or w < 760
+		local textBoost = math.min(preferredTextGrowth[guiService.PreferredTextSize] or 0, compact and 3 or 6)
+		gui:SetAttribute("HUDTextBoost", textBoost)
 		gui:SetAttribute("CompactLayout", compact)
 		gui:SetAttribute("TabletLayout", input.TouchEnabled and not compact)
-		gui:SetAttribute("HUDDesignVersion", 6)
+		gui:SetAttribute("HUDDesignVersion", 11)
+		scrim.BackgroundTransparency = scrimImage.IsLoaded and 1 or 0.35
 
 		local function place(name, x, y, bw, bh)
 			local o = get(name)
@@ -114,43 +89,89 @@ function Layout.Start(gui, player)
 
 		local margin = compact and 12 or 18
 		local inFlight = player:GetAttribute("InFlight") == true
-
-		-- 1. Altitude Capsule (Top Center Hero HUD)
-		local altY = 8
-		local topW = math.clamp(w * 0.44, 400, 500)
-		local topH = compact and 56 or 62
-		place("AltimeterFrame", (w - topW) / 2, altY, topW, topH)
-
-		-- 2. Grounded Countdown Ribbon (Strictly below Altimeter with comfortable 12px breathing room)
-		local noticeW = math.clamp(topW - 40, 300, 420)
-		local noticeH = 30
-		local noticeY = altY + topH + 12
-		place("GroundedCountdown", (w - noticeW) / 2, noticeY, noticeW, noticeH)
-
-		-- 3. Hull Condition Card (Top Left)
-		local statusY = (w >= 960 and 8) or (noticeY + noticeH + 10)
-		local statusW = compact and 180 or 196
-		local statusH = 56
-		local status = place("StatusFrame", margin, statusY, statusW, statusH)
-		local storm = get("StormChallengePanel")
-		if status then
-			status.Visible = inFlight and not (storm and storm.Visible)
-	end
-
-		-- 4. Left Dock Toolbar (Clean vertical column on left edge)
-		local tileW = 50
-		local tileH = 56
-		local gap = 8
-		local navY = compact and 120 or math.max(statusY + statusH + 14, math.min(180, h * 0.25))
-
-		for i, name in { "ShopToggleButton", "EmergencyKitButton", "PingButton", "WarningAudioToggleButton" } do
-			place(name, margin, navY + (i - 1) * (tileH + gap), tileW, tileH)
-		end
-
-		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
+		local portrait = w < h and w < 620
 		local jumpSize = compact and 84 or 90
 		local jumpMarginR = compact and 24 or 28
 		local jumpMarginB = compact and 24 or 28
+		local fireSize = compact and 74 or 84
+		local utility = (compact and 46 or 52) + textBoost
+		local right = w - jumpMarginR
+		local jumpY = h - jumpMarginB - jumpSize
+		local fireX = portrait and right - fireSize or right - jumpSize - 8 - fireSize
+		local fireY = portrait and jumpY - fireSize - 8 or h - jumpMarginB - fireSize
+		local touchUtilityGutter = input.TouchEnabled and compact and not portrait and w >= 680 and h >= 300
+		local utilityRight = touchUtilityGutter and fireX - 8 or right
+
+		-- 1. Altitude Capsule (Top Center Hero HUD)
+		local altY = 8
+		local topW = math.min(w - 2 * margin, math.clamp(w * 0.44, 400, 500) + 8 * textBoost)
+		local topH = (topW < 380 and (inFlight and 78 or 66) or 62) + 2 * textBoost
+		place("AltimeterFrame", (w - topW) / 2, altY, topW, topH)
+
+		local statusW = portrait and w - 2 * margin or 224 + 6 * textBoost
+		local wide = w >= 960 and (w - topW) / 2 >= margin + statusW + 12
+		local headerBottom = altY + topH
+		local statusY = wide and altY or headerBottom + 8
+		local statusH = 64 + 2 * textBoost
+		local tileW = 50 + textBoost
+		local statusX = portrait and margin or wide and margin or margin + tileW + 8
+		local status = place("StatusFrame", statusX, statusY, statusW, statusH)
+		if status then status.Visible = inFlight end
+
+		-- Keep hull telemetry visible and reserve one separate lane for priority messages.
+		local storm = get("StormChallengePanel")
+		local alert = get("AlertBanner")
+		if alert then
+			alert.Visible = inFlight and alert:GetAttribute("HUDAlertActive") == true and not (storm and storm.Visible)
+		end
+		local warningX = wide and (w - topW) / 2 or statusX
+		local warningY = (wide and headerBottom or statusY + statusH) + 8
+		local warningW = wide and topW or math.min(430, w - warningX - margin)
+		if touchUtilityGutter and get("WeaponFrame") and get("WeaponFrame").Visible then
+			warningW = math.min(warningW, utilityRight - utility * 2 - 16 - warningX)
+		end
+		place("StormChallengePanel", warningX, warningY, warningW, 60)
+		place("AlertBanner", warningX, warningY, warningW, 60)
+		local notice = place("GroundedCountdown", warningX, warningY, warningW, 38 + textBoost)
+		local seconds = gui:GetAttribute("HUDGroundedSeconds")
+		if notice then
+			notice.Visible = inFlight and seconds ~= nil and not (storm and storm.Visible) and not (alert and alert.Visible)
+			if notice.Visible then
+				local gas = get("GasButton")
+				local pilot = gas and gas.Visible
+				notice.Text = (pilot and "Tahan gas untuk lepas landas" or "Pilot belum lepas landas")
+					.. " · " .. seconds .. " dtk"
+			end
+		end
+
+		local tileH = (compact and 50 or 56) + textBoost
+		local gap = 8
+		local navY = portrait and warningY + 68 or (wide and statusY + statusH + 8 or statusY)
+		if not inFlight then navY = headerBottom + 12 end
+		local slot = 0
+		local topSlots = 0
+		local topUtilitySpace = (w - topW) / 2 - margin
+		for _, name in { "EmergencyKitButton", "PingButton", "WarningAudioToggleButton", "ShopToggleButton" } do
+			local item = get(name)
+			if item then
+				item.Visible = inFlight or name == "ShopToggleButton"
+				if item.Visible then
+					local slotsNeeded = name == "WarningAudioToggleButton" and 2 or 1
+					local moveToTop = input.TouchEnabled and compact and not portrait
+						and (name == "ShopToggleButton" or name == "WarningAudioToggleButton")
+						and topUtilitySpace >= slotsNeeded * (tileW + gap)
+					if moveToTop then
+						place(name, w - margin - tileW - topSlots * (tileW + gap), altY, tileW, tileH)
+						topSlots += 1
+					else
+						place(name, margin, navY + slot * (tileH + gap), tileW, tileH)
+						slot += 1
+					end
+				end
+			end
+		end
+
+		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
 		local jump = place("JumpPanel", w - jumpMarginR - jumpSize, h - jumpMarginB - jumpSize, jumpSize, jumpSize)
 		if jump then
 			jump.BackgroundTransparency = 1
@@ -161,34 +182,48 @@ function Layout.Start(gui, player)
 		end
 
 		-- 6. Gunner Shoot Button & Utilities (Right thumb zone)
-		local fireSize = compact and 74 or 84
-		local fireX = compact and (w - jumpMarginR - jumpSize - 16 - fireSize) or (w - jumpMarginR - fireSize)
-		local fireY = h - jumpMarginB - jumpSize - 16 - fireSize
 		place("MobileShootButton", fireX, fireY, fireSize, fireSize)
+		local utilityY = math.min(jumpY, fireY) - utility - 8
+		place("ReloadButton", utilityRight - utility * 2 - 8, utilityY, utility, utility)
+		place("DropButton", utilityRight - utility, utilityY, utility, utility)
+		local ammoW = (compact and 212 or 248) + 9 * textBoost
+		local ammoH = (compact and 56 or 60) + 2 * textBoost
+		local ammoX, ammoY = right - ammoW, utilityY - ammoH - 8
+		local ammoAlongsideFire = compact and not portrait and w >= 540
+		-- Short landscapes have room beside the utility buttons, preserving the playfield above.
+		if ammoAlongsideFire then
+			ammoX = fireX - 8 - ammoW
+			ammoY = touchUtilityGutter and jumpY or h - jumpMarginB - ammoH
+		end
+		place("WeaponFrame", ammoX, ammoY, ammoW, ammoH)
 
-		local utility = compact and 46 or 52
-		local utilityY = compact and (h - 134) or (h - 160)
-		place("ReloadButton", compact and math.max(12, w - 300) or (w - 260), utilityY, utility, utility)
-		place("DropButton", compact and math.max(68, w - 244) or (w - 200), utilityY, utility, utility)
-
-		-- 7. Ammo HUD Card (Bottom Right / Center)
-		local ammoX = compact and (w < 500 and 12 or math.max(w / 2 + 20, w - 320)) or (w - 370)
-		local ammoW = compact and (w < 500 and math.min(210, w - 24) or math.min(210, w - margin - jumpSize - 10 - ammoX)) or 240
-		place("WeaponFrame", ammoX, h - (w < 500 and 230 or (compact and 64 or 94)), ammoW, compact and 54 or 72)
+		local weaponView = get("WeaponView")
+		if weaponView then
+			local scale = compact and weaponView:GetAttribute("CompactScale") or 0.68
+			local side = math.min(h * scale, w * weaponView:GetAttribute("WidthCap"))
+			local aboveAmmo = ammoAlongsideFire or portrait
+			local gunRight = aboveAmmo and fireX or math.min(fireX, ammoX)
+			local gunBottom = aboveAmmo and ammoY + 4 or h
+			-- Align the visible weapon with the HUD, accounting for viewport padding.
+			local gunLeft = gunRight - 8 - weaponView:GetAttribute("RightEdge") * side
+			box(weaponView, math.max(0, gunLeft), gunBottom - 0.90 * side, side, side)
+		end
 
 		-- 8. Pilot Controls (Gas, AutoGas, Release)
 		local gasW = compact and 96 or 108
 		local gasH = compact and 80 or 90
 		place("GasButton", w - margin - gasW, h - margin - gasH, gasW, gasH)
 
-		local autoW = compact and 160 or 176
+		local autoW = (compact and 160 or 176) + 4 * textBoost
 		local autoH = compact and 54 or 56
+		local releaseSize = 54 + textBoost
 		place("AutoGasButton", w - margin - gasW - 12 - autoW, h - margin - autoH, autoW, autoH)
-		place("ReleaseHelmButton", w - margin - gasW - 12 - autoW - 10 - 54, h - margin - autoH, 54, 54)
+		place("ReleaseHelmButton", w - margin - gasW - 12 - autoW - 10 - releaseSize, h - margin - releaseSize, releaseSize, releaseSize)
 
 		if w < 500 then
-			place("AutoGasButton", margin, h - 144, 160, 54)
-			place("ReleaseHelmButton", margin, h - 80, 54, 54)
+			local pilotY = h - margin - gasH - math.max(autoH, releaseSize) - 8
+			place("AutoGasButton", w - margin - autoW, pilotY, autoW, autoH)
+			place("ReleaseHelmButton", w - margin - autoW - releaseSize - 8, pilotY, releaseSize, releaseSize)
 		end
 
 		-- 9. Rigging & Action Buttons (Contextual row)
@@ -199,71 +234,78 @@ function Layout.Start(gui, player)
 				table.insert(visible, o)
 			end
 		end
-		local bw = compact and 140 or 156
+		local bw = (compact and 140 or 156) + 4 * textBoost
 		local bh = compact and 46 or 52
 		local perRow = math.min(3, math.max(1, math.floor((w - 220) / (bw + 10))))
+		if compact and not portrait and w >= math.max(540, 3 * bw + 20 + 2 * margin) then perRow = 3 end
 		local rows = math.ceil(#visible / perRow)
 		for i, o in visible do
 			local row = math.floor((i - 1) / perRow)
 			local col = (i - 1) % perRow
 			local count = math.min(perRow, #visible - row * perRow)
-			box(o, (w - (count * bw + (count - 1) * 10)) / 2 + col * (bw + 10), h - 100 - (rows - row - 1) * (bh + 10), bw, bh)
+			local baseline = portrait and jumpY - bh - 8 or h - 100 - textBoost
+			box(o, (w - (count * bw + (count - 1) * 10)) / 2 + col * (bw + 10), baseline - (rows - row - 1) * (bh + 10), bw, bh)
 		end
 
 		-- 10. Tether Gauge Bar
 		local ropeW = math.min(260, w - jumpSize - 2 * margin - 12)
-		place("TetherFrame", w < 500 and margin or (w - ropeW) / 2, h - 42, ropeW, 30)
+		place("TetherFrame", w < 500 and margin or (w - ropeW) / 2, h - 42 - textBoost, ropeW, 30 + textBoost)
 
-		-- 11. Early Warning Hazards
-		local centerX = w < 650 and margin or (compact and 220 or math.max(statusW + margin + 16, (w - 440) / 2))
-		local alertW = math.min(440, w - centerX - (w < 650 and margin or (compact and 80 or 20)))
-		local alertY = w < 650 and 200 or (compact and 78 or 88)
-		place("AlertBanner", centerX, alertY, alertW, 68)
-		place("StormChallengePanel", centerX, alertY, alertW, 86)
-		place("GhostSpotterFrame", (w - math.min(320, w - 32)) / 2, compact and 78 or 88, math.min(320, w - 32), 60)
+		place("GhostSpotterFrame", warningX, warningY + 68, math.min(320, warningW), 60)
 
 		-- 12. Modals (ShopModal & TacticalPingWheel)
 		local modal = get("ShopModal")
 		local wheel = get("TacticalPingWheel")
-		scrim.Visible = (modal and modal.Visible) or (wheel and wheel.Visible) or false
+		-- The shop and weapon controllers own their buttons. Only reconcile visibility here.
+		if modal and modal.Visible and wheel and wheel.Visible then
+			if activeModal == modal then modal.Visible = false else wheel.Visible = false end
+		end
+		activeModal = (modal and modal.Visible and modal) or (wheel and wheel.Visible and wheel) or nil
+		scrim.Visible = activeModal ~= nil
 
 		if modal then
-			local mw = math.clamp(w * 0.52, 460, 560)
-			local mh = math.clamp(h * 0.74, 380, 440)
+			local mw = math.min(w - 24, math.clamp(w * 0.52, 460, 560))
+			local mh = math.min(h - 24, math.clamp(h * 0.74, 380, 440))
 			box(modal, (w - mw) / 2, (h - mh) / 2, mw, mh)
-			modal.CanvasSize = UDim2.fromOffset(0, 360)
 			modal.ZIndex = 22
 
 			local cBtn = modal:FindFirstChild("CloseButton", true)
 			if cBtn then
-				box(cBtn, mw - 42, 8, 32, 32)
+				box(cBtn, mw - 67, 18, 44, 44)
 				cBtn.ZIndex = 26
 			end
 
 			local card1 = modal:FindFirstChild("Card1")
 			local card2 = modal:FindFirstChild("Card2")
-			local cardW = mw - 32
-			local cardH = 140
+			local cardGap = 10
+			local shortModal = mh < 330
+			local cardW = math.min(shortModal and 150 or 185, math.floor((mw - 62 - cardGap) / 2))
+			local cardY = shortModal and 57 or 72
+			local cardH = shortModal and math.max(206, math.min(236, mh - cardY - 10))
+				or math.max(236, math.round(cardW * 1.65))
+			local cardX = (mw - cardW * 2 - cardGap) / 2
+			modal.CanvasSize = UDim2.fromOffset(0, math.max(mh, cardY + cardH + 40))
 
 			if card1 then
-				box(card1, 16, 50, cardW, cardH)
+				box(card1, cardX, cardY, cardW, cardH)
 				card1.ZIndex = 23
 			end
 			if card2 then
-				box(card2, 16, 50 + cardH + 12, cardW, cardH)
+				box(card2, cardX + cardW + cardGap, cardY, cardW, cardH)
 				card2.ZIndex = 23
 			end
 		end
 
 		if wheel then
 			local mw = math.min(340, w - 24)
-			local mh = 290
+			local mh = math.min(286, h - 20)
+			local row = math.min(54, math.floor((mh - 14) / 5))
 			box(wheel, (w - mw) / 2, (h - mh) / 2, mw, mh)
 			wheel.ZIndex = 22
 			for i = 1, 5 do
 				local b = wheel:FindFirstChild("Ping" .. i)
 				if b then
-					box(b, 0, (i - 1) * 54, mw, 46)
+					box(b, 8, 7 + (i - 1) * row, mw - 16, row - 4)
 					b.ZIndex = 23
 				end
 			end

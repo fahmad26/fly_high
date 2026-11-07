@@ -2,7 +2,7 @@
 
 **Untuk AI/developer penerus:** baca [konteks aktif dan batas pengujian](./AI_CONTEXT.md), kemudian PRD dan HANDOVER lengkap. Dokumen audit lama menyimpan riwayat; status paling baru dan masalah yang belum selesai dirangkum pada konteks aktif.
 
-HUD **Sky Arcade** memakai gradasi cerah, outline tegas, angka ketinggian/amunisi besar, serta kontrol kontekstual langsung. Bentuk dasar dan glyph kontrol dirender oleh Roblox sehingga tidak menunggu gambar termuat. Lihat [preview langsung dari Studio](./audit/hud-arcade-phone.jpg) dan [hasil pengujian beserta batasnya](./audit/hud-arcade-results.json). 32 skrip terkompilasi; 12 profil perangkat/kondisi diperiksa. Seluruh 27 sumber dan ID gambar sebelumnya tetap tersimpan.
+HUD **Sky Adventure** memakai gambar utuh untuk kontrol, panel penerbangan, nameplate, Toko, dan hasil penerbangan. Paket baru berisi 53 gambar terpilih yang dikemas dalam delapan tekstur Roblox. Teks dan angka memakai Fredoka One dan Nunito. Lihat [katalog aset dan hasil Playtest](./assets/ui/sky-adventure/README.md).
 
 > **Co-op Vertical Hot Air Balloon Survival & Adventure to the Floating Cloud Palace at 10,000 km.**
 

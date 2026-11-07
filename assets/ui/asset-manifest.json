@@ -2,7 +2,7 @@
   "version": 2,
   "folder": "assets/ui/final/compressed_img",
   "format": "PNG; RGBA for cutout icons, opaque RGB accepted for full-bleed panels",
-  "status": "Sky Arcade HUD active: code-rendered controls and panels, four optional raster illustrations; original 27 uploaded IDs retained",
+  "status": "Historical records. Superseded by assets/ui/sky-arcade on 2026-11-07. Legacy PNGs removed from the project and the Roblox IDs are no longer referenced by the place.",
   "assets": [
     {
       "key": "control_circle_normal",
@@ -106,7 +106,7 @@
       "sourceSha256": "4da076c41d66eda99f8007134755ae290550c1fdcae384de523362653054b942",
       "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
       "loadStatus": "Failure",
-      "activeAsHUDIllustration": true
+      "activeAsHUDIllustration": false
     },
     {
       "key": "helm",
@@ -301,7 +301,7 @@
       "sourceSha256": "61860cfde70ca42cd8dac172fc7b5fb0ee316fce891b9b7d19d6ba460497a264",
       "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
       "loadStatus": "Success",
-      "activeAsHUDIllustration": true
+      "activeAsHUDIllustration": false
     },
     {
       "key": "balloon_torn",
@@ -327,7 +327,7 @@
       "sourceSha256": "d15c182a9a6df8cc8a36519c05b713a191d803f6fc4b6edce3d26b651aae94a7",
       "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
       "loadStatus": "Failure",
-      "activeAsHUDIllustration": true
+      "activeAsHUDIllustration": false
     },
     {
       "key": "weapon_ak47",
@@ -340,7 +340,7 @@
       "sourceSha256": "a48860279d9e75a7c7698e5ac17a76adeb1de58c22c3673229edad170172fec1",
       "sourceStatus": "Optional HUD illustration; vector presentation remains when image is unavailable",
       "loadStatus": "Failure",
-      "activeAsHUDIllustration": true
+      "activeAsHUDIllustration": false
     },
     {
       "key": "panel_9slice",

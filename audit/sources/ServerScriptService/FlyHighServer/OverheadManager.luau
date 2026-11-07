@@ -19,7 +19,7 @@ local function updateOverheadTitle(player, billboard)
 	end
 
 	if summitCount > 0 then
-		titleLabel.Text = string.format("[⭐ Puncak: %dx]", summitCount)
+		titleLabel.Text = string.format("[Puncak: %dx]", summitCount)
 		titleLabel.TextColor3 = Color3.fromRGB(255, 215, 0) -- Gold
 		titleLabel.TextStrokeColor3 = Color3.fromRGB(139, 90, 0)
 	else
@@ -45,13 +45,13 @@ local function setupOverheadGui(player, character)
 	billboard.MaxDistance = 100
 	billboard.Parent = head
 
-	-- Master Crown Label
+	-- Party Master Label
 	local masterLabel = Instance.new("TextLabel")
 	masterLabel.Name = "MasterLabel"
 	masterLabel.Size = UDim2.new(1, 0, 0, 16)
 	masterLabel.Position = UDim2.new(0, 0, 0, 0)
 	masterLabel.BackgroundTransparency = 1
-	masterLabel.Text = "👑 PARTY MASTER"
+	masterLabel.Text = "PARTY MASTER"
 	masterLabel.TextColor3 = Color3.fromRGB(255, 220, 50)
 	masterLabel.TextStrokeTransparency = 0.2
 	masterLabel.TextStrokeColor3 = Color3.fromRGB(80, 50, 0)
@@ -84,7 +84,7 @@ local function setupOverheadGui(player, character)
 	nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	nameLabel.TextStrokeTransparency = 0.4
 	nameLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-	nameLabel.Font = Enum.Font.GothamBold
+	nameLabel.Font = Enum.Font.Nunito
 	nameLabel.TextSize = 13
 	nameLabel.Parent = billboard
 

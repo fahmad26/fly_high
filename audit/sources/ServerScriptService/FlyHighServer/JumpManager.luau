@@ -6,7 +6,7 @@ local U=require(script.Parent.ServerUtils)
 local remote=RS.FlyHigh.Remotes.FlightJumpEvent
 local Manager={states=setmetatable({},{__mode="k"})}
 _G.FlyHighJumpManager=Manager
-function Manager.CanJump(p,fd)
+function Manager.CanJump(p,fd,allowGroundReentry)
  if not U.Alive(p,fd)then return false,"Kru tidak aktif"end
  local hum=p.Character:FindFirstChildOfClass("Humanoid")local root=p.Character:FindFirstChild("HumanoidRootPart")
  if not root then return false,"Menunggu karakter"end
@@ -15,9 +15,16 @@ function Manager.CanJump(p,fd)
  if tether and (tether.winch or tether.repair)then return false,"Selesaikan katrol / perbaikan"end
  local floor=fd.balloon:FindFirstChild("BasketFloor")
  if not floor then return false,"Menunggu gondola"end
- local q=floor.CFrame:PointToObjectSpace(root.Position)
- if math.abs(q.X)>floor.Size.X/2 or math.abs(q.Z)>floor.Size.Z/2 or q.Y<0 or q.Y>C.JUMP_BASKET_HEIGHT then return false,"Kembali ke gondola [Q]"end
  if root.Anchored then return false,"Tunggu gerakan katrol selesai"end
+ local q=floor.CFrame:PointToObjectSpace(root.Position)
+ local outside=math.abs(q.X)>floor.Size.X/2 or math.abs(q.Z)>floor.Size.Z/2 or q.Y<0
+ if outside or q.Y>C.JUMP_BASKET_HEIGHT then
+  -- Before liftoff, manual jumps let crew climb back in without adding lift/drop effects.
+  if allowGroundReentry and outside and q.Y<=C.JUMP_BASKET_HEIGHT and not fd.hasLiftedOff and fd.root.Position.Y<=C.GROUND_Y+1 then
+   return true,"Lompat kembali ke gondola",true
+  end
+  return false,"Kembali ke gondola [Q]"
+ end
  return true,"Lompat bersama untuk turun"
 end
 function Manager.EligibleCount(fd)
@@ -59,7 +66,7 @@ Run.Heartbeat:Connect(function(dt)
   for _,p in ipairs(fd.players)do
    if p.Parent~=Players then continue end
    local st=state(p,fd)if not st then continue end touched[p]=true
-   local allowed,reason=Manager.CanJump(p,fd)
+   local allowed,reason,reentryJump=Manager.CanJump(p,fd,true)
    if p:GetAttribute("FlightJumpAllowed")~=allowed then p:SetAttribute("FlightJumpAllowed",allowed)end
    if p:GetAttribute("FlightJumpReason")~=reason then p:SetAttribute("FlightJumpReason",reason)end
    if st.blocked~=(not allowed)then
@@ -67,7 +74,7 @@ Run.Heartbeat:Connect(function(dt)
     if allowed then restore(st)
     else st.hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,false)st.hum.JumpPower=0 st.hum.JumpHeight=0 st.hum.Jump=false end
    end
-   if not allowed then st.pendingAt=nil st.actualJumpAt=nil st.lastGroundAt=-math.huge continue end
+   if not allowed or reentryJump then st.pendingAt=nil st.actualJumpAt=nil st.lastGroundAt=-math.huge continue end
    local root=p.Character.HumanoidRootPart local hum=st.hum
    local q=fd.balloon.BasketFloor.CFrame:PointToObjectSpace(root.Position)
    local relativeVy=root.AssemblyLinearVelocity.Y-fd.root.AssemblyLinearVelocity.Y

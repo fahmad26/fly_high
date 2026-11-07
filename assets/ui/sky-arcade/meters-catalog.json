@@ -1,0 +1,232 @@
+{
+  "textureSize": 1024,
+  "pages": [
+    "fly_high_meters_1.png"
+  ],
+  "sprites": {
+    "meter_glyph_km_s": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 6,
+      "w": 172,
+      "h": 84
+    },
+    "meter_glyph_dash": {
+      "page": "fly_high_meters_1.png",
+      "x": 190,
+      "y": 6,
+      "w": 80,
+      "h": 84
+    },
+    "meter_glyph_percent": {
+      "page": "fly_high_meters_1.png",
+      "x": 282,
+      "y": 6,
+      "w": 72,
+      "h": 84
+    },
+    "meter_glyph_minus": {
+      "page": "fly_high_meters_1.png",
+      "x": 366,
+      "y": 6,
+      "w": 50,
+      "h": 84
+    },
+    "meter_glyph_plus": {
+      "page": "fly_high_meters_1.png",
+      "x": 428,
+      "y": 6,
+      "w": 50,
+      "h": 84
+    },
+    "meter_glyph_0": {
+      "page": "fly_high_meters_1.png",
+      "x": 490,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_1": {
+      "page": "fly_high_meters_1.png",
+      "x": 550,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_2": {
+      "page": "fly_high_meters_1.png",
+      "x": 610,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_3": {
+      "page": "fly_high_meters_1.png",
+      "x": 670,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_4": {
+      "page": "fly_high_meters_1.png",
+      "x": 730,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_5": {
+      "page": "fly_high_meters_1.png",
+      "x": 790,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_6": {
+      "page": "fly_high_meters_1.png",
+      "x": 850,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_7": {
+      "page": "fly_high_meters_1.png",
+      "x": 910,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_8": {
+      "page": "fly_high_meters_1.png",
+      "x": 970,
+      "y": 6,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_9": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 102,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_seconds_short": {
+      "page": "fly_high_meters_1.png",
+      "x": 66,
+      "y": 102,
+      "w": 48,
+      "h": 84
+    },
+    "meter_glyph_comma": {
+      "page": "fly_high_meters_1.png",
+      "x": 126,
+      "y": 102,
+      "w": 28,
+      "h": 84
+    },
+    "meter_glyph_dot": {
+      "page": "fly_high_meters_1.png",
+      "x": 166,
+      "y": 102,
+      "w": 28,
+      "h": 84
+    },
+    "meter_glyph_slash": {
+      "page": "fly_high_meters_1.png",
+      "x": 206,
+      "y": 102,
+      "w": 28,
+      "h": 84
+    },
+    "meter_storm_title": {
+      "page": "fly_high_meters_1.png",
+      "x": 246,
+      "y": 102,
+      "w": 394,
+      "h": 70
+    },
+    "meter_ground_crew": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 198,
+      "w": 672,
+      "h": 69
+    },
+    "meter_hull_loading": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 279,
+      "w": 512,
+      "h": 60
+    },
+    "meter_choose_dock": {
+      "page": "fly_high_meters_1.png",
+      "x": 530,
+      "y": 279,
+      "w": 466,
+      "h": 60
+    },
+    "meter_hull_freefall": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 351,
+      "w": 450,
+      "h": 60
+    },
+    "meter_kit_shield": {
+      "page": "fly_high_meters_1.png",
+      "x": 468,
+      "y": 351,
+      "w": 421,
+      "h": 60
+    },
+    "meter_reload_empty": {
+      "page": "fly_high_meters_1.png",
+      "x": 652,
+      "y": 102,
+      "w": 301,
+      "h": 60
+    },
+    "meter_kit_empty": {
+      "page": "fly_high_meters_1.png",
+      "x": 690,
+      "y": 198,
+      "w": 297,
+      "h": 60
+    },
+    "meter_hull_critical": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 423,
+      "w": 201,
+      "h": 60
+    },
+    "meter_kit_loading": {
+      "page": "fly_high_meters_1.png",
+      "x": 219,
+      "y": 423,
+      "w": 369,
+      "h": 59
+    },
+    "meter_ground_pilot": {
+      "page": "fly_high_meters_1.png",
+      "x": 6,
+      "y": 495,
+      "w": 672,
+      "h": 58
+    },
+    "meter_kit_used": {
+      "page": "fly_high_meters_1.png",
+      "x": 600,
+      "y": 423,
+      "w": 408,
+      "h": 58
+    },
+    "meter_scrim": {
+      "page": "fly_high_meters_1.png",
+      "x": 965,
+      "y": 102,
+      "w": 16,
+      "h": 16
+    }
+  }
+}

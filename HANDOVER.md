@@ -1,5 +1,7 @@
 # 📋 Dokumen Handover & Panduan Audit Teknis — "Fly High"
 
+> **7 November 2026 — HUD versi 11.** [Sky Adventure](./assets/ui/sky-adventure/README.md) mengganti visual utama dengan gambar tombol utuh dan panel bergambar. `HUDAdventureArt` dan `HUDAdventureCatalog` dipakai oleh HUD dan nameplate. Controller Lompat hanya mengatur input dan izin; tampilan dikelola tema. Place tersimpan, 35 source container berhasil dikompilasi, dan Playtest desktop/iPad/iPhone selesai. Detail HUD lama di bawah adalah riwayat.
+
 ## 0. Cara membaca status terbaru
 
 Mulai dari **[AI_CONTEXT.md](./AI_CONTEXT.md)** untuk snapshot aktif 31 Oktober 2026, peta 32 source, batas QA, preferensi pengguna dan temuan terbuka. Desain HUD aktif adalah **Sky Arcade** (`edbd49d`); preview `audit/hud-arcade-phone.jpg`, QA `audit/hud-arcade-results.json`. Bagian arsitektur awal dan laporan bertanggal lebih lama di bawah merupakan riwayat. Prioritaskan snapshot ini untuk status implementasi, dan PRD lengkap untuk aturan produk. Dokumentasi handover tidak mengubah place atau menambahkan pengujian baru.

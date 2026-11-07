@@ -198,13 +198,20 @@ local function syncTether(t,inside)
  remotes.TetherEvent:FireClient(t.player,{isTethered=true,durability=t.durability,insideBasket=inside,stage=t.stage,ropeSlot=t.slot.index})
 end
 
+local function catwalkHeight(b)
+ local walkway=b.EnvelopeWalkway
+ local frame=b.PrimaryPart.CFrame
+ -- The walkway's cylinder axis is vertical and shares the bamboo deck top.
+ return frame:PointToObjectSpace(walkway.Position).Y+walkway.Size.X/2
+end
+
 local function travel(p,b,descending,rescue)
  local t=Manager.activeTethers[p.UserId]
  if not t or t.balloon~=b or t.winch or not U.Alive(p,U.Flight(p))then return false end
  if t.needsRescue and not rescue then return false end
  if descending and not rescue then
   local q=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
-  if t.stage~="Catwalk"or q.Y<17.6 or Vector2.new(q.X,q.Z).Magnitude>21 then return false end
+  if t.stage~="Catwalk"or q.Y<catwalkHeight(b)-1 or Vector2.new(q.X,q.Z).Magnitude>21 then return false end
  end
  if t.hanging then
   t.hrp.Anchored=t.hanging.anchored t.hum.AutoRotate=t.hanging.autoRotate t.hanging=nil
@@ -212,7 +219,7 @@ local function travel(p,b,descending,rescue)
  U.Unseat(p)
  local leg=t.hum.RigType==Enum.HumanoidRigType.R6 and p.Character:FindFirstChild("Left Leg")
  local standing=t.hum.HipHeight+t.hrp.Size.Y/2+(leg and leg.Size.Y or 0)+math.max(.1,t.hrp.Size.Y/2)
- local destination=descending and Vector3.new(t.slot.index==2 and 4 or -4,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,18.6+standing,t.slot.index==2 and 16 or -16)
+ local destination=descending and Vector3.new(t.slot.index==2 and 4 or -4,b.BasketFloor.Size.Y/2+standing,8)or Vector3.new(0,catwalkHeight(b)+standing,t.slot.index==2 and 16 or -16)
  t.oldAnchored=t.hrp.Anchored t.oldAutoRotate=t.hum.AutoRotate
  t.collisionGroups={}
  for _,part in p.Character:GetDescendants()do if part:IsA("BasePart")then t.collisionGroups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end
@@ -250,13 +257,12 @@ function Manager.SetupBalloonTethers(b,count)
  local ropeRepair=prompt("RepairRopePrompt","Perbaiki Tali yang Dilepas",Enum.KeyCode.C,Config.ROPE_MAX_DURABILITY/Config.ROPE_REPAIR_RATE_PER_SEC)
  local pull=prompt("PullCrewPrompt","Tarik Rekan ke Keranjang",Enum.KeyCode.B,0)
  pull.GamepadKeyCode=Enum.KeyCode.ButtonR1 pull.UIOffset=Vector2.new(0,144)
- pull.Triggered:Connect(Manager.PullCrew)
  ropeRepair.GamepadKeyCode=Enum.KeyCode.ButtonR3
- -- Two simultaneous station actions need separate native prompt rows.
- for _,p in {station.TetherPrompt,detach}do p.UIOffset=Vector2.new(0,-48)end
- for _,p in {station.ClimbPrompt,ropeRepair}do p.UIOffset=Vector2.new(0,48)end
- walkway.DescendPrompt.ActionText="Turun ke Gondola & Lepas Tali"
- walkway.DescendPrompt.MaxActivationDistance=28 walkway.DescendPrompt.RequiresLineOfSight=false
+ -- The custom action row owns the tap actions.
+ for _, tapPrompt in {station.TetherPrompt, detach, station.ClimbPrompt, walkway.DescendPrompt, pull} do
+  tapPrompt.Enabled = false
+ end
+ ropeRepair.UIOffset = Vector2.zero
  local folder=Instance.new("Folder")folder.Name="RopeSlots"folder.Parent=station
  local pool={station=station,slots={}}
  Manager.ropePools[b]=pool
@@ -290,24 +296,34 @@ function Manager.SetupBalloonTethers(b,count)
   return true
  end
  Manager.attachHandlers[b]=attach
- station.TetherPrompt.Triggered:Connect(attach)
- station.DetachTetherPrompt.Triggered:Connect(function(p)if U.CrewNear(p,b,station,10)then Manager.CleanupPlayer(p)end end)
- station.ClimbPrompt.Triggered:Connect(function(p)if U.CrewNear(p,b,station,10)and U.InBasket(p.Character.HumanoidRootPart,floor)then travel(p,b,false)end end)
- walkway.DescendPrompt.Triggered:Connect(function(p)if U.CrewNear(p,b,walkway,28)and not U.InBasket(p.Character.HumanoidRootPart,floor)then travel(p,b,true)end end)
- ropeRepair.PromptButtonHoldBegan:Connect(function(p)Manager.BeginRopeRepair(p)end)
- ropeRepair.Triggered:Connect(function(p)Manager.FinishRopeRepair(p)end)
+ ropeRepair.PromptButtonHoldBegan:Connect(function(p)
+  if U.CrewNear(p, b, station, 10) then Manager.BeginRopeRepair(p) end
+ end)
+ ropeRepair.Triggered:Connect(function(p)
+  local repair = Manager.ropeRepairs[p]
+  if repair and repair.pool == pool then Manager.FinishRopeRepair(p) end
+ end)
  ropeRepair.PromptButtonHoldEnded:Connect(function(p)
   local repair=Manager.ropeRepairs[p]
-  task.delay(.2,function()if repair and Manager.ropeRepairs[p]==repair then Manager.CancelRopeRepair(p)end end)
+  task.delay(.2,function()if repair and repair.pool==pool and Manager.ropeRepairs[p]==repair then Manager.CancelRopeRepair(p)end end)
  end)
  local duration=count==1 and 1.5 or(count==2 and 2 or 3)
  for _,hole in b.HoleSlots:GetChildren()do
-  local patch=hole.PatchPrompt patch.HoldDuration=duration patch.RequiresLineOfSight=false
-  patch.PromptButtonHoldBegan:Connect(function(p)Manager.BeginRepair(p,tonumber(hole.Name:match("%d+")))end)
-  patch.Triggered:Connect(function(p)Manager.FinishRepair(p)end)
+  local patch = hole.PatchPrompt
+  local holeNumber = tonumber(hole.Name:match("%d+"))
+  patch.HoldDuration = duration
+  patch.MaxActivationDistance = 10
+  patch.RequiresLineOfSight = false
+  patch.PromptButtonHoldBegan:Connect(function(p)
+   if U.CrewNear(p, b, hole, 10) then Manager.BeginRepair(p, holeNumber) end
+  end)
+  patch.Triggered:Connect(function(p)
+   local tether = Manager.activeTethers[p.UserId]
+   if tether and tether.repair and tether.repair.hole == hole then Manager.FinishRepair(p) end
+  end)
   patch.PromptButtonHoldEnded:Connect(function(p)
    local t=Manager.activeTethers[p.UserId]local repair=t and t.repair
-   task.delay(.2,function()if t and t.repair==repair then t.repair=nil end end)
+   task.delay(.2,function()if repair and repair.hole==hole and t.repair==repair then t.repair=nil end end)
   end)
  end
 end
@@ -328,24 +344,19 @@ function Manager.FinishRepair(p)
  if not fd or t.balloon~=fd.balloon or t.winch or t.stage~="Catwalk"or not U.CrewNear(p,fd.balloon,repair.hole,10)then return false end
  return _G.FlyHighBalloonManager.RepairHole(fd,repair.number)
 end
-local repairRate=U.RateLimiter(.08)
-remotes.RepairHoleEvent.OnServerEvent:Connect(function(p,action,n)
- if not repairRate(p)then return end
- if action=="Begin"then Manager.BeginRepair(p,n)
- elseif action=="Finish"then Manager.FinishRepair(p)
- elseif action=="Cancel"then local t=Manager.activeTethers[p.UserId]if t then t.repair=nil end end
-end)
 local travelRate=U.RateLimiter(.3)
 remotes.TetherEvent.OnServerEvent:Connect(function(p,action)
- if action=="CancelRopeRepair"then Manager.CancelRopeRepair(p)return end
  if not travelRate(p)then return end
  if action=="PullCrew"then Manager.PullCrew(p)return end
- if action=="BeginRopeRepair"then Manager.BeginRopeRepair(p)return
- elseif action=="FinishRopeRepair"then Manager.FinishRopeRepair(p)return end
  local fd=U.Flight(p)local t=Manager.activeTethers[p.UserId]
  if action=="Attach"then if fd and Manager.attachHandlers[fd.balloon]then Manager.attachHandlers[fd.balloon](p)end return end
  if not fd or not t or t.balloon~=fd.balloon then return end
- if action=="Detach"then Manager.CleanupPlayer(p)return end
+ if action == "Detach" then
+  if not t.winch and t.stage == "Basket" and U.InBasket(t.hrp, fd.balloon.BasketFloor) then
+   Manager.CleanupPlayer(p)
+  end
+  return
+ end
  if action=="Climb"and U.CrewNear(p,fd.balloon,fd.balloon.TetherStation,10)and U.InBasket(t.hrp,fd.balloon.BasketFloor)then travel(p,fd.balloon,false)
  elseif action=="Descend"and U.CrewNear(p,fd.balloon,fd.balloon.EnvelopeWalkway,28)and not U.InBasket(t.hrp,fd.balloon.BasketFloor)then travel(p,fd.balloon,true)end
 end)
@@ -384,7 +395,7 @@ RunService.Heartbeat:Connect(function(dt)
   local inside=U.InBasket(t.hrp,t.balloon.BasketFloor)
   if not t.winch and not t.needsRescue then
    local q=t.balloon.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
-   local fell=t.stage=="Catwalk"and(q.Y<17.6 or Vector2.new(q.X,q.Z).Magnitude>21)
+   local fell=t.stage=="Catwalk"and(q.Y<catwalkHeight(t.balloon)-1 or Vector2.new(q.X,q.Z).Magnitude>21)
     or t.stage=="Basket"and(q.Y<0 or math.abs(q.X)>t.balloon.BasketFloor.Size.X/2+1 or math.abs(q.Z)>t.balloon.BasketFloor.Size.Z/2+1)
    if fell then hang(t)elseif inside then t.stage="Basket"end
   end

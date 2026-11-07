@@ -1,0 +1,570 @@
+{
+  "textureSize": 1024,
+  "pages": [
+    "fly_high_lettering_1.png",
+    "fly_high_lettering_2.png",
+    "fly_high_lettering_3.png"
+  ],
+  "sprites": {
+    "letter_storm_sign": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 6,
+      "w": 672,
+      "h": 109
+    },
+    "letter_brand": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 127,
+      "w": 354,
+      "h": 72
+    },
+    "letter_ping3": {
+      "page": "fly_high_lettering_1.png",
+      "x": 372,
+      "y": 127,
+      "w": 576,
+      "h": 71
+    },
+    "letter_ping4": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 211,
+      "w": 547,
+      "h": 71
+    },
+    "letter_ping1": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 294,
+      "w": 516,
+      "h": 71
+    },
+    "letter_welcome_sign": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 377,
+      "w": 672,
+      "h": 70
+    },
+    "letter_ping5": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 459,
+      "w": 672,
+      "h": 66
+    },
+    "letter_shop_title": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 537,
+      "w": 672,
+      "h": 65
+    },
+    "letter_hull_0": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 614,
+      "w": 672,
+      "h": 64
+    },
+    "letter_key_q": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 6,
+      "w": 62,
+      "h": 63
+    },
+    "letter_ping2": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 690,
+      "w": 672,
+      "h": 62
+    },
+    "letter_flight_won": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 764,
+      "w": 651,
+      "h": 60
+    },
+    "letter_hull_damage": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 836,
+      "w": 552,
+      "h": 60
+    },
+    "letter_party_master": {
+      "page": "fly_high_lettering_1.png",
+      "x": 6,
+      "y": 908,
+      "w": 516,
+      "h": 60
+    },
+    "letter_launch": {
+      "page": "fly_high_lettering_1.png",
+      "x": 534,
+      "y": 294,
+      "w": 469,
+      "h": 60
+    },
+    "letter_auto_off": {
+      "page": "fly_high_lettering_1.png",
+      "x": 534,
+      "y": 908,
+      "w": 461,
+      "h": 60
+    },
+    "letter_auto_on": {
+      "page": "fly_high_lettering_1.png",
+      "x": 565,
+      "y": 211,
+      "w": 433,
+      "h": 60
+    },
+    "letter_reserve": {
+      "page": "fly_high_lettering_1.png",
+      "x": 570,
+      "y": 836,
+      "w": 417,
+      "h": 60
+    },
+    "letter_hull_safe": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 6,
+      "w": 399,
+      "h": 60
+    },
+    "letter_attach": {
+      "page": "fly_high_lettering_2.png",
+      "x": 417,
+      "y": 6,
+      "w": 396,
+      "h": 60
+    },
+    "letter_pod_a": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 78,
+      "w": 363,
+      "h": 60
+    },
+    "letter_pod_b": {
+      "page": "fly_high_lettering_2.png",
+      "x": 381,
+      "y": 78,
+      "w": 362,
+      "h": 60
+    },
+    "letter_pod_c": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 150,
+      "w": 362,
+      "h": 60
+    },
+    "letter_pod_d": {
+      "page": "fly_high_lettering_2.png",
+      "x": 380,
+      "y": 150,
+      "w": 362,
+      "h": 60
+    },
+    "letter_flight_lost": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 222,
+      "w": 361,
+      "h": 60
+    },
+    "letter_pod_e": {
+      "page": "fly_high_lettering_2.png",
+      "x": 379,
+      "y": 222,
+      "w": 359,
+      "h": 60
+    },
+    "letter_detach": {
+      "page": "fly_high_lettering_1.png",
+      "x": 669,
+      "y": 764,
+      "w": 343,
+      "h": 60
+    },
+    "letter_gas": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 377,
+      "w": 292,
+      "h": 60
+    },
+    "letter_reload_state": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 459,
+      "w": 255,
+      "h": 60
+    },
+    "letter_pistol": {
+      "page": "fly_high_lettering_1.png",
+      "x": 764,
+      "y": 6,
+      "w": 220,
+      "h": 60
+    },
+    "letter_audio_on": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 537,
+      "w": 216,
+      "h": 60
+    },
+    "letter_key_space": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 614,
+      "w": 209,
+      "h": 60
+    },
+    "letter_drop": {
+      "page": "fly_high_lettering_1.png",
+      "x": 690,
+      "y": 690,
+      "w": 203,
+      "h": 60
+    },
+    "letter_release": {
+      "page": "fly_high_lettering_2.png",
+      "x": 755,
+      "y": 78,
+      "w": 203,
+      "h": 60
+    },
+    "letter_kit_clutch": {
+      "page": "fly_high_lettering_2.png",
+      "x": 825,
+      "y": 6,
+      "w": 188,
+      "h": 60
+    },
+    "letter_shop_toggle": {
+      "page": "fly_high_lettering_2.png",
+      "x": 754,
+      "y": 150,
+      "w": 180,
+      "h": 60
+    },
+    "letter_ping_toggle": {
+      "page": "fly_high_lettering_2.png",
+      "x": 750,
+      "y": 222,
+      "w": 155,
+      "h": 60
+    },
+    "letter_audio_off": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 294,
+      "w": 151,
+      "h": 60
+    },
+    "letter_reload": {
+      "page": "fly_high_lettering_1.png",
+      "x": 918,
+      "y": 537,
+      "w": 87,
+      "h": 60
+    },
+    "letter_key_g": {
+      "page": "fly_high_lettering_1.png",
+      "x": 911,
+      "y": 614,
+      "w": 62,
+      "h": 60
+    },
+    "letter_hull_1": {
+      "page": "fly_high_lettering_2.png",
+      "x": 169,
+      "y": 294,
+      "w": 672,
+      "h": 59
+    },
+    "letter_climb": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 366,
+      "w": 370,
+      "h": 59
+    },
+    "letter_descend": {
+      "page": "fly_high_lettering_2.png",
+      "x": 388,
+      "y": 366,
+      "w": 212,
+      "h": 59
+    },
+    "letter_damage_0": {
+      "page": "fly_high_lettering_2.png",
+      "x": 853,
+      "y": 294,
+      "w": 128,
+      "h": 59
+    },
+    "letter_damage_1": {
+      "page": "fly_high_lettering_2.png",
+      "x": 612,
+      "y": 366,
+      "w": 128,
+      "h": 59
+    },
+    "letter_damage_2": {
+      "page": "fly_high_lettering_2.png",
+      "x": 752,
+      "y": 366,
+      "w": 128,
+      "h": 59
+    },
+    "letter_damage_3": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 437,
+      "w": 128,
+      "h": 59
+    },
+    "letter_damage_4": {
+      "page": "fly_high_lettering_2.png",
+      "x": 146,
+      "y": 437,
+      "w": 128,
+      "h": 59
+    },
+    "letter_damage_5": {
+      "page": "fly_high_lettering_2.png",
+      "x": 286,
+      "y": 437,
+      "w": 128,
+      "h": 59
+    },
+    "letter_key_c": {
+      "page": "fly_high_lettering_1.png",
+      "x": 960,
+      "y": 127,
+      "w": 58,
+      "h": 59
+    },
+    "letter_pod_footer": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 508,
+      "w": 672,
+      "h": 58
+    },
+    "letter_spot": {
+      "page": "fly_high_lettering_2.png",
+      "x": 426,
+      "y": 437,
+      "w": 482,
+      "h": 58
+    },
+    "letter_patch": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 578,
+      "w": 463,
+      "h": 58
+    },
+    "letter_repair_rope": {
+      "page": "fly_high_lettering_2.png",
+      "x": 481,
+      "y": 578,
+      "w": 424,
+      "h": 58
+    },
+    "letter_pull": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 648,
+      "w": 401,
+      "h": 58
+    },
+    "letter_seconds": {
+      "page": "fly_high_lettering_2.png",
+      "x": 690,
+      "y": 508,
+      "w": 186,
+      "h": 58
+    },
+    "letter_rifle": {
+      "page": "fly_high_lettering_2.png",
+      "x": 419,
+      "y": 648,
+      "w": 179,
+      "h": 58
+    },
+    "letter_kit_use": {
+      "page": "fly_high_lettering_1.png",
+      "x": 905,
+      "y": 690,
+      "w": 108,
+      "h": 58
+    },
+    "letter_km": {
+      "page": "fly_high_lettering_2.png",
+      "x": 892,
+      "y": 366,
+      "w": 105,
+      "h": 58
+    },
+    "letter_key_r": {
+      "page": "fly_high_lettering_1.png",
+      "x": 957,
+      "y": 459,
+      "w": 59,
+      "h": 58
+    },
+    "letter_key_b": {
+      "page": "fly_high_lettering_2.png",
+      "x": 946,
+      "y": 150,
+      "w": 58,
+      "h": 58
+    },
+    "letter_key_h": {
+      "page": "fly_high_lettering_2.png",
+      "x": 917,
+      "y": 222,
+      "w": 58,
+      "h": 58
+    },
+    "letter_key_v": {
+      "page": "fly_high_lettering_2.png",
+      "x": 920,
+      "y": 437,
+      "w": 57,
+      "h": 58
+    },
+    "letter_key_y": {
+      "page": "fly_high_lettering_2.png",
+      "x": 888,
+      "y": 508,
+      "w": 57,
+      "h": 58
+    },
+    "letter_key_x": {
+      "page": "fly_high_lettering_2.png",
+      "x": 957,
+      "y": 508,
+      "w": 56,
+      "h": 58
+    },
+    "letter_key_e": {
+      "page": "fly_high_lettering_2.png",
+      "x": 917,
+      "y": 578,
+      "w": 55,
+      "h": 58
+    },
+    "letter_key_p": {
+      "page": "fly_high_lettering_2.png",
+      "x": 610,
+      "y": 648,
+      "w": 55,
+      "h": 58
+    },
+    "letter_key_f": {
+      "page": "fly_high_lettering_2.png",
+      "x": 677,
+      "y": 648,
+      "w": 52,
+      "h": 58
+    },
+    "letter_key_t": {
+      "page": "fly_high_lettering_2.png",
+      "x": 741,
+      "y": 648,
+      "w": 52,
+      "h": 58
+    },
+    "letter_key_z": {
+      "page": "fly_high_lettering_2.png",
+      "x": 805,
+      "y": 648,
+      "w": 52,
+      "h": 58
+    },
+    "letter_speed_down": {
+      "page": "fly_high_lettering_2.png",
+      "x": 869,
+      "y": 648,
+      "w": 73,
+      "h": 57
+    },
+    "letter_speed_up": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 718,
+      "w": 73,
+      "h": 57
+    },
+    "letter_hull_4": {
+      "page": "fly_high_lettering_2.png",
+      "x": 91,
+      "y": 718,
+      "w": 672,
+      "h": 55
+    },
+    "letter_goal": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 787,
+      "w": 672,
+      "h": 54
+    },
+    "letter_hull_2": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 853,
+      "w": 672,
+      "h": 54
+    },
+    "letter_pod_start": {
+      "page": "fly_high_lettering_2.png",
+      "x": 6,
+      "y": 919,
+      "w": 672,
+      "h": 53
+    },
+    "letter_hull_3": {
+      "page": "fly_high_lettering_3.png",
+      "x": 6,
+      "y": 6,
+      "w": 672,
+      "h": 52
+    },
+    "letter_palace_sign": {
+      "page": "fly_high_lettering_3.png",
+      "x": 6,
+      "y": 70,
+      "w": 672,
+      "h": 51
+    },
+    "letter_hull_5": {
+      "page": "fly_high_lettering_3.png",
+      "x": 6,
+      "y": 133,
+      "w": 672,
+      "h": 48
+    },
+    "letter_speed_still": {
+      "page": "fly_high_lettering_2.png",
+      "x": 954,
+      "y": 648,
+      "w": 52,
+      "h": 46
+    }
+  }
+}

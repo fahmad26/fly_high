@@ -1,0 +1,598 @@
+{
+  "textureSize": 1024,
+  "pages": [
+    "fly_high_adventure_1.png",
+    "fly_high_adventure_2.png",
+    "fly_high_adventure_3.png",
+    "fly_high_adventure_4.png",
+    "fly_high_adventure_5.png",
+    "fly_high_adventure_6.png",
+    "fly_high_adventure_7.png",
+    "fly_high_adventure_8.png"
+  ],
+  "sprites": {
+    "shop_panel": {
+      "page": "fly_high_adventure_1.png",
+      "x": 4,
+      "y": 4,
+      "w": 768,
+      "h": 759,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_panel": {
+      "page": "fly_high_adventure_2.png",
+      "x": 4,
+      "y": 4,
+      "w": 488,
+      "h": 512,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "shop_ak_card": {
+      "page": "fly_high_adventure_2.png",
+      "x": 500,
+      "y": 4,
+      "w": 374,
+      "h": 512,
+      "source": [
+        1024,
+        1536
+      ]
+    },
+    "shop_kit_card": {
+      "page": "fly_high_adventure_3.png",
+      "x": 4,
+      "y": 4,
+      "w": 347,
+      "h": 512,
+      "source": [
+        1024,
+        1536
+      ]
+    },
+    "result_gameover": {
+      "page": "fly_high_adventure_2.png",
+      "x": 4,
+      "y": 524,
+      "w": 768,
+      "h": 384,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "result_victory": {
+      "page": "fly_high_adventure_3.png",
+      "x": 4,
+      "y": 524,
+      "w": 768,
+      "h": 384,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "jump_locked": {
+      "page": "fly_high_adventure_3.png",
+      "x": 359,
+      "y": 4,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "jump_normal": {
+      "page": "fly_high_adventure_3.png",
+      "x": 623,
+      "y": 4,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "jump_pressed": {
+      "page": "fly_high_adventure_4.png",
+      "x": 4,
+      "y": 4,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "kit_clutch": {
+      "page": "fly_high_adventure_4.png",
+      "x": 268,
+      "y": 4,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "kit_empty": {
+      "page": "fly_high_adventure_4.png",
+      "x": 532,
+      "y": 4,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "kit_normal": {
+      "page": "fly_high_adventure_4.png",
+      "x": 4,
+      "y": 268,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "shop_normal": {
+      "page": "fly_high_adventure_4.png",
+      "x": 268,
+      "y": 268,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "sound_off": {
+      "page": "fly_high_adventure_4.png",
+      "x": 532,
+      "y": 268,
+      "w": 256,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "drop_normal": {
+      "page": "fly_high_adventure_4.png",
+      "x": 4,
+      "y": 532,
+      "w": 255,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "sound_on": {
+      "page": "fly_high_adventure_4.png",
+      "x": 267,
+      "y": 532,
+      "w": 255,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "fire_normal": {
+      "page": "fly_high_adventure_4.png",
+      "x": 530,
+      "y": 532,
+      "w": 254,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_rope": {
+      "page": "fly_high_adventure_5.png",
+      "x": 4,
+      "y": 4,
+      "w": 254,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "release_helm_normal": {
+      "page": "fly_high_adventure_5.png",
+      "x": 266,
+      "y": 4,
+      "w": 254,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "close_normal": {
+      "page": "fly_high_adventure_5.png",
+      "x": 528,
+      "y": 4,
+      "w": 253,
+      "h": 256,
+      "source": [
+        1536,
+        1024
+      ]
+    },
+    "ping_thrust": {
+      "page": "fly_high_adventure_5.png",
+      "x": 4,
+      "y": 268,
+      "w": 253,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "reload_v2": {
+      "page": "fly_high_adventure_5.png",
+      "x": 265,
+      "y": 268,
+      "w": 253,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "gas_normal": {
+      "page": "fly_high_adventure_5.png",
+      "x": 526,
+      "y": 268,
+      "w": 252,
+      "h": 256,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_danger": {
+      "page": "fly_high_adventure_5.png",
+      "x": 4,
+      "y": 532,
+      "w": 256,
+      "h": 255,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_normal": {
+      "page": "fly_high_adventure_5.png",
+      "x": 268,
+      "y": 532,
+      "w": 256,
+      "h": 255,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_target": {
+      "page": "fly_high_adventure_5.png",
+      "x": 532,
+      "y": 532,
+      "w": 256,
+      "h": 254,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "ping_repair": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 4,
+      "w": 256,
+      "h": 252,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "altitude_panel": {
+      "page": "fly_high_adventure_1.png",
+      "x": 4,
+      "y": 771,
+      "w": 768,
+      "h": 188,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "pistol_art": {
+      "page": "fly_high_adventure_6.png",
+      "x": 268,
+      "y": 4,
+      "w": 256,
+      "h": 176,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "tether_pull": {
+      "page": "fly_high_adventure_4.png",
+      "x": 4,
+      "y": 796,
+      "w": 512,
+      "h": 153,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_detach": {
+      "page": "fly_high_adventure_5.png",
+      "x": 4,
+      "y": 795,
+      "w": 512,
+      "h": 152,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "auto_off": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 264,
+      "w": 512,
+      "h": 145,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_attach": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 417,
+      "w": 512,
+      "h": 140,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_descend": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 565,
+      "w": 512,
+      "h": 140,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_patch": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 713,
+      "w": 512,
+      "h": 138,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "buy_button": {
+      "page": "fly_high_adventure_6.png",
+      "x": 4,
+      "y": 859,
+      "w": 512,
+      "h": 134,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_climb": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 4,
+      "w": 512,
+      "h": 133,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "auto_on": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 145,
+      "w": 512,
+      "h": 132,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "context_panel": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 285,
+      "w": 512,
+      "h": 132,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "tether_repair_rope": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 425,
+      "w": 512,
+      "h": 129,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "goal_marker": {
+      "page": "fly_high_adventure_1.png",
+      "x": 780,
+      "y": 4,
+      "w": 123,
+      "h": 128,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "nameplate": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 562,
+      "w": 512,
+      "h": 126,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "rope_panel": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 696,
+      "w": 512,
+      "h": 115,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "ammo_panel": {
+      "page": "fly_high_adventure_7.png",
+      "x": 4,
+      "y": 819,
+      "w": 512,
+      "h": 109,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "hull_panel_v2": {
+      "page": "fly_high_adventure_2.png",
+      "x": 4,
+      "y": 916,
+      "w": 512,
+      "h": 103,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "rifle_art": {
+      "page": "fly_high_adventure_2.png",
+      "x": 524,
+      "y": 916,
+      "w": 256,
+      "h": 102,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "warning_critical": {
+      "page": "fly_high_adventure_3.png",
+      "x": 4,
+      "y": 916,
+      "w": 512,
+      "h": 98,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "warning_amber": {
+      "page": "fly_high_adventure_8.png",
+      "x": 4,
+      "y": 4,
+      "w": 512,
+      "h": 97,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "master_crest": {
+      "page": "fly_high_adventure_1.png",
+      "x": 780,
+      "y": 771,
+      "w": 128,
+      "h": 97,
+      "source": [
+        1254,
+        1254
+      ]
+    },
+    "progress_track": {
+      "page": "fly_high_adventure_1.png",
+      "x": 4,
+      "y": 967,
+      "w": 512,
+      "h": 41,
+      "source": [
+        2172,
+        724
+      ]
+    },
+    "hull_pip_intact": {
+      "page": "fly_high_adventure_1.png",
+      "x": 524,
+      "y": 967,
+      "w": 128,
+      "h": 39,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "hull_pip_torn": {
+      "page": "fly_high_adventure_1.png",
+      "x": 660,
+      "y": 967,
+      "w": 128,
+      "h": 37,
+      "source": [
+        1774,
+        887
+      ]
+    },
+    "progress_fill": {
+      "page": "fly_high_adventure_4.png",
+      "x": 4,
+      "y": 957,
+      "w": 512,
+      "h": 34,
+      "source": [
+        2172,
+        724
+      ]
+    }
+  }
+}

@@ -28,18 +28,15 @@ local panel=frame("JumpPanel",UDim2.new(0,20,0,265),UDim2.fromOffset(260,72),Col
 local hint=label(panel,"JumpHint",UDim2.fromOffset(9,5),UDim2.fromOffset(158,60),12)
 local button=Instance.new("TextButton")button.Name="JumpButton"button.Size=UDim2.fromOffset(82,56)button.Position=UDim2.fromOffset(171,8)
 button.BackgroundColor3=Color3.fromRGB(190,151,78)button.TextColor3=Color3.fromRGB(24,41,46)button.Text="↑"
-button.Font=Enum.Font.GothamBold button.TextSize=34 button.BorderSizePixel=0 button.Parent=panel
+button.Font=Enum.Font.FredokaOne button.TextSize=34 button.BorderSizePixel=0 button.AutoButtonColor=false button.Parent=panel
 local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(.5,0)corner.Parent=button
-local caption=label(button,"JumpCaption",UDim2.fromScale(0,.69),UDim2.fromScale(1,.21),10)
-caption.TextColor3=button.TextColor3 caption.Text="LOMPAT"
 local outline=Instance.new("UIStroke")outline.Color=Color3.fromRGB(246,219,144)outline.Thickness=2 outline.Transparency=.25 outline.ApplyStrokeMode=Enum.ApplyStrokeMode.Border outline.Parent=button
 local storm=frame("StormChallengePanel",UDim2.new(.5,-245,0,150),UDim2.fromOffset(490,82),Color3.fromRGB(31,57,76))
 storm.AnchorPoint=Vector2.new(.5,0)storm.Position=UDim2.new(.5,0,0,75)
 local title=label(storm,"Title",UDim2.fromOffset(8,5),UDim2.new(1,-16,0,25),17)
 local detail=label(storm,"Detail",UDim2.fromOffset(10,31),UDim2.new(1,-20,0,44),13)
 local active local hum local originalJump=true local lastEnabled
-local holes=0 local hiddenStatus
-remotes.FlightStateSyncEvent.OnClientEvent:Connect(function(data)holes=data.holes or 0 if data.isGameOver or data.isVictory then active=nil end end)
+remotes.FlightStateSyncEvent.OnClientEvent:Connect(function(data) if data.isGameOver or data.isVictory then active=nil end end)
 local function bind(char)
  hum=char:WaitForChild("Humanoid")originalJump=hum:GetStateEnabled(Enum.HumanoidStateType.Jumping)lastEnabled=nil active=nil
 end
@@ -71,8 +68,7 @@ Run.Heartbeat:Connect(function(dt)
  if hum and not allowed then hum.Jump=false end
  panel.Visible=hum~=nil and hum.Health>0 and not(p:GetAttribute("InFlight")==true and p:GetAttribute("FlightGhost")==true)and not (hum and hum.SeatPart and hum.SeatPart.Name=="HelmSeat")
  local remaining=math.max(0,(p:GetAttribute("FlightJumpReadyAt")or 0)-workspace:GetServerTimeNow())
- button.Active=allowed button.AutoButtonColor=allowed button.BackgroundTransparency=allowed and 0 or .6
- caption.Text=not allowed and "TERKUNCI"or(inFlight and remaining>0 and string.format("EFEK %.1fs",remaining)or(Input.TouchEnabled and "LOMPAT"or "SPACE / A"))
+ button.Active=allowed
  hint.Text=not allowed and (p:GetAttribute("FlightJumpReason")or "Tunggu gondola")or(remaining>0 and string.format("Efek turun siap\ndalam %.1f detik",remaining)or "LOMPAT BERSAMA\nTurunkan balon untuk menghindari badai")
  storm.Visible=inFlight and active~=nil
  if active then
@@ -82,21 +78,24 @@ Run.Heartbeat:Connect(function(dt)
    local ref=p:FindFirstChild("FlightBalloon")local balloon=ref and ref.Value local root=balloon and balloon.PrimaryPart
    local drop=root and math.max(0,root.Position.Y-active.safeRootY)or 0
    local safe=root and drop<=.1
-   title.Text=(safe and "POSISI AMAN"or "↓ DINDING BADAI").." • "..holes.."/5 LUBANG"
-   title.TextColor3=holes>=4 and Color3.fromRGB(255,150,134)or Color3.fromRGB(242,235,211)
-   storm.BackgroundColor3=safe and Color3.fromRGB(31,98,77)or Color3.fromRGB(31,57,76)
    local countdown=math.max(0,active.warningEndsAt-now)
+   title.Text=countdown>0 and string.format("Dinding Badai · %.0f dtk",math.ceil(countdown)) or "Dinding Badai"
+   storm.BackgroundColor3=safe and Color3.fromRGB(31,98,77)or Color3.fromRGB(31,57,76)
    local pilot=hum and balloon and hum.SeatPart==balloon:FindFirstChild("HelmSeat")
-   local gasHint=pilot and "Matikan GAS OTOMATIS [Z]."or "Pilot perlu mematikan GAS OTOMATIS di kemudi."
-   detail.Text=(countdown>0 and string.format("Mulai menyapu dalam %.1f detik. ",countdown)or "Badai sedang menyapu koridor! ")..(safe and ((balloon and balloon:GetAttribute("AutoGas"))and "Pertahankan posisi. "..gasHint or "Pertahankan posisi di bawah awan.")or string.format("Turun lagi %d km. %s",math.ceil(drop/C.STUDS_PER_KM),allowed and ((balloon and balloon:GetAttribute("AutoGas"))and "Lompat bersama! "..gasHint or "Lompat bersama!")or(p:GetAttribute("FlightJumpReason")or "Kembali ke gondola")))
+   local auto=balloon and balloon:GetAttribute("AutoGas")==true
+   if not root then
+    detail.Text="Posisi balon sedang dimuat"
+   elseif pilot and auto then
+    detail.Text="Matikan gas otomatis"
+   elseif safe then
+    detail.Text="Tetap di bawah awan"
+   elseif pilot then
+    detail.Text="Lepas gas agar balon turun"
+   elseif allowed then
+    detail.Text=string.format("Lompat bersama · turun %d km", math.ceil(drop/C.STUDS_PER_KM))
+   else
+    detail.Text=p:GetAttribute("FlightJumpReason") or "Kembali ke gondola"
+   end
   end
  end
- local status=gui:FindFirstChild("StatusFrame")
- if storm.Visible then
-  if status then if hiddenStatus==nil then hiddenStatus=status.Visible end status.Visible=false end
-  local alert=gui:FindFirstChild("AlertBanner")if alert then alert.Visible=false end
- elseif hiddenStatus~=nil then
-  if status then status.Visible=hiddenStatus end hiddenStatus=nil
- end
-
 end)

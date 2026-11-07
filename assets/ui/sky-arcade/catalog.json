@@ -1,0 +1,621 @@
+{
+  "textureSize": 1024,
+  "pages": [
+    "fly_high_arcade_1.png",
+    "fly_high_arcade_2.png",
+    "fly_high_arcade_3.png",
+    "fly_high_arcade_4.png",
+    "fly_high_arcade_5.png"
+  ],
+  "sprites": {
+    "shop_panel": {
+      "page": "fly_high_arcade_1.png",
+      "x": 6,
+      "y": 6,
+      "w": 448,
+      "h": 528
+    },
+    "badge_green": {
+      "page": "fly_high_arcade_1.png",
+      "x": 466,
+      "y": 6,
+      "w": 256,
+      "h": 256
+    },
+    "badge_red": {
+      "page": "fly_high_arcade_1.png",
+      "x": 734,
+      "y": 6,
+      "w": 256,
+      "h": 256
+    },
+    "close": {
+      "page": "fly_high_arcade_1.png",
+      "x": 6,
+      "y": 546,
+      "w": 256,
+      "h": 256
+    },
+    "jump": {
+      "page": "fly_high_arcade_1.png",
+      "x": 274,
+      "y": 546,
+      "w": 256,
+      "h": 256
+    },
+    "shoot": {
+      "page": "fly_high_arcade_1.png",
+      "x": 542,
+      "y": 546,
+      "w": 256,
+      "h": 256
+    },
+    "art_balloon": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 6,
+      "w": 240,
+      "h": 240
+    },
+    "art_kit": {
+      "page": "fly_high_arcade_2.png",
+      "x": 258,
+      "y": 6,
+      "w": 240,
+      "h": 240
+    },
+    "audio_off": {
+      "page": "fly_high_arcade_2.png",
+      "x": 510,
+      "y": 6,
+      "w": 240,
+      "h": 224
+    },
+    "audio_on": {
+      "page": "fly_high_arcade_2.png",
+      "x": 762,
+      "y": 6,
+      "w": 240,
+      "h": 224
+    },
+    "drop": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 258,
+      "w": 240,
+      "h": 224
+    },
+    "gas": {
+      "page": "fly_high_arcade_2.png",
+      "x": 258,
+      "y": 258,
+      "w": 240,
+      "h": 224
+    },
+    "kit_clutch": {
+      "page": "fly_high_arcade_2.png",
+      "x": 510,
+      "y": 258,
+      "w": 240,
+      "h": 224
+    },
+    "kit_use": {
+      "page": "fly_high_arcade_2.png",
+      "x": 762,
+      "y": 258,
+      "w": 240,
+      "h": 224
+    },
+    "ping_toggle": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 494,
+      "w": 240,
+      "h": 224
+    },
+    "release": {
+      "page": "fly_high_arcade_2.png",
+      "x": 258,
+      "y": 494,
+      "w": 240,
+      "h": 224
+    },
+    "reload": {
+      "page": "fly_high_arcade_2.png",
+      "x": 510,
+      "y": 494,
+      "w": 240,
+      "h": 224
+    },
+    "shop_toggle": {
+      "page": "fly_high_arcade_2.png",
+      "x": 762,
+      "y": 494,
+      "w": 240,
+      "h": 224
+    },
+    "alert": {
+      "page": "fly_high_arcade_1.png",
+      "x": 6,
+      "y": 814,
+      "w": 448,
+      "h": 192
+    },
+    "kit_card": {
+      "page": "fly_high_arcade_1.png",
+      "x": 466,
+      "y": 814,
+      "w": 448,
+      "h": 192
+    },
+    "palace_sign": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 730,
+      "w": 448,
+      "h": 192
+    },
+    "ping_panel": {
+      "page": "fly_high_arcade_2.png",
+      "x": 466,
+      "y": 730,
+      "w": 448,
+      "h": 192
+    },
+    "pod_sign": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 6,
+      "w": 448,
+      "h": 192
+    },
+    "rifle_card": {
+      "page": "fly_high_arcade_3.png",
+      "x": 466,
+      "y": 6,
+      "w": 448,
+      "h": 192
+    },
+    "storm": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 210,
+      "w": 448,
+      "h": 192
+    },
+    "world_sign": {
+      "page": "fly_high_arcade_3.png",
+      "x": 466,
+      "y": 210,
+      "w": 448,
+      "h": 192
+    },
+    "art_pistol": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 414,
+      "w": 288,
+      "h": 192
+    },
+    "art_rifle": {
+      "page": "fly_high_arcade_3.png",
+      "x": 306,
+      "y": 414,
+      "w": 288,
+      "h": 144
+    },
+    "altitude": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 618,
+      "w": 512,
+      "h": 128
+    },
+    "ammo": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 758,
+      "w": 512,
+      "h": 128
+    },
+    "status": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 6,
+      "w": 512,
+      "h": 128
+    },
+    "status_critical": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 146,
+      "w": 512,
+      "h": 128
+    },
+    "icon_aim": {
+      "page": "fly_high_arcade_1.png",
+      "x": 810,
+      "y": 546,
+      "w": 128,
+      "h": 128
+    },
+    "icon_attach": {
+      "page": "fly_high_arcade_3.png",
+      "x": 606,
+      "y": 414,
+      "w": 128,
+      "h": 128
+    },
+    "icon_auto": {
+      "page": "fly_high_arcade_3.png",
+      "x": 746,
+      "y": 414,
+      "w": 128,
+      "h": 128
+    },
+    "icon_climb": {
+      "page": "fly_high_arcade_3.png",
+      "x": 886,
+      "y": 414,
+      "w": 128,
+      "h": 128
+    },
+    "icon_close": {
+      "page": "fly_high_arcade_3.png",
+      "x": 530,
+      "y": 618,
+      "w": 128,
+      "h": 128
+    },
+    "icon_descend": {
+      "page": "fly_high_arcade_3.png",
+      "x": 670,
+      "y": 618,
+      "w": 128,
+      "h": 128
+    },
+    "icon_detach": {
+      "page": "fly_high_arcade_3.png",
+      "x": 810,
+      "y": 618,
+      "w": 128,
+      "h": 128
+    },
+    "icon_drop": {
+      "page": "fly_high_arcade_3.png",
+      "x": 530,
+      "y": 758,
+      "w": 128,
+      "h": 128
+    },
+    "icon_fire": {
+      "page": "fly_high_arcade_3.png",
+      "x": 670,
+      "y": 758,
+      "w": 128,
+      "h": 128
+    },
+    "icon_gas": {
+      "page": "fly_high_arcade_3.png",
+      "x": 810,
+      "y": 758,
+      "w": 128,
+      "h": 128
+    },
+    "icon_helm": {
+      "page": "fly_high_arcade_4.png",
+      "x": 530,
+      "y": 6,
+      "w": 128,
+      "h": 128
+    },
+    "icon_jump": {
+      "page": "fly_high_arcade_4.png",
+      "x": 670,
+      "y": 6,
+      "w": 128,
+      "h": 128
+    },
+    "icon_kit": {
+      "page": "fly_high_arcade_4.png",
+      "x": 810,
+      "y": 6,
+      "w": 128,
+      "h": 128
+    },
+    "icon_muted": {
+      "page": "fly_high_arcade_4.png",
+      "x": 530,
+      "y": 146,
+      "w": 128,
+      "h": 128
+    },
+    "icon_ping": {
+      "page": "fly_high_arcade_4.png",
+      "x": 670,
+      "y": 146,
+      "w": 128,
+      "h": 128
+    },
+    "icon_release": {
+      "page": "fly_high_arcade_4.png",
+      "x": 810,
+      "y": 146,
+      "w": 128,
+      "h": 128
+    },
+    "icon_reload": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_repair": {
+      "page": "fly_high_arcade_4.png",
+      "x": 146,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_rescue": {
+      "page": "fly_high_arcade_4.png",
+      "x": 286,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_rope": {
+      "page": "fly_high_arcade_4.png",
+      "x": 426,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_shop": {
+      "page": "fly_high_arcade_4.png",
+      "x": 566,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_sound": {
+      "page": "fly_high_arcade_4.png",
+      "x": 706,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_warning": {
+      "page": "fly_high_arcade_4.png",
+      "x": 846,
+      "y": 286,
+      "w": 128,
+      "h": 128
+    },
+    "icon_weapon": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 426,
+      "w": 128,
+      "h": 128
+    },
+    "attach": {
+      "page": "fly_high_arcade_4.png",
+      "x": 146,
+      "y": 426,
+      "w": 384,
+      "h": 112
+    },
+    "auto_off": {
+      "page": "fly_high_arcade_4.png",
+      "x": 542,
+      "y": 426,
+      "w": 384,
+      "h": 112
+    },
+    "auto_on": {
+      "page": "fly_high_arcade_3.png",
+      "x": 6,
+      "y": 898,
+      "w": 384,
+      "h": 112
+    },
+    "buy_kit": {
+      "page": "fly_high_arcade_3.png",
+      "x": 402,
+      "y": 898,
+      "w": 384,
+      "h": 112
+    },
+    "buy_rifle": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 566,
+      "w": 384,
+      "h": 112
+    },
+    "climb": {
+      "page": "fly_high_arcade_4.png",
+      "x": 402,
+      "y": 566,
+      "w": 384,
+      "h": 112
+    },
+    "countdown": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 690,
+      "w": 384,
+      "h": 112
+    },
+    "counter": {
+      "page": "fly_high_arcade_4.png",
+      "x": 402,
+      "y": 690,
+      "w": 384,
+      "h": 112
+    },
+    "crew_name": {
+      "page": "fly_high_arcade_4.png",
+      "x": 6,
+      "y": 814,
+      "w": 384,
+      "h": 112
+    },
+    "descend": {
+      "page": "fly_high_arcade_4.png",
+      "x": 402,
+      "y": 814,
+      "w": 384,
+      "h": 112
+    },
+    "detach": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 6,
+      "w": 384,
+      "h": 112
+    },
+    "hint": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 6,
+      "w": 384,
+      "h": 112
+    },
+    "marker": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 130,
+      "w": 384,
+      "h": 112
+    },
+    "patch": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 130,
+      "w": 384,
+      "h": 112
+    },
+    "ping1": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 254,
+      "w": 384,
+      "h": 112
+    },
+    "ping2": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 254,
+      "w": 384,
+      "h": 112
+    },
+    "ping3": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 378,
+      "w": 384,
+      "h": 112
+    },
+    "ping4": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 378,
+      "w": 384,
+      "h": 112
+    },
+    "ping5": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 502,
+      "w": 384,
+      "h": 112
+    },
+    "pull": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 502,
+      "w": 384,
+      "h": 112
+    },
+    "repair_rope": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 626,
+      "w": 384,
+      "h": 112
+    },
+    "speed": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 626,
+      "w": 384,
+      "h": 112
+    },
+    "spot": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 750,
+      "w": 384,
+      "h": 112
+    },
+    "spot_panel": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 750,
+      "w": 384,
+      "h": 112
+    },
+    "storm_sign": {
+      "page": "fly_high_arcade_5.png",
+      "x": 6,
+      "y": 874,
+      "w": 384,
+      "h": 112
+    },
+    "tether": {
+      "page": "fly_high_arcade_5.png",
+      "x": 402,
+      "y": 874,
+      "w": 384,
+      "h": 112
+    },
+    "hull_broken": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 934,
+      "w": 256,
+      "h": 36
+    },
+    "hull_good": {
+      "page": "fly_high_arcade_2.png",
+      "x": 274,
+      "y": 934,
+      "w": 256,
+      "h": 36
+    },
+    "progress": {
+      "page": "fly_high_arcade_2.png",
+      "x": 542,
+      "y": 934,
+      "w": 256,
+      "h": 36
+    },
+    "rope_fill": {
+      "page": "fly_high_arcade_2.png",
+      "x": 6,
+      "y": 982,
+      "w": 256,
+      "h": 36
+    },
+    "track": {
+      "page": "fly_high_arcade_2.png",
+      "x": 274,
+      "y": 982,
+      "w": 256,
+      "h": 36
+    }
+  }
+}
