@@ -86,6 +86,72 @@ local function styleWelcomeSign(gui)
 	subtitle.Parent = gui
 end
 
+local function dockLabel(gui, name, x, y, width, height, font, size, color)
+	local label = gui:FindFirstChild(name)
+	if not label then return end
+
+	label.Position = UDim2.fromOffset(x, y)
+	label.Size = UDim2.fromOffset(width, height)
+	label.Font = font
+	label.TextSize = size
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.TextYAlignment = Enum.TextYAlignment.Center
+	if color then label.TextColor3 = color end
+	label.ZIndex = 2
+	return label
+end
+
+local function styleDockSign(gui)
+	-- Keep the fixed canvas proportional to the 8.1 × 5.3 stud board.
+	gui.CanvasSize = Vector2.new(560, 366)
+	local left, width = 36, 488
+	local heading = Enum.Font.FredokaOne
+	local body = Enum.Font.Nunito
+	local cream = Color3.fromRGB(255, 234, 185)
+	local light = Color3.fromRGB(224, 235, 255)
+
+	dockLabel(gui, "PodTitle", left, 23, width, 30, heading, 24)
+	dockLabel(gui, "ThemeTitle", left, 55, width, 52, heading, 40, cream)
+
+	local crewRow = Instance.new("Frame")
+	crewRow.Name = "CrewRowBackground"
+	crewRow.Position = UDim2.fromOffset(left, 114)
+	crewRow.Size = UDim2.fromOffset(width, 48)
+	crewRow.BackgroundColor3 = Color3.fromRGB(18, 39, 73)
+	crewRow.BorderSizePixel = 0
+	crewRow.ZIndex = 1
+	local rowCorner = Instance.new("UICorner", crewRow)
+	rowCorner.CornerRadius = UDim.new(0, 12)
+	crewRow.Parent = gui
+
+	dockLabel(gui, "CountLabel", left + 16, 114, 260, 48, heading, 29)
+	for index = 1, 3 do
+		local slot = gui:FindFirstChild("CrewSlot" .. index)
+		if slot then
+			slot.Position = UDim2.fromOffset(398 + (index - 1) * 39, 126)
+			slot.Size = UDim2.fromOffset(25, 25)
+			slot.ZIndex = 2
+			local outline = Instance.new("UIStroke", slot)
+			outline.Thickness = 2
+			outline.Color = Color3.fromRGB(133, 158, 197)
+		end
+	end
+
+	dockLabel(gui, "MasterInfo", left, 169, width, 34, body, 25, light)
+	dockLabel(gui, "StatusLabel", left, 204, width, 32, body, 25)
+	local divider = gui:FindFirstChild("Divider")
+	if divider then
+		divider.Position = UDim2.fromOffset(left, 243)
+		divider.Size = UDim2.fromOffset(width, 2)
+		divider.BackgroundTransparency = 0.48
+	end
+
+	local start = dockLabel(gui, "StartHint", left, 253, width, 31, heading, 27, cream)
+	if start then start.Text = "Mulai penerbangan" end
+	local footer = dockLabel(gui, "Footer", left, 286, width, 27, body, 22, light)
+	if footer then footer.Text = "Khusus Party Master" end
+end
+
 local function style(gui)
 	if not gui:IsA("SurfaceGui") and not gui:IsA("BillboardGui") then return end
 	local parent = gui.Parent
@@ -113,32 +179,7 @@ local function style(gui)
 	end
 
 	if key == "pod_sign" then
-		local pod = parent.Parent and parent.Parent.Name:match("^Pod_([A-E])$")
-		if pod then lettering(gui:FindFirstChild("PodTitle"), "pod_" .. pod:lower()) end
-		lettering(gui:FindFirstChild("StartHint"), "pod_start")
-		lettering(gui:FindFirstChild("Footer"), "pod_footer")
-		for i = 1, 3 do
-			local slot = gui:FindFirstChild("CrewSlot" .. i)
-			if slot and slot:IsA("Frame") then
-				local fill = Assets.Mount(slot, "counter")
-				local function refresh()
-					fill.ImageColor3 = slot.BackgroundColor3:Lerp(Color3.new(1, 1, 1), 0.38)
-					slot.BackgroundTransparency = fill.IsLoaded and 1 or 0
-				end
-				slot:GetPropertyChangedSignal("BackgroundColor3"):Connect(refresh)
-				refresh()
-				onImageReady(fill, refresh)
-			end
-		end
-		local divider = gui:FindFirstChild("Divider")
-		if divider and divider:IsA("Frame") then
-			local line = Assets.Mount(divider, "progress")
-			local function refresh()
-				divider.BackgroundTransparency = line.IsLoaded and 1 or 0
-			end
-			refresh()
-			onImageReady(line, refresh)
-		end
+		styleDockSign(gui)
 	end
 end
 
