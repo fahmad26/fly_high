@@ -49,7 +49,7 @@ function Layout.Start(gui, player)
 	end
 
 	scrim.Activated:Connect(function()
-		for _, name in { "ShopModal", "TacticalPingWheel" } do
+		for _, name in { "ShopModal", "TacticalPingWheel", "WeaponSettingsModal" } do
 			local o = get(name)
 			if o then o.Visible = false end
 		end
@@ -79,7 +79,6 @@ function Layout.Start(gui, player)
 		gui:SetAttribute("CompactLayout", compact)
 		gui:SetAttribute("TabletLayout", input.TouchEnabled and not compact)
 		gui:SetAttribute("HUDDesignVersion", 11)
-		scrim.BackgroundTransparency = scrimImage.IsLoaded and 1 or 0.35
 
 		local function place(name, x, y, bw, bh)
 			local o = get(name)
@@ -151,15 +150,14 @@ function Layout.Start(gui, player)
 		local slot = 0
 		local topSlots = 0
 		local topUtilitySpace = (w - topW) / 2 - margin
-		for _, name in { "EmergencyKitButton", "PingButton", "WarningAudioToggleButton", "ShopToggleButton" } do
+		for _, name in { "EmergencyKitButton", "PingButton", "WarningAudioToggleButton", "ShopToggleButton", "SettingsToggleButton" } do
 			local item = get(name)
 			if item then
-				item.Visible = inFlight or name == "ShopToggleButton"
+				item.Visible = inFlight or name == "ShopToggleButton" or name == "SettingsToggleButton"
 				if item.Visible then
-					local slotsNeeded = name == "WarningAudioToggleButton" and 2 or 1
 					local moveToTop = input.TouchEnabled and compact and not portrait
-						and (name == "ShopToggleButton" or name == "WarningAudioToggleButton")
-						and topUtilitySpace >= slotsNeeded * (tileW + gap)
+						and (name == "ShopToggleButton" or name == "WarningAudioToggleButton" or name == "SettingsToggleButton")
+						and topUtilitySpace >= (topSlots + 1) * (tileW + gap)
 					if moveToTop then
 						place(name, w - margin - tileW - topSlots * (tileW + gap), altY, tileW, tileH)
 						topSlots += 1
@@ -170,6 +168,7 @@ function Layout.Start(gui, player)
 				end
 			end
 		end
+		place("PilotTouchPad", compact and not portrait and margin + tileW + gap or margin, h - margin - 136, 136, 136)
 
 		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
 		local jump = place("JumpPanel", w - jumpMarginR - jumpSize, h - jumpMarginB - jumpSize, jumpSize, jumpSize)
@@ -272,35 +271,78 @@ function Layout.Start(gui, player)
 		-- 12. Modals (ShopModal & TacticalPingWheel)
 		local modal = get("ShopModal")
 		local wheel = get("TacticalPingWheel")
-		-- The shop and weapon controllers own their buttons. Only reconcile visibility here.
-		if modal and modal.Visible and wheel and wheel.Visible then
-			if activeModal == modal then modal.Visible = false else wheel.Visible = false end
+		local settings = get("WeaponSettingsModal")
+		local popups = { modal, wheel, settings }
+		local shown = activeModal and activeModal.Visible and activeModal or nil
+		for _, popup in popups do
+			if popup.Visible and popup ~= activeModal then shown = popup end
 		end
-		activeModal = (modal and modal.Visible and modal) or (wheel and wheel.Visible and wheel) or nil
+		for _, popup in popups do
+			if popup ~= shown then popup.Visible = false end
+		end
+		activeModal = shown
 		scrim.Visible = activeModal ~= nil
+		local pingOpen = wheel ~= nil and activeModal == wheel
+		local topInset, bottomInset = guiService:GetGuiInset()
+		local top = pingOpen and topInset or Vector2.zero
+		local bottom = pingOpen and bottomInset or Vector2.zero
+		scrim.Position = UDim2.fromOffset(-top.X, -top.Y)
+		scrim.Size = UDim2.new(1, top.X + bottom.X, 1, top.Y + bottom.Y)
+		scrimImage.Visible = not pingOpen
+		scrim.BackgroundTransparency = not pingOpen and scrimImage.IsLoaded and 1 or 0.35
+		if settings then
+			local mw, mh = math.min(448, w - 24), math.min(374, h - 16)
+			box(settings, (w - mw) / 2, (h - mh) / 2, mw, mh)
+			-- Align the controls inside the artwork's navy area, below the compass.
+			local pad = math.round(mw * .13)
+			local innerWidth = mw - pad * 2
+			local innerTop, innerBottom = math.round(mh * .24), math.round(mh * .91)
+			local available = innerBottom - innerTop
+			local short = available < 243
+			local titleH, inventoryH = short and 22 or 25, short and 18 or 20
+			local sectionGap, rowGap = short and 5 or 10, short and 5 or 8
+			local footerH = short and 26 or 30
+			local contentH = titleH + inventoryH + sectionGap * 2 + 44 * 3 + rowGap * 2 + footerH
+			local top = innerTop + math.max(0, math.floor((available - contentH) / 2))
+			box(settings:FindFirstChild("Title"), pad, top, innerWidth, titleH)
+			box(settings:FindFirstChild("SettingsCloseButton"), mw - pad - 32, math.round(mh * .10), 44, 44)
+			box(settings:FindFirstChild("InventoryCount"), pad, top + titleH, innerWidth, inventoryH)
+			local labelW = 49
+			local choiceW = math.floor((innerWidth - labelW - 8) / 2)
+			local firstRow = top + titleH + inventoryH + sectionGap
+			for slot = 1, 2 do
+				local row = firstRow + (slot - 1) * (44 + rowGap)
+				box(settings:FindFirstChild("SlotLabel" .. slot), pad, row, labelW, 44)
+				box(settings:FindFirstChild("HandgunSlot" .. slot), pad + labelW, row, choiceW, 44)
+				box(settings:FindFirstChild("AK47Slot" .. slot), pad + labelW + choiceW + 8, row, choiceW, 44)
+			end
+			local labelRow = firstRow + 2 * (44 + rowGap)
+			box(settings:FindFirstChild("PlayerLabelsLabel"), pad, labelRow, innerWidth - choiceW - 8, 44)
+			box(settings:FindFirstChild("PlayerLabelsToggle"), mw - pad - choiceW, labelRow, choiceW, 44)
+			local footerY = labelRow + 44 + sectionGap
+			box(settings:FindFirstChild("LaunchNote"), pad, footerY, innerWidth, footerH)
+			box(settings:FindFirstChild("SettingsFeedback"), pad, footerY, innerWidth, footerH)
+		end
 
 		if modal then
-			local mw = math.min(w - 24, math.clamp(w * 0.52, 460, 560))
-			local mh = math.min(h - 24, math.clamp(h * 0.74, 380, 440))
+			local mw = math.min(w - 24, 610)
+			local mh = math.min(h - 16, 430)
 			box(modal, (w - mw) / 2, (h - mh) / 2, mw, mh)
 			modal.ZIndex = 22
 
 			local cBtn = modal:FindFirstChild("CloseButton", true)
 			if cBtn then
-				box(cBtn, mw - 67, 18, 44, 44)
+				box(cBtn, mw - math.round(mw * .11) - 28, math.round(mh * .065), 44, 44)
 				cBtn.ZIndex = 26
 			end
 
 			local card1 = modal:FindFirstChild("Card1")
 			local card2 = modal:FindFirstChild("Card2")
-			local cardGap = 10
-			local shortModal = mh < 330
-			local cardW = math.min(shortModal and 150 or 185, math.floor((mw - 62 - cardGap) / 2))
-			local cardY = shortModal and 57 or 72
-			local cardH = shortModal and math.max(206, math.min(236, mh - cardY - 10))
-				or math.max(236, math.round(cardW * 1.65))
+			local cardGap = math.max(10, math.round(mw * .025))
+			local cardY = math.max(52, math.round(mh * .205))
+			local cardH = mh - cardY - math.max(44, math.round(mh * .15))
+			local cardW = math.min(208, math.round(cardH * .75), math.floor((mw * .78 - cardGap) / 2))
 			local cardX = (mw - cardW * 2 - cardGap) / 2
-			modal.CanvasSize = UDim2.fromOffset(0, math.max(mh, cardY + cardH + 40))
 
 			if card1 then
 				box(card1, cardX, cardY, cardW, cardH)
@@ -313,15 +355,33 @@ function Layout.Start(gui, player)
 		end
 
 		if wheel then
-			local mw = math.min(340, w - 24)
-			local mh = math.min(286, h - 20)
-			local row = math.min(54, math.floor((mh - 14) / 5))
+			local columns = h < 416 and w >= 360 and 2 or 1
+			local mh = math.min(420, h - 20)
+			local mw = math.min(columns == 2 and math.round(mh * 1.45) or 382, w - 24)
 			box(wheel, (w - mw) / 2, (h - mh) / 2, mw, mh)
 			wheel.ZIndex = 22
+
+			local pad = math.ceil(mw * 0.11)
+			local header = math.ceil(mh * 0.23)
+			local title = wheel:FindFirstChild("PingTitle")
+			local close = wheel:FindFirstChild("PingCloseButton")
+			box(title, pad, header, mw - 2 * pad - 50, 24)
+			box(close, mw - pad - 44, header - 24, 44, 44)
+			if title then title.ZIndex = 24 end
+			if close then close.ZIndex = 25 end
+
+			local firstRow = header + 27
+			local rows = math.ceil(5 / columns)
+			local gap = 4
+			local rowHeight = math.floor((math.floor(mh * 0.90) - firstRow - (rows - 1) * gap) / rows)
+			local rowWidth = math.floor((mw - 2 * pad - (columns - 1) * gap) / columns)
 			for i = 1, 5 do
 				local b = wheel:FindFirstChild("Ping" .. i)
 				if b then
-					box(b, 8, 7 + (i - 1) * row, mw - 16, row - 4)
+					local column = (i - 1) % columns
+					local row = math.floor((i - 1) / columns)
+					local width = columns == 2 and i == 5 and mw - 2 * pad or rowWidth
+					box(b, pad + column * (rowWidth + gap), firstRow + row * (rowHeight + gap), width, rowHeight)
 					b.ZIndex = 23
 				end
 			end

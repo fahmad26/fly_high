@@ -43,6 +43,7 @@ local function setupOverheadGui(player, character)
 	billboard.StudsOffset = Vector3.new(0, 2.5, 0)
 	billboard.AlwaysOnTop = true
 	billboard.MaxDistance = 100
+	billboard:AddTag("FlyHighPlayerOverhead")
 	billboard.Parent = head
 
 	-- Party Master Label

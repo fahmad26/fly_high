@@ -100,6 +100,7 @@ end
 function Manager.LaunchBalloon(players,master,spawnPos,podName)
  if not _G.FlyHighDataManager or not _G.FlyHighWeaponManager or not _G.FlyHighTetherManager then return nil end
  if #players<1 or #players>Config.MAX_PLAYERS_PER_POD or not table.find(players,master) then return nil end
+ if _G.FlyHighDataManager.IsWeaponLoadoutSaving(master) then return nil end
  for _,p in ipairs(players) do
   if not U.Alive(p) or U.Flight(p,true) or not p:GetAttribute("DataReady") then return nil end
  end
@@ -178,9 +179,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   fd.isGasActive=false fd.pilotSteer=Vector3.zero
   helm.HelmPrompt.Enabled=fd.pilot==nil
  end)
- b:SetAttribute("AKUpgraded",master:GetAttribute("BoughtAK47")==true)
- _G.FlyHighWeaponManager.SetupWeaponRacks(b,master:GetAttribute("BoughtAK47")==true)
- master:SetAttribute("BoughtAK47",false)
+ _G.FlyHighWeaponManager.SetupWeaponRacks(b,_G.FlyHighDataManager.GetWeaponLoadout(master))
  _G.FlyHighTetherManager.SetupBalloonTethers(b,#players)
  task.spawn(function()
   while b.Parent and fd.boarding and not fd.isGameOver do

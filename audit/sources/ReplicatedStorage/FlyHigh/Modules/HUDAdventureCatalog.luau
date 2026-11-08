@@ -39,6 +39,7 @@ return table.freeze({
 	result_victory = { "rbxassetid://114473791032632", 4, 524, 768, 384 },
 	rifle_art = { "rbxassetid://114275036880923", 524, 916, 256, 102 },
 	rope_panel = { "rbxassetid://94564007914320", 4, 696, 512, 115 },
+	settings_normal = { "rbxassetid://98150165686462", 0, 0, 256, 256 },
 	shop_ak_card = { "rbxassetid://114275036880923", 500, 4, 374, 512 },
 	shop_kit_card = { "rbxassetid://114473791032632", 4, 4, 347, 512 },
 	shop_normal = { "rbxassetid://115506667687968", 268, 268, 256, 256 },

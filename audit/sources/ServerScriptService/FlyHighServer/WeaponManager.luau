@@ -59,17 +59,19 @@ function Manager.TryEquip(p,b,rack)
    end)
  return true
 end
-function Manager.SetupWeaponRacks(b,upgrade)
+function Manager.SetupWeaponRacks(b,slot1AK,slot2AK)
+ if slot2AK==nil then slot2AK=slot1AK end
+ local rifleByRack={slot1AK,slot2AK}
  for i=1,2 do
   local rack=b:FindFirstChild("WeaponRack"..i)
-  local kind=upgrade and "AK47" or "Pistol"
+  local kind=rifleByRack[i] and "AK47" or "Pistol"
   if rack:GetAttribute("CurrentWeapon")~=kind then
    rack:SetAttribute("StoredAmmo",nil) rack:SetAttribute("StoredReloadEnds",nil) rack:SetAttribute("StoredLastShot",nil)
   end
   rack:SetAttribute("CurrentWeapon",kind)
   RackArt.Build(rack,kind)
   local prompt=rack:FindFirstChild("PickupPrompt") or Instance.new("ProximityPrompt",rack)
-  prompt.Name="PickupPrompt" prompt.ActionText="Ambil "..kind prompt.ObjectText="Rak Senjata "..i
+  prompt.Name="PickupPrompt" prompt.ActionText=rifleByRack[i] and "Ambil AK-47" or "Ambil Handgun" prompt.ObjectText="Rak Senjata "..i
   prompt.KeyboardKeyCode=Enum.KeyCode.E prompt.GamepadKeyCode=Enum.KeyCode.ButtonX
   prompt.HoldDuration=0.2 prompt.MaxActivationDistance=8 prompt.RequiresLineOfSight=false
   if Manager.racks[rack] then continue end

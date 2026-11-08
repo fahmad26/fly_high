@@ -255,7 +255,7 @@ local function canUseHelm()
  local ref=localPlayer:FindFirstChild("FlightBalloon")local b=ref and ref.Value
  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
  local seat=b and b:FindFirstChild("HelmSeat")
- return localPlayer:GetAttribute("InFlight")==true and localPlayer:GetAttribute("FlightGhost")~=true and hum and hum.Health>0 and seat and hum.SeatPart==seat and seat.Occupant==hum
+ return localPlayer:GetAttribute("InFlight")==true and localPlayer:GetAttribute("FlightGhost")~=true and hum and hum.Health>0 and seat and hum.SeatPart==seat
 end
 local function toggleAutoGas()
  if canUseHelm()then flightActionEvent:FireServer("AutoGas",not autoGas)end
@@ -269,7 +269,51 @@ groundNotice.Visible=false groundNotice.Parent=screenGui
 
 -- State tracking
 local isGasHeld = false
-local steerVector = Vector3.zero
+local gasInput
+local gamepadGas=false
+local touchPad=Instance.new("Frame")
+touchPad.Name="PilotTouchPad"
+touchPad.BackgroundTransparency=1
+touchPad.Visible=false
+touchPad.Parent=screenGui
+local pressedDirections={}
+local directions={
+ {"Forward","▲",46,0,Vector3.new(0,0,-1)},
+ {"Left","◀",0,46,Vector3.new(-1,0,0)},
+ {"Right","▶",92,46,Vector3.new(1,0,0)},
+ {"Back","▼",46,92,Vector3.new(0,0,1)},
+}
+local idleColor=Color3.fromRGB(20,47,71)
+local heldColor=Color3.fromRGB(25,128,151)
+local function isPointer(input)
+ return input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1
+end
+for _,direction in ipairs(directions) do
+ local button=Instance.new("TextButton")
+ button.Name=direction[1]
+ button.Position=UDim2.fromOffset(direction[3],direction[4])
+ button.Size=UDim2.fromOffset(44,44)
+ button.Text=direction[2]
+ button.Font=Enum.Font.GothamBold
+ button.TextSize=22
+ button.TextColor3=Color3.fromRGB(248,235,193)
+ button.BackgroundColor3=idleColor
+ button.AutoButtonColor=false
+ Instance.new("UICorner",button).CornerRadius=UDim.new(0,12)
+ local stroke=Instance.new("UIStroke",button)
+ stroke.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+ stroke.Color=Color3.fromRGB(201,159,82)
+ button.Parent=touchPad
+ button.InputBegan:Connect(function(input)
+  if not isPointer(input) or not touchPad.Visible then return end
+  pressedDirections[input]={button=button,vector=direction[5]}
+  button.BackgroundColor3=heldColor
+ end)
+end
+local function clearDirections()
+ for _,entry in pressedDirections do entry.button.BackgroundColor3=idleColor end
+ table.clear(pressedDirections)
+end
 
 -- Gas button inputs (Mouse + Touch support)
 local function setGas(held)
@@ -281,17 +325,11 @@ local function setGas(held)
 	end
 end
 
-gasBtn.MouseButton1Down:Connect(function() setGas(true) end)
-gasBtn.MouseButton1Up:Connect(function() setGas(false) end)
 gasBtn.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.Touch then
-		setGas(true)
-	end
-end)
-gasBtn.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.Touch then
-		setGas(false)
-	end
+ if not gasInput and isPointer(input) then
+  gasInput=input
+  setGas(true)
+ end
 end)
 
 -- Emergency Button Trigger
@@ -450,12 +488,24 @@ localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
  alertBanner:SetAttribute("HUDAlertActive",false)
 end)
 UserInputService.InputEnded:Connect(function(input)
- if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch or input.KeyCode==Enum.KeyCode.ButtonR1 then setGas(false) end
+ local entry=pressedDirections[input]
+ if entry then
+  pressedDirections[input]=nil
+  entry.button.BackgroundColor3=idleColor
+ end
+ if gasInput==input or (gasInput and gasInput.UserInputType==Enum.UserInputType.MouseButton1
+  and input.UserInputType==Enum.UserInputType.MouseButton1) then gasInput=nil end
+ if input.KeyCode==Enum.KeyCode.ButtonR1 then gamepadGas=false end
+ setGas(gasInput~=nil or gamepadGas)
 end)
-UserInputService.WindowFocusReleased:Connect(function() setGas(false) end)
+UserInputService.WindowFocusReleased:Connect(function()
+ clearDirections()
+ gasInput=nil gamepadGas=false
+ setGas(false)
+end)
 UserInputService.InputBegan:Connect(function(input)
  if UserInputService:GetFocusedTextBox()then return end
- if input.KeyCode==Enum.KeyCode.ButtonR1 and gasBtn.Visible then setGas(true)
+ if input.KeyCode==Enum.KeyCode.ButtonR1 and gasBtn.Visible then gamepadGas=true setGas(true)
  elseif input.KeyCode==Enum.KeyCode.H or input.KeyCode==Enum.KeyCode.ButtonY then flightActionEvent:FireServer("ReleaseHelm")
  elseif input.KeyCode==Enum.KeyCode.Z or input.KeyCode==Enum.KeyCode.ButtonL1 then toggleAutoGas()end
 end)
@@ -466,17 +516,27 @@ task.spawn(function()
 end)
 -- Pilot WASD and Gas Input Loop (Throttled & HelmSeat Only)
 local wasSeated = false
-local lastSentSteer = Vector3.zero
-local lastSentGas = false
 local lastSendTime = 0
+local hiddenTouchFrame
+local previousTouchVisibility
 
 RunService.RenderStepped:Connect(function()
-	local char = localPlayer.Character
-	local hum = char and char:FindFirstChildOfClass("Humanoid")
-	local seat = hum and hum.SeatPart
-	local isSeatedInHelm = (seat ~= nil and seat.Name == "HelmSeat")
+	local isSeatedInHelm = canUseHelm()==true
  releaseHelmButton.Visible=isSeatedInHelm
- autoGasButton.Visible=canUseHelm()==true
+ autoGasButton.Visible=isSeatedInHelm
+ local preferred=UserInputService.PreferredInput
+ local touchPilot=isSeatedInHelm and UserInputService.TouchEnabled and preferred~=Enum.PreferredInput.Gamepad
+ local scrim=screenGui:FindFirstChild("HUDModalScrim")
+ touchPad.Visible=touchPilot and not (scrim and scrim.Visible)
+ if not touchPad.Visible and next(pressedDirections) then clearDirections() end
+ local nativeGui=touchPilot and playerGui:FindFirstChild("TouchGui")
+ local nativeFrame=nativeGui and nativeGui:FindFirstChild("TouchControlFrame") or nil
+ if nativeFrame~=hiddenTouchFrame then
+  if hiddenTouchFrame and hiddenTouchFrame.Parent then hiddenTouchFrame.Visible=previousTouchVisibility end
+  hiddenTouchFrame=nativeFrame
+  previousTouchVisibility=nativeFrame and nativeFrame.Visible
+ end
+ if hiddenTouchFrame then hiddenTouchFrame.Visible=false end
 
 	if isSeatedInHelm then
 		gasBtn.Visible = true
@@ -488,28 +548,24 @@ RunService.RenderStepped:Connect(function()
 		if (UserInputService:IsKeyDown(Enum.KeyCode.A) or UserInputService:IsKeyDown(Enum.KeyCode.Left)) then moveX = moveX - 1 end
 		if (UserInputService:IsKeyDown(Enum.KeyCode.D) or UserInputService:IsKeyDown(Enum.KeyCode.Right)) then moveX = moveX + 1 end
 
-		steerVector = Vector3.new(moveX, 0, moveZ)
-		local lastInput=UserInputService:GetLastInputType()
-		if controls and (lastInput==Enum.UserInputType.Touch or string.find(lastInput.Name,"Gamepad")) then steerVector = controls:GetMoveVector() end
+		local steerVector = Vector3.new(moveX, 0, moveZ)
+		if controls and preferred==Enum.PreferredInput.Gamepad then steerVector = controls:GetMoveVector() end
+		for _,entry in pressedDirections do steerVector+=entry.vector end
 
 		if UserInputService:GetFocusedTextBox()then steerVector=Vector3.zero end
 		steerVector=ControlMath.CameraSteer(steerVector,workspace.CurrentCamera.CFrame)
 		local now = os.clock()
-		local stateChanged = (steerVector ~= lastSentSteer) or (isGasHeld ~= lastSentGas)
 		if now - lastSendTime >= 0.1 then
 			pilotControlEvent:FireServer(steerVector, isGasHeld)
-			lastSentSteer = steerVector
-			lastSentGas = isGasHeld
 			lastSendTime = now
 		end
 		wasSeated = true
 	else
 		gasBtn.Visible = false
-		isGasHeld = false
 		if wasSeated then
+			gasInput=nil gamepadGas=false
+			setGas(false)
 			pilotControlEvent:FireServer(Vector3.zero, false)
-			lastSentSteer = Vector3.zero
-			lastSentGas = false
 			wasSeated = false
 		end
 	end

@@ -2,6 +2,7 @@
 local Assets = require(script.Parent.HUDImageAssets)
 local Glyphs = require(script.Parent.HUDGlyphs)
 local Adventure = require(script.Parent.HUDAdventureArt)
+local AdventureCatalog = require(script.Parent.HUDAdventureCatalog)
 local Input = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
@@ -10,6 +11,7 @@ local Theme = {}
 -- {1: GlyphKey, 2: FallbackTitle, 3: Sprite, 4: Style ("dock", "round", "wide", "tile")}
 local configs = {
 	ShopToggleButton = { "shop", "TOKO", "shop_toggle", "dock" },
+	SettingsToggleButton = { "settings", "SETELAN", "buy_rifle", "dock" },
 	EmergencyKitButton = { "kit", "KIT", "kit_use", "dock" },
 	PingButton = { "ping", "PING", "ping_toggle", "dock" },
 	WarningAudioToggleButton = { "sound", "SUARA", "audio_on", "dock" },
@@ -26,14 +28,16 @@ local configs = {
 	DescendButton = { "descend", "TURUN", "descend", "wide" },
 	PullCrewButton = { "rescue", "TARIK REKAN", "pull", "wide" },
 	BuyEmergencyKitButton = { "kit", "BELI 1 KIT • 29 R$", "buy_kit", "wide" },
-	BuyAK47Button = { "weapon", "UPGRADE AK-47 • 79 R$", "buy_rifle", "wide" },
+	BuyAK47Button = { "weapon", "BELI 1 AK-47", "buy_rifle", "wide" },
 	SpotHazardButton = { "warning", "TANDAI BAHAYA", "spot", "wide" },
 	CloseButton = { "close", "", "close", "round" },
-	Ping1 = { "gas", "Gas Api Sekarang!", "ping1", "wide" },
-	Ping2 = { "warning", "Awas Tornado Menghindar!", "ping2", "wide" },
-	Ping3 = { "rope", "Tali Saya Mau Habis!", "ping3", "wide" },
-	Ping4 = { "repair", "Saya yang Perbaiki!", "ping4", "wide" },
-	Ping5 = { "aim", "Fokus Tembak Rintangan!", "ping5", "wide" },
+	SettingsCloseButton = { "close", "", "close", "round" },
+	PingCloseButton = { "close", "", "close", "round" },
+	Ping1 = { "gas", "Gas sekarang!", "ping1", "ping" },
+	Ping2 = { "warning", "Awas tornado!", "ping2", "ping" },
+	Ping3 = { "rope", "Tali menipis!", "ping3", "ping" },
+	Ping4 = { "repair", "Saya perbaiki!", "ping4", "ping" },
+	Ping5 = { "aim", "Tembak rintangan!", "ping5", "ping" },
 }
 
 local fullButtons = {
@@ -57,6 +61,19 @@ local adventurePanels = {
 	hull_good = "hull_pip_intact", hull_broken = "hull_pip_torn",
 	shop_panel = "shop_panel", ping_panel = "ping_panel", spot_panel = "context_panel",
 	kit_card = "shop_kit_card", rifle_card = "shop_ak_card",
+}
+
+-- Crop the transparent padding from the dock sprites. The kit states retain
+-- the same framing so swapping state never changes the visible button size.
+local dockCrops = {
+	kit_normal = Rect.new(17, 24, 236, 247),
+	kit_empty = Rect.new(17, 24, 236, 247),
+	kit_clutch = Rect.new(17, 24, 236, 247),
+	ping_normal = Rect.new(3, 3, 253, 252),
+	sound_on = Rect.new(3, 3, 252, 253),
+	sound_off = Rect.new(3, 4, 253, 253),
+	shop_normal = Rect.new(4, 3, 253, 253),
+	settings_normal = Rect.new(3, 3, 253, 253),
 }
 
 local function box(o, x, y, w, h)
@@ -171,6 +188,7 @@ local surfaceKeys = {
 	AlertBanner = "alert",
 	StormChallengePanel = "storm",
 	ShopModal = "shop_panel",
+	WeaponSettingsModal = "ping_panel",
 	TacticalPingWheel = "ping_panel",
 	GhostSpotterFrame = "spot_panel",
 	Card1 = "kit_card",
@@ -180,7 +198,7 @@ local surfaceKeys = {
 local function raster(o, key, z, tint, completeKey, mode)
 	local adventureKey = completeKey or adventurePanels[key]
 	local complete, adventureImage = Adventure.Draw(o, adventureKey, z,
-		mode or ((o:IsA("ScrollingFrame") or key == "ping_panel" or key == "kit_card" or key == "rifle_card") and "stretch" or "wide"), tint)
+		mode or ((o:IsA("ScrollingFrame") or key == "shop_panel" or key == "ping_panel" or key == "kit_card" or key == "rifle_card") and "stretch" or "wide"), tint)
 	local image = o:FindFirstChild("HUDRaster")
 	local loaded = complete
 	if complete then
@@ -298,7 +316,14 @@ function Theme.Start(gui, player)
 
 			r.glyphBox = frame(o, "HUDIconBox")
 			r.glyphBox.BackgroundTransparency = 1
-			r.glyph = Glyphs.Draw(r.glyphBox, config[1])
+			if config[1] == "settings" then
+				r.glyph = label(r.glyphBox, "HUDSettingsGear", 26, Enum.Font.GothamBlack,
+					Color3.fromRGB(255, 244, 208), Color3.fromRGB(21, 38, 65), 2.5)
+				r.glyph.Text = "⚙"
+				r.glyph.TextScaled = true
+			else
+				r.glyph = Glyphs.Draw(r.glyphBox, config[1])
+			end
 
 			-- Sleek bottom caption ribbon
 			r.captionPill = frame(o, "HUDCaptionPill")
@@ -522,9 +547,10 @@ function Theme.Start(gui, player)
 			local w, h = o.AbsoluteSize.X, o.AbsoluteSize.Y
 
 			local background = surfaceKeys[o.Name]
+			if r.kind == "card" and h < 228 then background = "speed" end
 			local fullPanel = false
 			if background and r.kind ~= "status" then
-				fullPanel = raster(o, background, z)
+				fullPanel = raster(o, background, z, nil, nil, o.Name == "TacticalPingWheel" and "stretch" or nil)
 			end
 
 			if r.kind == "button" then
@@ -570,7 +596,7 @@ function Theme.Start(gui, player)
 					if ammo and ammo.Text:match("^0%s*/") then title = "ISI ULANG" end
 				end
 				local style = cfg[4]
-				local fullKey = fullButtons[sprite]
+				local fullKey = key == "settings" and "settings_normal" or fullButtons[sprite]
 				local shade = not o.Active and 0.52 or r.pressed and 0.76 or 1
 				if o.Name == "JumpButton" then
 					fullKey = not o.Active and "jump_locked" or r.pressed and "jump_pressed" or "jump_normal"
@@ -578,21 +604,30 @@ function Theme.Start(gui, player)
 				elseif o.Name == "EmergencyKitButton" and reason == "Kit habis" then
 					fullKey, shade = "kit_empty", 1
 				end
-				local pingChoice = o.Name:match("^Ping[1-5]$") ~= nil
 				local complete, illustration = raster(o, sprite, z + 1, Color3.new(shade, shade, shade),
-					fullKey, purchase and "stretch" or (style == "wide" and not pingChoice) and "wide" or "fit")
+					fullKey, purchase and "stretch" or style == "wide" and "wide" or "fit")
 				-- The jump glyph falls back to a local arrow if its image also fails.
 				r.glyphBox.Visible = not complete
 				r.captionPill.Visible = style ~= "round"
 				if complete and illustration then
-					if pingChoice then
-						illustration.Position = UDim2.fromOffset(3, 2)
-						illustration.Size = UDim2.fromOffset(math.max(1, h - 4), math.max(1, h - 4))
-					elseif style == "dock" or style == "tile" then
+					if style == "tile" then
 						illustration.Size = UDim2.new(1, 0, 1, -12 - textBoost)
 					end
 				end
-				if style == "wide" then
+				if style == "ping" then
+					local iconSize = math.max(1, math.min(h - 8, 36))
+					local left = iconSize + 16
+					local fallback = o:FindFirstChild("HUDRaster")
+					if fallback then fallback.Visible = false end
+					o.BackgroundColor3 = r.pressed and Color3.fromRGB(27, 78, 111) or Color3.fromRGB(16, 41, 81)
+					o.BackgroundTransparency = 0
+					box(illustration, 7, (h - iconSize) / 2, iconSize, iconSize)
+					box(r.glyphBox, 7, (h - iconSize) / 2, iconSize, iconSize)
+					r.captionPill.BackgroundTransparency = 1
+					box(r.captionPill, left, 2, math.max(1, w - left - 8), h - 4)
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 15 + math.min(2, textBoost), strokeThickness = 1, align = Enum.TextXAlignment.Left })
+
+				elseif style == "wide" then
 					r.captionPill.BackgroundTransparency = 1
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
@@ -608,21 +643,29 @@ function Theme.Start(gui, player)
 						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 14, strokeThickness = 2, align = Enum.TextXAlignment.Left })
 					end
 					if complete then
-						local left = purchase and math.round(w * 0.26) or pingChoice and h + 7 or math.max(39, math.round(h * 1.15))
+						local left = purchase and math.round(w * 0.26) or math.max(39, math.round(h * 1.15))
 						box(r.captionPill, left, 4, math.max(1, w - left - 15), h - 8)
 					end
 
 				elseif style == "dock" then
-					-- Left Toolbar: Icon sits in upper half with ample breathing room!
-					local iconSize = 28
-					box(r.glyphBox, (w - iconSize) / 2, 7, iconSize, iconSize)
-
-					-- Pure transparent caption container (No black inner sticker box!)
+					local captionHeight = 14 + textBoost
+					local iconSize = math.max(1, math.min(w - 4, h - captionHeight - 2))
+					local iconX = (w - iconSize) / 2
+					local crop, sprite = dockCrops[fullKey], AdventureCatalog[fullKey]
+					if illustration and crop and sprite then
+						illustration.ImageRectOffset = Vector2.new(sprite[2], sprite[3]) + crop.Min
+						illustration.ImageRectSize = crop.Max - crop.Min
+						illustration.ScaleType = Enum.ScaleType.Stretch
+						box(illustration, iconX, 1, iconSize, iconSize)
+					end
+					box(o:FindFirstChild("HUDRaster"), iconX, 1, iconSize, iconSize)
+					local glyphSize = math.round(iconSize * .68)
+					box(r.glyphBox, (w - glyphSize) / 2, 1 + (iconSize - glyphSize) / 2, glyphSize, glyphSize)
 					r.captionPill.BackgroundTransparency = 1
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
 
-					box(r.captionPill, 2, h - (complete and 16 or 21) - textBoost, w - 4, 15 + textBoost)
+					box(r.captionPill, 0, h - captionHeight, w, captionHeight)
 					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, color = Color3.new(1, 1, 1), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
 
 				elseif style == "round" then
@@ -660,7 +703,7 @@ function Theme.Start(gui, player)
 					["Kit habis"]="kit_empty", ["Memuat kit"]="kit_loading",
 					["Kit terpakai"]="kit_used", ["Perisai aktif"]="kit_shield", ["ISI ULANG"]="reload_empty",
 				}
-				letter(r.caption, fixed and sprite or lockKeys[title])
+				letter(r.caption, style ~= "dock" and (fixed and sprite or lockKeys[title]) or nil)
 
 				local hint = o.Text:match("%[([^%]]+)%]")
 				r.hint.Visible = not Input.TouchEnabled and hint ~= nil and #hint <= 7 and hint ~= "GUNAKAN"
@@ -1033,35 +1076,37 @@ function Theme.Start(gui, player)
 			elseif r.kind == "card" then
 				o.ZIndex = z
 				r.artBox.Visible = not fullPanel
-				box(r.artBox, (w - 78) / 2, 12, 78, math.min(78, h * 0.4))
+				local previewH = math.min(72, math.round(h * .32))
+				local previewW = math.min(w - 20, math.round(previewH * 1.4))
+				box(r.artBox, (w - previewW) / 2, 8, previewW, previewH)
 				ztree(r.artBox, z + 2)
 				if not fullPanel then
 					use(r.art, o.Name == "Card1" and "art_kit" or "art_rifle")
 				end
 
-				local titleY = math.round(h * 0.49)
-				for _, child in o:GetChildren() do
-					if child:IsA("TextLabel") and child.Name:sub(1, 3) ~= "HUD" then
-						child.ZIndex = z + 3
-						local productTitle = child:GetAttribute("HUDProductTitle")
-						if productTitle == nil then
-							productTitle = child.Position.Y.Offset < 30
-							child:SetAttribute("HUDProductTitle", productTitle)
-						end
-						if productTitle then
-							child.Text = o.Name == "Card1" and "Emergency Kit" or "Upgrade AK-47"
-							box(child, 10, titleY, w - 20, 22)
-							applyTextStyle(child, { font = Enum.Font.GothamBlack, size = 15, color = Color3.fromRGB(255, 225, 90), strokeThickness = 2, wrapped = false })
-						else
-							child.Text = o.Name == "Card1" and "Tambal semua lubang, termasuk saat terjun bebas. Kebal 60 dtk. 1× per terbang."
-								or "Ubah dua rak menjadi AK-47. 30 peluru. Khusus Party Master."
-							box(child, 12, titleY + 22, w - 24, math.max(22, h - titleY - 78))
-							applyTextStyle(child, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(215, 230, 250), strokeThickness = 1.2, align = Enum.TextXAlignment.Left })
-						end
-					elseif child:IsA("TextButton") then
-						child.ZIndex = z + 4
-						box(child, 8, h - 54, w - 16, 44)
-					end
+				local inset = math.max(10, math.round(w * .10))
+				local titleY = fullPanel and math.round(h * .51) + 2 or previewH + 12
+				local buttonY = h - 44 - math.max(9, math.round(h * .058))
+				local title = o:FindFirstChild("ProductTitle")
+				local detail = o:FindFirstChild("ProductDescription")
+				local purchase = o:FindFirstChildWhichIsA("TextButton")
+				if title then
+					box(title, inset, titleY, w - inset * 2, 22)
+					title.ZIndex = z + 3
+					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, color = Color3.fromRGB(255, 230, 135),
+						strokeThickness = 2, wrapped = false, align = Enum.TextXAlignment.Left })
+					fitLine(title, textBoost)
+				end
+				if detail then
+					box(detail, inset, titleY + 22, w - inset * 2, math.max(1, buttonY - titleY - 25))
+					detail.ZIndex = z + 3
+					applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 13, color = Color3.fromRGB(232, 241, 255),
+						strokeThickness = 1.2, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Top, scaled = true })
+					fitLine(detail, textBoost)
+				end
+				if purchase then
+					purchase.ZIndex = z + 4
+					box(purchase, inset, buttonY, w - inset * 2, 44)
 				end
 
 			elseif r.kind == "reticle" then
@@ -1076,7 +1121,7 @@ function Theme.Start(gui, player)
 				if title then
 					title.Text = "TOKO PERBEKALAN"
 					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 18, color = Color3.fromRGB(255, 220, 80), strokeThickness = 2.5, align = Enum.TextXAlignment.Center })
-					box(title, 63, h < 330 and 28 or 37, w - 126, 25)
+					box(title, 60, math.round(h * .12) - 12, w - 120, 25)
 					title.ZIndex = z + 3
 					letter(title, "shop_title", 22)
 				end
@@ -1085,8 +1130,9 @@ function Theme.Start(gui, player)
 					applyTextStyle(feedback, { font = Enum.Font.GothamBold, size = 11, strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 					feedback.ZIndex = z + 3
 					local card = o:FindFirstChild("Card1")
-					local y = card and (card.Position.Y.Offset + card.Size.Y.Offset + 4) or h - 28
-					box(feedback, 26, y, w - 52, 25)
+					local y = card and (card.Position.Y.Offset + card.Size.Y.Offset + 2) or h - 30
+					local inset = math.round(w * .13)
+					box(feedback, inset, y, w - inset * 2, 23)
 				end
 			end
 		end

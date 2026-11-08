@@ -13,8 +13,11 @@ local function number(v)
 end
 local function clean(d)
  d=type(d)=="table" and d or {}
+ local owned=number(d.AKOwned==nil and d.AKCredits or d.AKOwned)
+ local slot1=owned>=1 and d.AKSlot1==true
+ local slot2=owned>=(slot1 and 2 or 1) and d.AKSlot2==true
  return {MaxAltitude=math.min(10000,number(d.MaxAltitude)),SummitCount=number(d.SummitCount),
-  EmergencyKits=number(d.EmergencyKits),AKCredits=number(d.AKCredits),
+  EmergencyKits=number(d.EmergencyKits),AKOwned=owned,AKSlot1=slot1,AKSlot2=slot2,
   Receipts=type(d.Receipts)=="table" and d.Receipts or {},Session=d.Session}
 end
 local function snapshot(d)
@@ -22,7 +25,7 @@ local function snapshot(d)
  return copy
 end
 local function attributes(p,d)
- for _,key in ipairs({"MaxAltitude","SummitCount","EmergencyKits","AKCredits"}) do p:SetAttribute(key,d[key]) end
+ for _,key in ipairs({"MaxAltitude","SummitCount","EmergencyKits","AKOwned","AKSlot1","AKSlot2"}) do p:SetAttribute(key,d[key]) end
  local stats=p:FindFirstChild("leaderstats")
  if stats then stats["Rekor (km)"].Value=d.MaxAltitude stats.Puncak.Value=d.SummitCount end
 end
@@ -81,25 +84,47 @@ function Manager.ModifyEmergencyKits(p,delta)
  task.spawn(Manager.Save,p,false)
  return true
 end
-function Manager.ConsumeAKCredit(p)
+function Manager.GetWeaponLoadout(p)
  local s=sessions[p]
- if not s or s.busy or s.data.AKCredits<1 then return false end
- s.data.AKCredits-=1 attributes(p,s.data) task.spawn(Manager.Save,p,false) return true
+ if not s then return false,false end
+ return s.data.AKSlot1,s.data.AKSlot2
+end
+function Manager.SetWeaponSlot(p,slot,kind)
+ if (slot~=1 and slot~=2) or (kind~="Pistol" and kind~="AK47") then return false,"Pilihan senjata tidak valid." end
+ local s=sessions[p]
+ if not s or s.busy then return false,"Data sedang disimpan. Coba lagi sebentar." end
+ local key=slot==1 and "AKSlot1" or "AKSlot2"
+ local other=slot==1 and "AKSlot2" or "AKSlot1"
+ local equip=kind=="AK47"
+ if s.data[key]==equip then return true end
+ if equip and s.data.AKOwned<(s.data[other] and 2 or 1) then
+  return false,"AK-47 di inventaris belum cukup."
+ end
+ s.busy=true
+ local d=snapshot(s.data)
+ d[key]=equip
+ local ok=write(p,s,d,false)
+ if ok then
+  s.data[key]=equip
+  attributes(p,s.data)
+ end
+ s.busy=false
+ return ok,not ok and "Pengaturan gagal disimpan. Coba lagi." or nil
 end
 function Manager.GrantReceipt(p,id,item)
  local s=sessions[p]
- if not s or offline then return false end
+ if not s then return false end
  while s.busy do task.wait(0.05) end
  if sessions[p]~=s then return false end
  if s.data.Receipts[id] then return true,false end
  s.busy=true
  local d=snapshot(s.data)
- d.Receipts[id]=true
- if item=="EmergencyKit" then d.EmergencyKits+=1 elseif item=="AK47Upgrade" then d.AKCredits+=1 else s.busy=false return false end
+ d.Receipts[id]=item
+ if item=="EmergencyKit" then d.EmergencyKits+=1 elseif item=="AK47Upgrade" then d.AKOwned+=1 else s.busy=false return false end
  local ok=write(p,s,d,false)
  if ok then
   -- Preserve altitude/summit updates that happened while UpdateAsync yielded.
-  s.data.Receipts=d.Receipts s.data.EmergencyKits=d.EmergencyKits s.data.AKCredits=d.AKCredits
+  s.data.Receipts=d.Receipts s.data.EmergencyKits=d.EmergencyKits s.data.AKOwned=d.AKOwned
   attributes(p,s.data)
  end
  s.busy=false return ok,ok

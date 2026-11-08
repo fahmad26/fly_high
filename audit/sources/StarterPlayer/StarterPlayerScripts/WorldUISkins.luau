@@ -51,6 +51,41 @@ local function lettering(label, key)
 	label:GetPropertyChangedSignal("AbsoluteSize"):Connect(refresh)
 end
 
+local function styleWelcomeSign(gui)
+	-- Match the canvas aspect to the board so the lettering keeps its shape.
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.FixedSize
+	gui.CanvasSize = Vector2.new(880, 344)
+	local title = gui:FindFirstChildOfClass("TextLabel")
+	if not title then return end
+
+	title.Text = "FLY HIGH"
+	title.Position = UDim2.fromScale(0.1, 0.22)
+	title.Size = UDim2.fromScale(0.8, 0.33)
+	title.Font = Enum.Font.FredokaOne
+	title.TextSize = 96
+	title.TextScaled = false
+	title.TextWrapped = false
+	title.TextColor3 = Color3.fromRGB(255, 221, 134)
+	title.TextStrokeColor3 = Color3.fromRGB(4, 12, 28)
+	title.TextStrokeTransparency = 0.55
+	title.TextXAlignment = Enum.TextXAlignment.Center
+	title.TextYAlignment = Enum.TextYAlignment.Center
+	title.BackgroundTransparency = 1
+	title.ZIndex = 2
+
+	local subtitle = Instance.new("TextLabel")
+	subtitle.Name = "WelcomeInstructions"
+	subtitle.Text = "Pilih dermaga • Bentuk kru\nSiap terbang!"
+	subtitle.Position = UDim2.fromScale(0.1, 0.52)
+	subtitle.Size = UDim2.fromScale(0.8, 0.34)
+	subtitle.Font = Enum.Font.Nunito
+	subtitle.TextSize = 52
+	subtitle.TextColor3 = Color3.fromRGB(222, 241, 255)
+	subtitle.BackgroundTransparency = 1
+	subtitle.ZIndex = 2
+	subtitle.Parent = gui
+end
+
 local function style(gui)
 	if not gui:IsA("SurfaceGui") and not gui:IsA("BillboardGui") then return end
 	local parent = gui.Parent
@@ -72,7 +107,7 @@ local function style(gui)
 	backplate(gui, key)
 
 	if key == "world_sign" then
-		lettering(gui:FindFirstChildOfClass("TextLabel"), "welcome_sign")
+		styleWelcomeSign(gui)
 	elseif key == "palace_sign" or key == "storm_sign" then
 		lettering(gui:FindFirstChildOfClass("TextLabel"), key)
 	end

@@ -1,13 +1,18 @@
 local Players = game:GetService("Players")
+local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Marketplace=game:GetService("MarketplaceService")
-local Config=require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("FlyHighConfig"))
+local modules=ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules")
+local Config=require(modules.FlyHighConfig)
+local Assets=require(modules.HUDImageAssets)
 
 local localPlayer = Players.LocalPlayer
 local playerGui = localPlayer:WaitForChild("PlayerGui")
 
 local remotes = ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local shopPurchaseEvent = remotes:WaitForChild("ShopPurchaseEvent")
+local weaponLoadoutEvent = remotes:WaitForChild("WeaponLoadoutEvent")
+local playerLabelsEvent = remotes:WaitForChild("PlayerLabelsEvent")
 
 local screenGui = playerGui:WaitForChild("FlyHighHUD", 10) or Instance.new("ScreenGui")
 screenGui.Name = "FlyHighHUD"
@@ -32,11 +37,7 @@ sBtnCorner.CornerRadius = UDim.new(0, 10)
 sBtnCorner.Parent = shopToggleBtn
 
 -- Shop Modal Frame
-local shopModal = Instance.new("ScrollingFrame")
-shopModal.CanvasSize = UDim2.fromOffset(0, 390)
-shopModal.ScrollBarThickness = 5
-shopModal.ScrollingDirection = Enum.ScrollingDirection.Y
-shopModal.ClipsDescendants = true
+local shopModal = Instance.new("Frame")
 shopModal.Name = "ShopModal"
 shopModal.Size = UDim2.new(0, 440, 0, 390)
 shopModal.Position = UDim2.new(0.5, -220, 0.5, -195)
@@ -91,10 +92,11 @@ c1Corner.CornerRadius = UDim.new(0, 10)
 c1Corner.Parent = card1
 
 local c1Title = Instance.new("TextLabel")
+c1Title.Name = "ProductTitle"
 c1Title.Size = UDim2.new(1, -20, 0, 24)
 c1Title.Position = UDim2.new(0, 10, 0, 6)
 c1Title.BackgroundTransparency = 1
-c1Title.Text = "🛡️ Emergency Repair & Shield"
+c1Title.Text = "Emergency Kit"
 c1Title.TextColor3 = Color3.fromRGB(80, 220, 255)
 c1Title.Font = Enum.Font.FredokaOne
 c1Title.TextSize = 15
@@ -102,10 +104,11 @@ c1Title.TextXAlignment = Enum.TextXAlignment.Left
 c1Title.Parent = card1
 
 local c1Desc = Instance.new("TextLabel")
+c1Desc.Name = "ProductDescription"
 c1Desc.Size = UDim2.new(1, -20, 0, 42)
 c1Desc.Position = UDim2.new(0, 10, 0, 32)
 c1Desc.BackgroundTransparency = 1
-c1Desc.Text = "Pulihkan seluruh lubang ke 0 seketika + Kebal 60 detik. Bisa dipakai saat 5 lubang terjun bebas (Clutch Save)! Tersimpan di akun, maksimal 1x per terbang."
+c1Desc.Text = "Tambal semua lubang. Kebal 60 dtk. Sekali per terbang."
 c1Desc.TextColor3 = Color3.fromRGB(200, 220, 240)
 c1Desc.Font = Enum.Font.Gotham
 c1Desc.TextSize = 12
@@ -143,10 +146,11 @@ c2Corner.CornerRadius = UDim.new(0, 10)
 c2Corner.Parent = card2
 
 local c2Title = Instance.new("TextLabel")
+c2Title.Name = "ProductTitle"
 c2Title.Size = UDim2.new(1, -20, 0, 24)
 c2Title.Position = UDim2.new(0, 10, 0, 6)
 c2Title.BackgroundTransparency = 1
-c2Title.Text = "🔫 AK-47 Tactical Upgrade"
+c2Title.Text = "AK-47 Permanen"
 c2Title.TextColor3 = Color3.fromRGB(255, 200, 50)
 c2Title.Font = Enum.Font.FredokaOne
 c2Title.TextSize = 15
@@ -154,10 +158,11 @@ c2Title.TextXAlignment = Enum.TextXAlignment.Left
 c2Title.Parent = card2
 
 local c2Desc = Instance.new("TextLabel")
+c2Desc.Name = "ProductDescription"
 c2Desc.Size = UDim2.new(1, -20, 0, 42)
 c2Desc.Position = UDim2.new(0, 10, 0, 32)
 c2Desc.BackgroundTransparency = 1
-c2Desc.Text = "Gantikan 2 rak pistol di balon menjadi AK-47 (30 peluru, otomatis cepat, amunisi tak terbatas). Hanya dapat dibeli & diaktifkan oleh Game Master."
+c2Desc.Text = "Satu AK-47 permanen. Pilih raknya di Setelan."
 c2Desc.TextColor3 = Color3.fromRGB(200, 220, 240)
 c2Desc.Font = Enum.Font.Gotham
 c2Desc.TextSize = 12
@@ -170,7 +175,7 @@ buyAKBtn.Name="BuyAK47Button"
 buyAKBtn.Size = UDim2.new(1, -20, 0, 44)
 buyAKBtn.Position = UDim2.new(0, 10, 0, 80)
 buyAKBtn.BackgroundColor3 = Color3.fromRGB(210, 120, 20)
-buyAKBtn.Text = "Beli AK-47 Upgrade (Khusus Master)"
+buyAKBtn.Text = "Beli 1 AK-47"
 buyAKBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 buyAKBtn.Font = Enum.Font.FredokaOne
 buyAKBtn.TextSize = 13
@@ -191,8 +196,7 @@ local function price(item)
 end
 local function refreshButtons()
  buyKitBtn.Text=busy.EmergencyKit and "Membuka toko..." or ("Beli 1 Kit • "..price("EmergencyKit"))
- local credits=localPlayer:GetAttribute("AKCredits")or 0
- buyAKBtn.Text=busy.AK47Upgrade and "Memeriksa upgrade..." or (credits>0 and ("Gunakan Kredit AK-47 ("..credits..")")or ("Beli Upgrade • "..price("AK47Upgrade").." (Master)"))
+ buyAKBtn.Text=busy.AK47Upgrade and "Membuka toko..." or ("Beli 1 AK-47 • "..price("AK47Upgrade"))
 end
 local function refreshPrices()
  if loading or os.clock()-refreshedAt<60 then return end
@@ -204,8 +208,6 @@ local function refreshPrices()
    shopModal:SetAttribute(item.."Price",info.PriceInRobux)
   end
  end
- c1Title.Text="🛡️ Emergency Repair & Shield ("..price("EmergencyKit")..")"
- c2Title.Text="🔫 AK-47 Tactical Upgrade ("..price("AK47Upgrade")..")"
  refreshedAt=os.clock() loading=false refreshButtons()
 end
 local function request(item)
@@ -214,11 +216,11 @@ local function request(item)
  busy[item]=true feedback.Text=""refreshButtons()
  shopPurchaseEvent:FireServer(item)
 end
-shopToggleBtn.MouseButton1Click:Connect(function()
+shopToggleBtn.Activated:Connect(function()
  shopModal.Visible=not shopModal.Visible
  if shopModal.Visible then task.spawn(refreshPrices)end
 end)
-closeBtn.MouseButton1Click:Connect(function()shopModal.Visible=false end)
+closeBtn.Activated:Connect(function()shopModal.Visible=false end)
 buyKitBtn.Activated:Connect(function()request("EmergencyKit")end)
 buyAKBtn.Activated:Connect(function()request("AK47Upgrade")end)
 shopPurchaseEvent.OnClientEvent:Connect(function(message)
@@ -236,6 +238,171 @@ Marketplace.PromptProductPurchaseFinished:Connect(function(userId,productId,purc
  end
  -- Item grants always come from server ProcessReceipt, never from this client event.
 end)
-localPlayer:GetAttributeChangedSignal("AKCredits"):Connect(refreshButtons)
 refreshButtons()
 task.spawn(refreshPrices)
+
+local function settingsText(class, name, parent, caption, size, x, y, w, h)
+ local object=Instance.new(class)
+ object.Name=name
+ object.Position=UDim2.new(x, x==0 and 12 or 0, 0, y)
+ object.Size=UDim2.new(w, w==1 and -24 or 0, 0, h)
+ object.BackgroundTransparency=1
+ object.TextColor3=Color3.fromRGB(237,245,255)
+ object.Font=Enum.Font.GothamBold
+ object.TextSize=size
+ object.Text=caption
+ object.ZIndex=parent:IsA("GuiObject") and parent.ZIndex+2 or 1
+ object.Parent=parent
+ return object
+end
+local function styleButton(button,color)
+ button.BackgroundColor3=color
+ button.BackgroundTransparency=0
+ local round=Instance.new("UICorner",button)
+ round.CornerRadius=UDim.new(0,9)
+ return button
+end
+local blue=Color3.fromRGB(31,71,109)
+local teal=Color3.fromRGB(18,122,111)
+local dim=Color3.fromRGB(38,47,66)
+local settingsToggle=styleButton(settingsText("TextButton","SettingsToggleButton",screenGui,"SETELAN",11,0,0,0,50),blue)
+local settings=Instance.new("Frame")
+settings.Name="WeaponSettingsModal"
+settings.BackgroundColor3=Color3.fromRGB(13,32,56)
+settings.BorderSizePixel=0
+settings.Visible=false
+settings.ZIndex=22
+local corners=Instance.new("UICorner",settings)
+corners.CornerRadius=UDim.new(0,14)
+local outline=Instance.new("UIStroke",settings)
+outline.Color=Color3.fromRGB(226,180,90)
+outline.Thickness=2
+outline.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+local title=settingsText("TextLabel","Title",settings,"Senjata Balon",22,0,8,1,44)
+title.Size=UDim2.new(1,-72,0,44)
+title.Font=Enum.Font.FredokaOne
+title.TextColor3=Color3.fromRGB(255,230,153)
+title.TextXAlignment=Enum.TextXAlignment.Center
+local dismiss=styleButton(settingsText("TextButton","SettingsCloseButton",settings,"×",23,1,8,0,44),blue)
+dismiss.Position=UDim2.new(1,-56,0,8)
+dismiss.Size=UDim2.fromOffset(44,44)
+local inventory=settingsText("TextLabel","InventoryCount",settings,"",14,0,55,1,24)
+inventory.TextColor3=Color3.fromRGB(182,222,243)
+local note=settingsText("TextLabel","LaunchNote",settings,
+ "Untuk peluncuranmu sebagai Party Master.",13,0,81,1,37)
+note.TextWrapped=true
+local message=settingsText("TextLabel","SettingsFeedback",settings,"",13,0,239,1,33)
+message.TextWrapped=true
+message.TextColor3=Color3.fromRGB(255,219,143)
+local slots={}
+local function loadoutLocked()
+ return localPlayer:GetAttribute("InFlight")==true
+end
+local function addChoiceArt(button)
+ local image=Assets.Mount(button,"speed")
+ image.ZIndex=button.ZIndex+1
+ local label=Instance.new("TextLabel")
+ label.Name="ChoiceCaption"
+ label.Size=UDim2.fromScale(1,1)
+ label.BackgroundTransparency=1
+ label.Font=Enum.Font.FredokaOne
+ label.TextSize=14
+ label.TextColor3=Color3.new(1,1,1)
+ label.TextStrokeTransparency=.3
+ label.ZIndex=button.ZIndex+2
+ label.Parent=button
+ button.TextTransparency=1
+ local function refresh()
+  button.BackgroundTransparency=image.IsLoaded and 1 or 0
+ end
+ image:GetPropertyChangedSignal("IsLoaded"):Connect(refresh)
+ refresh()
+end
+local function paintChoice(button,text,selected)
+ button.Text=text
+ button.ChoiceCaption.Text=text
+ button.BackgroundColor3=selected and teal or blue
+ Assets.Apply(button.HUDRaster,selected and "buy_kit" or "speed")
+ button.HUDRaster.ImageColor3=selected and Color3.fromRGB(146,205,192) or Color3.new(1,1,1)
+end
+local function refreshLoadout()
+ local owned=localPlayer:GetAttribute("AKOwned") or 0
+ local count=(localPlayer:GetAttribute("AKSlot1") and 1 or 0)+(localPlayer:GetAttribute("AKSlot2") and 1 or 0)
+ local locked=loadoutLocked()
+ inventory.Text=string.format("AK-47 dimiliki %d  ·  Di inventaris %d",owned,math.max(0,owned-count))
+ for slot,buttons in ipairs(slots) do
+  local equipped=localPlayer:GetAttribute("AKSlot"..slot)==true
+  paintChoice(buttons.handgun,equipped and "Handgun" or "✓ Handgun",not equipped)
+  paintChoice(buttons.rifle,equipped and "✓ AK-47" or "AK-47",equipped)
+  if not equipped and owned<=count then
+   buttons.rifle.HUDRaster.ImageColor3=Color3.new(.66,.66,.66)
+   buttons.rifle.BackgroundColor3=dim
+  end
+  for _,button in {buttons.handgun,buttons.rifle} do
+   button.Interactable=not locked
+   button.Selectable=not locked
+   button.ChoiceCaption.TextTransparency=locked and .24 or 0
+   if locked then button.HUDRaster.ImageColor3=button.HUDRaster.ImageColor3:Lerp(Color3.new(0,0,0),.38) end
+  end
+ end
+end
+local function chooseWeapon(slot,kind)
+ if not loadoutLocked() then weaponLoadoutEvent:FireServer(slot,kind) end
+end
+for slot=1,2 do
+ local y=124+(slot-1)*56
+ local name=settingsText("TextLabel","SlotLabel"..slot,settings,"Rak "..slot,14,0,y,0.19,44)
+ name.TextXAlignment=Enum.TextXAlignment.Left
+ local handgun=styleButton(settingsText("TextButton","HandgunSlot"..slot,settings,"Handgun",14,.23,y,.35,44),blue)
+ local rifle=styleButton(settingsText("TextButton","AK47Slot"..slot,settings,"AK-47",14,.61,y,.35,44),blue)
+ addChoiceArt(handgun)
+ addChoiceArt(rifle)
+ handgun.Activated:Connect(function() chooseWeapon(slot,"Pistol") end)
+ rifle.Activated:Connect(function() chooseWeapon(slot,"AK47") end)
+ slots[slot]={handgun=handgun,rifle=rifle}
+end
+for _,key in {"AKOwned","AKSlot1","AKSlot2"} do
+ localPlayer:GetAttributeChangedSignal(key):Connect(refreshLoadout)
+end
+local launchNote=note.Text
+local function updateFlightLock()
+ note.Text=loadoutLocked() and "Pilihan senjata terkunci selama penerbangan." or launchNote
+ note.Visible=true
+ message.Text=""
+ refreshLoadout()
+end
+localPlayer:GetAttributeChangedSignal("InFlight"):Connect(updateFlightLock)
+weaponLoadoutEvent.OnClientEvent:Connect(function(result)
+ message.Text=result
+ note.Visible=false
+end)
+settingsToggle.Activated:Connect(function()
+ settings.Visible=not settings.Visible
+ if settings.Visible then updateFlightLock() end
+end)
+dismiss.Activated:Connect(function() settings.Visible=false end)
+
+local labelsTitle=settingsText("TextLabel","PlayerLabelsLabel",settings,"Tulisan di atas pemain",14,0,0,1,44)
+labelsTitle.TextXAlignment=Enum.TextXAlignment.Left
+local labelsToggle=styleButton(settingsText("TextButton","PlayerLabelsToggle",settings,"Tampil",14,0,0,1,44),blue)
+addChoiceArt(labelsToggle)
+local overheadTag="FlyHighPlayerOverhead"
+local nativeNameDistance=localPlayer.NameDisplayDistance
+local function labelsShown()
+ return localPlayer:GetAttribute("ShowPlayerLabels")~=false
+end
+local function updateOverhead(gui)
+ if gui:IsA("BillboardGui") then gui.Enabled=labelsShown() end
+end
+local function refreshPlayerLabels()
+ local visible=labelsShown()
+ paintChoice(labelsToggle,visible and "✓ Tampil" or "Sembunyi",visible)
+ localPlayer.NameDisplayDistance=visible and nativeNameDistance or 0
+ for _,gui in CollectionService:GetTagged(overheadTag) do updateOverhead(gui) end
+end
+labelsToggle.Activated:Connect(function() playerLabelsEvent:FireServer(not labelsShown()) end)
+CollectionService:GetInstanceAddedSignal(overheadTag):Connect(updateOverhead)
+localPlayer:GetAttributeChangedSignal("ShowPlayerLabels"):Connect(refreshPlayerLabels)
+updateFlightLock()
+refreshPlayerLabels()
+settings.Parent=screenGui

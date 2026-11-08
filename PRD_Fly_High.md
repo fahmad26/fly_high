@@ -123,7 +123,7 @@ flowchart LR
 ### 5.1 Aktivitas 1: Mengontrol Balon Udara (Navigation & Flight)
 * **Skema Kontrol Khusus Pilot:**
   * Pemain duduk/berinteraksi pada kursi kemudi (*Helm*) di bagian depan gondola untuk menjadi **Pilot**. Kursi kemudi tidak terkunci permanen; siapa pun yang masih hidup bisa bergantian mengambil alih kemudi kapan saja.
-  * **Gerakan Horizontal (Maju, Mundur, Kiri, Kanan):** Menggunakan tombol **WASD** (atau Dynamic Thumbstick di mobile) selama dibatasi oleh *Invisible Wall* koridor terbang.
+  * **Gerakan Horizontal (Maju, Mundur, Kiri, Kanan):** Gunakan WASD, stik gamepad, atau tahan tombol arah di sisi kiri HUD mobile. Arah gerak mengikuti kamera. Tombol arah mobile tampil saat memegang kemudi dan dapat ditahan sambil menekan gas.
   * **Gerakan Naik (Ascend) — Eksklusif Pilot:**
     * Tombol UI **`[ 🔥 GAS / NAIK ]`** **HANYA muncul di layar pemain yang sedang memegang kemudi (Pilot)**.
     * Ketika Pilot menahan tombol tersebut, tungku burner menyemburkan api besar, kain balon mengembang, dan balon memperoleh gaya angkat vertikal.
@@ -143,7 +143,7 @@ flowchart LR
   | Tipe Senjata | Kapasitas Mag | Sistem Tembak | Cadangan | Ketentuan |
   | :--- | :---: | :---: | :---: | :--- |
   | **Pistol Biasa (Handgun)** | **8 Peluru** | Semi-otomatis (Reload 1.5s) | **Tak Terbatas** | Default gratis di balon (2 unit) |
-  | **AK-47 (Tactical Rifle)** | **30 Peluru** | Otomatis cepat (Reload 2.0s) | **Tak Terbatas** | **Hanya dapat dibeli/disediakan oleh Game Master** (Maksimal 2 unit) |
+  | **AK-47 (Tactical Rifle)** | **30 Peluru** | Otomatis cepat (Reload 2.0s) | **Tak Terbatas** | Satu unit permanen per pembelian. Setelan Party Master menentukan isi dua rak pada peluncuran. |
 
 * **Sistem Ergonomi & Auto-Aim (Khusus Mobile/Opsional):**
   * **Auto-Aim Target Soft-Lock:** Kamera / bidikan pemain di perangkat mobile dapat mengunci secara halus ke arah rintangan terbang terdekat di layar.
@@ -252,7 +252,7 @@ stateDiagram-v2
 | Item Pembelian | Efek Utama | Harga Estimasi | Siapa yang Bisa Beli/Pakai? | Aturan, Batasan & Proteksi |
 | :--- | :--- | :---: | :---: | :--- |
 | **Emergency Repair & Shield** *(Kit Perbaikan Darurat)* | • Memulihkan **seluruh lubang seketika** (0 lubang)<br>• Memberikan **Kebal Serangan 1 Menit (60 Detik)**<br>• Dapat digunakan untuk **Clutch Save pada 5 lubang** | **29 Robux**<br>(harga dasar) | **Dapat dibeli dan dipakai oleh SIAPA SAJA** | • **1x pemakaian per pemain per penerbangan** (Maks 3x per tim).<br>• **Anti-Waste Cooldown:** Selama Shield 60 detik dari satu pemain sedang aktif, tombol Emergency Repair rekan setim lainnya otomatis dikunci sementara (`"🛡️ Shield Tim Sedang Aktif!"`) agar tidak terpakai ganda secara tidak sengaja.<br>• Masuk inventori data pemain, sisa stok aman untuk penerbangan berikutnya. |
-| **AK-47 Tactical Upgrade** | • Menggantikan rak pistol default menjadi AK-47<br>• 30 peluru per magazine (vs 8 di pistol)<br>• Tembakan beruntun & amunisi tak terbatas | **79 Robux**<br>(harga dasar) | **HANYA DAPAT DISEDIAKAN OLEH GAME MASTER** | • Maksimal **2 AK-47 per penerbangan**.<br>• Diatur/dibeli oleh Master di toko sebelum atau saat penerbangan. |
+| **AK-47 Permanen** | Satu unit per pembelian. Magazen 30 peluru, tembakan beruntun, dan amunisi cadangan tak terbatas. | **79 Robux**<br>(harga dasar) | Semua pemain dapat membeli. | Setelan Party Master mengisi dua rak saat peluncuran. Unit yang sedang tidak dipasang tersimpan di inventaris. |
 
 ---
 
@@ -470,9 +470,11 @@ Kelima gelombang memakai kabut bergerak, pita angin, dan petir bercabang. Garis 
 | Produk | Product ID | Harga dasar |
 | --- | --- | --- |
 | Emergency Repair & Shield (EmergencyKit) | 3723339056 | 29 Robux |
-| AK-47 Tactical Upgrade (AK47Upgrade) | 3723339246 | 79 Robux |
+| AK-47 Permanen (AK47Upgrade) | 3723339246 | 79 Robux |
 
-Harga di atas menggantikan kisaran perkiraan pada rancangan awal. UI membaca harga aktual melalui API Roblox pada client, sehingga dapat mengikuti harga regional. Satu pembelian EmergencyKit memberi satu kit tersimpan; satu pembelian AK47Upgrade memberi satu kredit upgrade untuk kedua rak pada satu penerbangan. Receipt yang sama tidak boleh memberikan item atau memicu pemasangan upgrade dua kali.
+UI membaca harga aktual melalui API Roblox pada client untuk mengikuti harga regional. Satu pembelian EmergencyKit memberi satu kit. Satu pembelian AK47Upgrade menambahkan satu AK-47 permanen ke inventaris. Receipt yang sama hanya boleh memberi satu unit.
+
+HUD Setelan menyimpan pilihan Handgun atau AK-47 secara terpisah untuk Rak 1 dan Rak 2. Satu AK-47 hanya mengisi satu rak. Memilih Handgun mengembalikan unit AK-47 ke inventaris. Akun dapat memiliki lebih dari dua unit dan Setelan menampilkan jumlah yang belum dipasang. Pilihan akun Party Master diterapkan saat balon dipanggil. Pilihan senjata dikunci untuk seluruh kru sampai penerbangan berakhir. Opsi tulisan di atas pemain aktif secara default dan berlaku pada layar pemain yang memilihnya.
 
 ## HUD pada Layar Kecil — 29 Oktober 2026
 

@@ -341,7 +341,17 @@ end)
 UserInputService.WindowFocusReleased:Connect(function() fireButtonInput=nil isFiringAuto=false end)
 local wheel=Instance.new("Frame")
 wheel.Name="TacticalPingWheel" wheel.Size=UDim2.fromOffset(440,310) wheel.Position=UDim2.new(0.5,-220,0.5,-155)
-wheel.BackgroundTransparency=1 wheel.Visible=false wheel.Parent=screenGui
+wheel.BackgroundColor3=Color3.fromRGB(7,22,55)
+wheel.BackgroundTransparency=1 wheel.Visible=false wheel.Active=true wheel.Parent=screenGui
+local pingTitle=Instance.new("TextLabel")
+pingTitle.Name="PingTitle"
+pingTitle.BackgroundTransparency=1
+pingTitle.Font=Enum.Font.FredokaOne
+pingTitle.Text="PING KRU"
+pingTitle.TextSize=20
+pingTitle.TextColor3=Color3.fromRGB(255,224,142)
+pingTitle.TextXAlignment=Enum.TextXAlignment.Left
+pingTitle.Parent=wheel
 local function button(name,text,position,callback)
  if UserInputService.TouchEnabled then text=text:gsub("%s*%[[^%]]+%]","")end
  local b=Instance.new("TextButton") b.Name=name b.Text=text b.Size=UDim2.fromOffset(150,42)
@@ -354,10 +364,13 @@ end
 local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),function() wheel.Visible=not wheel.Visible end)
 local reloadButton=button("ReloadButton","RELOAD [R / X]",UDim2.new(1,-260,1,-225),function() if currentWeapon then reloadRemote:FireServer() end end)
 local dropButton=button("DropButton","DROP [G / B]",UDim2.new(1,-260,1,-270),function() weaponDropEvent:FireServer() end)
+local pingClose=button("PingCloseButton","Tutup",UDim2.fromOffset(0,0),function() wheel.Visible=false end)
+pingClose.Parent=wheel
 for i,message in ipairs(Config.TACTICAL_MESSAGES) do
- local angle=math.rad(-90+(i-1)*72)
- local b=button("Ping"..i,message,UDim2.fromOffset(145+math.cos(angle)*140,130+math.sin(angle)*110),function()
-  tacticalPingEvent:FireServer("QuickPing",targetPosition(),message) wheel.Visible=false
+ local b=button("Ping"..i,message,UDim2.fromOffset(0,0),function()
+  local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+  if root then tacticalPingEvent:FireServer("QuickPing",root.Position,message) end
+  wheel.Visible=false
  end)
  b.Parent=wheel
 end
