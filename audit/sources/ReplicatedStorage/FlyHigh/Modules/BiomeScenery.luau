@@ -9,6 +9,8 @@ local neon = Enum.Material.Neon
 local grassMat = Enum.Material.Grass
 local woodMat = Enum.Material.Wood
 local marbleMat = Enum.Material.Marble
+local limestoneMat = Enum.Material.Limestone
+local sandstoneMat = Enum.Material.Sandstone
 local glassMat = Enum.Material.Glass
 local metalMat = Enum.Material.Metal
 local sandMat = Enum.Material.Sand
@@ -50,8 +52,16 @@ local function model(parent, name)
 	return group
 end
 
+local function getEnvironmentAssets()
+	return script.Parent.Parent:FindFirstChild("EnvironmentAssets")
+end
+
+local function getTemplates()
+	return script.Parent.Parent:FindFirstChild("Templates")
+end
+
 local function landmark(parent, name, cf, scale)
-	local environment = script.Parent.Parent:FindFirstChild("EnvironmentAssets")
+	local environment = getEnvironmentAssets()
 	local meshes = environment and environment:FindFirstChild("BiomeLandmarkMeshes")
 	local template = meshes and meshes:FindFirstChild(name)
 	if not template then return nil end
@@ -59,6 +69,160 @@ local function landmark(parent, name, cf, scale)
 	if scale then copy:ScaleTo(scale) end
 	copy:PivotTo(cf or template:GetAttribute("WorldPlacement") or CFrame.identity)
 	copy.Parent = parent
+	return copy
+end
+
+-- Clone a sculpted nature asset (BroadleafTree, PalmTree, Fern, Boulder, Flower) from EnvironmentAssets
+local function natureAsset(parent, templateName, instanceName, cf, scale, customizeFn)
+	local environment = getEnvironmentAssets()
+	local template = environment and environment:FindFirstChild(templateName)
+	if not template then return nil end
+	local copy = template:Clone()
+	copy.Name = instanceName or templateName
+	for _, d in copy:GetDescendants() do
+		if d:IsA("BasePart") then
+			if d.Name == "TrunkCollider" then
+				d:Destroy()
+			else
+				if d.Name == "NatureRoot" then d.Transparency = 1 end
+				d.Anchored = true
+				d.CanCollide = false
+				d.CanTouch = false
+				d.CanQuery = false
+				d.CastShadow = false
+				if customizeFn then customizeFn(d) end
+			end
+		end
+	end
+	if scale and scale ~= 1 then copy:ScaleTo(scale) end
+	copy:PivotTo(cf)
+	copy.Parent = parent
+	return copy
+end
+
+-- Clone a sculpted UnionOperation / MeshPart from Templates.FleetGeometry (SaturnRing, DockRim, Star, LotusPetal, LotusLeaf)
+local function fleetShape(parent, templateName, partName, cf, size, color, material)
+	local templates = getTemplates()
+	local fleet = templates and templates:FindFirstChild("FleetGeometry")
+	local group = fleet and fleet:FindFirstChild(templateName)
+	if group then
+		for _, d in group:GetDescendants() do
+			if d:IsA("BasePart") and d.Name ~= "GeometryRoot" then
+				local copy = d:Clone()
+				copy.Name = partName
+				copy.Size = size
+				copy.CFrame = cf
+				copy.Color = color
+				copy.Material = material or metalMat
+				if copy:IsA("UnionOperation") then copy.UsePartColor = true end
+				copy.Anchored = true
+				copy.CanCollide = false
+				copy.CanTouch = false
+				copy.CanQuery = false
+				copy.CastShadow = false
+				copy.Parent = parent
+				return copy
+			end
+		end
+	end
+	return part(parent, partName, size, cf, color, material or metalMat, ball)
+end
+
+-- Clone a sculpted balloon envelope MeshPart from Templates.BalloonSkins
+local function balloonEnvelopeMesh(parent, skinName, partName, cf, size, color, material, keepTexture)
+	local templates = getTemplates()
+	local skins = templates and templates:FindFirstChild("BalloonSkins")
+	local skin = skins and skins:FindFirstChild(skinName)
+	if skin then
+		for _, d in skin:GetDescendants() do
+			if d:IsA("MeshPart") then
+				local copy = d:Clone()
+				copy.Name = partName
+				if not keepTexture then copy.TextureID = "" end
+				copy.Size = size
+				copy.CFrame = cf
+				copy.Color = color
+				copy.Material = material or plastic
+				copy.Anchored = true
+				copy.CanCollide = false
+				copy.CanTouch = false
+				copy.CanQuery = false
+				copy.CastShadow = false
+				copy.Parent = parent
+				return copy
+			end
+		end
+	end
+	return part(parent, partName, size, cf, color, material or plastic, ball)
+end
+
+-- Clone pure visual parts of CloudPalace's SummitPhotoPodium (stripped of prompts/lights)
+local function clonePalacePodium(parent, name, cf, scale, stoneCol, goldCol, slateCol, ivoryCol, amberCol)
+	local palace = workspace:FindFirstChild("CloudPalace")
+	local podium = palace and palace:FindFirstChild("SummitPhotoPodium")
+	if not podium then return nil end
+	local copy = model(parent, name)
+	local origin = podium:GetPivot()
+	for _, d in podium:GetDescendants() do
+		if d:IsA("BasePart") and d.Name ~= "LanternLight" then
+			local p = d:Clone()
+			p:ClearAllChildren()
+			local rel = origin:ToObjectSpace(d.CFrame)
+			p.Size = d.Size * scale
+			p.CFrame = cf * CFrame.new(rel.Position * scale) * (rel - rel.Position)
+			if p.Name == "PhotoStone" or p.Name == "PodiumStep" then
+				p.Color = stoneCol or p.Color
+			elseif p.Name == "PhotoGold" then
+				p.Color = goldCol or p.Color
+				p.Material = metalMat
+			elseif p.Name == "PhotoSlate" then
+				p.Color = slateCol or p.Color
+			elseif p.Name == "PhotoIvory" then
+				p.Color = ivoryCol or p.Color
+			elseif p.Name == "PhotoAmber" then
+				p.Color = amberCol or p.Color
+				p.Material = neon
+			end
+			p.Anchored = true
+			p.CanCollide = false
+			p.CanTouch = false
+			p.CanQuery = false
+			p.CastShadow = false
+			p.Parent = copy
+		end
+	end
+	copy.WorldPivot = cf
+	return copy
+end
+
+-- Clone pure visual parts of CloudPalace's GardenLantern01
+local function clonePalaceLantern(parent, cf, scale, glowColor)
+	local palace = workspace:FindFirstChild("CloudPalace")
+	local garden = palace and palace:FindFirstChild("PalaceGarden")
+	local lantern = garden and garden:FindFirstChild("GardenLantern01")
+	if not lantern then return nil end
+	local copy = model(parent, "SanctuaryLantern")
+	local origin = lantern:GetPivot()
+	for _, d in lantern:GetDescendants() do
+		if d:IsA("BasePart") then
+			local p = d:Clone()
+			p:ClearAllChildren()
+			local rel = origin:ToObjectSpace(d.CFrame)
+			p.Size = d.Size * scale
+			p.CFrame = cf * CFrame.new(rel.Position * scale) * (rel - rel.Position)
+			if p.Name == "AmberGlass" and glowColor then
+				p.Color = glowColor
+				p.Material = neon
+			end
+			p.Anchored = true
+			p.CanCollide = false
+			p.CanTouch = false
+			p.CanQuery = false
+			p.CastShadow = false
+			p.Parent = copy
+		end
+	end
+	copy.WorldPivot = cf
 	return copy
 end
 
@@ -73,18 +237,48 @@ local function column(parent, name, center, width, height, color, material)
 		CFrame.new(center) * CFrame.Angles(0, 0, math.pi / 2), color, material, cylinder)
 end
 
+-- Volumetric cloud bank built from sculpted marching-tetrahedra cloud meshes (PalaceCloud / HorizonCloud / UpperSkyCloud / ZenithCloud)
 local function band(parent, name, center, size, colors, seed)
 	local group = model(parent, name)
 	local random = Random.new(seed)
 	local lobes = {}
-	for i = 1, 8 do
-		local angle = (i - 1) * math.pi / 4
-		local radius = i <= 2 and 0.12 or 0.27
-		local offset = Vector3.new(math.cos(angle) * size.X * radius,
-			random:NextNumber(-0.14, 0.21) * size.Y, math.sin(angle) * size.Z * radius)
-		local scale = random:NextNumber(0.78, 1.14)
-		lobes[i] = part(group, "CloudLobe", size * Vector3.new(0.64, 0.78, 0.66) * scale,
-			CFrame.new(center + offset), colors[(i - 1) % #colors + 1], plastic, ball)
+	local templates = { "PalaceCloud", "HorizonCloud", "UpperSkyCloud", "ZenithCloud" }
+	local choice = templates[(seed % #templates) + 1]
+	local baseScale = math.clamp(size.X / 240, 0.28, 1.15)
+	local yaw = random:NextNumber(0, math.pi * 2)
+	local primary = landmark(group, choice, CFrame.new(center) * CFrame.Angles(0, yaw, 0), baseScale)
+	if primary then
+		local idx = 1
+		for _, d in primary:GetDescendants() do
+			if d:IsA("BasePart") then
+				d.Color = colors[(idx - 1) % #colors + 1]
+				d.Material = plastic
+				lobes[#lobes + 1] = d
+				idx += 1
+			end
+		end
+	end
+	local subScale = math.clamp(size.X / 280, 0.22, 0.85)
+	local subOffset = Vector3.new(random:NextNumber(-0.18, 0.18) * size.X, random:NextNumber(-0.12, 0.14) * size.Y, random:NextNumber(-0.16, 0.16) * size.Z)
+	local secondary = landmark(group, "PalaceCloud", CFrame.new(center + subOffset) * CFrame.Angles(0, yaw + 1.4, 0), subScale)
+	if secondary then
+		local idx = 2
+		for _, d in secondary:GetDescendants() do
+			if d:IsA("BasePart") then
+				d.Color = colors[(idx - 1) % #colors + 1]
+				d.Material = plastic
+				lobes[#lobes + 1] = d
+				idx += 1
+			end
+		end
+	end
+	if #lobes == 0 then
+		for i = 1, 6 do
+			local angle = (i - 1) * math.pi / 3
+			local offset = Vector3.new(math.cos(angle) * size.X * 0.22, random:NextNumber(-0.12, 0.18) * size.Y, math.sin(angle) * size.Z * 0.22)
+			lobes[i] = part(group, "CloudLobe", size * Vector3.new(0.62, 0.74, 0.64),
+				CFrame.new(center + offset), colors[(i - 1) % #colors + 1], plastic, ball)
+		end
 	end
 	return lobes
 end
@@ -128,172 +322,281 @@ local function softFade(edge, middle)
 	})
 end
 
-local function buildCanopyTree(parent, baseCf, scale, leafColors, trunkColor)
-	local tree = model(parent, "CanopyTree")
-	local p0 = baseCf.Position
-	local trunkTop = (baseCf * CFrame.new(1.2 * scale, 11.5 * scale, -0.8 * scale)).Position
-	span(tree, "Trunk", p0, trunkTop, 2.2 * scale, trunkColor, woodMat)
-	for i, branchOffset in {
-		Vector3.new(-4.5, 4.2, 2.2),
-		Vector3.new(4.8, 3.8, -1.8),
-		Vector3.new(0.5, 5.4, 3.6),
-	} do
-		local tip = trunkTop + branchOffset * scale
-		span(tree, "Branch", trunkTop - Vector3.new(0, 1.5 * scale, 0), tip, 1.1 * scale, trunkColor, woodMat)
-		part(tree, "CanopyCluster", Vector3.new(13, 7.5, 11.5) * scale,
-			CFrame.new(tip + Vector3.new(0, 1.4 * scale, 0)), leafColors[(i - 1) % #leafColors + 1], plastic, ball)
+-- Sculpted floating island terrain base built from BiomeLandmarkMeshes.Sunset's organic crag & terrace meshes
+local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTempleRuins)
+	local base = landmark(parent, "Sunset", cf, scale)
+	if not base then return nil end
+	base.Name = "SculptedIslandTerrain"
+	local mossPart = base:FindFirstChild("Moss")
+	local basaltPart = base:FindFirstChild("Basalt")
+	local terraPart = base:FindFirstChild("TerraCotta")
+	local sandPart = base:FindFirstChild("Sandstone")
+	local ivoryPart = base:FindFirstChild("Ivory")
+	local goldPart = base:FindFirstChild("Gold")
+
+	if basaltPart then
+		basaltPart.Color = palette.basalt or rgb(82, 98, 108)
+		basaltPart.Material = palette.rockMat or slate
 	end
-	part(tree, "MainCrown", Vector3.new(17.5, 9.2, 15.5) * scale,
-		CFrame.new(trunkTop + Vector3.new(0, 4.2 * scale, 0)), leafColors[1], plastic, ball)
-	part(tree, "CrownHighlight", Vector3.new(12.5, 6.5, 11) * scale,
-		CFrame.new(trunkTop + Vector3.new(-1.5 * scale, 6.8 * scale, 1.2 * scale)), leafColors[#leafColors], plastic, ball)
-	return tree
+	if mossPart then
+		mossPart.Color = palette.moss or rgb(82, 148, 88)
+		mossPart.Material = palette.turfMat or grassMat
+		-- Create a sculpted cliff-rim stratum using the organic 17-sided jittered Moss mesh profile
+		local cliffRim = mossPart:Clone()
+		cliffRim.Name = "SculptedCliffRim"
+		cliffRim.Size = mossPart.Size * Vector3.new(1.04, 1.18, 1.04)
+		cliffRim.CFrame = mossPart.CFrame * CFrame.new(0, -4.8 * scale, 0)
+		cliffRim.Color = palette.cliff or rgb(166, 148, 124)
+		cliffRim.Material = palette.cliffMat or sandstoneMat
+		cliffRim.Parent = base
+	end
+
+	if keepTempleRuins then
+		if terraPart then
+			terraPart.Color = palette.cliff or rgb(196, 134, 98)
+			terraPart.Material = palette.cliffMat or sandstoneMat
+		end
+		if sandPart then
+			sandPart.Color = palette.sandstone or rgb(182, 138, 104)
+			sandPart.Material = sandstoneMat
+		end
+		if ivoryPart then
+			ivoryPart.Color = palette.ivory or rgb(236, 220, 188)
+			ivoryPart.Material = limestoneMat
+		end
+		if goldPart then
+			goldPart.Color = palette.gold or rgb(242, 182, 74)
+			goldPart.Material = metalMat
+		end
+	else
+		if terraPart then terraPart:Destroy() end
+		if sandPart then sandPart:Destroy() end
+		if ivoryPart then ivoryPart:Destroy() end
+		if goldPart then goldPart:Destroy() end
+	end
+
+	-- Soft sculpted PalaceCloud collar hugging the floating island underside
+	if palette.cloudColor then
+		local collarCf = cf * CFrame.new(0, -8 * scale, 0) * CFrame.Angles(0, 0.8, 0)
+		local collar = landmark(parent, "PalaceCloud", collarCf, scale * 0.56)
+		if collar then
+			collar.Name = "IslandCloudCollar"
+			for _, d in collar:GetDescendants() do
+				if d:IsA("BasePart") then
+					d.Color = d.Name == "CloudShadow" and (palette.cloudShadow or palette.cloudColor) or palette.cloudColor
+					d.Transparency = palette.cloudTransparency or 0.18
+				end
+			end
+		end
+	end
+	return base
+end
+
+-- Attach a sculpted waterfall cascade (using PalaceFoundation's CascadeBlue/CascadeFoam meshes + Beam streams + mist)
+local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterColor, foamColor, mistColor)
+	local wColor = waterColor or rgb(98, 196, 238)
+	local fColor = foamColor or rgb(214, 244, 255)
+	local mColor = mistColor or rgb(238, 246, 255)
+
+	-- Sculpted stone spillway & spring pool at the lip
+	part(parent, "SpringPool", Vector3.new(18, 1.8, 14) * scale,
+		lipCf * CFrame.new(0, 0.4 * scale, -4 * scale), wColor, glassMat, ball)
+	for _, side in { -1, 1 } do
+		natureAsset(parent, "Boulder", "SpillwayBoulder",
+			lipCf * CFrame.new(side * 6.5 * scale, -0.5 * scale, -1.5 * scale) * CFrame.Angles(0, side * 0.8, 0),
+			1.25 * scale)
+	end
+
+	local carrier = rail(parent, "ThinWaterfall", lipCf.Position)
+	carrier.Transparency = 1
+	for j = -1, 1 do
+		local off = Vector3.new(j * 2.6 * scale, 0, 0)
+		local stream = beam(
+			socket(carrier, off, Vector3.new(0.15, -1, 0.22)),
+			socket(carrier, off + Vector3.new(j * 1.4 * scale, -dropHeight, 9 * scale), Vector3.new(0.08, -1, 0.15)),
+			(3.6 + (1 - math.abs(j)) * 1.2) * scale,
+			(8.2 + (1 - math.abs(j)) * 2.0) * scale,
+			ColorSequence.new(wColor, fColor),
+			softFade(0.86, 0.18),
+			14 * scale
+		)
+		stream.LightEmission = 0.42
+	end
+
+	-- Sculpted mist cloud at the base of the cascade
+	local mistCloud = landmark(parent, "PalaceCloud",
+		lipCf * CFrame.new(0, -dropHeight * 0.78, 8 * scale) * CFrame.Angles(0, 0.5, 0),
+		math.clamp(scale * 0.22, 0.14, 0.34))
+	if mistCloud then
+		mistCloud.Name = "WaterfallMistCloud"
+		for _, d in mistCloud:GetDescendants() do
+			if d:IsA("BasePart") then
+				d.Color = mColor
+				d.Transparency = 0.42
+			end
+		end
+	end
 end
 
 local function buildFloatingRockIslet(parent, name, cf, width, hasWaterfall, seed)
 	local islet = model(parent, name)
 	local random = Random.new(seed)
-	local rockColor = rgb(104, 122, 132)
-	local darkRock = rgb(76, 92, 104)
-	local rimColor = rgb(162, 148, 126)
-	local grassColor = rgb(86, 156, 92)
-	local leafPalette = { rgb(82, 158, 88), rgb(114, 182, 98), rgb(64, 134, 78) }
-	local depth = width * random:NextNumber(0.74, 0.92)
-	local height = width * random:NextNumber(0.42, 0.56)
+	local scale = math.clamp(width / 108, 0.32, 0.68)
 
-	part(islet, "RockCore", Vector3.new(width, height, depth), cf, rockColor, slate, ball)
-	part(islet, "SandstoneRim", Vector3.new(width * 0.96, height * 0.42, depth * 0.94),
-		cf * CFrame.new(0, height * 0.24, 0), rimColor, slate, ball)
-	part(islet, "GrassyCap", Vector3.new(width * 0.9, height * 0.36, depth * 0.88),
-		cf * CFrame.new(0, height * 0.42, 0), grassColor, grassMat, ball)
+	buildSculptedIslandTerrain(islet, cf, scale, {
+		basalt = rgb(86, 106, 118),
+		cliff = rgb(168, 150, 124),
+		moss = rgb(80, 148, 86),
+		cloudColor = rgb(252, 246, 232),
+		cloudShadow = rgb(216, 228, 244),
+		cloudTransparency = 0.16,
+	}, false)
 
-	for i = 1, 5 do
-		local a = (i - 1) * math.pi * 2 / 5 + random:NextNumber(-0.2, 0.2)
-		local r = width * 0.26
-		local spikeH = height * random:NextNumber(0.85, 1.35)
-		part(islet, "UnderCrag", Vector3.new(width * 0.36, spikeH, depth * 0.34),
-			cf * CFrame.new(math.cos(a) * r, -height * 0.48, math.sin(a) * r)
-				* CFrame.Angles(math.pi, a + 0.4, random:NextNumber(-0.22, 0.22)),
-			i % 2 == 0 and darkRock or rockColor, slate, "Wedge")
+	local topY = 12.5 * scale
+	-- Sculpted BroadleafTree & PalmTree from EnvironmentAssets (matching FlyHighLobby)
+	natureAsset(islet, "BroadleafTree", "CanopyTree",
+		cf * CFrame.new(-8 * scale, topY, -4 * scale) * CFrame.Angles(0, random:NextNumber(0, 6.28), 0),
+		math.clamp(scale * 1.45, 0.55, 0.95))
+
+	if width >= 42 then
+		natureAsset(islet, "PalmTree", "IslandPalm",
+			cf * CFrame.new(14 * scale, topY - 1 * scale, 6 * scale) * CFrame.Angles(0.06, random:NextNumber(0, 6.28), -0.05),
+			math.clamp(scale * 1.25, 0.48, 0.82))
 	end
-	part(islet, "KeelTip", Vector3.new(width * 0.38, height * 1.15, depth * 0.38),
-		cf * CFrame.new(0, -height * 0.72, 0) * CFrame.Angles(math.pi, 0.6, 0.15), darkRock, slate, "Wedge")
 
+	-- Sculpted Boulders, Ferns, and Flowers on the grassy terrace
 	for i = 1, 3 do
-		local vineStart = (cf * CFrame.new((i - 2) * width * 0.26, -height * 0.12, depth * 0.32)).Position
-		local vineMid = vineStart + Vector3.new(i - 2, -height * 0.55, 1.5)
-		span(islet, "HangingVine", vineStart, vineMid, 1.1, rgb(74, 132, 78), grassMat)
-		span(islet, "VineTip", vineMid, vineMid + Vector3.new(0.8, -height * 0.45, -0.8), 0.65, rgb(98, 158, 88), grassMat)
+		local a = (i - 1) * math.pi * 2 / 3 + random:NextNumber(-0.3, 0.3)
+		local r = (16 + i * 4) * scale
+		local spot = cf * CFrame.new(math.cos(a) * r, topY - 0.5 * scale, math.sin(a) * r) * CFrame.Angles(0, a, 0)
+		natureAsset(islet, "Boulder", "TerraceBoulder", spot, (0.9 + (i % 2) * 0.45) * scale)
+		natureAsset(islet, "Fern", "TerraceFern", spot * CFrame.new(2.2 * scale, 0, 1.5 * scale), (1.1 + (i % 2) * 0.3) * scale)
+		natureAsset(islet, "Flower", "TerraceFlower", spot * CFrame.new(-1.8 * scale, 0.2 * scale, 1.8 * scale), 1.15 * scale)
 	end
-
-	local treeScale = math.clamp(width / 38, 0.62, 1.35)
-	buildCanopyTree(islet, cf * CFrame.new(-width * 0.08, height * 0.48, -depth * 0.06), treeScale, leafPalette, rgb(138, 96, 68))
 
 	if hasWaterfall then
-		local lipCf = cf * CFrame.new(width * 0.34, height * 0.44, depth * 0.12)
-		part(islet, "SpringPool", Vector3.new(width * 0.38, 2.2, depth * 0.32),
-			cf * CFrame.new(width * 0.22, height * 0.46, depth * 0.1), rgb(112, 208, 235), plastic, ball)
-		local carrier = rail(islet, "ThinWaterfall", lipCf.Position)
-		carrier.Transparency = 1
-		local drop = height * 2.5
-		for j = -1, 1 do
-			local off = Vector3.new(j * 2.1, 0, 0)
-			local stream = beam(
-				socket(carrier, off, Vector3.new(0.25, -1, 0.15)),
-				socket(carrier, off + Vector3.new(5, -drop, 6), Vector3.new(0.1, -1, 0.15)),
-				3.2, 7.5,
-				ColorSequence.new(rgb(96, 192, 240), rgb(215, 244, 255)),
-				softFade(0.9, 0.24),
-				12
-			)
-			stream.LightEmission = 0.35
-		end
-		for j = 1, 3 do
-			local mist = part(islet, "WaterfallMist", Vector3.new(12 + j * 4, 5 + j * 1.5, 12 + j * 4),
-				CFrame.new(lipCf.Position + Vector3.new(5, -drop + j * 3, 6)), rgb(238, 246, 255), plastic, ball)
-			mist.Transparency = 0.48 + j * 0.1
-		end
+		local lipCf = cf * CFrame.new(32 * scale, topY - 1.5 * scale, 12 * scale) * CFrame.Angles(0, 0.35, 0)
+		attachSculptedWaterfall(islet, lipCf, 95 * scale, scale * 1.35,
+			rgb(94, 198, 240), rgb(220, 246, 255), rgb(242, 248, 255))
 	end
+
 	islet.WorldPivot = cf
 	return islet
 end
 
 local function buildWeatherBalloon(parent, cf, scale)
 	local wb = model(parent, "WeatherBalloon")
-	local royalBlue = rgb(48, 106, 198)
-	local skyBlue = rgb(82, 152, 232)
-	local gold = rgb(244, 192, 78)
-	local brass = rgb(208, 154, 64)
-	local navy = rgb(34, 64, 128)
+	local royalBlue = rgb(44, 104, 198)
+	local skyBlue = rgb(86, 158, 236)
+	local gold = rgb(242, 192, 78)
+	local brass = rgb(206, 156, 68)
+	local copper = rgb(168, 108, 62)
 
-	-- Distinct spherical-teardrop meteorological envelope with gold meridian bands and instrument sonde
-	part(wb, "EnvelopeMain", Vector3.new(26, 30, 26) * scale, cf * CFrame.new(0, 16 * scale, 0), royalBlue, plastic, ball)
-	part(wb, "EnvelopeCrown", Vector3.new(21, 12, 21) * scale, cf * CFrame.new(0, 27 * scale, 0), skyBlue, plastic, ball)
-	part(wb, "EnvelopeCone", Vector3.new(16, 14, 16) * scale, cf * CFrame.new(0, 4 * scale, 0), navy, plastic, ball)
-	part(wb, "EquatorialGoldBand", Vector3.new(27.2, 3.6, 27.2) * scale, cf * CFrame.new(0, 16 * scale, 0), gold, plastic, ball)
+	-- Sculpted pleated hot-air / meteorological envelope using BalloonSkins.D & E MeshParts + FleetGeometry UnionOperations
+	local envCenter = cf * CFrame.new(0, 16 * scale, 0)
+	balloonEnvelopeMesh(wb, "D", "EnvelopeMain", envCenter,
+		Vector3.new(25.5, 31.0, 25.5) * scale, royalBlue, plastic, false)
+	balloonEnvelopeMesh(wb, "E", "EnvelopeGoldGores", envCenter * CFrame.Angles(0, math.pi / 8, 0),
+		Vector3.new(26.2, 30.2, 26.2) * scale, gold, metalMat, false)
+	balloonEnvelopeMesh(wb, "E", "EnvelopeSkyGores", envCenter * CFrame.Angles(0, math.pi / 4, 0),
+		Vector3.new(25.9, 30.6, 25.9) * scale, skyBlue, plastic, false)
 
-	for i = 1, 4 do
-		local angle = (i - 1) * math.pi / 4
-		part(wb, "GoldMeridian", Vector3.new(2.2, 29.5, 26.8) * scale,
-			cf * CFrame.new(0, 16 * scale, 0) * CFrame.Angles(0, angle, 0), gold, plastic, ball)
-	end
+	-- Sculpted brass equatorial & meridian rings (FleetGeometry.SaturnRing & DockRim UnionOperations)
+	fleetShape(wb, "SaturnRing", "EquatorialGoldBand",
+		envCenter * CFrame.new(0, 3.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.9, 27.6, 27.6) * scale, gold, metalMat)
+	fleetShape(wb, "DockRim", "UpperLatitudeCollar",
+		envCenter * CFrame.new(0, 11.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.7, 21.4, 21.4) * scale, brass, metalMat)
+	fleetShape(wb, "DockRim", "NeckTrimRing",
+		cf * CFrame.new(0, 1.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.8, 9.2, 9.2) * scale, brass, metalMat)
+
+	-- Sculpted Star emblems on the flanks (FleetGeometry.Star UnionOperation)
 	for _, side in { -1, 1 } do
-		part(wb, "SunEmblem", Vector3.new(7.5, 7.5, 1.8) * scale,
-			cf * CFrame.new(0, 16 * scale, side * 13.2 * scale), gold, neon, ball)
+		fleetShape(wb, "Star", "SunEmblem",
+			envCenter * CFrame.new(0, 3.2 * scale, side * 13.4 * scale) * CFrame.Angles(math.pi / 2, 0, 0),
+			Vector3.new(0.6, 6.8, 6.8) * scale, gold, neon)
 	end
 
-	-- Top meteorological mast & anemometer ring
-	column(wb, "TopMast", (cf * CFrame.new(0, 35 * scale, 0)).Position, 0.8 * scale, 8 * scale, brass, metalMat)
-	part(wb, "TopBeacon", Vector3.one * (2.6 * scale), cf * CFrame.new(0, 39.5 * scale, 0), rgb(255, 224, 118), neon, ball)
+	-- Top meteorological anemometer mast & beacon
+	column(wb, "TopMast", (cf * CFrame.new(0, 34.5 * scale, 0)).Position, 0.75 * scale, 7.2 * scale, brass, metalMat)
+	fleetShape(wb, "DockRim", "AnemometerHalo",
+		cf * CFrame.new(0, 36.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.4, 6.2, 6.2) * scale, gold, metalMat)
+	part(wb, "TopBeacon", Vector3.one * (2.2 * scale), cf * CFrame.new(0, 38.6 * scale, 0), rgb(255, 232, 136), neon, ball)
 
-	-- Suspended brass weather sonde pod (compact octagonal/cylindrical instrument capsule, not a passenger basket)
-	local podCenter = (cf * CFrame.new(0, -8 * scale, 0)).Position
+	-- Suspended brass weather sonde instrument capsule (octagonal/ringed telemetry pod)
+	local podCenter = (cf * CFrame.new(0, -8.5 * scale, 0)).Position
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + math.pi / 4
-		local topAttach = (cf * CFrame.new(math.cos(a) * 6.5 * scale, 1 * scale, math.sin(a) * 6.5 * scale)).Position
-		local botAttach = podCenter + Vector3.new(math.cos(a) * 2.8 * scale, 2.5 * scale, math.sin(a) * 2.8 * scale)
-		span(wb, "RiggingCable", topAttach, botAttach, 0.35 * scale, brass, metalMat)
+		local topAttach = (cf * CFrame.new(math.cos(a) * 4.2 * scale, 1.2 * scale, math.sin(a) * 4.2 * scale)).Position
+		local botAttach = podCenter + Vector3.new(math.cos(a) * 3.1 * scale, 2.8 * scale, math.sin(a) * 3.1 * scale)
+		span(wb, "RiggingCable", topAttach, botAttach, 0.28 * scale, brass, metalMat)
 	end
-	column(wb, "SondeCapsule", podCenter, 6.2 * scale, 5.2 * scale, brass, metalMat)
-	part(wb, "SondeSensorDome", Vector3.new(4.8, 3.6, 4.8) * scale, cf * CFrame.new(0, -11 * scale, 0), royalBlue, plastic, ball)
-	column(wb, "VaneBoom", podCenter + Vector3.new(0, -4.5 * scale, 0), 0.5 * scale, 5 * scale, brass, metalMat)
+	column(wb, "SondeCapsule", podCenter, 5.8 * scale, 5.4 * scale, copper, metalMat)
+	fleetShape(wb, "DockRim", "SondeGuardRing",
+		CFrame.new(podCenter) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.6, 8.6, 8.6) * scale, gold, metalMat)
+	part(wb, "SondeSensorDome", Vector3.new(4.6, 3.8, 4.6) * scale, cf * CFrame.new(0, -11.4 * scale, 0), skyBlue, glassMat, ball)
+	part(wb, "SondeGlowCore", Vector3.new(2.8, 2.2, 2.8) * scale, cf * CFrame.new(0, -11.4 * scale, 0), rgb(138, 224, 255), neon, ball)
+	column(wb, "VaneBoom", podCenter + Vector3.new(0, -4.8 * scale, 0), 0.45 * scale, 5.2 * scale, brass, metalMat)
 
-	-- Fluttering tail ribbons / pennants
+	-- Fluttering expedition tail pennants
 	local tailCarrier = rail(wb, "TailRibbons", podCenter)
 	tailCarrier.Transparency = 1
-	local s1 = socket(tailCarrier, Vector3.new(-2 * scale, 0, 0), Vector3.new(-1, -0.3, 0.2))
-	local f1 = socket(tailCarrier, Vector3.new(-18 * scale, -9 * scale, 6 * scale), Vector3.new(-1, -0.1, 0.3))
-	beam(s1, f1, 2.4 * scale, 0.7 * scale, ColorSequence.new(skyBlue, gold), softFade(0.2, 0.05), 8 * scale)
+	local s1 = socket(tailCarrier, Vector3.new(-2.4 * scale, 0, 0), Vector3.new(-1, -0.3, 0.2))
+	local f1 = socket(tailCarrier, Vector3.new(-17 * scale, -8.5 * scale, 5.5 * scale), Vector3.new(-1, -0.1, 0.3))
+	beam(s1, f1, 2.1 * scale, 0.55 * scale, ColorSequence.new(skyBlue, gold), softFade(0.18, 0.04), 7.5 * scale)
 
-	local s2 = socket(tailCarrier, Vector3.new(2 * scale, -1 * scale, 0), Vector3.new(-1, -0.4, -0.2))
-	local f2 = socket(tailCarrier, Vector3.new(-15 * scale, -12 * scale, -5 * scale), Vector3.new(-1, -0.2, -0.2))
-	beam(s2, f2, 2.0 * scale, 0.6 * scale, ColorSequence.new(gold, royalBlue), softFade(0.2, 0.05), -7 * scale)
+	local s2 = socket(tailCarrier, Vector3.new(2.4 * scale, -0.8 * scale, 0), Vector3.new(-1, -0.4, -0.2))
+	local f2 = socket(tailCarrier, Vector3.new(-14.5 * scale, -11.5 * scale, -4.8 * scale), Vector3.new(-1, -0.2, -0.2))
+	beam(s2, f2, 1.8 * scale, 0.48 * scale, ColorSequence.new(gold, royalBlue), softFade(0.18, 0.04), -6.8 * scale)
 
 	wb.WorldPivot = cf
 	return wb
 end
 
+-- Realistic feathered seabirds matching ServerScriptService.FlyHighServer.ObstacleArt's feathered anatomy
 local function buildSeabirdFlock(parent, centerCf, birdCount, scale)
 	local flock = model(parent, "DistantSeabirdFlock")
-	local plumage = rgb(250, 250, 252)
-	local wingTip = rgb(58, 74, 98)
-	local beakColor = rgb(242, 178, 72)
+	local plumage = rgb(248, 249, 252)
+	local chestCol = rgb(232, 238, 246)
+	local wingTip = rgb(52, 68, 92)
+	local beakColor = rgb(242, 178, 68)
 
 	for i = 1, birdCount do
 		local side = i == 1 and 0 or (i % 2 == 0 and 1 or -1)
 		local rank = math.floor(i / 2)
-		local offset = Vector3.new(side * rank * 7.5 * scale, math.abs(rank) * 1.4 * scale + (i % 2) * 0.8, rank * 6.2 * scale)
+		local offset = Vector3.new(side * rank * 8.2 * scale, math.abs(rank) * 1.5 * scale + (i % 2) * 0.9, rank * 6.8 * scale)
 		local bcf = centerCf * CFrame.new(offset)
 		local bird = model(flock, "Seabird")
-		part(bird, "Body", Vector3.new(1.8, 1.3, 4.8) * scale, bcf, plumage, plastic, ball)
-		part(bird, "Beak", Vector3.new(0.7, 0.6, 1.6) * scale, bcf * CFrame.new(0, 0.1 * scale, -2.6 * scale), beakColor, plastic, "Wedge")
+
+		part(bird, "Body", Vector3.new(2.1, 1.6, 4.9) * scale, bcf, plumage, plastic, ball)
+		part(bird, "Chest", Vector3.new(1.8, 1.35, 2.7) * scale, bcf * CFrame.new(0, -0.18 * scale, -0.95 * scale), chestCol, plastic, ball)
+		part(bird, "Head", Vector3.new(1.45, 1.35, 1.75) * scale, bcf * CFrame.new(0, 0.42 * scale, -2.25 * scale), plumage, plastic, ball)
+		part(bird, "Beak", Vector3.new(0.55, 0.48, 1.65) * scale,
+			bcf * CFrame.new(0, 0.28 * scale, -3.35 * scale) * CFrame.Angles(math.rad(8), 0, 0), beakColor, plastic, "Wedge")
+
 		for _, wSide in { -1, 1 } do
-			local innerCf = bcf * CFrame.new(wSide * 2.6 * scale, 0.4 * scale, 0.2 * scale)
-				* CFrame.Angles(0, wSide * -0.12, wSide * 0.28)
-			local outerCf = innerCf * CFrame.new(wSide * 2.8 * scale, 0.3 * scale, 0.5 * scale)
-				* CFrame.Angles(0, wSide * -0.18, wSide * -0.36)
-			part(bird, "InnerWing", Vector3.new(5.4, 0.45, 2.1) * scale, innerCf, plumage, plastic, ball)
-			part(bird, "OuterWing", Vector3.new(4.2, 0.38, 1.6) * scale, outerCf, wingTip, plastic, ball)
+			local innerCf = bcf * CFrame.new(wSide * 2.5 * scale, 0.35 * scale, -0.15 * scale)
+				* CFrame.Angles(0, wSide * -0.1, wSide * 0.24)
+			local outerCf = innerCf * CFrame.new(wSide * 2.9 * scale, 0.28 * scale, 0.45 * scale)
+				* CFrame.Angles(0, wSide * -0.16, wSide * -0.32)
+			part(bird, "InnerWing", Vector3.new(5.2, 0.42, 2.2) * scale, innerCf, plumage, plastic, "Wedge")
+			part(bird, "OuterWing", Vector3.new(4.4, 0.34, 1.7) * scale, outerCf, wingTip, plastic, "Wedge")
+			for f = 1, 3 do
+				part(bird, "FlightFeather", Vector3.new(1.8, 0.18, 0.65) * scale,
+					outerCf * CFrame.new(wSide * (0.6 + f * 0.48) * scale, -0.05 * scale, (0.35 + f * 0.22) * scale)
+						* CFrame.Angles(0, wSide * 0.18, 0),
+					f == 3 and wingTip or chestCol, plastic)
+			end
+		end
+		for t = -1, 1 do
+			part(bird, "TailFeather", Vector3.new(0.58, 0.18, 1.95) * scale,
+				bcf * CFrame.new(t * 0.42 * scale, 0.08 * scale, 2.85 * scale)
+					* CFrame.Angles(math.rad(-8), math.rad(t * 12), 0),
+				math.abs(t) == 1 and wingTip or plumage, plastic, "Wedge")
 		end
 	end
 	flock.WorldPivot = centerCf
@@ -301,76 +604,85 @@ local function buildSeabirdFlock(parent, centerCf, birdCount, scale)
 end
 
 local function dawn(parent)
-	local sand, grass, reef = rgb(241, 218, 168), rgb(80, 142, 94), rgb(170, 215, 194)
-	local rock = rgb(108, 139, 139)
 	local random = Random.new(802)
 	local headland = landmark(parent, "Dawn", CFrame.new(115, -5, -308) * CFrame.Angles(0, 0.32, 0))
+	if headland then
+		-- Dress the primary Dawn headland with sculpted PalmTrees, BroadleafTrees, Boulders & Ferns like FlyHighLobby
+		local hCf = headland:GetPivot()
+		natureAsset(headland, "PalmTree", "HeadlandPalm1", hCf * CFrame.new(-14, 14, -4) * CFrame.Angles(0.05, 0.8, -0.04), 0.92)
+		natureAsset(headland, "PalmTree", "HeadlandPalm2", hCf * CFrame.new(8, 13, 6) * CFrame.Angles(-0.04, 2.4, 0.06), 0.84)
+		natureAsset(headland, "BroadleafTree", "HeadlandTree", hCf * CFrame.new(-4, 15, 2) * CFrame.Angles(0, 1.5, 0), 0.78)
+		natureAsset(headland, "Boulder", "HeadlandBoulder", hCf * CFrame.new(18, 10, -8) * CFrame.Angles(0, 0.9, 0), 1.45)
+		natureAsset(headland, "Fern", "HeadlandFern", hCf * CFrame.new(-8, 14, 4), 1.25)
+	end
+
 	for i = 1, 9 do
 		local angle = (i - 1) * math.pi * 2 / 9 + 0.2
 		local direction = Vector3.new(math.cos(angle), 0, math.sin(angle))
-		local position = direction * random:NextNumber(235, 365)
+		local position = direction * random:NextNumber(245, 365)
 		if headland and i == 8 then continue end
 		local island = model(parent, "CoastalIslet")
-		local cf = CFrame.new(position) * CFrame.Angles(0, angle, 0)
-		local width = random:NextNumber(29, 60)
-		part(island, "PaleReef", Vector3.new(width + 15, 3.4, width * 0.85), cf, reef, sandMat, ball)
-		part(island, "Shore", Vector3.new(width, 10, width * 0.68), cf * CFrame.new(0, 2, 0), sand, sandMat, ball)
-		local side = i % 2 == 0 and -1 or 1
-		local cove = cf * CFrame.new(width * 0.21, 1.8, width * side * 0.19) * CFrame.Angles(0, side * 0.64, 0)
-		part(island, "SandSpit", Vector3.new(width * 0.62, 6, width * 0.36), cove, sand, sandMat, ball)
-		part(island, "GrassyCrest", Vector3.new(width * 0.71, 10, width * 0.49),
-			cf * CFrame.new(-width * 0.08, 4.6, -side * width * 0.05), grass, grassMat, ball)
-		part(island, "Headland", Vector3.new(width * 0.39, 7, width * 0.32), cove * CFrame.new(-3, 3.7, -side * 2),
-			rgb(109, 155, 99), grassMat, ball)
-		for j = 1, 4 do
-			local offset = Vector3.new(random:NextNumber(-0.48, 0.48) * width, 2, j % 2 == 0 and width * 0.31 or -width * 0.28)
-			part(island, "CoastalRock", Vector3.new(6, random:NextNumber(4, 8), 5),
-				cf * CFrame.new(offset) * CFrame.Angles(0, j * 1.2, 0.2), rock, slate, "Wedge")
+		local cf = CFrame.new(position + Vector3.new(0, -1.5, 0)) * CFrame.Angles(0, angle + random:NextNumber(-0.4, 0.4), 0)
+		local width = random:NextNumber(34, 58)
+		local meshScale = math.clamp(width / 96, 0.36, 0.62)
+
+		-- Use the sculpted BiomeLandmarkMeshes.Dawn MeshPart kit (Reef, Sand, Grass, Rock) instead of flat primitive balls
+		local sculptedDawn = landmark(island, "Dawn", cf, meshScale)
+		if sculptedDawn then
+			sculptedDawn.Name = "SculptedAtoll"
 		end
-		local foot = (cf * CFrame.new(-width * 0.13, 8, 0)).Position
-		local crown = foot + Vector3.new(2.8, 8 + i % 3, -1.6)
-		span(island, "PalmTrunk", foot, crown, 1.3, rgb(152, 108, 73), woodMat)
-		for j = 1, 5 do
-			local bearing = angle + j * math.pi * 2 / 5
-			local tip = crown + Vector3.new(math.cos(bearing) * 5.6, -1.1, math.sin(bearing) * 5.6)
-			part(island, "PalmFrond", Vector3.new(2.3, 0.65, 6.9), CFrame.lookAt(crown:Lerp(tip, 0.45), tip),
-				j % 2 == 0 and rgb(75, 141, 88) or rgb(102, 165, 92), plastic, ball)
+
+		-- Add sculpted PalmTree, BroadleafTree, Boulder, Fern & Flower from EnvironmentAssets (matching FlyHighLobby)
+		local crestY = 14.5 * meshScale
+		natureAsset(island, "PalmTree", "CoastalPalm",
+			cf * CFrame.new(-6 * meshScale, crestY, -2 * meshScale) * CFrame.Angles(0.06, angle + i, -0.05),
+			math.clamp(meshScale * 1.45, 0.56, 0.88))
+		if i % 2 == 0 then
+			natureAsset(island, "BroadleafTree", "CoastalBroadleaf",
+				cf * CFrame.new(10 * meshScale, crestY - 1 * meshScale, 4 * meshScale) * CFrame.Angles(0, i * 1.3, 0),
+				math.clamp(meshScale * 1.25, 0.48, 0.76))
 		end
+		natureAsset(island, "Boulder", "CoastalBoulder",
+			cf * CFrame.new(18 * meshScale, 6 * meshScale, -8 * meshScale) * CFrame.Angles(0, i * 0.9, 0),
+			1.35 * meshScale)
+		natureAsset(island, "Fern", "CoastalFern",
+			cf * CFrame.new(-2 * meshScale, crestY, 3 * meshScale) * CFrame.Angles(0, i * 1.7, 0),
+			1.2 * meshScale)
+		natureAsset(island, "Flower", "CoastalFlower",
+			cf * CFrame.new(4 * meshScale, crestY, -3 * meshScale) * CFrame.Angles(0, i * 2.1, 0),
+			1.15 * meshScale)
+		island.WorldPivot = cf
 	end
 
+	-- Sculpted sailboats using BiomeLandmarkMeshes.CloudCutter / CloudSailer planked wooden hulls & billowed cloth sails
 	local boats = {}
 	for i = 1, 4 do
 		local angle = i * math.pi / 2 + 0.65
-		local position = Vector3.new(math.cos(angle) * 255, 2, math.sin(angle) * 255)
+		local position = Vector3.new(math.cos(angle) * 258, 1.6, math.sin(angle) * 258)
 		local boat = model(parent, "DistantSailboat")
 		local cf = CFrame.new(position) * CFrame.Angles(0, angle, 0)
-		part(boat, "Hull", Vector3.new(4, 2.4, 13), cf, rgb(104, 65, 54), woodMat, ball)
-		column(boat, "Mast", position + Vector3.new(0, 5, 0), 0.36, 10, rgb(151, 98, 62), woodMat)
-		part(boat, "MainSail", Vector3.new(0.35, 9, 6), cf * CFrame.new(0, 5.7, 2.8), rgb(255, 246, 217), plastic, "Wedge")
-		part(boat, "Jib", Vector3.new(0.3, 6, 4), cf * CFrame.new(0, 4.3, -2.3) * CFrame.Angles(0, math.pi, 0),
-			rgb(234, 153, 96), plastic, "Wedge")
+		local cutter = landmark(boat, i % 2 == 0 and "CloudCutter" or "CloudSailer", cf, 0.24)
+		if cutter then
+			cutter.Name = "SculptedSchooner"
+		end
 		boat.WorldPivot = cf
 		boats[i] = { boat = boat, origin = cf }
 	end
 
-	-- P1 & P2: Low floating rock/island kits with plant tops + waterfall variant transitioning to cloud layer
+	-- P1 & P2: Low floating rock/island kits with sculpted terrain, trees, boulders & waterfall variants
 	local isletSpecs = {
-		-- Around 500 km (staggered horizontally across lanes so upward & forward sightlines never stack)
-		{ km = 480, x = -112, z = -238, width = 42, yaw = 0.35, waterfall = false },
-		{ km = 520, x = 246, z = -28, width = 40, yaw = -1.2, waterfall = false },
-		{ km = 590, x = -248, z = 24, width = 36, yaw = 1.4, waterfall = false },
-		{ km = 780, x = 68, z = -252, width = 44, yaw = -0.4, waterfall = false },
-		-- Around 1,200 km (staggered lanes across forward, side, and upper-forward layers)
-		{ km = 1170, x = 128, z = -236, width = 48, yaw = -0.35, waterfall = false },
-		{ km = 1210, x = 244, z = -22, width = 44, yaw = -1.35, waterfall = false },
-		{ km = 1260, x = -246, z = -18, width = 38, yaw = 1.25, waterfall = false },
-		{ km = 1520, x = 58, z = -262, width = 40, yaw = -0.5, waterfall = false },
-		-- P2: Waterfall floating island variant near upper transition (visible looking up at 1,200 km & forward at 1,800-1,900 km)
+		{ km = 480, x = -112, z = -238, width = 44, yaw = 0.35, waterfall = false },
+		{ km = 520, x = 246, z = -28, width = 42, yaw = -1.2, waterfall = false },
+		{ km = 590, x = -248, z = 24, width = 38, yaw = 1.4, waterfall = false },
+		{ km = 780, x = 68, z = -252, width = 46, yaw = -0.4, waterfall = false },
+		{ km = 1170, x = 128, z = -236, width = 50, yaw = -0.35, waterfall = false },
+		{ km = 1210, x = 244, z = -22, width = 46, yaw = -1.35, waterfall = false },
+		{ km = 1260, x = -246, z = -18, width = 40, yaw = 1.25, waterfall = false },
+		{ km = 1520, x = 58, z = -262, width = 42, yaw = -0.5, waterfall = false },
 		{ km = 1660, x = -134, z = -248, width = 64, yaw = 0.32, waterfall = true },
-		-- Around 1,900 km (distinct horizontal lane from 1,660 km waterfall island)
-		{ km = 1860, x = -68, z = -234, width = 56, yaw = 0.28, waterfall = true },
-		{ km = 1890, x = 245, z = -24, width = 42, yaw = -1.4, waterfall = false },
-		{ km = 1940, x = -246, z = 22, width = 36, yaw = 1.5, waterfall = false },
+		{ km = 1860, x = -68, z = -234, width = 58, yaw = 0.28, waterfall = true },
+		{ km = 1890, x = 245, z = -24, width = 44, yaw = -1.4, waterfall = false },
+		{ km = 1940, x = -246, z = 22, width = 38, yaw = 1.5, waterfall = false },
 	}
 	for idx, spec in isletSpecs do
 		local cf = CFrame.new(spec.x, altitude(spec.km), spec.z) * CFrame.Angles(0, spec.yaw, 0)
@@ -378,7 +690,7 @@ local function dawn(parent)
 		buildFloatingRockIslet(parent, name, cf, spec.width, spec.waterfall, 900 + idx * 17)
 	end
 
-	-- P1: Decorative weather balloons with distinct round/teardrop blue-gold silhouette
+	-- P1: Decorative weather balloons with sculpted pleated envelope & brass sonde
 	local balloonSpecs = {
 		{ km = 540, pos = Vector3.new(98, altitude(540), -225), yaw = -0.35, scale = 1.12 },
 		{ km = 1230, pos = Vector3.new(-74, altitude(1230), -222), yaw = 0.38, scale = 1.16 },
@@ -392,7 +704,7 @@ local function dawn(parent)
 		weatherBalloons[idx] = { model = wb, origin = cf }
 	end
 
-	-- P1: Distant decorative seabird flocks gliding outside the flight corridor
+	-- P1: Distant decorative feathered seabird flocks gliding outside the flight corridor
 	local flockSpecs = {
 		{ km = 510, radius = 232, baseAngle = -1.62, speed = 0.045, count = 6, scale = 1.2 },
 		{ km = 860, radius = 242, baseAngle = -0.15, speed = -0.048, count = 5, scale = 1.2 },
@@ -408,15 +720,12 @@ local function dawn(parent)
 		birdFlocks[idx] = { flock = flock, spec = spec, y = y }
 	end
 
-	-- Polish: Re-arrange coastal clouds into Near, Mid, and Far depth layers spanning takeoff to 2,000 km
-	local cloudColors = { rgb(254, 247, 230), rgb(226, 237, 250), rgb(240, 243, 251) }
+	-- Polish: Near, Mid, and Far depth layers of sculpted coastal clouds spanning takeoff to 2,000 km
+	local cloudColors = { rgb(254, 248, 234), rgb(228, 238, 250), rgb(242, 245, 252) }
 	local cloudLayers = {
-		-- Near layer (camera-level silhouettes around corridor)
-		{ count = 8, minKm = 320, stepKm = 205, radius = 258, size = Vector3.new(135, 26, 88), phase = 0.15 },
-		-- Mid layer
-		{ count = 9, minKm = 440, stepKm = 180, radius = 342, size = Vector3.new(178, 34, 112), phase = 0.52 },
-		-- Far horizon layer
-		{ count = 7, minKm = 260, stepKm = 245, radius = 455, size = Vector3.new(235, 42, 142), phase = 0.88 },
+		{ count = 8, minKm = 320, stepKm = 205, radius = 268, size = Vector3.new(135, 26, 88), phase = 0.15 },
+		{ count = 9, minKm = 440, stepKm = 180, radius = 348, size = Vector3.new(178, 34, 112), phase = 0.52 },
+		{ count = 7, minKm = 260, stepKm = 245, radius = 460, size = Vector3.new(235, 42, 142), phase = 0.88 },
 	}
 	local cloudParts = {}
 	local seedCounter = 31
@@ -427,7 +736,7 @@ local function dawn(parent)
 			local y = altitude(layer.minKm + (i - 1) * layer.stepKm)
 			local center = Vector3.new(math.cos(angle) * layer.radius, y, math.sin(angle) * layer.radius)
 			for _, cloud in band(parent, "CoastalCloudBank", center, layer.size, cloudColors, seedCounter) do
-				cloud.Transparency = 0.12
+				cloud.Transparency = 0.1
 				table.insert(cloudParts, cloud)
 			end
 		end
@@ -435,7 +744,6 @@ local function dawn(parent)
 
 	local lastCloudTransparency
 	return function(km, time)
-		-- Keep coastal clouds readable all the way from 0 km to 2,000 km
 		local cloudTransparency = math.round((0.08 + math.clamp((km - 1550) / 550, 0, 1) * 0.22) * 50) / 50
 		if cloudTransparency ~= lastCloudTransparency then
 			lastCloudTransparency = cloudTransparency
@@ -461,78 +769,164 @@ local function dawn(parent)
 	end
 end
 
+-- Realistic storm vortex funnel built from sculpted PalaceCloud / Storm cloud meshes & helical Beam vortex ribbons
 local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, height, ringCount, seed)
 	local vortex = model(parent, name)
-	local random = Random.new(seed)
 	local colors = {
-		rgb(62, 56, 106),
-		rgb(82, 76, 134),
-		rgb(98, 92, 158),
-		rgb(122, 116, 192),
+		rgb(52, 46, 94),
+		rgb(68, 62, 118),
+		rgb(86, 78, 142),
+		rgb(108, 98, 174),
 	}
+
+	-- Massive brooding storm anvil crowning the funnel top & swirling base collar
+	local topAnvil = landmark(vortex, "Storm",
+		CFrame.new(basePos + Vector3.new(0, height * 0.52, 0)) * CFrame.Angles(0, seed * 0.7, 0),
+		math.clamp(topWidth / 165, 0.52, 0.95))
+	if topAnvil then
+		topAnvil.Name = "VortexAnvilCrown"
+	end
+
 	local rings = {}
+	local tierAttachments = {}
 	for i = 1, ringCount do
 		local t = (i - 1) / (ringCount - 1)
 		local eased = t * t * (3 - 2 * t)
 		local w = bottomWidth + (topWidth - bottomWidth) * eased
-		local h = 14 + eased * 18
 		local y = basePos.Y + (t - 0.5) * height
-		local bendX = math.sin(t * math.pi * 1.2) * (topWidth * 0.14)
-		local bendZ = math.cos(t * math.pi * 1.1) * (topWidth * 0.08)
+		local bendX = math.sin(t * math.pi * 1.25) * (topWidth * 0.15)
+		local bendZ = math.cos(t * math.pi * 1.1) * (topWidth * 0.09)
 		local ringCenter = Vector3.new(basePos.X + bendX, y, basePos.Z + bendZ)
 		local ringModel = model(vortex, "VortexTier")
-		local ringCf = CFrame.new(ringCenter)
-		part(ringModel, "FunnelCore", Vector3.new(w, h, w * 0.88), ringCf, colors[(i - 1) % #colors + 1], plastic, ball)
-		for j = 1, 4 do
-			local a = (j - 1) * math.pi / 2 + i * 0.35
-			local lobeOff = Vector3.new(math.cos(a) * w * 0.34, random:NextNumber(-2, 2), math.sin(a) * w * 0.3)
-			part(ringModel, "FunnelSwirl", Vector3.new(w * 0.55, h * 0.82, w * 0.44),
-				ringCf * CFrame.new(lobeOff) * CFrame.Angles(0, a, 0.12),
-				colors[(i + j) % #colors + 1], plastic, ball)
+		local ringCf = CFrame.new(ringCenter) * CFrame.Angles(0, i * 0.65, 0)
+
+		-- Use sculpted PalaceCloud organic cloud mesh scaled to the funnel tier width
+		local cloudScale = math.clamp(w / 185, 0.12, 0.82)
+		local sculptedTier = landmark(ringModel, "PalaceCloud", ringCf * CFrame.new(0, 14 * cloudScale, 0), cloudScale)
+		if sculptedTier then
+			sculptedTier.Name = "FunnelCloudMesh"
+			for idx, d in sculptedTier:GetDescendants() do
+				if d:IsA("BasePart") then
+					d.Color = colors[(i + idx) % #colors + 1]
+					d.Transparency = 0.08 + (1 - t) * 0.08
+				end
+			end
 		end
+
 		if i % 3 == 0 then
-			local glow = part(ringModel, "VortexLightningCore", Vector3.new(w * 0.62, h * 0.38, w * 0.62),
-				ringCf, rgb(164, 152, 248), neon, ball)
-			glow.Transparency = 0.52
+			local glow = part(ringModel, "VortexLightningCore", Vector3.new(w * 0.42, 12 + eased * 10, w * 0.42),
+				ringCf, rgb(172, 158, 255), neon, ball)
+			glow.Transparency = 0.56
 		end
+
+		local carrier = rail(ringModel, "RibbonAnchor", ringCenter)
+		carrier.Transparency = 1
+		tierAttachments[i] = { part = carrier, width = w }
+
 		ringModel.WorldPivot = ringCf
-		rings[i] = { model = ringModel, origin = ringCf, radius = 3.5 + (1 - t) * 5.5, phase = i * 0.55 }
+		rings[i] = { model = ringModel, origin = ringCf, radius = 3.2 + (1 - t) * 5.2, phase = i * 0.55 }
 	end
+
+	-- Helical swirling wind & lightning ribbons wrapping the funnel from base to anvil
+	for strand = 1, 4 do
+		local isLightning = strand == 4
+		local seq = isLightning
+			and ColorSequence.new(rgb(186, 174, 255), rgb(132, 118, 238))
+			or ColorSequence.new(rgb(88, 82, 146), rgb(138, 132, 204))
+		for i = 1, ringCount - 1 do
+			local a0 = (strand - 1) * math.pi / 2 + i * 0.85
+			local a1 = a0 + 0.95
+			local r0 = tierAttachments[i].width * 0.42
+			local r1 = tierAttachments[i + 1].width * 0.42
+			local s0 = socket(tierAttachments[i].part,
+				Vector3.new(math.cos(a0) * r0, 0, math.sin(a0) * r0),
+				Vector3.new(-math.sin(a0), 0.55, math.cos(a0)))
+			local s1 = socket(tierAttachments[i + 1].part,
+				Vector3.new(math.cos(a1) * r1, 0, math.sin(a1) * r1),
+				Vector3.new(-math.sin(a1), 0.55, math.cos(a1)))
+			local rib = beam(
+				s0, s1,
+				isLightning and 2.6 or (5.5 + i * 0.6),
+				isLightning and 3.2 or (6.2 + i * 0.65),
+				seq,
+				isLightning and softFade(0.75, 0.18) or softFade(0.84, 0.36),
+				r0 * 0.55
+			)
+			rib.LightEmission = isLightning and 0.95 or 0.45
+		end
+	end
+
 	return rings
 end
 
+-- Sculpted jagged storm rock fragment using BiomeLandmarkMeshes.Cosmic + EnvironmentAssets.Boulder + electric ring
 local function buildStormRockFragment(parent, cf, scale, seed)
 	local frag = model(parent, "StormEdgeFragment")
-	local random = Random.new(seed)
-	local darkSlate = rgb(54, 48, 82)
-	local glowColor = seed % 2 == 0 and rgb(238, 148, 86) or rgb(168, 124, 248)
-	part(frag, "SlateBody", Vector3.new(15, 19, 13) * scale, cf * CFrame.Angles(0.25, 0.4, -0.18), darkSlate, slate, "Wedge")
-	part(frag, "SlateShoulder", Vector3.new(11, 14, 10) * scale,
-		cf * CFrame.new(4 * scale, -3 * scale, 2 * scale) * CFrame.Angles(math.pi, 1.1, 0.22), darkSlate, slate, "Wedge")
-	for i = 1, 3 do
-		local veinCf = cf * CFrame.new((i - 2) * 3.2 * scale, (i % 2 - 0.5) * 4 * scale, -2.5 * scale)
-			* CFrame.Angles(random:NextNumber(-0.4, 0.4), i * 0.8, 0.3)
-		local vein = part(frag, "ChargedVein", Vector3.new(2.4, 8.5, 2.4) * scale, veinCf, glowColor, neon, "Wedge")
-		vein.Transparency = 0.22
+	local darkSlate = rgb(48, 44, 78)
+	local midSlate = rgb(66, 60, 104)
+	local glowColor = seed % 2 == 0 and rgb(244, 152, 86) or rgb(168, 126, 255)
+
+	-- Sculpted jagged rock & glowing crystal fracture veins from BiomeLandmarkMeshes.Cosmic
+	local crag = landmark(frag, "Cosmic", cf * CFrame.Angles(0.18, seed * 0.7, -0.14), 0.25 * scale)
+	if crag then
+		crag.Name = "SculptedStormCrag"
+		for _, d in crag:GetDescendants() do
+			if d:IsA("BasePart") then
+				if d.Name == "Astral" then
+					d.Color = darkSlate
+					d.Material = slate
+				elseif d.Name == "Violet" then
+					d.Color = midSlate
+					d.Material = slate
+				elseif d.Name == "Crystal" then
+					d.Color = glowColor
+					d.Material = neon
+					d.Transparency = 0.12
+				end
+			end
+		end
 	end
+
+	-- Companion sculpted boulders & charged lightning ring
+	for _, side in { -1, 1 } do
+		natureAsset(frag, "Boulder", "StormBoulder",
+			cf * CFrame.new(side * 5.5 * scale, -2.5 * scale, side * 2.2 * scale) * CFrame.Angles(0.4, side * 1.2, 0.2),
+			1.85 * scale,
+			function(d)
+				if d:IsA("MeshPart") then d.TextureID = "" end
+				if d.Name:find("moss") then
+					d.Color = glowColor
+					d.Material = neon
+				else
+					d.Color = darkSlate
+					d.Material = slate
+				end
+			end)
+	end
+	fleetShape(frag, "DockRim", "ChargedArcRing",
+		cf * CFrame.Angles(0.35, 0.4, 0.8),
+		Vector3.new(0.45, 16.5, 16.5) * scale, glowColor, neon)
+
 	frag.WorldPivot = cf
 	return frag
 end
 
 local function thundercloud(parent)
 	local banks, rain = {}, {}
-	local indigo = { rgb(78, 78, 119), rgb(96, 91, 146), rgb(109, 112, 163) }
-	local anvilPalette = { rgb(68, 64, 110), rgb(92, 86, 148), rgb(118, 114, 178) }
+	local indigo = { rgb(72, 68, 116), rgb(92, 86, 144), rgb(112, 108, 168) }
+	local anvilPalette = { rgb(64, 58, 108), rgb(88, 82, 146), rgb(118, 114, 182) }
 	local random = Random.new(2020)
 
 	for i = 1, 12 do
 		local angle = (i - 1) * math.pi * 2 / 12 + random:NextNumber(-0.1, 0.1)
-		local radius = random:NextNumber(295, 395)
+		local radius = random:NextNumber(305, 395)
 		local y = altitude(2060 + i * 150) + random:NextNumber(-28, 28)
 		local position = Vector3.new(math.cos(angle) * radius, y, math.sin(angle) * radius)
-		local size = Vector3.new(random:NextNumber(145, 235), random:NextNumber(72, 155), random:NextNumber(110, 168))
+		local size = Vector3.new(random:NextNumber(155, 235), random:NextNumber(72, 155), random:NextNumber(110, 168))
 		local clouds = band(parent, "ThunderheadCliff", position, size, indigo, i * 19)
-		banks[#banks + 1] = { lobe = clouds[3], color = clouds[3].Color }
+		if clouds[1] then
+			banks[#banks + 1] = { lobe = clouds[1], color = clouds[1].Color }
+		end
 
 		-- Polish: Clearer slanted rain curtains visible from the balloon gondola
 		if i % 2 == 0 or i == 3 or i == 9 then
@@ -554,12 +948,12 @@ local function thundercloud(parent)
 		end
 	end
 
-	-- Polish: Reuse cloud cliffs and storm towers to create separate anvil formations
+	-- Polish: Reuse sculpted Storm towers and sculpted ZenithCloud/PalaceCloud anvils
 	local anvilSpecs = {
-		{ km = 2380, pos = Vector3.new(245, altitude(2380), -210), yaw = -0.45, scale = 0.95 },
-		{ km = 3040, pos = Vector3.new(-225, altitude(3040), -215), yaw = 0.55, scale = 1.15 },
-		{ km = 3020, pos = Vector3.new(275, altitude(3020), -25), yaw = -1.45, scale = 1.05 },
-		{ km = 3520, pos = Vector3.new(-45, altitude(3520), -275), yaw = 0.15, scale = 1.1 },
+		{ km = 2380, pos = Vector3.new(255, altitude(2380), -220), yaw = -0.45, scale = 0.95 },
+		{ km = 3040, pos = Vector3.new(-235, altitude(3040), -225), yaw = 0.55, scale = 1.15 },
+		{ km = 3020, pos = Vector3.new(285, altitude(3020), -25), yaw = -1.45, scale = 1.05 },
+		{ km = 3520, pos = Vector3.new(-45, altitude(3520), -285), yaw = 0.15, scale = 1.1 },
 	}
 	for idx, spec in anvilSpecs do
 		local storm = landmark(parent, "Storm", CFrame.new(spec.pos) * CFrame.Angles(0, spec.yaw, 0), spec.scale)
@@ -567,31 +961,32 @@ local function thundercloud(parent)
 			local crown = storm:FindFirstChild("IndigoLight")
 			if crown then banks[#banks + 1] = { lobe = crown, color = crown.Color } end
 		end
-		-- Separate spreading anvil top crowning the tower
 		local anvilTop = spec.pos + Vector3.new(0, 76 * spec.scale, 0)
 		local anvilLobes = band(parent, "SeparateStormAnvil", anvilTop,
 			Vector3.new(245, 58, 185) * spec.scale, anvilPalette, 300 + idx * 29)
-		banks[#banks + 1] = { lobe = anvilLobes[1], color = anvilLobes[1].Color }
+		if anvilLobes[1] then
+			banks[#banks + 1] = { lobe = anvilLobes[1], color = anvilLobes[1].Color }
+		end
 	end
 
-	-- P1: Two background storm vortex silhouettes (1 wide profile, 1 slender profile) outside corridor with slow motion
+	-- P1: Two background storm vortex silhouettes (1 wide profile, 1 slender profile) with sculpted cloud tiers & helical ribbons
 	local vortexRings = {}
 	for _, r in buildStormVortex(
 		parent, "WideStormVortex",
-		Vector3.new(-138, altitude(2980), -285),
+		Vector3.new(-138, altitude(2980), -295),
 		154, 22, 210, 12, 2401
 	) do
 		table.insert(vortexRings, r)
 	end
 	for _, r in buildStormVortex(
 		parent, "SlenderStormVortex",
-		Vector3.new(128, altitude(3110), -278),
+		Vector3.new(128, altitude(3110), -288),
 		90, 14, 232, 13, 2402
 	) do
 		table.insert(vortexRings, r)
 	end
 
-	-- P2: Dimly glowing rock fragments at the storm edges for extra visual depth
+	-- P2: Sculpted glowing rock fragments at the storm edges
 	local fragmentSpecs = {
 		{ km = 2320, x = -155, z = -225, scale = 1.1 },
 		{ km = 2640, x = 165, z = -230, scale = 1.0 },
@@ -630,76 +1025,135 @@ local function thundercloud(parent)
 	end
 end
 
+-- Sculpted cherry-blossom tree built from EnvironmentAssets.BroadleafTree & Flower meshes
 local function buildBlossomTree(parent, baseCf, scale)
 	local tree = model(parent, "SunsetBlossomTree")
-	local trunkColor = rgb(96, 58, 68)
-	local blossomColors = {
-		rgb(248, 122, 162),
-		rgb(255, 162, 192),
-		rgb(228, 92, 138),
-	}
-	local p0 = baseCf.Position
-	local p1 = (baseCf * CFrame.new(2.2 * scale, 13.5 * scale, -1.2 * scale)).Position
-	span(tree, "GnarledTrunk", p0, p1, 2.8 * scale, trunkColor, woodMat)
-	for i, bOff in {
-		Vector3.new(-6.5, 5.2, 2.4),
-		Vector3.new(6.2, 4.6, -2.2),
-		Vector3.new(0.8, 6.8, 4.5),
-		Vector3.new(-2.4, 3.8, -5.2),
-	} do
-		local tip = p1 + bOff * scale
-		span(tree, "BlossomBough", p1 - Vector3.new(0, 2 * scale, 0), tip, 1.4 * scale, trunkColor, woodMat)
-		part(tree, "BlossomCanopy", Vector3.new(15.5, 8.2, 13.5) * scale,
-			CFrame.new(tip + Vector3.new(0, 1.8 * scale, 0)), blossomColors[(i - 1) % #blossomColors + 1], plastic, ball)
+	local trunkColor = rgb(104, 62, 72)
+	local sakuraMain = rgb(252, 134, 172)
+	local sakuraLight = rgb(255, 182, 208)
+	local sakuraDeep = rgb(232, 96, 142)
+
+	-- Primary sculpted BroadleafTree with sakura-pink faceted canopy
+	local mainTree = natureAsset(tree, "BroadleafTree", "SakuraPrimary", baseCf, scale * 1.25, function(d)
+		if d:IsA("MeshPart") then
+			d.TextureID = ""
+			if d.Name == "leaves_geom" then
+				d.Color = sakuraMain
+				d.Material = plastic
+			else
+				d.Color = trunkColor
+				d.Material = woodMat
+			end
+		end
+	end)
+
+	-- Secondary rotated sculpted leaves_geom crown for lush multi-tone cherry blossom volume
+	if mainTree then
+		local leaves = mainTree:FindFirstChild("leaves_geom", true)
+		if leaves and leaves:IsA("MeshPart") then
+			local upperCrown = leaves:Clone()
+			upperCrown.Name = "BlossomHighlightCrown"
+			upperCrown.Size = leaves.Size * Vector3.new(0.84, 0.78, 0.84)
+			upperCrown.CFrame = leaves.CFrame * CFrame.new(0, 4.2 * scale, 0) * CFrame.Angles(0.08, 1.8, -0.06)
+			upperCrown.Color = sakuraLight
+			upperCrown.Parent = tree
+
+			local sideBough = leaves:Clone()
+			sideBough.Name = "BlossomLowerBough"
+			sideBough.Size = leaves.Size * Vector3.new(0.76, 0.68, 0.76)
+			sideBough.CFrame = leaves.CFrame * CFrame.new(5.5 * scale, -2.2 * scale, -3.5 * scale) * CFrame.Angles(-0.1, -1.2, 0.12)
+			sideBough.Color = sakuraDeep
+			sideBough.Parent = tree
+		end
 	end
-	part(tree, "BlossomCrown", Vector3.new(21, 9.8, 18) * scale,
-		CFrame.new(p1 + Vector3.new(0, 5.2 * scale, 0)), blossomColors[1], plastic, ball)
-	part(tree, "BlossomHighlight", Vector3.new(14, 6.8, 12.5) * scale,
-		CFrame.new(p1 + Vector3.new(-2 * scale, 8.2 * scale, 1.5 * scale)), blossomColors[2], plastic, ball)
+
+	-- Sculpted Flower blossoms & Boulders around the roots
+	for i = 1, 4 do
+		local a = (i - 1) * math.pi / 2 + 0.4
+		natureAsset(tree, "Flower", "RootBlossom",
+			baseCf * CFrame.new(math.cos(a) * 4.5 * scale, 0.2 * scale, math.sin(a) * 4.5 * scale) * CFrame.Angles(0, a, 0),
+			1.35 * scale,
+			function(d)
+				if d.Name == "PetalCorolla" then d.Color = i % 2 == 0 and sakuraLight or sakuraMain end
+			end)
+	end
+	tree.WorldPivot = baseCf
 	return tree
 end
 
+-- Ornate sunset sanctuary pergola & wind chimes using sculpted rings, lotus petals & masonry
 local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 	local shrine = model(parent, "WindChimeRuin")
-	local masonry = rgb(208, 168, 142)
-	local timber = rgb(118, 74, 68)
-	local gold = rgb(242, 192, 92)
-	local ribbonColor = rgb(238, 112, 128)
+	local masonry = rgb(228, 198, 168)
+	local sandstone = rgb(188, 138, 108)
+	local timber = rgb(116, 68, 64)
+	local gold = rgb(244, 192, 86)
+	local ribbonColor = rgb(252, 124, 148)
 
-	column(shrine, "ShrinePillar", (baseCf * CFrame.new(0, 13 * scale, 0)).Position, 5.2 * scale, 26 * scale, masonry, slate)
-	part(shrine, "PillarCap", Vector3.new(8.2, 3.2, 8.2) * scale, baseCf * CFrame.new(0, 26.5 * scale, 0), masonry, slate)
-	part(shrine, "CrossBeam", Vector3.new(28, 2.8, 3.4) * scale, baseCf * CFrame.new(9 * scale, 24.5 * scale, 0), timber, woodMat)
-	part(shrine, "BeamBrace", Vector3.new(2.4, 11, 2.6) * scale,
-		baseCf * CFrame.new(4.5 * scale, 19.5 * scale, 0) * CFrame.Angles(0, 0, -0.68), timber, woodMat)
+	-- Stepped carved stone plinth & sanctuary lantern
+	clonePalacePodium(shrine, "ShrinePlinth", baseCf, 0.52 * scale, masonry, gold, sandstone, masonry, gold)
+	clonePalaceLantern(shrine, baseCf * CFrame.new(-4.5 * scale, 1.2 * scale, 3.5 * scale), 1.45 * scale, rgb(255, 214, 138))
+
+	-- Twin fluted sanctuary columns & curved pagoda timber lintel
+	for _, side in { -1, 1 } do
+		local colX = (side == -1 and 0 or 18) * scale
+		local colH = (side == -1 and 25 or 21) * scale
+		part(shrine, "PillarBase", Vector3.new(6.8, 2.8, 6.8) * scale, baseCf * CFrame.new(colX, 2.4 * scale, 0), sandstone, sandstoneMat)
+		column(shrine, "ShrinePillar", (baseCf * CFrame.new(colX, 2.8 * scale + colH * 0.5, 0)).Position, 4.6 * scale, colH, masonry, limestoneMat)
+		part(shrine, "PillarCapital", Vector3.new(7.4, 2.6, 7.4) * scale, baseCf * CFrame.new(colX, 3.2 * scale + colH, 0), gold, metalMat)
+	end
+
+	-- Tiered timber cross-beam with upturned eaves & sculpted LotusPetal finials
+	part(shrine, "CrossBeam", Vector3.new(28, 2.4, 3.6) * scale, baseCf * CFrame.new(9 * scale, 25.5 * scale, 0), timber, woodMat)
+	part(shrine, "UpperRidgeBeam", Vector3.new(31, 1.6, 4.4) * scale, baseCf * CFrame.new(9 * scale, 27.2 * scale, 0), gold, metalMat)
+	fleetShape(shrine, "LotusPetal", "WestEaveFinial",
+		baseCf * CFrame.new(-6.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, 0, 0.65),
+		Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
+	fleetShape(shrine, "LotusPetal", "EastEaveFinial",
+		baseCf * CFrame.new(24.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, math.pi, 0.65),
+		Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
 
 	for i = 1, 4 do
-		local xOff = (4 + i * 4.6) * scale
-		local topPos = (baseCf * CFrame.new(xOff, 23 * scale, 0)).Position
-		local chimeLen = (8.5 + (i % 2) * 3.2) * scale
+		local xOff = (2.2 + i * 3.6) * scale
+		local topPos = (baseCf * CFrame.new(xOff, 24.2 * scale, 0)).Position
+		local chimeLen = (8.2 + (i % 2) * 3.0) * scale
 		local chimeModel = model(shrine, "HangingWindChime")
 		local pivotCf = CFrame.new(topPos)
-		span(chimeModel, "ChimeCord", topPos, topPos + Vector3.new(0, -3.5 * scale, 0), 0.35 * scale, timber, woodMat)
-		column(chimeModel, "GoldenTube", topPos + Vector3.new(0, -(3.5 + chimeLen * 0.5) * scale, 0),
-			1.5 * scale, chimeLen, gold, metalMat)
-		part(chimeModel, "ChimeTag", Vector3.new(0.4, 5.5, 1.8) * scale,
-			CFrame.new(topPos + Vector3.new(0, -(4.5 + chimeLen) * scale, 0)), ribbonColor, neon)
+
+		span(chimeModel, "ChimeCord", topPos, topPos + Vector3.new(0, -3.2 * scale, 0), 0.28 * scale, gold, metalMat)
+		fleetShape(chimeModel, "DockRim", "ChimeCanopyRing",
+			CFrame.new(topPos + Vector3.new(0, -3.2 * scale, 0)) * CFrame.Angles(0, 0, math.pi / 2),
+			Vector3.new(0.45, 3.8, 3.8) * scale, gold, metalMat)
+		for t = -1, 1, 2 do
+			column(chimeModel, "GoldenTube",
+				topPos + Vector3.new(t * 0.65 * scale, -(3.4 + chimeLen * 0.5) * scale, 0),
+				0.82 * scale, chimeLen, gold, metalMat)
+		end
+		fleetShape(chimeModel, "Star", "ChimeStarOrnament",
+			CFrame.new(topPos + Vector3.new(0, -(4.2 + chimeLen) * scale, 0)) * CFrame.Angles(math.pi / 2, 0, 0),
+			Vector3.new(0.35, 2.8, 2.8) * scale, gold, neon)
+		part(chimeModel, "ChimeTag", Vector3.new(0.32, 5.2, 1.65) * scale,
+			CFrame.new(topPos + Vector3.new(0, -(7.6 + chimeLen) * scale, 0)), ribbonColor, neon)
+
 		chimeModel.WorldPivot = pivotCf
 		table.insert(chimeList, { model = chimeModel, origin = pivotCf, phase = i * 1.1 })
 	end
+	shrine.WorldPivot = baseCf
 	return shrine
 end
 
 local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 	local bridge = model(parent, "BrokenStoneBridge")
-	local masonry = rgb(206, 166, 140)
-	local darkStone = rgb(146, 108, 118)
-	local moss = rgb(124, 144, 106)
-	local roots = rgb(110, 73, 79)
+	local masonry = rgb(224, 194, 164)
+	local sandstone = rgb(182, 134, 106)
+	local darkStone = rgb(134, 96, 108)
+	local gold = rgb(236, 182, 82)
+	local roots = rgb(108, 70, 76)
 
 	local delta = finishPos - startPos
 	local totalLen = delta.Magnitude
 	local dir = delta.Unit
-	local segLen = totalLen * 0.34
+	local segLen = totalLen * 0.35
 
 	for idx, side in { -1, 1 } do
 		local anchorPos = side == -1 and startPos or finishPos
@@ -707,50 +1161,72 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 		local segCenter = anchorPos + inward * (segLen * 0.5)
 		local segCf = CFrame.lookAt(segCenter, segCenter + inward)
 
-		part(bridge, "BridgeDeck", Vector3.new(12, 3.8, segLen), segCf, masonry, slate)
-		part(bridge, "MossTop", Vector3.new(10.8, 1.2, segLen * 0.92), segCf * CFrame.new(0, 2.1, 0), moss, grassMat)
+		-- Multi-layered masonry viaduct deck with gold cornice & stone balustrades
+		part(bridge, "BridgeDeck", Vector3.new(13.5, 3.6, segLen), segCf, masonry, limestoneMat)
+		part(bridge, "DeckCornice", Vector3.new(14.6, 1.1, segLen * 0.98), segCf * CFrame.new(0, 1.6, 0), sandstone, sandstoneMat)
+		part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.4, segLen * 0.92), segCf * CFrame.new(0, 2.0, 0), gold, metalMat)
+
 		for _, railSide in { -1, 1 } do
-			part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * 0.88),
-				segCf * CFrame.new(railSide * 5.1, 2.8, -segLen * 0.04), masonry, slate)
+			part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * 0.9),
+				segCf * CFrame.new(railSide * 5.6, 3.2, -segLen * 0.03), masonry, limestoneMat)
+			for post = 1, 3 do
+				local zOff = (post - 2) * segLen * 0.34
+				part(bridge, "BalustradePost", Vector3.new(2.4, 4.2, 2.4),
+					segCf * CFrame.new(railSide * 5.6, 3.8, zOff), sandstone, sandstoneMat)
+				part(bridge, "PostFinial", Vector3.new(1.8, 1.8, 1.8),
+					segCf * CFrame.new(railSide * 5.6, 6.2, zOff), gold, metalMat, ball)
+			end
 		end
 
-		-- Broken jagged tip slabs near the central chasm
-		local tipCf = CFrame.lookAt(anchorPos + inward * (segLen + 3.5), anchorPos + inward * (segLen + 10))
-			* CFrame.Angles(-0.18, idx * 0.25, side * 0.12)
-		part(bridge, "BrokenSpanTip", Vector3.new(10.5, 3.4, 8.5), tipCf, darkStone, slate)
+		-- Fractured chasm tip with sculpted Boulder rubble & Fern overgrowth
+		local tipCf = CFrame.lookAt(anchorPos + inward * (segLen + 3.2), anchorPos + inward * (segLen + 10))
+			* CFrame.Angles(-0.16, idx * 0.22, side * 0.1)
+		part(bridge, "BrokenSpanTip", Vector3.new(11.2, 3.2, 8.2), tipCf, darkStone, slate)
+		natureAsset(bridge, "Boulder", "ChasmRubble", tipCf * CFrame.new(2.2, 1.8, 0), 1.45, function(d)
+			if d:IsA("MeshPart") then d.TextureID = "" end
+			d.Color = sandstone
+			d.Material = sandstoneMat
+		end)
+		natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
 
-		-- Support piers & arch ribs underneath
+		-- Fluted support piers & curved voussoir arch ribs underneath
 		for p = 1, 2 do
 			local pierFrac = p == 1 and 0.32 or 0.76
 			local pierTop = anchorPos + inward * (segLen * pierFrac)
-			local pierH = p == 1 and 26 or 19
-			column(bridge, "BridgePier", pierTop + Vector3.new(0, -pierH * 0.5 - 1.5, 0), 5.6, pierH, darkStone, slate)
-			part(bridge, "ArchRib", Vector3.new(8.5, 5.2, 14),
+			local pierH = p == 1 and 28 or 20
+			column(bridge, "BridgePier", pierTop + Vector3.new(0, -pierH * 0.5 - 1.5, 0), 5.8, pierH, darkStone, slate)
+			part(bridge, "PierCapital", Vector3.new(7.8, 2.4, 7.8), CFrame.new(pierTop + Vector3.new(0, -2.2, 0)), sandstone, sandstoneMat)
+			part(bridge, "ArchRib", Vector3.new(9.2, 4.8, 15),
 				CFrame.lookAt(pierTop + inward * 6 + Vector3.new(0, -5.5, 0), pierTop + inward * 14)
-					* CFrame.Angles(0.42, 0, 0), masonry, slate)
+					* CFrame.Angles(0.42, 0, 0), masonry, limestoneMat)
 		end
 
 		-- Hanging roots under the broken bridge
 		local rootStart = anchorPos + inward * (segLen * 0.82) + Vector3.new(0, -3, 0)
 		local rootMid = rootStart + Vector3.new(side * 2.5, -16 - seed % 5, 2)
-		span(bridge, "BridgeRoot", rootStart, rootMid, 1.8, roots, woodMat)
-		span(bridge, "BridgeRootTip", rootMid, rootMid + Vector3.new(-side * 1.5, -12, -1.5), 0.95, roots, woodMat)
+		span(bridge, "BridgeRoot", rootStart, rootMid, 1.6, roots, woodMat)
+		span(bridge, "BridgeRootTip", rootMid, rootMid + Vector3.new(-side * 1.5, -12, -1.5), 0.85, roots, woodMat)
 	end
 	return bridge
 end
 
 local function skyIsles(parent)
-	local stone, grass = rgb(129, 93, 108), rgb(128, 143, 111)
-	local masonry, roots = rgb(203, 165, 139), rgb(110, 73, 79)
-	-- Staggered island placements so forward, side, and upward views at 5,000 km read in distinct depth layers
+	local basaltCol = rgb(92, 62, 82)
+	local cliffCol = rgb(198, 128, 92)
+	local mossCol = rgb(118, 142, 104)
+	local sandstoneCol = rgb(184, 136, 102)
+	local ivoryCol = rgb(238, 220, 186)
+	local goldCol = rgb(242, 182, 74)
+	local roots = rgb(110, 73, 79)
+
 	local islandSpecs = {
-		{ km = 4180, pos = Vector3.new(-105, altitude(4180), -252), width = 56, depthRatio = 0.82, yaw = 0.35, temple = false },
-		{ km = 4520, pos = Vector3.new(112, altitude(4520), -258), width = 94, depthRatio = 0.62, yaw = -0.42, temple = false },
-		{ km = 4780, pos = Vector3.new(-262, altitude(4780), 28), width = 66, depthRatio = 0.74, yaw = 1.45, temple = false },
-		{ km = 4960, pos = Vector3.new(-118, altitude(4960), -255), width = 134, depthRatio = 0.68, yaw = 0.52, temple = true },
-		{ km = 5020, pos = Vector3.new(258, altitude(5020), -24), width = 76, depthRatio = 0.78, yaw = -1.35, temple = false },
-		{ km = 5060, pos = Vector3.new(115, altitude(5060), -248), width = 98, depthRatio = 0.58, yaw = -0.38, temple = false },
-		{ km = 5480, pos = Vector3.new(-88, altitude(5480), -265), width = 68, depthRatio = 0.72, yaw = 0.25, temple = false },
+		{ km = 4180, pos = Vector3.new(-105, altitude(4180), -252), width = 62, yaw = 0.35, temple = false, ruin = true },
+		{ km = 4520, pos = Vector3.new(112, altitude(4520), -258), width = 96, yaw = -0.42, temple = false, ruin = false },
+		{ km = 4780, pos = Vector3.new(-262, altitude(4780), 28), width = 72, yaw = 1.45, temple = false, ruin = true },
+		{ km = 4960, pos = Vector3.new(-118, altitude(4960), -255), width = 134, yaw = 0.52, temple = true, ruin = true },
+		{ km = 5020, pos = Vector3.new(258, altitude(5020), -24), width = 82, yaw = -1.35, temple = false, ruin = false },
+		{ km = 5060, pos = Vector3.new(115, altitude(5060), -248), width = 102, yaw = -0.38, temple = false, ruin = true },
+		{ km = 5480, pos = Vector3.new(-88, altitude(5480), -265), width = 74, yaw = 0.25, temple = false, ruin = false },
 	}
 	local islandPositions = {}
 	local chimes = {}
@@ -761,84 +1237,56 @@ local function skyIsles(parent)
 		local temple = spec.temple
 		local island = model(parent, temple and "CloudTempleIsland" or "ForgottenSkyIsle")
 		local cf = CFrame.new(p) * CFrame.Angles(0, spec.yaw, 0)
-		local width, depth = spec.width, spec.width * spec.depthRatio
-		local customTemple = temple and landmark(island, "Sunset", cf)
-		if not customTemple then
-			part(island, "BasaltShelf", Vector3.new(width, 23 + i * 2, depth), cf, stone, slate, ball)
-			part(island, "OvergrownTerrace", Vector3.new(width * 0.92, 12, depth * 0.91),
-				cf * CFrame.new(0, 10, 0), grass, grassMat, ball)
-			for j = 1, 4 do
-				local x = (j - 2.5) * width * 0.17
-				part(island, "FracturedStone", Vector3.new(width * 0.35, 34 + j * 4, 27),
-					cf * CFrame.new(x, -19, j % 2 * 13 - 7) * CFrame.Angles(math.pi, j * 1.2, 0.21),
-					stone:Lerp(rgb(70, 61, 87), j * 0.13), slate, "Wedge")
-				local start = (cf * CFrame.new(x, -7, 19)).Position
-				local elbow = start + Vector3.new(4, -19 - j * 4, 3)
-				span(island, "HangingRoot", start, elbow, 2.8, roots, woodMat)
-				span(island, "RootTip", elbow, elbow + Vector3.new(j * 2 - 5, -18 - j * 2, 4), 1.4, roots, woodMat)
-			end
-			local ruin = cf * CFrame.new(-7, 10, -2)
-			if temple then
-				part(island, "TempleStair", Vector3.new(58, 3, 28), ruin * CFrame.new(0, 3, 13), masonry, slate)
-				part(island, "TempleDais", Vector3.new(48, 4, 23), ruin * CFrame.new(0, 6, 7), masonry, slate)
-				for _, z in { 5, -9 } do
-					for _, side in { -1, 1 } do
-						column(island, "TempleColumn", (ruin * CFrame.new(side * 18, 22, z)).Position, 8, 31, masonry, slate)
-						part(island, "TempleArchShoulder", Vector3.new(22, 7, 9),
-							ruin * CFrame.new(side * 11, 39, z) * CFrame.Angles(0, 0, side * -0.56), masonry, slate)
-					end
-					part(island, "TempleKeystone", Vector3.new(12, 8, 9), ruin * CFrame.new(0, 44, z), rgb(234, 191, 153), slate)
-				end
-			else
-				local side = i % 2 == 0 and 1 or -1
-				local height = 15 + (i % 3) * 7
-				part(island, "RuinedPillar", Vector3.new(8, height, 8), ruin * CFrame.new(side * 9, height / 2, 0), masonry, slate)
-				part(island, "BrokenArch", Vector3.new(13, 7, 8),
-					ruin * CFrame.new(side * 5, height + 2, 0) * CFrame.Angles(0, 0, side * -0.6), masonry, slate)
-			end
-			part(island, "FallenMasonry", Vector3.new(12, 5, 7),
-				ruin * CFrame.new(7, 3, 9) * CFrame.Angles(0.22, 1.3, 0), masonry, slate)
-		else
-			for j = 1, 3 do
-				local start = (cf * CFrame.new(j * 20 - 42, -6, 35 - j * 2)).Position
-				local elbow = start + Vector3.new(5, -18 - j * 5, 1)
-				span(island, "HangingRoot", start, elbow, 2.7, roots, woodMat)
-				span(island, "RootTip", elbow, elbow + Vector3.new(j * 3 - 5, -15, 2), 1.3, roots, woodMat)
-			end
+		local scale = math.clamp(spec.width / 128, 0.48, 1.05)
+
+		-- Every island in skyIsles uses the sculpted BiomeLandmarkMeshes.Sunset terrain mesh + PalaceCloud collar
+		buildSculptedIslandTerrain(island, cf, scale, {
+			basalt = basaltCol,
+			cliff = cliffCol,
+			moss = mossCol,
+			sandstone = sandstoneCol,
+			ivory = ivoryCol,
+			gold = goldCol,
+			cloudColor = rgb(255, 224, 192),
+			cloudShadow = rgb(218, 172, 168),
+			cloudTransparency = 0.16,
+		}, temple or spec.ruin)
+
+		local topY = 13.5 * scale
+		-- Sculpted boulders, ferns & hanging roots
+		for j = 1, 3 do
+			local a = (j - 1) * math.pi * 2 / 3 + i * 0.5
+			natureAsset(island, "Boulder", "SunsetBoulder",
+				cf * CFrame.new(math.cos(a) * 26 * scale, topY - 1 * scale, math.sin(a) * 22 * scale) * CFrame.Angles(0, a, 0),
+				1.45 * scale)
+			natureAsset(island, "Fern", "SunsetFern",
+				cf * CFrame.new(math.cos(a) * 22 * scale, topY, math.sin(a) * 18 * scale),
+				1.3 * scale)
+			local start = (cf * CFrame.new((j - 2) * 22 * scale, -8 * scale, 28 * scale)).Position
+			local elbow = start + Vector3.new(4, -18 * scale - j * 3, 2)
+			span(island, "HangingRoot", start, elbow, 2.2 * scale, roots, woodMat)
+			span(island, "RootTip", elbow, elbow + Vector3.new(j * 2 - 4, -14 * scale, 2), 1.1 * scale, roots, woodMat)
 		end
 
-		-- P2: Flowering blossom tree silhouette marker on key islands
+		-- P2: Sculpted flowering blossom tree silhouette marker on key islands
 		if i == 2 or i == 4 or i == 5 or i == 6 or i == 7 then
-			local treeSpot = cf * CFrame.new(-width * 0.22, customTemple and 12 or 14, -depth * 0.14)
-			buildBlossomTree(island, treeSpot, math.clamp(width / 68, 0.85, 1.45))
+			local treeSpot = cf * CFrame.new(-28 * scale, topY, -12 * scale) * CFrame.Angles(0, i * 1.1, 0)
+			buildBlossomTree(island, treeSpot, math.clamp(scale * 1.15, 0.78, 1.25))
 		end
 
-		-- P2: Mid-sized ruin variant with hanging wind chimes / ornaments
+		-- P2: Mid-sized sanctuary ruin variant with hanging wind chimes / ornaments
 		if i == 2 or i == 5 or i == 6 then
-			local chimeSpot = cf * CFrame.new(width * 0.12, 12, -depth * 0.08)
-			buildWindChimeRuin(island, chimeSpot, math.clamp(width / 72, 0.85, 1.25), chimes)
+			local chimeSpot = cf * CFrame.new(12 * scale, topY, -6 * scale)
+			buildWindChimeRuin(island, chimeSpot, math.clamp(scale * 1.05, 0.78, 1.12), chimes)
 		end
 
-		if i == 1 then continue end
-		local waterLevel = customTemple and 9 or 13
-		local lip = (cf * CFrame.new(width * 0.46, waterLevel, 4)).Position
-		part(island, "SpringPool", Vector3.new(24, 2, 16), cf * CFrame.new(width * 0.34, waterLevel, 4),
-			rgb(114, 200, 228), plastic, ball)
-		local waterfall = rail(island, "Waterfall", lip)
-		waterfall.Transparency = 1
-		local drop = temple and 132 or 66 + i * 7
-		for j = -1, 1 do
-			local offset = Vector3.new(j * 3.8, 0, 0)
-			local stream = beam(socket(waterfall, offset, Vector3.new(0.3, -1, 0.2)),
-				socket(waterfall, offset + Vector3.new(9, -drop, 12), Vector3.new(0.15, -1, 0.2)),
-				5.5, 13, ColorSequence.new(rgb(64, 156, 215), rgb(184, 225, 245)), softFade(0.92, 0.32), 22)
-			stream.LightEmission = 0.28
+		if i ~= 1 then
+			local lipCf = cf * CFrame.new(48 * scale, topY - 2 * scale, 6 * scale) * CFrame.Angles(0, 0.25, 0)
+			local drop = temple and 132 or (72 + i * 8)
+			attachSculptedWaterfall(island, lipCf, drop, scale * 1.15,
+				rgb(78, 172, 224), rgb(208, 238, 252), rgb(244, 216, 208))
 		end
-		for j = 1, 4 do
-			local mist = part(island, "WaterfallMist", Vector3.new(18 + j * 7, 7 + j * 1.8, 20 + j * 3),
-				CFrame.new(lip + Vector3.new(8 + j * 3, 5 - drop + j * 2, 11)), rgb(234, 206, 201), plastic, ball)
-			mist.Transparency = 0.54 + j * 0.07
-		end
+		island.WorldPivot = cf
 	end
 
 	-- P1: Broken stone bridge kits spanning between landmarks along the corridor sides (strictly outside corridor)
@@ -861,53 +1309,53 @@ local function skyIsles(parent)
 	}
 	for idx, pair in bridgePairs do
 		buildBrokenStoneBridge(parent, pair.start, pair.finish, pair.seed)
-		-- Companion anchor islet at the far end of each broken bridge
 		local anchorCf = CFrame.new(pair.finish + Vector3.new(0, -10, 0)) * CFrame.Angles(0, idx * 0.9, 0)
 		local anchorIsle = model(parent, "BridgeAnchorIsle")
-		part(anchorIsle, "BasaltShelf", Vector3.new(44, 18, 36), anchorCf, stone, slate, ball)
-		part(anchorIsle, "OvergrownTerrace", Vector3.new(40, 9, 32), anchorCf * CFrame.new(0, 7, 0), grass, grassMat, ball)
-		column(anchorIsle, "GatePillar", (anchorCf * CFrame.new(-8, 18, 0)).Position, 5.5, 20, masonry, slate)
-		column(anchorIsle, "GatePillar", (anchorCf * CFrame.new(8, 16, 0)).Position, 5.5, 16, masonry, slate)
+		buildSculptedIslandTerrain(anchorIsle, anchorCf, 0.42, {
+			basalt = basaltCol,
+			cliff = cliffCol,
+			moss = mossCol,
+			sandstone = sandstoneCol,
+			ivory = ivoryCol,
+			gold = goldCol,
+			cloudColor = rgb(255, 224, 192),
+			cloudTransparency = 0.2,
+		}, idx == 1)
 		if idx == 2 then
-			buildBlossomTree(anchorIsle, anchorCf * CFrame.new(4, 11, -4), 0.95)
+			buildBlossomTree(anchorIsle, anchorCf * CFrame.new(4, 7, -4), 0.82)
 		end
+		anchorIsle.WorldPivot = anchorCf
 	end
 
-	-- Polish: Reuse island & waterfall kit for smaller distant islands at varied heights & sizes
+	-- Polish: Smaller distant sculpted islands & waterfalls at varied heights & sizes
 	local distantSpecs = {
-		{ km = 4120, angle = -1.25, radius = 415, width = 34, waterfall = false },
-		{ km = 4420, angle = -1.85, radius = 438, width = 42, waterfall = true },
-		{ km = 4720, angle = -1.48, radius = 425, width = 30, waterfall = false },
-		{ km = 4920, angle = -1.62, radius = 412, width = 44, waterfall = true },
-		{ km = 5140, angle = -0.15, radius = 420, width = 36, waterfall = true },
-		{ km = 5320, angle = -1.42, radius = 435, width = 40, waterfall = true },
-		{ km = 5680, angle = -1.75, radius = 445, width = 32, waterfall = false },
-		{ km = 5890, angle = -1.32, radius = 425, width = 38, waterfall = true },
+		{ km = 4120, angle = -1.25, radius = 415, width = 42, waterfall = false },
+		{ km = 4420, angle = -1.85, radius = 438, width = 50, waterfall = true },
+		{ km = 4720, angle = -1.48, radius = 425, width = 38, waterfall = false },
+		{ km = 4920, angle = -1.62, radius = 412, width = 52, waterfall = true },
+		{ km = 5140, angle = -0.15, radius = 420, width = 44, waterfall = true },
+		{ km = 5320, angle = -1.42, radius = 435, width = 48, waterfall = true },
+		{ km = 5680, angle = -1.75, radius = 445, width = 40, waterfall = false },
+		{ km = 5890, angle = -1.32, radius = 425, width = 46, waterfall = true },
 	}
 	for idx, spec in distantSpecs do
 		local pos = Vector3.new(math.cos(spec.angle) * spec.radius, altitude(spec.km), math.sin(spec.angle) * spec.radius)
 		local cf = CFrame.new(pos) * CFrame.Angles(0, spec.angle, 0)
 		local distIsle = model(parent, "DistantSkyIslet")
-		local w = spec.width
-		local d = w * 0.78
-		part(distIsle, "BasaltShelf", Vector3.new(w, 15, d), cf, stone, slate, ball)
-		part(distIsle, "OvergrownTerrace", Vector3.new(w * 0.9, 8, d * 0.88), cf * CFrame.new(0, 6, 0), grass, grassMat, ball)
-		part(distIsle, "KeelWedge", Vector3.new(w * 0.42, 22, d * 0.42),
-			cf * CFrame.new(0, -13, 0) * CFrame.Angles(math.pi, idx * 0.7, 0.15), stone, slate, "Wedge")
-		column(distIsle, "DistantRuinPillar", (cf * CFrame.new(0, 14, 0)).Position, 4.5, 14, masonry, slate)
+		local sc = math.clamp(spec.width / 128, 0.32, 0.46)
+		buildSculptedIslandTerrain(distIsle, cf, sc, {
+			basalt = basaltCol,
+			cliff = cliffCol,
+			moss = mossCol,
+			sandstone = sandstoneCol,
+			ivory = ivoryCol,
+			gold = goldCol,
+		}, idx % 2 == 0)
 		if spec.waterfall then
-			local lip = (cf * CFrame.new(w * 0.4, 7, 0)).Position
-			local wf = rail(distIsle, "DistantWaterfall", lip)
-			wf.Transparency = 1
-			beam(
-				socket(wf, Vector3.zero, Vector3.new(0.2, -1, 0.1)),
-				socket(wf, Vector3.new(5, -48, 6), Vector3.new(0.1, -1, 0.1)),
-				3.5, 8.5,
-				ColorSequence.new(rgb(84, 172, 225), rgb(198, 232, 248)),
-				softFade(0.92, 0.35),
-				12
-			)
+			attachSculptedWaterfall(distIsle, cf * CFrame.new(42 * sc, 5 * sc, 0), 54, sc * 1.1,
+				rgb(84, 172, 225), rgb(198, 232, 248), rgb(242, 214, 206))
 		end
+		distIsle.WorldPivot = cf
 	end
 
 	return function(_, time)
@@ -919,160 +1367,238 @@ local function skyIsles(parent)
 	end
 end
 
+-- Primary Cosmic Crystal Island built from sculpted Sunset island terrain + multi-cluster Cosmic crystal meshes
 local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 	local island = model(parent, "CosmicCrystalIsland")
 	local random = Random.new(seed)
-	local astralRock = rgb(58, 56, 98)
-	local deepSlate = rgb(38, 36, 68)
-	local bioMoss = rgb(72, 168, 178)
+	local astralObsidian = rgb(38, 36, 72)
+	local astralSlate = rgb(62, 56, 108)
+	local bioTeal = rgb(58, 162, 178)
 	local crystalColors = {
 		rgb(218, 92, 255),
-		rgb(96, 228, 255),
-		rgb(162, 118, 255),
-		rgb(255, 132, 224),
+		rgb(88, 232, 255),
+		rgb(156, 114, 255),
+		rgb(255, 128, 224),
 	}
 
-	-- Stone shelf base & craggy underside
-	part(island, "AstralStoneBase", Vector3.new(92, 24, 72) * scale, cf, astralRock, slate, ball)
-	part(island, "BioluminescentTerrace", Vector3.new(84, 10, 64) * scale,
-		cf * CFrame.new(0, 9 * scale, 0), bioMoss, slate, ball)
-	for i = 1, 5 do
-		local a = (i - 1) * math.pi * 2 / 5 + 0.3
-		part(island, "AstralUnderCrag", Vector3.new(32, 38 + i * 4, 28) * scale,
-			cf * CFrame.new(math.cos(a) * 24 * scale, -18 * scale, math.sin(a) * 18 * scale)
-				* CFrame.Angles(math.pi, a, 0.2), deepSlate, slate, "Wedge")
-	end
+	-- Sculpted floating island terrain base with bioluminescent nebula cloud collar
+	buildSculptedIslandTerrain(island, cf, scale * 0.78, {
+		basalt = astralObsidian,
+		cliff = astralSlate,
+		moss = bioTeal,
+		turfMat = slate,
+		cloudColor = rgb(86, 72, 152),
+		cloudShadow = rgb(54, 118, 164),
+		cloudTransparency = 0.24,
+	}, false)
 
-	-- Core landmark mesh if available
-	landmark(island, "Cosmic", cf * CFrame.new(0, 14 * scale, 0), scale)
-
-	-- Readable faceted crystal spires around the island crown
-	local spireSpecs = {
-		{ pos = Vector3.new(-16, 26, -6), size = Vector3.new(11, 42, 11), rot = Vector3.new(0.18, 0.4, 0.22), col = 1 },
-		{ pos = Vector3.new(14, 28, -4), size = Vector3.new(12, 46, 12), rot = Vector3.new(-0.15, 1.1, -0.24), col = 2 },
-		{ pos = Vector3.new(0, 32, 8), size = Vector3.new(13, 52, 13), rot = Vector3.new(0.08, 2.1, -0.08), col = 3 },
-		{ pos = Vector3.new(-26, 20, 8), size = Vector3.new(8.5, 30, 8.5), rot = Vector3.new(0.28, -0.6, 0.32), col = 4 },
-		{ pos = Vector3.new(25, 19, 10), size = Vector3.new(9, 32, 9), rot = Vector3.new(-0.22, 0.8, -0.28), col = 1 },
+	-- Central & flanking sculpted BiomeLandmarkMeshes.Cosmic crystal-spire formations
+	local clusterSpecs = {
+		{ pos = Vector3.new(0, 16, 0), rot = Vector3.new(0, 0, 0), sc = 1.05, col = 2 },
+		{ pos = Vector3.new(-22, 14, -8), rot = Vector3.new(0.16, 1.2, 0.18), sc = 0.72, col = 1 },
+		{ pos = Vector3.new(24, 15, 6), rot = Vector3.new(-0.14, -1.1, -0.2), sc = 0.76, col = 3 },
+		{ pos = Vector3.new(4, 12, 18), rot = Vector3.new(0.22, 2.4, -0.12), sc = 0.58, col = 4 },
 	}
-	for _, s in spireSpecs do
-		local cColor = crystalColors[s.col]
-		local spireCf = cf * CFrame.new(s.pos * scale) * CFrame.Angles(s.rot.X, s.rot.Y, s.rot.Z)
-		part(island, "FacetedCrystal", s.size * scale, spireCf, cColor, glassMat, "Wedge")
-		local core = part(island, "CrystalGlowCore", s.size * Vector3.new(0.55, 0.82, 0.55) * scale,
-			spireCf, cColor, neon, "Wedge")
-		core.Transparency = 0.25
+	for _, cs in clusterSpecs do
+		local cColor = crystalColors[cs.col]
+		local cCf = cf * CFrame.new(cs.pos * scale) * CFrame.Angles(cs.rot.X, cs.rot.Y, cs.rot.Z)
+		local cluster = landmark(island, "Cosmic", cCf, cs.sc * scale)
+		if cluster then
+			cluster.Name = "FacetedCrystalCluster"
+			for _, d in cluster:GetDescendants() do
+				if d:IsA("BasePart") then
+					if d.Name == "Astral" then
+						d.Color = astralObsidian
+						d.Material = slate
+					elseif d.Name == "Violet" then
+						d.Color = cColor:Lerp(astralSlate, 0.35)
+						d.Material = glassMat
+					elseif d.Name == "Crystal" then
+						d.Color = cColor
+						d.Material = neon
+					end
+				end
+			end
+		end
 	end
 
-	-- Slow-orbiting mini crystal satellites around the island
+	-- Bioluminescent astral flowers & boulders on the terrace
+	for i = 1, 4 do
+		local a = (i - 1) * math.pi / 2 + 0.5
+		local spot = cf * CFrame.new(math.cos(a) * 24 * scale, 10 * scale, math.sin(a) * 20 * scale)
+		natureAsset(island, "Flower", "BioluminescentFlora", spot, 1.45 * scale, function(d)
+			if d.Name == "PetalCorolla" then
+				d.Color = crystalColors[(i % #crystalColors) + 1]
+				d.Material = neon
+			elseif d.Name == "CurvedStemAndLeaves" then
+				d.Color = bioTeal
+			end
+		end)
+	end
+
+	-- Slow-orbiting sculpted mini crystal satellites around the island
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + random:NextNumber(-0.2, 0.2)
-		local satDist = (56 + i * 7) * scale
+		local satDist = (58 + i * 7) * scale
 		local satOrigin = cf * CFrame.new(math.cos(a) * satDist, (6 + (i % 2) * 12) * scale, math.sin(a) * satDist)
 		local sat = model(island, "CrystalSatellite")
-		part(sat, "SatRock", Vector3.new(12, 7, 10) * scale, satOrigin, astralRock, slate, ball)
-		part(sat, "SatKeel", Vector3.new(7, 11, 7) * scale,
-			satOrigin * CFrame.new(0, -5 * scale, 0) * CFrame.Angles(math.pi, i, 0.15), deepSlate, slate, "Wedge")
-		part(sat, "SatCrystal", Vector3.new(4.5, 13, 4.5) * scale,
-			satOrigin * CFrame.new(0, 6 * scale, 0) * CFrame.Angles(0.15, i * 0.7, -0.18),
-			crystalColors[(i % #crystalColors) + 1], neon, "Wedge")
+		local cCol = crystalColors[(i % #crystalColors) + 1]
+		local satMesh = landmark(sat, "Cosmic", satOrigin * CFrame.Angles(0.15, i * 0.8, -0.12), 0.24 * scale)
+		if satMesh then
+			for _, d in satMesh:GetDescendants() do
+				if d:IsA("BasePart") and d.Name == "Crystal" then
+					d.Color = cCol
+					d.Material = neon
+				end
+			end
+		end
+		fleetShape(sat, "DockRim", "SatOrbitalHalo",
+			satOrigin * CFrame.Angles(0.3, i, math.pi / 2),
+			Vector3.new(0.35, 14, 14) * scale, cCol, neon)
 		sat.WorldPivot = satOrigin
 		table.insert(satellites, { model = sat, origin = satOrigin, phase = seed + i * 1.3 })
 	end
 
+	island.WorldPivot = cf
 	return island
 end
 
+-- Floating Astral Observatory with sculpted Sunset base, SummitPhotoPodium terrace & FleetGeometry UnionOperation Armillary Sphere
 local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	local obs = model(parent, "FloatingObservatory")
-	local astralStone = rgb(64, 62, 106)
-	local marble = rgb(232, 224, 214)
-	local gold = rgb(244, 192, 82)
-	local royalBanner = rgb(44, 88, 186)
-	local cyanGlow = rgb(104, 236, 255)
+	local astralObsidian = rgb(40, 38, 74)
+	local astralSlate = rgb(66, 62, 114)
+	local bioTeal = rgb(68, 164, 182)
+	local marble = rgb(238, 230, 216)
+	local gold = rgb(246, 194, 84)
+	local royalBanner = rgb(42, 86, 188)
+	local cyanGlow = rgb(104, 238, 255)
 
-	-- Floating stone base & ruined steps
-	part(obs, "ObservatoryIslandBase", Vector3.new(108, 26, 86) * scale, cf, astralStone, slate, ball)
-	part(obs, "AstralTurf", Vector3.new(98, 10, 78) * scale, cf * CFrame.new(0, 10 * scale, 0), rgb(78, 136, 148), grassMat, ball)
-	for i = 1, 5 do
-		local a = (i - 1) * math.pi * 2 / 5 + 0.2
-		part(obs, "ObservatoryUnderCrag", Vector3.new(36, 42 + i * 4, 30) * scale,
-			cf * CFrame.new(math.cos(a) * 28 * scale, -20 * scale, math.sin(a) * 22 * scale)
-				* CFrame.Angles(math.pi, a, 0.18), rgb(44, 42, 76), slate, "Wedge")
+	-- Sculpted floating island base with ruined colonnade arches from Sunset
+	buildSculptedIslandTerrain(obs, cf, scale * 0.86, {
+		basalt = astralObsidian,
+		cliff = astralSlate,
+		moss = bioTeal,
+		sandstone = astralSlate,
+		ivory = marble,
+		gold = gold,
+		turfMat = slate,
+		cloudColor = rgb(84, 74, 156),
+		cloudShadow = rgb(52, 112, 162),
+		cloudTransparency = 0.22,
+	}, true)
+
+	-- Sculpted marble-and-gold compass terrace cloned from CloudPalace's SummitPhotoPodium
+	local terraceCf = cf * CFrame.new(0, 12.5 * scale, 0)
+	clonePalacePodium(obs, "ObservatoryCompassTerrace", terraceCf, 2.35 * scale,
+		marble, gold, astralObsidian, marble, cyanGlow)
+
+	-- Sanctuary astral lanterns around the terrace perimeter
+	for i = 1, 4 do
+		local a = (i - 1) * math.pi / 2 + math.pi / 4
+		clonePalaceLantern(obs,
+			terraceCf * CFrame.new(math.cos(a) * 24 * scale, 1.5 * scale, math.sin(a) * 24 * scale),
+			1.8 * scale, cyanGlow)
 	end
 
-	-- Stepped marble ruin dais & colonnade
-	part(obs, "DaisLower", Vector3.new(68, 5, 56) * scale, cf * CFrame.new(0, 15 * scale, 0), marble, marbleMat)
-	part(obs, "DaisUpper", Vector3.new(54, 5, 44) * scale, cf * CFrame.new(0, 19.5 * scale, 0), marble, marbleMat)
-	part(obs, "GrandStair", Vector3.new(22, 8, 24) * scale,
-		cf * CFrame.new(-18 * scale, 13 * scale, 28 * scale) * CFrame.Angles(0.32, 0, 0), marble, marbleMat)
-
-	for idx, colPos in {
-		Vector3.new(-22, 34, -16),
-		Vector3.new(22, 36, -16),
-		Vector3.new(26, 32, 6),
-		Vector3.new(-25, 29, 10),
-	} do
-		local h = (idx <= 2 and 26 or 18) * scale
-		column(obs, "RuinedColumn", (cf * CFrame.new(colPos * scale)).Position, 5.8 * scale, h, marble, marbleMat)
-	end
-	part(obs, "BrokenArchitrave", Vector3.new(32, 5.5, 7.5) * scale,
-		cf * CFrame.new(12 * scale, 49 * scale, -16 * scale) * CFrame.Angles(0, 0, -0.12), marble, marbleMat)
-
-	-- Royal astral banners hanging on the front cliff
+	-- Royal astral banners with sculpted FleetGeometry.Star crests hanging on the front cliff
 	for _, xSide in { -1, 1 } do
-		local bannerCf = cf * CFrame.new(xSide * 24 * scale, 6 * scale, 36 * scale)
+		local bannerCf = cf * CFrame.new(xSide * 22 * scale, 4 * scale, 32 * scale)
 		part(obs, "BannerTrim", Vector3.new(7.5, 18, 1.2) * scale, bannerCf, gold, metalMat)
 		part(obs, "AstralBanner", Vector3.new(6.2, 16.5, 1.5) * scale, bannerCf, royalBanner, plastic)
-		part(obs, "BannerStar", Vector3.one * (2.6 * scale), bannerCf * CFrame.new(0, 1 * scale, 0.8 * scale), gold, neon, ball)
+		fleetShape(obs, "Star", "BannerStar",
+			bannerCf * CFrame.new(0, 1 * scale, 0.9 * scale) * CFrame.Angles(math.pi / 2, 0, 0),
+			Vector3.new(0.45, 4.4, 4.4) * scale, gold, neon)
 	end
 
-	-- Central pedestal & rotating multi-ring Golden Armillary Sphere
-	local sphereCenterCf = cf * CFrame.new(-2 * scale, 48 * scale, -2 * scale)
-	column(obs, "ArmillaryPedestal", (cf * CFrame.new(-2 * scale, 27 * scale, -2 * scale)).Position, 11 * scale, 12 * scale, marble, marbleMat)
-	part(obs, "PedestalGoldCollar", Vector3.new(14, 3.5, 14) * scale, cf * CFrame.new(-2 * scale, 33 * scale, -2 * scale), gold, metalMat, ball)
-	part(obs, "AstralCoreStar", Vector3.one * (8.5 * scale), sphereCenterCf, cyanGlow, neon, ball)
+	-- Central pedestal & rotating multi-ring Golden Armillary Sphere built with smooth FleetGeometry UnionOperation rings
+	local sphereCenterCf = cf * CFrame.new(0, 52 * scale, -2 * scale)
+	column(obs, "ArmillaryPedestal", (cf * CFrame.new(0, 24 * scale, -2 * scale)).Position, 11 * scale, 18 * scale, marble, marbleMat)
+	fleetShape(obs, "DockRim", "PedestalGoldCollar",
+		cf * CFrame.new(0, 33 * scale, -2 * scale) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(1.2, 16, 16) * scale, gold, metalMat)
 
-	local ringRadii = { 23 * scale, 18.5 * scale, 14 * scale }
-	local ringSpeeds = {
-		Vector3.new(0.28, 0.42, 0.12),
-		Vector3.new(-0.36, 0.22, 0.38),
-		Vector3.new(0.18, -0.48, -0.26),
+	-- Glowing AstralCoreStar + 3D Star UnionOperations at the center of the Armillary Sphere
+	part(obs, "AstralCoreStar", Vector3.one * (8.2 * scale), sphereCenterCf, cyanGlow, neon, ball)
+	fleetShape(obs, "Star", "AstralStarHorizontal",
+		sphereCenterCf, Vector3.new(0.8, 13.5, 13.5) * scale, gold, neon)
+	fleetShape(obs, "Star", "AstralStarVertical",
+		sphereCenterCf * CFrame.Angles(math.pi / 2, 0, 0), Vector3.new(0.8, 13.5, 13.5) * scale, cyanGlow, neon)
+
+	local ringSpecs = {
+		{ diameter = 48 * scale, thickness = 1.35 * scale, template = "SaturnRing", speed = Vector3.new(0.28, 0.42, 0.12) },
+		{ diameter = 38 * scale, thickness = 1.15 * scale, template = "DockRim", speed = Vector3.new(-0.36, 0.22, 0.38) },
+		{ diameter = 28 * scale, thickness = 0.95 * scale, template = "DockRim", speed = Vector3.new(0.18, -0.48, -0.26) },
 	}
-	for rIdx, radius in ringRadii do
+	for rIdx, rSpec in ringSpecs do
 		local ringModel = model(obs, "ArmillaryRing_" .. rIdx)
 		local ringOrigin = sphereCenterCf * CFrame.Angles(0.38 * rIdx, 0.52 * rIdx, 0.24 * rIdx)
-		local segments = 12
-		local segLen = 2 * radius * math.sin(math.pi / segments) * 1.08
-		for s = 1, segments do
-			local a = (s - 1) * math.pi * 2 / segments
-			local p = Vector3.new(math.cos(a) * radius, math.sin(a) * radius, 0)
-			local segCf = ringOrigin * CFrame.new(p) * CFrame.Angles(0, 0, a)
-			part(ringModel, "RingArc", Vector3.new(1.8 * scale, segLen, 2.2 * scale), segCf, gold, metalMat)
+
+		-- Primary smooth UnionOperation ring + orthogonal meridian band
+		fleetShape(ringModel, rSpec.template, "PrimaryGyroRing",
+			ringOrigin,
+			Vector3.new(rSpec.thickness, rSpec.diameter, rSpec.diameter),
+			gold, metalMat)
+		fleetShape(ringModel, "DockRim", "InnerBezelRing",
+			ringOrigin,
+			Vector3.new(rSpec.thickness * 1.3, rSpec.diameter * 0.94, rSpec.diameter * 0.94),
+			rIdx == 2 and cyanGlow or gold, rIdx == 2 and neon or metalMat)
+
+		-- Cardinal astrolabe degree nodes around each ring
+		local r = rSpec.diameter * 0.5
+		for n = 1, 4 do
+			local a = (n - 1) * math.pi / 2
+			local nodeCf = ringOrigin * CFrame.new(0, math.cos(a) * r, math.sin(a) * r)
+			part(ringModel, "AstrolabeNode", Vector3.one * (2.4 * scale), nodeCf, n % 2 == 0 and cyanGlow or gold, neon, ball)
 		end
+
 		ringModel.WorldPivot = ringOrigin
-		table.insert(armillaryRings, { model = ringModel, origin = ringOrigin, speed = ringSpeeds[rIdx] })
+		table.insert(armillaryRings, { model = ringModel, origin = ringOrigin, speed = rSpec.speed })
 	end
 
+	obs.WorldPivot = cf
 	return obs
 end
 
+-- Sculpted DistantCosmicArch built from BiomeLandmarkMeshes.HorizonArch + Cosmic crystal crown
 local function buildDistantCosmicArch(parent, cf, scale)
 	local arch = model(parent, "DistantCosmicArch")
-	local stone = rgb(66, 62, 112)
-	local runeGlow = rgb(112, 232, 255)
+	local stone = rgb(66, 62, 118)
+	local runeGlow = rgb(104, 232, 255)
 	local violetGlow = rgb(206, 112, 255)
+	local nebulaDark = rgb(52, 46, 94)
 
-	part(arch, "ArchBase", Vector3.new(44, 12, 28) * scale, cf, stone, slate, ball)
-	for _, side in { -1, 1 } do
-		column(arch, "ArchPillar", (cf * CFrame.new(side * 13 * scale, 16 * scale, 0)).Position, 5.5 * scale, 24 * scale, stone, slate)
-		part(arch, "ArchShoulder", Vector3.new(15, 5.2, 6.2) * scale,
-			cf * CFrame.new(side * 7.5 * scale, 29 * scale, 0) * CFrame.Angles(0, 0, side * -0.52), stone, slate)
-		part(arch, "RuneNode", Vector3.one * (3.2 * scale),
-			cf * CFrame.new(side * 13 * scale, 18 * scale, 3 * scale), runeGlow, neon, ball)
+	local sculptedArch = landmark(arch, "HorizonArch", cf, 0.22 * scale)
+	if sculptedArch then
+		sculptedArch.Name = "SculptedAstralArch"
+		for _, d in sculptedArch:GetDescendants() do
+			if d:IsA("BasePart") then
+				if d.Name == "HorizonStone" then
+					d.Color = stone
+					d.Material = slate
+				elseif d.Name == "HorizonGold" then
+					d.Color = runeGlow
+					d.Material = neon
+				elseif d.Name == "VistaIvory" then
+					d.Color = astralSlate or rgb(78, 72, 134)
+				elseif d.Name == "VistaShadow" then
+					d.Color = nebulaDark
+				end
+			end
+		end
 	end
-	part(arch, "ArchCrown", Vector3.new(11, 5.5, 6.8) * scale, cf * CFrame.new(0, 32.5 * scale, 0), stone, slate)
-	part(arch, "CrownCrystal", Vector3.new(3.8, 8.5, 3.8) * scale,
-		cf * CFrame.new(0, 36.5 * scale, 0) * CFrame.Angles(0, 0.6, 0), violetGlow, neon, "Wedge")
+
+	local crown = landmark(arch, "Cosmic", cf * CFrame.new(0, 18 * scale, 0), 0.18 * scale)
+	if crown then
+		crown.Name = "ArchCrystalCrown"
+		for _, d in crown:GetDescendants() do
+			if d:IsA("BasePart") and d.Name == "Crystal" then
+				d.Color = violetGlow
+				d.Material = neon
+			end
+		end
+	end
+	arch.WorldPivot = cf
 	return arch
 end
 
@@ -1081,15 +1607,15 @@ local function exosphere(parent)
 	local satellites = {}
 	local armillaryRings = {}
 
-	-- Polish: Rework Cosmic crystal templates into primary crystal islands with stone bases, faceted crystals, and slow satellites
+	-- Polish: Sculpted Cosmic crystal islands with Sunset terrain bases, multi-cluster Cosmic spires & orbiting satellites
 	buildCosmicCrystalIsland(parent, CFrame.new(-115, altitude(6960), -248) * CFrame.Angles(0, 0.38, 0), 1.04, satellites, 610)
 	buildCosmicCrystalIsland(parent, CFrame.new(258, altitude(6980), -22) * CFrame.Angles(0, -1.25, 0), 0.85, satellites, 620)
 	buildCosmicCrystalIsland(parent, CFrame.new(-88, altitude(7480), -262) * CFrame.Angles(0, 0.45, 0), 0.84, satellites, 630)
 
-	-- P1: Floating Astral Observatory with rotating armillary sphere rings and ruined stone base
+	-- P1: Floating Astral Observatory with smooth UnionOperation armillary sphere rings and sculpted ruin terrace
 	buildFloatingObservatory(parent, CFrame.new(118, altitude(7040), -242) * CFrame.Angles(0, -0.42, 0), 1.02, armillaryRings)
 
-	-- P2: Small glowing stone arches in the distance as a third depth layer
+	-- P2: Sculpted glowing stone arches in the distance as a third depth layer
 	local archSpecs = {
 		{ km = 6280, angle = -1.35, radius = 425, scale = 0.92 },
 		{ km = 6680, angle = -1.78, radius = 445, scale = 1.02 },
@@ -1104,15 +1630,26 @@ local function exosphere(parent)
 		buildDistantCosmicArch(parent, cf, spec.scale)
 	end
 
-	-- Sweeping arc of small glowing cosmic pebbles/satellites in the background (slow gentle float)
+	-- Sweeping arc of sculpted glowing cosmic pebbles/satellites in the background
 	for i = 1, 9 do
 		local t = (i - 1) / 8
 		local arcPos = Vector3.new(-155 + t * 285, altitude(6720 + t * 560) + math.sin(t * math.pi) * 28, -315 - math.sin(t * math.pi) * 45)
 		local cf = CFrame.new(arcPos) * CFrame.Angles(0, i * 0.5, 0)
 		local pebble = model(parent, "CosmicArcStone")
 		local sc = 0.55 + (1 - math.abs(t - 0.5)) * 0.45
-		part(pebble, "Stone", Vector3.new(11, 6, 9) * sc, cf, rgb(64, 62, 108), slate, ball)
-		part(pebble, "GlowRing", Vector3.new(13, 1.8, 11) * sc, cf, i % 2 == 0 and rgb(92, 232, 255) or rgb(216, 112, 255), neon, ball)
+		local ringCol = i % 2 == 0 and rgb(92, 232, 255) or rgb(216, 112, 255)
+		local crag = landmark(pebble, "Cosmic", cf, 0.2 * sc)
+		if crag then
+			for _, d in crag:GetDescendants() do
+				if d:IsA("BasePart") and d.Name == "Crystal" then
+					d.Color = ringCol
+					d.Material = neon
+				end
+			end
+		end
+		fleetShape(pebble, "SaturnRing", "GlowRing",
+			cf * CFrame.Angles(0.25, 0, math.pi / 2),
+			Vector3.new(0.4, 15, 15) * sc, ringCol, neon)
 		pebble.WorldPivot = cf
 		table.insert(satellites, { model = pebble, origin = cf, phase = 700 + i * 0.8 })
 	end
@@ -1134,7 +1671,6 @@ local function exosphere(parent)
 
 		local start = socket(from, Vector3.zero, Vector3.new(1, -0.83, -0.15))
 		local finish = socket(to, Vector3.zero, Vector3.new(1, index == 1 and 0.75 or 0.39, 0.19))
-		-- One continuous curve per layer keeps the ribbons joined from every camera angle.
 		for layer = 1, 5 do
 			local width = 87 - (layer - 1) * 17
 			local glow = beam(start, finish, width, width * 0.83, ribbon.color, softFade(1, 0.87 - layer * 0.045), 275)
@@ -1173,62 +1709,106 @@ local function exosphere(parent)
 	end
 end
 
+-- Sculpted FloatingCrystalGate built with CloudPalace's own MeshPart & UnionOperation kit
 local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 	local gate = model(parent, "FloatingCrystalGate")
-	local ivory = rgb(248, 238, 218)
-	local gold = rgb(238, 188, 84)
-	local stone = rgb(164, 152, 146)
-	local grass = rgb(104, 162, 108)
-	local cyanCrystal = rgb(88, 234, 255)
-	local deepCyan = rgb(42, 178, 226)
+	local ivory = rgb(246, 236, 214)
+	local gold = rgb(236, 186, 82)
+	local warmStone = rgb(186, 174, 156)
+	local grass = rgb(94, 152, 108)
+	local cyanCrystal = rgb(88, 236, 255)
+	local deepCyan = rgb(44, 182, 232)
 
-	-- Floating sanctuary island base with greenery and waterfall (distinct from ReturnPortal)
-	part(gate, "SanctuaryStone", Vector3.new(78, 22, 62) * scale, cf, stone, slate, ball)
-	part(gate, "SanctuaryLawn", Vector3.new(72, 9, 56) * scale, cf * CFrame.new(0, 8.5 * scale, 0), grass, grassMat, ball)
-	part(gate, "MarblePlinth", Vector3.new(56, 5, 38) * scale, cf * CFrame.new(0, 13 * scale, 0), ivory, marbleMat)
-	for i = 1, 4 do
-		local a = (i - 1) * math.pi / 2 + 0.4
-		part(gate, "UnderSpire", Vector3.new(26, 36 + i * 4, 24) * scale,
-			cf * CFrame.new(math.cos(a) * 18 * scale, -18 * scale, math.sin(a) * 14 * scale)
-				* CFrame.Angles(math.pi, a, 0.16), stone, slate, "Wedge")
+	-- Sculpted floating sanctuary island base + golden PalaceCloud bed
+	buildSculptedIslandTerrain(gate, cf, scale * 0.68, {
+		basalt = warmStone,
+		cliff = rgb(214, 198, 176),
+		moss = grass,
+		rockMat = limestoneMat,
+		cliffMat = limestoneMat,
+		cloudColor = rgb(252, 236, 198),
+		cloudShadow = rgb(222, 198, 176),
+		cloudTransparency = 0.08,
+	}, false)
+
+	-- Sculpted marble-and-gold sanctuary dais cloned from CloudPalace's SummitPhotoPodium
+	local daisCf = cf * CFrame.new(0, 9.5 * scale, 0)
+	clonePalacePodium(gate, "SanctuaryMarbleDais", daisCf, 2.15 * scale,
+		ivory, gold, deepCyan, ivory, cyanCrystal)
+
+	-- Sculpted twin-arch sanctuary gateway cloned from BiomeLandmarkMeshes.HorizonArch & Sunset.Ivory
+	local archClone = landmark(gate, "HorizonArch", daisCf * CFrame.new(0, 6 * scale, 0), 0.26 * scale)
+	if archClone then
+		archClone.Name = "SculptedSanctuaryArchway"
+		for _, d in archClone:GetDescendants() do
+			if d:IsA("BasePart") then
+				if d.Name == "HorizonStone" then
+					d.Color = ivory
+					d.Material = limestoneMat
+				elseif d.Name == "HorizonGold" then
+					d.Color = gold
+					d.Material = metalMat
+				elseif d.Name == "VistaIvory" or d.Name == "VistaShadow" then
+					d:Destroy()
+				end
+			end
+		end
 	end
 
-	-- Ornate twin-column golden & ivory archway
+	-- Sanctuary garden trees, ferns, flowers & CloudPalace lanterns flanking the gateway
 	for _, side in { -1, 1 } do
-		column(gate, "OuterColumn", (cf * CFrame.new(side * 19 * scale, 29 * scale, 0)).Position, 5.2 * scale, 28 * scale, ivory, marbleMat)
-		column(gate, "InnerColumn", (cf * CFrame.new(side * 13 * scale, 27 * scale, 0)).Position, 3.8 * scale, 24 * scale, gold, metalMat)
-		part(gate, "PillarCapital", Vector3.new(14, 4, 10) * scale, cf * CFrame.new(side * 16 * scale, 43 * scale, 0), gold, metalMat)
-		part(gate, "ArchVault", Vector3.new(19, 6.5, 8.5) * scale,
-			cf * CFrame.new(side * 10 * scale, 51 * scale, 0) * CFrame.Angles(0, 0, side * -0.55), ivory, marbleMat)
-		part(gate, "ArchGoldTrim", Vector3.new(18, 3.2, 9.2) * scale,
-			cf * CFrame.new(side * 9.5 * scale, 53.5 * scale, 0) * CFrame.Angles(0, 0, side * -0.55), gold, metalMat)
+		natureAsset(gate, "BroadleafTree", "SanctuaryTree",
+			daisCf * CFrame.new(side * 24 * scale, 0.5 * scale, -6 * scale) * CFrame.Angles(0, side * 0.8, 0),
+			0.68 * scale)
+		natureAsset(gate, "Fern", "SanctuaryFern",
+			daisCf * CFrame.new(side * 18 * scale, 1.0 * scale, 8 * scale),
+			1.25 * scale)
+		natureAsset(gate, "Flower", "SanctuaryFlower",
+			daisCf * CFrame.new(side * 15 * scale, 1.2 * scale, 10 * scale),
+			1.35 * scale)
+		clonePalaceLantern(gate,
+			daisCf * CFrame.new(side * 14 * scale, 1.2 * scale, 14 * scale),
+			1.65 * scale, cyanCrystal)
 	end
-	part(gate, "ArchKeystone", Vector3.new(12, 7.5, 9.5) * scale, cf * CFrame.new(0, 56.5 * scale, 0), gold, metalMat)
-	column(gate, "KeystoneFinial", (cf * CFrame.new(0, 63 * scale, 0)).Position, 2.2 * scale, 8 * scale, gold, metalMat)
 
-	-- Hovering diamond crystal suspended inside the arch (rotating & bobbing)
-	local crystalOrigin = cf * CFrame.new(0, 34 * scale, 0)
+	-- Hovering multi-faceted diamond crystal cluster + intersecting golden UnionOperation halos inside the arch
+	local crystalOrigin = daisCf * CFrame.new(0, 18.5 * scale, 3 * scale)
 	local diamond = model(gate, "SuspendedDiamondCrystal")
-	part(diamond, "UpperPyramid", Vector3.new(9.5, 13, 9.5) * scale,
-		crystalOrigin * CFrame.new(0, 6.5 * scale, 0) * CFrame.Angles(0, math.pi / 4, 0), cyanCrystal, neon, "Wedge")
-	part(diamond, "LowerPyramid", Vector3.new(9.5, 13, 9.5) * scale,
-		crystalOrigin * CFrame.new(0, -6.5 * scale, 0) * CFrame.Angles(math.pi, math.pi / 4, 0), deepCyan, neon, "Wedge")
-	part(diamond, "CrystalHaloRing", Vector3.new(18, 1.6, 18) * scale, crystalOrigin, gold, neon, ball)
+	local crystalMesh = landmark(diamond, "Cosmic", crystalOrigin, 0.24 * scale)
+	if crystalMesh then
+		crystalMesh.Name = "FacetedSanctuaryCrystal"
+		for _, d in crystalMesh:GetDescendants() do
+			if d:IsA("BasePart") then
+				if d.Name == "Crystal" then
+					d.Color = cyanCrystal
+					d.Material = neon
+				elseif d.Name == "Violet" then
+					d.Color = deepCyan
+					d.Material = glassMat
+				elseif d.Name == "Astral" then
+					d.Color = gold
+					d.Material = metalMat
+				end
+			end
+		end
+	end
+	fleetShape(diamond, "DockRim", "CrystalHaloHorizontal",
+		crystalOrigin * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.65, 19.5, 19.5) * scale, gold, neon)
+	fleetShape(diamond, "DockRim", "CrystalHaloInclined",
+		crystalOrigin * CFrame.Angles(0.65, 0.4, 0),
+		Vector3.new(0.55, 16.5, 16.5) * scale, cyanCrystal, neon)
+	fleetShape(diamond, "Star", "CrystalCrestStar",
+		crystalOrigin * CFrame.new(0, 11.5 * scale, 0) * CFrame.Angles(math.pi / 2, 0, 0),
+		Vector3.new(0.55, 5.2, 5.2) * scale, gold, neon)
 	diamond.WorldPivot = crystalOrigin
 	table.insert(gateCrystals, { model = diamond, origin = crystalOrigin })
 
-	-- Small cascading waterfall off the sanctuary lip
-	local lip = (cf * CFrame.new(0, 9 * scale, 26 * scale)).Position
-	local wf = rail(gate, "GateWaterfall", lip)
-	wf.Transparency = 1
-	beam(
-		socket(wf, Vector3.zero, Vector3.new(0, -1, 0.25)),
-		socket(wf, Vector3.new(0, -52 * scale, 10 * scale), Vector3.new(0, -1, 0.15)),
-		5.2 * scale, 11 * scale,
-		ColorSequence.new(rgb(112, 218, 255), rgb(228, 248, 255)),
-		softFade(0.88, 0.25),
-		10 * scale
-	)
+	-- Sculpted waterfall cascading off the front sanctuary lip
+	attachSculptedWaterfall(gate, daisCf * CFrame.new(0, -1 * scale, 22 * scale), 68 * scale, scale * 1.1,
+		rgb(108, 214, 252), rgb(228, 248, 255), rgb(252, 244, 226))
+
+	gate.WorldPivot = cf
 	return gate
 end
 
@@ -1278,7 +1858,6 @@ end
 local function palaceHorizon(parent, anchor)
 	local horizon = model(parent, "PalaceHorizon")
 	local layouts = {
-		-- Polish: Multi-layered ascent pavilions, arches & spires distributed from 8,150 km to 9,600 km
 		{ "HorizonPavilion", Vector3.new(-165, -510, -255), 0.52, -16 },
 		{ "HorizonArch", Vector3.new(-195, -455, -295), 0.66, -12 },
 		{ "HorizonSpire", Vector3.new(185, -420, -265), 0.58, 22 },
@@ -1287,7 +1866,6 @@ local function palaceHorizon(parent, anchor)
 		{ "HorizonSpire", Vector3.new(-285, -295, -45), 0.64, -24 },
 		{ "HorizonArch", Vector3.new(215, -245, -310), 0.72, 18 },
 		{ "HorizonPavilion", Vector3.new(-175, -185, -295), 0.48, -8 },
-		-- Upper summit horizon ring around the Cloud Palace
 		{ "HorizonPavilion", Vector3.new(-275, 1, -438), 0.72, -18 },
 		{ "HorizonSpire", Vector3.new(323, -12, -558), 0.78, 25 },
 		{ "HorizonCloud", Vector3.new(335, -22, 456), 0.83, -18 },
@@ -1382,13 +1960,10 @@ local function palaceUpperSky(parent, anchor)
 		ray.LightEmission = 0.18
 	end
 
-	-- Polish: Adjust ship distances & routes so multiple ship layers are readable during the 8,000–10,000 km climb as well as at the summit
 	local routes = {
-		-- Mid-ascent patrol ships (8,400 km – 9,350 km, visible around 9,000 km forward & side)
 		{ "CloudSailer", Vector3.new(-85, -335, -225), Vector3.new(42, 6, 30), 84, 0.35, 1.08 },
 		{ "CloudKetch", Vector3.new(242, -315, -25), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
 		{ "CloudCutter", Vector3.new(95, -210, -255), Vector3.new(48, 8, 36), 108, 4.2, 0.94 },
-		-- Summit patrol ships around the Cloud Palace
 		{ "CloudSailer", Vector3.new(57, 79, -131), Vector3.new(138, 6, 43), 88, 0.12, 1.04 },
 		{ "CloudKetch", Vector3.new(425, 278, -715), Vector3.new(160, 13, 70), 133, 2.9, 0.92 },
 		{ "CloudCutter", Vector3.new(170, 460, 630), Vector3.new(122, 13, 69), 151, 5.2, 0.90 },
@@ -1450,7 +2025,7 @@ local function gateway(parent)
 		animateSky = palaceUpperSky(parent, anchor)
 	end
 
-	-- P2: Floating crystal gate landmark in the distance, distinct in shape & color from ReturnPortal
+	-- P2: Sculpted FloatingCrystalGate landmark in the distance
 	local gateCrystals = {}
 	buildFloatingCrystalGate(parent, CFrame.new(112, altitude(8980), -238) * CFrame.Angles(0, -0.35, 0), 1.04, gateCrystals)
 
@@ -1473,7 +2048,6 @@ local function gateway(parent)
 		end
 	end
 
-	-- The far silhouette is an atmospheric preview. Victory still uses the real palace.
 	local silhouette = model(parent, "PalaceSilhouette")
 	local at = CFrame.new(0, altitude(9450), -398)
 	local shadow, gold = rgb(129, 104, 134), rgb(187, 151, 130)
