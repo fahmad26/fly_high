@@ -128,14 +128,16 @@ local BIOME_SETTINGS = {
 		OutdoorAmbient = Color3.fromRGB(40, 80, 120),
 	},
 	[5] = { -- 8,000 - 10,000 km: The Celestial Gateway
-		ClockTime = 14.0,
-		Brightness = 3.5,
+		ClockTime = 8.05,
+		Brightness = 3.65,
 		FogColor = Color3.fromRGB(255, 245, 210),
 		FogEnd = 5000,
-		OutdoorAmbient = Color3.fromRGB(255, 230, 160),
-		AtmosphereColor = Color3.fromRGB(255, 232, 184),
-		AtmosphereDecay = Color3.fromRGB(181, 158, 120),
-		Tint = Color3.fromRGB(255, 246, 224),
+		OutdoorAmbient = Color3.fromRGB(157, 155, 167),
+		Ambient = Color3.fromRGB(102, 108, 127),
+		AtmosphereColor = Color3.fromRGB(249, 229, 205),
+		AtmosphereDecay = Color3.fromRGB(224, 181, 142),
+		Tint = Color3.fromRGB(255, 244, 229),
+		Contrast = 0.085,
 	}
 }
 
@@ -172,7 +174,10 @@ local function applyBiome(biomeIndex)
 	activeTween:Play()
 
 	if colorGradeTween then colorGradeTween:Cancel() end
-	colorGradeTween = TweenService:Create(colorGrade, tweenInfo, { TintColor = cfg.Tint or Color3.new(1, 1, 1) })
+	colorGradeTween = TweenService:Create(colorGrade, tweenInfo, {
+		TintColor = cfg.Tint or Color3.new(1, 1, 1),
+		Contrast = cfg.Contrast or 0,
+	})
 	colorGradeTween:Play()
 
 	if atmosphere then

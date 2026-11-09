@@ -444,7 +444,9 @@ local function gateway(parent)
 	local at = CFrame.new(0, altitude(9450), -398)
 	local shadow, gold = rgb(129, 104, 134), rgb(187, 151, 130)
 	if landmark(silhouette, "Palace", at, 0.75) then
-		landmark(silhouette, "PalaceCloud", at, 0.75)
+		if not landmark(silhouette, "PalaceFoundation", at, 0.75) then
+			landmark(silhouette, "PalaceCloud", at, 0.75)
+		end
 	else
 		part(silhouette, "CloudPlinth", Vector3.new(124, 20, 49), at, shadow, plastic, ball)
 		part(silhouette, "Keep", Vector3.new(48, 33, 28), at * CFrame.new(0, 17, 0), shadow)
@@ -458,9 +460,12 @@ local function gateway(parent)
 	local silhouetteParts = {}
 	for _, piece in silhouette:GetDescendants() do
 		if piece:IsA("BasePart") then
-			if piece:IsA("MeshPart") then piece.Color = piece.Color:Lerp(shadow, 0.56) end
+			if piece:IsA("MeshPart") then
+				local accent = piece.Name:match("^Dome") or piece.Name:match("^Cascade")
+				piece.Color = piece.Color:Lerp(shadow, accent and 0.23 or 0.44)
+			end
+			silhouetteParts[piece] = piece.Transparency
 			piece.Transparency = 1
-			table.insert(silhouetteParts, piece)
 		end
 	end
 
@@ -486,7 +491,9 @@ local function gateway(parent)
 	return function(km)
 		local fadeIn = math.clamp((km - 8850) / 430, 0, 1)
 		local fadeOut = math.clamp((9860 - km) / 370, 0, 1)
-		for _, piece in silhouetteParts do piece.Transparency = 1 - fadeIn * fadeOut * 0.82 end
+		for piece, transparency in silhouetteParts do
+			piece.Transparency = 1 - (1 - transparency) * fadeIn * fadeOut * 0.82
+		end
 	end
 end
 
