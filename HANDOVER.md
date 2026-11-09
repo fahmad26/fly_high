@@ -4,6 +4,8 @@
 
 ## 0. Cara membaca status terbaru
 
+**9 November 2026 — Scenery.** Lihat [handover aset scenery 0–10.000 km](./design/SCENERY_HANDOVER.md) untuk inventaris yang sudah terpasang, aset yang masih kurang, dan urutan implementasinya. [Gambar konsep v2](./design/fly-high-scenery-0-10000km-v2.png) adalah referensi visual aktif.
+
 Untuk rintangan, baca [status rintangan reguler di PRD](./PRD_Fly_High.md#target-desain-rintangan-reguler-per-segmen) dan catatan Dinding Badai di bagian 11. Place aktif memakai batas 300 km. Playtest Studio memverifikasi bahwa spawn ditolak pada 299,99 km dan Burung Liar mulai muncul lewat jadwal normal pada 300 km. Ambang 200 km dan 1.200 km pada catatan bertanggal di bawah adalah riwayat.
 
 Model rintangan reguler dibuat oleh `ServerScriptService.FlyHighServer.ObstacleArt`. `ObstacleManager` menentukan jadwal, fase peringatan/aktif, lintasan, dan hit di server. Studio memverifikasi spawn kesembilan pasangan, penolakan spawn di bawah 1.200 km, peralihan laser ke sambaran, gerak meteorit, tembakan Drone Penjaga, serta urutan tiga sambaran pada Badai Gerbang Surgawi. Uji memakai posisi terkontrol.

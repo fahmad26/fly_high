@@ -10,6 +10,7 @@ Snapshot dokumentasi: **31 Oktober 2026**. Dokumen ini menyatukan keadaan terbar
 2. Untuk HUD aktif, baca [catatan Sky Adventure](./assets/ui/sky-adventure/README.md) dan [desain yang disetujui](./design/features/hud-generated-art/design.md). Laporan `audit/hud-arcade-results.json` dan preview lama adalah riwayat.
 3. Untuk status perjalanan penuh dan masalah co-op, baca `audit/FULL_JOURNEY_QA.md` dan `audit/full-journey-summary.json`.
 4. `AUDIT_REPORT.md` menyimpan temuan serta hasil pengujian dari banyak iterasi. Jangan menganggap semua angka/hashes di laporan lama mewakili build terbaru.
+5. Untuk melanjutkan scenery, baca [handover aset scenery 0–10.000 km](./design/SCENERY_HANDOVER.md) dan [gambar konsep v2](./design/fly-high-scenery-0-10000km-v2.png). Inventaris 9 November 2026 di sana mencerminkan place lokal yang lebih baru daripada snapshot lama pada halaman ini.
 
 ## Workspace, versi dan sumber
 
