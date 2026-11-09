@@ -54,7 +54,9 @@ function Manager.EndFlight(fd,victory)
   if victory and U.Alive(p,fd) then _G.FlyHighDataManager.AddSummit(p) end
  end
  if victory then
-  local dock=workspace.CloudPalace.CloudHavenDock
+  local palace=workspace.CloudPalace
+  local dock=palace.CloudHavenDock
+  local keep=palace.CastleKeep
   -- Move the complete assembly and crew through a clear side approach above the flight ceiling.
   local passengers={}
   for _,p in ipairs(fd.players) do
@@ -86,8 +88,12 @@ function Manager.EndFlight(fd,victory)
    for i,p in ipairs(fd.players) do
     local data=passengers[p]
     if data and data.root.Parent then
-     data.root.CFrame=CFrame.new(dock.Position+Vector3.new((i-2)*4,5,-8))
+     local arrival=dock.Position+Vector3.new((i-(#fd.players+1)/2)*4,5,-8)
+     local lookAt=Vector3.new(keep.Position.X,arrival.Y,keep.Position.Z)
+     data.root.CFrame=CFrame.lookAt(arrival,lookAt)
      data.root.Anchored=data.anchored data.root.AssemblyLinearVelocity=Vector3.zero
+     p:SetAttribute("PalaceArrival",nil)
+     p:SetAttribute("PalaceArrival",arrival)
     end
    end
   end)

@@ -15,6 +15,9 @@ local colorGrade = Instance.new("ColorCorrectionEffect")
 colorGrade.Name = "FlyHighBiomeGrade"
 colorGrade.Parent = Lighting
 local baseAmbient = Lighting.Ambient
+local baseLatitude = Lighting.GeographicLatitude
+local baseShadowSoftness = Lighting.ShadowSoftness
+local baseSunTint = Lighting.ColorShift_Top
 
 local sceneryRoot = Instance.new("Folder")
 sceneryRoot.Name = "ClientBiomeScenery"
@@ -88,6 +91,7 @@ local atmosphereColorTween
 local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
 local clearDensity = atmosphere and atmosphere.Density
 local clearHaze = atmosphere and atmosphere.Haze
+local clearGlare = atmosphere and atmosphere.Glare
 local clearAtmosphereColor = atmosphere and atmosphere.Color
 local clearAtmosphereDecay = atmosphere and atmosphere.Decay
 
@@ -128,16 +132,22 @@ local BIOME_SETTINGS = {
 		OutdoorAmbient = Color3.fromRGB(40, 80, 120),
 	},
 	[5] = { -- 8,000 - 10,000 km: The Celestial Gateway
-		ClockTime = 8.05,
-		Brightness = 3.65,
-		FogColor = Color3.fromRGB(255, 245, 210),
+		ClockTime = 8.55,
+		GeographicLatitude = 52,
+		Brightness = 3.15,
+		ShadowSoftness = 0.68,
+		ColorShift_Top = Color3.fromRGB(255, 216, 171),
+		FogColor = Color3.fromRGB(255, 232, 202),
 		FogEnd = 5000,
-		OutdoorAmbient = Color3.fromRGB(157, 155, 167),
-		Ambient = Color3.fromRGB(102, 108, 127),
-		AtmosphereColor = Color3.fromRGB(249, 229, 205),
-		AtmosphereDecay = Color3.fromRGB(224, 181, 142),
-		Tint = Color3.fromRGB(255, 244, 229),
-		Contrast = 0.085,
+		OutdoorAmbient = Color3.fromRGB(164, 152, 151),
+		Ambient = Color3.fromRGB(118, 112, 130),
+		AtmosphereColor = Color3.fromRGB(255, 224, 193),
+		AtmosphereDecay = Color3.fromRGB(240, 204, 185),
+		AtmosphereDensity = 0.32,
+		AtmosphereHaze = 1.35,
+		AtmosphereGlare = 0.16,
+		Tint = Color3.fromRGB(255, 247, 235),
+		Contrast = 0.04,
 	}
 }
 
@@ -148,9 +158,13 @@ local function transitionFog(target, seconds, dense)
 	fogTween:Play()
 	if atmosphere then
 		if atmosphereTween then atmosphereTween:Cancel() end
+		local cfg = BIOME_SETTINGS[currentBiome]
+		local density = cfg.AtmosphereDensity or clearDensity
+		local haze = cfg.AtmosphereHaze or clearHaze
 		atmosphereTween = TweenService:Create(atmosphere, info, {
-			Density = dense and math.max(clearDensity, 0.58) or clearDensity,
-			Haze = dense and math.max(clearHaze, 3.5) or clearHaze,
+			Density = dense and math.max(density, 0.58) or density,
+			Haze = dense and math.max(haze, 3.5) or haze,
+			Glare = dense and 0 or cfg.AtmosphereGlare or clearGlare,
 		})
 		atmosphereTween:Play()
 	end
@@ -166,7 +180,10 @@ local function applyBiome(biomeIndex)
 	if activeTween then activeTween:Cancel() end
 	activeTween = TweenService:Create(Lighting, tweenInfo, {
 		ClockTime = cfg.ClockTime,
+		GeographicLatitude = cfg.GeographicLatitude or baseLatitude,
 		Brightness = cfg.Brightness,
+		ShadowSoftness = cfg.ShadowSoftness or baseShadowSoftness,
+		ColorShift_Top = cfg.ColorShift_Top or baseSunTint,
 		FogColor = cfg.FogColor,
 		OutdoorAmbient = cfg.OutdoorAmbient,
 		Ambient = cfg.Ambient or baseAmbient,

@@ -521,6 +521,13 @@ function Theme.Start(gui, player)
 		local compact = gui:GetAttribute("CompactLayout") == true
 		local textBoost = gui:GetAttribute("HUDTextBoost") or 0
 		local inFlight = player:GetAttribute("InFlight") == true
+		local character = player.Character
+		local root = character and character:FindFirstChild("HumanoidRootPart")
+		local palace = not inFlight and workspace:FindFirstChild("CloudPalace")
+		local terrace = palace and palace:FindFirstChild("GoldenRim")
+		local offset = root and terrace and terrace.CFrame:PointToObjectSpace(root.Position)
+		local atPalace = offset and math.abs(offset.X) <= terrace.Size.X / 2 + 10
+			and math.abs(offset.Z) <= terrace.Size.Z / 2 + 12 and offset.Y >= -3 and offset.Y <= 55
 		local flightReady = gui:GetAttribute("FlightHUDReady") == true
 		local status = gui:FindFirstChild("StatusFrame")
 		local penalty = status and status:FindFirstChild("HolePenalty")
@@ -804,6 +811,10 @@ function Theme.Start(gui, player)
 							headingWidth = 138 + 5 * textBoost
 							goalWidth = headingWidth
 						end
+					elseif atPalace or (outcome == "result_victory" and os.clock() < resultUntil) then
+						r.head.Text = "ISTANA AWAN"
+						r.head.TextSize = 20
+						r.goal.Text = "Puncak · 10.000 km"
 					else
 						local pod = player:GetAttribute("CurrentPod")
 						local podLetter = pod and pod:match("^Pod_([A-E])$")

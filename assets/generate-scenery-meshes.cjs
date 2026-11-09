@@ -28,6 +28,18 @@ const palette = {
   PhotoStone: [0.88, 0.84, 0.74], PhotoSlate: [0.20, 0.34, 0.43],
   PhotoGold: [0.82, 0.65, 0.31], PhotoIvory: [0.99, 0.92, 0.76],
   PhotoAmber: [1, 0.79, 0.43],
+  MasonryIvory: [0.93, 0.89, 0.81], MasonryCream: [0.95, 0.91, 0.84],
+  MasonrySand: [0.91, 0.86, 0.78], ApproachMist: [0.99, 0.96, 0.90],
+  ApproachShadow: [0.85, 0.89, 0.95],
+  GalleryRecess: [0.15, 0.29, 0.39], GalleryGlass: [0.39, 0.64, 0.72],
+  GardenLeaf: [0.29, 0.46, 0.42], GardenTip: [0.48, 0.63, 0.51],
+  GardenBloom: [0.72, 0.57, 0.74], VistaShadow: [0.77, 0.77, 0.85],
+  VistaIvory: [0.96, 0.90, 0.82],
+  HorizonStone: [0.68, 0.66, 0.76], HorizonGold: [0.89, 0.77, 0.62],
+  SkyHull: [0.40, 0.24, 0.28], SkyHullLight: [0.58, 0.36, 0.30],
+  SkyBrass: [0.89, 0.68, 0.39], SkySail: [0.98, 0.94, 0.83],
+  SkySailShade: [0.89, 0.82, 0.72],
+  SkyPennant: [0.69, 0.32, 0.30],
 };
 
 const groups = new Map();
@@ -399,6 +411,105 @@ for(const x of [photoX-10.1,photoX+10.1]) {
     [3.68,.22,.22,'PhotoGold'],[3.78,.09,.09,'PhotoGold']],8,{rotation:Math.PI/8});
 }
 
+asset='PalaceMasonry';
+// Thin stone faces sit behind the arches and leave the existing wall visible in the joints.
+function masonry(x,z,dx,dz,width,bottom,top,seed) {
+  const shades=['MasonryIvory','MasonryCream','MasonrySand'];
+  const point=(u,y)=>[x+dx*u,y,z+dz*u];
+  const course=2.55, joint=.085;
+  for(let row=0;bottom+row*course<top;row++) {
+    const low=bottom+row*course+joint/2;
+    const high=Math.min(top,bottom+(row+1)*course)-joint/2;
+    if(high<=low) continue;
+    for(let start=-(row%2)*2.7,col=0;start<width;col++) {
+      const pattern=(row*7+col*3+seed)%11;
+      const end=start+4.1+pattern*.35;
+      const left=Math.max(0,start)+joint/2,right=Math.min(width,end)-joint/2;
+      if(right>left) {
+        const shade=shades[(pattern+row+col)%shades.length];
+        face(shade,point(left,low),point(right,low),point(right,high),point(left,high));
+      }
+      start=end;
+    }
+  }
+}
+masonry(-28.5,-8.927,1,0,57,3,32,2);
+masonry(34.573,-15,0,-1,44,3,32,4);
+masonry(-34.573,-59,0,1,44,3,32,8);
+masonry(-66.88,2.573,1,0,37.76,2,23,3);
+masonry(28.62,3.573,1,0,38.76,2,23,7);
+masonry(-69.573,-21.9,0,1,21.8,2,23,5);
+masonry(70.073,.9,0,-1,21.8,2,23,9);
+
+asset='PalaceGallery';
+// Set the panes behind a projecting frame so the reveal reads from the terrace.
+for(const [center,z,width] of [[-48,-10,44],[48,-9,45]]) {
+  const span=(width-5)/5;
+  const front=z+13.2;
+  const spring=24*.63;
+  for(let i=0;i<5;i++) {
+    const x=center-width/2+2.5+(i+.5)*span;
+    const r=span*.37-.36;
+    const rise=span*.37*1.16-.30;
+    const paneZ=front+.64;
+    const frameZ=front+1.18;
+    block('GalleryRecess',x,3.6,paneZ-.08,r*2,spring-3.6,.20);
+    arch('GalleryRecess',x,spring,paneZ+.02,r,rise,r-.03,.16,12);
+    arch('CarvedIvory',x,spring,frameZ,r+.08,rise+.08,.29,.63,12);
+    for(const side of [-1,1]) {
+      block('CarvedIvory',x+side*(r-.08),3.6,front+.87,.31,spring-3.6,.67);
+      block('GalleryGlass',x+side*r*.32,4.35,paneZ+.12,r*.54,spring-4.45,.16,.07);
+    }
+    arch('GalleryGlass',x,spring,paneZ+.13,r*.67,rise*.72,r*.67-.04,.13,10);
+    block('ReliefGold',x,4.25,paneZ+.27,.18,spring-4.25+rise*.64,.18);
+    block('ReliefGold',x,spring-.21,paneZ+.28,r*1.25,.24,.23);
+    block('CarvedIvory',x,3.1,front+1.13,r*2+.72,.55,1.36,.16);
+    block('ReliefGold',x,3.65,front+1.15,r*2+.53,.13,1.15,.12);
+  }
+}
+
+asset='PalaceGarden';
+// Keep bases on the marble terrace, clear of the canal, cloud paths and photo podium.
+for(const [x,z,scale,low] of [[-30,9,1,false],[-28,44,.78,true],[-34,42,.74,false],
+  [19,33,.65,true],[56.8,10,.88,false],[22,47,.72,true]]) {
+  const s=scale;
+  if(low) {
+    block('CarvedIvory',x,.08,z,7*s,1.2*s,4.7*s,.55*s);
+    block('ReliefGold',x,1.14*s,z,7.15*s,.22*s,4.85*s,.57*s);
+    block('GardenLeaf',x,1.33*s,z,6.32*s,.12*s,4.02*s,.49*s);
+    for(const [dx,dz,y,r] of [[-2,0,1.5,1.2],[0,.34,2,1.28],[1.9,-.28,1.6,1.15]]) {
+      rings(x+dx*s,z+dz*s,[[1.37*s,r*.65*s,r*.7*s,'GardenLeaf'],[(y+1.1)*s,r*s,r*s,'GardenLeaf'],
+        [(y+2)*s,r*.65*s,r*.65*s,'GardenTip'],[(y+2.8)*s,.13*s,.14*s,'GardenTip']],9,{jitter:.10,smooth:true,phase:x});
+      rings(x+dx*s,z+(dz+.75)*s,[[(y+.6)*s,.20*s,.24*s,'GardenLeaf'],
+        [(y+1.45)*s,.57*s,.53*s,'GardenBloom'],[(y+1.82)*s,.31*s,.28*s,'GardenBloom']],7);
+    }
+    continue;
+  }
+  rings(x,z,[[.10,2.35*s,2.35*s,'CarvedIvory'],[.48,2.54*s,2.54*s,'CarvedIvory'],
+    [1.7*s,2.17*s,2.17*s,'ReliefGold'],[1.91*s,2.52*s,2.52*s,'CarvedIvory'],
+    [2.08*s,2.47*s,2.47*s,'GardenLeaf']],12);
+  rings(x,z,[[1.95*s,.44*s,.42*s,'ReliefGold'],[4.85*s,.35*s,.34*s,'ReliefGold']],7);
+  for(const [dx,dz,y,r] of [[-.83,.42,4.9,1.75],[.83,.53,5.38,1.74],[.12,-.86,5.74,1.92],[-.25,.08,6.62,1.42]]) {
+    rings(x+dx*s,z+dz*s,[[(y-r*.67)*s,r*.45*s,r*.42*s,'GardenLeaf'],
+      [(y-.34)*s,r*.88*s,r*.83*s,'GardenLeaf'],[y*s,r*s,r*.97*s,'GardenLeaf'],
+      [(y+r*.65)*s,r*.72*s,r*.75*s,'GardenTip'],[(y+r*.91)*s,r*.16*s,r*.16*s,'GardenTip']],10,
+      {jitter:.07,smooth:true,phase:x*.2+dz});
+  }
+  for(let i=0;i<4;i++) {
+    const a=i*tau/4+x;
+    const fx=x+Math.cos(a)*1.55*s, fz=z+Math.sin(a)*1.55*s;
+    rings(fx,fz,[[1.95*s,.14*s,.14*s,'GardenLeaf'],[2.44*s,.46*s,.48*s,'GardenBloom'],
+      [2.82*s,.19*s,.21*s,'GardenBloom']],6);
+  }
+}
+for(const [x,z,tall] of [[-27.5,50,true],[-16,35,false],[16,35,false],[27.5,50,true]]) {
+  const lantern=[[.1,1,1,'CarvedIvory'],[.48,1.02,1.02,'ReliefGold'],[.62,.64,.64,'CarvedIvory'],
+    [2.55,.55,.55,'ReliefGold'],[2.78,.88,.88,'ReliefGold'],[3,.78,.78,'PhotoAmber'],
+    [3.73,.78,.78,'ReliefGold'],[4.04,.96,.96,'ReliefGold'],[4.24,.32,.32,'ReliefGold']];
+  rings(x,z,lantern.map(([y,rx,rz,mat])=>[tall?y:y*.67,rx*(tall?1:1.19),rz*(tall?1:1.19),mat]),
+    tall?8:6,{rotation:Math.PI/8});
+}
+
 asset='PalaceCloud';
 rings(0,1,[[-45,16,25,'CloudShadow'],[-39,52,46,'CloudShadow'],[-30,77,67,'CloudWarm'],
   [-20,96,90,'Cloud'],[-10,101,99,'Cloud'],[-3,93,94,'CloudWarm'],[-.85,79,81,'Cloud']],48,
@@ -427,6 +538,18 @@ function waterSheet(rows,lanes=15,softEdges=true) {
   }
 }
 
+function fallingStreams(rows, profiles, taper) {
+  for(const [center,span] of profiles) {
+    const strip=rows.map(([x,y,z,width],i)=>{
+      const flow=Math.min(1,Math.max(0,(i-2)/3));
+      const end=Math.max(0,(i-rows.length+3)/2);
+      return [x+center*width,y,z+Math.sin(i*.72+center*8)*flow*.28,
+        span*width*(1-flow*.24-end*taper)];
+    });
+    waterSheet(strip,5);
+  }
+}
+
 // A stone spillway projects past the arcade so the water falls free of the facade.
 block('Porcelain',24,35.45,-4.4,18.4,2.95,19.3,1.1);
 block('Gold',24,36.1,-4.45,18.65,.38,19.7,.85);
@@ -436,9 +559,10 @@ for(const side of [-1,1]) {
   block('Porcelain',24+side*6.6,33.7,-5,2.2,1.85,12,1.2);
   block('Porcelain',24+side*6.6,32.45,-7.4,1.86,1.28,7.8,.78);
 }
-waterSheet([[24,38.5,-10,13.6],[24,38.49,3.7,13.8],[24,38.38,5.46,13.7],
+fallingStreams([[24,38.5,-10,13.6],[24,38.49,3.7,13.8],[24,38.38,5.46,13.7],
   [24.06,37.35,6.44,13.25],[24.18,32.5,7.2,12.4],[24.34,25,7.68,11.8],
-  [24.52,14,8.24,11.55],[24.34,4.1,8.94,12.8],[24.44,.25,9.82,14.4]],16);
+  [24.52,14,8.24,11.55],[24.34,4.1,8.94,12.8],[24.44,.25,9.82,14.4]],
+  [[-.34,.32],[-.02,.32],[.32,.36]],0);
 
 // A shallow receiving pool narrows into a channel that feeds the two lower falls.
 const canal=[[24.44,.24,7.8,15.2],[24.7,.23,13.6,16.4],[26.9,.22,19.8,12.2],
@@ -465,11 +589,15 @@ for(const [x,z,top,width,depth,lean] of [
     [x+lean*.2,top-9,z+4.3,width*.94],[x+lean*.37,top-23,z+5.8,width*.94],
     [x+lean*.67,top-52,z+8.5,width*.90],[x+lean,top-depth*.78,z+10.8,width*.79],
     [x+lean*1.1,top-depth,z+13,width*.7]];
-  waterSheet(rows,width>11?13:9);
+  const streams=width>16?[[-.34,.32],[-.02,.32],[.32,.36]]:[[-.23,.54],[.27,.46]];
+  fallingStreams(rows,streams,.42);
 }
 
 // Fuse overlapping cloud volumes so there are no straight seams around the terrace.
-function cloudField(lobes) {
+function cloudField(lobes,{
+  lower=[-120,-56,-118],upper=[123,26,125],step=7.4,shadeBelow=-20,
+  shade='CloudShade',highlight='CloudIvory',
+}={}) {
   function density(x,y,z) {
     let distance=1e6;
     for(const [cx,cy,cz,rx,ry,rz] of lobes) {
@@ -479,9 +607,6 @@ function cloudField(lobes) {
     }
     return distance+Math.sin(x*.12+y*.17)*Math.sin(z*.113-y*.14)*.73;
   }
-  const step=7.4;
-  const lower=[-120,-56,-118];
-  const upper=[123,26,125];
   const size=lower.map((start,i)=>Math.ceil((upper[i]-start)/step)+1);
   const samples=new Float32Array(size[0]*size[1]*size[2]);
   const index=(x,y,z)=>(z*size[1]+y)*size[0]+x;
@@ -499,7 +624,7 @@ function cloudField(lobes) {
     if(Math.hypot(...crossProduct)<1e-6) return;
     const oriented=crossProduct.reduce((sum,value,i)=>sum+value*n[i],0);
     if(oriented<0) [b,c]=[c,b];
-    const mat=(a[1]+b[1]+c[1])/3 < -20?'CloudShade':'CloudIvory';
+    const mat=(a[1]+b[1]+c[1])/3<shadeBelow?shade:highlight;
     face(mat,a,b,c,null,[n,normal(b),normal(c)]);
   };
   for(let z=0;z<size[2]-1;z++) for(let y=0;y<size[1]-1;y++) for(let x=0;x<size[0]-1;x++) {
@@ -537,6 +662,215 @@ cloudField([
   [60,1,79,18,11,17],[74,-6,77,19,10,19],[46,-5,82,16,11,18],
   [39,-8,69,15,10,18],[71,-9,94,16,9,14],
 ]);
+
+asset='PalaceApproach';
+// Stagger the banks along +Z, the real docking approach. Their inner edges leave the center clear.
+const approachStyle={step:6.25,shadeBelow:1,shade:'ApproachShadow',highlight:'ApproachMist'};
+cloudField([
+  [-72,-9,63,43,21,25],[-58,5,64,27,16,17],[-48,10,70,17,11,13],
+  [-82,2,80,30,20,21],[-55,2,91,22,12,16],[-76,-6,110,34,15,20],
+  [-65,-8,132,24,11,19],[-95,-13,133,28,15,28],[-89,-10,160,26,13,21],
+],{...approachStyle,lower:[-128,-36,32],upper:[-25,31,189]});
+cloudField([
+  [76,-10,56,43,21,25],[58,3,58,25,16,18],[50,8,64,20,11,13],
+  [89,0,78,29,18,23],[59,0,88,24,14,18],[77,-4,109,33,16,20],
+  [64,-8,133,23,11,19],[96,-13,146,28,15,27],[90,-10,164,24,13,19],
+],{...approachStyle,lower:[25,-36,26],upper:[129,31,190]});
+
+asset='PalaceVista';
+// A low cloud sea and separate pavilion islands frame the palace from the dock.
+function vistaCloud(lobes,shadeBelow,step=12) {
+  const bounds=(sign)=>[0,1,2].map(axis=>{
+    const extremes=lobes.map(lobe=>lobe[axis]+sign*lobe[axis+3]);
+    return (sign<0?Math.min(...extremes):Math.max(...extremes))+sign*step;
+  });
+  cloudField(lobes,{lower:bounds(-1),upper:bounds(1),step,shadeBelow,
+    shade:'VistaShadow',highlight:'VistaIvory'});
+}
+vistaCloud([[-277,-35,-303,86,24,60],[-187,-24,-342,94,28,59],[-95,-33,-378,111,25,60],
+  [27,-38,-390,104,27,59],[138,-27,-371,100,28,59],[245,-24,-326,95,25,55],[328,-31,-258,83,23,61]],-37,15);
+vistaCloud([[-353,51,-451,106,13,30],[-271,57,-467,86,10,24],[-219,53,-474,51,8,23]],46,10);
+vistaCloud([[338,52,-441,99,14,30],[255,49,-484,85,10,24],[197,45,-497,47,7,19]],44,10);
+for(const [x,y,z,s] of [[-172,4,-88,1],[174,3,-145,.84],[-275,24,-215,.66],[296,-3,-85,.77]]) {
+  vistaCloud([[x,y-13*s,z,43*s,16*s,30*s],[x-26*s,y-9*s,z+9*s,23*s,13*s,22*s],
+    [x+25*s,y-10*s,z-6*s,25*s,11*s,21*s],[x+8*s,y-12*s,z+22*s,20*s,10*s,15*s]],y-14*s,8);
+  rings(x,z,[[y-20*s,8*s,6*s,'VistaShadow'],[y-7*s,21*s,14*s,'CarvedIvory'],
+    [y+2*s,21*s,14*s,'CarvedIvory'],[y+4*s,17*s,11*s,'ReliefGold']],14,{jitter:.09});
+  for(let i=0;i<6;i++) {
+    const a=i*tau/6;
+    const sx=x+Math.cos(a)*10.2*s, sz=z+Math.sin(a)*7.3*s;
+    rings(sx,sz,[[y+4*s,1.45*s,1.45*s,'CarvedIvory'],[y+6*s,1.06*s,1.06*s,'CarvedIvory'],
+      [y+18*s,1.06*s,1.06*s,'CarvedIvory'],[y+20*s,1.52*s,1.52*s,'ReliefGold']],8);
+  }
+  rings(x,z,[[y+19*s,12*s,9*s,'CarvedIvory'],[y+21*s,13*s,10*s,'ReliefGold'],
+    [y+23*s,11*s,9*s,'CarvedIvory']],18);
+  onionDome(x,z,y+23*s,9*s,13*s);
+}
+
+asset='HorizonArch';
+// Open spans keep the far landmark readable as a silhouette through the haze.
+vistaCloud([[-93,-16,6,65,24,36],[-30,-22,5,78,25,40],[43,-20,-6,75,26,40],
+  [110,-17,9,55,21,32],[-142,-28,-14,36,15,26]],-27,11);
+for(const x of [-105,-35,35,105]) {
+  block('HorizonStone',x,-20,0,23,24,36,4);
+  block('HorizonGold',x,4,0,23.8,2.2,37,3.8);
+  block('HorizonStone',x,6,0,17.5,22,26,3.2);
+  block('HorizonGold',x,27.5,0,22,3.6,31,3.5);
+}
+for(const x of [-70,0,70]) {
+  arch('HorizonStone',x,28,12,36,34,7.7,25,16);
+  arch('HorizonGold',x,28,12.4,36.5,34.5,2.3,1.2,16);
+  block('HorizonStone',x,61,-.5,71,4.3,24,1.2);
+  block('HorizonGold',x,65.3,-.5,71,1.6,25,.9);
+}
+for(const x of [-105,105]) {
+  rings(x,0,[[30,10,11,'HorizonStone'],[56,9,10,'HorizonStone'],[62,11,12,'HorizonGold'],
+    [67,11,12,'HorizonGold'],[79,6,6,'HorizonGold'],[89,.5,.5,'HorizonGold']],12,{smooth:true});
+}
+
+asset='HorizonSpire';
+vistaCloud([[-83,-26,14,62,22,37],[-34,-17,-5,59,25,41],[19,-21,11,65,27,43],
+  [79,-31,-10,61,21,39],[106,-28,17,42,16,31]],-27,10);
+for(const [x,z,r,height] of [[-69,8,13,76],[-24,-18,20,105],[29,6,16,86],[67,-17,12,65]]) {
+  rings(x,z,[[-38,r*.45,r*.45,'HorizonStone'],[-9,r*1.22,r*1.16,'HorizonStone'],
+    [8,r*1.15,r*1.1,'HorizonGold'],[10,r*.8,r*.79,'HorizonStone'],
+    [height*.63,r*.7,r*.65,'HorizonStone'],[height*.65,r*.87,r*.83,'HorizonGold'],
+    [height*.72,r*.86,r*.83,'HorizonGold'],[height*.83,r*.48,r*.47,'HorizonGold'],
+    [height,.4,.4,'HorizonGold']],14,{smooth:true});
+}
+
+asset='HorizonCloud';
+vistaCloud([[-178,-6,19,91,16,43],[-95,-3,0,109,22,51],[-14,4,-12,125,26,57],
+  [72,-1,-10,120,18,49],[162,-7,9,93,17,42],[225,-11,21,58,13,36]],-9,13);
+
+asset='HorizonPavilion';
+vistaCloud([[-85,-13,18,62,22,38],[-30,-23,-6,76,24,46],[35,-16,8,70,24,42],
+  [88,-31,-24,57,24,33],[121,-25,19,43,17,31]],-25,9);
+for(const [x,y,z,s] of [[-49,-4,5,.68],[9,9,-12,1],[59,-1,11,.67]]) {
+  rings(x,z,[[y-12,34*s,22*s,'HorizonStone'],[y,34*s,22*s,'HorizonGold'],
+    [y+3,28*s,19*s,'HorizonStone'],[y+8,26*s,18*s,'HorizonGold']],12);
+  for(let i=0;i<8;i++) {
+    const a=i*tau/8;
+    const px=x+Math.cos(a)*19*s, pz=z+Math.sin(a)*13*s;
+    rings(px,pz,[[y+8,2.4*s,2.4*s,'HorizonStone'],[y+32*s,1.9*s,1.9*s,'HorizonStone'],
+      [y+34*s,2.7*s,2.7*s,'HorizonGold']],6);
+  }
+  rings(x,z,[[y+34*s,25*s,18*s,'HorizonGold'],[y+38*s,24*s,17*s,'HorizonGold'],
+    [y+52*s,14*s,10*s,'HorizonStone'],[y+55*s,12*s,9*s,'HorizonGold'],
+    [y+69*s,5.4*s,4.2*s,'HorizonGold'],[y+81*s,.5,.5,'HorizonGold']],14,{smooth:true});
+}
+
+// Hull stations taper the keel toward the stern and the raised prow.
+function cloudSailer(name,length,beamWidth,depth,sails,pennant) {
+  asset=name;
+  const hullStations=[[-46,2,5,3],[-37,8,2,-7],[-19,12,1,-12],[0,13,1,-13],
+    [21,11,2,-10],[39,6,5,-3],[49,.8,8,6]].map(([x,width,deck,keel])=>[x*length,width*beamWidth,deck,keel*depth]);
+  function hullStation(t) {
+    const last=hullStations.length-1;
+    const index=Math.min(last-1,Math.max(0,Math.floor(t)));
+    const fraction=Math.max(0,Math.min(1,t-index));
+    const a=hullStations[Math.max(0,index-1)], b=hullStations[index];
+    const c=hullStations[index+1], d=hullStations[Math.min(last,index+2)];
+    return b.map((v,k)=>.5*(2*v+(c[k]-a[k])*fraction+
+      (2*a[k]-5*v+4*c[k]-d[k])*fraction**2+(3*v-a[k]-3*c[k]+d[k])*fraction**3));
+  }
+  function hullPoint(t,angle) {
+    const [x,width,deck,keel]=hullStation(t);
+    return [x,deck+(keel-deck)*Math.sin(angle),width*Math.cos(angle)];
+  }
+  function hullNormal(t,angle) {
+    const lengthwise=subtract(hullPoint(t+.012,angle),hullPoint(t-.012,angle));
+    const across=subtract(hullPoint(t,angle+.012),hullPoint(t,angle-.012));
+    return unit(cross(across,lengthwise));
+  }
+  for(let i=0;i<(hullStations.length-1)*4;i++) {
+    const a=i/4,b=(i+1)/4;
+    for(let j=0;j<16;j++) {
+      const angle=j*Math.PI/16,next=(j+1)*Math.PI/16;
+      const stripe=j===1||j===14;
+      const material=stripe?'SkyBrass':(j<4||j>11?'SkyHullLight':'SkyHull');
+      face(material,hullPoint(a,angle),hullPoint(a,next),hullPoint(b,next),hullPoint(b,angle),
+        [hullNormal(a,angle),hullNormal(a,next),hullNormal(b,next),hullNormal(b,angle)]);
+    }
+    face('SkyHullLight',hullPoint(a,0),hullPoint(b,0),hullPoint(b,Math.PI),hullPoint(a,Math.PI));
+    for(const rim of [0,Math.PI]) {
+      const start=hullPoint(a,rim), end=hullPoint(b,rim);
+      const rail=[start,end,[end[0],end[1]+1.45,end[2]],[start[0],start[1]+1.45,start[2]]];
+      face('SkyBrass',...rail);
+      face('SkyBrass',...rail.reverse());
+    }
+  }
+  for(const [t,stern] of [[0,true],[hullStations.length-1,false]]) {
+    const outline=Array.from({length:17},(_,j)=>hullPoint(t,j*Math.PI/16));
+    const [x,,deck,keel]=hullStation(t);
+    const center=[x,(deck+keel)*.5,0];
+    for(let j=0;j<outline.length;j++) {
+      const a=outline[j], b=outline[(j+1)%outline.length];
+      face('SkyHull',center,stern?a:b,stern?b:a);
+    }
+  }
+
+  // The cloth tapers to the head and shares smooth normals across its sewn panels.
+  function skySail(mast,foot,top,width,side) {
+    const vertex=(u,v)=>{
+      const span=width*(1-.84*v+.06*Math.sin(Math.PI*v));
+      return [mast+(u-.88)*span+v*1.8,foot+v*(top-foot)+u*2.4-Math.sin(Math.PI*u)*(1-v)*2,
+        side*(.45+Math.sin(Math.PI*u)*Math.sin(Math.PI*(v*.88+.08))*width*.23)];
+    };
+    const normal=(u,v)=>unit(cross(subtract(vertex(u+.005,v),vertex(u-.005,v)),
+      subtract(vertex(u,v+.005),vertex(u,v-.005))));
+    for(let i=0;i<20;i++) for(let j=0;j<10;j++) {
+      const u=i/20,v=j/10, nextU=(i+1)/20,nextV=(j+1)/10;
+      const corners=[[u,v],[nextU,v],[nextU,nextV],[u,nextV]];
+      const quad=corners.map(pair=>vertex(...pair));
+      const normals=corners.map(pair=>normal(...pair));
+      const material=i===0||i===19||i===7||i===13?'SkySailShade':'SkySail';
+      face(material,...quad,normals);
+      face(material,...quad.reverse(),normals.reverse().map(n=>n.map(value=>-value)));
+    }
+  }
+  function skyLine(material,start,end,radius) {
+    const direction=unit(subtract(end,start));
+    const perpendicular=unit(cross(direction,Math.abs(direction[1])>.92?[1,0,0]:[0,1,0]));
+    const binormal=cross(direction,perpendicular);
+    const point=(center,i)=>center.map((value,k)=>value+radius*(perpendicular[k]*Math.cos(i*tau/6)+binormal[k]*Math.sin(i*tau/6)));
+    for(let i=0;i<6;i++) face(material,point(start,i),point(start,i+1),point(end,i+1),point(end,i));
+  }
+  for(const [x,foot,top,width,side] of sails) {
+    rings(x,0,[[2,1.35,1.35,'SkyHull'],[top+4,.62,.62,'SkyBrass'],[top+7,.28,.28,'SkyBrass']],8);
+    skySail(x,foot,top,width,side);
+    skyLine('SkyBrass',[x-width*.88,foot,.5*side],[x+width*.12,foot+2.4,.5*side],.45);
+    const [railX,railWidth,railY]=hullStation(x<0?2.2:3.8);
+    skyLine('SkyBrass',[x,top+2,0],[railX,railY,railWidth*.91],.30);
+    skyLine('SkyBrass',[x,top+2,0],[railX,railY,-railWidth*.91],.30);
+  }
+  const [mast,,mastTop]=sails.at(-1);
+  skyLine('SkyBrass',[mast,mastTop+2,0],[48*length,8,0],.34);
+  for(let i=0;i<8;i++) {
+    const point=(j,edge)=>[mast-j*1.85,mastTop+7-.21*j+Math.sin(j*.65)*1.2-edge*(5.9-j*.48),Math.sin(j*.63)*1.6];
+    const quad=[point(i,0),point(i+1,0),point(i+1,1),point(i,1)];
+    face(pennant,...quad);
+    face(pennant,...quad.reverse());
+  }
+  block('SkyHull',-33*length,2,0,14*length,6,12*beamWidth,2);
+  block('SkyBrass',-33*length,8,0,15*length,1.2,13*beamWidth,2);
+}
+cloudSailer('CloudSailer',1,1,1,[[-12,15,46,34,1],[20,13,57,40,-1]],'SkyPennant');
+cloudSailer('CloudKetch',1.04,.78,.76,[[-19,14,39,28,1],[15,12,61,30,-1]],'SkyBrass');
+cloudSailer('CloudCutter',.78,1.06,1.23,[[12,11,65,54,1]],'SkyBrass');
+
+asset='UpperSkyCloud';
+vistaCloud([[-210,-4,22,65,8,29],[-155,0,10,78,17,34],[-105,8,-1,88,24,39],
+  [-52,1,-11,73,18,43],[-7,8,-21,68,21,35],[35,4,-32,63,13,29],
+  [86,4,-53,55,9,27],[159,13,-65,66,11,26],[205,17,-70,51,7,20]],1,8);
+
+asset='ZenithCloud';
+// A ragged crescent with gaps separates the layers when seen from below.
+vistaCloud([[-145,6,56,60,23,43],[-107,10,30,67,30,51],[-63,-3,6,61,26,47],
+  [-12,4,-12,66,26,51],[37,12,-41,64,34,46],[86,0,-50,61,25,43],
+  [132,-7,-42,54,17,36],[161,-9,-21,45,12,30],[-66,-6,62,47,13,31],
+  [-108,-16,27,44,18,34],[-33,-20,-11,41,17,31],[47,-16,-31,49,20,33],
+  [103,-13,-31,34,17,27],[-18,-10,48,42,12,31],[143,7,47,43,11,22],[195,6,36,29,8,16]],-13,6.6);
 
 asset='Dawn';
 rings(0,0,[[-5,52,29,'Reef'],[-.1,53,30,'Sand'],[4,48,24,'Sand'],
@@ -589,12 +923,28 @@ const offsets={
   Palace:[0,0,0], PalaceCloud:[250,0,0], Dawn:[500,0,0],
   Storm:[750,0,0], Sunset:[1050,0,0], Cosmic:[1290,0,0], PalaceFoundation:[1510,0,0],
   PalaceOrnament:[1780,0,0], PalaceArrival:[2010,0,0], PalacePhoto:[2260,0,0],
+  PalaceMasonry:[2520,0,0], PalaceApproach:[2760,0,0],
+  PalaceGallery:[3040,0,0], PalaceGarden:[3280,0,0], PalaceVista:[3850,0,0],
+  HorizonArch:[4540,0,0], HorizonSpire:[4950,0,0], HorizonCloud:[5510,0,0],
+  CloudSailer:[5950,0,0], UpperSkyCloud:[6320,0,0],
+  ZenithCloud:[6950,0,0],
+  HorizonPavilion:[7380,0,0], CloudKetch:[7630,0,0], CloudCutter:[7780,0,0],
 };
 const palaceOnly=process.argv.includes('--palace-only');
 const palacePolish=process.argv.includes('--palace-polish');
 const palaceWater=process.argv.includes('--palace-water');
 const palaceArrival=process.argv.includes('--palace-arrival');
 const palacePhoto=process.argv.includes('--palace-photo');
+const palaceView=process.argv.includes('--palace-view');
+const palaceSummit=process.argv.includes('--palace-summit');
+const palaceHorizon=process.argv.includes('--palace-horizon');
+const palaceSky=process.argv.includes('--palace-sky');
+const palaceScenery=process.argv.includes('--palace-scenery');
+const summitOffsets={PalaceGallery:[0,0,0],PalaceGarden:[240,0,0],PalaceVista:[770,0,0],PalaceFoundation:[1350,0,0]};
+const horizonOffsets={HorizonArch:[0,0,0],HorizonSpire:[410,0,0],HorizonCloud:[970,0,0]};
+const skyOffsets={CloudSailer:[0,0,0],UpperSkyCloud:[440,0,0],ZenithCloud:[1070,0,0]};
+const sceneryOffsets={CloudSailer:[0,0,0],CloudKetch:[140,0,0],CloudCutter:[285,0,0],
+  ZenithCloud:[560,0,0],HorizonPavilion:[990,0,0],PalaceGarden:[1300,0,0]};
 const materials=Object.entries(palette).map(([name,rgb])=>{
   const dome=name==='DomeGold'||name==='DomeRib';
   return {name,pbrMetallicRoughness:{baseColorFactor:[...rgb,1],
@@ -620,11 +970,16 @@ for(const [name,mesh] of groups) {
   const assetName=name.split('_')[0];
   const reference=assetName.startsWith('Reference');
   const cloud=name==='PalaceFoundation_CloudIvory'||name==='PalaceFoundation_CloudShade';
-  if(palaceOnly && !['Palace','PalaceFoundation','PalaceOrnament','PalaceArrival','PalacePhoto'].includes(assetName) && !reference) continue;
+  if(palaceOnly && !['Palace','PalaceFoundation','PalaceOrnament','PalaceArrival','PalacePhoto','PalaceMasonry','PalaceApproach'].includes(assetName) && !reference) continue;
   if(palacePolish && assetName!=='PalaceOrnament' && !cloud && !reference) continue;
   if(palaceWater && (assetName!=='PalaceFoundation'||cloud) && !reference) continue;
   if(palaceArrival && assetName!=='PalaceArrival' && (assetName!=='PalaceFoundation'||cloud) && !reference) continue;
   if(palacePhoto && assetName!=='PalacePhoto' && !reference) continue;
+  if(palaceView && !['PalaceMasonry','PalaceApproach'].includes(assetName) && !reference) continue;
+  if(palaceSummit && !(assetName in summitOffsets && (assetName!=='PalaceFoundation'||mesh.material.startsWith('Cascade'))) && !reference) continue;
+  if(palaceHorizon && !(assetName in horizonOffsets) && !reference) continue;
+  if(palaceSky && !(assetName in skyOffsets) && !reference) continue;
+  if(palaceScenery && !(assetName in sceneryOffsets) && !reference) continue;
   if(mesh.normals.some(v=>!Number.isFinite(v))) throw Error('Degenerate face in '+name);
   const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];
   mesh.positions.forEach((value,i)=>{
@@ -640,6 +995,8 @@ for(const [name,mesh] of groups) {
     if(assetName==='PalaceOrnament') translation=[500,0,0];
     if(assetName==='PalaceArrival') translation=[750,0,0];
     if(assetName==='PalacePhoto') translation=[1000,0,0];
+    if(assetName==='PalaceMasonry') translation=[1250,0,0];
+    if(assetName==='PalaceApproach') translation=[1500,0,0];
   } else if(palacePolish) {
     if(assetName==='PalaceFoundation') translation=[250,0,0];
     if(assetName==='PalaceOrnament') translation=[0,0,0];
@@ -650,6 +1007,17 @@ for(const [name,mesh] of groups) {
     if(assetName==='PalaceArrival') translation=[0,0,0];
   } else if(palacePhoto && assetName==='PalacePhoto') {
     translation=[0,0,0];
+  } else if(palaceView) {
+    if(assetName==='PalaceMasonry') translation=[0,0,0];
+    if(assetName==='PalaceApproach') translation=[300,0,0];
+  } else if(palaceSummit && !reference) {
+    translation=summitOffsets[assetName];
+  } else if(palaceHorizon && !reference) {
+    translation=horizonOffsets[assetName];
+  } else if(palaceSky && !reference) {
+    translation=skyOffsets[assetName];
+  } else if(palaceScenery && !reference) {
+    translation=sceneryOffsets[assetName];
   }
   gltf.nodes.push({name,mesh:index,translation});
   gltf.scenes[0].nodes.push(index);
@@ -663,7 +1031,7 @@ header.writeUInt32LE(20+json.length+jsonPadding.length+8+byteLength,8);
 header.writeUInt32LE(json.length+jsonPadding.length,12);header.write('JSON',16);
 const binary=Buffer.alloc(8);binary.writeUInt32LE(byteLength);binary.write('BIN\0',4);
 const out=process.argv.slice(2).find(arg=>!arg.startsWith('--'))||
-  path.join(__dirname,palacePhoto?'FlyHighPalacePhoto.glb':palaceArrival?'FlyHighPalaceArrival.glb':palaceWater?'FlyHighPalaceWater.glb':
+  path.join(__dirname,palaceScenery?'FlyHighPalaceScenery.glb':palaceSky?'FlyHighPalaceSky.glb':palaceHorizon?'FlyHighPalaceHorizon.glb':palaceSummit?'FlyHighPalaceSummit.glb':palaceView?'FlyHighPalaceView.glb':palacePhoto?'FlyHighPalacePhoto.glb':palaceArrival?'FlyHighPalaceArrival.glb':palaceWater?'FlyHighPalaceWater.glb':
     palacePolish?'FlyHighPalacePolish.glb':palaceOnly?'FlyHighPalace.glb':'FlyHighScenery.glb');
 fs.writeFileSync(out,Buffer.concat([header,json,jsonPadding,binary,...chunks]));
 console.log(`Wrote ${gltf.meshes.length} mesh groups to ${out}`);

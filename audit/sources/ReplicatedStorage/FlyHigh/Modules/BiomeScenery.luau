@@ -51,7 +51,7 @@ local function landmark(parent, name, cf, scale)
 	if not template then return nil end
 	local copy = template:Clone()
 	if scale then copy:ScaleTo(scale) end
-	copy:PivotTo(cf)
+	copy:PivotTo(cf or template:GetAttribute("WorldPlacement") or CFrame.identity)
 	copy.Parent = parent
 	return copy
 end
@@ -419,7 +419,165 @@ local function palaceApproach(parent, palace)
 	end
 end
 
+local function palaceHorizon(parent, anchor)
+	local horizon = model(parent, "PalaceHorizon")
+	local layouts = {
+		{ "HorizonPavilion", Vector3.new(-275, 1, -438), 0.72, -18 },
+		{ "HorizonSpire", Vector3.new(323, -12, -558), 0.78, 25 },
+		{ "HorizonCloud", Vector3.new(335, -22, 456), 0.83, -18 },
+		-- Keep the front pair out of the palace silhouette and fill the side views too.
+		{ "HorizonArch", Vector3.new(-765, 67, -965), 1.22, -14 },
+		{ "HorizonSpire", Vector3.new(810, 58, -1050), 1.28, 18 },
+		{ "HorizonSpire", Vector3.new(-1090, 150, 805), 1.16, -25 },
+		{ "HorizonPavilion", Vector3.new(1230, 165, 690), 1.21, 27 },
+		{ "HorizonPavilion", Vector3.new(-520, -22, 1280), 1.34, 24 },
+		{ "HorizonArch", Vector3.new(695, 14, 1370), 1.17, -21 },
+		{ "HorizonCloud", Vector3.new(-190, -69, -1740), 1.52, 8 },
+		{ "HorizonCloud", Vector3.new(1475, -58, -965), 1.37, -20 },
+		{ "HorizonCloud", Vector3.new(-1530, -59, 865), 1.32, 10 },
+		{ "HorizonCloud", Vector3.new(120, -92, 1890), 1.45, -16 },
+	}
+	for _, layout in layouts do
+		local name, offset, scale, turn = table.unpack(layout)
+		local position = anchor:PointToWorldSpace(offset)
+		local target = Vector3.new(anchor.Position.X, position.Y, anchor.Position.Z)
+		local facing = CFrame.lookAt(position, target) * CFrame.Angles(0, math.pi + math.rad(turn), 0)
+		local vista = landmark(horizon, name, facing, scale)
+		if vista then
+			local haze = math.clamp((offset.Magnitude - 350) / 1800, 0.05, 0.46)
+			for _, piece in vista:GetChildren() do
+				if piece:IsA("BasePart") then piece.Color = piece.Color:Lerp(rgb(198, 211, 229), haze) end
+			end
+		end
+	end
+end
+
+local function palaceUpperSky(parent, anchor)
+	local sky = model(parent, "PalaceUpperSky")
+	local clouds = {
+		{ Vector3.new(-600, 510, -810), 1.12, -18, 9 },
+		{ Vector3.new(355, 331.5, -460), 0.72, 14, 7 },
+		{ Vector3.new(-370, 380, 1060), 1.14, -24, 9 },
+	}
+	for _, cloud in clouds do
+		local offset, scale, yaw, tilt = table.unpack(cloud)
+		local facing = anchor * CFrame.new(offset) * CFrame.Angles(0, math.rad(yaw), math.rad(tilt))
+		landmark(sky, "UpperSkyCloud", facing, scale)
+	end
+	local overhead = model(sky, "OverheadClouds")
+	local ceiling = {
+		{ "ZenithCloud", Vector3.new(-15, 345, 104), 0.85, -20 },
+		{ "ZenithCloud", Vector3.new(221, 490, -116), 0.69, 76 },
+		{ "ZenithCloud", Vector3.new(-294, 570, 244), 0.72, 39 },
+		{ "UpperSkyCloud", Vector3.new(-155, 411, -333), 0.72, -31 },
+		{ "UpperSkyCloud", Vector3.new(185, 159, -196), 0.63, -13 },
+		{ "UpperSkyCloud", Vector3.new(-178, 141, -228), 0.54, 18 },
+	}
+	local driftingClouds = {}
+	for _, layout in ceiling do
+		local name, offset, scale, yaw = table.unpack(layout)
+		local placement = anchor * CFrame.new(offset) * CFrame.Angles(0, math.rad(yaw), 0)
+		local cloud = landmark(overhead, name, placement, scale)
+		if cloud then table.insert(driftingClouds, { cloud = cloud, placement = placement }) end
+		if name == "ZenithCloud" then
+			local mistPlacement = placement * CFrame.new(19, -13, 52 * scale) * CFrame.Angles(0, 0.18, 0)
+			local mist = landmark(overhead, "UpperSkyCloud", mistPlacement, scale * 0.53)
+			if mist then
+				mist.Name = "CloudEdgeMist"
+				for _, piece in mist:GetChildren() do
+					piece.Transparency = 0.83
+					piece.Color = piece.Color:Lerp(rgb(242, 239, 238), 0.65)
+				end
+				table.insert(driftingClouds, { cloud = mist, placement = mistPlacement })
+			end
+		end
+	end
+
+	local lightTop = Vector3.new(300, 311.5, -445)
+	local lightDirection = Vector3.new(-124, -111, -185)
+	local shaft = rail(sky, "UpperSunshafts", anchor:PointToWorldSpace(lightTop))
+	shaft.CFrame = anchor * CFrame.new(lightTop)
+	shaft.Transparency = 1
+	for _, rayStyle in {
+		{ Vector3.new(-54, -3, -6), Vector3.new(-23, -5, 8), 19, 48, 0.69 },
+		{ Vector3.new(4, 2, -3), Vector3.zero, 25, 60, 0.58 },
+		{ Vector3.new(68, 12, -14), Vector3.new(29, 14, -20), 13, 46, 0.73 },
+	} do
+		local offset, spread, narrow, wide, centerAlpha = table.unpack(rayStyle)
+		local start = socket(shaft, offset)
+		local finish = socket(shaft, offset + lightDirection + spread)
+		local fade = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.87),
+			NumberSequenceKeypoint.new(0.25, centerAlpha),
+			NumberSequenceKeypoint.new(0.62, centerAlpha + 0.13),
+			NumberSequenceKeypoint.new(1, 1),
+		})
+		local ray = beam(start, finish, narrow, wide, ColorSequence.new(rgb(255, 232, 190)), fade)
+		ray.Name = "CloudSunshaft"
+		ray.LightEmission = 0.18
+	end
+
+	local routes = {
+		{ "CloudSailer", Vector3.new(57, 79, -131), Vector3.new(138, 6, 43), 88, 0.12, 1.04 },
+		{ "CloudKetch", Vector3.new(425, 278, -715), Vector3.new(160, 13, 70), 133, 2.9, 0.92 },
+		{ "CloudCutter", Vector3.new(170, 460, 630), Vector3.new(122, 13, 69), 151, 5.2, 0.90 },
+	}
+	local fleet = {}
+	for _, route in routes do
+		local name, center, excursion, period, phase, scale = table.unpack(route)
+		local ship = landmark(sky, name, anchor * CFrame.new(center), scale)
+		if ship then
+			local sail = ship:FindFirstChild("SkySail")
+			table.insert(fleet, {
+				ship = ship, center = center, excursion = excursion, period = period, phase = phase,
+				sail = sail, sailColor = sail and sail.Color,
+			})
+		end
+	end
+
+	local epoch, lastVisibility
+	return function(km, time)
+		local visibility = math.clamp((km - 8820) / 510, 0, 1)
+		if visibility > 0 and not epoch then epoch = time end
+		local elapsed = epoch and time - epoch or 0
+		for index, layer in driftingClouds do
+			local shift = Vector3.new(math.sin(elapsed * 0.018 + index) * 14, 0, math.sin(elapsed * 0.013 + index) * 9)
+			layer.cloud:PivotTo(layer.placement + shift)
+		end
+		for _, flight in fleet do
+			if lastVisibility ~= visibility then
+				for _, piece in flight.ship:GetChildren() do piece.Transparency = 1 - visibility end
+			end
+			if visibility > 0 then
+				local angle = elapsed * (2 * math.pi / flight.period) + flight.phase
+				local drift = flight.excursion * Vector3.new(math.sin(angle), math.sin(angle * 2), math.cos(angle))
+				local position = flight.center + drift
+				local dx = flight.excursion.X * math.cos(angle)
+				local dz = -flight.excursion.Z * math.sin(angle)
+				local yaw = math.atan2(-dz, dx)
+				local roll = math.sin(angle * 2) * 0.035
+				flight.ship:PivotTo(anchor * CFrame.new(position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(roll, 0, 0))
+				if flight.sail then
+					local toShip = position - lightTop
+					local progress = math.clamp(toShip:Dot(lightDirection) / lightDirection:Dot(lightDirection), 0, 1)
+					local distance = (toShip - lightDirection * progress).Magnitude
+					local light = math.clamp(1 - distance / 155, 0, 1)
+					flight.sail.Color = flight.sailColor:Lerp(rgb(255, 254, 240), light * 0.75)
+				end
+			end
+		end
+		lastVisibility = visibility
+	end
+end
+
 local function gateway(parent)
+	local vista = landmark(parent, "PalaceVista")
+	local animateSky
+	if vista then
+		local anchor = vista:GetPivot()
+		palaceHorizon(parent, anchor)
+		animateSky = palaceUpperSky(parent, anchor)
+	end
 	local clouds = { rgb(252, 232, 179), rgb(255, 244, 210), rgb(246, 221, 162) }
 	for i = 1, 12 do
 		local tier = math.floor((i - 1) / 4)
@@ -447,6 +605,7 @@ local function gateway(parent)
 		if not landmark(silhouette, "PalaceFoundation", at, 0.75) then
 			landmark(silhouette, "PalaceCloud", at, 0.75)
 		end
+		landmark(silhouette, "PalaceApproach", at, 0.75)
 	else
 		part(silhouette, "CloudPlinth", Vector3.new(124, 20, 49), at, shadow, plastic, ball)
 		part(silhouette, "Keep", Vector3.new(48, 33, 28), at * CFrame.new(0, 17, 0), shadow)
@@ -488,7 +647,8 @@ local function gateway(parent)
 		end
 	end
 
-	return function(km)
+	return function(km, time)
+		if animateSky then animateSky(km, time) end
 		local fadeIn = math.clamp((km - 8850) / 430, 0, 1)
 		local fadeOut = math.clamp((9860 - km) / 370, 0, 1)
 		for piece, transparency in silhouetteParts do
