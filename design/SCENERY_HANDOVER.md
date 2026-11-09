@@ -1,6 +1,6 @@
 # Handover scenery Fly High · 0–10.000 km
 
-Status inventaris per **9 November 2026**. Tujuan pass berikutnya adalah mengisi ruang udara dengan landmark yang bisa dikenali dari gondola. [Gambar konsep v2](./fly-high-scenery-0-10000km-v2.png) menunjukkan satu perjalanan vertikal dari pulau spawn ke Istana Awan. Gunakan susunan dan kedalaman objeknya sebagai referensi art direction. Pakai [PRD](../PRD_Fly_High.md) untuk batas zona, rintangan, dan aturan gameplay.
+Status inventaris & implementasi per **10 November 2026** (**Selesai Diimplementasikan & Diverifikasi di Studio**). Seluruh aset **P1**, **P2**, dan **Pemolesan aset yang sudah ada** pada kelima zona terbang (`0–10.000 km`) telah dibangun dan dianimasikan di [`BiomeScenery.luau`](../audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau) serta disinkronkan ke `ReplicatedStorage.FlyHigh.Modules.BiomeScenery` di `Fly High.rbxl`. [Gambar konsep v2](./fly-high-scenery-0-10000km-v2.png) menjadi acuan susunan vertikal dari pulau spawn ke Istana Awan, sementara [PRD](../PRD_Fly_High.md) menjadi acuan batas zona, rintangan, dan aturan gameplay.
 
 | Zona | Sudah ada di place | Aset baru yang perlu dibuat | Pemolesan aset yang sudah ada |
 | --- | --- | --- | --- |
@@ -27,4 +27,4 @@ Status inventaris per **9 November 2026**. Tujuan pass berikutnya adalah mengisi
 3. Ambil screenshot dari gondola pada sekitar 500, 1.200, 1.900, 3.000, 5.000, 7.000, 9.000, dan 10.000 km. Lihat ke depan, samping, dan atas. Periksa siluet, jarak antarobjek, koridor terbang, dan keterbacaan rintangan. Bandingkan desktop dan tampilan tablet.
 4. Uji naik dan turun melewati batas bioma, Game Over, respawn di lobi, Victory, serta portal pulang. Pastikan dekorasi berganti sesuai zona, tidak meninggalkan model atau animasi lama, dan tidak mengganggu pendaratan di Istana Awan.
 
-Inventaris ini disusun dari DataModel aktif dan source scenery. Gambar v2 adalah konsep. Aset pada kolom **Aset baru yang perlu dibuat** belum dipasang dan belum diuji di Studio.
+Inventaris ini telah diimplementasikan penuh di DataModel aktif (`ReplicatedStorage.FlyHigh.Modules.BiomeScenery`) dan mirror source (`audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau`), serta telah melewati verifikasi visual gondola (`500`, `1.200`, `1.900`, `3.000`, `5.000`, `7.000`, `9.000`, dan `10.000 km`) maupun verifikasi siklus hidup (lintas batas bioma naik/turun, Victory & `ReturnPortal`, serta Game Over & respawn lobi) dengan `0` intrusi koridor (`|X| < 155, |Z| < 155`) dan `0` part kolisi (`Anchored = true, CanCollide = false, CanTouch = false, CanQuery = false`).
