@@ -114,21 +114,46 @@ local function setSummitDeckFade(fade)
 	end
 end
 
+-- Fade the square Terrain water horizon into the overcast during the climb.
+local terrain = workspace.Terrain
+local baseWaterTransparency = terrain.WaterTransparency
+local baseWaterReflectance = terrain.WaterReflectance
+local baseWaterColor = terrain.WaterColor
+local stormWaterColor = Color3.fromRGB(72, 36, 65)
+local sunsetWaterColor = Color3.fromRGB(83, 62, 44)
+local lastWaterFade, lastWaterTint = 0, 0
+
+local function updateWaterHorizon(km)
+	local t = math.clamp((km - 1550) / 660, 0, 1)
+	local fade = math.round(t * t * (3 - 2 * t) * 40) / 40
+	local sunsetStart = 2 * Config.BIOME_STEP_KM - TRANSITION_KM
+	local tint = math.round(math.clamp((km - sunsetStart) / (2 * TRANSITION_KM), 0, 1) * 40) / 40
+	if fade == lastWaterFade and tint == lastWaterTint then return end
+	lastWaterFade, lastWaterTint = fade, tint
+	terrain.WaterTransparency = baseWaterTransparency + (1 - baseWaterTransparency) * fade
+	terrain.WaterReflectance = baseWaterReflectance * (1 - fade)
+	terrain.WaterColor = baseWaterColor:Lerp(stormWaterColor:Lerp(sunsetWaterColor, tint), fade)
+end
+
 local elapsed = 0
 local animation = RunService.Heartbeat:Connect(function(dt)
 	elapsed += dt
 	if elapsed < 0.1 then return end
 	elapsed = 0
 	updateScenery(altitudeKm)
+	updateWaterHorizon(altitudeKm)
 	local camera = workspace.CurrentCamera
 	if camera then
-		local t = math.clamp((camera.CFrame.Position.Y - 2495) / 83, 0, 1)
+		local flightCeiling = Config.GROUND_Y + Config.MAX_ALTITUDE_KM * Config.STUDS_PER_KM
+		-- Complete the reveal before the climb reaches the underside of the island.
+		local t = math.clamp((camera.CFrame.Position.Y - (flightCeiling - 105)) / 45, 0, 1)
 		setSummitDeckFade(1 - math.round(t * t * (3 - 2 * t) * 24) / 24)
 	end
 end)
 
 script.Destroying:Connect(function()
 	animation:Disconnect()
+	updateWaterHorizon(0)
 	trackSummit(nil)
 	sceneryRoot:Destroy()
 	colorGrade:Destroy()

@@ -8,6 +8,7 @@ local Themes=require(RS.FlyHigh.Modules.BalloonThemes)
 local Space=require(script.Parent.FlightSpace)
 local remotes=RS.FlyHigh.Remotes
 local Manager={activeFlights={}}
+local HORIZONTAL_SPEED_SCALE_BY_CREW = { 1, 0.75, 0.6 }
 _G.FlyHighBalloonManager=Manager
 pcall(function() PhysicsService:RegisterCollisionGroup("FlyHighBalloons") end)
 PhysicsService:CollisionGroupSetCollidable("FlyHighBalloons","FlyHighBalloons",true)
@@ -373,8 +374,9 @@ RunService.Heartbeat:Connect(function(dt)
    local fade = (fd.windUntil - now) / 0.5
    push = fd.wind * math.clamp(math.min(ramp, fade), 0, 1)
   end
-  fd.targetPosition=Vector3.new(math.clamp(fd.targetPosition.X+(steer.X*30+push.X)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT),
-   y,math.clamp(fd.targetPosition.Z+(steer.Z*30+push.Z)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT))
+  local steerSpeed = 30 * HORIZONTAL_SPEED_SCALE_BY_CREW[alive]
+  fd.targetPosition=Vector3.new(math.clamp(fd.targetPosition.X+(steer.X*steerSpeed+push.X)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT),
+   y,math.clamp(fd.targetPosition.Z+(steer.Z*steerSpeed+push.Z)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT))
   local clamped=Manager.ResolveCollisions(fd,fd.targetPosition)
   fd.targetPosition=clamped
   if fd.holes==5 then

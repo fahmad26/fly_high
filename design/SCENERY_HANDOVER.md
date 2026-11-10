@@ -1,5 +1,28 @@
 # Handover scenery Fly High · 0–10.000 km
 
+## Pemolesan sambungan aset — 10 November 2026
+
+Pada saat pemeriksaan ini, source Studio dan mirror `BiomeScenery` identik (95.788 byte UTF-8/LF, rolling hash base-31 `986080822`). Hasil dan screenshot di bawah merekam versi yang diuji pada 10 November 2026.
+
+| Bioma | Perubahan pass ini |
+| --- | --- |
+| Dawn | Dua lapisan kapur mengikuti mesh tebing yang sudah ada, dengan bibir tanah di bawah rumput untuk melembutkan pertemuan permukaan hijau dan batu. |
+| Indigo | Massa awan menyambung ke kaki dan bahu pusaran. Kilatan warna menyebar ke seluruh lobe dalam kelompok awan, bukan hanya satu bagian. |
+| Forgotten Sky Isles | Ujung jembatan diberi jalan pendek yang tertanam dan penopang batu terpahat. Pecahan kecil ditempatkan di bawah ujung patahan. |
+| Cosmic | Warna alas observatorium dibuat lebih terbaca; tiga tonjolan batu memakai warna pantulan sian redup dengan material batu, tanpa tambahan lampu. |
+| Celestial Gateway | Profil awan fondasi tersusun dari volume yang saling bertumpuk, bagian bawah meruncing, dan kabut tipis. Setelah review visual, tinggi awan ditambah dan pusatnya diturunkan agar tidak terlalu pipih serta tetap menopang bangunan. |
+
+### Bukti dan batas verifikasi
+
+- Kelima builder berhasil dijalankan di Studio, termasuk fungsi animasi dan opacity 0, 0,25, 0,5, 0,75, dan 1.
+- Jumlah BasePart hasil build masing-masing 1.176, 198, 854, 369, dan 436. Semuanya anchored, tanpa collision, touch, dan query.
+- Playtest satu pemain menggunakan 20 sampel altitude naik/turun dari 1.260 hingga 10.000 km. Pada batas 2.000/4.000/6.000/8.000 km hanya dua scene transisi yang ada; di titik tengah hanya satu. Scene lama dibersihkan.
+- Console sesi terakhir hanya memuat pemberitahuan DataManager memakai mock terisolasi di unpublished Studio. Tidak ada error game pada sesi tersebut.
+- Screenshot diperiksa dari kamera penerbangan dan sudut dekat/bawah. HUD disembunyikan sementara untuk inspeksi. Fixture kamera dan data pengujian hanya ada di sesi Play dan hilang setelah Stop.
+- Ini verifikasi visual bertitik dan lifecycle scene, bukan penerbangan penuh, uji multiplayer, pengukuran FPS, atau uji iPad fisik. Transaksi/data produksi tidak diuji pada pass ini.
+
+Screenshot tersimpan di [folder audit](../audit/scenery-polish-2026-11-10/README.md). Rute, jumlah rintangan, aturan gameplay, dan furnitur plaza Istana Awan tidak diubah.
+
 Status inventaris & implementasi per **10 November 2026** (**Selesai Diimplementasikan & Diverifikasi di Studio**). Seluruh aset **P1**, **P2**, dan **Pemolesan aset yang sudah ada** pada kelima zona terbang (`0–10.000 km`) telah dibangun dan dianimasikan di [`BiomeScenery.luau`](../audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau) serta disinkronkan ke `ReplicatedStorage.FlyHigh.Modules.BiomeScenery` di `Fly High.rbxl`. [Gambar konsep v2](./fly-high-scenery-0-10000km-v2.png) menjadi acuan susunan vertikal dari pulau spawn ke Istana Awan, sementara [PRD](../PRD_Fly_High.md) menjadi acuan batas zona, rintangan, dan aturan gameplay.
 
 | Zona | Sudah ada di place | Aset baru yang perlu dibuat | Pemolesan aset yang sudah ada |
