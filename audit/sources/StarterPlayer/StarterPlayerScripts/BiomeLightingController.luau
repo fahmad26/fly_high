@@ -66,16 +66,70 @@ local function updateScenery(km)
 	end
 end
 
+-- The distant silhouette covers the climb. Reveal the playable summit from deck level.
+local summitVisuals = {}
+local trackedPalace, summitAdded, summitRemoving
+local summitFade = 0
+
+local function trackSummit(palace)
+	if summitAdded then summitAdded:Disconnect() end
+	if summitRemoving then summitRemoving:Disconnect() end
+	for visual, original in summitVisuals do
+		visual.LocalTransparencyModifier = original
+	end
+	table.clear(summitVisuals)
+	trackedPalace = palace
+	if not palace then return end
+
+	local function register(visual)
+		if not (visual:IsA("BasePart") or visual:IsA("Beam") or visual:IsA("ParticleEmitter")) then return end
+		local mist = palace:FindFirstChild("CascadesAndMist")
+		local banks = mist and mist:FindFirstChild("SummitCloudBanks")
+		if banks and visual:IsDescendantOf(banks) then
+			local foundation = banks:FindFirstChild("IslandUnderside")
+			if not foundation or not visual:IsDescendantOf(foundation) then return end
+		end
+		local original = visual.LocalTransparencyModifier
+		summitVisuals[visual] = original
+		visual.LocalTransparencyModifier = 1 - (1 - original) * (1 - summitFade)
+	end
+
+	for _, visual in palace:GetDescendants() do register(visual) end
+	summitAdded = palace.DescendantAdded:Connect(register)
+	summitRemoving = palace.DescendantRemoving:Connect(function(visual)
+		local original = summitVisuals[visual]
+		if original == nil then return end
+		visual.LocalTransparencyModifier = original
+		summitVisuals[visual] = nil
+	end)
+end
+
+local function setSummitDeckFade(fade)
+	local palace = workspace:FindFirstChild("CloudPalace")
+	if palace ~= trackedPalace then trackSummit(palace) end
+	if fade == summitFade then return end
+	summitFade = fade
+	for visual, original in summitVisuals do
+		visual.LocalTransparencyModifier = 1 - (1 - original) * (1 - fade)
+	end
+end
+
 local elapsed = 0
 local animation = RunService.Heartbeat:Connect(function(dt)
 	elapsed += dt
 	if elapsed < 0.1 then return end
 	elapsed = 0
 	updateScenery(altitudeKm)
+	local camera = workspace.CurrentCamera
+	if camera then
+		local t = math.clamp((camera.CFrame.Position.Y - 2495) / 83, 0, 1)
+		setSummitDeckFade(1 - math.round(t * t * (3 - 2 * t) * 24) / 24)
+	end
 end)
 
 script.Destroying:Connect(function()
 	animation:Disconnect()
+	trackSummit(nil)
 	sceneryRoot:Destroy()
 	colorGrade:Destroy()
 end)
@@ -104,12 +158,12 @@ local BIOME_SETTINGS = {
 		OutdoorAmbient = Color3.fromRGB(150, 140, 120),
 	},
 	[2] = { -- 2,000 - 4,000 km: Indigo Thundercloud
-		ClockTime = 0.5,
-		Brightness = 1.0,
+		ClockTime = 19.55,
+		Brightness = 1.3,
 		FogColor = Color3.fromRGB(35, 25, 60),
 		FogEnd = 800,
-		OutdoorAmbient = Color3.fromRGB(81, 66, 126),
-		Ambient = Color3.fromRGB(102, 94, 139),
+		OutdoorAmbient = Color3.fromRGB(107, 109, 155),
+		Ambient = Color3.fromRGB(122, 123, 164),
 		AtmosphereColor = Color3.fromRGB(159, 153, 222),
 		AtmosphereDecay = Color3.fromRGB(71, 57, 123),
 		Tint = Color3.fromRGB(222, 222, 255),
@@ -120,16 +174,18 @@ local BIOME_SETTINGS = {
 		FogColor = Color3.fromRGB(200, 100, 80),
 		FogEnd = 2000,
 		OutdoorAmbient = Color3.fromRGB(180, 96, 78),
+		Ambient = Color3.fromRGB(134, 110, 108),
 		AtmosphereColor = Color3.fromRGB(255, 188, 146),
 		AtmosphereDecay = Color3.fromRGB(180, 108, 127),
 		Tint = Color3.fromRGB(255, 224, 204),
 	},
 	[4] = { -- 6,000 - 8,000 km: Bioluminescent Cosmic Exosphere
 		ClockTime = 23.5,
-		Brightness = 0.8,
+		Brightness = 1.05,
 		FogColor = Color3.fromRGB(10, 15, 35),
 		FogEnd = 4000,
-		OutdoorAmbient = Color3.fromRGB(40, 80, 120),
+		OutdoorAmbient = Color3.fromRGB(82, 101, 150),
+		Ambient = Color3.fromRGB(104, 116, 153),
 	},
 	[5] = { -- 8,000 - 10,000 km: The Celestial Gateway
 		ClockTime = 8.55,

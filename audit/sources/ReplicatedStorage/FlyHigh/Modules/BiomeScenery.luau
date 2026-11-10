@@ -237,50 +237,55 @@ local function column(parent, name, center, width, height, color, material)
 		CFrame.new(center) * CFrame.Angles(0, 0, math.pi / 2), color, material, cylinder)
 end
 
--- Volumetric cloud bank built from sculpted marching-tetrahedra cloud meshes (PalaceCloud / HorizonCloud / UpperSkyCloud / ZenithCloud)
-local function band(parent, name, center, size, colors, seed)
+-- A cloud bank has one silhouette and a small, matched set of rounded lobes.
+local function band(parent, name, center, size, colors, seed, profile, heading)
 	local group = model(parent, name)
 	local random = Random.new(seed)
+	local angle = math.atan2(center.Z, center.X) + math.pi / 2
+	local base = CFrame.new(center) * CFrame.Angles(0, heading or angle + random:NextNumber(-0.18, 0.18), 0)
 	local lobes = {}
-	local templates = { "PalaceCloud", "HorizonCloud", "UpperSkyCloud", "ZenithCloud" }
-	local choice = templates[(seed % #templates) + 1]
-	local baseScale = math.clamp(size.X / 240, 0.28, 1.15)
-	local yaw = random:NextNumber(0, math.pi * 2)
-	local primary = landmark(group, choice, CFrame.new(center) * CFrame.Angles(0, yaw, 0), baseScale)
-	if primary then
-		local idx = 1
-		for _, d in primary:GetDescendants() do
-			if d:IsA("BasePart") then
-				d.Color = colors[(idx - 1) % #colors + 1]
-				d.Material = plastic
-				lobes[#lobes + 1] = d
-				idx += 1
-			end
-		end
+	local function puff(x, y, z, width, height, depth, color, transparency)
+		local shape = part(group, "CloudLobe", size * Vector3.new(width, height, depth),
+			base * CFrame.new(size * Vector3.new(x, y, z)), color, plastic, ball)
+		shape.Transparency = transparency or 0
+		table.insert(lobes, shape)
 	end
-	local subScale = math.clamp(size.X / 280, 0.22, 0.85)
-	local subOffset = Vector3.new(random:NextNumber(-0.18, 0.18) * size.X, random:NextNumber(-0.12, 0.14) * size.Y, random:NextNumber(-0.16, 0.16) * size.Z)
-	local secondary = landmark(group, "PalaceCloud", CFrame.new(center + subOffset) * CFrame.Angles(0, yaw + 1.4, 0), subScale)
-	if secondary then
-		local idx = 2
-		for _, d in secondary:GetDescendants() do
-			if d:IsA("BasePart") then
-				d.Color = colors[(idx - 1) % #colors + 1]
-				d.Material = plastic
-				lobes[#lobes + 1] = d
-				idx += 1
-			end
-		end
+	local shade, light, body = colors[1], colors[2] or colors[1], colors[3] or colors[1]
+	local function veil(offset, width, height, color, transparency)
+		local holder = part(group, "MistAnchor", Vector3.one, base * CFrame.new(size * offset), body)
+		holder.Transparency = 1
+		local sprite = Instance.new("BillboardGui")
+		sprite.Name = "SoftCloudMist"
+		sprite.Size = UDim2.fromScale(width, height)
+		sprite.MaxDistance = 2600
+		sprite.LightInfluence = 0.18
+		sprite.Parent = holder
+		local texture = Instance.new("ImageLabel")
+		texture.Name = "MistTexture"
+		texture.Size = UDim2.fromScale(1, 1)
+		texture.BackgroundTransparency = 1
+		texture.Image = "rbxasset://textures/particles/smoke_main.dds"
+		texture.ImageColor3 = color
+		texture.ImageTransparency = transparency
+		texture.Parent = sprite
 	end
-	if #lobes == 0 then
-		for i = 1, 6 do
-			local angle = (i - 1) * math.pi / 3
-			local offset = Vector3.new(math.cos(angle) * size.X * 0.22, random:NextNumber(-0.12, 0.18) * size.Y, math.sin(angle) * size.Z * 0.22)
-			lobes[i] = part(group, "CloudLobe", size * Vector3.new(0.62, 0.74, 0.64),
-				CFrame.new(center + offset), colors[(i - 1) % #colors + 1], plastic, ball)
-		end
+
+	if profile == "mist" then
+		veil(Vector3.zero, size.X, size.Y * 1.55, body:Lerp(light, 0.35), 0.50)
+	elseif profile == "wisp" then
+		veil(Vector3.new(-0.12, 0.02, 0), size.X * 0.85, size.Y * 1.46, body, 0.24)
+		veil(Vector3.new(0.26, -0.12, 0.09), size.X * 0.68, size.Y * 1.06, light, 0.45)
+	else
+		local crest = random:NextNumber(-0.17, 0.15)
+		puff(0, -0.09, 0.04, 0.90, 0.68, 0.84, body:Lerp(shade, 0.21))
+		puff(-0.31, 0.00, 0.06, 0.47, 0.55, 0.65, body)
+		puff(0.29, 0.04, -0.06, 0.48, 0.68, 0.74, body)
+		puff(crest - 0.15, 0.15, -0.12, 0.47, 0.86, 0.77, body:Lerp(light, 0.33))
+		puff(crest + 0.14, 0.23, 0.03, 0.52, random:NextNumber(0.79, 0.99), 0.75, body:Lerp(light, 0.39))
+		puff(-0.04, -0.02, 0.23, 0.50, 0.58, 0.62, body:Lerp(shade, 0.17))
 	end
-	return lobes
+	group.WorldPivot = base
+	return lobes, group
 end
 
 local function rail(parent, name, center)
@@ -337,6 +342,21 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 	if basaltPart then
 		basaltPart.Color = palette.basalt or rgb(82, 98, 108)
 		basaltPart.Material = palette.rockMat or slate
+		if palette.rockProfile then
+			local profile = palette.rockProfile
+			local depth = basaltPart.Size.Y
+			basaltPart.Size *= profile
+			basaltPart.CFrame += Vector3.new(0, (1 - profile.Y) * depth / 2, 0)
+		end
+		for _, ledge in palette.rockLedges or {} do
+			local offset, proportion, lean = table.unpack(ledge)
+			local shard = basaltPart:Clone()
+			shard.Name = "CliffLedge"
+			shard.Size = basaltPart.Size * proportion
+			shard.CFrame = cf * CFrame.new(offset * scale) * CFrame.Angles(lean * 0.38, 0.35, lean)
+			shard.Color = basaltPart.Color:Lerp(palette.cliff, 0.26)
+			shard.Parent = base
+		end
 	end
 	if mossPart then
 		mossPart.Color = palette.moss or rgb(82, 148, 88)
@@ -376,17 +396,10 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 
 	-- Soft sculpted PalaceCloud collar hugging the floating island underside
 	if palette.cloudColor then
-		local collarCf = cf * CFrame.new(0, -8 * scale, 0) * CFrame.Angles(0, 0.8, 0)
-		local collar = landmark(parent, "PalaceCloud", collarCf, scale * 0.56)
-		if collar then
-			collar.Name = "IslandCloudCollar"
-			for _, d in collar:GetDescendants() do
-				if d:IsA("BasePart") then
-					d.Color = d.Name == "CloudShadow" and (palette.cloudShadow or palette.cloudColor) or palette.cloudColor
-					d.Transparency = palette.cloudTransparency or 0.18
-				end
-			end
-		end
+		local center = cf:PointToWorldSpace(Vector3.new(19, -33, 19) * scale)
+		local shadow = palette.cloudShadow or palette.cloudColor
+		band(parent, "IslandCloudMist", center, Vector3.new(90, 15, 48) * scale,
+			{ shadow, palette.cloudColor, shadow:Lerp(palette.cloudColor, 0.4) }, math.floor(cf.Position.Y), "mist")
 	end
 	return base
 end
@@ -406,47 +419,57 @@ local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterCo
 	end
 
 	local carrier = rail(parent, "ThinWaterfall", lipCf.Position)
+	carrier.CFrame = lipCf
 	carrier.Transparency = 1
 	for j = -1, 1 do
-		local off = Vector3.new(j * 2.6 * scale, 0, 0)
+		local off = Vector3.new(j * 2.65 * scale, 0, 0)
+		local fade = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.29),
+			NumberSequenceKeypoint.new(0.32, 0.30 + math.abs(j) * 0.07),
+			NumberSequenceKeypoint.new(0.67, 0.47),
+			NumberSequenceKeypoint.new(0.86, 0.73),
+			NumberSequenceKeypoint.new(1, 1),
+		})
 		local stream = beam(
-			socket(carrier, off, Vector3.new(0.15, -1, 0.22)),
-			socket(carrier, off + Vector3.new(j * 1.4 * scale, -dropHeight, 9 * scale), Vector3.new(0.08, -1, 0.15)),
-			(3.6 + (1 - math.abs(j)) * 1.2) * scale,
-			(8.2 + (1 - math.abs(j)) * 2.0) * scale,
-			ColorSequence.new(wColor, fColor),
-			softFade(0.86, 0.18),
-			14 * scale
+			socket(carrier, off, Vector3.new(0, -0.36, 1)),
+			socket(carrier, off + Vector3.new(j * 0.72 * scale, -dropHeight * (1 - math.abs(j) * 0.11), 13 * scale),
+				Vector3.new(0, -1, 0.10)),
+			(3.2 + (1 - math.abs(j)) * 1.25) * scale, 1.8 * scale,
+			ColorSequence.new(wColor, fColor), fade, 9 * scale
 		)
-		stream.LightEmission = 0.42
+		stream.LightEmission = 0.22
 	end
 
-	local mistCloud = landmark(parent, "PalaceCloud",
-		lipCf * CFrame.new(0, -dropHeight * 0.78, 8 * scale) * CFrame.Angles(0, 0.5, 0),
-		math.clamp(scale * 0.22, 0.14, 0.34))
-	if mistCloud then
-		mistCloud.Name = "WaterfallMistCloud"
-		for _, d in mistCloud:GetDescendants() do
-			if d:IsA("BasePart") then
-				d.Color = mColor
-				d.Transparency = 0.42
-			end
-		end
-	end
+	local mistCenter = lipCf:PointToWorldSpace(Vector3.new(0, -dropHeight * 0.89, 12 * scale))
+	band(parent, "WaterfallMistCloud", mistCenter, Vector3.new(25, 12, 19) * scale,
+		{ mColor, fColor, mColor }, math.floor(lipCf.Y), "mist")
 end
 
-local function buildFloatingRockIslet(parent, name, cf, width, hasWaterfall, seed)
-	local islet = model(parent, name)
+local dawnRockStyles = {
+	{ name = "ReefShelf", profile = Vector3.new(1.10, 0.37, 1.10), stone = rgb(153, 166, 153), cliff = rgb(209, 190, 154),
+		ledges = { { Vector3.new(-26, -4, 28), Vector3.new(0.54, 0.68, 0.53), -0.10 } } },
+	{ name = "TerracedCliff", profile = Vector3.new(0.97, 0.69, 0.94), stone = rgb(95, 119, 131), cliff = rgb(167, 158, 134),
+		ledges = {
+			{ Vector3.new(-40, -13, 20), Vector3.new(0.60, 0.53, 0.57), -0.24 },
+			{ Vector3.new(18, -20, 30), Vector3.new(0.62, 0.62, 0.42), 0.09 },
+		} },
+	{ name = "SplitCrag", profile = Vector3.new(0.72, 0.94, 0.91), stone = rgb(80, 103, 122), cliff = rgb(161, 154, 135),
+		ledges = { { Vector3.new(40, -17, 11), Vector3.new(0.47, 0.90, 0.60), -0.28 } } },
+}
+
+local function buildFloatingRockIslet(parent, cf, width, hasWaterfall, seed, style)
+	local islet = model(parent, hasWaterfall and "DawnWaterfallIsle" or style.name)
 	local random = Random.new(seed)
 	local scale = math.clamp(width / 108, 0.32, 0.68)
 
 	buildSculptedIslandTerrain(islet, cf, scale, {
-		basalt = rgb(86, 106, 118),
-		cliff = rgb(168, 150, 124),
+		basalt = style.stone,
+		cliff = style.cliff,
 		moss = rgb(80, 148, 86),
 		cloudColor = rgb(252, 246, 232),
 		cloudShadow = rgb(216, 228, 244),
-		cloudTransparency = 0.16,
+		rockProfile = style.profile,
+		rockLedges = style.ledges,
 	}, false)
 
 	local topY = 12.5 * scale
@@ -593,14 +616,15 @@ end
 
 local function dawn(parent)
 	local random = Random.new(802)
-	local headland = landmark(parent, "Dawn", CFrame.new(115, -5, -308) * CFrame.Angles(0, 0.32, 0))
+	local headland = landmark(parent, "Dawn", CFrame.new(115, -5, -308) * CFrame.Angles(0, 0.32, 0), 1.24)
 	if headland then
+		headland.Name = "DawnHeadland"
 		local hCf = headland:GetPivot()
-		natureAsset(headland, "PalmTree", "HeadlandPalm1", hCf * CFrame.new(-14, 14, -4) * CFrame.Angles(0.05, 0.8, -0.04), 0.92)
-		natureAsset(headland, "PalmTree", "HeadlandPalm2", hCf * CFrame.new(8, 13, 6) * CFrame.Angles(-0.04, 2.4, 0.06), 0.84)
-		natureAsset(headland, "BroadleafTree", "HeadlandTree", hCf * CFrame.new(-4, 15, 2) * CFrame.Angles(0, 1.5, 0), 0.78)
-		natureAsset(headland, "Boulder", "HeadlandBoulder", hCf * CFrame.new(18, 10, -8) * CFrame.Angles(0, 0.9, 0), 1.45)
-		natureAsset(headland, "Fern", "HeadlandFern", hCf * CFrame.new(-8, 14, 4), 1.25)
+		natureAsset(headland, "PalmTree", "HeadlandPalm1", hCf * CFrame.new(-17.4, 17.4, -5) * CFrame.Angles(0.05, 0.8, -0.04), 0.92)
+		natureAsset(headland, "PalmTree", "HeadlandPalm2", hCf * CFrame.new(9.9, 16.1, 7.4) * CFrame.Angles(-0.04, 2.4, 0.06), 0.84)
+		natureAsset(headland, "BroadleafTree", "HeadlandTree", hCf * CFrame.new(-5, 18.6, 2.5) * CFrame.Angles(0, 1.5, 0), 0.78)
+		natureAsset(headland, "Boulder", "HeadlandBoulder", hCf * CFrame.new(22.3, 12.4, -9.9) * CFrame.Angles(0, 0.9, 0), 1.45)
+		natureAsset(headland, "Fern", "HeadlandFern", hCf * CFrame.new(-9.9, 17.4, 5), 1.25)
 	end
 
 	for i = 1, 9 do
@@ -657,27 +681,24 @@ local function dawn(parent)
 		{ km = 480, x = -112, z = -238, width = 44, yaw = 0.35, waterfall = false },
 		{ km = 520, x = 246, z = -28, width = 42, yaw = -1.2, waterfall = false },
 		{ km = 590, x = -248, z = 24, width = 38, yaw = 1.4, waterfall = false },
-		{ km = 780, x = 68, z = -252, width = 46, yaw = -0.4, waterfall = false },
-		{ km = 1170, x = 128, z = -236, width = 50, yaw = -0.35, waterfall = false },
+		{ km = 1170, x = 193, z = -310, width = 43, yaw = -0.35, waterfall = false },
 		{ km = 1210, x = 244, z = -22, width = 46, yaw = -1.35, waterfall = false },
-		{ km = 1260, x = -246, z = -18, width = 40, yaw = 1.25, waterfall = false },
 		{ km = 1520, x = 58, z = -262, width = 42, yaw = -0.5, waterfall = false },
-		{ km = 1660, x = -134, z = -248, width = 64, yaw = 0.32, waterfall = true },
-		{ km = 1860, x = -68, z = -234, width = 58, yaw = 0.28, waterfall = true },
+		{ km = 1660, x = -134, z = -267, width = 81, yaw = 0.32, waterfall = true },
 		{ km = 1890, x = 245, z = -24, width = 44, yaw = -1.4, waterfall = false },
 		{ km = 1940, x = -246, z = 22, width = 38, yaw = 1.5, waterfall = false },
 	}
 	for idx, spec in isletSpecs do
 		local cf = CFrame.new(spec.x, altitude(spec.km), spec.z) * CFrame.Angles(0, spec.yaw, 0)
-		local name = spec.waterfall and "DawnWaterfallIsle" or "LowFloatingIslet"
-		buildFloatingRockIslet(parent, name, cf, spec.width, spec.waterfall, 900 + idx * 17)
+		local style = dawnRockStyles[(idx - 1) % #dawnRockStyles + 1]
+		buildFloatingRockIslet(parent, cf, spec.width, spec.waterfall, 900 + idx * 17, style)
 	end
 
 	local balloonSpecs = {
-		{ km = 540, pos = Vector3.new(98, altitude(540), -225), yaw = -0.35, scale = 1.12 },
-		{ km = 1230, pos = Vector3.new(-74, altitude(1230), -222), yaw = 0.38, scale = 1.16 },
-		{ km = 1320, pos = Vector3.new(236, altitude(1320), 42), yaw = -1.25, scale = 1.08 },
-		{ km = 1910, pos = Vector3.new(104, altitude(1910), -224), yaw = -0.28, scale = 1.12 },
+		{ pos = Vector3.new(105, altitude(680), -250), yaw = -0.35, scale = 1.54 },
+		{ pos = Vector3.new(-180, altitude(1250), -375), yaw = 0.38, scale = 0.88 },
+		{ pos = Vector3.new(303, altitude(1320), 72), yaw = -1.25, scale = 0.92 },
+		{ pos = Vector3.new(104, altitude(1910), -310), yaw = -0.28, scale = 0.9 },
 	}
 	local weatherBalloons = {}
 	for idx, spec in balloonSpecs do
@@ -701,11 +722,11 @@ local function dawn(parent)
 		birdFlocks[idx] = { flock = flock, spec = spec, y = y }
 	end
 
-	local cloudColors = { rgb(254, 248, 234), rgb(228, 238, 250), rgb(242, 245, 252) }
+	local cloudColors = { rgb(195, 215, 240), rgb(255, 251, 235), rgb(231, 242, 253) }
 	local cloudLayers = {
-		{ count = 8, minKm = 320, stepKm = 205, radius = 268, size = Vector3.new(135, 26, 88), phase = 0.15 },
-		{ count = 9, minKm = 440, stepKm = 180, radius = 348, size = Vector3.new(178, 34, 112), phase = 0.52 },
-		{ count = 7, minKm = 260, stepKm = 245, radius = 460, size = Vector3.new(235, 42, 142), phase = 0.88 },
+		{ count = 5, minKm = 360, stepKm = 290, radius = 292, size = Vector3.new(102, 37, 61), phase = 0.57 },
+		{ count = 6, minKm = 510, stepKm = 235, radius = 380, size = Vector3.new(155, 22, 82), phase = 0.91, profile = "wisp" },
+		{ count = 5, minKm = 620, stepKm = 260, radius = 525, size = Vector3.new(186, 37, 108), phase = 0.22, profile = "mist" },
 	}
 	local cloudParts = {}
 	local seedCounter = 31
@@ -715,19 +736,18 @@ local function dawn(parent)
 			local angle = (i - 1) * math.pi * 2 / layer.count + layer.phase
 			local y = altitude(layer.minKm + (i - 1) * layer.stepKm)
 			local center = Vector3.new(math.cos(angle) * layer.radius, y, math.sin(angle) * layer.radius)
-			for _, cloud in band(parent, "CoastalCloudBank", center, layer.size, cloudColors, seedCounter) do
-				cloud.Transparency = 0.1
-				table.insert(cloudParts, cloud)
+			for _, cloud in band(parent, "CoastalCloudBank", center, layer.size, cloudColors, seedCounter, layer.profile) do
+				table.insert(cloudParts, { part = cloud, base = cloud.Transparency })
 			end
 		end
 	end
 
 	local lastCloudTransparency
 	return function(km, time)
-		local cloudTransparency = math.round((0.08 + math.clamp((km - 1550) / 550, 0, 1) * 0.22) * 50) / 50
+		local cloudTransparency = math.round(math.clamp((km - 1680) / 520, 0, 1) * 12) / 50
 		if cloudTransparency ~= lastCloudTransparency then
 			lastCloudTransparency = cloudTransparency
-			for _, cloud in cloudParts do cloud.Transparency = cloudTransparency end
+			for _, cloud in cloudParts do cloud.part.Transparency = cloud.base + (1 - cloud.base) * cloudTransparency end
 		end
 		for i, item in boats do
 			item.boat:PivotTo(item.origin * CFrame.new(0, math.sin(time * 0.65 + i) * 0.3, math.sin(time * 0.08 + i) * 10))
@@ -749,90 +769,51 @@ local function dawn(parent)
 	end
 end
 
-local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, height, ringCount, seed)
+local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, height, seed)
 	local vortex = model(parent, name)
-	local colors = {
-		rgb(52, 46, 94),
-		rgb(68, 62, 118),
-		rgb(86, 78, 142),
-		rgb(108, 98, 174),
-	}
-
-	local topAnvil = landmark(vortex, "Storm",
-		CFrame.new(basePos + Vector3.new(0, height * 0.52, 0)) * CFrame.Angles(0, seed * 0.7, 0),
-		math.clamp(topWidth / 165, 0.52, 0.95))
-	if topAnvil then
-		topAnvil.Name = "VortexAnvilCrown"
+	local base = CFrame.new(basePos)
+	vortex.WorldPivot = base
+	local shade, body, top = rgb(55, 53, 87), rgb(81, 83, 126), rgb(129, 130, 172)
+	local function section(t)
+		local radius = (bottomWidth + (topWidth - bottomWidth) * t ^ 1.62) / 2
+		local center = basePos + Vector3.new(math.sin(t * 2.9) * topWidth * 0.14,
+			(t - 0.5) * height, math.sin(t * 3.3) * topWidth * 0.07)
+		return center, radius
 	end
 
-	local rings = {}
-	local tierAttachments = {}
-	for i = 1, ringCount do
-		local t = (i - 1) / (ringCount - 1)
-		local eased = t * t * (3 - 2 * t)
-		local w = bottomWidth + (topWidth - bottomWidth) * eased
-		local y = basePos.Y + (t - 0.5) * height
-		local bendX = math.sin(t * math.pi * 1.25) * (topWidth * 0.15)
-		local bendZ = math.cos(t * math.pi * 1.1) * (topWidth * 0.09)
-		local ringCenter = Vector3.new(basePos.X + bendX, y, basePos.Z + bendZ)
-		local ringModel = model(vortex, "VortexTier")
-		local ringCf = CFrame.new(ringCenter) * CFrame.Angles(0, i * 0.65, 0)
-
-		local cloudScale = math.clamp(w / 185, 0.12, 0.82)
-		local sculptedTier = landmark(ringModel, "PalaceCloud", ringCf * CFrame.new(0, 14 * cloudScale, 0), cloudScale)
-		if sculptedTier then
-			sculptedTier.Name = "FunnelCloudMesh"
-			for idx, d in sculptedTier:GetDescendants() do
-				if d:IsA("BasePart") then
-					d.Color = colors[(i + idx) % #colors + 1]
-					d.Transparency = 0.08 + (1 - t) * 0.08
-				end
-			end
-		end
-
-		if i % 3 == 0 then
-			local glow = part(ringModel, "VortexLightningCore", Vector3.new(w * 0.42, 12 + eased * 10, w * 0.42),
-				ringCf, rgb(172, 158, 255), neon, ball)
-			glow.Transparency = 0.56
-		end
-
-		local carrier = rail(ringModel, "RibbonAnchor", ringCenter)
-		carrier.Transparency = 1
-		tierAttachments[i] = { part = carrier, width = w }
-
-		ringModel.WorldPivot = ringCf
-		rings[i] = { model = ringModel, origin = ringCf, radius = 3.2 + (1 - t) * 5.2, phase = i * 0.55 }
+	-- Closely spaced volumes give the funnel a continuous edge, even in profile.
+	local funnel = {}
+	for i = 0, 28 do
+		local t = i / 28
+		local center, radius = section(t)
+		local verticalSize = math.min(height * 0.29, 18 + radius * 0.82)
+		local tone = shade:Lerp(body, t ^ 0.75)
+		local volume = part(vortex, "FunnelVolume", Vector3.new(radius * 2, verticalSize, radius * 1.76),
+			CFrame.new(center) * CFrame.Angles(0, 0.2, -0.06 - t * 0.10), tone, plastic, ball)
+		table.insert(funnel, { part = volume, tone = tone })
 	end
+	local crown, _ = section(1)
+	band(vortex, "StormCap", crown + Vector3.new(0, height * 0.04, 0),
+		Vector3.new(topWidth * 1.42, height * 0.29, topWidth * 1.15), { body, top, body:Lerp(top, 0.46) }, seed)
 
-	for strand = 1, 4 do
-		local isLightning = strand == 4
-		local seq = isLightning
-			and ColorSequence.new(rgb(186, 174, 255), rgb(132, 118, 238))
-			or ColorSequence.new(rgb(88, 82, 146), rgb(138, 132, 204))
-		for i = 1, ringCount - 1 do
-			local a0 = (strand - 1) * math.pi / 2 + i * 0.85
-			local a1 = a0 + 0.95
-			local r0 = tierAttachments[i].width * 0.42
-			local r1 = tierAttachments[i + 1].width * 0.42
-			local s0 = socket(tierAttachments[i].part,
-				Vector3.new(math.cos(a0) * r0, 0, math.sin(a0) * r0),
-				Vector3.new(-math.sin(a0), 0.55, math.cos(a0)))
-			local s1 = socket(tierAttachments[i + 1].part,
-				Vector3.new(math.cos(a1) * r1, 0, math.sin(a1) * r1),
-				Vector3.new(-math.sin(a1), 0.55, math.cos(a1)))
-			local rib = beam(
-				s0, s1,
-				isLightning and 2.6 or (5.5 + i * 0.6),
-				isLightning and 3.2 or (6.2 + i * 0.65),
-				seq,
-				isLightning and softFade(0.75, 0.18) or softFade(0.84, 0.36),
-				r0 * 0.55
-			)
-			rib.LightEmission = isLightning and 0.95 or 0.45
+	-- One faint band suggests rotation without tracing every tier in neon.
+	local carrier = rail(vortex, "WindShearAnchors", basePos)
+	carrier.Transparency = 1
+	local previous
+	for i = 0, 8 do
+		local t = i / 8
+		local center, radius = section(t)
+		local angle = t * 8.5 + seed % 4
+		local offset = center - basePos + Vector3.new(math.cos(angle) * radius * 1.04, 0, math.sin(angle) * radius)
+		local node = socket(carrier, offset, Vector3.new(-math.sin(angle), 0.7, math.cos(angle)))
+		if previous then
+			local ribbon = beam(previous, node, 1.5 + t, 1.8 + t,
+				ColorSequence.new(rgb(123, 130, 178)), softFade(0.98, 0.76), radius * 0.36)
+			ribbon.LightEmission = 0.12
 		end
+		previous = node
 	end
-
-	return rings
+	return { model = vortex, origin = base, phase = seed % 7, funnel = funnel }
 end
 
 local function buildStormRockFragment(parent, cf, scale, seed)
@@ -886,14 +867,14 @@ end
 
 local function thundercloud(parent)
 	local banks, rain = {}, {}
-	local indigo = { rgb(72, 68, 116), rgb(92, 86, 144), rgb(112, 108, 168) }
+	local indigo = { rgb(55, 59, 100), rgb(107, 115, 170), rgb(81, 89, 136) }
 	local anvilPalette = { rgb(64, 58, 108), rgb(88, 82, 146), rgb(118, 114, 182) }
 	local random = Random.new(2020)
 
-	for i = 1, 12 do
-		local angle = (i - 1) * math.pi * 2 / 12 + random:NextNumber(-0.1, 0.1)
-		local radius = random:NextNumber(305, 395)
-		local y = altitude(2060 + i * 150) + random:NextNumber(-28, 28)
+	for i = 1, 9 do
+		local angle = (i - 1) * math.pi * 2 / 9 + 0.36 + random:NextNumber(-0.1, 0.1)
+		local radius = random:NextNumber(390, 520)
+		local y = altitude(2060 + i * 188) + random:NextNumber(-28, 28)
 		local position = Vector3.new(math.cos(angle) * radius, y, math.sin(angle) * radius)
 		local size = Vector3.new(random:NextNumber(155, 235), random:NextNumber(72, 155), random:NextNumber(110, 168))
 		local clouds = band(parent, "ThunderheadCliff", position, size, indigo, i * 19)
@@ -906,61 +887,41 @@ local function thundercloud(parent)
 			local carrier = rail(parent, "SlantedRainCurtain", origin)
 			carrier.Transparency = 1
 			rain[#rain + 1] = { part = carrier, origin = origin }
-			for j = 1, 16 do
-				local offset = Vector3.new(random:NextNumber(-64, 64), random:NextNumber(-42, 42), random:NextNumber(-32, 32))
+			local wind = Vector3.new(-28 + math.sin(angle) * 21, 0, 10 + math.cos(angle) * 21)
+			for j = 1, 13 do
+				local offset = Vector3.new(random:NextNumber(-66, 66), random:NextNumber(-33, 34), random:NextNumber(-36, 36))
+				local drift = wind * random:NextNumber(0.65, 1.3) + Vector3.new(0, -random:NextNumber(88, 167), j % 3 * 4)
 				local streak = beam(
 					socket(carrier, offset),
-					socket(carrier, offset + Vector3.new(-32, -132, 8)),
-					2.8, 1.8,
-					ColorSequence.new(rgb(172, 196, 255), rgb(132, 158, 242)),
-					softFade(0.92, 0.26)
+					socket(carrier, offset + drift),
+					random:NextNumber(0.7, 1.6), 0.38,
+					ColorSequence.new(rgb(158, 183, 232), rgb(116, 133, 194)),
+					softFade(1, random:NextNumber(0.69, 0.86))
 				)
-				streak.LightEmission = 0.92
+				streak.LightEmission = 0.25
 			end
 		end
 	end
 
 	local anvilSpecs = {
-		{ km = 2380, pos = Vector3.new(255, altitude(2380), -220), yaw = -0.45, scale = 0.95 },
-		{ km = 3040, pos = Vector3.new(-235, altitude(3040), -225), yaw = 0.55, scale = 1.15 },
-		{ km = 3020, pos = Vector3.new(285, altitude(3020), -25), yaw = -1.45, scale = 1.05 },
-		{ km = 3520, pos = Vector3.new(-45, altitude(3520), -285), yaw = 0.15, scale = 1.1 },
+		{ Vector3.new(301, altitude(2480), -270), 0.82 },
+		{ Vector3.new(-348, altitude(3620), -345), 1.0 },
+		{ Vector3.new(94, altitude(3750), -480), 1.08 },
 	}
-	for idx, spec in anvilSpecs do
-		local storm = landmark(parent, "Storm", CFrame.new(spec.pos) * CFrame.Angles(0, spec.yaw, 0), spec.scale)
-		if storm then
-			local crown = storm:FindFirstChild("IndigoLight")
-			if crown then banks[#banks + 1] = { lobe = crown, color = crown.Color } end
-		end
-		local anvilTop = spec.pos + Vector3.new(0, 76 * spec.scale, 0)
-		local anvilLobes = band(parent, "SeparateStormAnvil", anvilTop,
-			Vector3.new(245, 58, 185) * spec.scale, anvilPalette, 300 + idx * 29)
-		if anvilLobes[1] then
-			banks[#banks + 1] = { lobe = anvilLobes[1], color = anvilLobes[1].Color }
-		end
+	for i, spec in anvilSpecs do
+		local center, scale = table.unpack(spec)
+		local anvilLobes = band(parent, "StormAnvil", center,
+			Vector3.new(255, 89, 153) * scale, anvilPalette, 300 + i * 29)
+		banks[#banks + 1] = { lobe = anvilLobes[1], color = anvilLobes[1].Color }
 	end
 
-	local vortexRings = {}
-	for _, r in buildStormVortex(
-		parent, "WideStormVortex",
-		Vector3.new(-138, altitude(2980), -295),
-		154, 22, 210, 12, 2401
-	) do
-		table.insert(vortexRings, r)
-	end
-	for _, r in buildStormVortex(
-		parent, "SlenderStormVortex",
-		Vector3.new(128, altitude(3110), -288),
-		90, 14, 232, 13, 2402
-	) do
-		table.insert(vortexRings, r)
-	end
+	local vortex = buildStormVortex(parent, "WideStormVortex",
+		Vector3.new(-161, altitude(2960), -322), 175, 19, 237, 2401)
 
 	local fragmentSpecs = {
 		{ km = 2320, x = -155, z = -225, scale = 1.1 },
 		{ km = 2640, x = 165, z = -230, scale = 1.0 },
-		{ km = 2940, x = -58, z = -232, scale = 1.25 },
-		{ km = 3040, x = 56, z = -238, scale = 1.2 },
+		{ km = 3040, x = 136, z = -288, scale = 0.94 },
 		{ km = 3030, x = 238, z = 38, scale = 1.15 },
 		{ km = 3070, x = -238, z = -42, scale = 1.1 },
 		{ km = 3380, x = 92, z = -242, scale = 1.15 },
@@ -973,6 +934,7 @@ local function thundercloud(parent)
 		fragments[idx] = { model = frag, origin = cf }
 	end
 
+	local lastRimLight = 0
 	return function(_, time)
 		for i, item in rain do
 			item.part.Position = item.origin + Vector3.new(math.sin(time * 0.4 + i) * 9, math.sin(time * 0.78 + i) * 12, 0)
@@ -980,13 +942,19 @@ local function thundercloud(parent)
 		for i, item in banks do
 			local phase = (time + i * 3.19) % 13
 			local pulse = math.max(0, 1 - math.abs(phase - 1.3) / 0.85)
-			item.lobe.Color = item.color:Lerp(rgb(174, 175, 248), pulse * 0.82)
+			item.lobe.Color = item.color:Lerp(rgb(174, 175, 248), pulse * 0.46)
 		end
-		for _, ring in vortexRings do
-			local a = time * 0.38 + ring.phase
-			local shift = Vector3.new(math.cos(a) * ring.radius, math.sin(a * 0.7) * 1.8, math.sin(a) * ring.radius)
-			ring.model:PivotTo(ring.origin * CFrame.new(shift) * CFrame.Angles(0, a * 0.35, 0))
+		local crestPhase = (time + 2.6) % 17
+		local rimLight = math.max(0, 1 - math.abs(crestPhase - 2) / 1.3)
+		if rimLight ~= lastRimLight then
+			lastRimLight = rimLight
+			for i, volume in vortex.funnel do
+				local strength = (i - 1) / (#vortex.funnel - 1)
+				volume.part.Color = volume.tone:Lerp(rgb(157, 164, 222), rimLight * strength * 0.24)
+			end
 		end
+		local sway = math.sin(time * 0.2 + vortex.phase)
+		vortex.model:PivotTo(vortex.origin * CFrame.Angles(0, sway * 0.09, sway * 0.015))
 		for i, frag in fragments do
 			frag.model:PivotTo(frag.origin * CFrame.new(0, math.sin(time * 0.48 + i) * 3.5, 0)
 				* CFrame.Angles(math.sin(time * 0.25 + i) * 0.06, time * 0.08, 0))
@@ -1114,9 +1082,11 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 	local delta = finishPos - startPos
 	local totalLen = delta.Magnitude
 	local dir = delta.Unit
-	local segLen = totalLen * 0.35
+	local shortSide = seed % 2 == 0 and 1 or -1
 
 	for idx, side in { -1, 1 } do
+		local worn = side == shortSide
+		local segLen = totalLen * (worn and 0.24 or 0.41)
 		local anchorPos = side == -1 and startPos or finishPos
 		local inward = side == -1 and dir or -dir
 		local segCenter = anchorPos + inward * (segLen * 0.5)
@@ -1127,9 +1097,10 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 		part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.4, segLen * 0.92), segCf * CFrame.new(0, 2.0, 0), gold, metalMat)
 
 		for _, railSide in { -1, 1 } do
-			part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * 0.9),
-				segCf * CFrame.new(railSide * 5.6, 3.2, -segLen * 0.03), masonry, limestoneMat)
-			for post = 1, 3 do
+			local parapetLength = worn and (railSide == side and 0.41 or 0.23) or 0.84
+			part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * parapetLength),
+				segCf * CFrame.new(railSide * 5.6, 3.2, segLen * (1 - parapetLength) * 0.39), masonry, limestoneMat)
+			for post = 1, (worn and 1 or 3) do
 				local zOff = (post - 2) * segLen * 0.34
 				part(bridge, "BalustradePost", Vector3.new(2.4, 4.2, 2.4),
 					segCf * CFrame.new(railSide * 5.6, 3.8, zOff), sandstone, sandstoneMat)
@@ -1148,10 +1119,10 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 		end)
 		natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
 
-		for p = 1, 2 do
+		for p = 1, (worn and 1 or 2) do
 			local pierFrac = p == 1 and 0.32 or 0.76
 			local pierTop = anchorPos + inward * (segLen * pierFrac)
-			local pierH = p == 1 and 28 or 20
+			local pierH = worn and 19 or p == 1 and 28 or 20
 			column(bridge, "BridgePier", pierTop + Vector3.new(0, -pierH * 0.5 - 1.5, 0), 5.8, pierH, darkStone, slate)
 			part(bridge, "PierCapital", Vector3.new(7.8, 2.4, 7.8), CFrame.new(pierTop + Vector3.new(0, -2.2, 0)), sandstone, sandstoneMat)
 			part(bridge, "ArchRib", Vector3.new(9.2, 4.8, 15),
@@ -1169,7 +1140,7 @@ end
 
 local function skyIsles(parent)
 	local basaltCol = rgb(92, 62, 82)
-	local cliffCol = rgb(198, 128, 92)
+	local cliffCol = rgb(145, 101, 91)
 	local mossCol = rgb(118, 142, 104)
 	local sandstoneCol = rgb(184, 136, 102)
 	local ivoryCol = rgb(238, 220, 186)
@@ -1177,13 +1148,22 @@ local function skyIsles(parent)
 	local roots = rgb(110, 73, 79)
 
 	local islandSpecs = {
-		{ km = 4180, pos = Vector3.new(-105, altitude(4180), -252), width = 62, yaw = 0.35, temple = false, ruin = true },
-		{ km = 4520, pos = Vector3.new(112, altitude(4520), -258), width = 96, yaw = -0.42, temple = false, ruin = false },
-		{ km = 4780, pos = Vector3.new(-262, altitude(4780), 28), width = 72, yaw = 1.45, temple = false, ruin = true },
-		{ km = 4960, pos = Vector3.new(-118, altitude(4960), -255), width = 134, yaw = 0.52, temple = true, ruin = true },
-		{ km = 5020, pos = Vector3.new(258, altitude(5020), -24), width = 82, yaw = -1.35, temple = false, ruin = false },
-		{ km = 5060, pos = Vector3.new(115, altitude(5060), -248), width = 102, yaw = -0.38, temple = false, ruin = true },
-		{ km = 5480, pos = Vector3.new(-88, altitude(5480), -265), width = 74, yaw = 0.25, temple = false, ruin = false },
+		{ pos = Vector3.new(-105, altitude(4180), -252), width = 62, yaw = 0.35, rock = Vector3.new(1.05, 0.58, 0.95) },
+		{ pos = Vector3.new(112, altitude(4520), -258), width = 96, yaw = -0.42, rock = Vector3.new(1.10, 0.42, 0.93), shelf = true,
+			ledges = {
+				{ Vector3.new(-46, -16, 18), Vector3.new(0.49, 1.06, 0.55), -0.34 },
+				{ Vector3.new(22, -24, 28), Vector3.new(0.39, 0.80, 0.49), 0.36 },
+			} },
+		{ pos = Vector3.new(-262, altitude(4780), 28), width = 72, yaw = 1.45, rock = Vector3.new(0.87, 1.22, 0.91) },
+		{ pos = Vector3.new(-139, altitude(4960), -291), width = 186, yaw = 0.23, temple = true, rock = Vector3.new(1, 1.04, 1) },
+		{ pos = Vector3.new(258, altitude(5020), -24), width = 82, yaw = -1.35, rock = Vector3.new(1.13, 0.62, 1.01),
+			ledges = { { Vector3.new(-39, -16, 24), Vector3.new(0.55, 1.26, 0.50), 0.40 } } },
+		{ pos = Vector3.new(142, altitude(5140), -307), width = 96, yaw = -0.31, rock = Vector3.new(1.02, 0.64, 1), twinPeaks = true,
+			ledges = {
+				{ Vector3.new(42, -16, 14), Vector3.new(0.59, 1.07, 0.53), -0.44 },
+				{ Vector3.new(-28, -38, 20), Vector3.new(0.21, 0.31, 0.29), 0.61 },
+			} },
+		{ pos = Vector3.new(-88, altitude(5480), -265), width = 74, yaw = 0.25, rock = Vector3.new(1.03, 0.55, 1.16) },
 	}
 	local islandPositions = {}
 	local chimes = {}
@@ -1192,11 +1172,12 @@ local function skyIsles(parent)
 		local p = spec.pos
 		islandPositions[i] = p
 		local temple = spec.temple
-		local island = model(parent, temple and "CloudTempleIsland" or "ForgottenSkyIsle")
+		local name = temple and "CloudTempleIsland" or spec.shelf and "StratifiedCliffIsland" or spec.twinPeaks and "TwinPeakIsland" or "ForgottenSkyIsle"
+		local island = model(parent, name)
 		local cf = CFrame.new(p) * CFrame.Angles(0, spec.yaw, 0)
-		local scale = math.clamp(spec.width / 128, 0.48, 1.05)
+		local scale = spec.width / 128
 
-		buildSculptedIslandTerrain(island, cf, scale, {
+		local terrain = buildSculptedIslandTerrain(island, cf, scale, {
 			basalt = basaltCol,
 			cliff = cliffCol,
 			moss = mossCol,
@@ -1204,9 +1185,53 @@ local function skyIsles(parent)
 			ivory = ivoryCol,
 			gold = goldCol,
 			cloudColor = rgb(255, 224, 192),
-			cloudShadow = rgb(218, 172, 168),
-			cloudTransparency = 0.16,
-		}, temple or spec.ruin)
+			cloudShadow = rgb(182, 142, 154),
+			rockProfile = spec.rock,
+			rockLedges = spec.ledges,
+		}, temple)
+		if i == 3 then
+			for _, columnSpec in { { -26, 23, -1, -0.15 }, { -8, 11, 2, 0.09 }, { 16, 16, 0, 0.22 } } do
+				local x, height, z, tilt = table.unpack(columnSpec)
+				local base = cf * CFrame.new(x * scale, 12 * scale, z * scale)
+				local ruined = base * CFrame.Angles(0, 0, tilt)
+				part(island, "RuinPedestal", Vector3.new(10, 3.4, 10) * scale, base, sandstoneCol, sandstoneMat)
+				part(island, "BrokenPillar", Vector3.new(height, 6.3, 6.3) * scale,
+					ruined * CFrame.new(0, height * scale * 0.5, 0) * CFrame.Angles(0, 0, math.pi / 2),
+					ivoryCol:Lerp(cliffCol, 0.28), limestoneMat, cylinder)
+				part(island, "FracturedCapital", Vector3.new(7, 3.4, 6.4) * scale,
+					ruined * CFrame.new(0.4 * scale, height * scale, 0) * CFrame.Angles(0, 0.30, tilt),
+					sandstoneCol, sandstoneMat, "Wedge")
+			end
+		end
+		if terrain and spec.shelf then
+			local rim = terrain:FindFirstChild("SculptedCliffRim")
+			if rim then
+				for layer, dimensions in { Vector3.new(1.02, 0.39, 0.98), Vector3.new(0.93, 0.45, 0.89) } do
+					local shelf = rim:Clone()
+					shelf.Name = "SandstoneStratum"
+					shelf.Size = rim.Size * dimensions
+					shelf.CFrame = rim.CFrame * CFrame.new((layer - 1) * -4 * scale, (-8 - layer * 5) * scale, 0)
+					shelf.Color = cliffCol:Lerp(sandstoneCol, layer == 1 and 0.68 or 0.22)
+					shelf.Parent = terrain
+				end
+			end
+		elseif terrain and spec.twinPeaks then
+			local basalt = terrain:FindFirstChild("Basalt")
+			if basalt then
+				for _, peak in {
+					{ Vector3.new(-34, 28, -12), Vector3.new(54, 51, 47), -0.22 },
+					{ Vector3.new(35, 21, -8), Vector3.new(42, 38, 39), 0.20 },
+				} do
+					local offset, size, lean = table.unpack(peak)
+					local tower = basalt:Clone()
+					tower.Name = "WeatheredPeak"
+					tower.Size = size * scale
+					tower.CFrame = cf * CFrame.new(offset * scale) * CFrame.Angles(0.14, lean, math.pi + lean)
+					tower.Color = basaltCol:Lerp(sandstoneCol, 0.32)
+					tower.Parent = terrain
+				end
+			end
+		end
 
 		local topY = 13.5 * scale
 		for j = 1, 3 do
@@ -1228,14 +1253,14 @@ local function skyIsles(parent)
 			buildBlossomTree(island, treeSpot, math.clamp(scale * 1.15, 0.78, 1.25))
 		end
 
-		if i == 2 or i == 5 or i == 6 then
-			local chimeSpot = cf * CFrame.new(12 * scale, topY, -6 * scale)
-			buildWindChimeRuin(island, chimeSpot, math.clamp(scale * 1.05, 0.78, 1.12), chimes)
+		if i == 2 or i == 4 or i == 5 then
+			local chimeSpot = cf * CFrame.new(12 * scale, topY, temple and 17 * scale or -6 * scale)
+			buildWindChimeRuin(island, chimeSpot, temple and 1.62 or math.clamp(scale * 1.05, 0.78, 1.12), chimes)
 		end
 
-		if i ~= 1 then
-			local lipCf = cf * CFrame.new(48 * scale, topY - 2 * scale, 6 * scale) * CFrame.Angles(0, 0.25, 0)
-			local drop = temple and 132 or (72 + i * 8)
+		if i == 2 or i == 4 or i == 6 or i == 7 then
+			local lipCf = cf * CFrame.new(49 * scale, topY - 2 * scale, 9 * scale) * CFrame.Angles(0, math.pi / 2, 0)
+			local drop = temple and 153 or (66 + i * 6)
 			attachSculptedWaterfall(island, lipCf, drop, scale * 1.15,
 				rgb(78, 172, 224), rgb(208, 238, 252), rgb(244, 216, 208))
 		end
@@ -1245,7 +1270,7 @@ local function skyIsles(parent)
 	local bridgePairs = {
 		{
 			start = islandPositions[4] + Vector3.new(-38, 6, 12),
-			finish = Vector3.new(-235, altitude(4980), -205),
+			finish = Vector3.new(-283, altitude(4980), -218),
 			seed = 401,
 		},
 		{
@@ -1272,8 +1297,23 @@ local function skyIsles(parent)
 			gold = goldCol,
 			cloudColor = rgb(255, 224, 192),
 			cloudTransparency = 0.2,
-		}, idx == 1)
-		if idx == 2 then
+		}, false)
+		if idx == 1 then
+			local arch = anchorCf * CFrame.new(-2, 6, 0) * CFrame.Angles(0, -0.4, 0)
+			part(anchorIsle, "ArchRemnantPier", Vector3.new(6, 13, 7),
+				arch * CFrame.new(-10, 6.5, 0), sandstoneCol, sandstoneMat)
+			for segment = 0, 4 do
+				local angle = math.pi - segment * 0.24
+				local stone = arch * CFrame.new(math.cos(angle) * 10, 13 + math.sin(angle) * 10, 0)
+					* CFrame.Angles(0, 0, angle - math.pi / 2)
+				part(anchorIsle, "BrokenArchVoussoir", Vector3.new(3.1, 4.4, 5.8), stone,
+					ivoryCol:Lerp(sandstoneCol, segment * 0.10), limestoneMat)
+			end
+			local rootStart = (arch * CFrame.new(-8, -1, 2)).Position
+			local rootMid = (arch * CFrame.new(-13, -12, 5)).Position
+			span(anchorIsle, "HangingRoot", rootStart, rootMid, 1.65, roots, woodMat)
+			span(anchorIsle, "RootTip", rootMid, rootMid + Vector3.new(-3, -8, 2), 0.82, roots, woodMat)
+		elseif idx == 2 then
 			buildBlossomTree(anchorIsle, anchorCf * CFrame.new(4, 7, -4), 0.82)
 		end
 		anchorIsle.WorldPivot = anchorCf
@@ -1282,7 +1322,7 @@ local function skyIsles(parent)
 	local distantSpecs = {
 		{ km = 4120, angle = -1.25, radius = 415, width = 42, waterfall = false },
 		{ km = 4420, angle = -1.85, radius = 438, width = 50, waterfall = true },
-		{ km = 4720, angle = -1.48, radius = 425, width = 38, waterfall = false },
+		{ km = 4720, angle = -1.12, radius = 525, width = 35, waterfall = false },
 		{ km = 4920, angle = -1.62, radius = 412, width = 52, waterfall = true },
 		{ km = 5140, angle = -0.15, radius = 420, width = 44, waterfall = true },
 		{ km = 5320, angle = -1.42, radius = 435, width = 48, waterfall = true },
@@ -1301,6 +1341,7 @@ local function skyIsles(parent)
 			sandstone = sandstoneCol,
 			ivory = ivoryCol,
 			gold = goldCol,
+			rockProfile = idx % 3 == 0 and Vector3.new(0.95, 1.18, 1) or Vector3.new(1.05, 0.67, 1.08),
 		}, idx % 2 == 0)
 		if spec.waterfall then
 			attachSculptedWaterfall(distIsle, cf * CFrame.new(42 * sc, 5 * sc, 0), 54, sc * 1.1,
@@ -1321,8 +1362,8 @@ end
 local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 	local island = model(parent, "CosmicCrystalIsland")
 	local random = Random.new(seed)
-	local astralObsidian = rgb(38, 36, 72)
-	local astralSlate = rgb(62, 56, 108)
+	local astralObsidian = rgb(76, 80, 123)
+	local astralSlate = rgb(102, 106, 152)
 	local bioTeal = rgb(58, 162, 178)
 	local crystalColors = {
 		rgb(218, 92, 255),
@@ -1411,8 +1452,8 @@ end
 
 local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	local obs = model(parent, "FloatingObservatory")
-	local astralObsidian = rgb(40, 38, 74)
-	local astralSlate = rgb(66, 62, 114)
+	local astralObsidian = rgb(77, 84, 125)
+	local astralSlate = rgb(108, 112, 155)
 	local bioTeal = rgb(68, 164, 182)
 	local marble = rgb(238, 230, 216)
 	local gold = rgb(246, 194, 84)
@@ -1433,6 +1474,18 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	}, true)
 
 	local terraceCf = cf * CFrame.new(0, 12.5 * scale, 0)
+	fleetShape(obs, "DockRim", "ObservatoryStoneCornice",
+		terraceCf * CFrame.new(0, -1.8 * scale, 2 * scale) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(3.6, 78, 58) * scale, astralSlate:Lerp(marble, 0.21), slate)
+	fleetShape(obs, "DockRim", "ObservatoryMetalInlay",
+		terraceCf * CFrame.new(0, 0.1 * scale, 2 * scale) * CFrame.Angles(0, 0, math.pi / 2),
+		Vector3.new(0.75, 77.4, 57.4) * scale, bioTeal:Lerp(marble, 0.30), metalMat)
+	for i = 1, 7 do
+		local a = math.pi * (i - 1) / 6
+		local ledge = terraceCf * CFrame.new(math.cos(a) * 39 * scale, -3.4 * scale, (2 + math.sin(a) * 29) * scale)
+			* CFrame.Angles(0, -a - math.pi / 2, 0)
+		part(obs, "CrystalInlay", Vector3.new(3.1, 1.4, 1.05) * scale, ledge, bioTeal:Lerp(cyanGlow, 0.25), neon)
+	end
 	clonePalacePodium(obs, "ObservatoryCompassTerrace", terraceCf, 2.35 * scale,
 		marble, gold, astralObsidian, marble, cyanGlow)
 
@@ -1543,16 +1596,15 @@ local function exosphere(parent)
 	local satellites = {}
 	local armillaryRings = {}
 
-	buildCosmicCrystalIsland(parent, CFrame.new(-115, altitude(6960), -248) * CFrame.Angles(0, 0.38, 0), 1.04, satellites, 610)
+	buildCosmicCrystalIsland(parent, CFrame.new(-226, altitude(6900), -355) * CFrame.Angles(0, 0.38, 0), 0.92, satellites, 610)
 	buildCosmicCrystalIsland(parent, CFrame.new(258, altitude(6980), -22) * CFrame.Angles(0, -1.25, 0), 0.85, satellites, 620)
 	buildCosmicCrystalIsland(parent, CFrame.new(-88, altitude(7480), -262) * CFrame.Angles(0, 0.45, 0), 0.84, satellites, 630)
 
-	buildFloatingObservatory(parent, CFrame.new(118, altitude(7040), -242) * CFrame.Angles(0, -0.42, 0), 1.02, armillaryRings)
+	buildFloatingObservatory(parent, CFrame.new(112, altitude(7040), -290) * CFrame.Angles(0, -0.28, 0), 1.48, armillaryRings)
 
 	local archSpecs = {
 		{ km = 6280, angle = -1.35, radius = 425, scale = 0.92 },
 		{ km = 6680, angle = -1.78, radius = 445, scale = 1.02 },
-		{ km = 6940, angle = -1.55, radius = 415, scale = 0.96 },
 		{ km = 7060, angle = -0.12, radius = 395, scale = 0.95 },
 		{ km = 7420, angle = -1.38, radius = 428, scale = 1.0 },
 		{ km = 7820, angle = -1.68, radius = 435, scale = 0.88 },
@@ -1563,9 +1615,9 @@ local function exosphere(parent)
 		buildDistantCosmicArch(parent, cf, spec.scale)
 	end
 
-	for i = 1, 9 do
-		local t = (i - 1) / 8
-		local arcPos = Vector3.new(-155 + t * 285, altitude(6720 + t * 560) + math.sin(t * math.pi) * 28, -315 - math.sin(t * math.pi) * 45)
+	for i = 1, 6 do
+		local t = (i - 1) / 5
+		local arcPos = Vector3.new(-295 + t * 185, altitude(6720 + t * 560) + math.sin(t * math.pi) * 28, -380 - math.sin(t * math.pi) * 38)
 		local cf = CFrame.new(arcPos) * CFrame.Angles(0, i * 0.5, 0)
 		local pebble = model(parent, "CosmicArcStone")
 		local sc = 0.55 + (1 - math.abs(t - 0.5)) * 0.45
@@ -1593,20 +1645,30 @@ local function exosphere(parent)
 	local nodes, dust = {}, {}
 	for index, ribbon in ribbons do
 		local y = altitude(ribbon.km)
-		local left = Vector3.new(-390, y + 66, ribbon.z)
-		local right = Vector3.new(390, y + 108, ribbon.z - 34)
-		local from = rail(parent, "AuroraStart", left)
-		local to = rail(parent, "AuroraEnd", right)
-		from.Transparency, to.Transparency = 1, 1
-		table.insert(nodes, { part = from, origin = left })
-		table.insert(nodes, { part = to, origin = right })
-
-		local start = socket(from, Vector3.zero, Vector3.new(1, -0.83, -0.15))
-		local finish = socket(to, Vector3.zero, Vector3.new(1, index == 1 and 0.75 or 0.39, 0.19))
-		for layer = 1, 5 do
-			local width = 87 - (layer - 1) * 17
-			local glow = beam(start, finish, width, width * 0.83, ribbon.color, softFade(1, 0.87 - layer * 0.045), 275)
-			glow.Segments = 40
+		local base = Vector3.new(0, y, ribbon.z)
+		local carrier = rail(parent, "AuroraCurtain", base)
+		carrier.Transparency = 1
+		table.insert(nodes, { part = carrier, origin = base })
+		local direction = index == 1 and 1 or -1
+		-- Overlap soft-edged curtains with different widths, heights and depth.
+		for i, fold in {
+			{ -400, 30, -182, 9, 23, 71, -0.15, 0.18, 0.56 },
+			{ -260, 15, 24, 73, 45, 121, 0.11, 0.42, 0.38 },
+			{ -77, 59, 156, 50, 74, 29, 0.31, -0.32, 0.53 },
+			{ 83, 54, 398, 133, 27, 90, -0.22, 0.49, 0.47 },
+			{ 245, 99, 459, 115, 59, 12, 0.33, -0.11, 0.66 },
+		} do
+			local x0, y0, x1, y1, width0, width1, pitch0, pitch1, alpha = table.unpack(fold)
+			local start = socket(carrier, Vector3.new(x0 * direction, y0, i * 7),
+				Vector3.new(direction, pitch0, -0.13))
+			local finish = socket(carrier, Vector3.new(x1 * direction, y1, i * -10),
+				Vector3.new(direction, pitch1, 0.19))
+			local glow = beam(start, finish, width0, width1, ribbon.color, softFade(1, alpha), 67 + i * 5)
+			glow.Segments = 24
+			glow.Texture = "rbxasset://textures/particles/smoke_main.dds"
+			glow.TextureMode = Enum.TextureMode.Stretch
+			glow.TextureSpeed = 0
+			glow.LightEmission = 0.63
 		end
 	end
 
@@ -1782,15 +1844,16 @@ end
 
 local function palaceHorizon(parent, anchor)
 	local horizon = model(parent, "PalaceHorizon")
+	local cloudPalette = { rgb(183, 195, 222), rgb(255, 244, 223), rgb(232, 232, 237) }
 	local layouts = {
 		{ "HorizonPavilion", Vector3.new(-165, -510, -255), 0.52, -16 },
-		{ "HorizonArch", Vector3.new(-195, -455, -295), 0.66, -12 },
+		{ "HorizonPavilion", Vector3.new(-214, -441, -309), 0.63, -12, "WestArcade" },
 		{ "HorizonSpire", Vector3.new(185, -420, -265), 0.58, 22 },
 		{ "HorizonPavilion", Vector3.new(265, -345, -35), 0.54, 28 },
-		{ "HorizonPavilion", Vector3.new(-145, -325, -265), 0.62, -14 },
+		{ "HorizonPavilion", Vector3.new(-165, -327, -295), 0.54, -14, "WestArcade" },
 		{ "HorizonSpire", Vector3.new(-285, -295, -45), 0.64, -24 },
-		{ "HorizonArch", Vector3.new(215, -245, -310), 0.72, 18 },
-		{ "HorizonPavilion", Vector3.new(-175, -185, -295), 0.48, -8 },
+		{ "HorizonArch", Vector3.new(227, -245, -317), 0.72, 18, "EastCauseway" },
+		{ "HorizonSpire", Vector3.new(-267, -192, -360), 0.43, -8 },
 		{ "HorizonPavilion", Vector3.new(-275, 1, -438), 0.72, -18 },
 		{ "HorizonSpire", Vector3.new(323, -12, -558), 0.78, 25 },
 		{ "HorizonCloud", Vector3.new(335, -22, 456), 0.83, -18 },
@@ -1805,16 +1868,56 @@ local function palaceHorizon(parent, anchor)
 		{ "HorizonCloud", Vector3.new(-1530, -59, 865), 1.32, 10 },
 		{ "HorizonCloud", Vector3.new(120, -92, 1890), 1.45, -16 },
 	}
-	for _, layout in layouts do
-		local name, offset, scale, turn = table.unpack(layout)
+	for index, layout in layouts do
+		local name, offset, scale, turn, style = table.unpack(layout)
 		local position = anchor:PointToWorldSpace(offset)
 		local target = Vector3.new(anchor.Position.X, position.Y, anchor.Position.Z)
 		local facing = CFrame.lookAt(position, target) * CFrame.Angles(0, math.pi + math.rad(turn), 0)
+		if name == "HorizonCloud" then
+			band(horizon, "FarCloudVeil", position, Vector3.new(420, 78, 190) * scale,
+				cloudPalette, 151 + index, "wisp")
+			continue
+		end
+
 		local vista = landmark(horizon, name, facing, scale)
 		if vista then
-			local haze = math.clamp((offset.Magnitude - 320) / 1800, 0.06, 0.46)
+			local haze = math.clamp((offset.Magnitude - 130) / 1420, 0.24, 0.79)
+			local warm = offset.X < 0
+			local mistColor = warm and rgb(231, 222, 224) or rgb(193, 211, 233)
+			local cloudTones = { cloudPalette[1]:Lerp(mistColor, haze), cloudPalette[2]:Lerp(mistColor, haze), cloudPalette[3]:Lerp(mistColor, haze) }
 			for _, piece in vista:GetChildren() do
-				if piece:IsA("BasePart") then piece.Color = piece.Color:Lerp(rgb(198, 211, 229), haze) end
+				if piece.Name == "VistaIvory" or piece.Name == "VistaShadow" then
+					piece:Destroy()
+				elseif piece:IsA("BasePart") then
+					piece.Color = piece.Color:Lerp(mistColor, haze)
+					if style == "WestArcade" then
+						local rel = facing:PointToObjectSpace(piece.Position)
+						piece.Size *= Vector3.new(1.18, 0.70, 1.08)
+						piece.Position = facing:PointToWorldSpace(rel * Vector3.new(1.18, 0.70, 1.08))
+					end
+				end
+			end
+			local _, heading = facing:ToOrientation()
+			local arch = name == "HorizonArch"
+			local baseWidth = arch and 284 or style == "WestArcade" and 284 or 242
+			local cloudHeight = style == "WestArcade" and 37 or 53
+			band(vista, "HorizonCloudBase", position - Vector3.new(0, 22 * scale, 0),
+				Vector3.new(baseWidth, cloudHeight, 124) * scale, cloudTones, 151 + index, nil, heading)
+			if style == "WestArcade" then
+				for terrace = 1, 2 do
+					local shelf = facing * CFrame.new(terrace * 53 * scale, (-9 - terrace * 4) * scale, 18 * scale)
+					part(vista, "OpenTerrace", Vector3.new(56, 4, 39) * scale, shelf,
+						rgb(244, 219, 170):Lerp(mistColor, haze), limestoneMat)
+				end
+			end
+			if arch then
+				local plinthColor = rgb(220, 214, 205):Lerp(rgb(183, 199, 220), haze)
+				for _, side in { -1, 1 } do
+					local footing = facing * CFrame.new(side * 98 * scale, -19 * scale, 0)
+					part(vista, "ArchFooting", Vector3.new(44, 13, 47) * scale, footing, plinthColor, limestoneMat)
+					band(vista, "FootingCloud", footing.Position - Vector3.new(0, 9 * scale, 0),
+						Vector3.new(117, style == "EastCauseway" and 48 or 38, 91) * scale, cloudTones, 175 + index + side, nil, heading)
+				end
 			end
 		end
 	end
@@ -1822,43 +1925,20 @@ end
 
 local function palaceUpperSky(parent, anchor)
 	local sky = model(parent, "PalaceUpperSky")
-	local clouds = {
-		{ Vector3.new(-600, 510, -810), 1.12, -18, 9 },
-		{ Vector3.new(355, 331.5, -460), 0.72, 14, 7 },
-		{ Vector3.new(-370, 380, 1060), 1.14, -24, 9 },
-	}
-	for _, cloud in clouds do
-		local offset, scale, yaw, tilt = table.unpack(cloud)
-		local facing = anchor * CFrame.new(offset) * CFrame.Angles(0, math.rad(yaw), math.rad(tilt))
-		landmark(sky, "UpperSkyCloud", facing, scale)
-	end
 	local overhead = model(sky, "OverheadClouds")
 	local ceiling = {
-		{ "ZenithCloud", Vector3.new(-15, 345, 104), 0.85, -20 },
-		{ "ZenithCloud", Vector3.new(221, 490, -116), 0.69, 76 },
-		{ "ZenithCloud", Vector3.new(-294, 570, 244), 0.72, 39 },
-		{ "UpperSkyCloud", Vector3.new(-155, 411, -333), 0.72, -31 },
-		{ "UpperSkyCloud", Vector3.new(185, 159, -196), 0.63, -13 },
-		{ "UpperSkyCloud", Vector3.new(-178, 141, -228), 0.54, 18 },
+		{ Vector3.new(-455, 278, -280), Vector3.new(240, 36, 126), "wisp" },
+		{ Vector3.new(460, 305, -330), Vector3.new(260, 45, 141), "wisp" },
+		{ Vector3.new(-340, 435, 360), Vector3.new(235, 42, 113), "wisp" },
+		{ Vector3.new(374, 560, 125), Vector3.new(235, 69, 125), "mist" },
+		{ Vector3.new(16, 627, -416), Vector3.new(215, 30, 121), "mist" },
 	}
+	local colors = { rgb(220, 220, 232), rgb(253, 242, 223), rgb(242, 231, 221) }
 	local driftingClouds = {}
-	for _, layout in ceiling do
-		local name, offset, scale, yaw = table.unpack(layout)
-		local placement = anchor * CFrame.new(offset) * CFrame.Angles(0, math.rad(yaw), 0)
-		local cloud = landmark(overhead, name, placement, scale)
-		if cloud then table.insert(driftingClouds, { cloud = cloud, placement = placement }) end
-		if name == "ZenithCloud" then
-			local mistPlacement = placement * CFrame.new(19, -13, 52 * scale) * CFrame.Angles(0, 0.18, 0)
-			local mist = landmark(overhead, "UpperSkyCloud", mistPlacement, scale * 0.53)
-			if mist then
-				mist.Name = "CloudEdgeMist"
-				for _, piece in mist:GetChildren() do
-					piece.Transparency = 0.83
-					piece.Color = piece.Color:Lerp(rgb(242, 239, 238), 0.65)
-				end
-				table.insert(driftingClouds, { cloud = mist, placement = mistPlacement })
-			end
-		end
+	for i, layout in ceiling do
+		local offset, size, profile = table.unpack(layout)
+		local _, cloud = band(overhead, "UpperCloudDrift", anchor:PointToWorldSpace(offset), size, colors, 810 + i, profile)
+		table.insert(driftingClouds, { cloud = cloud, placement = cloud:GetPivot() })
 	end
 
 	local lightTop = Vector3.new(300, 311.5, -445)
@@ -1886,10 +1966,10 @@ local function palaceUpperSky(parent, anchor)
 	end
 
 	local routes = {
-		{ "CloudSailer", Vector3.new(-85, -335, -225), Vector3.new(42, 6, 30), 84, 0.35, 1.08 },
+		{ "CloudSailer", Vector3.new(-225, -292, -280), Vector3.new(32, 6, 30), 84, 0.35, 1.08 },
 		{ "CloudKetch", Vector3.new(242, -315, -25), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
-		{ "CloudCutter", Vector3.new(95, -210, -255), Vector3.new(48, 8, 36), 108, 4.2, 0.94 },
-		{ "CloudSailer", Vector3.new(57, 79, -131), Vector3.new(138, 6, 43), 88, 0.12, 1.04 },
+		{ "CloudCutter", Vector3.new(239, -196, -335), Vector3.new(31, 8, 36), 108, 4.2, 0.88 },
+		{ "CloudSailer", Vector3.new(187, 66, -159), Vector3.new(42, 6, 39), 88, 0.12, 1.04 },
 		{ "CloudKetch", Vector3.new(425, 278, -715), Vector3.new(160, 13, 70), 133, 2.9, 0.92 },
 		{ "CloudCutter", Vector3.new(170, 460, 630), Vector3.new(122, 13, 69), 151, 5.2, 0.90 },
 	}
@@ -1946,6 +2026,8 @@ local function gateway(parent)
 	local animateSky
 	if vista then
 		local anchor = vista:GetPivot()
+		-- Keep only the placement from the old full-width backdrop.
+		vista:Destroy()
 		palaceHorizon(parent, anchor)
 		animateSky = palaceUpperSky(parent, anchor)
 	end
@@ -1957,10 +2039,10 @@ local function gateway(parent)
 	for i = 1, 12 do
 		local tier = math.floor((i - 1) / 4)
 		local angle = (i - 1) * math.pi / 2 + 0.48 + tier * 0.32
-		local radius = 335 + tier * 52
+		local radius = 390 + tier * 55
 		local center = Vector3.new(math.cos(angle) * radius, altitude(8120 + tier * 680 + i % 4 * 85), math.sin(angle) * radius)
-		local cloud = landmark(parent, "PalaceCloud", CFrame.new(center) * CFrame.Angles(0, angle, 0), 0.73 + tier * 0.15)
-		if not cloud then band(parent, "GoldenCloudTerrace", center, Vector3.new(208, 58 + tier * 10, 145), clouds, i * 21) end
+		band(parent, "GoldenCloudTerrace", center, Vector3.new(185 + tier * 13, 46, 112), clouds, i * 21,
+			i % 3 == 0 and "wisp" or nil)
 		if i % 2 == 0 then
 			local source = rail(parent, "Sunshaft", center + Vector3.new(0, 52, 0))
 			source.Transparency = 1
@@ -1976,10 +2058,15 @@ local function gateway(parent)
 	local at = CFrame.new(0, altitude(9450), -398)
 	local shadow, gold = rgb(129, 104, 134), rgb(187, 151, 130)
 	if landmark(silhouette, "Palace", at, 0.75) then
-		if not landmark(silhouette, "PalaceFoundation", at, 0.75) then
-			landmark(silhouette, "PalaceCloud", at, 0.75)
+		local foundation = landmark(silhouette, "PalaceFoundation", at, 0.75)
+		if foundation then
+			for _, name in { "CloudIvory", "CloudShade" } do
+				local backing = foundation:FindFirstChild(name)
+				if backing then backing:Destroy() end
+			end
 		end
-		landmark(silhouette, "PalaceApproach", at, 0.75)
+		band(silhouette, "PalaceCloudPlinth", at.Position - Vector3.new(0, 11, 0),
+			Vector3.new(190, 52, 163), { shadow, rgb(247, 235, 224), rgb(221, 220, 230) }, 1403)
 	else
 		part(silhouette, "CloudPlinth", Vector3.new(124, 20, 49), at, shadow, plastic, ball)
 		part(silhouette, "Keep", Vector3.new(48, 33, 28), at * CFrame.new(0, 17, 0), shadow)
@@ -1990,6 +2077,7 @@ local function gateway(parent)
 				at * CFrame.new(x, 48, 0) * CFrame.Angles(0, math.pi / 4, 0), gold, plastic, "Wedge")
 		end
 	end
+	silhouette.WorldPivot = at
 	local silhouetteParts = {}
 	for _, piece in silhouette:GetDescendants() do
 		if piece:IsA("BasePart") then
@@ -2027,7 +2115,9 @@ local function gateway(parent)
 			item.model:PivotTo(item.origin * CFrame.new(0, math.sin(time * 0.65 + i) * 2.8, 0) * CFrame.Angles(0, time * 0.45, 0))
 		end
 		local fadeIn = math.clamp((km - 8150) / 520, 0, 1)
-		local fadeOut = math.clamp((9860 - km) / 370, 0, 1)
+		local fadeOut = math.clamp((10000 - km) / 200, 0, 1)
+		local revealLift = math.clamp((km - 9000) * 0.23, 0, 178)
+		silhouette:PivotTo(at + Vector3.new(0, revealLift, 0))
 		for piece, transparency in silhouetteParts do
 			piece.Transparency = 1 - (1 - transparency) * fadeIn * fadeOut * 0.82
 		end
@@ -2040,18 +2130,26 @@ local names = { "DawnArchipelago", "IndigoThundercloud", "ForgottenSkyIsles", "C
 function Scenery.Build(index)
 	local scene = model(nil, names[index])
 	local animate = builders[index](scene)
-	local parts, beams = {}, {}
-	for _, object in scene:GetDescendants() do
-		if object:IsA("BasePart") then
-			object.Anchored = true
-			object.CanCollide = false
-			object.CanTouch = false
-			object.CanQuery = false
-			object.CastShadow = false
-			table.insert(parts, object)
-		elseif object:IsA("Beam") then
-			beams[object] = object.Transparency
+	local groups = {}
+	for index, root in scene:GetChildren() do
+		local group = { parts = {}, beams = {}, mist = {}, delay = ((index * 7) % 13) / 12 * 0.48 }
+		local objects = root:GetDescendants()
+		table.insert(objects, root)
+		for _, object in objects do
+			if object:IsA("BasePart") then
+				object.Anchored = true
+				object.CanCollide = false
+				object.CanTouch = false
+				object.CanQuery = false
+				object.CastShadow = false
+				table.insert(group.parts, object)
+			elseif object:IsA("Beam") then
+				group.beams[object] = object.Transparency
+			elseif object:IsA("ImageLabel") and object.Name == "MistTexture" then
+				group.mist[object] = object.ImageTransparency
+			end
 		end
+		table.insert(groups, group)
 	end
 
 	local lastOpacity
@@ -2059,13 +2157,19 @@ function Scenery.Build(index)
 		if animate then animate(km, time) end
 		if opacity == lastOpacity then return end
 		lastOpacity = opacity
-		for _, object in parts do object.LocalTransparencyModifier = 1 - opacity end
-		for object, original in beams do
-			local points = {}
-			for i, point in original.Keypoints do
-				points[i] = NumberSequenceKeypoint.new(point.Time, 1 - (1 - point.Value) * opacity)
+		for _, group in groups do
+			-- Fade landmarks in sequence to limit the number of transparent silhouettes at once.
+			local t = math.clamp((opacity - group.delay) / 0.52, 0, 1)
+			local weight = t * t * (3 - 2 * t)
+			for _, object in group.parts do object.LocalTransparencyModifier = 1 - weight end
+			for sprite, base in group.mist do sprite.ImageTransparency = 1 - (1 - base) * weight end
+			for object, original in group.beams do
+				local points = {}
+				for i, point in original.Keypoints do
+					points[i] = NumberSequenceKeypoint.new(point.Time, 1 - (1 - point.Value) * weight)
+				end
+				object.Transparency = NumberSequence.new(points)
 			end
-			object.Transparency = NumberSequence.new(points)
 		end
 	end
 end
