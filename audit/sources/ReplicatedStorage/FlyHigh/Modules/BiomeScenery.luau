@@ -341,7 +341,6 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 	if mossPart then
 		mossPart.Color = palette.moss or rgb(82, 148, 88)
 		mossPart.Material = palette.turfMat or grassMat
-		-- Create a sculpted cliff-rim stratum using the organic 17-sided jittered Moss mesh profile
 		local cliffRim = mossPart:Clone()
 		cliffRim.Name = "SculptedCliffRim"
 		cliffRim.Size = mossPart.Size * Vector3.new(1.04, 1.18, 1.04)
@@ -392,13 +391,12 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 	return base
 end
 
--- Attach a sculpted waterfall cascade (using PalaceFoundation's CascadeBlue/CascadeFoam meshes + Beam streams + mist)
+-- Attach a sculpted waterfall cascade
 local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterColor, foamColor, mistColor)
 	local wColor = waterColor or rgb(98, 196, 238)
 	local fColor = foamColor or rgb(214, 244, 255)
 	local mColor = mistColor or rgb(238, 246, 255)
 
-	-- Sculpted stone spillway & spring pool at the lip
 	part(parent, "SpringPool", Vector3.new(18, 1.8, 14) * scale,
 		lipCf * CFrame.new(0, 0.4 * scale, -4 * scale), wColor, glassMat, ball)
 	for _, side in { -1, 1 } do
@@ -423,7 +421,6 @@ local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterCo
 		stream.LightEmission = 0.42
 	end
 
-	-- Sculpted mist cloud at the base of the cascade
 	local mistCloud = landmark(parent, "PalaceCloud",
 		lipCf * CFrame.new(0, -dropHeight * 0.78, 8 * scale) * CFrame.Angles(0, 0.5, 0),
 		math.clamp(scale * 0.22, 0.14, 0.34))
@@ -453,7 +450,6 @@ local function buildFloatingRockIslet(parent, name, cf, width, hasWaterfall, see
 	}, false)
 
 	local topY = 12.5 * scale
-	-- Sculpted BroadleafTree & PalmTree from EnvironmentAssets (matching FlyHighLobby)
 	natureAsset(islet, "BroadleafTree", "CanopyTree",
 		cf * CFrame.new(-8 * scale, topY, -4 * scale) * CFrame.Angles(0, random:NextNumber(0, 6.28), 0),
 		math.clamp(scale * 1.45, 0.55, 0.95))
@@ -464,7 +460,6 @@ local function buildFloatingRockIslet(parent, name, cf, width, hasWaterfall, see
 			math.clamp(scale * 1.25, 0.48, 0.82))
 	end
 
-	-- Sculpted Boulders, Ferns, and Flowers on the grassy terrace
 	for i = 1, 3 do
 		local a = (i - 1) * math.pi * 2 / 3 + random:NextNumber(-0.3, 0.3)
 		local r = (16 + i * 4) * scale
@@ -492,7 +487,6 @@ local function buildWeatherBalloon(parent, cf, scale)
 	local brass = rgb(206, 156, 68)
 	local copper = rgb(168, 108, 62)
 
-	-- Sculpted pleated hot-air / meteorological envelope using BalloonSkins.D & E MeshParts + FleetGeometry UnionOperations
 	local envCenter = cf * CFrame.new(0, 16 * scale, 0)
 	balloonEnvelopeMesh(wb, "D", "EnvelopeMain", envCenter,
 		Vector3.new(25.5, 31.0, 25.5) * scale, royalBlue, plastic, false)
@@ -501,7 +495,6 @@ local function buildWeatherBalloon(parent, cf, scale)
 	balloonEnvelopeMesh(wb, "E", "EnvelopeSkyGores", envCenter * CFrame.Angles(0, math.pi / 4, 0),
 		Vector3.new(25.9, 30.6, 25.9) * scale, skyBlue, plastic, false)
 
-	-- Sculpted brass equatorial & meridian rings (FleetGeometry.SaturnRing & DockRim UnionOperations)
 	fleetShape(wb, "SaturnRing", "EquatorialGoldBand",
 		envCenter * CFrame.new(0, 3.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
 		Vector3.new(0.9, 27.6, 27.6) * scale, gold, metalMat)
@@ -512,21 +505,18 @@ local function buildWeatherBalloon(parent, cf, scale)
 		cf * CFrame.new(0, 1.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
 		Vector3.new(0.8, 9.2, 9.2) * scale, brass, metalMat)
 
-	-- Sculpted Star emblems on the flanks (FleetGeometry.Star UnionOperation)
 	for _, side in { -1, 1 } do
 		fleetShape(wb, "Star", "SunEmblem",
 			envCenter * CFrame.new(0, 3.2 * scale, side * 13.4 * scale) * CFrame.Angles(math.pi / 2, 0, 0),
 			Vector3.new(0.6, 6.8, 6.8) * scale, gold, neon)
 	end
 
-	-- Top meteorological anemometer mast & beacon
 	column(wb, "TopMast", (cf * CFrame.new(0, 34.5 * scale, 0)).Position, 0.75 * scale, 7.2 * scale, brass, metalMat)
 	fleetShape(wb, "DockRim", "AnemometerHalo",
 		cf * CFrame.new(0, 36.2 * scale, 0) * CFrame.Angles(0, 0, math.pi / 2),
 		Vector3.new(0.4, 6.2, 6.2) * scale, gold, metalMat)
 	part(wb, "TopBeacon", Vector3.one * (2.2 * scale), cf * CFrame.new(0, 38.6 * scale, 0), rgb(255, 232, 136), neon, ball)
 
-	-- Suspended brass weather sonde instrument capsule (octagonal/ringed telemetry pod)
 	local podCenter = (cf * CFrame.new(0, -8.5 * scale, 0)).Position
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + math.pi / 4
@@ -542,7 +532,6 @@ local function buildWeatherBalloon(parent, cf, scale)
 	part(wb, "SondeGlowCore", Vector3.new(2.8, 2.2, 2.8) * scale, cf * CFrame.new(0, -11.4 * scale, 0), rgb(138, 224, 255), neon, ball)
 	column(wb, "VaneBoom", podCenter + Vector3.new(0, -4.8 * scale, 0), 0.45 * scale, 5.2 * scale, brass, metalMat)
 
-	-- Fluttering expedition tail pennants
 	local tailCarrier = rail(wb, "TailRibbons", podCenter)
 	tailCarrier.Transparency = 1
 	local s1 = socket(tailCarrier, Vector3.new(-2.4 * scale, 0, 0), Vector3.new(-1, -0.3, 0.2))
@@ -557,7 +546,6 @@ local function buildWeatherBalloon(parent, cf, scale)
 	return wb
 end
 
--- Realistic feathered seabirds matching ServerScriptService.FlyHighServer.ObstacleArt's feathered anatomy
 local function buildSeabirdFlock(parent, centerCf, birdCount, scale)
 	local flock = model(parent, "DistantSeabirdFlock")
 	local plumage = rgb(248, 249, 252)
@@ -607,7 +595,6 @@ local function dawn(parent)
 	local random = Random.new(802)
 	local headland = landmark(parent, "Dawn", CFrame.new(115, -5, -308) * CFrame.Angles(0, 0.32, 0))
 	if headland then
-		-- Dress the primary Dawn headland with sculpted PalmTrees, BroadleafTrees, Boulders & Ferns like FlyHighLobby
 		local hCf = headland:GetPivot()
 		natureAsset(headland, "PalmTree", "HeadlandPalm1", hCf * CFrame.new(-14, 14, -4) * CFrame.Angles(0.05, 0.8, -0.04), 0.92)
 		natureAsset(headland, "PalmTree", "HeadlandPalm2", hCf * CFrame.new(8, 13, 6) * CFrame.Angles(-0.04, 2.4, 0.06), 0.84)
@@ -626,13 +613,11 @@ local function dawn(parent)
 		local width = random:NextNumber(34, 58)
 		local meshScale = math.clamp(width / 96, 0.36, 0.62)
 
-		-- Use the sculpted BiomeLandmarkMeshes.Dawn MeshPart kit (Reef, Sand, Grass, Rock) instead of flat primitive balls
 		local sculptedDawn = landmark(island, "Dawn", cf, meshScale)
 		if sculptedDawn then
 			sculptedDawn.Name = "SculptedAtoll"
 		end
 
-		-- Add sculpted PalmTree, BroadleafTree, Boulder, Fern & Flower from EnvironmentAssets (matching FlyHighLobby)
 		local crestY = 14.5 * meshScale
 		natureAsset(island, "PalmTree", "CoastalPalm",
 			cf * CFrame.new(-6 * meshScale, crestY, -2 * meshScale) * CFrame.Angles(0.06, angle + i, -0.05),
@@ -654,7 +639,6 @@ local function dawn(parent)
 		island.WorldPivot = cf
 	end
 
-	-- Sculpted sailboats using BiomeLandmarkMeshes.CloudCutter / CloudSailer planked wooden hulls & billowed cloth sails
 	local boats = {}
 	for i = 1, 4 do
 		local angle = i * math.pi / 2 + 0.65
@@ -669,7 +653,6 @@ local function dawn(parent)
 		boats[i] = { boat = boat, origin = cf }
 	end
 
-	-- P1 & P2: Low floating rock/island kits with sculpted terrain, trees, boulders & waterfall variants
 	local isletSpecs = {
 		{ km = 480, x = -112, z = -238, width = 44, yaw = 0.35, waterfall = false },
 		{ km = 520, x = 246, z = -28, width = 42, yaw = -1.2, waterfall = false },
@@ -690,7 +673,6 @@ local function dawn(parent)
 		buildFloatingRockIslet(parent, name, cf, spec.width, spec.waterfall, 900 + idx * 17)
 	end
 
-	-- P1: Decorative weather balloons with sculpted pleated envelope & brass sonde
 	local balloonSpecs = {
 		{ km = 540, pos = Vector3.new(98, altitude(540), -225), yaw = -0.35, scale = 1.12 },
 		{ km = 1230, pos = Vector3.new(-74, altitude(1230), -222), yaw = 0.38, scale = 1.16 },
@@ -704,7 +686,6 @@ local function dawn(parent)
 		weatherBalloons[idx] = { model = wb, origin = cf }
 	end
 
-	-- P1: Distant decorative feathered seabird flocks gliding outside the flight corridor
 	local flockSpecs = {
 		{ km = 510, radius = 232, baseAngle = -1.62, speed = 0.045, count = 6, scale = 1.2 },
 		{ km = 860, radius = 242, baseAngle = -0.15, speed = -0.048, count = 5, scale = 1.2 },
@@ -720,7 +701,6 @@ local function dawn(parent)
 		birdFlocks[idx] = { flock = flock, spec = spec, y = y }
 	end
 
-	-- Polish: Near, Mid, and Far depth layers of sculpted coastal clouds spanning takeoff to 2,000 km
 	local cloudColors = { rgb(254, 248, 234), rgb(228, 238, 250), rgb(242, 245, 252) }
 	local cloudLayers = {
 		{ count = 8, minKm = 320, stepKm = 205, radius = 268, size = Vector3.new(135, 26, 88), phase = 0.15 },
@@ -769,7 +749,6 @@ local function dawn(parent)
 	end
 end
 
--- Realistic storm vortex funnel built from sculpted PalaceCloud / Storm cloud meshes & helical Beam vortex ribbons
 local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, height, ringCount, seed)
 	local vortex = model(parent, name)
 	local colors = {
@@ -779,7 +758,6 @@ local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, he
 		rgb(108, 98, 174),
 	}
 
-	-- Massive brooding storm anvil crowning the funnel top & swirling base collar
 	local topAnvil = landmark(vortex, "Storm",
 		CFrame.new(basePos + Vector3.new(0, height * 0.52, 0)) * CFrame.Angles(0, seed * 0.7, 0),
 		math.clamp(topWidth / 165, 0.52, 0.95))
@@ -800,7 +778,6 @@ local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, he
 		local ringModel = model(vortex, "VortexTier")
 		local ringCf = CFrame.new(ringCenter) * CFrame.Angles(0, i * 0.65, 0)
 
-		-- Use sculpted PalaceCloud organic cloud mesh scaled to the funnel tier width
 		local cloudScale = math.clamp(w / 185, 0.12, 0.82)
 		local sculptedTier = landmark(ringModel, "PalaceCloud", ringCf * CFrame.new(0, 14 * cloudScale, 0), cloudScale)
 		if sculptedTier then
@@ -827,7 +804,6 @@ local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, he
 		rings[i] = { model = ringModel, origin = ringCf, radius = 3.2 + (1 - t) * 5.2, phase = i * 0.55 }
 	end
 
-	-- Helical swirling wind & lightning ribbons wrapping the funnel from base to anvil
 	for strand = 1, 4 do
 		local isLightning = strand == 4
 		local seq = isLightning
@@ -859,14 +835,12 @@ local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, he
 	return rings
 end
 
--- Sculpted jagged storm rock fragment using BiomeLandmarkMeshes.Cosmic + EnvironmentAssets.Boulder + electric ring
 local function buildStormRockFragment(parent, cf, scale, seed)
 	local frag = model(parent, "StormEdgeFragment")
 	local darkSlate = rgb(48, 44, 78)
 	local midSlate = rgb(66, 60, 104)
 	local glowColor = seed % 2 == 0 and rgb(244, 152, 86) or rgb(168, 126, 255)
 
-	-- Sculpted jagged rock & glowing crystal fracture veins from BiomeLandmarkMeshes.Cosmic
 	local crag = landmark(frag, "Cosmic", cf * CFrame.Angles(0.18, seed * 0.7, -0.14), 0.25 * scale)
 	if crag then
 		crag.Name = "SculptedStormCrag"
@@ -887,7 +861,6 @@ local function buildStormRockFragment(parent, cf, scale, seed)
 		end
 	end
 
-	-- Companion sculpted boulders & charged lightning ring
 	for _, side in { -1, 1 } do
 		natureAsset(frag, "Boulder", "StormBoulder",
 			cf * CFrame.new(side * 5.5 * scale, -2.5 * scale, side * 2.2 * scale) * CFrame.Angles(0.4, side * 1.2, 0.2),
@@ -928,7 +901,6 @@ local function thundercloud(parent)
 			banks[#banks + 1] = { lobe = clouds[1], color = clouds[1].Color }
 		end
 
-		-- Polish: Clearer slanted rain curtains visible from the balloon gondola
 		if i % 2 == 0 or i == 3 or i == 9 then
 			local origin = position + Vector3.new(0, -68, 0)
 			local carrier = rail(parent, "SlantedRainCurtain", origin)
@@ -948,7 +920,6 @@ local function thundercloud(parent)
 		end
 	end
 
-	-- Polish: Reuse sculpted Storm towers and sculpted ZenithCloud/PalaceCloud anvils
 	local anvilSpecs = {
 		{ km = 2380, pos = Vector3.new(255, altitude(2380), -220), yaw = -0.45, scale = 0.95 },
 		{ km = 3040, pos = Vector3.new(-235, altitude(3040), -225), yaw = 0.55, scale = 1.15 },
@@ -969,7 +940,6 @@ local function thundercloud(parent)
 		end
 	end
 
-	-- P1: Two background storm vortex silhouettes (1 wide profile, 1 slender profile) with sculpted cloud tiers & helical ribbons
 	local vortexRings = {}
 	for _, r in buildStormVortex(
 		parent, "WideStormVortex",
@@ -986,7 +956,6 @@ local function thundercloud(parent)
 		table.insert(vortexRings, r)
 	end
 
-	-- P2: Sculpted glowing rock fragments at the storm edges
 	local fragmentSpecs = {
 		{ km = 2320, x = -155, z = -225, scale = 1.1 },
 		{ km = 2640, x = 165, z = -230, scale = 1.0 },
@@ -1025,7 +994,6 @@ local function thundercloud(parent)
 	end
 end
 
--- Sculpted cherry-blossom tree built from EnvironmentAssets.BroadleafTree & Flower meshes
 local function buildBlossomTree(parent, baseCf, scale)
 	local tree = model(parent, "SunsetBlossomTree")
 	local trunkColor = rgb(104, 62, 72)
@@ -1033,7 +1001,6 @@ local function buildBlossomTree(parent, baseCf, scale)
 	local sakuraLight = rgb(255, 182, 208)
 	local sakuraDeep = rgb(232, 96, 142)
 
-	-- Primary sculpted BroadleafTree with sakura-pink faceted canopy
 	local mainTree = natureAsset(tree, "BroadleafTree", "SakuraPrimary", baseCf, scale * 1.25, function(d)
 		if d:IsA("MeshPart") then
 			d.TextureID = ""
@@ -1047,7 +1014,6 @@ local function buildBlossomTree(parent, baseCf, scale)
 		end
 	end)
 
-	-- Secondary rotated sculpted leaves_geom crown for lush multi-tone cherry blossom volume
 	if mainTree then
 		local leaves = mainTree:FindFirstChild("leaves_geom", true)
 		if leaves and leaves:IsA("MeshPart") then
@@ -1067,7 +1033,6 @@ local function buildBlossomTree(parent, baseCf, scale)
 		end
 	end
 
-	-- Sculpted Flower blossoms & Boulders around the roots
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + 0.4
 		natureAsset(tree, "Flower", "RootBlossom",
@@ -1081,7 +1046,6 @@ local function buildBlossomTree(parent, baseCf, scale)
 	return tree
 end
 
--- Ornate sunset sanctuary pergola & wind chimes using sculpted rings, lotus petals & masonry
 local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 	local shrine = model(parent, "WindChimeRuin")
 	local masonry = rgb(228, 198, 168)
@@ -1090,11 +1054,9 @@ local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 	local gold = rgb(244, 192, 86)
 	local ribbonColor = rgb(252, 124, 148)
 
-	-- Stepped carved stone plinth & sanctuary lantern
 	clonePalacePodium(shrine, "ShrinePlinth", baseCf, 0.52 * scale, masonry, gold, sandstone, masonry, gold)
 	clonePalaceLantern(shrine, baseCf * CFrame.new(-4.5 * scale, 1.2 * scale, 3.5 * scale), 1.45 * scale, rgb(255, 214, 138))
 
-	-- Twin fluted sanctuary columns & curved pagoda timber lintel
 	for _, side in { -1, 1 } do
 		local colX = (side == -1 and 0 or 18) * scale
 		local colH = (side == -1 and 25 or 21) * scale
@@ -1103,7 +1065,6 @@ local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 		part(shrine, "PillarCapital", Vector3.new(7.4, 2.6, 7.4) * scale, baseCf * CFrame.new(colX, 3.2 * scale + colH, 0), gold, metalMat)
 	end
 
-	-- Tiered timber cross-beam with upturned eaves & sculpted LotusPetal finials
 	part(shrine, "CrossBeam", Vector3.new(28, 2.4, 3.6) * scale, baseCf * CFrame.new(9 * scale, 25.5 * scale, 0), timber, woodMat)
 	part(shrine, "UpperRidgeBeam", Vector3.new(31, 1.6, 4.4) * scale, baseCf * CFrame.new(9 * scale, 27.2 * scale, 0), gold, metalMat)
 	fleetShape(shrine, "LotusPetal", "WestEaveFinial",
@@ -1161,7 +1122,6 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 		local segCenter = anchorPos + inward * (segLen * 0.5)
 		local segCf = CFrame.lookAt(segCenter, segCenter + inward)
 
-		-- Multi-layered masonry viaduct deck with gold cornice & stone balustrades
 		part(bridge, "BridgeDeck", Vector3.new(13.5, 3.6, segLen), segCf, masonry, limestoneMat)
 		part(bridge, "DeckCornice", Vector3.new(14.6, 1.1, segLen * 0.98), segCf * CFrame.new(0, 1.6, 0), sandstone, sandstoneMat)
 		part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.4, segLen * 0.92), segCf * CFrame.new(0, 2.0, 0), gold, metalMat)
@@ -1178,7 +1138,6 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 			end
 		end
 
-		-- Fractured chasm tip with sculpted Boulder rubble & Fern overgrowth
 		local tipCf = CFrame.lookAt(anchorPos + inward * (segLen + 3.2), anchorPos + inward * (segLen + 10))
 			* CFrame.Angles(-0.16, idx * 0.22, side * 0.1)
 		part(bridge, "BrokenSpanTip", Vector3.new(11.2, 3.2, 8.2), tipCf, darkStone, slate)
@@ -1189,7 +1148,6 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 		end)
 		natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
 
-		-- Fluted support piers & curved voussoir arch ribs underneath
 		for p = 1, 2 do
 			local pierFrac = p == 1 and 0.32 or 0.76
 			local pierTop = anchorPos + inward * (segLen * pierFrac)
@@ -1201,7 +1159,6 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 					* CFrame.Angles(0.42, 0, 0), masonry, limestoneMat)
 		end
 
-		-- Hanging roots under the broken bridge
 		local rootStart = anchorPos + inward * (segLen * 0.82) + Vector3.new(0, -3, 0)
 		local rootMid = rootStart + Vector3.new(side * 2.5, -16 - seed % 5, 2)
 		span(bridge, "BridgeRoot", rootStart, rootMid, 1.6, roots, woodMat)
@@ -1239,7 +1196,6 @@ local function skyIsles(parent)
 		local cf = CFrame.new(p) * CFrame.Angles(0, spec.yaw, 0)
 		local scale = math.clamp(spec.width / 128, 0.48, 1.05)
 
-		-- Every island in skyIsles uses the sculpted BiomeLandmarkMeshes.Sunset terrain mesh + PalaceCloud collar
 		buildSculptedIslandTerrain(island, cf, scale, {
 			basalt = basaltCol,
 			cliff = cliffCol,
@@ -1253,7 +1209,6 @@ local function skyIsles(parent)
 		}, temple or spec.ruin)
 
 		local topY = 13.5 * scale
-		-- Sculpted boulders, ferns & hanging roots
 		for j = 1, 3 do
 			local a = (j - 1) * math.pi * 2 / 3 + i * 0.5
 			natureAsset(island, "Boulder", "SunsetBoulder",
@@ -1268,13 +1223,11 @@ local function skyIsles(parent)
 			span(island, "RootTip", elbow, elbow + Vector3.new(j * 2 - 4, -14 * scale, 2), 1.1 * scale, roots, woodMat)
 		end
 
-		-- P2: Sculpted flowering blossom tree silhouette marker on key islands
 		if i == 2 or i == 4 or i == 5 or i == 6 or i == 7 then
 			local treeSpot = cf * CFrame.new(-28 * scale, topY, -12 * scale) * CFrame.Angles(0, i * 1.1, 0)
 			buildBlossomTree(island, treeSpot, math.clamp(scale * 1.15, 0.78, 1.25))
 		end
 
-		-- P2: Mid-sized sanctuary ruin variant with hanging wind chimes / ornaments
 		if i == 2 or i == 5 or i == 6 then
 			local chimeSpot = cf * CFrame.new(12 * scale, topY, -6 * scale)
 			buildWindChimeRuin(island, chimeSpot, math.clamp(scale * 1.05, 0.78, 1.12), chimes)
@@ -1289,7 +1242,6 @@ local function skyIsles(parent)
 		island.WorldPivot = cf
 	end
 
-	-- P1: Broken stone bridge kits spanning between landmarks along the corridor sides (strictly outside corridor)
 	local bridgePairs = {
 		{
 			start = islandPositions[4] + Vector3.new(-38, 6, 12),
@@ -1327,7 +1279,6 @@ local function skyIsles(parent)
 		anchorIsle.WorldPivot = anchorCf
 	end
 
-	-- Polish: Smaller distant sculpted islands & waterfalls at varied heights & sizes
 	local distantSpecs = {
 		{ km = 4120, angle = -1.25, radius = 415, width = 42, waterfall = false },
 		{ km = 4420, angle = -1.85, radius = 438, width = 50, waterfall = true },
@@ -1367,7 +1318,6 @@ local function skyIsles(parent)
 	end
 end
 
--- Primary Cosmic Crystal Island built from sculpted Sunset island terrain + multi-cluster Cosmic crystal meshes
 local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 	local island = model(parent, "CosmicCrystalIsland")
 	local random = Random.new(seed)
@@ -1381,7 +1331,6 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		rgb(255, 128, 224),
 	}
 
-	-- Sculpted floating island terrain base with bioluminescent nebula cloud collar
 	buildSculptedIslandTerrain(island, cf, scale * 0.78, {
 		basalt = astralObsidian,
 		cliff = astralSlate,
@@ -1392,7 +1341,6 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		cloudTransparency = 0.24,
 	}, false)
 
-	-- Central & flanking sculpted BiomeLandmarkMeshes.Cosmic crystal-spire formations
 	local clusterSpecs = {
 		{ pos = Vector3.new(0, 16, 0), rot = Vector3.new(0, 0, 0), sc = 1.05, col = 2 },
 		{ pos = Vector3.new(-22, 14, -8), rot = Vector3.new(0.16, 1.2, 0.18), sc = 0.72, col = 1 },
@@ -1422,7 +1370,6 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		end
 	end
 
-	-- Bioluminescent astral flowers & boulders on the terrace
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + 0.5
 		local spot = cf * CFrame.new(math.cos(a) * 24 * scale, 10 * scale, math.sin(a) * 20 * scale)
@@ -1436,7 +1383,6 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		end)
 	end
 
-	-- Slow-orbiting sculpted mini crystal satellites around the island
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + random:NextNumber(-0.2, 0.2)
 		local satDist = (58 + i * 7) * scale
@@ -1463,7 +1409,6 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 	return island
 end
 
--- Floating Astral Observatory with sculpted Sunset base, SummitPhotoPodium terrace & FleetGeometry UnionOperation Armillary Sphere
 local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	local obs = model(parent, "FloatingObservatory")
 	local astralObsidian = rgb(40, 38, 74)
@@ -1474,7 +1419,6 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	local royalBanner = rgb(42, 86, 188)
 	local cyanGlow = rgb(104, 238, 255)
 
-	-- Sculpted floating island base with ruined colonnade arches from Sunset
 	buildSculptedIslandTerrain(obs, cf, scale * 0.86, {
 		basalt = astralObsidian,
 		cliff = astralSlate,
@@ -1488,12 +1432,10 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 		cloudTransparency = 0.22,
 	}, true)
 
-	-- Sculpted marble-and-gold compass terrace cloned from CloudPalace's SummitPhotoPodium
 	local terraceCf = cf * CFrame.new(0, 12.5 * scale, 0)
 	clonePalacePodium(obs, "ObservatoryCompassTerrace", terraceCf, 2.35 * scale,
 		marble, gold, astralObsidian, marble, cyanGlow)
 
-	-- Sanctuary astral lanterns around the terrace perimeter
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + math.pi / 4
 		clonePalaceLantern(obs,
@@ -1501,7 +1443,6 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 			1.8 * scale, cyanGlow)
 	end
 
-	-- Royal astral banners with sculpted FleetGeometry.Star crests hanging on the front cliff
 	for _, xSide in { -1, 1 } do
 		local bannerCf = cf * CFrame.new(xSide * 22 * scale, 4 * scale, 32 * scale)
 		part(obs, "BannerTrim", Vector3.new(7.5, 18, 1.2) * scale, bannerCf, gold, metalMat)
@@ -1511,14 +1452,12 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 			Vector3.new(0.45, 4.4, 4.4) * scale, gold, neon)
 	end
 
-	-- Central pedestal & rotating multi-ring Golden Armillary Sphere built with smooth FleetGeometry UnionOperation rings
 	local sphereCenterCf = cf * CFrame.new(0, 52 * scale, -2 * scale)
 	column(obs, "ArmillaryPedestal", (cf * CFrame.new(0, 24 * scale, -2 * scale)).Position, 11 * scale, 18 * scale, marble, marbleMat)
 	fleetShape(obs, "DockRim", "PedestalGoldCollar",
 		cf * CFrame.new(0, 33 * scale, -2 * scale) * CFrame.Angles(0, 0, math.pi / 2),
 		Vector3.new(1.2, 16, 16) * scale, gold, metalMat)
 
-	-- Glowing AstralCoreStar + 3D Star UnionOperations at the center of the Armillary Sphere
 	part(obs, "AstralCoreStar", Vector3.one * (8.2 * scale), sphereCenterCf, cyanGlow, neon, ball)
 	fleetShape(obs, "Star", "AstralStarHorizontal",
 		sphereCenterCf, Vector3.new(0.8, 13.5, 13.5) * scale, gold, neon)
@@ -1534,7 +1473,6 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 		local ringModel = model(obs, "ArmillaryRing_" .. rIdx)
 		local ringOrigin = sphereCenterCf * CFrame.Angles(0.38 * rIdx, 0.52 * rIdx, 0.24 * rIdx)
 
-		-- Primary smooth UnionOperation ring + orthogonal meridian band
 		fleetShape(ringModel, rSpec.template, "PrimaryGyroRing",
 			ringOrigin,
 			Vector3.new(rSpec.thickness, rSpec.diameter, rSpec.diameter),
@@ -1544,7 +1482,6 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 			Vector3.new(rSpec.thickness * 1.3, rSpec.diameter * 0.94, rSpec.diameter * 0.94),
 			rIdx == 2 and cyanGlow or gold, rIdx == 2 and neon or metalMat)
 
-		-- Cardinal astrolabe degree nodes around each ring
 		local r = rSpec.diameter * 0.5
 		for n = 1, 4 do
 			local a = (n - 1) * math.pi / 2
@@ -1560,7 +1497,6 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 	return obs
 end
 
--- Sculpted DistantCosmicArch built from BiomeLandmarkMeshes.HorizonArch + Cosmic crystal crown
 local function buildDistantCosmicArch(parent, cf, scale)
 	local arch = model(parent, "DistantCosmicArch")
 	local stone = rgb(66, 62, 118)
@@ -1580,7 +1516,7 @@ local function buildDistantCosmicArch(parent, cf, scale)
 					d.Color = runeGlow
 					d.Material = neon
 				elseif d.Name == "VistaIvory" then
-					d.Color = astralSlate or rgb(78, 72, 134)
+					d.Color = rgb(78, 72, 134)
 				elseif d.Name == "VistaShadow" then
 					d.Color = nebulaDark
 				end
@@ -1607,15 +1543,12 @@ local function exosphere(parent)
 	local satellites = {}
 	local armillaryRings = {}
 
-	-- Polish: Sculpted Cosmic crystal islands with Sunset terrain bases, multi-cluster Cosmic spires & orbiting satellites
 	buildCosmicCrystalIsland(parent, CFrame.new(-115, altitude(6960), -248) * CFrame.Angles(0, 0.38, 0), 1.04, satellites, 610)
 	buildCosmicCrystalIsland(parent, CFrame.new(258, altitude(6980), -22) * CFrame.Angles(0, -1.25, 0), 0.85, satellites, 620)
 	buildCosmicCrystalIsland(parent, CFrame.new(-88, altitude(7480), -262) * CFrame.Angles(0, 0.45, 0), 0.84, satellites, 630)
 
-	-- P1: Floating Astral Observatory with smooth UnionOperation armillary sphere rings and sculpted ruin terrace
 	buildFloatingObservatory(parent, CFrame.new(118, altitude(7040), -242) * CFrame.Angles(0, -0.42, 0), 1.02, armillaryRings)
 
-	-- P2: Sculpted glowing stone arches in the distance as a third depth layer
 	local archSpecs = {
 		{ km = 6280, angle = -1.35, radius = 425, scale = 0.92 },
 		{ km = 6680, angle = -1.78, radius = 445, scale = 1.02 },
@@ -1630,7 +1563,6 @@ local function exosphere(parent)
 		buildDistantCosmicArch(parent, cf, spec.scale)
 	end
 
-	-- Sweeping arc of sculpted glowing cosmic pebbles/satellites in the background
 	for i = 1, 9 do
 		local t = (i - 1) / 8
 		local arcPos = Vector3.new(-155 + t * 285, altitude(6720 + t * 560) + math.sin(t * math.pi) * 28, -315 - math.sin(t * math.pi) * 45)
@@ -1709,7 +1641,6 @@ local function exosphere(parent)
 	end
 end
 
--- Sculpted FloatingCrystalGate built with CloudPalace's own MeshPart & UnionOperation kit
 local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 	local gate = model(parent, "FloatingCrystalGate")
 	local ivory = rgb(246, 236, 214)
@@ -1719,7 +1650,6 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 	local cyanCrystal = rgb(88, 236, 255)
 	local deepCyan = rgb(44, 182, 232)
 
-	-- Sculpted floating sanctuary island base + golden PalaceCloud bed
 	buildSculptedIslandTerrain(gate, cf, scale * 0.68, {
 		basalt = warmStone,
 		cliff = rgb(214, 198, 176),
@@ -1731,12 +1661,10 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 		cloudTransparency = 0.08,
 	}, false)
 
-	-- Sculpted marble-and-gold sanctuary dais cloned from CloudPalace's SummitPhotoPodium
 	local daisCf = cf * CFrame.new(0, 9.5 * scale, 0)
 	clonePalacePodium(gate, "SanctuaryMarbleDais", daisCf, 2.15 * scale,
 		ivory, gold, deepCyan, ivory, cyanCrystal)
 
-	-- Sculpted twin-arch sanctuary gateway cloned from BiomeLandmarkMeshes.HorizonArch & Sunset.Ivory
 	local archClone = landmark(gate, "HorizonArch", daisCf * CFrame.new(0, 6 * scale, 0), 0.26 * scale)
 	if archClone then
 		archClone.Name = "SculptedSanctuaryArchway"
@@ -1755,7 +1683,6 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 		end
 	end
 
-	-- Sanctuary garden trees, ferns, flowers & CloudPalace lanterns flanking the gateway
 	for _, side in { -1, 1 } do
 		natureAsset(gate, "BroadleafTree", "SanctuaryTree",
 			daisCf * CFrame.new(side * 24 * scale, 0.5 * scale, -6 * scale) * CFrame.Angles(0, side * 0.8, 0),
@@ -1771,7 +1698,6 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 			1.65 * scale, cyanCrystal)
 	end
 
-	-- Hovering multi-faceted diamond crystal cluster + intersecting golden UnionOperation halos inside the arch
 	local crystalOrigin = daisCf * CFrame.new(0, 18.5 * scale, 3 * scale)
 	local diamond = model(gate, "SuspendedDiamondCrystal")
 	local crystalMesh = landmark(diamond, "Cosmic", crystalOrigin, 0.24 * scale)
@@ -1804,7 +1730,6 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 	diamond.WorldPivot = crystalOrigin
 	table.insert(gateCrystals, { model = diamond, origin = crystalOrigin })
 
-	-- Sculpted waterfall cascading off the front sanctuary lip
 	attachSculptedWaterfall(gate, daisCf * CFrame.new(0, -1 * scale, 22 * scale), 68 * scale, scale * 1.1,
 		rgb(108, 214, 252), rgb(228, 248, 255), rgb(252, 244, 226))
 
@@ -2025,7 +1950,6 @@ local function gateway(parent)
 		animateSky = palaceUpperSky(parent, anchor)
 	end
 
-	-- P2: Sculpted FloatingCrystalGate landmark in the distance
 	local gateCrystals = {}
 	buildFloatingCrystalGate(parent, CFrame.new(112, altitude(8980), -238) * CFrame.Angles(0, -0.35, 0), 1.04, gateCrystals)
 
