@@ -1,0 +1,991 @@
+{
+  "ok": false,
+  "checks": [
+    {
+      "passed": true,
+      "name": "solo native dock launch and boarding"
+    },
+    {
+      "passed": true,
+      "name": "duo native dock launch and boarding"
+    },
+    {
+      "passed": true,
+      "name": "trio native dock launch and boarding"
+    },
+    {
+      "passed": false,
+      "name": "solo continuous run",
+      "detail": "ServerScriptService.__JourneyQA:150: ServerScriptService.__JourneyQA:97: climb timeout {\"position\":\"-12.496578216552734, 2.54937744140625, -12.011726379394531\",\"inside\":true,\"client\":{\"state\":\"Running\",\"anchored\":false,\"role\":\"Engineer\",\"position\":\"-12.502867698669434, 2.5486364364624023, -12.010082244873047\"},\"stage\":\"Basket\",\"near\":false}\nServerScriptService.__JourneyQA:97 function repair\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:133 function runJourney\n\nServerScriptService.__JourneyQA:150\nServerScriptService.__JourneyQA:133 function runJourney\n"
+    },
+    {
+      "passed": false,
+      "name": "trio continuous run",
+      "detail": "ServerScriptService.__JourneyQA:150: ServerScriptService.__JourneyQA:24: client pose did not replicate\nServerScriptService.__JourneyQA:24 function pose\nServerScriptService.__JourneyQA:31 function restoreRope\nServerScriptService.__JourneyQA:122 function repair\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:133 function runJourney\n\nServerScriptService.__JourneyQA:150\nServerScriptService.__JourneyQA:133 function runJourney\n"
+    },
+    {
+      "passed": false,
+      "name": "duo continuous run",
+      "detail": "ServerScriptService.__JourneyQA:136: continuous journey exceeded 1150 seconds\nServerScriptService.__JourneyQA:136\nServerScriptService.__JourneyQA:133 function runJourney\n"
+    },
+    {
+      "passed": false,
+      "name": "all requested continuous journeys succeed"
+    }
+  ],
+  "elapsed": 1212.270180499996,
+  "journeys": [
+    {
+      "ok": false,
+      "interruptions": [],
+      "victory": false,
+      "dodges": 0,
+      "name": "solo",
+      "altitudeKm": 1938.6029052734375,
+      "terminalCancellations": [],
+      "rescues": 0,
+      "error": "ServerScriptService.__JourneyQA:150: ServerScriptService.__JourneyQA:97: climb timeout {\"position\":\"-12.496578216552734, 2.54937744140625, -12.011726379394531\",\"inside\":true,\"client\":{\"state\":\"Running\",\"anchored\":false,\"role\":\"Engineer\",\"position\":\"-12.502867698669434, 2.5486364364624023, -12.010082244873047\"},\"stage\":\"Basket\",\"near\":false}\nServerScriptService.__JourneyQA:97 function repair\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:133 function runJourney\n\nServerScriptService.__JourneyQA:150\nServerScriptService.__JourneyQA:133 function runJourney\n",
+      "repairs": 1
+    },
+    {
+      "ok": false,
+      "interruptions": [],
+      "victory": false,
+      "dodges": 21,
+      "name": "duo",
+      "altitudeKm": 8283.1416015625,
+      "terminalCancellations": [],
+      "rescues": 0,
+      "error": "ServerScriptService.__JourneyQA:136: continuous journey exceeded 1150 seconds\nServerScriptService.__JourneyQA:136\nServerScriptService.__JourneyQA:133 function runJourney\n",
+      "repairs": 149
+    },
+    {
+      "ok": false,
+      "interruptions": [
+        {
+          "durability": 77.91891540866345,
+          "km": 2348.774169921875,
+          "distance": 7.211158752441406,
+          "stage": "Catwalk",
+          "holes": 5
+        }
+      ],
+      "victory": false,
+      "dodges": 8,
+      "name": "trio",
+      "altitudeKm": 0,
+      "terminalCancellations": [],
+      "rescues": 0,
+      "error": "ServerScriptService.__JourneyQA:150: ServerScriptService.__JourneyQA:24: client pose did not replicate\nServerScriptService.__JourneyQA:24 function pose\nServerScriptService.__JourneyQA:31 function restoreRope\nServerScriptService.__JourneyQA:122 function repair\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:148\nServerScriptService.__JourneyQA:133 function runJourney\n\nServerScriptService.__JourneyQA:150\nServerScriptService.__JourneyQA:133 function runJourney\n",
+      "repairs": 21
+    }
+  ],
+  "fixtures": {
+    "roles": "scripted positions inside lobby/basket; native remotes and production manager validations",
+    "steering": "Virtual WASD keys through production FlightHUDController; pilot holds horizontal input during repair; auto gas remains on; hazards stay enabled",
+    "continuousAltitude": "normal production integration, no altitude skips or shields",
+    "fatalBranches": "not included in continuous run; separate focused regression"
+  },
+  "logs": [
+    "ContentId: rbxassetid://72109765799973 failed due to: No asset content representation found while do_not_fallback_to_baseline is set to true."
+  ],
+  "startedUTC": "2026-11-11T10:52:49Z",
+  "finishedUTC": "2026-11-11T11:13:01Z",
+  "samples": [
+    {
+      "elapsed": 82.21133329998702,
+      "crews": {
+        "duo": {
+          "km": 512.670654296875,
+          "holes": 0,
+          "repairs": 0
+        },
+        "solo": {
+          "km": 628.4964599609375,
+          "holes": 0,
+          "repairs": 0
+        },
+        "trio": {
+          "km": 89.03111267089844,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 112.2919353999896,
+      "crews": {
+        "duo": {
+          "km": 957.5687866210938,
+          "holes": 0,
+          "repairs": 1
+        },
+        "solo": {
+          "km": 1087.068359375,
+          "holes": 0,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 591.1229858398438,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 142.4241109000286,
+      "crews": {
+        "duo": {
+          "km": 1403.510498046875,
+          "holes": 0,
+          "repairs": 2
+        },
+        "solo": {
+          "km": 1589.181884765625,
+          "holes": 0,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 1093.819580078125,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 172.55588839994743,
+      "crews": {
+        "duo": {
+          "km": 1850.02490234375,
+          "holes": 0,
+          "repairs": 3
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 1595.3919677734375,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 202.58868589997292,
+      "crews": {
+        "duo": {
+          "km": 2351.033935546875,
+          "holes": 0,
+          "repairs": 3
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 2095.8115234375,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 232.70336189994123,
+      "crews": {
+        "duo": {
+          "km": 2852.7900390625,
+          "holes": 0,
+          "repairs": 3
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 2597.168701171875,
+          "holes": 0,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 262.8349959999323,
+      "crews": {
+        "duo": {
+          "km": 3174.239013671875,
+          "holes": 1,
+          "repairs": 5
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 3080.5458984375,
+          "holes": 1,
+          "repairs": 0
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 292.984835500014,
+      "crews": {
+        "duo": {
+          "km": 3452.421142578125,
+          "holes": 0,
+          "repairs": 9
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 3378.23876953125,
+          "holes": 0,
+          "repairs": 3
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 323.1680121999234,
+      "crews": {
+        "duo": {
+          "km": 3898.521484375,
+          "holes": 0,
+          "repairs": 10
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 3728.482177734375,
+          "holes": 1,
+          "repairs": 5
+        }
+      },
+      "storms": 0,
+      "obstacles": 4
+    },
+    {
+      "elapsed": 353.28115409996826,
+      "crews": {
+        "duo": {
+          "km": 4215.423828125,
+          "holes": 2,
+          "repairs": 12
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 3932.40625,
+          "holes": 1,
+          "repairs": 8
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 383.41393069992773,
+      "crews": {
+        "duo": {
+          "km": 4441.35595703125,
+          "holes": 0,
+          "repairs": 17
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 4201.353515625,
+          "holes": 2,
+          "repairs": 11
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 413.6288660999853,
+      "crews": {
+        "duo": {
+          "km": 4944.82470703125,
+          "holes": 0,
+          "repairs": 17
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 4311.8828125,
+          "holes": 1,
+          "repairs": 15
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 443.7768435999751,
+      "crews": {
+        "duo": {
+          "km": 5249.66064453125,
+          "holes": 1,
+          "repairs": 20
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 4418.4873046875,
+          "holes": 3,
+          "repairs": 17
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 473.99480949994177,
+      "crews": {
+        "duo": {
+          "km": 5426.3330078125,
+          "holes": 1,
+          "repairs": 25
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "km": 4295.1376953125,
+          "holes": 4,
+          "repairs": 21
+        }
+      },
+      "storms": 1,
+      "obstacles": 4
+    },
+    {
+      "elapsed": 504.3909051999217,
+      "crews": {
+        "duo": {
+          "km": 5640.35693359375,
+          "holes": 1,
+          "repairs": 29
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 534.5245429000352,
+      "crews": {
+        "duo": {
+          "km": 5796.79150390625,
+          "holes": 2,
+          "repairs": 34
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 564.6569637999637,
+      "crews": {
+        "duo": {
+          "km": 5898.5263671875,
+          "holes": 2,
+          "repairs": 39
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 594.771764599951,
+      "crews": {
+        "duo": {
+          "km": 6025.31494140625,
+          "holes": 1,
+          "repairs": 45
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 624.869994699955,
+      "crews": {
+        "duo": {
+          "km": 6153.59375,
+          "holes": 1,
+          "repairs": 50
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 655.0190361000132,
+      "crews": {
+        "duo": {
+          "km": 6315.3486328125,
+          "holes": 2,
+          "repairs": 54
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 685.2511681999313,
+      "crews": {
+        "duo": {
+          "km": 6338.67822265625,
+          "holes": 2,
+          "repairs": 59
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 715.417438399978,
+      "crews": {
+        "duo": {
+          "km": 6529.09814453125,
+          "holes": 1,
+          "repairs": 65
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 745.5661430000328,
+      "crews": {
+        "duo": {
+          "km": 6620.71533203125,
+          "holes": 3,
+          "repairs": 69
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 775.716516799992,
+      "crews": {
+        "duo": {
+          "km": 6725.83935546875,
+          "holes": 1,
+          "repairs": 76
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 805.8624589999672,
+      "crews": {
+        "duo": {
+          "km": 6780.76904296875,
+          "holes": 3,
+          "repairs": 80
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 836.0285252999747,
+      "crews": {
+        "duo": {
+          "km": 6815.1875,
+          "holes": 2,
+          "repairs": 86
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 866.210930799949,
+      "crews": {
+        "duo": {
+          "km": 6853.4169921875,
+          "holes": 2,
+          "repairs": 91
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 1
+    },
+    {
+      "elapsed": 896.3599458999233,
+      "crews": {
+        "duo": {
+          "km": 6888.50634765625,
+          "holes": 3,
+          "repairs": 96
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 926.5748953999719,
+      "crews": {
+        "duo": {
+          "km": 6987.74267578125,
+          "holes": 1,
+          "repairs": 102
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 956.6904781999765,
+      "crews": {
+        "duo": {
+          "km": 7005.80517578125,
+          "holes": 2,
+          "repairs": 107
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 986.9066789000062,
+      "crews": {
+        "duo": {
+          "km": 7136.1416015625,
+          "holes": 1,
+          "repairs": 113
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 1017.0711154999444,
+      "crews": {
+        "duo": {
+          "km": 7277.49755859375,
+          "holes": 2,
+          "repairs": 117
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 1,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 1047.2037042999873,
+      "crews": {
+        "duo": {
+          "km": 7462.201171875,
+          "holes": 1,
+          "repairs": 122
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 1077.3187608999433,
+      "crews": {
+        "duo": {
+          "km": 7561.8525390625,
+          "holes": 1,
+          "repairs": 127
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 2
+    },
+    {
+      "elapsed": 1107.4848196000094,
+      "crews": {
+        "duo": {
+          "km": 7767.81640625,
+          "holes": 1,
+          "repairs": 132
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 1137.632174200029,
+      "crews": {
+        "duo": {
+          "km": 7897.48046875,
+          "holes": 2,
+          "repairs": 136
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 0
+    },
+    {
+      "elapsed": 1167.8168690999737,
+      "crews": {
+        "duo": {
+          "km": 8070.23388671875,
+          "holes": 1,
+          "repairs": 142
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    },
+    {
+      "elapsed": 1197.980735499994,
+      "crews": {
+        "duo": {
+          "km": 8210.32421875,
+          "holes": 2,
+          "repairs": 146
+        },
+        "solo": {
+          "done": true,
+          "km": 1938.6029052734375,
+          "holes": 1,
+          "repairs": 1
+        },
+        "trio": {
+          "done": true,
+          "km": 0,
+          "holes": 5,
+          "repairs": 21
+        }
+      },
+      "storms": 0,
+      "obstacles": 3
+    }
+  ]
+}

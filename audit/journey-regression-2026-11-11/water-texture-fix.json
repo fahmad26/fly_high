@@ -1,0 +1,100 @@
+{
+  "utc": "2026-11-11T11:06:29Z",
+  "keep": [
+    0,
+    2606,
+    -37
+  ],
+  "changes": [
+    {
+      "path": "Workspace.CloudPalace.CascadesAndMist.WaterFlowRibbons.WaterStreaks",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.AnimatedWaterCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.CliffCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.CliffCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.CliffCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.CliffCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.CliffCurrent",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.WaterEdgeFoam1",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.WaterEdgeFoam2",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.WaterEdgeFoam3",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.WaterEdgeFoam4",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament1",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament2",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament3",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament4",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament5",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    },
+    {
+      "path": "Workspace.CloudPalace.SummitScenery.PalaceWaterfall.WaterfallAnchors.FlowFilament6",
+      "new": "rbxasset://textures/particles/smoke_main.dds",
+      "old": "rbxassetid://72109765799973"
+    }
+  ],
+  "dock": [
+    0,
+    2588,
+    70
+  ]
+}

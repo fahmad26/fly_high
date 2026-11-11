@@ -1,0 +1,55 @@
+{
+  "finishedUTC": "2026-11-11T11:16:50Z",
+  "errors": [],
+  "success": true,
+  "checks": [
+    {
+      "pass": true,
+      "name": "player ready"
+    },
+    {
+      "pass": true,
+      "name": "boarding"
+    },
+    {
+      "pass": true,
+      "name": "pilot acquired"
+    },
+    {
+      "pass": true,
+      "name": "virtual WASD held as pilot"
+    },
+    {
+      "pass": true,
+      "name": "pilot released"
+    },
+    {
+      "pass": true,
+      "name": "driver released WASD on role exit"
+    },
+    {
+      "pass": true,
+      "name": "attach at station"
+    },
+    {
+      "pass": true,
+      "name": "solo climbs after pilot release"
+    },
+    {
+      "pass": true,
+      "name": "descent and detach"
+    },
+    {
+      "pass": true,
+      "name": "clean client warnings and errors",
+      "detail": []
+    },
+    {
+      "pass": true,
+      "name": "no server errors"
+    }
+  ],
+  "fixture": "Solo native client; manager launch and boarding; natural climb in safe zone; driver pose and virtual keys; no full journey",
+  "startedUTC": "2026-11-11T11:16:42Z",
+  "clientLogs": []
+}

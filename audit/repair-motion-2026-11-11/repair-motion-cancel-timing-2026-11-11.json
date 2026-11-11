@@ -1,0 +1,172 @@
+{
+  "finishedUTC": "2026-11-11T07:12:09Z",
+  "nativeServerEvents": [
+    {
+      "repair": true,
+      "action": "Begin",
+      "distance": 9.240008354187012,
+      "stage": "Catwalk",
+      "n": "1"
+    },
+    {
+      "repair": false,
+      "action": "Cancel",
+      "distance": 9.263625144958496,
+      "stage": "Catwalk",
+      "n": "1"
+    }
+  ],
+  "checks": [
+    {
+      "pass": true,
+      "name": "solo client ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Fikki2621"
+    },
+    {
+      "pass": true,
+      "name": "launch"
+    },
+    {
+      "pass": true,
+      "name": "attach",
+      "detail": "{\"boarding\":false,\"role\":\"Engineer\",\"alive\":100,\"client\":{\"q\":\"0.019062545150518417, 2.54534912109375, 8.000732421875\",\"jumpPower\":50,\"floor\":\"WoodPlanks\",\"enabled\":true,\"state\":\"Running\"},\"anchored\":false}"
+    },
+    {
+      "pass": true,
+      "name": "climb settles"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 1",
+      "detail": "{\"client\":{\"q\":\"0.3719160556793213, 20.766111373901367, -16.443647384643555\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.463617324829102,\"stage\":\"Catwalk\",\"serverQ\":\"0.48575860261917114, 20.638811111450195, -16.36565589904785\"}"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 1",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 1"
+    },
+    {
+      "pass": false,
+      "name": "native repair hold moving",
+      "detail": {
+        "endAt": 7135.44393310009,
+        "headDistance": 9.327665328979492,
+        "beginAt": 7134.780272700009,
+        "holdDuration": 1.5,
+        "began": 1,
+        "lastAction": "Cancel",
+        "ended": 1,
+        "presentationReady": true,
+        "bridgeReady": true,
+        "style": "Default",
+        "enabled": true,
+        "triggered": 0,
+        "service": true,
+        "maxDistance": 12,
+        "distance": 9.295517921447754
+      }
+    },
+    {
+      "pass": true,
+      "name": "descent detaches"
+    },
+    {
+      "pass": true,
+      "name": "no runtime errors"
+    }
+  ],
+  "nativePrompt": {
+    "endAt": 7135.44393310009,
+    "headDistance": 9.327665328979492,
+    "beginAt": 7134.780272700009,
+    "holdDuration": 1.5,
+    "began": 1,
+    "lastAction": "Cancel",
+    "ended": 1,
+    "presentationReady": true,
+    "bridgeReady": true,
+    "style": "Default",
+    "enabled": true,
+    "triggered": 0,
+    "service": true,
+    "maxDistance": 12,
+    "distance": 9.295517921447754
+  },
+  "samples": [
+    {
+      "client": {
+        "q": "0.3719160556793213, 20.766111373901367, -16.443647384643555",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.463617324829102,
+      "stage": "Catwalk",
+      "serverQ": "0.48575860261917114, 20.638811111450195, -16.36565589904785"
+    }
+  ],
+  "run": "repair-motion-2026-11-11",
+  "fixtures": "solo Test client; altitude warp; shield; rope durability reset between independent trials; client position setup and following local catwalk point; manager begin/finish repair with production validation",
+  "executionCompleted": true,
+  "holesAfterNative": 1,
+  "success": false,
+  "nativePromptInput": "ProximityPrompt InputHoldBegin/End (engine path; no keyboard visibility claim)",
+  "repairTrace": [
+    {
+      "at": 7132.710333000054,
+      "stage": "Catwalk",
+      "active": true,
+      "start": 7132.693379900069,
+      "duration": 1.5,
+      "holes": 1,
+      "distance": 9.493077278137207
+    },
+    {
+      "at": 7134.376352600055,
+      "stage": "Catwalk",
+      "active": false,
+      "holes": 1,
+      "distance": 9.247888565063477
+    },
+    {
+      "at": 7134.810320200049,
+      "stage": "Catwalk",
+      "fromPrompt": true,
+      "active": true,
+      "start": 7134.809467700077,
+      "duration": 1.5,
+      "holes": 1,
+      "distance": 9.239760398864746
+    },
+    {
+      "at": 7135.476066000061,
+      "stage": "Catwalk",
+      "active": false,
+      "holes": 1,
+      "distance": 9.266236305236816
+    }
+  ],
+  "startedUTC": "2026-11-11T07:11:52Z",
+  "attachDiagnostic": {
+    "boarding": false,
+    "role": "Engineer",
+    "alive": 100,
+    "client": {
+      "q": "0.019062545150518417, 2.54534912109375, 8.000732421875",
+      "jumpPower": 50,
+      "floor": "WoodPlanks",
+      "enabled": true,
+      "state": "Running"
+    },
+    "anchored": false
+  },
+  "errors": []
+}

@@ -1,0 +1,33 @@
+{
+  "finishedUTC": "2026-11-11T06:38:21Z",
+  "checks": [
+    {
+      "pass": true,
+      "name": "2 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "launch"
+    },
+    {
+      "pass": false,
+      "name": "attach"
+    }
+  ],
+  "samples": [],
+  "run": "repair-motion-2026-11-11",
+  "fixtures": "2 real clients; altitude warp; shield; client position setup and following local catwalk point; manager begin/finish repair with production validation",
+  "success": false,
+  "failure": "ServerScriptService.__RepairQA:8: attach nil\nServerScriptService.__RepairQA:8\nServerScriptService.__RepairQA:16\n",
+  "startedUTC": "2026-11-11T06:38:01Z",
+  "errors": [],
+  "executionCompleted": false
+}

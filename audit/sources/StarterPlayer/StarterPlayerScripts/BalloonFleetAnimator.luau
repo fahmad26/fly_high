@@ -1,11 +1,25 @@
 local Players=game:GetService("Players")
 local RunService=game:GetService("RunService")
 local RS=game:GetService("ReplicatedStorage")
+local Input=game:GetService("UserInputService")
+local touches={}
+local touchBegan=Input.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.Touch then touches[i]=true end end)
+local touchEnded=Input.InputEnded:Connect(function(i)touches[i]=nil end)
+script.Destroying:Connect(function()touchBegan:Disconnect()touchEnded:Disconnect()end)
 local player=Players.LocalPlayer
 local remotes=RS:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local pods=workspace:WaitForChild("FlyHighLobby"):WaitForChild("MatchmakingPods")
 local flights={} local previews={} local attached=false local holes=0 local tetherStage
 remotes.TetherEvent.OnClientEvent:Connect(function(data)
+ local wasWinching=tetherStage=="Climbing"or tetherStage=="Descending"or tetherStage=="Rescuing"
+ if wasWinching and (data.stage=="Catwalk"or data.stage=="Basket"or data.isTethered==false)then
+  local character=player.Character
+  local hum=character and character:FindFirstChildOfClass("Humanoid")
+  if hum and hum.Health>0 and not character:GetAttribute("FatalRopeFall")then
+   hum.Sit=false hum.PlatformStand=false hum.Jump=false
+   hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+  end
+ end
  attached = data.isTethered == true
  tetherStage = data.stage
 end)
@@ -19,6 +33,48 @@ local function register(model)
    -- Mask new prompts before the first visibility pass; otherwise every
    -- server-enabled station action briefly appears during replication.
    o.Enabled=false entry.prompts[o]=true
+   if o.Name=="PatchPrompt"then
+    local number=tonumber(o.Parent.Name:match("%d+"))
+    if number then
+     local function send(action)
+      local ref=player:FindFirstChild("FlightBalloon")
+      if ref and ref.Value==model then remotes.RepairHoleEvent:FireServer(action,number)end
+     end
+     local held=false local key local pointer local mouse local pad
+     local function stop()
+      if held then held=false send("Cancel")end
+     end
+     local function down()
+      return key and Input:IsKeyDown(key)or pointer and touches[pointer]==true
+       or mouse and Input:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
+       or pad and Input:IsGamepadButtonDown(pad,o.GamepadKeyCode)
+     end
+     table.insert(entry.connections,o.PromptButtonHoldBegan:Connect(function()
+      key=Input:IsKeyDown(o.KeyboardKeyCode)and o.KeyboardKeyCode or nil
+      pointer=nil mouse=nil pad=nil
+      local camera=workspace.CurrentCamera local target=camera and camera:WorldToScreenPoint(o.Parent.Position)
+      local best=math.huge
+      for touch in pairs(touches)do
+       local d=target and (Vector2.new(touch.Position.X,touch.Position.Y)-Vector2.new(target.X,target.Y)).Magnitude or 0
+       if d<best then best=d pointer=touch end
+      end
+      if not pointer then mouse=Input:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)end
+      local kind=Input:GetLastInputType()
+      if kind.Name:match("^Gamepad")and Input:IsGamepadButtonDown(kind,o.GamepadKeyCode)then pad=kind end
+      held=true send("Begin")
+     end))
+     table.insert(entry.connections,o.PromptButtonHoldEnded:Connect(function()
+      -- Moving world prompts can disappear while the physical input remains held.
+      if not down()then stop()end
+     end))
+     table.insert(entry.connections,Input.InputEnded:Connect(function(i)
+      if held and (key and i.KeyCode==key or pointer and i==pointer
+       or mouse and i.UserInputType==Enum.UserInputType.MouseButton1
+       or pad and i.UserInputType==pad and i.KeyCode==o.GamepadKeyCode)then stop()end
+     end))
+     table.insert(entry.connections,o.Triggered:Connect(function()send("Finish")end))
+    end
+   end
   elseif o:IsA("Motor6D") and o:GetAttribute("BalloonMotion") then entry.motors[o]=true end
  end
  for _,o in ipairs(model:GetDescendants()) do add(o) end
@@ -27,8 +83,20 @@ local function register(model)
   for _,c in ipairs(entry.connections) do c:Disconnect() end flights[model]=nil
  end))
 end
-for _,m in ipairs(workspace:GetChildren()) do register(m) end
-workspace.ChildAdded:Connect(function(m) task.defer(register,m) end)
+local function observe(model)
+ if not model:IsA("Model")then return end
+ register(model)
+ if flights[model]or model:GetAttribute("IsFleetPreview")then return end
+ -- ChildAdded can precede replicated attributes. Do not permanently miss a flight.
+ local connection
+ connection=model:GetAttributeChangedSignal("BalloonThemeId"):Connect(function()
+  register(model)
+  if flights[model]then connection:Disconnect()end
+ end)
+ model.Destroying:Once(function()connection:Disconnect()end)
+end
+for _,m in ipairs(workspace:GetChildren()) do observe(m) end
+workspace.ChildAdded:Connect(function(m) task.defer(observe,m) end)
 for _,pod in ipairs(pods:GetChildren()) do
  local decor=pod:WaitForChild("DockDecor",10)
  local preview=decor and decor:FindFirstChild("PreviewBalloon")
@@ -98,7 +166,8 @@ RunService.Heartbeat:Connect(function(dt)
       enabled = attached and tetherStage == "Catwalk" and not inside and holes < 5 and prompt.Parent.Transparency < 0.5
      elseif prompt.Name=="PickupPrompt" then enabled=free and prompt.Parent:GetAttribute("IsOccupied")==true and char:FindFirstChildOfClass("Tool")==nil end
     end
-    prompt.Enabled=enabled==true
+    local desired=enabled==true
+    if prompt.Enabled~=desired then prompt.Enabled=desired end
    end
   end
  end

@@ -1,0 +1,60 @@
+{
+  "compileCount": 41,
+  "compileErrors": [],
+  "pods": [
+    {
+      "faceDot": 0.9964492917060852,
+      "name": "Pod_A",
+      "position": [
+        -90,
+        10.199999809265137,
+        15
+      ]
+    },
+    {
+      "faceDot": 0.9973084926605225,
+      "name": "Pod_B",
+      "position": [
+        -63.639610290527344,
+        10.199999809265137,
+        -48.639610290527344
+      ]
+    },
+    {
+      "faceDot": 0.9975549578666687,
+      "name": "Pod_C",
+      "position": [
+        0,
+        10.199999809265137,
+        -75
+      ]
+    },
+    {
+      "faceDot": 0.9973084926605225,
+      "name": "Pod_D",
+      "position": [
+        63.639610290527344,
+        10.199999809265137,
+        -48.639610290527344
+      ]
+    },
+    {
+      "faceDot": 0.9964492321014404,
+      "name": "Pod_E",
+      "position": [
+        90,
+        10.199999809265137,
+        15
+      ]
+    }
+  ],
+  "sourceMatches": {
+    "ObstacleManager": true,
+    "ObstacleMotion": true
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "players": 1,
+    "fixtureAbsent": true
+  }
+}

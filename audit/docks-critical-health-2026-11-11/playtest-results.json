@@ -1,0 +1,725 @@
+{
+  "finishedUTC": "2026-11-11T10:37:47Z",
+  "errors": [],
+  "cases": [
+    {
+      "band": 1,
+      "verticalSpeed": -2.0757217407226562,
+      "effect": "WildBird",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 1,
+      "verticalSpeed": -4.151484489440918,
+      "effect": "WildBird",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 2,
+      "verticalSpeed": -2.0760374069213867,
+      "effect": "StormBat",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 2,
+      "verticalSpeed": -4.145651817321777,
+      "effect": "StormBat",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 3,
+      "verticalSpeed": -2.0667402744293213,
+      "effect": "Hailstone",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 3,
+      "verticalSpeed": -4.133205413818359,
+      "effect": "Hailstone",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 4,
+      "verticalSpeed": -2.0760843753814697,
+      "effect": "GuardianDrone",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 4,
+      "verticalSpeed": -4.142918586730957,
+      "effect": "GuardianDrone",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 5,
+      "verticalSpeed": -2.0687386989593506,
+      "effect": "FireBee",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 5,
+      "verticalSpeed": -4.158207893371582,
+      "effect": "FireBee",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 6,
+      "verticalSpeed": -2.071305274963379,
+      "effect": "CrystalWyvern",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 6,
+      "verticalSpeed": -4.1557512283325195,
+      "effect": "CrystalWyvern",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 7,
+      "verticalSpeed": -2.0718142986297607,
+      "effect": "ShadowPhantom",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 7,
+      "verticalSpeed": -4.143016815185547,
+      "effect": "ShadowPhantom",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 8,
+      "verticalSpeed": -2.0715909004211426,
+      "effect": "SatelliteDebris",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 8,
+      "verticalSpeed": -4.152892112731934,
+      "effect": "SatelliteDebris",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 9,
+      "verticalSpeed": -2.0746288299560547,
+      "effect": "CelestialPhoenix",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 9,
+      "verticalSpeed": -4.1579694747924805,
+      "effect": "CelestialPhoenix",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    }
+  ],
+  "oldVerticalMissWithGas": 21.496818346857832,
+  "success": true,
+  "fixture": "Solo real balloon; altitude warps; 4 holes seeded using production puncture calls; character anchored/carried for measurement; natural spawning and storm walls paused; manually spawned real enemies; no shield",
+  "startedUTC": "2026-11-11T10:36:28Z",
+  "oldVerticalMissWithoutGas": 19.55034475147675,
+  "checks": [
+    {
+      "pass": true,
+      "name": "player and managers ready"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "real balloon launches"
+    },
+    {
+      "pass": true,
+      "name": "boarding settles"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "old gas prediction misses critical descent radius",
+      "detail": 21.496818346857832
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 1/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 1/true",
+      "detail": "{\"band\":1,\"verticalSpeed\":-2.0757217407226564,\"effect\":\"WildBird\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 1/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 1/false",
+      "detail": "{\"band\":1,\"verticalSpeed\":-4.151484489440918,\"effect\":\"WildBird\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 2/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 2/true",
+      "detail": "{\"band\":2,\"verticalSpeed\":-2.0760374069213869,\"effect\":\"StormBat\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 2/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 2/false",
+      "detail": "{\"band\":2,\"verticalSpeed\":-4.145651817321777,\"effect\":\"StormBat\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 3/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 3/true",
+      "detail": "{\"band\":3,\"verticalSpeed\":-2.0667402744293215,\"effect\":\"Hailstone\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 3/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 3/false",
+      "detail": "{\"band\":3,\"verticalSpeed\":-4.133205413818359,\"effect\":\"Hailstone\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 4/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 4/true",
+      "detail": "{\"band\":4,\"verticalSpeed\":-2.0760843753814699,\"effect\":\"GuardianDrone\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 4/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 4/false",
+      "detail": "{\"band\":4,\"verticalSpeed\":-4.142918586730957,\"effect\":\"GuardianDrone\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 5/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 5/true",
+      "detail": "{\"band\":5,\"verticalSpeed\":-2.0687386989593508,\"effect\":\"FireBee\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 5/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 5/false",
+      "detail": "{\"band\":5,\"verticalSpeed\":-4.158207893371582,\"effect\":\"FireBee\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 6/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 6/true",
+      "detail": "{\"band\":6,\"verticalSpeed\":-2.071305274963379,\"effect\":\"CrystalWyvern\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 6/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 6/false",
+      "detail": "{\"band\":6,\"verticalSpeed\":-4.1557512283325199,\"effect\":\"CrystalWyvern\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 7/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 7/true",
+      "detail": "{\"band\":7,\"verticalSpeed\":-2.0718142986297609,\"effect\":\"ShadowPhantom\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 7/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 7/false",
+      "detail": "{\"band\":7,\"verticalSpeed\":-4.143016815185547,\"effect\":\"ShadowPhantom\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 8/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 8/true",
+      "detail": "{\"band\":8,\"verticalSpeed\":-2.0715909004211427,\"effect\":\"SatelliteDebris\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 8/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 8/false",
+      "detail": "{\"band\":8,\"verticalSpeed\":-4.152892112731934,\"effect\":\"SatelliteDebris\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 9/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 9/true",
+      "detail": "{\"band\":9,\"verticalSpeed\":-2.0746288299560549,\"effect\":\"CelestialPhoenix\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 9/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 9/false",
+      "detail": "{\"band\":9,\"verticalSpeed\":-4.1579694747924809,\"effect\":\"CelestialPhoenix\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "healthy balloon still hit"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "safe takeoff zone still blocks enemies"
+    },
+    {
+      "pass": true,
+      "name": "no runtime errors",
+      "detail": "[]"
+    }
+  ]
+}

@@ -8,6 +8,8 @@ local Physics=game:GetService("PhysicsService")
 pcall(function()Physics:RegisterCollisionGroup("FlyHighBalloons")end)
 pcall(function()Physics:RegisterCollisionGroup("FlyHighWinching")end)
 for _,name in {"Default","FlyHighBalloons","FlyHighWinching"}do Physics:CollisionGroupSetCollidable("FlyHighWinching",name,false)end
+-- Keep native visibility and authoritative validation aligned for the catwalk repair reach.
+local PATCH_REACH = 10
 local Manager={rescuers={},activeTethers={},attachHandlers=setmetatable({},{__mode="k"}),ropePools=setmetatable({},{__mode="k"}),ropeRepairs=setmetatable({},{__mode="k"})}
 _G.FlyHighTetherManager=Manager
 
@@ -312,10 +314,13 @@ function Manager.SetupBalloonTethers(b,count)
   local patch = hole.PatchPrompt
   local holeNumber = tonumber(hole.Name:match("%d+"))
   patch.HoldDuration = duration
-  patch.MaxActivationDistance = 10
+  patch.MaxActivationDistance = PATCH_REACH
   patch.RequiresLineOfSight = false
   patch.PromptButtonHoldBegan:Connect(function(p)
-   if U.CrewNear(p, b, hole, 10) then Manager.BeginRepair(p, holeNumber) end
+   if U.CrewNear(p, b, hole, PATCH_REACH) and Manager.BeginRepair(p, holeNumber) then
+    local tether=Manager.activeTethers[p.UserId]
+    if tether and tether.repair then tether.repair.fromPrompt=true end
+   end
   end)
   patch.Triggered:Connect(function(p)
    local tether = Manager.activeTethers[p.UserId]
@@ -323,7 +328,11 @@ function Manager.SetupBalloonTethers(b,count)
   end)
   patch.PromptButtonHoldEnded:Connect(function(p)
    local t=Manager.activeTethers[p.UserId]local repair=t and t.repair
-   task.delay(.2,function()if repair and repair.hole==hole and t.repair==repair then t.repair=nil end end)
+   if repair and repair.hole==hole and not repair.clientTracked then
+    -- End can arrive before Triggered; preserve a completed hold, cancel an early release immediately.
+    if os.clock()-repair.start>=repair.duration-.08 then Manager.FinishRepair(p)
+    else t.repair=nil end
+   end
   end)
  end
 end
@@ -333,7 +342,8 @@ function Manager.BeginRepair(p,n)
  local fd=U.Flight(p)local t=Manager.activeTethers[p.UserId]
  if not fd or not t or t.balloon~=fd.balloon or t.winch or t.stage~="Catwalk"or fd.holes>=5 then return false end
  local hole=fd.balloon.HoleSlots:FindFirstChild("Hole"..n)
- if not fd.holeSet[n]or not U.CrewNear(p,fd.balloon,hole,10)then return false end
+ if not fd.holeSet[n]or not U.CrewNear(p,fd.balloon,hole,PATCH_REACH)then return false end
+ if t.repair then return t.repair.number==n end
  t.repair={number=n,start=os.clock(),duration=hole.PatchPrompt.HoldDuration,hole=hole}
  return true
 end
@@ -341,9 +351,27 @@ function Manager.FinishRepair(p)
  local fd=U.Flight(p)local t=Manager.activeTethers[p.UserId]local repair=t and t.repair
  if not repair or os.clock()-repair.start<repair.duration-.08 then return false end
  t.repair=nil
- if not fd or t.balloon~=fd.balloon or t.winch or t.stage~="Catwalk"or not U.CrewNear(p,fd.balloon,repair.hole,10)then return false end
+ if not fd or t.balloon~=fd.balloon or t.winch or t.stage~="Catwalk"or not U.CrewNear(p,fd.balloon,repair.hole,PATCH_REACH)then return false end
  return _G.FlyHighBalloonManager.RepairHole(fd,repair.number)
 end
+-- Native prompt events are also forwarded by the owning client.
+-- All progress, reach, role, duration and completion remain server validated.
+local patchRate=U.RateLimiter(.15)
+remotes.RepairHoleEvent.OnServerEvent:Connect(function(p,action,n)
+ if type(n)~="number"or n~=n or n%1~=0 or n<1 or n>Config.MAX_HOLES then return end
+ local tether=Manager.activeTethers[p.UserId]
+ if action=="Cancel" then
+  local repair=tether and tether.repair
+  if repair and repair.number==n then
+   if os.clock()-repair.start>=repair.duration-.08 then Manager.FinishRepair(p)
+   else tether.repair=nil end
+  end
+ elseif action=="Begin"and patchRate(p)then
+  if Manager.BeginRepair(p,n)then local repair=Manager.activeTethers[p.UserId].repair repair.fromPrompt=true repair.clientTracked=true end
+ elseif action=="Finish"and patchRate(p)then
+  if tether and tether.repair and tether.repair.number==n then Manager.FinishRepair(p)end
+ end
+end)
 local travelRate=U.RateLimiter(.3)
 remotes.TetherEvent.OnServerEvent:Connect(function(p,action)
  if not travelRate(p)then return end
@@ -375,7 +403,12 @@ RunService.Heartbeat:Connect(function(dt)
    local h=t.helper local hr=h.Character and h.Character:FindFirstChild("HumanoidRootPart")
    if not U.Alive(h,fd)or U.Flight(h)~=fd or not hr or not U.InBasket(hr,t.balloon.BasketFloor)or h.Character:FindFirstChildOfClass("Tool")then Manager.CancelPull(t)end
   end
-  if t.repair and(t.winch or not t.repair.hole.Parent or not U.Near(p,t.repair.hole,10)or fd.holes>=5)then t.repair=nil end
+  if t.repair and(t.winch or not t.repair.hole.Parent or not U.Near(p,t.repair.hole,PATCH_REACH)or fd.holes>=5)then t.repair=nil end
+  local repair=t.repair
+  if repair and repair.fromPrompt and os.clock()-repair.start>=repair.duration then
+   -- Server tracks the validated hold; a missing engine Triggered event must not lose completion.
+   Manager.FinishRepair(p)
+  end
   if t.winch then
    local w=t.winch w.elapsed+=dt
    local alpha=math.clamp(w.elapsed/Config.WINCH_MOVE_DURATION_SEC,0,1)local eased=alpha*alpha*(3-2*alpha)
@@ -385,7 +418,9 @@ RunService.Heartbeat:Connect(function(dt)
    if w.elapsed>=Config.WINCH_MOVE_DURATION_SEC+Config.WINCH_SETTLE_DURATION_SEC then
     t.hrp.Anchored=t.oldAnchored t.hrp.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity t.hrp.AssemblyAngularVelocity=Vector3.zero
     restoreCollisions(t)
-    t.hum.AutoRotate=t.oldAutoRotate t.hum:Move(Vector3.zero,false)t.winch=nil
+    t.hum.AutoRotate=t.oldAutoRotate t.hum.Sit=false t.hum.PlatformStand=false
+    t.hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+    t.hum:Move(Vector3.zero,false)t.winch=nil
     independentOwner(t,false)
     if w.detach then Manager.CleanupPlayer(p)continue end
     if w.rescue then t.needsRescue=false t.stage="Basket"releaseHelper(t)

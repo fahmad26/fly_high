@@ -47,12 +47,23 @@ local function request()
  if p:GetAttribute("InFlight")then jump:FireServer("Request")end
 end
 Input.JumpRequest:Connect(request)
+local jumpTap=0
 button.Activated:Connect(function()
- if (not p:GetAttribute("InFlight")or p:GetAttribute("FlightJumpAllowed")==true)and hum and hum.Health>0 and hum.FloorMaterial~=Enum.Material.Air and hum:GetStateEnabled(Enum.HumanoidStateType.Jumping) then
-  request()
-  -- TouchJump resets Humanoid.Jump each frame; enter the normal state immediately.
-  hum.Jump=true hum:ChangeState(Enum.HumanoidStateType.Jumping)
- end
+ jumpTap+=1 local token=jumpTap local targetHum=hum
+ -- Moving floors can report Air for a single frame; buffer one tap, never grant an air jump.
+ task.spawn(function()
+  local deadline=os.clock()+.2
+  repeat
+   if token~=jumpTap or targetHum~=hum or not targetHum or not targetHum.Parent or targetHum.Health<=0 then return end
+   if p:GetAttribute("InFlight")and(p:GetAttribute("FlightJumpAllowed")~=true or p:GetAttribute("FlightGhost")==true)then return end
+   if targetHum.FloorMaterial~=Enum.Material.Air and targetHum:GetStateEnabled(Enum.HumanoidStateType.Jumping)then
+    request()
+    targetHum.Jump=true targetHum:ChangeState(Enum.HumanoidStateType.Jumping)
+    return
+   end
+   Run.Heartbeat:Wait()
+  until os.clock()>=deadline
+ end)
 end)
 challengeEvent.OnClientEvent:Connect(function(data)
  if data.kind=="Ended"then if active and active.id==data.id then active=nil end

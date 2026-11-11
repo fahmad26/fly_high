@@ -111,17 +111,21 @@ local function stormBlocksSpawn(fd, now)
 	return fd.largeChallengeUntil and now < fd.largeChallengeUntil
 end
 
-local function predictedEnvelope(fd)
-	return fd.balloon.Envelope.Position + Vector3.new(0, (fd.isGasActive or fd.autoGas) and 12.5 or 0, 0)
+local function verticalSpeed(fd)
+ local speed=fd.root.AssemblyLinearVelocity.Y
+ return speed==speed and math.clamp(speed,-20,20)or 0
+end
+local function predictedEnvelope(fd,seconds)
+ return fd.balloon.Envelope.Position+Vector3.yAxis*verticalSpeed(fd)*(seconds or 0)
 end
 
-local function spawnEnemy(spec, pacing, aim, bearing, slot)
+local function spawnEnemy(spec, pacing, aim, bearing, slot, riseSpeed)
 	local outward = Vector3.new(math.sin(bearing), 0, -math.cos(bearing))
 	local range = math.max(95, pacing.speed * 3.15) + (slot - 1) * pacing.speed * 0.75
 	local height = spec.enemy == "Hailstone" and 42 or 10
 	local start = aim + outward * range + Vector3.yAxis * height
-	local travel = aim - start
-	local approach = travel.Magnitude / pacing.speed
+	local target,approach=Motion.VerticalIntercept(start,aim,pacing.speed,riseSpeed or 0)
+ local travel=target-start
 	local item = add(Art.Enemy(spec.enemy), start, travel.Unit * pacing.speed,
 		spec.enemy, spec.enemy, 0, approach + 4, pacing.health)
 	item.approach = approach
@@ -140,7 +144,7 @@ local function spawnEnemyWave(index, fd, count)
 	local sideways = Vector3.new(math.cos(heading), 0, math.sin(heading)) * 8
 	local offsets = {Vector3.zero, sideways, -sideways}
 	for slot = 1, count do
-		spawnEnemy(spec, pacing, aim + offsets[slot], bearings[slot], slot)
+		spawnEnemy(spec, pacing, aim + offsets[slot], bearings[slot], slot, verticalSpeed(fd))
 	end
 end
 
@@ -152,11 +156,11 @@ function Manager.SpawnBand(index, fd, hazard)
 
 	local predicted = predictedEnvelope(fd)
 	if not hazard then
-		return spawnEnemy(spec, pacing, predicted, math.rad(math.random(-25, 25)), 1)
+		return spawnEnemy(spec, pacing, predicted, math.rad(math.random(-25, 25)), 1, verticalSpeed(fd))
 	end
 
 	local path = trajectories[spec.effect] or Vector3.zero
-	local impact = predicted + Vector3.new(0, 0, -12)
+	local impact = predictedEnvelope(fd,warningSeconds+hazardSeconds/2) + Vector3.new(0, 0, -12)
 	local start = impact - path / 2
 	local cells = spec.effect == "Storm" and stormCells or ruinCells
 	local model = Art.Hazard(spec.effect, spec.color, path, cells)
@@ -453,7 +457,7 @@ RunService.Heartbeat:Connect(function(dt)
 					local distance = (target - nextPose.Position).Magnitude
 					if distance > 22 and distance < 76 then
 						item.chargeAge = age
-						item.chargeTarget = target
+						item.chargeTarget = predictedEnvelope(flight,0.65+math.min(distance/43,2))
 						model:SetAttribute("Charging", true)
 						model.Aperture.Color = Color3.fromRGB(255, 245, 189)
 						break

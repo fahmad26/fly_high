@@ -1,0 +1,35 @@
+{
+  "capturedUTC": "2026-11-11T07:32:44.7185801Z",
+  "timezone": "Asia/Jakarta",
+  "baseCommit": "8e02af016d4369db32cac38398b1e3bc26e46876",
+  "scope": "Focused repair and jump-role regression; not full journey or physical-device QA",
+  "sources": {
+    "audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau": "4E325D3095BC4BA3131D85027896B3F52E6998AEDB2B33A011113DAE613FE0DD",
+    "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau": "A0C891D7E16503E9EAE5DE85B6A1CDB0BC6F90105F27501B778186736DE047D3",
+    "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau": "8FB7766471E42F351F138ABC1CA7FE4BA015F71C040EF55B2E9298FCBA12E262"
+  },
+  "normalization": "CRLF to LF and trailing newline ignored for exact source comparison",
+  "studioMirrorNormalizedExactMatch": [
+    "TetherManager",
+    "BalloonFleetAnimator",
+    "FlightJumpController"
+  ],
+  "compilation": {
+    "errors": 0,
+    "productionSources": 41
+  },
+  "place": {
+    "saved": true,
+    "reopenedAndCompared": false,
+    "sha256": "837300C2A77E0CF6B2720C03A611C1625CA43AC209C98DBC71E542249BAC18DF"
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "testPlayerCount": 1,
+    "temporaryRemoteRemoved": true,
+    "temporaryDriversRemoved": true
+  },
+  "trioReport": "repair-motion-trio-final-pass-2026-11-11.json",
+  "soloReport": "repair-motion-solo-final-pass-2026-11-11.json",
+  "qualification": "Trio exercises real client remotes and input; solo verifies native virtual-keyboard hold. Initial warp/climb fixture holds balloon anchored; measured manoeuvres and jumps are unanchored. Rope refilled between independent repair trials, shield enabled. Trio preceded removal of diagnostic-only attributes; solo used final source."
+}

@@ -1,0 +1,122 @@
+{
+  "finishedUTC": "2026-11-11T06:27:49Z",
+  "errors": [],
+  "success": true,
+  "checks": [
+    {
+      "pass": true,
+      "name": "3 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player3"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "launch"
+    },
+    {
+      "pass": true,
+      "name": "attach"
+    },
+    {
+      "pass": true,
+      "name": "climb settles"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 1",
+      "detail": "{\"client\":{\"q\":\"0.38074302673339844, 20.86054229736328, -16.136940002441406\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.11583137512207,\"stage\":\"Catwalk\",\"serverQ\":\"0.39735299348831177, 20.916412353515625, -16.097429275512695\"}"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 1",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 1"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 2",
+      "detail": "{\"client\":{\"q\":\"0.019589344039559364, 20.566593170166016, -16.30447006225586\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.417235374450684,\"stage\":\"Catwalk\",\"serverQ\":\"0.01953143998980522, 20.566713333129883, -16.304447174072266\"}"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 2",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 2"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 3",
+      "detail": "{\"client\":{\"q\":\"0.026885297149419785, 20.56659507751465, -16.30755043029785\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.42001724243164,\"stage\":\"Catwalk\",\"serverQ\":\"0.02685573883354664, 20.56671905517578, -16.3073787689209\"}"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 3",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 3"
+    },
+    {
+      "pass": true,
+      "name": "no runtime errors"
+    }
+  ],
+  "startedUTC": "2026-11-11T06:27:09Z",
+  "samples": [
+    {
+      "client": {
+        "q": "0.38074302673339844, 20.86054229736328, -16.136940002441406",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.11583137512207,
+      "stage": "Catwalk",
+      "serverQ": "0.39735299348831177, 20.916412353515625, -16.097429275512695"
+    },
+    {
+      "client": {
+        "q": "0.019589344039559364, 20.566593170166016, -16.30447006225586",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.417235374450684,
+      "stage": "Catwalk",
+      "serverQ": "0.01953143998980522, 20.566713333129883, -16.304447174072266"
+    },
+    {
+      "client": {
+        "q": "0.026885297149419785, 20.56659507751465, -16.30755043029785",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.42001724243164,
+      "stage": "Catwalk",
+      "serverQ": "0.02685573883354664, 20.56671905517578, -16.3073787689209"
+    }
+  ],
+  "run": "repair-motion-2026-11-11",
+  "fixtures": "3 real clients; altitude warp; shield; client position setup and following local catwalk point; manager begin/finish repair with production validation"
+}

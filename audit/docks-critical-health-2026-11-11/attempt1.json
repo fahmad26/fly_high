@@ -1,0 +1,202 @@
+{
+  "finishedUTC": "2026-11-11T10:35:30Z",
+  "errors": [],
+  "cases": [
+    {
+      "band": 1,
+      "verticalSpeed": -2.0685718059539795,
+      "effect": "WildBird",
+      "gas": true,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 1,
+      "verticalSpeed": -4.138925552368164,
+      "effect": "WildBird",
+      "gas": false,
+      "holes": 5,
+      "hit": true
+    },
+    {
+      "band": 2,
+      "verticalSpeed": 0,
+      "effect": "StormBat",
+      "gas": true,
+      "holes": 4,
+      "hit": true
+    }
+  ],
+  "failure": "ServerScriptService.__DocksCriticalQA:6: critical balloon can be hit 2/true {\"band\":2,\"verticalSpeed\":0,\"effect\":\"StormBat\",\"gas\":true,\"holes\":4,\"hit\":true}\nServerScriptService.__DocksCriticalQA:6\nServerScriptService.__DocksCriticalQA:10\n",
+  "oldVerticalMissWithGas": 21.495924949550414,
+  "success": false,
+  "fixture": "Solo real balloon; altitude warps; 4 holes seeded using production puncture calls; character anchored/carried for measurement; natural spawning and storm walls paused; manually spawned real enemies; no shield",
+  "startedUTC": "2026-11-11T10:35:15Z",
+  "oldVerticalMissWithoutGas": 19.056365400405905,
+  "checks": [
+    {
+      "pass": true,
+      "name": "player and managers ready"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "other four docks do not block Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "same dock stays blocked Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "real balloon launches"
+    },
+    {
+      "pass": true,
+      "name": "boarding settles"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "old gas prediction misses critical descent radius",
+      "detail": 21.495924949550414
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 1/true"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 1/true",
+      "detail": "{\"band\":1,\"verticalSpeed\":-2.0685718059539797,\"effect\":\"WildBird\",\"gas\":true,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 1/false"
+    },
+    {
+      "pass": true,
+      "name": "critical balloon can be hit 1/false",
+      "detail": "{\"band\":1,\"verticalSpeed\":-4.138925552368164,\"effect\":\"WildBird\",\"gas\":false,\"holes\":5,\"hit\":true}"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "seed puncture"
+    },
+    {
+      "pass": true,
+      "name": "critical enemy spawned 2/true"
+    },
+    {
+      "pass": false,
+      "name": "critical balloon can be hit 2/true",
+      "detail": "{\"band\":2,\"verticalSpeed\":0,\"effect\":\"StormBat\",\"gas\":true,\"holes\":4,\"hit\":true}"
+    }
+  ]
+}

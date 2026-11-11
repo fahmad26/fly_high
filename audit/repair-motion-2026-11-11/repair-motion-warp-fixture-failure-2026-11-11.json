@@ -1,0 +1,28 @@
+{
+  "finishedUTC": "2026-11-11T06:36:37Z",
+  "checks": [
+    {
+      "pass": true,
+      "name": "2 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "launch"
+    }
+  ],
+  "samples": [],
+  "run": "repair-motion-2026-11-11",
+  "fixtures": "2 real clients; altitude warp; shield; client position setup and following local catwalk point; manager begin/finish repair with production validation",
+  "success": false,
+  "startedUTC": "2026-11-11T06:36:12Z",
+  "failure": "ServerScriptService.__RepairQA:31: attempt to call a nil value\nServerScriptService.__RepairQA:31\nServerScriptService.__RepairQA:16\n",
+  "errors": []
+}

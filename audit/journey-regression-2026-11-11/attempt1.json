@@ -1,0 +1,24 @@
+{
+  "ok": false,
+  "checks": [
+    {
+      "passed": true,
+      "name": "solo native dock launch and boarding"
+    }
+  ],
+  "elapsed": 66.69018119992688,
+  "journeys": [],
+  "fixtures": {
+    "roles": "scripted positions inside lobby/basket; native remotes and production manager validations",
+    "steering": "pilot holds horizontal input during repair; auto gas remains on; hazards stay enabled",
+    "continuousAltitude": "normal production integration, no altitude skips or shields",
+    "fatalBranches": "controlled altitude/damage/inventory after full journeys"
+  },
+  "logs": [
+    "ContentId: rbxassetid://72109765799973 failed due to: No asset content representation found while do_not_fallback_to_baseline is set to true."
+  ],
+  "finishedUTC": "2026-11-11T10:51:34Z",
+  "startedUTC": "2026-11-11T10:50:27Z",
+  "error": "ServerScriptService.__JourneyQA:191: departure lane timeout\nServerScriptService.__JourneyQA:191\nServerScriptService.__JourneyQA:175\n",
+  "samples": []
+}

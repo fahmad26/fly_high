@@ -1,0 +1,67 @@
+{
+  "run": "journey-regression-2026-11-11",
+  "baseCommit": "8e02af016d4369db32cac38398b1e3bc26e46876",
+  "startedRecordingUTC": "2026-11-11T10:56:34.5868849Z",
+  "timezone": "Asia/Jakarta",
+  "sourceEvidence": "mirror-hashes.json + studio-mirror-comparison.json",
+  "sourceExactMatching": 41,
+  "environment": "Native Studio six clients, desktop local",
+  "fixtures": [
+    "Virtual WASD through production HUD",
+    "Scripted lobby/station positions and walking goals",
+    "Manager Begin/Finish repair retains reach/duration validation",
+    "No altitude skips, damage shields or natural hazard pause in continuous run"
+  ],
+  "scope": "Continuous solo/duo/trio plus focused five-client dock and arrival regression",
+  "status": "EXECUTED_WITH_OPEN_FINDINGS",
+  "dirtyAtStart": [
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PROGRESS.md",
+    " M audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/ObstacleMotion.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+    " M design/features/flight-arrival/design.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/docks-critical-health-2026-11-11/",
+    "?? audit/image-hud-v10-portrait.jpg",
+    "?? audit/journey-regression-2026-11-11/",
+    "?? audit/repair-motion-2026-11-11/",
+    "?? design/fly-high-scenery-0-10000km.png"
+  ],
+  "completedUTC": "2026-11-11T11:18:53.4472192Z",
+  "results": {
+    "singleAllGreenEndToEndSuite": false,
+    "continuous": "continuous-results.json",
+    "continuousVictoryCount": 0,
+    "focusedPassed": 47,
+    "focusedTotal": 47,
+    "driverKeyPassed": 11,
+    "driverKeyTotal": 11,
+    "openFinding": "OPEN-05",
+    "productionScriptChangesThisRun": 0,
+    "waterBeamTextureReplacements": 17
+  },
+  "cleanup": {
+    "fixturesRemoved": true,
+    "mode": "Edit",
+    "testPlayers": 1,
+    "viewport": "Desktop default; no device emulator used; capture camera was temporary",
+    "placeSaved": true
+  },
+  "place": {
+    "sha256": "7A666F54FE4214DCF01EF7C0B48E9F8976071B34BAFFEE7417757AFE22772FB7",
+    "binaryReopened": false,
+    "lastWriteUTC": "2026-11-11T11:18:24.2881936Z"
+  },
+  "limits": [
+    "Full journeys not green; no natural summit achieved",
+    "Focused arrival uses warps and shield",
+    "Corrected driver not rerun for full journeys",
+    "Texture edited during clone run; verified separately afterward",
+    "No physical mobile or latency test",
+    "Binary not reopened"
+  ]
+}

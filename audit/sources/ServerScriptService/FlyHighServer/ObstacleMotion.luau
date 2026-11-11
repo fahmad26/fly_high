@@ -1,5 +1,16 @@
 local Motion = {}
 
+-- Snapshot interception: predict signed vertical motion once, never home after launch.
+function Motion.VerticalIntercept(start,center,speed,verticalSpeed)
+ assert(speed>0,"positive projectile speed required")
+ local seconds=(center-start).Magnitude/speed
+ for _=1,6 do
+  seconds=math.min(8,(center+Vector3.yAxis*verticalSpeed*seconds-start).Magnitude/speed)
+ end
+ local target=center+Vector3.yAxis*verticalSpeed*seconds
+ return target,(target-start).Magnitude/speed
+end
+
 Motion.LightningRadius = 17
 Motion.LightningLow = -37
 Motion.LightningHigh = 49

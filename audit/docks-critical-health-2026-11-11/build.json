@@ -1,0 +1,265 @@
+{
+  "runId": "docks-critical-health-2026-11-11",
+  "recordedUTC": "2026-11-11T10:46:33.1547985Z",
+  "timezone": "Asia/Jakarta",
+  "baseCommit": "8e02af016d4369db32cac38398b1e3bc26e46876",
+  "dirtyFiles": [
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PROGRESS.md",
+    " M audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/ObstacleMotion.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+    " M design/features/flight-arrival/design.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/docks-critical-health-2026-11-11/",
+    "?? audit/image-hud-v10-portrait.jpg",
+    "?? audit/repair-motion-2026-11-11/",
+    "?? design/fly-high-scenery-0-10000km.png"
+  ],
+  "environment": {
+    "studio": "Fly High.rbxl",
+    "studioId": "593fcb90-d74b-4780-a52a-f83ac341f912",
+    "placeId": 0,
+    "testMode": "Solo native Studio Test",
+    "clients": 1,
+    "network": "local Studio, no simulated latency",
+    "device": "desktop viewport, no tablet/phone physical test",
+    "screenshot": "Edit overhead camera, 1333x670"
+  },
+  "sourceManifest": [
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BalloonThemes.luau",
+      "sha256": "ac1b00e0796f1cb9f879acb7783c7c2b947e4d70eceb535a598e42bd500849c9"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau",
+      "sha256": "8c864b658c1b8a950cec8b1870006218f1db426dca1bfc84b33699f52a8415c8"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlightControlMath.luau",
+      "sha256": "5c8af9642ef634d5240afa28da9fd798182bfa1684afacae30e578e72ad0692b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau",
+      "sha256": "605d21161d3ee1878385565e9b60d68e38a1c58b3799c02bc322abd7dfd59647"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureArt.luau",
+      "sha256": "bae7c5464ddb26c0571d517b00d38bc08890a1cb14bd7d377a881e54cc72c2fe"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureCatalog.luau",
+      "sha256": "711a014a13c52baf97aa463fe582d1eb1a8cfb351b94506a126501f24b6305d8"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDGlyphs.luau",
+      "sha256": "4e930103c7244f2561cfd0b3c1fe7566865d52ca5871ce7d2556673046e20960"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDImageAssets.luau",
+      "sha256": "50a3e7e0294e0b591ae341cedbb6af7bd7a2c2f25065a692b9cba149c96f33eb"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+      "sha256": "f60677477e2aa20e0f37b2bcde701dab4ea8568c2defd835827018dd52ee899b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+      "sha256": "2b3cf7f211fb24ba75f1c270fec32d004970d077796f90de207db311cb22c17b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/WeaponPresentation.luau",
+      "sha256": "bdb2068f5ee7ccb139d9b6493bcec7de52d328b7b85ee1ecb8e2945b0a002458"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+      "sha256": "04c2d2b3f679810cbf7d4be7b80fad2b8e34b8397f63cad38a7abf8ab1b2b009"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/CrewAccessGuard.luau",
+      "sha256": "f3b93d7f8f8b1751e3f5eb941adb730ef506f3cfe0608910b5e2526f340329fc"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+      "sha256": "967633feabc9138354e259b54976db66caa63ab5ba839de1a721536fe31eb099"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau",
+      "sha256": "3a2b1d8774de434979f3ac9b9e49db6a68ae6c842e70c538e76ed38299bfa372"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/IslandWildlifeController.luau",
+      "sha256": "397d3ef94f76b631227b678981558c0a1930f8b9f3583cb80d16b501da8b0413"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+      "sha256": "b66e44ed109381a8048fc0f38d3c6305bf397db70ce6f573f25c36549c879766"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/LargeChallengeManager.luau",
+      "sha256": "62b5670a7f7abc5071a158a8fe08e87abeb652f780e1a0892428e71854592fea"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleArt.luau",
+      "sha256": "9c653fa95307b1f401bd6e6d0d5532bcaea169e43e7a5bded2f6d14d9686a9e2"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+      "sha256": "59a3cbeda4e59d39730cb530891e86f336b7cdf5ca820433015539ad0b5d2b8f"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleMotion.luau",
+      "sha256": "e9d4a8db30bae0afb8915f76d6af823371d506aa39644acbe2c2650918d27e34"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+      "sha256": "9afce659db8f4086c09575f99c8139ca3cfb06e8937589045d840282de8d8816"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PalaceArrival.luau",
+      "sha256": "035aaf7c619a7521b8419dd1232bdc2ad6c92fec05b9d7f9f0d0c81ba324ac8a"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PalaceManager.luau",
+      "sha256": "57dbee29cb2a811a175653097f6affcafefa5b57f6a4fb7d56bc8edd3d7b6875"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+      "sha256": "77d1bb87cff0a72f39313c50ad1096fc242f68941fe836daf4ca4be96d043ed1"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ServerUtils.luau",
+      "sha256": "4819c7d347fa948a118ce55f84e2339bac2e6c9eec36556c0d0e81595e76588d"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+      "sha256": "6d5691c1dbeb0fa4eb463c78ab5715e101fa8497c42e3dac610acc2d14d01782"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+      "sha256": "8fb7766471e42f351f138abc1ca7fe4ba015f71c040ef55b2e9298fcba12e262"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+      "sha256": "f774874de7ad8670242f5dbe65b8688174107f7b17dd03cc8279a2c20be1621b"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/WeaponRackPresentation.luau",
+      "sha256": "788dc8dd1e2481fbb1ef12a1e9b160cdaa3ea0e0155789abb5dce0276af184f9"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau",
+      "sha256": "4e325d3095bc4ba3131d85027896b3f52e6998aedb2b33a011113dae613fe0dd"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/BiomeLightingController.luau",
+      "sha256": "d055322d6cd94ca987263194e224910052bd2afb35c37defaa02726185e7b041"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+      "sha256": "dbe2429f5dd45129690eec9e636b83f01647b29b34cb55d9ede39469aaed9db1"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+      "sha256": "a0c891d7e16503e9eae5de85b6a1cdb0bc6f90105f27501b778186736de047d3"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/IslandNatureAnimator.luau",
+      "sha256": "6e4b1f48399b7c846132c4e9e3d82b99bc87e544ed45bd1ed79fde3c422cc9c5"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/PalacePresentation.luau",
+      "sha256": "577a2bd39656cc9bb122afcb387322e84870738fdf83f54192079ac78d2b3b33"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+      "sha256": "b72aa2c37530b03599d7d933bbdcafde99b5d177ba143e2199173ec4e8cb4a7a"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/StormCurtainPresentation.luau",
+      "sha256": "aa73d012ae02c77af328f1298851b7e88712bf691ada7e29b5eb7f23fb4f2556"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WarningAudioController.luau",
+      "sha256": "22c7c79724e2a06b96198683bc8171997a6a5099ea4c33e104958b92880b0e29"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+      "sha256": "5cf8fddf0206896944d279a591279dce28674875efce40589bdbb50040372f94"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WorldUISkins.luau",
+      "sha256": "14ff52546575c7e8f79b6b6b1789ce622eebf2d0ce1eaeafa9f162b2cb305b1e"
+    }
+  ],
+  "sourceVerification": {
+    "paths": [
+      "ObstacleManager",
+      "ObstacleMotion"
+    ],
+    "method": "Exact ScriptEditorService.GetEditorSource versus disk; CRLF normalized to LF, trailing LF removed",
+    "bothMatch": true,
+    "allProductionCompileCount": 41,
+    "compileErrors": 0,
+    "allStudioSourcesCompared": false
+  },
+  "savedPlace": {
+    "path": "Fly High.rbxl",
+    "length": 1690675,
+    "modifiedUTC": "2026-11-11T10:40:51.0715474Z",
+    "sha256": "981a66528c56e96b40449f5ebf59b89ffdbd5d6d72b48117ec9bc5cd98188f1d",
+    "savedViaStudio": true,
+    "binaryReopenedAndCompared": false
+  },
+  "results": {
+    "success": true,
+    "shootableEnemyCases": 18,
+    "enemyCasesPassed": 18,
+    "dockOccupancyChecks": 10,
+    "rawChecksIncludingFixture": 137,
+    "runtimeServerErrors": 0,
+    "finishedUTC": "2026-11-11T10:37:47Z"
+  },
+  "fixtures": [
+    "One live player anchored and carried for measurement",
+    "Four holes via ApplyPuncture SelfShot; invulnerability cleared after setup",
+    "Warp per band; boarding distance grace extended during atomic warp",
+    "Natural obstacle spawning and LargeChallengeManager paused",
+    "Manual production SpawnBand enemies and production damage",
+    "Four balloon models at other dock spawn positions for occupancy proxies"
+  ],
+  "evidence": [
+    "playtest-results.json",
+    "attempt1.json",
+    "server-playtest.luau",
+    "layout.luau",
+    "layout-results.json",
+    "layout-final-results.json",
+    "static-results.json",
+    "top-final.jpg"
+  ],
+  "changesAfterGameplayQA": "Additional PalmTree_1 and seven ferns cleared from offset spawn; no dock coordinate or gameplay source changes",
+  "cleanup": {
+    "fixtureRemoved": true,
+    "mode": "Edit",
+    "testPlayers": 1,
+    "testConfiguration": "Test",
+    "viewport": "Desktop default; no device emulator used",
+    "studioPlaceSaved": true
+  },
+  "limits": [
+    "Not a full journey or five human teams",
+    "Natural waves and warning hazards not regression-playtested",
+    "No mobile physical device or network latency QA",
+    "Existing historical image asset warning not resolved in this task",
+    "Binary contents not reverified by reopening"
+  ],
+  "git": {
+    "committed": false,
+    "pushed": false
+  },
+  "preservedLocalWork": "Previous uncommitted repair/motion changes and user artifacts retained"
+}

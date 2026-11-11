@@ -5,7 +5,7 @@ Disetujui pengguna 11 November 2026. Status verifikasi mengikuti [PROGRESS](../.
 ## Aturan produk
 
 - Kelima dermaga dapat meluncurkan balon secara bersamaan selama volume spawn masing-masing kosong. Balon dari tim mana pun tetap memblokir dermaga yang ditempatinya.
-- Posisi FloorPad dermaga A–E direnggangkan menjadi X -100/-50/0/50/100, dengan Z bergantian 20/-40/20/-40/20 stud. Titik spawn balon tetap menggunakan offset Z -18 dari pad. Jarak terdekat sekitar 78 stud, melebihi clearance 60 stud. Tata letak ini disimpan sebagai objek place.
+- Revisi layout 11 November: FloorPad A–E mengikuti busur radius 90 stud berpusat XZ (0,15), pada sudut -90/-45/0/45/90 derajat. Posisi XZ berturut-turut (-90,15), (-63,64;-48,64), (0,-75), (63,64;-48,64), (90,15). Titik spawn balon tetap offset Z -18. Jarak terdekat 68,883 stud, melebihi clearance 60. Tata letak zigzag sebelumnya telah diganti; perubahan disimpan sebagai objek place. Lihat [QA layout](../../../audit/docks-critical-health-2026-11-11/README.md).
 - Keberhasilan satu penerbangan memberi satu puncak kepada seluruh anggota roster yang masih terhubung, termasuk yang telah mati. Roster dikunci saat launch; bukan semua pemain di server.
 - Pemain mati dihidupkan kembali di Istana Awan saat tim mendarat. Anggota yang sudah keluar dari server tidak ditransportasikan.
 - Jika tim gagal, rekor tiap pemain dihitung dari ketinggian tertinggi selama masih hidup, bukan ketinggian tim setelah pemain mati. Rekor terbaik dari penerbangan sebelumnya tidak diturunkan.

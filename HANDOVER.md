@@ -6,6 +6,12 @@ Snapshot aktif per 11 November 2026, Asia/Jakarta. Dokumen ini menggabungkan rin
 
 ## Keadaan workspace
 
+Regresi lanjutan: [run perjalanan enam klien](audit/journey-regression-2026-11-11/README.md) belum lulus penuh (solo fixture, trio lima lubang, duo timeout 8.283 km). Jangan menyebut suite hijau. Regresi lima klien terkontrol lulus 47/47, input driver solo terkoreksi lulus 11/11. Seluruh 41 source Studio cocok dengan mirror dan lolos kompilasi. Sebanyak 17 Beam air terjun diperbaiki dari texture gagal muat ke texture bawaan valid; run solo berikutnya bersih dari warning/error klien. Source fixture, hasil gagal, build dan batas tersedia dalam folder audit. Paket mencakup perbaikan lokal di bawah; status commit/push harus diperiksa melalui Git. Binary tersimpan belum dibuka ulang untuk pembandingan.
+
+Checkpoint terbaru dermaga/health 1: layout zigzag diganti busur radius 90 dengan promenade tersambung dan clearing dekorasi pada titik spawn. ObstacleManager serta ObstacleMotion kini memprediksi kecepatan vertikal aktual saat menarget, termasuk balon turun dengan empat lubang. [QA](audit/docks-critical-health-2026-11-11/README.md) dan [build](audit/docks-critical-health-2026-11-11/build.json) mencatat 18/18 kombinasi musuh/gas, cek okupansi dan screenshot akhir. Perubahan masih lokal, belum commit/push.
+
+Checkpoint lanjutan reparasi/role: TetherManager, BalloonFleetAnimator dan FlightJumpController berubah setelah commit 8e02af0. Hold native diteruskan lewat remote tervalidasi, completion dihitung server, dan pembatalan membedakan pelepasan input dari hilangnya prompt. Recovery katrol serta buffer tap loncat telah ditambahkan. [QA](audit/repair-motion-2026-11-11/README.md) mencatat trio 40/40 dan solo 11/11 lulus; source akhir tetap memvalidasi jarak 10 stud. Perubahan ini masih lokal. Source/place dan keterbatasan QA dicatat di [build](audit/repair-motion-2026-11-11/build.json).
+
 | Item | Hasil pemeriksaan |
 | --- | --- |
 | Workspace | E:/Antigravity/Fly High |
@@ -74,7 +80,7 @@ Objek penting lain berada di ReplicatedStorage.FlyHigh.Remotes, Templates, Envir
 
 ## Batas bukti dan lanjutan
 
-Temuan COOP-LATERAL-POSITION dan anomali jump setelah pergantian role belum ditutup oleh QA analog. Lihat PROGRESS.
+QA reparasi/role terbaru memverifikasi loncat pada jalur produksi normal serta tambal saat bermanuver. COOP-LATERAL-POSITION tetap memerlukan pengujian latency publik dan perangkat fisik; jangan menganggap satu regresi lokal menutup semua kasus desync. Lihat PROGRESS.
 
 Perjalanan penuh historis merekam solo/duo/trio mencapai puncak dengan verifikasi terminal co-op terpisah. singleAllGreenEndToEndSuite masih false pada [ringkasan historis](audit/full-journey-summary.json). Penerbangan scenery yang dipercepat dan memakai shield tidak memperbarui hasil suite tersebut.
 

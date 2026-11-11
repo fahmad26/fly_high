@@ -1,0 +1,99 @@
+{
+  "trees": [
+    {
+      "to": "-25, 9.819999694824219, -20",
+      "name": "BroadleafTree_9",
+      "from": "-88, 9.796562194824219, -49"
+    },
+    {
+      "to": "25, 9.819995880126953, -20",
+      "name": "PalmTree_2",
+      "from": "-102, 9.63967514038086, 25"
+    },
+    {
+      "to": "-45, 9.819999694824219, -5",
+      "name": "PalmTree_7",
+      "from": "100, 9.819999694824219, 22"
+    },
+    {
+      "to": "45, 9.819992065429688, -5",
+      "name": "PalmTree_8",
+      "from": "96, 9.799488067626953, -43"
+    }
+  ],
+  "minimumDockDistance": 68.88301849365234,
+  "restoredCells": 148,
+  "paintedCells": 201,
+  "decor": [
+    "Fern_4",
+    "Fern_5",
+    "Fern_19",
+    "Fern_20",
+    "Fern_21",
+    "Fern_28",
+    "Fern_29",
+    "Fern_46",
+    "Fern_50",
+    "Fern_58",
+    "Fern_59",
+    "Flower_7_1",
+    "Flower_7_2",
+    "Flower_7_3",
+    "Flower_7_4",
+    "Flower_7_5",
+    "Flower_7_6",
+    "Flower_7_7",
+    "Flower_8_1",
+    "Flower_8_2",
+    "Flower_8_3",
+    "Flower_8_4",
+    "Flower_8_5",
+    "Flower_8_6",
+    "Flower_8_7",
+    "SteppingStone_1",
+    "SteppingStone_2",
+    "SteppingStone_3"
+  ],
+  "pods": [
+    {
+      "name": "Pod_A",
+      "position": [
+        -90,
+        10.199999809265137,
+        15
+      ]
+    },
+    {
+      "name": "Pod_B",
+      "position": [
+        -63.639610290527344,
+        10.199999809265137,
+        -48.639610290527344
+      ]
+    },
+    {
+      "name": "Pod_C",
+      "position": [
+        0,
+        10.199999809265137,
+        -75
+      ]
+    },
+    {
+      "name": "Pod_D",
+      "position": [
+        63.639610290527344,
+        10.199999809265137,
+        -48.639610290527344
+      ]
+    },
+    {
+      "name": "Pod_E",
+      "position": [
+        90,
+        10.199999809265137,
+        15
+      ]
+    }
+  ]
+}
