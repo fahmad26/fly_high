@@ -1,0 +1,16 @@
+{
+  "figmaOfficialConnectorVerified": true,
+  "blenderPackage": "2.2.7",
+  "sourceCommit": "2e4b0bc294694b1570d76ed01be657c22e6d02a0",
+  "blenderVersion": "5.3.0",
+  "addonProtocol": 15,
+  "mcpToolCount": 9,
+  "addonStatusVerified": true,
+  "sceneReadVerified": true,
+  "sceneGeometryChanged": false,
+  "configParsed": true,
+  "executableExists": true,
+  "localhostSafeModeTelemetryOff": true,
+  "nativeBlenderToolsNeedCodexReload": true,
+  "pipCheckPassed": true
+}

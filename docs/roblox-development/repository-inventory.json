@@ -1,0 +1,30 @@
+[
+  {
+    "repo": "EL4CTEO/roblox-skills",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "license": "MIT",
+    "download": "git clone --no-checkout",
+    "archiveSkills": 23,
+    "files": 48,
+    "installedNow": 0
+  },
+  {
+    "repo": "AshExplained/roblox-skills",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "license": "MIT",
+    "download": "git clone --no-checkout",
+    "archiveSkills": 7,
+    "files": 8,
+    "installedNow": 5
+  },
+  {
+    "repo": "MSayib/roblox-dev-skill",
+    "commit": null,
+    "status": "catalog discovered; not downloaded or deeply audited"
+  },
+  {
+    "repo": "justOzy/Roblox-Skills",
+    "commit": null,
+    "status": "catalog discovered; not downloaded or deeply audited"
+  }
+]

@@ -79,6 +79,19 @@ function Manager.SetupWeaponRacks(b,slot1AK,slot2AK)
   prompt.Triggered:Connect(function(p)Manager.TryEquip(p,b,rack)end)
  end
 end
+-- Only server-managed, live obstacle models may receive weapon damage.
+local function liveObstacle(model)
+ if typeof(model)~="Instance" or not model:IsA("Model")
+  or model.Parent~=workspace:FindFirstChild("FlyHighObstacles")
+  or model:GetAttribute("IsObstacle")~=true or model:GetAttribute("Shootable")~=true then return false end
+ local hp=model:GetAttribute("Health")
+ if type(hp)~="number" or hp~=hp or hp<=0 or hp==math.huge then return false end
+ local manager=_G.FlyHighObstacleManager
+ for _,item in ipairs(manager and manager.activeObstacles or {})do
+  if item.instance==model and item.shootable and os.clock()>=item.activeAt and os.clock()<item.expires then return true end
+ end
+ return false
+end
 local dropRate=U.RateLimiter(0.2)
 remotes.WeaponDropEvent.OnServerEvent:Connect(function(p)
  if dropRate(p) then Manager.CleanupPlayer(p) end
@@ -106,12 +119,14 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target,cl
  local muzzle=handle:FindFirstChild("MuzzleAttachment")
  local origin=muzzle and muzzle.WorldPosition or handle.Position
  local targetPos=target
- if typeof(clientTargetModel)=="Instance" and clientTargetModel.Parent and clientTargetModel:GetAttribute("IsObstacle") and clientTargetModel:GetAttribute("Shootable")==true then
+ if clientTargetModel~=nil and not liveObstacle(clientTargetModel) then return end
+ if clientTargetModel then
   local targetPart=clientTargetModel.PrimaryPart or clientTargetModel:FindFirstChildWhichIsA("BasePart")
   if targetPart then targetPos=targetPart.Position end
  end
  local delta=targetPos-origin
- if delta.Magnitude<0.01 then return end
+ if not U.FiniteVector(delta) or delta.Magnitude<0.01 then return end
+ if clientTargetModel and delta.Magnitude>500 then return end
  s.lastShot=os.clock() s.ammo-=1 state(s)
  local direction=delta.Unit
  local spread=CFrame.lookAt(Vector3.zero,direction)*CFrame.Angles(math.rad((math.random()-0.5)*1.5),math.rad((math.random()-0.5)*1.5),0)
@@ -127,25 +142,24 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target,cl
  end
  params.FilterDescendantsInstances=excluded
  local hit=workspace:Raycast(origin,direction*500,params)
- if not hit or (hit.Instance~=fd.balloon.Envelope and not (hit.Instance:FindFirstAncestorOfClass("Model") and hit.Instance:FindFirstAncestorOfClass("Model"):GetAttribute("Shootable")==true)) then
+ -- Aim tolerance may widen a miss, but must never cross a world blocker.
+ if not hit then
   local sphereHit=workspace:Spherecast(origin,2.5,direction*500,params)
   if sphereHit then
+   local candidate=sphereHit.Instance:FindFirstAncestorOfClass("Model")
    if sphereHit.Instance==fd.balloon.Envelope then
     hit=sphereHit
-   else
-    local sm=sphereHit.Instance:FindFirstAncestorOfClass("Model")
-    if sm and sm:GetAttribute("Shootable")==true then hit=sphereHit end
+   elseif liveObstacle(candidate) then
+    local targetPart=candidate.PrimaryPart or candidate:FindFirstChildWhichIsA("BasePart")
+    local sight=targetPart and workspace:Raycast(origin,targetPart.Position-origin,params)
+    if sight and sight.Instance:IsDescendantOf(candidate) then hit=sphereHit end
    end
   end
  end
  local part=hit and hit.Instance
  if part==fd.balloon.Envelope then _G.FlyHighBalloonManager.ApplyPuncture(fd,"SelfShot")end
  local model=part and part:FindFirstAncestorOfClass("Model")
- if (not model or not model:GetAttribute("Shootable")) and typeof(clientTargetModel)=="Instance" and clientTargetModel.Parent and clientTargetModel:GetAttribute("Shootable")==true and part~=fd.balloon.Envelope then
-  local toModel=(clientTargetModel:GetPivot().Position-origin)
-  if toModel.Magnitude<=500 and direction:Dot(toModel.Unit)>0.82 then model=clientTargetModel end
- end
- if model and model:GetAttribute("IsObstacle") and model:GetAttribute("Shootable")==true then
+ if liveObstacle(model) then
   local hp=(model:GetAttribute("Health") or 50)-s.cfg.Damage
   model:SetAttribute("Health",hp)
   if hp<=0 then model:Destroy() end

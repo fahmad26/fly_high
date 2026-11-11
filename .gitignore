@@ -6,3 +6,6 @@
 # IDE / Editor configuration
 .vscode/
 .idea/
+
+# Local MCP source checkouts and isolated Python environment
+.local-tools/

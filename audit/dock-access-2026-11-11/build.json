@@ -1,0 +1,58 @@
+{
+  "run": "dock-access-2026-11-11",
+  "capturedUTC": "2026-11-11T14:01:38.0329546Z",
+  "timezone": "Asia/Jakarta",
+  "baseCommit": "44093850df0044a86a9285f0f9f0412023369e63",
+  "changes": "Terrain grading, nature placement and DockPromenade objects; no gameplay script changes",
+  "place": {
+    "path": "Fly High.rbxl",
+    "sha256": "D1761908FD9F09D446C476723EF81E6B727CAD516EDD6361B968F037FF65A9A0",
+    "saved": true,
+    "binaryReopened": false
+  },
+  "qa": {
+    "mode": "Native Studio Solo Test",
+    "clients": 1,
+    "device": "desktop; no mobile or latency emulator",
+    "fixture": "Pose reset at spawn between routes; Humanoid movement waypoints; no jump or in-route teleport",
+    "results": "walk-results.json",
+    "passed": 11,
+    "total": 11,
+    "serverErrors": 0,
+    "clientWarningsCollected": false
+  },
+  "visual": {
+    "top": "top-final.jpg",
+    "eyeLevel": "dock-a-final.jpg",
+    "rejected": "top-csg-rejected.jpg",
+    "surface": "167 simple parts, zero UnionOperation",
+    "oldMoundHeight": 16.3203125,
+    "verifiedTerrainRange": [
+      9.999992370605469,
+      10.00372314453125
+    ]
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "players": 1,
+    "pathParts": 167,
+    "temporaryServerScriptRemoved": true,
+    "temporaryClientScriptRemoved": true,
+    "temporaryRemoteRemoved": true,
+    "camera": "Spawn-facing desktop authoring view",
+    "deviceEmulator": "Not used"
+  },
+  "git": {
+    "committed": false,
+    "pushed": false
+  },
+  "remaining": [
+    "Physical device and human visual review",
+    "Binary reopen comparison not performed"
+  ],
+  "excludedExistingArtifacts": [
+    "audit/Fly High.before-arcade-refine.rbxl",
+    "audit/image-hud-v10-portrait.jpg",
+    "design/fly-high-scenery-0-10000km.png"
+  ]
+}

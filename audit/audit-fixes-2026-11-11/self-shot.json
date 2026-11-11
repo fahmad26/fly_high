@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"health\":10000,\"saves\":3,\"exists\":false,\"ammo\":4,\"holes\":1,\"labels\":false}"
+    }
+  ],
+  "isError": false
+}

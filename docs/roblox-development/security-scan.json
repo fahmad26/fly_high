@@ -1,0 +1,337 @@
+[
+  {
+    "file": "docs\\roblox-development\\skills\\ash\\roblox-creator-store-security-audit\\SKILL.md",
+    "line": 34,
+    "text": "1. Confirm Studio connection with `list_roblox_studios`, `set_active_studio` if needed, and `get_studio_state`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\ash\\roblox-playtest-qa\\SKILL.md",
+    "line": 15,
+    "text": "2. Use `set_active_studio` if needed."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\ash\\roblox-playtest-qa\\SKILL.md",
+    "line": 50,
+    "text": "Do not mark roadmap items complete without human approval, even after a passing playtest."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\ash\\roblox-world-level-design\\SKILL.md",
+    "line": 40,
+    "text": "- Hidden secrets off the main path, not on the onboarding path."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-architecture\\SKILL.md",
+    "line": 23,
+    "text": "| `ServerStorage` | Server only | Server-only assets: maps, NPC templates, tools to clone, secrets-adjacent config. |"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-architecture\\SKILL.md",
+    "line": 33,
+    "text": "- Code in `ReplicatedStorage` is **downloadable by exploiters**. Never put server logic, secrets,"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-code-review\\SKILL.md",
+    "line": 15,
+    "text": "| **Critical** | Client-authoritative rewards/damage/currency; unvalidated remote args (NaN, instance spoofing); purchases granted outside `ProcessReceipt` or non-idempotent; data saved with `SetAsync` from multiple servers without session locking; secrets/API keys in replicated code; unfiltered player text shown to others. |"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-code-review\\SKILL.md",
+    "line": 25,
+    "text": "- No server-only logic, admin lists, or secrets in `ReplicatedStorage`/`StarterPlayer`/`Workspace`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-code-review\\references\\deprecated-apis.md",
+    "line": 140,
+    "text": "| `OpenCloudService`, `OpenCloudApiV1` | `HttpService:RequestAsync` with an API key secret |"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-data-stores\\SKILL.md",
+    "line": 195,
+    "text": "templates like `PlayerData/User_{userId}`. Otherwise handle the right-to-erasure webhook (see"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-monetization\\SKILL.md",
+    "line": 178,
+    "text": "**Transaction Refunded** webhook (covers developer products, passes, private servers, Paid Access) and"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 3,
+    "text": "description: Open Cloud REST APIs and HttpService - API keys/OAuth, v2 patterns, data/memory stores from outside, publishMessage, place publishing, server restarts, Luau execution, bans, configs/experiments, notifications, webhooks with roblox-signature verification, rate limits, Secrets. Use when building external tools, dashboards, bots, CI/CD, admin panels, or calling web APIs from a game."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 8,
+    "text": "Base URL: `https://apis.roblox.com`. Prefer **Open Cloud** endpoints (API key or OAuth 2.0, stable)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 13,
+    "text": "- **API keys** (Creator Dashboard → Open Cloud → API Keys): for your own/your group's resources and"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 15,
+    "text": "store as a secret (CI secret, vault), send as header `x-api-key: <key>`. Group-owned resources need a"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 16,
+    "text": "key created under the group. Introspect a key with `POST /api-keys/v1/introspect`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 33,
+    "text": "| Secrets store | `/cloud/v2/universes/{u}/secrets` |"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 52,
+    "text": "limits don't change: use Open Cloud with an API key for tools and bots, and cache responses."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 58,
+    "text": "curl -s \"https://apis.roblox.com/cloud/v2/universes/$UNIVERSE_ID/data-stores/PlayerData/entries/User_$USER_ID\" \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 59,
+    "text": "-H \"x-api-key: $ROBLOX_API_KEY\""
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 62,
+    "text": "curl -s -X POST \"https://apis.roblox.com/cloud/v2/universes/$UNIVERSE_ID:publishMessage\" \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 63,
+    "text": "-H \"x-api-key: $ROBLOX_API_KEY\" -H \"Content-Type: application/json\" \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 72,
+    "text": "- Store keys in the experience **Secrets store** (Creator Hub) and read with `HttpService:GetSecret(name)`,"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 82,
+    "text": "local function postToWebhook(url: string, payload: { [string]: any }): boolean"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 108,
+    "text": "[\"x-api-key\"] = HttpService:GetSecret(\"OpenCloudKey\"),"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 118,
+    "text": "return { postToWebhook = postToWebhook, banViaOpenCloud = banViaOpenCloud }"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 124,
+    "text": "## Webhooks (Roblox → your server)"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 126,
+    "text": "Configure in Creator Hub → Account Settings → Webhooks (max 5; for group games only the group owner)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 130,
+    "text": "Verification details and a Node/Python verifier: [references/webhooks.md](references/webhooks.md)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\SKILL.md",
+    "line": 135,
+    "text": "execution tests), `roblox-analytics-liveops` (configs, experiments), `roblox-security` (bans, secrets)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 1,
+    "text": "# Verifying Roblox webhooks"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 3,
+    "text": "When a webhook has a secret, Roblox sends header `roblox-signature: t=<timestamp>,v1=<signature>`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 4,
+    "text": "Signature = Base64( HMAC-SHA256( key = secret, message = `<timestamp>.<raw JSON body>` ) )."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 15,
+    "text": "const SECRET = process.env.ROBLOX_WEBHOOK_SECRET;"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 17,
+    "text": "app.post(\"/roblox-webhook\", express.raw({ type: \"application/json\" }), (req, res) => {"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 30,
+    "text": ".digest(\"base64\");"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 38,
+    "text": "console.log(\"webhook\", event.EventType ?? event.eventType, event);"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 48,
+    "text": "import base64, hashlib, hmac, os, time"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 52,
+    "text": "SECRET = os.environ[\"ROBLOX_WEBHOOK_SECRET\"].encode()"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 54,
+    "text": "@app.post(\"/roblox-webhook\")"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 55,
+    "text": "def roblox_webhook():"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 62,
+    "text": "expected = base64.b64encode(hmac.new(SECRET, f\"{ts}.{body}\".encode(), hashlib.sha256).digest()).decode()"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-open-cloud\\references\\webhooks.md",
+    "line": 80,
+    "text": "- Subscription refunds use the subscription webhooks, not Transaction Refunded."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-security\\SKILL.md",
+    "line": 20,
+    "text": "5. **Keep secrets server-side**: server code in `ServerScriptService`/`ServerStorage`; API keys via"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-security\\SKILL.md",
+    "line": 178,
+    "text": "- Never put API keys in scripts or attributes; use the in-experience Secrets store (`HttpService:GetSecret`)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-security\\references\\checklist.md",
+    "line": 37,
+    "text": "- [ ] No server logic or secrets in `ReplicatedStorage`, `ReplicatedFirst`, `StarterPlayer`, `StarterGui`, `Workspace`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-security\\references\\checklist.md",
+    "line": 38,
+    "text": "- [ ] API keys stored as experience Secrets and read with `HttpService:GetSecret`."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\SKILL.md",
+    "line": 130,
+    "text": "(API key scope `universe.place.luau-execution-session:write`; rate limit ≈ 5 tasks/min per key owner)."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 10,
+    "text": "2. Creator Dashboard → Open Cloud → API Keys: create a key with"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 34,
+    "text": "## Driver (bash + curl + jq)"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 39,
+    "text": ": \"${ROBLOX_API_KEY:?}\" \"${UNIVERSE_ID:?}\" \"${PLACE_ID:?}\""
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 43,
+    "text": "VERSION=$(curl -sf -X POST \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 45,
+    "text": "-H \"x-api-key: $ROBLOX_API_KEY\" -H \"Content-Type: application/octet-stream\" \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 50,
+    "text": "curl -sf -X POST \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 52,
+    "text": "-H \"x-api-key: $ROBLOX_API_KEY\" -H \"Content-Type: application/json\" --data @- | jq -r .path)"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 56,
+    "text": "RESPONSE=$(curl -sf \"$API/cloud/v2/$TASK\" -H \"x-api-key: $ROBLOX_API_KEY\")"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 66,
+    "text": "curl -sf \"$API/cloud/v2/$TASK/logs\" -H \"x-api-key: $ROBLOX_API_KEY\" | jq -r '.luauExecutionSessionTaskLogs[]?.messages[]?'"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-testing\\references\\cloud-test-runner.md",
+    "line": 70,
+    "text": "- Tasks default to a 5-minute timeout; the rate limit is about 5 task creations per minute per API key owner."
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\SKILL.md",
+    "line": 34,
+    "text": "Install Rokit: `curl -sSf https://raw.githubusercontent.com/rojo-rbx/rokit/main/scripts/install.sh | bash`"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\SKILL.md",
+    "line": 112,
+    "text": "`npx rbxtsc -w` compiles `src/*.ts` to `out/*.luau`, and Rojo syncs `out/`. Use `@rbxts/services`,"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 22,
+    "text": "curl -sSf https://raw.githubusercontent.com/rojo-rbx/rokit/main/scripts/install.sh | bash"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 27,
+    "text": "GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 42,
+    "text": "curl -fsSL -o globalTypes.d.luau \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 66,
+    "text": "Create an API key (Creator Dashboard → Open Cloud → API Keys) with the **universe-places** permission (write) for the"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 67,
+    "text": "target universe, store it as a repository secret `ROBLOX_API_KEY`, then:"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 80,
+    "text": "curl --fail -X POST \\"
+  },
+  {
+    "file": "docs\\roblox-development\\skills\\el4cteo\\skills\\roblox-tooling\\references\\ci-workflow.md",
+    "line": 82,
+    "text": "-H \"x-api-key: ${{ secrets.ROBLOX_API_KEY }}\" \\"
+  }
+]

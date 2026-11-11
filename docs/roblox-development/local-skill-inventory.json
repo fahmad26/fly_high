@@ -1,0 +1,194 @@
+[
+  {
+    "newlyInstalled": false,
+    "name": "roblox-analytics-liveops",
+    "sha256": "EECBCA76ABE764FAD33DE11940129ACB07B602BBA47BE4D5C2B65A1CF42D7203",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-analytics-liveops\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-animation-audio-feedback",
+    "sha256": "D25231BE92B5C271420916C2A975C2D586B4C35326061C48C23B1A3E25180252",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-animation-audio-feedback\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-architecture",
+    "sha256": "FE258F8DE3CC7A279429219EA36E70C6A79D7752A533E2F29120E3A6AC4ED163",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-architecture\\SKILL.md"
+  },
+  {
+    "newlyInstalled": true,
+    "name": "roblox-asset-pipeline",
+    "sha256": "DFD286B0FA65BCA915DA11781017F5EB048F2F71F5DFF0A3D3798CC050A8E704",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-asset-pipeline\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-audio",
+    "sha256": "10BE47FAA824A390FAEDB1CBDF8CC95E32ECC25052C9D7E11C5D3F227072BBCF",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-audio\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-characters-animation",
+    "sha256": "5033F97D05F135C424098BECC5435B82DD9FFF0D90A8F1781D0594059B7D9A65",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-characters-animation\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-code-review",
+    "sha256": "0AD1029E26C2B66FB3EC6FE589E2A4F540F0FE8D530C47740A0C092939FDECBF",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-code-review\\SKILL.md"
+  },
+  {
+    "newlyInstalled": true,
+    "name": "roblox-creator-store-security-audit",
+    "sha256": "853EEC8B3D1AB79C2E9F49489E454426B4B91CAF20E80FEE9B7D30DECD6E16E6",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-creator-store-security-audit\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-data-stores",
+    "sha256": "5CC1EC80A074CD4558EC3B8B91D47DC9E9EECC2A77DBF27D78DD18BDADD48CFA",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-data-stores\\SKILL.md"
+  },
+  {
+    "newlyInstalled": true,
+    "name": "roblox-debugging-bugfix",
+    "sha256": "9C85043B7DEEC6F2421C468A738568268EE2830A4E81DC1E026003E0FF45C615",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-debugging-bugfix\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-game-systems",
+    "sha256": "EBEAD0F55AFBC82CFEF52BA2701B0CFFD6B50502430925AE17704E465168B5F1",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-game-systems\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-game-ux",
+    "sha256": "69BE6F5C086AC7780AA5155D47736412CDBD1812E25E04CD148711624E18A598",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-game-ux\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-input",
+    "sha256": "ED106F1D3F13D102DF9364C3C14585D8989F465BF1AE2D94FF469C78CD92C454",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-input\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-localization-accessibility",
+    "sha256": "A104CA8F0A25A6C48B876B69F7E2FD2A539140E4B114BA25681632F576396F35",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-localization-accessibility\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-luau",
+    "sha256": "D63A362A5FA6CF98BDDFDA6C5DB804F181FC0904450C454A6EDF13F6EC56C5E1",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-luau\\SKILL.md"
+  },
+  {
+    "newlyInstalled": true,
+    "name": "roblox-mobile-playtest",
+    "sha256": "8C3704C45ABF9F236D0C8C2FF8452E0D11BFBE60A6C448B8A7817BCF8BA52486",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-mobile-playtest\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-monetization",
+    "sha256": "F9D983DB1C0798E578DD0F87CF9A97DE4914B31792125E93D142F56B5F41FD88",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-monetization\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-networking",
+    "sha256": "AE189C87D71DCA9934690B31A711B588FD21D0CE993804E1A1232F7ED9BED143",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-networking\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-npc-ai",
+    "sha256": "831E31FD00E81CBE2281B893C0649C42E6415923D35743372D0EA314F6BFDDED",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-npc-ai\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-open-cloud",
+    "sha256": "179EC41FDA9B0EE88DD9FCA171194E9EFA850902873A07139876F9B6C4507DC3",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-open-cloud\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-performance",
+    "sha256": "CCADE6AE608B570823B175225B8F00DFB5F43F1C37B3CE48ACFFEDE59C175F9D",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-performance\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-physics",
+    "sha256": "90D6F271D781ED8BFEEC5A09D5DEF3C1ADA49E8FE27302F6BB84789DA0E216FE",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-physics\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-security",
+    "sha256": "8A437FB0569AFEE4F013E6EB695D66A22D5909AF28F5A97F058F975E617E17A6",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-security\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-studio-mcp",
+    "sha256": "5FB70F4B905CECCE9A087787C716039A2610D55B50F4D58D801CF791B104641D",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-studio-mcp\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-teleport-matchmaking",
+    "sha256": "26243FC076E5BA19E5B21D32300DED3160C3978AF05F0A09FD25003DD835AF25",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-teleport-matchmaking\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-testing",
+    "sha256": "70F5D0BA3723641917CC1B9545CB8C449C67F93EDB995FDCCAC818D5C09B6E1B",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-testing\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-text-chat",
+    "sha256": "B2B5637709B2E759D6571407A3BBF942263DD60DB28E7D0AB486432E725BB24D",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-text-chat\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-tooling",
+    "sha256": "400DC4B8942F015A608579ED9A0D65EBEE6920DFB693DDAF782E5BF16FF9EE32",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-tooling\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-ui",
+    "sha256": "469AF6C2D15394147DDD74ABA80E6664E8E8CA810E3513AA795CFEBA22B012F3",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-ui\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-ui-implementation",
+    "sha256": "4F2EBDD5E0F8E08C3CB869C9833CBD8D35DC312957E5BE46E7C2044CB743D94B",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-ui-implementation\\SKILL.md"
+  },
+  {
+    "newlyInstalled": false,
+    "name": "roblox-world-building",
+    "sha256": "5CFB0710D9CD70B4C97E1162DDEC33355760D983AD6CAFDF291FEAB21F490828",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-world-building\\SKILL.md"
+  },
+  {
+    "newlyInstalled": true,
+    "name": "roblox-world-level-design",
+    "sha256": "27AA5F89D92CEBEC35D5C058F9125B5C3D98A7FF1C0845C0127C85D25A9AC980",
+    "path": "C:\\Users\\fahma\\.codex\\skills\\roblox-world-level-design\\SKILL.md"
+  }
+]

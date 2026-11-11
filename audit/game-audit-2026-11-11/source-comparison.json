@@ -1,0 +1,166 @@
+[
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.WeaponRackPresentation"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.WarningAudioController"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.BiomeLightingController"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDGlyphs"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDTheme"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.PalaceManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.PodManager"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDImageAssets"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.JumpManager"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.FlightControlMath"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.FlightJumpController"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.ObstacleManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.DataManager"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.StormCurtainPresentation"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.ShopClientController"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.OverheadManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.ObstacleArt"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.CrewAccessGuard"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.LargeChallengeManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.TetherManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.WeaponManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.FlightSpace"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.WeaponPresentation"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.WorldUISkins"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.FlightHUDController"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.BalloonManager"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.PalaceArrival"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.WeaponClientController"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.ShopManager"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.FlyHighConfig"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.IslandWildlifeController"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.ObstacleMotion"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.HUDLayout"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.BiomeScenery"
+  },
+  {
+    "match": true,
+    "path": "game.ServerScriptService.FlyHighServer.ServerUtils"
+  },
+  {
+    "match": true,
+    "path": "game.ReplicatedStorage.FlyHigh.Modules.BalloonThemes"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.IslandNatureAnimator"
+  },
+  {
+    "match": true,
+    "path": "game.StarterPlayer.StarterPlayerScripts.PalacePresentation"
+  }
+]

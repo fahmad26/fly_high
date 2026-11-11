@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"role\":\"Pilot\",\"autoGas\":true,\"climb\":15.105484008789063,\"holes\":0,\"pilot\":true}"
+    }
+  ],
+  "isError": false
+}

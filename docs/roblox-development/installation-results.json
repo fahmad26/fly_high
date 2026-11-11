@@ -1,0 +1,62 @@
+[
+  {
+    "name": "roblox-debugging-bugfix",
+    "sourceCommit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "destination": "C:/Users/fahma/.codex/skills/roblox-debugging-bugfix/SKILL.md",
+    "archiveSHA256": "16A488F9894980C6A78D680027820C2CF7E8F90B18087F44C8609BE567F8D651",
+    "normalizedExactMatch": true,
+    "files": [
+      "LICENSE",
+      "SKILL.md"
+    ],
+    "installedSHA256": "9C85043B7DEEC6F2421C468A738568268EE2830A4E81DC1E026003E0FF45C615"
+  },
+  {
+    "name": "roblox-world-level-design",
+    "sourceCommit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "destination": "C:/Users/fahma/.codex/skills/roblox-world-level-design/SKILL.md",
+    "archiveSHA256": "68443D8236D02B1C9A1DB4042AC0F180A4E23A7C5EA87AB39D27C442A7B38426",
+    "normalizedExactMatch": true,
+    "files": [
+      "LICENSE",
+      "SKILL.md"
+    ],
+    "installedSHA256": "27AA5F89D92CEBEC35D5C058F9125B5C3D98A7FF1C0845C0127C85D25A9AC980"
+  },
+  {
+    "name": "roblox-mobile-playtest",
+    "sourceCommit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "destination": "C:/Users/fahma/.codex/skills/roblox-mobile-playtest/SKILL.md",
+    "archiveSHA256": "8C15082EBDEC0647EC8245790109816990A99E41667B609FAF2A89A851CBA234",
+    "normalizedExactMatch": true,
+    "files": [
+      "LICENSE",
+      "SKILL.md"
+    ],
+    "installedSHA256": "8C3704C45ABF9F236D0C8C2FF8452E0D11BFBE60A6C448B8A7817BCF8BA52486"
+  },
+  {
+    "name": "roblox-asset-pipeline",
+    "sourceCommit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "destination": "C:/Users/fahma/.codex/skills/roblox-asset-pipeline/SKILL.md",
+    "archiveSHA256": "1AF46A07BCDACB323FC5DE95B6C0A51BA31D4428D4C51275F06A157B65B6153B",
+    "normalizedExactMatch": true,
+    "files": [
+      "LICENSE",
+      "SKILL.md"
+    ],
+    "installedSHA256": "DFD286B0FA65BCA915DA11781017F5EB048F2F71F5DFF0A3D3798CC050A8E704"
+  },
+  {
+    "name": "roblox-creator-store-security-audit",
+    "sourceCommit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "destination": "C:/Users/fahma/.codex/skills/roblox-creator-store-security-audit/SKILL.md",
+    "archiveSHA256": "935178381D49DDDACDA37A20A177FE4591D030F1DEF75B41A008812F7078CA87",
+    "normalizedExactMatch": true,
+    "files": [
+      "LICENSE",
+      "SKILL.md"
+    ],
+    "installedSHA256": "853EEC8B3D1AB79C2E9F49489E454426B4B91CAF20E80FEE9B7D30DECD6E16E6"
+  }
+]

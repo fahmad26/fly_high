@@ -1,0 +1,13 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Saved: Saved to the local place file."
+    },
+    {
+      "type": "text",
+      "text": "{\"message\":\"Saved to the local place file.\",\"status\":\"Saved\",\"filePath\":\"E:/Antigravity/Fly High/Fly High.rbxl\",\"location\":\"LocalFile\"}"
+    }
+  ],
+  "isError": false
+}

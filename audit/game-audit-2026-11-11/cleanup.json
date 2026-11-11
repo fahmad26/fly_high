@@ -1,0 +1,17 @@
+{
+  "fixtures": [],
+  "extraScripts": [],
+  "sourceCount": 41,
+  "placeId": 0,
+  "gameId": 0,
+  "parts": [
+    {
+      "root": "Workspace.CloudPalace.PalaceFurniture.RoyalSwingRight.Carriage.MovingRoot",
+      "mass": 0.17232319712638855
+    },
+    {
+      "root": "Workspace.CloudPalace.PalaceFurniture.RoyalSwingLeft.Carriage.MovingRoot",
+      "mass": 0.17232319712638855
+    }
+  ]
+}

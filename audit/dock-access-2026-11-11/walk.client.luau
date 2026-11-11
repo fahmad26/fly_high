@@ -1,0 +1,6 @@
+local p=game.Players.LocalPlayer local event=game.ReplicatedStorage:WaitForChild("__AccessQA")local goal
+game:GetService("RunService"):BindToRenderStep("AccessQA",201,function()local c=p.Character local root=c and c:FindFirstChild("HumanoidRootPart")local hum=c and c:FindFirstChildOfClass("Humanoid")if hum and root and goal then local d=Vector3.new(goal.X-root.Position.X,0,goal.Z-root.Position.Z)hum:Move(d.Magnitude>.6 and d.Unit*math.min(1,d.Magnitude)or Vector3.zero,false)end end)
+event.OnClientEvent:Connect(function(id,action,v)local ok,result=pcall(function()
+ local c=p.Character local h=c.Humanoid local root=c.HumanoidRootPart
+ if action=="Pose"then goal=nil c:PivotTo(CFrame.new(v))root.AssemblyLinearVelocity=Vector3.zero return true
+ elseif action=="Walk"then goal=v local began=os.clock()repeat task.wait(.05)local d=Vector3.new(root.Position.X-v.X,0,root.Position.Z-v.Z)if d.Magnitude<1.2 then goal=nil h:Move(Vector3.zero,false)return {position={root.Position.X,root.Position.Y,root.Position.Z},seconds=os.clock()-began,health=h.Health,jumps=h:GetState().Name}end until os.clock()-began>18 error("walking timeout: "..tostring(root.Position).." target "..tostring(v))end end)event:FireServer(id,ok,result)end)

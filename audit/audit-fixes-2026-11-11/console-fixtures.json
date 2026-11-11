@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "[DataManager] Unpublished Studio: isolated mock data; checkout disabled.\nloadstring() is not available\nStack Begin\nScript 'AssistantCommand', Line 9\nStack End\nLoadStringEnabled is not a valid member of ServerScriptService \"ServerScriptService\"\nStack Begin\nScript 'AssistantCommand', Line 1\nStack End\n[DataManager] Save failed; retained session data for retry: 987654\n[DataManager] Session ownership lost; data mutations fenced: 987654\n[DataManager] Save failed; retained session data for retry: 987654\n[DataManager] Session ownership lost; data mutations fenced: 987654\n__AuditFixTarget is not a valid member of Workspace \"Workspace\"\nStack Begin\nScript 'AssistantCommand', Line 1\nStack End"
+    }
+  ],
+  "isError": false
+}

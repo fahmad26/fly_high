@@ -1,0 +1,13 @@
+{
+  "checkedUTC": "2026-11-11T14:19:10.788692+00:00",
+  "archiveFiles": 56,
+  "archiveSkills": 30,
+  "regularGitBlobsVerified": 56,
+  "sha256Verified": 56,
+  "newInstallationsVerified": 5,
+  "localInventoryCount": 32,
+  "localLinksChecked": 82,
+  "errors": [],
+  "success": true,
+  "scope": "Archive byte integrity, frontmatter, installed content/licensing, local links. Not a guarantee of all semantic instructions or future versions."
+}

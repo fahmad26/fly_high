@@ -1,0 +1,506 @@
+[
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-analytics-liveops/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "B887012707A2856A25A13776E43107CED59C9277644B88295FA90641633B5E92",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-analytics-liveops/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "26ff04ea8a2656efe52d094c4cb5a20c3f2e3804"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-architecture/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "DE9050D490F5E1BE49B2B8724AE0B16A0E2F55311003C61D9752F4035D16C82E",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-architecture/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "ca8bc2d311dd590147b1960895c3ca2534f5fddf"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-architecture/references/ecosystem.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "3D0B4293A6F6FDFFE576D32D1CAFDAABB8196CD0E6F97359D72D34C1C7081065",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-architecture/references/ecosystem.md",
+    "gitMode": "100644",
+    "gitBlob": "dfe9d717f89c7453e6429cea89466f31d1fca70d"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-architecture/references/streaming.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "711025A89081F7FBA3BCC149264B78637B3D35563230CEB1CC47B48C41CDF5A9",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-architecture/references/streaming.md",
+    "gitMode": "100644",
+    "gitBlob": "a2980009d5b2dda063c993d98aead9b8842e2b1a"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-audio/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "E86AD11C1D1EED75BA3123727C8391AA85EE074CDE33F78C1423E476BCBEAC2A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-audio/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "1199998a3d5a71ab8572170a7c7a6f62558c44c8"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-characters-animation/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "76E71FEBCBBD842FE4354F5302041EAC25DE683D184414DF3E98CC78EF87EB9A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-characters-animation/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "31c4ebeccabd603bde95f1701afa214d4bc64016"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-characters-animation/references/character-controller-library.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "82B8FF8F232F0926F5D3213A68B03109F071C4C43B0E2D46E2B5826349995289",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-characters-animation/references/character-controller-library.md",
+    "gitMode": "100644",
+    "gitBlob": "006d1f7b3966338e7887461f7ee76a835c6a6983"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-code-review/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "2C2375ED923615FFCB27C68B05F2B3E4105199E76045A998448C7AC6851AD7D8",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-code-review/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "dd6227ff7a5af0e71f101b5d7b8dec685ccddb60"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-code-review/references/deprecated-apis.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "ED31110869AEB68007C571F34A81C583E7274DA5C208F71552783631490520B7",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-code-review/references/deprecated-apis.md",
+    "gitMode": "100644",
+    "gitBlob": "464f6339b774a51d2304912815d39542b93a1d8d"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-data-stores/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "9F4720FC968CFC5629D7522B355CC9E0D9FC6EBBFDEB5D108C224AEE6347DF27",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-data-stores/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "cfc550959791d6cda35312bb3e58dc0678a59a07"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-data-stores/references/memory-and-messaging.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "5937CC552452FFCDE6D7E05AA93E7F785DAC9FDADF531EFEAA030528FD2A2A92",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-data-stores/references/memory-and-messaging.md",
+    "gitMode": "100644",
+    "gitBlob": "eb1b725f32d4daff9f9844f87e19aef2db767e23"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-data-stores/references/raw-datastore.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "3E8377CBEC72BF1D5B73200119E6BB3A2AB38368B64162EB1923A4D71D005AD1",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-data-stores/references/raw-datastore.md",
+    "gitMode": "100644",
+    "gitBlob": "b5fafc1e1f068605c2fc5514cb834043a1063082"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-game-systems/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "09E7288189EA139C7379ED1DFEA584CEC2CF85C2D7DB0C42E8AA5E63BCB9721A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-game-systems/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "0ef6f3bb850a8477a9cc556c3087f46904bc3fa0"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-game-systems/references/combat.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "A70441CD19258FEE6C3467124BDAAD621AB6D32BDA4AB21BB10567DE2739A301",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-game-systems/references/combat.md",
+    "gitMode": "100644",
+    "gitBlob": "593e616908b17768c398a3a2392bd12a6eb84eff"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-game-systems/references/inventory-shop.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "4D9D0482267756BF43E848D3559F22A1897CE718928F07DE5ABD9F15F08740AF",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-game-systems/references/inventory-shop.md",
+    "gitMode": "100644",
+    "gitBlob": "07a082805fad9d107b29ac4f785a1d0e63db94d9"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-game-systems/references/progression.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "94F3683D999A67021BDAD2E589416CA411AB954A42CE8371C8C2B7CE49115530",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-game-systems/references/progression.md",
+    "gitMode": "100644",
+    "gitBlob": "380e3086d2f5ac34f7206886850c640ca57d8923"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-game-systems/references/round-system.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "B9FD6637CE1AF4A9C93D257FF8890FB4BBA25E1A423FE17020C05BFAEC8E0A00",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-game-systems/references/round-system.md",
+    "gitMode": "100644",
+    "gitBlob": "cad1ea5936df9df4c9cf5ce4cd1c31be8698f59c"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-input/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "EF9AAEFC8A6E0C416B3698C9FAAF5250F4B35F76729AD8C60FB3735E12E5399A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-input/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "81aa5bb7db27ded0ef43a4faad5980b39482f010"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-luau/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "F54D54F67C077F31C3E64047C605DD9812D44FC4E0EFC55B4C839F98A2D5B243",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-luau/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "40e1f25c756a1bf7fda60aab6c86096e56aae815"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-luau/references/stdlib-cheatsheet.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "242F6961A739727DC9E6BEB666E5BA86E07487A43E4EC83820C9A35CE70164B0",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-luau/references/stdlib-cheatsheet.md",
+    "gitMode": "100644",
+    "gitBlob": "6fc13267afa0f4e25623d9b51c9b09517adb6c24"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-luau/references/type-system.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "0AA560ABB7A4DB026BC0E6642A9EAE90CA4B16A2A27ADB4BFA43BBA0AF849053",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-luau/references/type-system.md",
+    "gitMode": "100644",
+    "gitBlob": "b9192e3ae777308d235ac861db2ea147cb3625df"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-monetization/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "BFBFF77E1939E987E108D7E101D56B18553DE11095CD1A0C8FA4C54377FB2122",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-monetization/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "916930cc9606d4b14f1f56981b550a6583476de7"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-monetization/references/ads-and-extras.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "B1D3DDAAB9B93C2E416019D5308C7167DF996A5A6AABE42BD4EE7F047C28827C",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-monetization/references/ads-and-extras.md",
+    "gitMode": "100644",
+    "gitBlob": "c9e93b51d02954c80ffbae8bbb99176a00f0682f"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-networking/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "DD1FD935C8986D3BD7B8CE4EF7CEC99BDFF1528552FFDEBB05CDA0ADB98D5479",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-networking/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "2457a4c960163693aadd1a6cbe065acb355d34e7"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-networking/references/patterns.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "A0D023E614BE54D7B38EDECC3DF1648E0C3402D4E3F77345677564CD4222B84F",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-networking/references/patterns.md",
+    "gitMode": "100644",
+    "gitBlob": "bdb1e20fcce40d8974e859f9f53578e2072783b6"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-npc-ai/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "40561EDE91DB2C88C9C6022265089E429E49120DAF1F3A57BC1D0FCB2B66ACB4",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-npc-ai/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "8a9e5d60773a06d5df66a79b96e351b39e671a55"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-npc-ai/references/scaling-npcs.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "AC17986AFB1B2D4A90F4961F241EAA32EC33782396ED33C78D3B7CCA1B5E6668",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-npc-ai/references/scaling-npcs.md",
+    "gitMode": "100644",
+    "gitBlob": "f8ad287dffd7cd375e67c9c24dc85b97b5d0f2ac"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-open-cloud/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "077741D4D08F1F76FB7448A005538AA557AB9FF51B712068D77975CCAA39E27D",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-open-cloud/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "5c9810ab16ac778c14bfec02eb35ed24402a61eb"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-open-cloud/references/webhooks.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "86A4B016F53D8D419C6DD4AA6B74DE1F3B5B73D4D7F4D7DF8EC8A9C234CF6741",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-open-cloud/references/webhooks.md",
+    "gitMode": "100644",
+    "gitBlob": "4a5ec81b03610bdaeaa9c927acb8e20c30debeb1"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-performance/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "3733FE59136D7FE320C6998064200342FE185B7C9912A16DA126B42FA41743E3",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-performance/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "e1f3c66d7b5b8028a0398a84bd9922dc6ef23e2b"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-performance/references/profiling.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "5F1A0BEB4F9BA3EFFFE833B6C78800850994D57712BB890AA631F10DF9DB071C",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-performance/references/profiling.md",
+    "gitMode": "100644",
+    "gitBlob": "0ea1879a74c8f184bcaf274568e58115d46f8f3a"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-physics/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "8ED4239EB779FC067376FA1AC433973267242122C87E6D417F1267F3D8CC370F",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-physics/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "edd15ead76ff40566aa868748e12b2c6c52cffc5"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-physics/references/recipes.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "9C958834057E265576E87AAD850C03CD1EABD22A8251F18D6C7E84E754C84730",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-physics/references/recipes.md",
+    "gitMode": "100644",
+    "gitBlob": "791458b995be9f0ce65d1d81b624ec06e68ef1bc"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-physics/references/server-authority.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "CBE7EE8E074018FD246C5B7AC8752FC501893D782C67841204E6A8A3574C69AA",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-physics/references/server-authority.md",
+    "gitMode": "100644",
+    "gitBlob": "ee53523a17302616f07d41d737de47beda59455a"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-security/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "54940C7EE1A09C4C4C7E20D11400C82AD1DBFF009F7ADE6015C7E455B316FE75",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-security/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "05e31536c0295d316baa9c00a67c11c5ac93f8bd"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-security/references/checklist.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "75B4624A4BE879CACFCC572003F450430DE67F02AFCDB9C2BD8F07916513ADF6",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-security/references/checklist.md",
+    "gitMode": "100644",
+    "gitBlob": "f4aaa1df9240eaf07349f4e3b91b9e1ea39e1ecb"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-studio-mcp/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "6CBAD87813FD4AFD1119846938BC4F5F196EBD0674ED1C21771E8D8EA1E6E6C5",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-studio-mcp/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "62f9317f468c20e7ae004ab44c465ef16e260d72"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-studio-mcp/references/client-setup.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "762EFB89C0235F7B0C4E116D7C340F147834E4FD8698A20F8A0A1CF5458F3398",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-studio-mcp/references/client-setup.md",
+    "gitMode": "100644",
+    "gitBlob": "eef97542a11c62261612692b9eda5e18adbfca14"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-teleport-matchmaking/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "F232B936E76DC6CD1ACC615413C289555998B4C5022BAB8E389B0C4A3D576789",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-teleport-matchmaking/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "6cdf6cd67d2027b11342750a150b8c9b3a020031"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-testing/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "44A7DA48E3ECAE98DCBDBC0E88E363C0256F03548EEA419D9C955D57BDF78F2A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-testing/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "a22ed96cfb60a9b7fdcc6bd2421debd85d86c738"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-testing/references/cloud-test-runner.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "583C3A1EEFE38C4C3C2E5E5934DD5FDD24CF1F4413B1E35FA73644EAFED4EAA4",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-testing/references/cloud-test-runner.md",
+    "gitMode": "100644",
+    "gitBlob": "529e09d61f052e4603ffd659569a157eae0e48c5"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-text-chat/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "582406544E1FF22926BE4A5F89478824B69D9CA7C8AB58173F37672BDFD9B76E",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-text-chat/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "8c84e57851f5e71bdd04f2cfdba36d3e36fa09c1"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-text-chat/references/chat-recipes.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "C745A564AA1FF5ACF2BFA5F648DE7D62187F1F5B21D0C051415586BDC5B32146",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-text-chat/references/chat-recipes.md",
+    "gitMode": "100644",
+    "gitBlob": "26a12d0d19640466d7586f9f29e864889560745e"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-tooling/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "F1A97B6E25E9E1F419CB483D9F708C505C80CB47DAF8D43E2B79770E04DF30BF",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-tooling/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "1ff862edd1e3d12458a275f0e744c566afe21dfa"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-tooling/references/ci-workflow.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "CE3CDE2C02989B36F5C974E2660DF243A6964DC87127BA32CE7E5303AA7C3DA3",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-tooling/references/ci-workflow.md",
+    "gitMode": "100644",
+    "gitBlob": "691abba503b5432272e9f4ed24315a18bae2b574"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-ui/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "6A8231BF314CD1710E0A316F558DFABE8DFEB4381797F4251129D55E67E05D4F",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-ui/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "acb4e59351ce2b25a25636d10e68d8336d5128b4"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-ui/references/styling-and-frameworks.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "62E568A34C7867DA3ECAFF83785253CC47D7739D3B3AC8FBAABBA399DEC4ED5A",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-ui/references/styling-and-frameworks.md",
+    "gitMode": "100644",
+    "gitBlob": "b67f0dffb43779f63cd8d0e4360f24b042b98bfa"
+  },
+  {
+    "repo": "el4cteo",
+    "path": "skills/roblox-world-building/SKILL.md",
+    "commit": "f94b0e499c124c11b30cd2cc0a57267090943049",
+    "sha256": "4DCA44551933921334F62B9EB3FD8F479857E4B056B23AE5AA1D2B5B9FB61A85",
+    "local": "docs/roblox-development/skills/el4cteo/skills/roblox-world-building/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "f3761f3202bc494ae86ceb82b5a7b17486efcca8"
+  },
+  {
+    "repo": "ash",
+    "path": "LICENSE",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "E03986A905054B5DF122B12EA4FAC8F3EEB4CE5CA11EE00FB3D134BC239E28E7",
+    "local": "docs/roblox-development/skills/ash/LICENSE",
+    "gitMode": "100644",
+    "gitBlob": "bbd589e075de511acb493194cde2b0bbe8db8965"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-asset-pipeline/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "1AF46A07BCDACB323FC5DE95B6C0A51BA31D4428D4C51275F06A157B65B6153B",
+    "local": "docs/roblox-development/skills/ash/roblox-asset-pipeline/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "1672cb60e71f3e1c185b2bf55bfd83bd57a396c9"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-creator-store-security-audit/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "935178381D49DDDACDA37A20A177FE4591D030F1DEF75B41A008812F7078CA87",
+    "local": "docs/roblox-development/skills/ash/roblox-creator-store-security-audit/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "01336006b69ef9ea4f483e5ccd6a394dfcf4837e"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-debugging-bugfix/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "16A488F9894980C6A78D680027820C2CF7E8F90B18087F44C8609BE567F8D651",
+    "local": "docs/roblox-development/skills/ash/roblox-debugging-bugfix/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "1809de5caf92d70a9569dbba1f9be960bf571c0f"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-economy-balancing/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "11AD4A717014AE769B191C77FC479DA417CAEB910682A36BCCFE7518621767C9",
+    "local": "docs/roblox-development/skills/ash/roblox-economy-balancing/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "e2e7e3112461503e292b4c15204500263fd1c2af"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-mobile-playtest/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "8C15082EBDEC0647EC8245790109816990A99E41667B609FAF2A89A851CBA234",
+    "local": "docs/roblox-development/skills/ash/roblox-mobile-playtest/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "70ed5341ef9725f896af414a99968c494a8e19d3"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-playtest-qa/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "615673B1595CCC50498FC49F44AC53D54E15FBE5E6DDEF2D18499F0D6F1DD20C",
+    "local": "docs/roblox-development/skills/ash/roblox-playtest-qa/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "06773f6d86f176b06d9763178314c442b8f66730"
+  },
+  {
+    "repo": "ash",
+    "path": "roblox-world-level-design/SKILL.md",
+    "commit": "a3a7b940f0899d4a69c1a7df625996bdfc917388",
+    "sha256": "68443D8236D02B1C9A1DB4042AC0F180A4E23A7C5EA87AB39D27C442A7B38426",
+    "local": "docs/roblox-development/skills/ash/roblox-world-level-design/SKILL.md",
+    "gitMode": "100644",
+    "gitBlob": "842284147ee7332429bb919fb99e0ecdc1504e77"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "orientation": "Enum.ScreenOrientation.LandscapeSensor",
+  "presets": {
+    "1": {
+      "id": "iphone_17_pro",
+      "name": "iPhone 17 Pro"
+    },
+    "2": {
+      "id": "ipad_6th_generation",
+      "name": "iPad 6th Generation"
+    },
+    "3": {
+      "id": "ipad_8th_generation",
+      "name": "iPad 8th Generation"
+    },
+    "4": {
+      "id": "ipad_9th_generation",
+      "name": "iPad 9th Generation"
+    },
+    "5": {
+      "id": "ipad_10th_generation",
+      "name": "iPad 10th Generation"
+    },
+    "6": {
+      "id": "ipad_a16",
+      "name": "iPad A16"
+    },
+    "7": {
+      "id": "ipad_air_5th_generation",
+      "name": "iPad Air 5th Generation"
+    },
+    "8": {
+      "id": "ipad_pro_M4_11in",
+      "name": "iPad Pro M4 (11in)"
+    },
+    "9": {
+      "id": "ipad_pro_M5_13in",
+      "name": "iPad Pro M5 (13in)"
+    }
+  },
+  "device": "default"
+}

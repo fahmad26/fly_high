@@ -1,0 +1,27 @@
+[
+  {
+    "minTerrain": 9.999992370605469,
+    "maxTerrain": 10.000007629394531,
+    "pod": "Pod_A"
+  },
+  {
+    "minTerrain": 9.999992370605469,
+    "maxTerrain": 10.00372314453125,
+    "pod": "Pod_B"
+  },
+  {
+    "minTerrain": 9.999992370605469,
+    "maxTerrain": 10.000030517578125,
+    "pod": "Pod_C"
+  },
+  {
+    "minTerrain": 9.999992370605469,
+    "maxTerrain": 10.00372314453125,
+    "pod": "Pod_D"
+  },
+  {
+    "minTerrain": 9.999992370605469,
+    "maxTerrain": 10,
+    "pod": "Pod_E"
+  }
+]

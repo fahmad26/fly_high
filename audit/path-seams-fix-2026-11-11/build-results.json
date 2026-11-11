@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"surfaceParts\":728,\"method\":\"Vertex-matched trapezoids, clipped borders, no CSG\",\"roadColliderWidth\":9}"
+    }
+  ],
+  "isError": false
+}

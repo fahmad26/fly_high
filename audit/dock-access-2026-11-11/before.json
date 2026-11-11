@@ -1,0 +1,228 @@
+{
+  "pads": [
+    {
+      "console": "-85.92170715332031, 13.5, 23.38436508178711",
+      "name": "Pod_A",
+      "samples": [
+        10,
+        10,
+        9.8505859375,
+        16.3203125,
+        10.409820556640625
+      ],
+      "size": "17, 0.20000000298023224, 17",
+      "pos": "-90, 10.199999809265137, 15"
+    },
+    {
+      "console": "-65.93708038330078, 13.500000953674316, -39.60348129272461",
+      "name": "Pod_B",
+      "samples": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "size": "17, 0.20000000298023224, 17",
+      "pos": "-63.639610290527344, 10.199999809265137, -48.639610290527344"
+    },
+    {
+      "console": "-7.300000190734863, 13.499999046325684, -69.19999694824219",
+      "name": "Pod_C",
+      "samples": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "size": "17, 0.20000000298023224, 17",
+      "pos": "0, 10.199999809265137, -75"
+    },
+    {
+      "console": "54.31803512573242, 13.499999046325684, -48.44416809082031",
+      "name": "Pod_D",
+      "samples": [
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "size": "17, 0.20000000298023224, 17",
+      "pos": "63.639610290527344, 10.199999809265137, -48.639610290527344"
+    },
+    {
+      "console": "82.75452423095703, 13.5, 9.132026672363281",
+      "name": "Pod_E",
+      "samples": [
+        10,
+        9.813484191894531,
+        10,
+        10,
+        10
+      ],
+      "size": "17, 0.20000000298023224, 17",
+      "pos": "90, 10.199999809265137, 15"
+    }
+  ],
+  "children": [
+    {
+      "name": "IslandGround",
+      "class": "Part"
+    },
+    {
+      "name": "RockBase",
+      "class": "Part"
+    },
+    {
+      "name": "LobbySpawn",
+      "class": "SpawnLocation"
+    },
+    {
+      "name": "WelcomeSign",
+      "class": "Part"
+    },
+    {
+      "name": "MatchmakingPods",
+      "class": "Folder"
+    },
+    {
+      "name": "OceanWater",
+      "class": "Part"
+    },
+    {
+      "name": "InvisibleBoundaryCorridor",
+      "class": "Folder"
+    },
+    {
+      "name": "IslandNature",
+      "class": "Folder"
+    },
+    {
+      "name": "ArrivalGarden",
+      "class": "Model"
+    }
+  ],
+  "nearby": [
+    {
+      "path": "Workspace.FlyHighLobby.IslandGround",
+      "collide": true,
+      "material": "Grass",
+      "pos": "0, 5, 0",
+      "size": "150, 10, 140"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.RockBase",
+      "collide": true,
+      "material": "Slate",
+      "pos": "0, -12, 0",
+      "size": "120, 30, 110"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_1.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "25.00009536743164, 26.231468200683594, 78.00038146972656",
+      "size": "19.101896286010742, 10.877063751220703, 16.162078857421875"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_2.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "24.999574661254883, 27.958988189697266, -20.000091552734375",
+      "size": "21.11262321472168, 12.022018432617188, 17.863351821899414"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_3.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-77.99992370605469, 24.443878173828125, 70.0003662109375",
+      "size": "18.096532821655273, 10.304586410522461, 15.311443328857422"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_4.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-32.0003776550293, 24.158523559570312, 95.99998474121094",
+      "size": "18.49867820739746, 10.533577919006348, 15.651697158813477"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_5.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "28.000308990478516, 27.013778686523438, 96.99970245361328",
+      "size": "20.911550521850586, 11.907523155212402, 17.69322395324707"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_6.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "78.0003890991211, 26.606945037841797, 68.99987030029297",
+      "size": "20.10725975036621, 11.449541091918945, 17.012714385986328"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.PalmTree_7.fronds.fronds_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-44.99996566772461, 25.713211059570312, -4.999619960784912",
+      "size": "18.49867820739746, 10.533577919006348, 15.651697158813477"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_9.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-25, 24.237382888793945, -20",
+      "size": "19.128902435302734, 12.525236129760742, 16.368013381958008"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_10.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-25, 26.38465118408203, 60",
+      "size": "21.977886199951172, 14.390695571899414, 18.805801391601562"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_11.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "25, 23.930633544921875, 60",
+      "size": "18.721904754638672, 12.25874137878418, 16.019758224487305"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_12.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-59, 26.69140625, 74",
+      "size": "22.384885787963867, 14.657191276550293, 19.1540584564209"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_13.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-8, 23.62387466430664, 83",
+      "size": "18.314905166625977, 11.992246627807617, 15.671501159667969"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_14.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "45, 29.293926239013672, 78",
+      "size": "21.163890838623047, 13.857707023620605, 18.109291076660156"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_15.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-25, 25.924518585205078, 78",
+      "size": "21.367389678955078, 13.990954399108887, 18.283418655395508"
+    },
+    {
+      "path": "Workspace.FlyHighLobby.IslandNature.Trees.BroadleafTree_16.leaves.leaves_geom",
+      "collide": false,
+      "material": "Plastic",
+      "pos": "-49.99999237060547, 21.406639099121094, 94",
+      "size": "18.721904754638672, 12.25874137878418, 16.019758224487305"
+    }
+  ]
+}

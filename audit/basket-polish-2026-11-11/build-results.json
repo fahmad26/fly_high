@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "[{\"decorParts\":252,\"name\":\"HotAirBalloon\",\"floor\":\"28, 1.2000000476837158, 28\"},{\"decorParts\":252,\"name\":\"DawnExplorer\",\"floor\":\"28, 1.2000000476837158, 28\"},{\"decorParts\":252,\"name\":\"FloatingGarden\",\"floor\":\"28, 1.2000000476837158, 28\"},{\"decorParts\":252,\"name\":\"SkyKoi\",\"floor\":\"28, 1.2000000476837158, 28\"},{\"decorParts\":252,\"name\":\"SaturnVoyager\",\"floor\":\"28, 1.2000000476837158, 28\"},{\"decorParts\":252,\"name\":\"PalaceLantern\",\"floor\":\"28, 1.2000000476837158, 28\"}]"
+    }
+  ],
+  "isError": false
+}

@@ -1,0 +1,105 @@
+{
+  "viewport": "1375, 1030",
+  "guiSize": "1375, 972",
+  "buttons": [
+    {
+      "size": [
+        50,
+        56
+      ],
+      "name": "EmergencyKitButton",
+      "pos": [
+        18,
+        80
+      ]
+    },
+    {
+      "size": [
+        84,
+        84
+      ],
+      "name": "MobileShootButton",
+      "pos": [
+        1165,
+        860
+      ]
+    },
+    {
+      "size": [
+        50,
+        56
+      ],
+      "name": "PingButton",
+      "pos": [
+        18,
+        144
+      ]
+    },
+    {
+      "size": [
+        52,
+        52
+      ],
+      "name": "ReloadButton",
+      "pos": [
+        1235,
+        794
+      ]
+    },
+    {
+      "size": [
+        52,
+        52
+      ],
+      "name": "DropButton",
+      "pos": [
+        1295,
+        794
+      ]
+    },
+    {
+      "size": [
+        50,
+        56
+      ],
+      "name": "ShopToggleButton",
+      "pos": [
+        18,
+        272
+      ]
+    },
+    {
+      "size": [
+        50,
+        56
+      ],
+      "name": "SettingsToggleButton",
+      "pos": [
+        18,
+        336
+      ]
+    },
+    {
+      "size": [
+        50,
+        56
+      ],
+      "name": "WarningAudioToggleButton",
+      "pos": [
+        18,
+        208
+      ]
+    },
+    {
+      "size": [
+        90,
+        90
+      ],
+      "name": "JumpButton",
+      "pos": [
+        1257,
+        854
+      ]
+    }
+  ]
+}

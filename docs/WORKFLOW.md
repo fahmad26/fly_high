@@ -15,6 +15,8 @@ Berlaku untuk setiap AI/developer. Dokumen ini menangani perbedaan Studio–Git,
 
 Baca AGENTS, HANDOVER, PROGRESS, lalu bagian PRD/desain terkait. Gunakan hanya skill yang relevan. Ringkasan lain merujuk ke pemilik informasi tersebut agar tidak muncul beberapa daftar status terbaru yang saling bertentangan.
 
+Katalog skill dan knowledge disimpan di [roblox-development](roblox-development/README.md). Jalankan hanya skill sesuai tugas; jangan ikuti seluruh rantai “Next” paket pihak ketiga. Audit keamanan skill mencakup snapshot tertentu, bukan semua versi mendatang. Contoh perintah download-pipe-shell dan trust-bypass dalam skill lama tidak boleh dieksekusi.
+
 ## Sebelum edit
 
 1. Jalankan git status. Catat branch, HEAD, origin/main lokal dan file yang telah berubah.
@@ -55,6 +57,7 @@ Setiap run yang dipakai untuk status terverifikasi menyimpan catatan berikut dal
 - Rekam altitude target dan altitude aktual terpisah. Nama screenshot atau angka bulat pada narasi tidak menggantikan pengukuran.
 - Konflik historis 1.850/1.900 km tetap OPEN-03 sampai ada bukti yang tepat. Jangan memilih salah satu atau menganggap keduanya lulus.
 - Jangan memakai screenshot pass awal sebagai bukti polesan berikutnya. Tuliskan tanggal/pass yang benar.
+- Untuk jalan bercabang/melengkung, ambil dan periksa gambar dekat setiap sambungan A–E, termasuk kedua ujung busur dan simpang tengah. Uji berjalan terpisah dari QA visual; foto B/C atau foto lebar tidak mewakili A/E. Capture kosong berarti visual belum diverifikasi.
 - Hasil yang hanya ada di chat diberi status dilaporkan di sesi. Ekspor bukti sebelum menaikkan status menjadi selesai terverifikasi.
 - Raw report gagal tetap gagal meskipun rute mencapai puncak. Verifikasi terminal terpisah tidak menjadikan seluruh run end-to-end hijau.
 - Simpan kegagalan fixture dan pengulangannya sebagai run berbeda. Pisahkan error alat, error game dan pesan mock, dengan log mentah tetap utuh.

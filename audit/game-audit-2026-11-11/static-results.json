@@ -1,0 +1,13 @@
+{
+  "streaming": true,
+  "compileErrors": [],
+  "sourceCount": 41,
+  "testPlayers": 1,
+  "fixtures": [],
+  "world": {
+    "lights": 23,
+    "unanchored": 304,
+    "emitters": 22,
+    "parts": 2896
+  }
+}

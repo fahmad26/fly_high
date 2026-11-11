@@ -1,0 +1,44 @@
+{
+  "captured_utc": "2026-11-11T17:02:23.036284+00:00",
+  "branch": "main",
+  "base_commit": "44093850df0044a86a9285f0f9f0412023369e63",
+  "scope": "Local mirror analysis only; Studio/place not compared. Git status captured after motion draft was written.",
+  "git_status": "M .gitignore\n M AGENTS.md\n M \"Fly High.rbxl\"\n M HANDOVER.md\n M PROGRESS.md\n M audit/sources/ServerScriptService/FlyHighServer/DataManager.luau\n M audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau\n M design/features/flight-arrival/design.md\n M docs/WORKFLOW.md\n?? \"audit/Fly High.before-arcade-refine.rbxl\"\n?? audit/audit-fixes-2026-11-11/\n?? audit/basket-polish-2026-11-11/\n?? audit/dock-access-2026-11-11/\n?? audit/game-audit-2026-11-11/\n?? audit/hud-motion-reference-2026-11-11/\n?? audit/image-hud-v10-portrait.jpg\n?? audit/mcp-setup-2026-11-11/\n?? audit/path-endpoints-fix-2026-11-11/\n?? audit/path-polish-2026-11-11/\n?? audit/path-seams-fix-2026-11-11/\n?? design/features/hud-motion/\n?? design/fly-high-scenery-0-10000km.png\n?? docs/roblox-development/\n?? tools/",
+  "sources": [
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+      "bytes": 47909,
+      "sha256": "2b3cf7f211fb24ba75f1c270fec32d004970d077796f90de207db311cb22c17b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureArt.luau",
+      "bytes": 3718,
+      "sha256": "bae7c5464ddb26c0571d517b00d38bc08890a1cb14bd7d377a881e54cc72c2fe"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+      "bytes": 16325,
+      "sha256": "f60677477e2aa20e0f37b2bcde701dab4ea8568c2defd835827018dd52ee899b"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+      "bytes": 21511,
+      "sha256": "dbe2429f5dd45129690eec9e636b83f01647b29b34cb55d9ede39469aaed9db1"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+      "bytes": 7219,
+      "sha256": "a0c891d7e16503e9eae5de85b6a1cdb0bc6f90105f27501b778186736de047d3"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+      "bytes": 24774,
+      "sha256": "5cf8fddf0206896944d279a591279dce28674875efce40589bdbb50040372f94"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+      "bytes": 16108,
+      "sha256": "b72aa2c37530b03599d7d933bbdcafde99b5d177ba143e2199173ec4e8cb4a7a"
+    }
+  ]
+}

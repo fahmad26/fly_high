@@ -13,6 +13,8 @@ Disetujui pengguna 11 November 2026. Status verifikasi mengikuti [PROGRESS](../.
 
 ## Pemilik state
 
+Akses darat diperbarui 11 November setelah pengguna menemukan gundukan tanah menutupi dermaga: zona dermaga dan koridor jalan diratakan, dengan jalan nyata 9 stud dari spawn, promenade radius 70 dan lima cabang pendek. Jangan hanya mengecat material Terrain karena IslandGround dapat menutupinya. Verifikasi mencakup raycast tinggi tanah dan berjalan dari spawn ke setiap dermaga; lihat [QA akses](../../../audit/dock-access-2026-11-11/README.md).
+
 - BalloonManager menetapkan hasil tepat sekali dan menyimpan personalBest per pemain. Death handler mengambil sampel akhir sebelum menandai pemain mati. Setiap Heartbeat memperbarui peak hanya untuk anggota hidup.
 - DataManager tetap menjadi pemilik MaxAltitude dan SummitCount. Tidak ada reset data maupun perubahan skema pembelian.
 - PalaceArrival mengantrekan pemenang secara FIFO. Satu worker mengurus docking, penurunan pemain dan keberangkatan sebelum mengambil balon berikutnya.

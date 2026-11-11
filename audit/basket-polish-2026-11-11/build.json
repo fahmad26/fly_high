@@ -1,0 +1,30 @@
+{
+  "committed": false,
+  "dirtyFiles": [
+    " M AGENTS.md",
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PROGRESS.md",
+    " M audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+    " M design/features/flight-arrival/design.md",
+    " M docs/WORKFLOW.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/audit-fixes-2026-11-11/",
+    "?? audit/basket-polish-2026-11-11/",
+    "?? audit/dock-access-2026-11-11/",
+    "?? audit/game-audit-2026-11-11/",
+    "?? audit/image-hud-v10-portrait.jpg",
+    "?? design/fly-high-scenery-0-10000km.png",
+    "?? docs/roblox-development/"
+  ],
+  "environment": "Native Studio Solo Test, default viewport, unpublished mock",
+  "placeSHA256": "18A5279B74FE32F0B824B688BB4F251FBFB693B4E5AAD184C5916A497FED1D11",
+  "pushed": false,
+  "capturedUTC": "2026-11-11T15:53:07.8725657Z",
+  "binaryReopened": false,
+  "fixtures": "manager launch/boarding, initial warp, AFK grace, anchor, ScreenGui disabled only for beauty shot",
+  "baseCommit": "44093850df0044a86a9285f0f9f0412023369e63",
+  "productionSourceEdited": false,
+  "timezone": "Asia/Jakarta"
+}

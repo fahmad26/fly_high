@@ -30,20 +30,38 @@ local function attributes(p,d)
  local stats=p:FindFirstChild("leaderstats")
  if stats then stats["Rekor (km)"].Value=d.MaxAltitude stats.Puncak.Value=d.SummitCount end
 end
+local function loseSession(p,s)
+ if s.lost then return end
+ s.lost=true
+ p:SetAttribute("DataReady",false)
+ p:SetAttribute("DataSessionLost",true)
+ warn("[DataManager] Session ownership lost; data mutations fenced: "..p.UserId)
+ task.defer(function()
+  if p.Parent==Players then p:Kick("Sesi data berpindah atau berakhir. Silakan masuk kembali agar progres aman.") end
+ end)
+end
+local function writable(s)
+ return s and not s.lost and not s.released
+end
 local function write(p,s,data,release)
- if offline then return true end
+ if not writable(s) then return false end
+ if offline then s.savedLabels=data.ShowPlayerLabels return true end
  data.Session=release and nil or {Id=token,Expires=os.time()+180}
  -- Explicit conditional: Lua's and/or cannot select nil.
  if release then data.Session=nil end
  for attempt=1,3 do
+  local ownershipLost=false
   local ok,result=pcall(function()
    return store:UpdateAsync("User_"..p.UserId,function(old)
     old=clean(old)
-    if not old.Session or old.Session.Id~=token then return nil end
+    ownershipLost=not old.Session or old.Session.Id~=token
+    if ownershipLost then return nil end
     return data
    end)
   end)
-  if ok and result then return true end
+  -- Only a completed UpdateAsync confirms ownership loss; network errors remain retryable.
+  if ok and ownershipLost then loseSession(p,s) return false end
+  if ok and result then s.savedLabels=data.ShowPlayerLabels return true end
   if attempt<3 then task.wait(attempt) end
  end
  warn("[DataManager] Save failed; retained session data for retry: "..p.UserId)
@@ -51,11 +69,12 @@ local function write(p,s,data,release)
 end
 function Manager.Save(p,release)
  local s=sessions[p]
- if not s then return false end
+ if not writable(s) then return false end
  while s.busy do task.wait(0.05) end
- if sessions[p]~=s then return false end
+ if sessions[p]~=s or not writable(s) then return false end
  s.busy=true
  local ok=write(p,s,snapshot(s.data),release)
+ if ok and release then s.released=true end
  s.busy=false
  return ok
 end
@@ -79,7 +98,7 @@ local function added(p)
   end
  end
  if not data then p:Kick("Data belum dapat dimuat dengan aman. Silakan masuk kembali.") return end
- local s={data=data,busy=false}
+ local s={data=data,busy=false,savedLabels=data.ShowPlayerLabels}
  sessions[p]=s
  if p.Parent~=Players then Manager.Save(p,true) sessions[p]=nil return end
  local stats=Instance.new("Folder") stats.Name="leaderstats" stats.Parent=p
@@ -89,30 +108,30 @@ local function added(p)
 end
 function Manager.UpdateAltitude(p,km)
  local s=sessions[p]
- if s and km==km and km>s.data.MaxAltitude then s.data.MaxAltitude=math.clamp(math.floor(km),0,10000) attributes(p,s.data) end
+ if writable(s) and km==km and km>s.data.MaxAltitude then s.data.MaxAltitude=math.clamp(math.floor(km),0,10000) attributes(p,s.data) end
 end
 function Manager.AddSummit(p)
- local s=sessions[p] if not s then return end
+ local s=sessions[p] if not writable(s) then return end
  s.data.SummitCount+=1 s.data.MaxAltitude=10000 attributes(p,s.data)
  task.spawn(Manager.Save,p,false)
 end
 function Manager.ModifyEmergencyKits(p,delta)
  local s=sessions[p]
- if not s or s.busy or (delta~=-1 and delta~=1) or s.data.EmergencyKits+delta<0 then return false end
+ if not writable(s) or s.busy or (delta~=-1 and delta~=1) or s.data.EmergencyKits+delta<0 then return false end
  s.data.EmergencyKits+=delta attributes(p,s.data)
  task.spawn(Manager.Save,p,false)
  return true
 end
 function Manager.GetWeaponLoadout(p)
  local s=sessions[p]
- if not s then return false,false end
+ if not writable(s) then return false,false end
  return s.data.AKSlot1,s.data.AKSlot2
 end
 function Manager.SetWeaponSlot(p,slot,kind)
  if (slot~=1 and slot~=2) or (kind~="Pistol" and kind~="AK47") then return false,"Pilihan senjata tidak valid." end
  if U.Flight(p) then return false,"Pilihan senjata terkunci selama penerbangan." end
  local s=sessions[p]
- if not s or s.busy then return false,"Data sedang disimpan. Coba lagi sebentar." end
+ if not writable(s) or s.busy then return false,"Data sedang disimpan. Coba lagi sebentar." end
  local key=slot==1 and "AKSlot1" or "AKSlot2"
  local other=slot==1 and "AKSlot2" or "AKSlot1"
  local equip=kind=="AK47"
@@ -139,16 +158,23 @@ function Manager.IsWeaponLoadoutSaving(p)
 end
 function Manager.SetPlayerLabels(p,show)
  local s=sessions[p]
- if not s or type(show)~="boolean" or s.data.ShowPlayerLabels==show then return end
+ if not writable(s) or type(show)~="boolean" or s.data.ShowPlayerLabels==show then return end
  s.data.ShowPlayerLabels=show
  p:SetAttribute("ShowPlayerLabels",show)
- task.spawn(Manager.Save,p,false)
+ if s.labelSaveQueued then return end
+ -- Fixed window coalesces rapid changes without allowing continuous input to postpone forever.
+ s.labelSaveQueued=true
+ task.delay(5,function()
+  if sessions[p]~=s then return end
+  s.labelSaveQueued=nil
+  if writable(s) and s.savedLabels~=s.data.ShowPlayerLabels then Manager.Save(p,false) end
+ end)
 end
 function Manager.GrantReceipt(p,id,item)
  local s=sessions[p]
- if not s then return false end
+ if not writable(s) then return false end
  while s.busy do task.wait(0.05) end
- if sessions[p]~=s then return false end
+ if sessions[p]~=s or not writable(s) then return false end
  if s.data.Receipts[id] then return true,false end
  s.busy=true
  local d=snapshot(s.data)
@@ -165,13 +191,15 @@ end
 Players.PlayerAdded:Connect(added)
 for _,p in ipairs(Players:GetPlayers()) do task.spawn(added,p) end
 Players.PlayerRemoving:Connect(function(p)
- if Manager.Save(p,true) then sessions[p]=nil end
+ local s=sessions[p]
+ if (s and s.lost) or Manager.Save(p,true) then sessions[p]=nil end
 end)
 task.spawn(function()
  while true do
   task.wait(60)
-  for p in pairs(sessions) do
+  for p,s in pairs(sessions) do
    task.spawn(function()
+    if p.Parent~=Players and s.lost then sessions[p]=nil return end
     if Manager.Save(p,p.Parent~=Players) and p.Parent~=Players then sessions[p]=nil end
    end)
   end

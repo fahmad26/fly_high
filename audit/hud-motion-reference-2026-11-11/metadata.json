@@ -1,0 +1,20 @@
+[
+  {
+    "file": "D:\\Downloads\\WhatsApp Video 2026-11-11 at 23.41.36.mp4",
+    "sha256": "b5617f7561191aaef2d83f0bcb9b16b88bb8ef34aeff87fddd05b9c8beead22a",
+    "duration": 42.833333333333336,
+    "fps": 30.0,
+    "width": 576,
+    "height": 1024,
+    "audio_streams": 1
+  },
+  {
+    "file": "D:\\Downloads\\WhatsApp Video 2026-11-11 at 23.41.337.mp4",
+    "sha256": "1b01902e04ab8d6ca54fd627f76db28263d969660bdac80ea8db8dc34e706380",
+    "duration": 94.56666666666666,
+    "fps": 30.0,
+    "width": 576,
+    "height": 1024,
+    "audio_streams": 1
+  }
+]

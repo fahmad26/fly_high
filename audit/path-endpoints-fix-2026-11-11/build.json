@@ -1,0 +1,33 @@
+{
+  "dirtyFiles": [
+    " M AGENTS.md",
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PROGRESS.md",
+    " M audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+    " M design/features/flight-arrival/design.md",
+    " M docs/WORKFLOW.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/audit-fixes-2026-11-11/",
+    "?? audit/basket-polish-2026-11-11/",
+    "?? audit/dock-access-2026-11-11/",
+    "?? audit/game-audit-2026-11-11/",
+    "?? audit/image-hud-v10-portrait.jpg",
+    "?? audit/path-endpoints-fix-2026-11-11/",
+    "?? audit/path-polish-2026-11-11/",
+    "?? audit/path-seams-fix-2026-11-11/",
+    "?? design/fly-high-scenery-0-10000km.png",
+    "?? docs/roblox-development/"
+  ],
+  "capturedUTC": "2026-11-11T16:29:55.7226581Z",
+  "binaryReopened": false,
+  "committed": false,
+  "environment": "Studio native solo, default viewport, unpublished mock, local network",
+  "timezone": "Asia/Jakarta",
+  "pushed": false,
+  "placeSHA256": "B8C1AC3406A051FA1FCCFD73CB2D6339881086549A3F3AF3DB33E810655DD510",
+  "fixture": "Spawn reset before each of five routes, native movement driver; no teleport or jump during route",
+  "productionSourceEdited": false,
+  "baseCommit": "44093850df0044a86a9285f0f9f0412023369e63"
+}

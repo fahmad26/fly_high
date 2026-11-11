@@ -1,0 +1,31 @@
+{
+  "baseCommit": "44093850df0044a86a9285f0f9f0412023369e63",
+  "fixture": "Reset pose at spawn between five routes; native Humanoid Move at RenderStep201, no jumping or teleport during route",
+  "timezone": "Asia/Jakarta",
+  "binaryReopened": false,
+  "placeSHA256": "307E31EF5323395546A49E6E1362A36A0D43E00D6F141620CCD86268ED57AC3A",
+  "committed": false,
+  "capturedUTC": "2026-11-11T16:04:09.1100480Z",
+  "environment": "Studio solo native, default viewport, unpublished mock, local network",
+  "pushed": false,
+  "dirtyFiles": [
+    " M AGENTS.md",
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PROGRESS.md",
+    " M audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+    " M audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+    " M design/features/flight-arrival/design.md",
+    " M docs/WORKFLOW.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/audit-fixes-2026-11-11/",
+    "?? audit/basket-polish-2026-11-11/",
+    "?? audit/dock-access-2026-11-11/",
+    "?? audit/game-audit-2026-11-11/",
+    "?? audit/image-hud-v10-portrait.jpg",
+    "?? audit/path-polish-2026-11-11/",
+    "?? design/fly-high-scenery-0-10000km.png",
+    "?? docs/roblox-development/"
+  ],
+  "sourceGameplayEdited": false
+}
