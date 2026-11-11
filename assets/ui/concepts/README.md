@@ -1,5 +1,7 @@
 # Fly High UI kit — concept v1
 
+> Arsip konsep awal, bukan daftar pekerjaan aktif. HUD produksi lokal dan upload berikutnya tercatat di [Sky Adventure](../sky-adventure/README.md). Pernyataan belum diunggah di bawah hanya berlaku untuk lembar konsep ini.
+
 Generated with the built-in imagegen tool. The exact prompt is in `prompt-v1.txt`; preview: `fly-high-ui-kit-v1.png`.
 
 This is an art-direction concept sheet with 25 icons/controls, not a production sprite atlas. Spacing, edge quality, silhouettes and small-size readability still need review before individual asset export. Do not assume exact cell rectangles or wire this whole sheet to live buttons. Nothing has been uploaded to Roblox or installed into the game.

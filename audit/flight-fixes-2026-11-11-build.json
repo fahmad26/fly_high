@@ -1,0 +1,68 @@
+{
+  "run": "flight-fixes-2026-11-11",
+  "capturedUTC": "2026-11-11T06:12:58.3299975Z",
+  "timezone": "Asia/Jakarta",
+  "head": "4765f4594e8cdf793a25ebb58c4b6c1e40d98a12",
+  "trackedDirtyFiles": [
+    "AGENTS.md",
+    "AI_CONTEXT.md",
+    "AUDIT_REPORT.md",
+    "Fly High.rbxl",
+    "HANDOVER.md",
+    "PRD_Fly_High.md",
+    "README.md",
+    "UI_IMAGE_ASSET_PLAN.md",
+    "assets/ui/concepts/README.md",
+    "assets/ui/final/compressed_img/README.md",
+    "assets/ui/ready/README.md",
+    "assets/ui/sky-adventure/README.md",
+    "assets/ui/sky-arcade/README.md",
+    "audit/FULL_JOURNEY_QA.md",
+    "audit/HUD_ARCADE_REDESIGN.md",
+    "audit/HUD_IMAGE_INTEGRATION.md",
+    "audit/scenery-polish-2026-11-10/README.md",
+    "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+    "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+    "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau",
+    "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+    "design/SCENERY_HANDOVER.md",
+    "design/SCENERY_POST_HANDOVER_REPORT.md",
+    "design/features/flight-hud/design.md",
+    "design/features/hud-generated-art/design.md",
+    "design/features/obstacle-motion/design.md"
+  ],
+  "newProductionSource": "audit/sources/ServerScriptService/FlyHighServer/PalaceArrival.luau",
+  "normalization": "CRLF to LF; trailing LF ignored; line endings normalized after QA without semantic edits",
+  "sourceSHA256": {
+    "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau": "3A2B1D8774DE434979F3AC9B9E49DB6A68AE6C842E70C538E76ED38299BFA372",
+    "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau": "04C2D2B3F679810CBF7D4BE7B80FAD2B8E34B8397F63CAD38A7ABF8AB1B2B009",
+    "audit/sources/ServerScriptService/FlyHighServer/PalaceArrival.luau": "035AAF7C619A7521B8419DD1232BDC2AD6C92FEC05B9D7F9F0D0C81BA324AC8A"
+  },
+  "staticCompilation": {
+    "count": 41,
+    "errors": 0
+  },
+  "changedSourceStudioEquality": {
+    "FlightSpace": true,
+    "PalaceArrival": true,
+    "BalloonManager": true
+  },
+  "place": {
+    "reopenedAndCompared": false,
+    "sha256": "D9BA41DBD6CF0F5FDB61A526AFD525BA6A9D2A5683FDE333E05F2A5509012382",
+    "saved": true
+  },
+  "cleanup": {
+    "temporaryDriverRemoved": true,
+    "testPlayerCount": 1,
+    "mode": "Edit"
+  },
+  "scope": "Controlled 5-client gameplay assertions; no full journey, physical device, disconnect or network impairment test",
+  "report": "flight-fixes-2026-11-11-results.json",
+  "screenshot": "flight-fixes-2026-11-11-docks.jpg",
+  "commitPreparation": {
+    "capturedUTC": "2026-11-11T06:22:31.3709901Z",
+    "placeSHA256": "DBD4E9284D39791439BE53A26CEB72CB634F86B19D92070926E8D8189B7E10AA",
+    "note": "Current local place differs from the earlier QA capture hash. Original QA hash preserved above; binary content not reopened/reverified. No new gameplay QA in commit task."
+  }
+}

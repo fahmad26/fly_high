@@ -16,7 +16,7 @@ function Space.IsGrounded(fd,flights)
 end
 function Space.Blocker(position,flights)
  for _,fd in ipairs(flights)do
-  if fd.balloon.Parent then
+  if fd.balloon.Parent and not fd.isVictory then
    local d=fd.root.Position-position
    if math.abs(d.Y)<Config.BALLOON_CLEARANCE_HEIGHT and Vector2.new(d.X,d.Z).Magnitude<Config.BALLOON_CLEARANCE_DISTANCE then return fd end
   end
@@ -24,7 +24,7 @@ function Space.Blocker(position,flights)
 end
 function Space.ClampMovement(fd,position,flights)
  for _,other in ipairs(flights)do
-  if other~=fd and other.balloon.Parent then
+  if other~=fd and other.balloon.Parent and not other.isVictory then
    local d=position-other.root.Position
    if math.abs(d.Y)<Config.BALLOON_CLEARANCE_HEIGHT then
     local flat=Vector3.new(d.X,0,d.Z)
@@ -40,7 +40,7 @@ function Space.ClampMovement(fd,position,flights)
  local limit=Config.CORRIDOR_CENTER_LIMIT
  if math.abs(position.X)>limit or math.abs(position.Z)>limit then return fd.root.Position end
  for _,other in ipairs(flights)do
-  if other~=fd and other.balloon.Parent then
+  if other~=fd and other.balloon.Parent and not other.isVictory then
    local d=position-other.root.Position
    if math.abs(d.Y)<Config.BALLOON_CLEARANCE_HEIGHT and Vector2.new(d.X,d.Z).Magnitude<Config.BALLOON_CLEARANCE_DISTANCE-.01 then return fd.root.Position end
   end

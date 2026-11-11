@@ -1,5 +1,7 @@
 # Rencana gerak rintangan Fly High
 
+> Rekaman desain dan laporan implementasi. Hasil uji di bawah belum terikat ke hash build dalam dokumen ini; status lintas fitur dan QA tersisa ada di [PROGRESS](../../../PROGRESS.md).
+
 **Status: diimplementasikan di place lokal.** Sembilan segmen rintangan mendapat pola gerak tersendiri. Penanda petir dan meteorit memakai ukuran yang sama dengan pemeriksaan server. Lihat aturan rintangan global di [PRD](../../../PRD_Fly_High.md).
 
 ## Kondisi sebelum perubahan

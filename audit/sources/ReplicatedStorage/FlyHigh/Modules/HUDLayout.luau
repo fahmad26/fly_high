@@ -168,7 +168,6 @@ function Layout.Start(gui, player)
 				end
 			end
 		end
-		place("PilotTouchPad", compact and not portrait and margin + tileW + gap or margin, h - margin - 136, 136, 136)
 
 		-- 5. Jump Button (Bottom Right - Circular Arcade Button inside JumpPanel)
 		local jump = place("JumpPanel", w - jumpMarginR - jumpSize, h - jumpMarginB - jumpSize, jumpSize, jumpSize)

@@ -1,0 +1,209 @@
+{
+  "finishedUTC": "2026-11-11T06:09:27Z",
+  "arrivalOrder": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "success": true,
+  "checks": [
+    {
+      "pass": true,
+      "name": "5 players ready"
+    },
+    {
+      "pass": true,
+      "name": "independent dock Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "independent dock Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "independent dock Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "independent dock Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "independent dock Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "same dock blocked 1"
+    },
+    {
+      "pass": true,
+      "name": "same dock blocked 2"
+    },
+    {
+      "pass": true,
+      "name": "same dock blocked 3"
+    },
+    {
+      "pass": true,
+      "name": "same dock blocked 4"
+    },
+    {
+      "pass": true,
+      "name": "same dock blocked 5"
+    },
+    {
+      "pass": true,
+      "name": "launch fixture Pod_A"
+    },
+    {
+      "pass": true,
+      "name": "launch fixture Pod_B"
+    },
+    {
+      "pass": true,
+      "name": "personal altitude frozen after death",
+      "detail": "[200,1000,4000]"
+    },
+    {
+      "pass": true,
+      "name": "all-dead crew fails"
+    },
+    {
+      "pass": true,
+      "name": "launch fixture Pod_C"
+    },
+    {
+      "pass": true,
+      "name": "launch fixture Pod_D"
+    },
+    {
+      "pass": true,
+      "name": "launch fixture Pod_E"
+    },
+    {
+      "pass": true,
+      "name": "steady climb has no backwards jumps",
+      "detail": 0
+    },
+    {
+      "pass": true,
+      "name": "one arrival worker"
+    },
+    {
+      "pass": true,
+      "name": "arrival invulnerable 2"
+    },
+    {
+      "pass": true,
+      "name": "arrival invulnerable 3"
+    },
+    {
+      "pass": true,
+      "name": "arrival invulnerable 4"
+    },
+    {
+      "pass": true,
+      "name": "arrival invulnerable 5"
+    },
+    {
+      "pass": true,
+      "name": "simultaneous winners queued",
+      "detail": 3
+    },
+    {
+      "pass": true,
+      "name": "arrival queue finishes"
+    },
+    {
+      "pass": true,
+      "name": "FIFO arrival order",
+      "detail": "2,3,4,5"
+    },
+    {
+      "pass": true,
+      "name": "summit exactly once 1"
+    },
+    {
+      "pass": true,
+      "name": "crew landed 1"
+    },
+    {
+      "pass": true,
+      "name": "summit overhead priority 1"
+    },
+    {
+      "pass": true,
+      "name": "summit exactly once 2"
+    },
+    {
+      "pass": true,
+      "name": "crew landed 2"
+    },
+    {
+      "pass": true,
+      "name": "summit overhead priority 2"
+    },
+    {
+      "pass": true,
+      "name": "summit exactly once 3"
+    },
+    {
+      "pass": true,
+      "name": "crew landed 3"
+    },
+    {
+      "pass": true,
+      "name": "summit overhead priority 3"
+    },
+    {
+      "pass": true,
+      "name": "summit exactly once 4"
+    },
+    {
+      "pass": true,
+      "name": "crew landed 4"
+    },
+    {
+      "pass": true,
+      "name": "summit overhead priority 4"
+    },
+    {
+      "pass": true,
+      "name": "summit exactly once 5"
+    },
+    {
+      "pass": true,
+      "name": "crew landed 5"
+    },
+    {
+      "pass": true,
+      "name": "summit overhead priority 5"
+    },
+    {
+      "pass": true,
+      "name": "balloon departed and removed 2"
+    },
+    {
+      "pass": true,
+      "name": "balloon departed and removed 3"
+    },
+    {
+      "pass": true,
+      "name": "balloon departed and removed 4"
+    },
+    {
+      "pass": true,
+      "name": "balloon departed and removed 5"
+    },
+    {
+      "pass": true,
+      "name": "no runtime errors",
+      "detail": "[]"
+    }
+  ],
+  "fixture": "5 clients; manager launch/boarding calls, altitude warps, shield during motion; not a full journey",
+  "startedUTC": "2026-11-11T06:08:19Z",
+  "run": "flight-fixes-2026-11-11",
+  "errors": []
+}

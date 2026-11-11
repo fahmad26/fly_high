@@ -1,5 +1,7 @@
 # Full-journey QA — 31 October 2026
 
+> Historical run. Counts, hashes, environments and outcomes below belong to the recorded October build. This is not a pass report for the current workspace. [PROGRESS](../PROGRESS.md) tracks open findings; [WORKFLOW](../docs/WORKFLOW.md) defines evidence required for a new run. Keep failed raw results intact.
+
 ## Scope
 
 One native Studio server runs six clients together: one solo crew (dock A), one duo (dock C), and one trio (dock E). Each crew travels from its dock to 10,000 km at production speed. Regular enemies, global hazards, storm walls, ammunition, reloads, repair hold durations, rope wear, damage and role restrictions stay enabled. Continuous journeys do not receive altitude skips, shields or replacement characters.

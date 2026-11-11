@@ -1,0 +1,360 @@
+{
+  "date": "2026-11-11",
+  "timezone": "Asia/Jakarta",
+  "kind": "read-only documentation/source inventory",
+  "normalization": "UTF-8, CRLF converted to LF, trailing LF removed; byte length and rolling base-31 modulo 2^32. Not a cryptographic source hash.",
+  "studioMode": "Edit",
+  "placeId": 0,
+  "headCommit": "4765f4594e8cdf793a25ebb58c4b6c1e40d98a12",
+  "remoteTrackingCommit": "4765f4594e8cdf793a25ebb58c4b6c1e40d98a12",
+  "remoteTrackingFetchedThisTask": false,
+  "sourceRoots": [
+    "ReplicatedStorage.FlyHigh",
+    "ServerScriptService.FlyHighServer",
+    "StarterPlayer.StarterPlayerScripts"
+  ],
+  "studioSourceCount": 40,
+  "mirrorSourceCount": 40,
+  "studioMirrorMismatches": [],
+  "studioOnly": [],
+  "mirrorDifferentFromHead": [
+    "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+    "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau"
+  ],
+  "placeFile": {
+    "path": "Fly High.rbxl",
+    "sha256": "D4553D8B9D984480E55A35C132B5A2B1778B84B253CD6FE4806A07913D1903FA",
+    "differsFromHead": true,
+    "reopenedAndSourceCompared": false
+  },
+  "newGameplayPlaytest": false,
+  "scripts": [
+    {
+      "len": 1118,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+      "hash": 3418015979,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 101568,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "hash": 3376965236,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 482,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+      "hash": 1495767843,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 4243,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+      "hash": 1744577589,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 3717,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+      "hash": 1900743459,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 3856,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+      "hash": 3928927529,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 1374,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+      "hash": 3562454917,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 20945,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+      "hash": 3986316471,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 16324,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "hash": 3917286433,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": false
+    },
+    {
+      "len": 47908,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "hash": 3272055993,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 12045,
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "hash": 288005591,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 21695,
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "hash": 461562446,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 1060,
+      "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+      "hash": 2472879766,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 7018,
+      "path": "ServerScriptService.FlyHighServer.DataManager",
+      "hash": 1911973772,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 2389,
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "hash": 1900493146,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 4201,
+      "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+      "hash": 1933282874,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 6446,
+      "path": "ServerScriptService.FlyHighServer.JumpManager",
+      "hash": 1847808546,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 5541,
+      "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+      "hash": 1017864337,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 25509,
+      "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+      "hash": 1559563007,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 19239,
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "hash": 2646004186,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 3395,
+      "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+      "hash": 2140559968,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 4258,
+      "path": "ServerScriptService.FlyHighServer.OverheadManager",
+      "hash": 2348546520,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 2285,
+      "path": "ServerScriptService.FlyHighServer.PalaceManager",
+      "hash": 4157809237,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 5438,
+      "path": "ServerScriptService.FlyHighServer.PodManager",
+      "hash": 2169739030,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 2464,
+      "path": "ServerScriptService.FlyHighServer.ServerUtils",
+      "hash": 3422997688,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 2479,
+      "path": "ServerScriptService.FlyHighServer.ShopManager",
+      "hash": 205204017,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 21822,
+      "path": "ServerScriptService.FlyHighServer.TetherManager",
+      "hash": 3481530872,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 7796,
+      "path": "ServerScriptService.FlyHighServer.WeaponManager",
+      "hash": 539391353,
+      "class": "Script",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 2989,
+      "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+      "hash": 2126345708,
+      "class": "ModuleScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 5696,
+      "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+      "hash": 3667796110,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 11380,
+      "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+      "hash": 3024899294,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 21510,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+      "hash": 1970346229,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": false
+    },
+    {
+      "len": 6829,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+      "hash": 369202350,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 4940,
+      "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+      "hash": 2374508641,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 3981,
+      "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+      "hash": 651637619,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 16107,
+      "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+      "hash": 2445598111,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 9535,
+      "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+      "hash": 3019237,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 7449,
+      "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+      "hash": 1984929072,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 24773,
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "hash": 138799875,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    },
+    {
+      "len": 6087,
+      "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+      "hash": 2247634257,
+      "class": "LocalScript",
+      "mirrorMatches": true,
+      "mirrorMatchesHead": true
+    }
+  ],
+  "documentationValidation": {
+    "kind": "Documentation structure and local-file link inspection; not gameplay QA",
+    "documentCount": 20,
+    "localFileLinksChecked": 93,
+    "missingLocalFileLinks": [],
+    "placeHashUnchangedDuringDocumentationTask": true
+  }
+}

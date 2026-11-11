@@ -1,7 +1,17 @@
 # Product Requirement Document (PRD)
 # Game Roblox: "Fly High"
 
-> Dokumen ini memuat spesifikasi beserta revisi bertanggal. Untuk **status implementasi, bukti pengujian dan temuan terbuka**, baca `AI_CONTEXT.md` dan `HANDOVER.md`; status tersebut bukan pengganti aturan produk di sini. Desain visual HUD aktif adalah Sky Arcade pada bagian 12; catatan tray AKSI yang lebih lama merupakan riwayat sebelum redesign.
+## Revisi kemenangan tim dan dermaga — 11 November 2026
+
+Revisi ini menggantikan aturan lama yang bertentangan. Kelima dermaga dapat dipakai bersamaan apabila masing-masing ruang spawn kosong. Pemeriksaan tetap melibatkan balon dari tim mana pun. Tata letak dermaga harus menyediakan jarak fisik cukup untuk semua varian balon.
+
+Ketika mencapai puncak, balon mendapat perlindungan penuh selama antrean dan animasi masuk. Kedatangan diproses satu per satu oleh server. Sesudah seluruh penumpang diturunkan, balon melesat ke atas dan menghilang, lalu giliran berikutnya masuk.
+
+Seluruh anggota roster penerbangan yang masih terhubung mendapat satu puncak jika tim berhasil, termasuk anggota yang telah mati; mereka dihidupkan kembali di Istana Awan. Jika tim gagal, rekor setiap anggota menggunakan ketinggian tertinggi selama anggota itu masih hidup. Contoh: pernah mencapai 1.000 km lalu mati saat turun di 700 km tetap mencatat 1.000 km. Rekor terbaik sebelumnya tidak diturunkan. Overhead menampilkan jumlah puncak jika pernah menang; ketinggian hanya ditampilkan jika belum pernah mencapai puncak.
+
+Detail state dan tata letak ada di [desain kedatangan](design/features/flight-arrival/design.md); status verifikasi di [PROGRESS](PROGRESS.md).
+
+> Dokumen ini memuat spesifikasi beserta revisi bertanggal. Untuk **status implementasi, bukti pengujian dan temuan terbuka**, baca [HANDOVER](HANDOVER.md) dan [PROGRESS](PROGRESS.md). Revisi terbaru yang disetujui menggantikan aturan lama yang bertentangan. Desain HUD aktif adalah Sky Adventure pada bagian 12; catatan tray AKSI dan Sky Arcade bertanggal lama merupakan riwayat desain.
 
 ---
 
@@ -123,7 +133,8 @@ flowchart LR
 ### 5.1 Aktivitas 1: Mengontrol Balon Udara (Navigation & Flight)
 * **Skema Kontrol Khusus Pilot:**
   * Pemain duduk/berinteraksi pada kursi kemudi (*Helm*) di bagian depan gondola untuk menjadi **Pilot**. Kursi kemudi tidak terkunci permanen; siapa pun yang masih hidup bisa bergantian mengambil alih kemudi kapan saja.
-  * **Gerakan Horizontal (Maju, Mundur, Kiri, Kanan):** Gunakan WASD, stik gamepad, atau tahan tombol arah di sisi kiri HUD mobile. Arah gerak mengikuti kamera. Tombol arah mobile tampil saat memegang kemudi dan dapat ditahan sambil menekan gas.
+  * **Gerakan Horizontal (Maju, Mundur, Kiri, Kanan):** Gunakan WASD, stik gamepad, atau analog native Dynamic Thumbstick di mobile/tablet. Arah gerak mengikuti kamera; besar input analog menentukan besar gerak. Saat memegang kemudi, analog menggerakkan balon dan dapat digunakan bersamaan dengan gas. Tidak ada D-pad custom tambahan.
+  * **Jumlah Kru Hidup:** Kecepatan horizontal memakai pengali **1× / 0,75× / 0,6×** untuk **1 / 2 / 3** anggota yang masih hidup di balon. Nilainya dihitung ulang saat anggota mati; kecepatan naik/turun tidak memakai pengali ini.
   * **Gerakan Naik (Ascend) — Eksklusif Pilot:**
     * Tombol UI **`[ 🔥 GAS / NAIK ]`** **HANYA muncul di layar pemain yang sedang memegang kemudi (Pilot)**.
     * Ketika Pilot menahan tombol tersebut, tungku burner menyemburkan api besar, kain balon mengembang, dan balon memperoleh gaya angkat vertikal.
@@ -355,16 +366,16 @@ Saat balon menyentuh ketinggian **10.000 km**:
 
 ## 12. Desain Antarmuka Pengguna (UI / HUD)
 
-**Arah visual terbaru — Sky Arcade, 31 Oktober 2026:** HUD memakai gradasi biru/cyan, hijau untuk pemulihan, oranye untuk gas, merah untuk bahaya, outline gelap tegas, highlight tipis dan teks putih Fredoka ber-outline. Ketinggian menjadi angka utama di atas tengah; lima segmen kondisi dan hitungan lubang dipadatkan menjadi kartu kecil. Navigasi TOKO/KIT/PING/SUARA berupa tile bergambar, dengan stok kit sebagai badge. Amunisi dan aksi senjata dikelompokkan di kanan bawah; kontrol pilot muncul menggantikannya sesuai role. Aksi tali yang relevan ditampilkan langsung dan berurutan, tanpa tray AKSI. Tombol lompat tetap bulat di kanan bawah; status terkunci dan badge cooldown efek turun tetap tersedia. Ukuran minimum target sentuh 44×44. Ilustrasi raster hanya pelengkap: panel, ikon kontrol dan label harus tetap terlihat utuh saat gambar Roblox belum termuat. Rincian visual dan preview: `audit/hud-arcade-phone.jpg`; QA: `audit/hud-arcade-results.json`. Catatan layout AKSI bertanggal lebih lama di bagian riwayat merupakan versi sebelum desain ini.
+**Arah visual aktif — Sky Adventure:** panel dan tombol memakai gambar lengkap, termasuk siluet, bingkai cyan/emas, bayangan dan ikon. Teks dinamis memakai Fredoka One dan Nunito; angka, harga, nama dan timer tetap dirender sebagai teks. Ketinggian menjadi angka utama di atas tengah; kondisi menampilkan lima segmen **sisa kesehatan**, yaitu **5/5 saat utuh dan 0/5 saat lima lubang**. TOKO/KIT/PING/SUARA/SETELAN memakai tile konsisten. Amunisi dan aksi senjata dikelompokkan di kanan bawah; kontrol pilot muncul sesuai role. Aksi tap memakai HUD custom, sedangkan aksi tekan-tahan seperti tambal lubang/perbaiki tali memakai ProximityPrompt native di tengah layar tanpa duplikasi tombol custom. Lompat berbentuk lingkaran lengkap dengan varian normal, ditekan dan terkunci. Target sentuh minimal 44×44. Fallback saat gambar belum termuat tidak boleh bertumpuk dengan gambar yang sudah siap. [Katalog aset aktif](assets/ui/sky-adventure/README.md) menyimpan sumber/atlas/ID; status QA mengikuti [PROGRESS](PROGRESS.md). Sky Arcade adalah paket lama/fallback, bukan desain utama.
 
-**Kontrol sentuh dan HUD tablet:** tombol lompat custom berbentuk lingkaran di kanan bawah, terpisah dari tembak dan aksi senjata; tombol lompat native disembunyikan tanpa mematikan joystick. Tombol custom juga tersedia di lobby dan setelah respawn. Izin lompat pilot/engineer tetap mengikuti aturan role; badge tombol menampilkan sisa cooldown efek turun saat aktif. Tablet memakai layout tersendiri dengan target sentuh minimal 44×44; teks/angka tetap dinamis. Rencana aset historis: UI_IMAGE_ASSET_PLAN.md. Diagram berikut menjelaskan informasi gameplay; posisi/gaya final mengikuti paragraf Sky Arcade di atas.
+**Kontrol sentuh dan HUD tablet:** tombol lompat custom berbentuk lingkaran di kanan bawah, terpisah dari tembak dan aksi senjata; tombol lompat native disembunyikan tanpa mematikan analog native. Auto-jump mobile dinonaktifkan. Tombol custom juga tersedia di lobby dan setelah respawn. Izin lompat pilot/engineer tetap mengikuti aturan role; badge tombol menampilkan sisa cooldown efek turun saat aktif. Tablet memakai layout tersendiri dengan target sentuh minimal 44×44; teks/angka tetap dinamis. [Rencana aset historis](docs/ARCHIVE.md) tetap dapat ditelusuri. Diagram berikut hanya contoh informasi gameplay; posisi dan gaya mengikuti Sky Adventure.
 
 ```
 +-------------------------------------------------------------------------+
 | [Alt: 4.250 km / 10.000 km] =======[=======|-------------] (42.5%)      |
 |                                                                         |
 | Status Balon:                                                           |
-| [X] [X] [O] [O] [O] (2/5 Lubang) - [BAHAYA: TURUN 1.2x]                 |
+| [X] [X] [O] [O] [O] (3/5 Kesehatan; 2 lubang)                          |
 | [Invulnerability: 3.2s]                                                |
 |                                                                         |
 | ⚠️ [PERINGATAN: TORNADO DARI KIRI DALAM 2.5s] [ <--- ]                   |
@@ -380,7 +391,7 @@ Saat balon menyentuh ketinggian **10.000 km**:
 |                       |  🔥 [GAS / NAIK]    |                           |
 |                       +---------------------+                           |
 |                                                                         |
-| (Jika memegang senjata):                       [AK-47: 30/30 | ∞ Ammo]  |
+| (Jika memegang senjata):                       [AK-47: 30/∞]           |
 | [🕹️ Thumbstick Gerak]                        [ 🎯 TEMBAK ] (Manual)     |
 |                                                Tekan [G] Drop           |
 +-------------------------------------------------------------------------+
@@ -388,11 +399,11 @@ Saat balon menyentuh ketinggian **10.000 km**:
 
 1. **Altimeter & Progress Bar:** Indikator ketinggian (0 - 10.000 km) dan persentase perjalanan.
 2. **Banner Peringatan Dini (Alert 3s):** Muncul berkedip dengan arah ancaman yang tidak dapat ditembak.
-3. **Status Lubang:** Visual 5 ikon lubang + peringatan kecepatan turun/naik. Altimeter juga menampilkan kecepatan vertikal aktual dalam km/detik: NAIK (+), TURUN (-), atau DIAM; dihitung server dari perubahan ketinggian balon, termasuk gerak terjun bebas. Speedometer bawaan VehicleSeat dinonaktifkan. Angka kembali nol saat flight berakhir.
+3. **Kondisi Balon:** Lima segmen sisa kesehatan, dengan nilai `5 - jumlah lubang` dari 5, disertai peringatan kecepatan turun/naik. Altimeter juga menampilkan kecepatan vertikal aktual dalam km/detik: NAIK (+), TURUN (-), atau DIAM; dihitung server dari perubahan ketinggian balon, termasuk gerak terjun bebas. Speedometer bawaan VehicleSeat dinonaktifkan. Angka kembali nol saat flight berakhir.
 4. **Tombol UI Gas / Naik (Khusus Pilot):** Hanya tampil di layar pemain yang sedang menduduki kursi kemudi (*Helm*).
 5. **Emergency Kit Button (Dengan Anti-Waste Lock):** Menampilkan jumlah stok kit darurat pemain; otomatis terkunci sementara jika Shield 60 detik rekan setim sedang aktif.
 6. **Gauge Tali Pengaman:** Muncul saat pemain memasang tali pengaman dan menggunakan katrol naik ke kubah balon.
-7. **Weapon HUD & Kontrol Mobile:** Indikator amunisi (Pistol 8 atau AK-47 30) dengan cadangan tak terbatas, auto-aim soft-lock kamera, serta tombol tembak manual.
+7. **Weapon HUD & Kontrol Mobile:** Indikator amunisi `8/∞` untuk Handgun atau `30/∞` untuk AK-47 saat penuh, auto-aim soft-lock kamera, serta tombol tembak manual. Reload tetap mengisi maksimal 8 atau 30 sesuai kapasitas magazen.
 
 ## Pembaruan Visual Dermaga A–E (28 Oktober 2026)
 

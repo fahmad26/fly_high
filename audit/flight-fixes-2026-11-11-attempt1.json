@@ -1,0 +1,15 @@
+{
+  "finishedUTC": "2026-11-11T06:06:26Z",
+  "errors": [],
+  "success": false,
+  "checks": [
+    {
+      "pass": false,
+      "name": "8 players ready"
+    }
+  ],
+  "fixture": "8 clients; manager launch/boarding calls, altitude warps, shield during motion; not a full journey",
+  "startedUTC": "2026-11-11T06:05:45Z",
+  "run": "flight-fixes-2026-11-11",
+  "failure": "ServerScriptService.__FlightFixQA:7: 8 players ready\nServerScriptService.__FlightFixQA:7 function check\nServerScriptService.__FlightFixQA:13\nServerScriptService.__FlightFixQA:11\n"
+}

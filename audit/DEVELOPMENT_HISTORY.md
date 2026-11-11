@@ -1,6 +1,19 @@
+# Riwayat pengembangan dan audit Fly High
+
+Arsip narasi audit 28 Oktober–10 November 2026. Pernyataan status dan angka di dalam kutipan historis berlaku untuk iterasi yang ditulis saat itu. Gunakan HANDOVER dan PROGRESS pada root repositori untuk status aktif.
+
+Dokumen ini menggabungkan AUDIT_REPORT.md, dua laporan prototipe HUD, dan laporan pasca-handover scenery. Hasil mentah dan screenshot tetap berada di audit/. Konflik 1.850/1.900 km pada laporan scenery belum terkonfirmasi. Klaim sinkronisasi/push lama harus diperiksa terhadap build yang bersangkutan.
+
+Peta versi asli tersimpan di [indeks arsip](../docs/ARCHIVE.md).
+
+
+---
+
+## Asal dokumen — AUDIT_REPORT.md
+
 # Audit teknis Fly High — 28 Oktober 2026
 
-> **Indeks status aktif — 31 Oktober 2026:** laporan ini merupakan akumulasi historis. Angka 15/29/31 skrip, hashes lama dan detail implementasi awal di bawah tidak mewakili build aktif. Snapshot sekarang memiliki **32 LuaSourceContainer terkompilasi**, HUD Sky Arcade, place SHA-256 `B94CEC7E3591A0B2E2480C8F4B67CECBF909F5843389A94BCCB8457F48AC95FF`, tanpa fixture QA tersimpan. Baca [AI_CONTEXT.md](./AI_CONTEXT.md), [redesign HUD](./audit/HUD_ARCADE_REDESIGN.md), [bukti HUD](./audit/hud-arcade-results.json) dan [ringkasan perjalanan penuh](./audit/full-journey-summary.json). Temuan co-op lateral dan anomali jump dalam fixture setelah pergantian role masih terbuka; tidak ada klaim satu suite end-to-end seluruhnya hijau. Safe zone terbaru hanya membatasi rintangan lingkungan; self-shot dan tabrakan antarbalon tetap dapat merusak di bawah 1.200 km. Pengguna menunda publish/Robux/cloud. Pembaruan indeks ini hanya dokumentasi, bukan run QA baru.
+> **Indeks status aktif — 31 Oktober 2026:** laporan ini merupakan akumulasi historis. Angka 15/29/31 skrip, hashes lama dan detail implementasi awal di bawah tidak mewakili build aktif. Snapshot sekarang memiliki **32 LuaSourceContainer terkompilasi**, HUD Sky Arcade, place SHA-256 `B94CEC7E3591A0B2E2480C8F4B67CECBF909F5843389A94BCCB8457F48AC95FF`, tanpa fixture QA tersimpan. Baca [AI_CONTEXT.md](../HANDOVER.md), [redesign HUD](../docs/ARCHIVE.md), [bukti HUD](hud-arcade-results.json) dan [ringkasan perjalanan penuh](full-journey-summary.json). Temuan co-op lateral dan anomali jump dalam fixture setelah pergantian role masih terbuka; tidak ada klaim satu suite end-to-end seluruhnya hijau. Safe zone terbaru hanya membatasi rintangan lingkungan; self-shot dan tabrakan antarbalon tetap dapat merusak di bawah 1.200 km. Pengguna menunda publish/Robux/cloud. Pembaruan indeks ini hanya dokumentasi, bukan run QA baru.
 Status: dua revisi utama selesai dan disimpan ke `Fly High.rbxl`. Gameplay inti lolos regresi lokal. **Belum dinyatakan siap rilis publik** karena pengujian monetisasi/cloud/multiplayer dan beberapa aset PRD masih belum lengkap.
 
 ## Lingkup dan bukti
@@ -428,7 +441,7 @@ Seluruh 37 pemeriksaan skenario akhir/cleanup pada pengulangan lulus: Clutch Sav
 
 **Temuan terbuka pada manuver horizontal cepat:** posisi avatar di client dan server dapat berbeda cukup jauh untuk menolak interaksi reparasi atau mengklasifikasikan repairer sebagai Hanging. Uji terfokus membaca posisi client dekat titik tambal tetapi jarak server 11,07 stud, melampaui radius 10. Kontribusi replikasi dan fisika belum dipastikan; validasi produksi tidak diperlebar. Delapan siklus reparasi dengan pilot menahan gerak horizontal (gas tetap aktif) lulus, ditambah tiga log client bersih, total 11/11. Ini uji terkontrol, bukan penutupan temuan manuver cepat.
 
-**Perbaikan produksi:** BiomeLightingController mengembalikan Dawn pada Game Over dan respawn lobby, membatalkan callback kabut lama, serta menjaga bioma Ghost Spotter aktif dan Victory. Bug original direproduksi pada 2.500 km; regresi satu pemain sesudah koreksi **12/12 lulus**, log server/client bersih. PRD, README dan HANDOVER diperbarui. Rincian fixture dan bukti berada di [prosedur QA](audit/FULL_JOURNEY_QA.md); seluruh putaran diagnostik tetap disimpan. Publikasi, transaksi Robux/cloud, jaringan publik dan penilaian manusia/perangkat fisik tetap di luar pengujian ini.
+**Perbaikan produksi:** BiomeLightingController mengembalikan Dawn pada Game Over dan respawn lobby, membatalkan callback kabut lama, serta menjaga bioma Ghost Spotter aktif dan Victory. Bug original direproduksi pada 2.500 km; regresi satu pemain sesudah koreksi **12/12 lulus**, log server/client bersih. PRD, README dan HANDOVER diperbarui. Rincian fixture dan bukti berada di [prosedur QA](FULL_JOURNEY_QA.md); seluruh putaran diagnostik tetap disimpan. Publikasi, transaksi Robux/cloud, jaringan publik dan penilaian manusia/perangkat fisik tetap di luar pengujian ini.
 
 Pada putaran berkoordinasi, duo dan trio sama-sama tercatat mencapai **10.000 km**, dengan 26 dan 13 tambalan, pada kecepatan produksi dan hazards aktif. Laporan raw tetap gagal karena penguji meneruskan perbaikan setelah Victory membersihkan handler tali. Koreksi harness hanya menangani pembatalan setelah server benar-benar menyatakan Victory. Pendaratan lalu diperiksa melalui fixture terminal tersendiri (warp ke 9.995 km lalu ascent normal saat hold aktif): **28/28 lulus**, seluruh lima kru mendapat summit, mendarat hidup, bebas anchor/role/tool, log client bersih, reservasi kosong dan model dibersihkan alami. Raw laporan rute dan hasil terminal terpisah agar tidak memberi kesan ada satu suite end-to-end yang seluruhnya hijau. Temuan manuver horizontal cepat tetap belum ditutup.
 
@@ -438,4 +451,202 @@ Layout tablet kini terpisah dari desktop. Tombol lompat berupa lingkaran kanan b
 
 Sebelas profil perangkat/peran lolos pemeriksaan overlap tombol proyek, batas layar dan teks terpotong. Semua target sentuh ≥44 unit. Tap simulator saat memegang pistol diterima server; gas otomatis, lepas kemudi, kit, lobby jump dan respawn juga diverifikasi. Sesi final tidak mencatat error/warning. Fixture statis dengan hazards dijeda dan durabilitas tali dijaga; hasil ini tidak menguji ulang fisika atau menutup temuan co-op sebelumnya. Perangkat fisik belum diuji.
 
-Bukti [hasil UI](audit/ipad-ui-results.json), [preview iPad](audit/ipad-ui-pro-gunner.jpg), dan [rencana aset gambar](UI_IMAGE_ASSET_PLAN.md). Aset gambar masih berupa daftar konsep, belum dibuat/diunggah. Driver dibuang; place tersimpan dengan 29 skrip terkompilasi dan Studio dipulihkan ke 1 client / Test.
+Bukti [hasil UI](ipad-ui-results.json), [preview iPad](ipad-ui-pro-gunner.jpg), dan [rencana aset gambar](../docs/ARCHIVE.md). Aset gambar masih berupa daftar konsep, belum dibuat/diunggah. Driver dibuang; place tersimpan dengan 29 skrip terkompilasi dan Studio dipulihkan ke 1 client / Test.
+
+
+---
+
+## Asal dokumen — audit/HUD_IMAGE_INTEGRATION.md
+
+# HUD image integration — 31 October 2026
+
+The saved place uses the user's 27 compressed PNG asset IDs through `HUDImageAssets` and `HUDTheme`. `HUDLayout` calls the theme after each layout pass so image children follow the existing bounds and modal Z order. Existing controllers retain their input handlers, role validation, visibility, and dynamic text. Decorative ImageLabels are not active or selectable.
+
+Jump/fire use the combined circular artwork directly, without stacking another circle underneath. Rectangular action controls keep labels and optional icons, and use the 9-slice panel when it loads. The small icon medallion uses normal/pressed/disabled bases; pressed controls also darken visibly. Balloon damage icons, warning badges, reticle, weapon type, sound mute state and all rigging actions have mappings. Missing art preserves native text and backgrounds instead of an empty button. The hole count uses `n/5` to fit phone widths.
+
+Loading uses ImageLabel instances, serial requests and a bounded three-pass retry with increasing pauses. The theme disconnects input and descendant listeners and cancels its loading worker when its GUI is destroyed. See Roblox's [ContentProvider reference](https://create.roblox.com/docs/reference/engine/classes/ContentProvider) and [ImageLabel reference](https://create.roblox.com/docs/reference/engine/classes/ImageLabel) for the APIs used.
+
+## Verification and limits
+
+- Single-player stationary Studio fixture: desktop 2090×694; phone 749×323; iPad landscape 1179×761 and portrait 819×1120. Gunner, pilot and attached engineer layouts checked. No project button overlap, out-of-bounds controls or visible text overflow in recorded profiles. Touch targets meet 44 pixels; small desktop targets are not touch failures.
+- Native window clicks verified sound ON/OFF artwork and caption, auto gas ON, helm release preserving auto gas, and one accepted server flight jump. Native joystick remains enabled; native jump remains hidden.
+- Phone fire was moved another 24 pixels left after visual inspection to clear Roblox's capture overlay. Final phone gunner profile verifies that spacing and the shortened hole count. Earlier desktop/iPad profiles preceded those two refinements.
+- 31 source containers compile; live changed modules match source mirrors. Temporary `TabletUIQA` removed before saving. Final Play log contains only the expected unpublished Studio mock-data notice, with no warnings/errors. Studio left in Edit, Test, Current device desktop.
+- **Only 7/27 original image IDs loaded successfully. The other 20 remained Failure after the earlier HTTP 429 responses.** The complete artwork, including 9-slice panel, circular bases and weapon art, is therefore not visually verified. These components currently use native presentation where necessary. No image re-upload or asset-ID substitution was performed.
+- This is UI verification, not a new flight-physics, live purchase, public-server or physical-device test. The fixture anchored the balloon and paused hazards. It was removed from the production DataModel.
+
+Machine-readable evidence: `hud-images-results.json`. Pre-change place backup: `Fly High.before-hud-images.rbxl`.
+
+
+---
+
+## Asal dokumen — audit/HUD_ARCADE_REDESIGN.md
+
+# Sky Arcade HUD — 31 October 2026
+
+The user's reference established a bright arcade direction rather than the previous dark prototype panels with small decorative icons. The current HUD uses saturated blue/cyan, green repair, orange ascent, red danger, heavy dark outlines, inner highlights, subtle depth and outlined Fredoka labels. A centered flight header prioritizes altitude, with a compact five-segment hull card, four navigation tiles, a contextual action row and a separate gunner control cluster. Pilot gas lock and helm release remain direct controls. The old AKSI tray is no longer part of this composition.
+
+`HUDGlyphs` draws scalable white UI silhouettes. `HUDTheme` owns surfaces and presentation; `HUDLayout` owns bounds. Gameplay controllers retain the same button instances, handlers, role rules, remotes and canonical data labels. Illustration loading is optional and serialized for only the four used keys. All 27 user PNGs and uploaded IDs remain available; none were edited or re-uploaded.
+
+## Evidence and limits
+
+`hud-arcade-phone.jpg` is an unedited Studio capture of the running HUD, not a generated mockup. `hud-arcade-results.json` records 12 device/state samples: iPad landscape gunner/shop/pilot/critical damage/engineer; portrait engineer/storm; portrait phone engineer/gunner; final landscape phone gunner/pilot; desktop gunner. All recorded project button bounds fit, targets meet 44 pixels, button pairs do not overlap and visible text fits. Core Roblox overlays and 3D proximity prompts remain native; these are outside that project-button-pair check.
+
+Native window clicks verified shop open/close, auto gas ON, helm release preserving gas and a kit clearing four holes. A fresh phone session credited one real jump. During an earlier role-cycled anchored fixture with auto gas enabled, a jump button activation reached the client but did not increment the server counter; its cause is unresolved. No jump physics/validation code was changed, and this does not constitute a full gameplay regression pass.
+
+The fixture anchors the balloon and pauses hazards, so these checks do not cover flight physics, public-server latency, purchases or physical devices. The complete 27-image inventory is not claimed load-verified. Core UI appearance no longer depends on that inventory loading. After the last full live scenes, a short cooldown badge, explicit rope-repair hold label and removal of two unused preload requests were compiled and saved; these small changes were not given another full scene run.
+
+Final cleanup: temporary TabletUIQA removed, 32 source containers compile, live changed sources match their mirrors, and Studio returns to Edit / Test / desktop. Backup: `Fly High.before-hud-redesign.rbxl`. Prior integration reports remain historical evidence.
+
+
+---
+
+## Asal dokumen — design/SCENERY_POST_HANDOVER_REPORT.md
+
+# Laporan Dokumentasi Pelaksanaan Pasca-Handover Scenery Fly High (0–10.000 km)
+
+Dokumen ini mencatat seluruh rangkaian pekerjaan, peningkatan desain, metodologi teknis, dan hasil verifikasi yang telah dilaksanakan sejak serah terima dokumen [Handover Scenery Fly High · 0–10.000 km](../design/SCENERY.md) per tanggal **10 November 2026**.
+
+---
+
+## 1. Latar Belakang & Alur Kerja Pasca-Handover
+
+Pekerjaan pasca-handover terbagi dalam dua tahap utama:
+
+```mermaid
+flowchart TD
+    A["Handover Scenery Backlog (P1 & P2)"] --> B["Tahap 1: Implementasi Fitur Backlog (Commit a0ae43a)"]
+    B --> C["Evaluasi & Feedback Visual Pengguna:<br/>Aset prosedural kasar (primitive blocks),<br/>minta dibuat realistis mengacu pada Lobby & Cloud Palace"]
+    C --> D["Tahap 2: Re-arsitektur Sculpted Mesh & Union (Commit b825848)"]
+    D --> E["Audit Teknis Studio (Edit & Play Mode):<br/>0 Intrusi Koridor | 0 Kolisi | 9 Titik Ketinggian"]
+    E --> F["Sinkronisasi Studio DataModel & Git Repository"]
+```
+
+1. **Tahap 1 — Eksekusi Backlog Handover (Commit `a0ae43a`)**:
+   - Membangun seluruh varian landmark P1 dan P2 yang terdaftar di [`SCENERY_HANDOVER.md`](../design/SCENERY.md) ke dalam [`BiomeScenery.luau`](sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau).
+   - Menghubungkan logika pemunculan ke siklus bioma di `BiomeLightingController`.
+2. **Tahap 2 — Perombakan Kualitas Realisme (*Sculpted Quality Overhaul*, Commit `b825848`)**:
+   - Merespons evaluasi visual pengguna: mengganti prop prosedural berbasis balok/bola primitif (`Ball`, `Cylinder`, `WedgePart`) menjadi rakitan aset *sculpted* berkualitas tinggi.
+   - Mengambil referensi langsung dan memanfaatkan kit aset asli dari pulau awal (`Workspace.FlyHighLobby`) serta istana awan (`Workspace.CloudPalace`).
+
+---
+
+## 2. Inventaris Aset Sumber & Pustaka Template yang Digunakan
+
+Seluruh model dekoratif baru disusun dari kombinasi `MeshPart` dan `UnionOperation` berkualitas tinggi yang sudah ada di DataModel tanpa membebani memori dengan aset asing:
+
+| Kategori Sumber | Lokasi di DataModel | Aset / Komponen yang Dimanfaatkan |
+| --- | --- | --- |
+| **Flora & Alam Lobby** | `ReplicatedStorage.FlyHigh.EnvironmentAssets` | `BroadleafTree` (batang, cabang, mahkota daun), `PalmTree` (pohon kelapa pesisir), `Boulder` (batu alam berfaset), `Fern` (pakis), `Flower` (bunga) |
+| **Landmark & Awan Meshes** | `ReplicatedStorage.FlyHigh.EnvironmentAssets.BiomeLandmarkMeshes` | `Dawn` (Reef, Sand, Grass, Rock), `Storm` (anvil cumulonimbus), `Sunset` (Basalt, TerraCotta, Moss, Sandstone, Ivory, Gold), `Cosmic` (Astral, Violet, Crystal), `HorizonPavilion`, `HorizonArch`, `HorizonSpire`, `HorizonCloud`, `PalaceCloud`, `UpperSkyCloud`, `ZenithCloud`, armada kapal `CloudSailer`, `CloudKetch`, `CloudCutter` |
+| **Geometri Presisi (Unions)** | `ReplicatedStorage.FlyHigh.Templates.FleetGeometry` | `SaturnRing` (cincin planet halus), `DockRim` (cincin dok/halo emas), `Star` (bintang faset 3D), `LotusPetal` (kelopak teratai/nok atap pagoda), `LotusLeaf` |
+| **Kulit Balon Berlipit** | `ReplicatedStorage.FlyHigh.Templates.BalloonSkins` | Kulit `MeshPart` balon `D` dan `E` (amplop berlipit realistis dengan gores vertikal) |
+| **Arsitektur Istana Awan** | `Workspace.CloudPalace` | `SummitPhotoPodium` (plinth marmer bertingkat, lantai kompas emas, pilar gading), `PalaceGarden.GardenLantern01` (lentera taman istana) |
+
+---
+
+## 3. Komponen Helper & Arsitektur Prosedural Baru
+
+Pada [`BiomeScenery.luau`](sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau), diimplementasikan serangkaian fungsi pembangun prosedural khusus untuk memastikan konsistensi visual:
+
+### A. Generator Tebing & Pulau Melayang Berfaset (`buildSculptedIslandTerrain`)
+- **Struktur Faset Organik**: Menggunakan bagian dasar `Sunset.Basalt` (crag batu gelap berfaset 17 sisi tidak beraturan) dan `Sunset.Moss` (permukaan rumput terasering).
+- **Penyesuaian Tanpa Temple Arches**: Untuk pulau alam non-kuil, komponen candi atas (`TerraCotta`/`Sandstone`/`Gold`) dihapus secara otomatis, lalu digantikan oleh `SculptedCliffRim` (klon `Moss` yang digeser turun `-4.8 * scale` dan diperlebar `1.04x` XZ) untuk mempertahankan siluet tebing bertingkat yang natural.
+- **Sabuk Kabut Awan**: Bagian bawah pulau dibungkus dengan awan volumetrik `PalaceCloud` bernuansa lembut untuk menyamarkan batas bawah pulau melayang.
+
+### B. Modul Air Terjun Berundak Realistis (`attachSculptedWaterfall`)
+- **Spillway Batuan**: Menggunakan bebatuan alam `EnvironmentAssets.Boulder` di bibir tebing.
+- **Kolam Hulu**: Kolam air jernih dengan tepian batu halus.
+- **Tirai Air Dinamis**: Menggunakan sepasang pita `Beam` ganda dengan tekstur air mengalir vertikal, transparansi bergradasi, dan lekukan fisika air jatuh.
+- **Buih Kabut di Dasar**: Gumpalan `PalaceCloud` berpartikel lembut di titik jatuhnya air terjun.
+
+### C. Sanitasi Properti & Keamanan Fisika (`cleanDecoPart`)
+Setiap part, mesh, dan union yang dipasang melalui helper scenery secara otomatis diatur:
+- `Anchored = true`
+- `CanCollide = false`
+- `CanTouch = false`
+- `CanQuery = false`
+- `CastShadow = false`
+- Menghapus seluruh skrip, `ProximityPrompt`, `PointLight`, atau koneksi yang berpotensi memicu interaksi/overhead performa.
+
+---
+
+## 4. Rincian Pembaruan per Zona Terbang (0–10.000 km)
+
+```mermaid
+graph LR
+    Z1["0-2k km: Dawn<br/>Pesisir, Schooner, Balon Sonde"] --> Z2["2-4k km: Thunder<br/>Corong Badai, Anvil, Heliks Petir"]
+    Z2 --> Z3["4-6k km: Sky Isles<br/>Sakura, Pagoda, Lonceng, Jembatan"]
+    Z3 --> Z4["6-8k km: Exosphere<br/>Armillary Sphere, Kristal, Aurora"]
+    Z4 --> Z5["8-10k km: Gateway<br/>Gerbang Megah, Intan Halo, Air Suci"]
+```
+
+### Zona 1 — Breezy Dawn Archipelago (0–2.000 km)
+- **Coastal Islet & Tanjung Dawn**: Pulau pesisir dirombak menggunakan mesh `BiomeLandmarkMeshes.Dawn` (bergradasi Reef, Sand, Grass, Rock) dan ditanami vegetasi asli `FlyHighLobby` (`PalmTree`, `BroadleafTree`, `Boulder`, `Fern`, `Flower`).
+- **Distant Sailboat**: Diubah dari bentuk perahu blok sederhana menjadi kapal schooner kayu realistis dengan tiang layar kain mengembang (`CloudCutter` dan `CloudSailer`).
+- **Low Floating Islet & Dawn Waterfall Isle**: Pulau batu mengapung dengan air terjun tipis dan sabuk awan sebagai transisi menuju atmosfer atas.
+- **Weather Balloon Dekoratif**: Di-upgrade dari bola biru polos menjadi balon berlipit (`BalloonSkins.D` & `E`), diikat dengan sabuk kuningan konsentris (`SaturnRing` & `DockRim`), lambang matahari faset emas 3D (`Star`), tiang anemometer, pod instrumen meteorologi tembaga-kaca, dan pita angin `Beam`.
+- **Distant Seabird Flock**: Burung camar latar kini memiliki anatomi realistis bersayap bulu bertingkat (`FlightFeather` lapis 1–3) dan ekor kipas (`TailFeather`).
+- **Lapisan Awan Pesisir**: Awan bola primitif diganti total dengan mesh awan marching-tetrahedra (`PalaceCloud`, `HorizonCloud`, `UpperSkyCloud`, `ZenithCloud`).
+
+### Zona 2 — Indigo Thundercloud (2.000–4.000 km)
+- **Thunderhead Cliff & Anvil Terpisah**: Formasi awan badai hitam pekat menggunakan mesh masif `Storm` dan `ZenithCloud` dengan pencahayaan denyut kilat internal (*sheet lightning*).
+- **Pusaran Badai Latar (Wide & Slender Vortex)**: Tumpukan 12 bola ungu diganti dengan mahkota awan paron `Storm`, corong awan bertingkat `PalaceCloud`, inti kilat bercahaya, dan 4 pita heliks pusaran angin/petir berputar (`Beam` berlekuk dinamis `CurveSize0`/`CurveSize1`).
+- **Fragmen Batu Tepi Badai (Storm Edge Fragment)**: Bebatuan tajam `Cosmic` gelap dengan urat energi kuning/ungu menyala, taburan `Boulder`, dan cincin busur listrik statis `DockRim`.
+
+### Zona 3 — Sunset of Forgotten Sky Isles (4.000–6.000 km)
+- **Pulau Kuil & Reruntuhan Langit**: Setiap pulau menggunakan kit tebing faset `Sunset` bertingkat dengan aksen batu bata terakota, reruntuhan kuil batu pasir/gading/emas, dan air terjun senja.
+- **Pohon Sakura Senja (Sunset Blossom Tree)**: Batang kayu berliuk `BroadleafTree` dipadukan dengan 3 lapisan mahkota daun mesh yang dirotasi secara organik dan diberi warna merah muda-keemasan sakura, dilengkapi taburan bunga di pangkal akar.
+- **Paviliun Lonceng Angin & Ornamen Gantung**: Plinth marmer-emas dari `SummitPhotoPodium`, lentera taman `GardenLantern01`, kolom bergalur, atap kayu bertingkat dengan ujung kelopak teratai `LotusPetal`, serta 4 lonceng angin gantung berornamen cincin `DockRim` dan bintang emas 3D `Star`.
+- **Jembatan Batu Patah (Broken Stone Bridge)**: Jembatan viaduk batu kapur-batu pasir bertingkat dengan lis emas, pilar balustrade berukir dengan finial bola, puing bebatuan `Boulder` di celah patahan, dan semak pakis liar.
+
+### Zona 4 — Bioluminescent Cosmic Exosphere (6.000–8.000 km)
+- **Pulau Kristal Kosmik & Satelit**: Berdiri di atas dasar tebing obsidian gelap `Sunset` berlumut teal dengan sabuk nebula `PalaceCloud`, 4 gugusan kristal bersegi tajam `Cosmic` (cyan, magenta, dan ungu elektrik), flora bercahaya, serta satelit kristal kecil bercincin halo `DockRim`/`SaturnRing`.
+- **Observatorium Melayang (Floating Observatory)**: Dibangun di atas teras batu kapur dengan colonnade runtuh, lantai kompas marmer-emas `SummitPhotoPodium`, 4 lentera astral `GardenLantern01`, panji astral berbintang `Star`, dan **Golden Armillary Sphere** 3 cincin konsentris (`SaturnRing` & `DockRim`) yang berputar perlahan mengelilingi inti bintang 3D `Star` dan kristal cyan bercahaya.
+- **Lengkungan Kosmik Kejauhan (Distant Cosmic Arch)**: Gerbang lengkung bertingkat tiga `HorizonArch` beraksen neon cyan dan bermahkota kristal `Cosmic`.
+
+### Zona 5 — The Celestial Gateway (8.000–10.000 km)
+- **Gerbang Kristal Melayang (Floating Crystal Gate)**: Didesain serasi dengan arsitektur `Workspace.CloudPalace`: pulau batu kapur-lumut `Sunset` beralaskan awan emas `PalaceCloud`, podium marmer-emas `SummitPhotoPodium`, gerbang lengkung suci gading-emas `HorizonArch`, pepohonan `BroadleafTree`, lentera `GardenLantern01`, air terjun suci, serta kristal intan faset cyan `Cosmic` yang melayang di dalam sepasang cincin halo emas saling bersilang (`DockRim`).
+
+---
+
+## 5. Hasil Verifikasi Teknis & Kepatuhan Batasan
+
+Pemeriksaan menyeluruh dilakukan di Roblox Studio (`Fly High.rbxl`) pada mode **Edit** dan mode **Play** (kamera gondola pemain):
+
+### A. Audit Properti & Koridor (Mode Edit)
+| Bioma | Total Part Scenery | MeshParts | UnionOperations | Properti Ilegal (`badFlags`) | Pelanggaran Koridor (`intrude`) |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| **1. Dawn Archipelago** | 1.384 | 612 | 116 | **0** | **0** |
+| **2. Indigo Thundercloud** | 298 | 233 | 8 | **0** | **0** |
+| **3. Forgotten Sky Isles** | 913 | 377 | 78 | **0** | **0** |
+| **4. Cosmic Exosphere** | 386 | 174 | 56 | **0** | **0** |
+| **5. Celestial Gateway** | 288 | 240 | 7 | **0** | **0** |
+
+*Catatan:*
+- `badFlags = 0`: Memastikan tidak ada part yang `CanCollide = true`, `CanTouch = true`, `CanQuery = true`, atau unanchored.
+- `intrude = 0`: Memastikan seluruh geometri berada di luar kotak koridor penerbangan aman (`|X| < 155, |Z| < 155`), sehingga tidak menghalangi jalur balon dan rintangan gameplay.
+- Aset interaktif di `FlyHighLobby` dan `CloudPalace` (kursi, ayunan, portal, podium foto, barrier) tetap 100% utuh tanpa modifikasi destruktif.
+
+### B. Verifikasi Penerbangan Gondola (Mode Play)
+Tangkapan layar verifikasi visual gondola telah diuji dan divalidasi pada elevasi:
+1. `0 km`: Pemandangan pulau lobi, laut berlayar `CloudCutter`, dermaga, dan balon cuaca awal.
+2. `500 km`: Pulau melayang rendah dan transisi tirai awan pesisir.
+3. `1.200 km`: Air terjun melayang `DawnWaterfallIsle` dan balon cuaca sonde di samping koridor.
+4. `1.850 km`: Transisi awan tinggi menjelang lapisan cumulonimbus badai.
+5. `3.000 km`: Siluet pusaran badai heliks berputar dan tebing petir `Storm`.
+6. `5.000 km`: Pemandangan kepulauan langit senja, pohon sakura, paviliun lonceng angin, dan jembatan batu patah.
+7. `7.000 km`: Kegelapan eksosfer kosmik dengan bola armillary berputar emas dan pulau kristal bersatelit.
+8. `9.000 km`: Kemegahan gerbang kristal melayang dan armada kapal langit menyambut Istana Awan.
+9. `10.000 km`: Ketibaan mulus di dermaga dan plaza Istana Awan.
+
+---
+
+## 6. Riwayat Commit & Sinkronisasi Repositori
+
+| Commit Hash | Judul Perubahan | Ruang Lingkup Berkas |
+| --- | --- | --- |
+| `a0ae43a` | *Implement 0-10,000 km air scenery P1/P2 landmarks and biome layering polish* | Penambahan landmark P1/P2 pada `BiomeScenery.luau`, penyesuaian `HANDOVER.md` & `AI_CONTEXT.md` |
+| `b825848` | *feat(scenery): upgrade all 5 biome procedural props to sculpted MeshPart & UnionOperation assemblies matching FlyHighLobby & CloudPalace* | Refactoring total `BiomeScenery.luau` menjadi sculpted assemblies, pembaruan `SCENERY_HANDOVER.md` |
+
+Status saat ini: **Tersimpan di DataModel Studio (`ReplicatedStorage.FlyHigh.Modules.BiomeScenery`), tersinkronkan ke mirror git, dan telah ter-push ke cabang utama (`origin/main`).**

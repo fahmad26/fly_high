@@ -1,6 +1,6 @@
 # PNG siap impor untuk Fly High
 
-> **Desain aktif: Sky Arcade.** Semua 27 ID hasil unggahan final tetap disimpan. Kontrol utama, glyph, panel dan outline sekarang dibangun melalui UI Roblox dengan empat ilustrasi opsional. Catatan di bawah merupakan riwayat prototipe berbasis gambar. Lihat `../../../audit/HUD_ARCADE_REDESIGN.md`.
+> **Paket historis.** Semua 27 ID hasil unggahan final tetap disimpan untuk penelusuran. HUD aktif memakai [Sky Adventure](../sky-adventure/README.md). Catatan di bawah merekam prototipe awal dan tidak menggambarkan status pemuatan gambar pada build terbaru. Lihat [riwayat pengembangan](../../../audit/DEVELOPMENT_HISTORY.md).
 
 > Pembaruan 31 Oktober 2026: sumber final yang diunggah berasal dari `../final/compressed_img/` (27 PNG), bukan folder historis ini. Semua ID Roblox aktual tersedia di `../asset-manifest.json` dan `../final/compressed_img/roblox-asset-ids.json`. ID sudah dihubungkan ke HUDTheme pada place tersimpan; 7 gambar berhasil dimuat dan 20 masih memakai tampilan semula. Catatan generasi di bawah menjelaskan sumber lama sebelum pengguna menyiapkan ekspor final.
 

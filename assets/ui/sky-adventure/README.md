@@ -2,6 +2,8 @@
 
 HUD design version 11 is installed in the local `Fly High.rbxl`. See the [approved visual brief](../../../design/features/hud-generated-art/design.md).
 
+> The playtest record below belongs to the 7 November HUD pass. Later layout/input edits require their own regression evidence. [PROGRESS](../../../PROGRESS.md) tracks the current workspace; the historical count of 35 compiled scripts is not the current source inventory.
+
 - [Generated sources and prompts](./generated/README.md): 55 independent source PNGs made with built-in image generation. No source sprite was cropped from a concept collage.
 - [Catalog](./catalog.json): 53 selected sprites packed into eight 1024 × 1024 runtime textures. Two first drafts, `reload_normal` and `hull_panel`, remain in the source folder but are superseded.
 - [Roblox IDs](./roblox-texture-ids.json): uploaded through Studio Asset Manager and matched against the Roblox creator inventory. The place is local; no experience publishing was performed.

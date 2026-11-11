@@ -1,5 +1,7 @@
 # Sky Arcade PNG
 
+> Paket historis dan fallback. HUD utama sekarang memakai [Sky Adventure](../sky-adventure/README.md). Kata “now” dan hasil QA di bawah merujuk build Sky Arcade saat dokumen ini dibuat; status terbaru ada di [PROGRESS](../../../PROGRESS.md).
+
 Fly High loads 199 independent PNGs from nine Roblox image assets. The [source folder](./png) contains the 87 surfaces, glyphs, gauges, panels, and illustrations, 80 lettering sprites, and 32 telemetry and state images. `catalog.json`, `lettering-catalog.json`, and `meters-catalog.json` map each key to its texture rectangle. `roblox-texture-ids.json` records the uploaded pages.
 
 Controls keep their input handlers and live values. The HUD now composes altitude, speed, progress, ammunition, stock badges, and the takeoff timer from image glyphs. Rectangle surfaces use 9-slice scaling, circles use Fit, and loaded artwork hides the previous border strokes. Player names, shop prices, translated copy, and contextual messages use live text. Core Roblox UI and native proximity prompts use the platform's controls.

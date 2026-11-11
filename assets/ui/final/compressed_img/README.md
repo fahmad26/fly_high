@@ -1,6 +1,6 @@
 # Fly High — final compressed UI assets
 
-> Current design: Sky Arcade. All 27 uploaded IDs remain preserved. Core HUD controls, glyphs, gradients and borders now render directly with Roblox UI; four optional illustrations are used. Earlier integration/loading notes below describe the previous image-led prototype. See `../../../../audit/HUD_ARCADE_REDESIGN.md` and the canonical manifest for the active design.
+> Historical package. All 27 uploaded IDs remain preserved for provenance. The current HUD uses [Sky Adventure](../../sky-adventure/README.md). Integration and loading notes below describe the earlier prototype, not the current atlas. See [development history](../../../../audit/DEVELOPMENT_HISTORY.md).
 
 27 PNG supplied by the user and uploaded to Roblox through the connected Fly High.rbxl Studio on 2026-10-31. All image dimensions match the planned export targets. Source bytes were not modified.
 

@@ -1,5 +1,7 @@
 # Scenery polish — 10 November 2026
 
+> **Batas bukti:** screenshot ini merekam pass awal sebelum polesan lanjutan. Gambar tersebut tidak memverifikasi setiap perubahan setelahnya. [Inventaris scenery](../../design/SCENERY.md) dan [PROGRESS](../../PROGRESS.md) mencatat pekerjaan serta QA yang tersisa.
+
 Screenshot aktual Playtest Studio. Kamera ditempatkan terkontrol, dengan HUD disembunyikan sementara agar detail mudah diperiksa.
 
 | Screenshot | Area yang diperiksa |

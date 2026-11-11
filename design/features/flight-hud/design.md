@@ -2,6 +2,8 @@
 
 Status: approved
 
+> Rekaman keputusan/audit 7 November. Status penerapan dan QA terbaru dipelihara di [PROGRESS](../../../PROGRESS.md); jangan mengulang seluruh rencana ini sebagai backlog baru.
+
 ## Audit 7 November 2026
 
 Saya membaca HUD versi 8 pada sesi Studio yang sedang berjalan dan meninjau tangkapan layar penerbangan dari uji sebelumnya. Viewport Studio saat inspeksi berukuran sekitar 773 × 380 unit UI. Bukti pembanding: [iPhone landscape](../../../audit/image-ui-lettering-mobile.jpg), [HUD penembak](../../../audit/image-ui-gunner.jpg), dan [toko](../../../audit/image-ui-shop.jpg).

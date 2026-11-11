@@ -6,12 +6,14 @@ local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
 local U=require(script.Parent.ServerUtils)
 local Themes=require(RS.FlyHigh.Modules.BalloonThemes)
 local Space=require(script.Parent.FlightSpace)
+local Arrival=require(script.Parent.PalaceArrival)
 local remotes=RS.FlyHigh.Remotes
 local Manager={activeFlights={}}
 local HORIZONTAL_SPEED_SCALE_BY_CREW = { 1, 0.75, 0.6 }
 _G.FlyHighBalloonManager=Manager
 pcall(function() PhysicsService:RegisterCollisionGroup("FlyHighBalloons") end)
-PhysicsService:CollisionGroupSetCollidable("FlyHighBalloons","FlyHighBalloons",true)
+-- Separation/damage are resolved once by FlightSpace; physical contacts must not fight the movers.
+PhysicsService:CollisionGroupSetCollidable("FlyHighBalloons","FlyHighBalloons",false)
 local function sync(fd)
  -- Sample altitude rather than assembly velocity: freefall moves with PivotTo.
  local now=os.clock()
@@ -52,57 +54,18 @@ function Manager.EndFlight(fd,victory)
  _G.FlyHighWeaponManager.CleanupBalloon(fd.balloon)
  for _,p in ipairs(fd.players) do
   p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false) p:SetAttribute("CrewRole",nil)
-  if victory and U.Alive(p,fd) then _G.FlyHighDataManager.AddSummit(p) end
+  if p.Parent==Players then
+   _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p] or 0)
+   if victory then _G.FlyHighDataManager.AddSummit(p)end
+  end
  end
  if victory then
-  local palace=workspace.CloudPalace
-  local dock=palace.CloudHavenDock
-  local keep=palace.CastleKeep
-  -- Move the complete assembly and crew through a clear side approach above the flight ceiling.
-  local passengers={}
-  for _,p in ipairs(fd.players) do
-   if U.Alive(p,fd) then
-    local hrp=p.Character.HumanoidRootPart
-    U.Unseat(p)
-    passengers[p]={root=hrp,offset=fd.root.CFrame:ToObjectSpace(hrp.CFrame),anchored=hrp.Anchored}
-    hrp.Anchored=true
-   end
-  end
-  fd.root.Anchored=true
-  task.spawn(function()
-   local origin=fd.root.CFrame
-   local points={
-    Vector3.new(origin.X,origin.Y,120),
-    Vector3.new(dock.Position.X,dock.Position.Y+1.7,120),
-    dock.Position+Vector3.new(0,1.7,0)}
-   for _,point in ipairs(points) do
-    local start=fd.root.CFrame
-    local elapsed=0
-    while elapsed<0.8 and fd.balloon.Parent do
-     elapsed+=RunService.Heartbeat:Wait()
-     local alpha=math.clamp(elapsed/0.8,0,1)
-     local cf=start:Lerp(CFrame.new(point),alpha*alpha*(3-2*alpha))
-     fd.balloon:PivotTo(cf)
-     for _,data in pairs(passengers) do if data.root.Parent then data.root.CFrame=cf*data.offset end end
-    end
-   end
-   for i,p in ipairs(fd.players) do
-    local data=passengers[p]
-    if data and data.root.Parent then
-     local arrival=dock.Position+Vector3.new((i-(#fd.players+1)/2)*4,5,-8)
-     local lookAt=Vector3.new(keep.Position.X,arrival.Y,keep.Position.Z)
-     data.root.CFrame=CFrame.lookAt(arrival,lookAt)
-     data.root.Anchored=data.anchored data.root.AssemblyLinearVelocity=Vector3.zero
-     p:SetAttribute("PalaceArrival",nil)
-     p:SetAttribute("PalaceArrival",arrival)
-    end
-   end
-  end)
+  Arrival.Enqueue(fd)
  else
   for _,p in ipairs(fd.players) do if U.Alive(p,fd) then p.Character:FindFirstChildOfClass("Humanoid").Health=0 end end
  end
  renderHoles(fd) sync(fd)
- task.delay(victory and 20 or 4,function() if fd.balloon.Parent then fd.balloon:Destroy() end end)
+ if not victory then task.delay(4,function() if fd.balloon.Parent then fd.balloon:Destroy() end end)end
 end
 function Manager.LaunchBalloon(players,master,spawnPos,podName)
  if not _G.FlyHighDataManager or not _G.FlyHighWeaponManager or not _G.FlyHighTetherManager then return nil end
@@ -126,9 +89,12 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  for _,part in ipairs(b:GetDescendants()) do if part:IsA("BasePart") then part.CollisionGroup="FlyHighBalloons" end end
  local root=b.PrimaryPart
  root:SetNetworkOwner(nil)
+ root.AlignPosition.RigidityEnabled=false
+ root.AlignPosition.ApplyAtCenterOfMass=true
+ root.AlignPosition.Responsiveness=20
  local fd={balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
   burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
-  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},connections={},
+  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},personalBest={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
   holes=0,holeSet={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
   usedKits={},targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+20,boarding={},boardingDeadline=os.clock()+20}
@@ -139,6 +105,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  table.insert(Manager.activeFlights,fd)
  for i,p in ipairs(players) do
   fd.characters[p]=p.Character
+  fd.personalBest[p]=0
   p:SetAttribute("CurrentPod",nil) p:SetAttribute("IsMaster",p==master) p:SetAttribute("InFlight",true)
   p:SetAttribute("FlightGhost",false) p:SetAttribute("UsedEmergencyKitThisFlight",false)
   local ref=p:FindFirstChild("FlightBalloon") or Instance.new("ObjectValue",p)
@@ -147,6 +114,10 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   fd.boarding[p]={root=hrp,anchored=hrp.Anchored,token=game:GetService("HttpService"):GenerateGUID(false),offset=Vector3.new((i-2)*5,4,0)}
   hrp.Anchored=true p:SetAttribute("BoardingFlight",true)
   table.insert(fd.connections,p.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+   if not fd.isVictory and not fd.isGameOver then
+    fd.personalBest[p]=math.max(fd.personalBest[p] or 0,math.clamp((fd.root.Position.Y-Config.GROUND_Y)/Config.STUDS_PER_KM,0,Config.MAX_ALTITUDE_KM))
+    _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p])
+   end
    fd.dead[p]=true p:SetAttribute("FlightGhost",true) p:SetAttribute("CrewRole",nil)
    if fd.pilot==p then fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero end
    _G.FlyHighTetherManager.CleanupPlayer(p)
@@ -211,7 +182,7 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
 end
 function Manager.ApplyPuncture(fd,cause)
  local deliberate=cause=="Collision" or cause=="SelfShot"
- if fd.isGameOver or fd.isVictory or (not deliberate and fd.altitudeKm<Config.SAFE_TAKEOFF_KM) or fd.invulnTime>0 or fd.shieldTime>0 or fd.holes>=Config.MAX_HOLES then return false end
+ if fd.isGameOver or fd.isVictory or fd.balloon:GetAttribute("ArrivalProtected") or (not deliberate and fd.altitudeKm<Config.SAFE_TAKEOFF_KM) or fd.invulnTime>0 or fd.shieldTime>0 or fd.holes>=Config.MAX_HOLES then return false end
  for i=1,Config.MAX_HOLES do if not fd.holeSet[i] then fd.holeSet[i]=true break end end
  fd.holes+=1 fd.invulnTime=Config.PASSIVE_INVULN_DURATION fd.isFreefalling=fd.holes==Config.MAX_HOLES
  if fd.isFreefalling then fd.targetPosition=fd.root.Position end
@@ -400,13 +371,14 @@ RunService.Heartbeat:Connect(function(dt)
   fd.alignPos.Position=fd.targetPosition
   fd.altitudeKm=math.clamp((fd.root.Position.Y-Config.GROUND_Y)/Config.STUDS_PER_KM,0,Config.MAX_ALTITUDE_KM)
   if fd.altitudeKm>1 then fd.hasLiftedOff=true end
+  for _,p in ipairs(fd.players)do if U.Alive(p,fd)then fd.personalBest[p]=math.max(fd.personalBest[p] or 0,fd.altitudeKm)end end
   local tilt=fd.engineerTilt or Vector3.zero
-  fd.alignOri.CFrame=CFrame.Angles(math.clamp(steer.Z*0.08+tilt.X,-0.18,0.18),0,math.clamp(-steer.X*0.08+tilt.Z,-0.18,0.18))
+  fd.alignOri.CFrame=fd.alignOri.CFrame:Lerp(CFrame.Angles(math.clamp(steer.Z*0.08+tilt.X,-0.18,0.18),0,math.clamp(-steer.X*0.08+tilt.Z,-0.18,0.18)),1-math.exp(-8*dt))
   if fd.holes==5 and fd.root.Position.Y<=Config.GROUND_Y+0.15 then Manager.EndFlight(fd,false) continue end
   if fd.root.Position.Y>=maxY-0.2 then fd.altitudeKm=Config.MAX_ALTITUDE_KM Manager.EndFlight(fd,true) continue end
   if os.clock()-(fd.lastSyncTime or 0)>=0.1 then
    fd.lastSyncTime=os.clock()
-   for _,p in ipairs(fd.players) do if U.Alive(p,fd) then _G.FlyHighDataManager.UpdateAltitude(p,fd.altitudeKm) end end
+   for _,p in ipairs(fd.players) do if U.Alive(p,fd) then _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p] or fd.altitudeKm) end end
    sync(fd)
   end
  end
