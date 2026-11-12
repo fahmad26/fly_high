@@ -1,3 +1,4 @@
+local HUDMotion = require(game:GetService("ReplicatedStorage"):WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("HUDMotion"))
 local Players = game:GetService("Players")
 local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -361,16 +362,16 @@ local function button(name,text,position,callback)
  local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(0,10)corner.Parent=b
  return b
 end
-local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),function() wheel.Visible=not wheel.Visible end)
+local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),function() HUDMotion.Toggle(wheel) end)
 local reloadButton=button("ReloadButton","RELOAD [R / X]",UDim2.new(1,-260,1,-225),function() if currentWeapon then reloadRemote:FireServer() end end)
 local dropButton=button("DropButton","DROP [G / B]",UDim2.new(1,-260,1,-270),function() weaponDropEvent:FireServer() end)
-local pingClose=button("PingCloseButton","Tutup",UDim2.fromOffset(0,0),function() wheel.Visible=false end)
+local pingClose=button("PingCloseButton","Tutup",UDim2.fromOffset(0,0),function() HUDMotion.SetVisible(wheel,false) end)
 pingClose.Parent=wheel
 for i,message in ipairs(Config.TACTICAL_MESSAGES) do
  local b=button("Ping"..i,message,UDim2.fromOffset(0,0),function()
   local root=localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
   if root then tacticalPingEvent:FireServer("QuickPing",root.Position,message) end
-  wheel.Visible=false
+  HUDMotion.SetVisible(wheel,false)
  end)
  b.Parent=wheel
 end
@@ -380,7 +381,7 @@ UserInputService.InputBegan:Connect(function(input,gpe)
  elseif input.KeyCode==Enum.KeyCode.R or input.KeyCode==Enum.KeyCode.ButtonX then
   if currentWeapon then reloadRemote:FireServer() end
  elseif input.KeyCode==Enum.KeyCode.G or input.KeyCode==Enum.KeyCode.ButtonB then weaponDropEvent:FireServer()
- elseif input.KeyCode==Enum.KeyCode.V or input.KeyCode==Enum.KeyCode.DPadUp then wheel.Visible=not wheel.Visible end
+ elseif input.KeyCode==Enum.KeyCode.V or input.KeyCode==Enum.KeyCode.DPadUp then HUDMotion.Toggle(wheel) end
 end)
 local function onCharacter(char)
  setWeapon(nil)

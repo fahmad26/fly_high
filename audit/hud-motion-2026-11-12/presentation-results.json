@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"burstBounded\":true,\"destroyCleanup\":true,\"reducedHidesStars\":true,\"noticeVisible\":true,\"noticeExpires\":true}"
+    }
+  ],
+  "isError": false
+}

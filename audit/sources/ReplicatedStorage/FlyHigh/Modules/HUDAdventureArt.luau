@@ -81,7 +81,7 @@ function Art.Draw(parent, key, z, mode, tint)
 		-- Horizontal three-part sprite. Preserve the emblem and round ends without
 		-- relying on Roblox's atlas nine-slice to render a very shallow panel.
 		local left, right = math.round(w * 0.31), math.round(w * 0.14)
-		local target = parent.AbsoluteSize
+		local target = parent.Name=="HUDMotionVisual" and parent.Parent.AbsoluteSize or parent.AbsoluteSize
 		local scale = math.min(target.Y / h, target.X / (left + right + 2))
 		local leftWidth, rightWidth = math.floor(left * scale), math.floor(right * scale)
 		local middle = math.max(0, target.X - leftWidth - rightWidth)

@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"errors\":[],\"compiled\":42,\"exactChangedSources\":{\"ReplicatedStorage.FlyHigh.Modules.HUDLayout\":true,\"ReplicatedStorage.FlyHigh.Modules.HUDMotion\":true,\"StarterPlayer.StarterPlayerScripts.WeaponClientController\":true,\"StarterPlayer.StarterPlayerScripts.ShopClientController\":true,\"StarterPlayer.StarterPlayerScripts.FlightHUDController\":true}}"
+    }
+  ],
+  "isError": false
+}

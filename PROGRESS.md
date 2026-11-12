@@ -1,6 +1,6 @@
 # Progres Fly High
 
-Diperbarui 11 November 2026, Asia/Jakarta. Status mengacu pada workspace lokal. Implementasi dan QA dicatat terpisah.
+Diperbarui 12 November 2026, Asia/Jakarta. Status mengacu pada workspace lokal. Implementasi dan QA dicatat terpisah.
 
 ## Definisi status
 
@@ -27,7 +27,7 @@ Checkpoint tambahan 11 November: [perbaikan penerbangan/kemenangan tim](design/f
 | GAME-08 | Kemudi mengikuti kru hidup, 1× / 0,75× / 0,6× | Terpasang, commit 4765f45 | Dilaporkan di sesi 11 November. Tiga klien, empat arah, dua kematian, sekitar 18 / 22,5 / 30 stud/detik. Log mentah belum diekspor. | Simpan regresi berikutnya |
 | GAME-09 | Antrean istana, kemenangan tim dan rekor pribadi | Terpasang | [47/47 pemeriksaan terbaru](audit/journey-regression-2026-11-11/focused-results.json): lima klien, rekor mati, FIFO, revive, kredit tepat sekali dan cleanup. Warp/shield; bukan arrival dari perjalanan penuh. | Arrival manual, disconnect dan jaringan/perangkat fisik |
 | INPUT-01 | Analog native dan kompatibilitas PlayerModule | Terpasang; baseline awal sebelum commit | Dilaporkan di sesi 11 November. Simulator iPad Pro M5 dan iPhone 17 Pro landscape, empat arah, input 0,625, kamera 180°, release ke nol dan lepas kemudi. | Uji perangkat fisik |
-| UI-01 | HUD Sky Adventure dan layout | Terpasang; [rencana motion](design/features/hud-motion/design.md) berstatus draft, belum diimplementasikan | [Katalog aktif](assets/ui/sky-adventure/README.md) mencatat QA 7 November dengan fixture presentasi. [Analisis video 11 November](audit/hud-motion-reference-2026-11-11/README.md) hanya inspeksi visual referensi/source mirror, bukan QA Studio baru. | Review rencana motion, lalu regresi layout/input phone–tablet jika diimplementasikan |
+| UI-01 | HUD Sky Adventure dan layout | Motion terpasang; hover direvisi setelah ditolak pengguna: child UIScale, render berurutan dan sheen alpha PNG tanpa outline kotak | [Revisi 12 November](audit/hud-motion-refine-2026-11-12/README.md): 9/9 regresi, 12 sampel hover monotonic/root stabil, silhouette lulus; 42 compile dan lima source revisi sama persis. Place tersimpan, binary belum dibuka ulang. QA awal 14/14 bukan bukti kualitas motion memuaskan. | Review rasa pengguna; regresi touch/tablet fisik, hold/respawn dan profiling. Status pengiriman mengikuti checkpoint Git di HANDOVER. |
 | UI-02 | Setelan dua rak dan hide/show overhead | Terpasang | Source dan PRD. Bukti E2E terbaru belum diindeks. | Uji sebelum summon dan selama flight |
 | WORLD-01 | Pulau awal, laut, fauna dan lima armada | Jalan 9 stud spawn–A–E; A/E kini memakai belokan fillet tangent-matched, B/C/D simpang tengah; lampu/bunga tetap | [QA ujung dan semua sambungan](audit/path-endpoints-fix-2026-11-11/README.md): foto dekat A–E diperiksa, lima rute native sampai CurrentPod benar, semua hidup dan nol error. Pemeriksaan B/C sebelumnya melewatkan cacat A/E; tidak dianggap final. Source gameplay tidak berubah. | Review visual manusia/perangkat fisik |
 | WORLD-02 | Lima bioma dan polesan landmark | Terpasang, commit 4765f45 | [Inventaris scenery](design/SCENERY.md) membedakan screenshot awal dan hasil sesi lanjutan | QA final dan performa mobile |

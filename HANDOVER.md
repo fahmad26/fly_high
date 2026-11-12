@@ -8,7 +8,11 @@ Checkpoint Git 12 November: paket commit yang memuat catatan ini mencakup patch 
 
 ## Keadaan workspace
 
-Rencana motion HUD tersedia sebagai [draft desain](design/features/hud-motion/design.md), berdasarkan dua video referensi pengguna dan inspeksi source mirror. [Frame/metadata/batas analisis](audit/hud-motion-reference-2026-11-11/README.md) disimpan. Belum ada perubahan kode/aset/layout atau Playtest dari tugas analisis ini; status mengikuti UI-01 di PROGRESS. Jangan menganggap draft sebagai implementasi atau bukti sinkronisasi Studio.
+Checkpoint pengiriman motion HUD: commit yang memuat catatan ini mencakup HUDMotion, revisi hover/silhouette, place tersimpan dan bukti QA kedua iterasi. Penyebutan belum commit/push pada laporan run di bawah adalah status sebelum checkpoint pengiriman; verifikasi commit remote dilakukan setelah push. Binary place belum dibuka ulang. Backup place lama tetap lokal.
+
+Revisi hover setelah penolakan pengguna: [hasil dan batas](audit/hud-motion-refine-2026-11-12/README.md). Tombol kini memakai satu child UIScale, render layout/motion diurutkan, outline kotak cyan dihapus dan sheen mengikuti alpha sprite. Regresi 9/9, sampel hover monotonic/root stabil dan cek silhouette lulus; 42 compile, lima source sama persis. Ini menggantikan klaim kualitas motion awal yang belum memuaskan pengguna. Place tersimpan, Edit/default, belum commit/push; review manusia/mobile tetap terbuka.
+
+Motion HUD sudah mendapat persetujuan dan implementasi awal: [desain](design/features/hud-motion/design.md), [QA/batas](audit/hud-motion-2026-11-12/README.md). Module HUDMotion baru membuat total 42 source; lima source berubah/baru sama persis dengan mirror dan 42 compile. Tombol/popup, bar, pulse state, milestone dan pilihan animasi ringan tersedia. Runtime/presentation 14/14; simulator phone/iPad dan gamepad diperiksa, input sentuh fisik belum. Place disimpan, binary belum dibuka ulang; belum commit/push tugas motion. Fixture runtime terhapus setelah Stop; viewport default. [Analisis video awal](audit/hud-motion-reference-2026-11-11/README.md) tetap bukti historis sebelum implementasi, status terbaru mengikuti UI-01.
 
 Integrasi Figma dan Blender telah disiapkan: [MCP_SETUP](docs/roblox-development/MCP_SETUP.md). Figma terhubung; Blender stdio dan add-on aktif lolos tes status/baca scene. Restart Codex diperlukan untuk memuat tool Blender native. Folder .local-tools diabaikan Git tetapi dipakai command MCP; jangan dipindah sembarangan. Tidak ada perubahan game pada tugas setup ini.
 

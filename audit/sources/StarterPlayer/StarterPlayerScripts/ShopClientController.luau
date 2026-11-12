@@ -1,3 +1,4 @@
+local HUDMotion = require(game:GetService("ReplicatedStorage"):WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("HUDMotion"))
 local Players = game:GetService("Players")
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -217,10 +218,10 @@ local function request(item)
  shopPurchaseEvent:FireServer(item)
 end
 shopToggleBtn.Activated:Connect(function()
- shopModal.Visible=not shopModal.Visible
+ HUDMotion.Toggle(shopModal)
  if shopModal.Visible then task.spawn(refreshPrices)end
 end)
-closeBtn.Activated:Connect(function()shopModal.Visible=false end)
+closeBtn.Activated:Connect(function()HUDMotion.SetVisible(shopModal,false) end)
 buyKitBtn.Activated:Connect(function()request("EmergencyKit")end)
 buyAKBtn.Activated:Connect(function()request("AK47Upgrade")end)
 shopPurchaseEvent.OnClientEvent:Connect(function(message)
@@ -299,7 +300,7 @@ local function loadoutLocked()
  return localPlayer:GetAttribute("InFlight")==true
 end
 local function addChoiceArt(button)
- local image=Assets.Mount(button,"speed")
+ local image=Assets.Mount(HUDMotion.Visual(button),"speed")
  image.ZIndex=button.ZIndex+1
  local label=Instance.new("TextLabel")
  label.Name="ChoiceCaption"
@@ -310,7 +311,7 @@ local function addChoiceArt(button)
  label.TextColor3=Color3.new(1,1,1)
  label.TextStrokeTransparency=.3
  label.ZIndex=button.ZIndex+2
- label.Parent=button
+ label.Parent=HUDMotion.Visual(button)
  button.TextTransparency=1
  local function refresh()
   button.BackgroundTransparency=image.IsLoaded and 1 or 0
@@ -320,10 +321,10 @@ local function addChoiceArt(button)
 end
 local function paintChoice(button,text,selected)
  button.Text=text
- button.ChoiceCaption.Text=text
+ button:FindFirstChild("ChoiceCaption",true).Text=text
  button.BackgroundColor3=selected and teal or blue
- Assets.Apply(button.HUDRaster,selected and "buy_kit" or "speed")
- button.HUDRaster.ImageColor3=selected and Color3.fromRGB(146,205,192) or Color3.new(1,1,1)
+ Assets.Apply(button:FindFirstChild("HUDRaster",true),selected and "buy_kit" or "speed")
+ button:FindFirstChild("HUDRaster",true).ImageColor3=selected and Color3.fromRGB(146,205,192) or Color3.new(1,1,1)
 end
 local function refreshLoadout()
  local owned=localPlayer:GetAttribute("AKOwned") or 0
@@ -335,14 +336,14 @@ local function refreshLoadout()
   paintChoice(buttons.handgun,equipped and "Handgun" or "✓ Handgun",not equipped)
   paintChoice(buttons.rifle,equipped and "✓ AK-47" or "AK-47",equipped)
   if not equipped and owned<=count then
-   buttons.rifle.HUDRaster.ImageColor3=Color3.new(.66,.66,.66)
+   buttons.rifle:FindFirstChild("HUDRaster",true).ImageColor3=Color3.new(.66,.66,.66)
    buttons.rifle.BackgroundColor3=dim
   end
   for _,button in {buttons.handgun,buttons.rifle} do
    button.Interactable=not locked
    button.Selectable=not locked
-   button.ChoiceCaption.TextTransparency=locked and .24 or 0
-   if locked then button.HUDRaster.ImageColor3=button.HUDRaster.ImageColor3:Lerp(Color3.new(0,0,0),.38) end
+   button:FindFirstChild("ChoiceCaption",true).TextTransparency=locked and .24 or 0
+   if locked then button:FindFirstChild("HUDRaster",true).ImageColor3=button:FindFirstChild("HUDRaster",true).ImageColor3:Lerp(Color3.new(0,0,0),.38) end
   end
  end
 end
@@ -366,7 +367,7 @@ for _,key in {"AKOwned","AKSlot1","AKSlot2"} do
 end
 local launchNote=note.Text
 local function updateFlightLock()
- note.Text=loadoutLocked() and "Pilihan senjata terkunci selama penerbangan." or launchNote
+ note.Text=loadoutLocked() and "Senjata terkunci saat terbang." or launchNote
  note.Visible=true
  message.Text=""
  refreshLoadout()
@@ -377,10 +378,10 @@ weaponLoadoutEvent.OnClientEvent:Connect(function(result)
  note.Visible=false
 end)
 settingsToggle.Activated:Connect(function()
- settings.Visible=not settings.Visible
+ HUDMotion.Toggle(settings)
  if settings.Visible then updateFlightLock() end
 end)
-dismiss.Activated:Connect(function() settings.Visible=false end)
+dismiss.Activated:Connect(function() HUDMotion.SetVisible(settings,false) end)
 
 local labelsTitle=settingsText("TextLabel","PlayerLabelsLabel",settings,"Tulisan di atas pemain",14,0,0,1,44)
 labelsTitle.TextXAlignment=Enum.TextXAlignment.Left
@@ -396,7 +397,7 @@ local function updateOverhead(gui)
 end
 local function refreshPlayerLabels()
  local visible=labelsShown()
- paintChoice(labelsToggle,visible and "✓ Tampil" or "Sembunyi",visible)
+ paintChoice(labelsToggle,visible and "Nama: Tampil" or "Nama: Sembunyi",visible)
  localPlayer.NameDisplayDistance=visible and nativeNameDistance or 0
  for _,gui in CollectionService:GetTagged(overheadTag) do updateOverhead(gui) end
 end
@@ -405,4 +406,13 @@ CollectionService:GetInstanceAddedSignal(overheadTag):Connect(updateOverhead)
 localPlayer:GetAttributeChangedSignal("ShowPlayerLabels"):Connect(refreshPlayerLabels)
 updateFlightLock()
 refreshPlayerLabels()
+local motionToggle=styleButton(settingsText("TextButton","ReduceMotionToggle",settings,"Animasi: Penuh",13,0,0,1,44),blue)
+addChoiceArt(motionToggle)
+local function refreshMotion()
+ local reduced=localPlayer:GetAttribute("ReduceHUDMotion")==true
+ paintChoice(motionToggle,reduced and "Animasi: Ringan" or "Animasi: Penuh",reduced)
+end
+motionToggle.Activated:Connect(function() localPlayer:SetAttribute("ReduceHUDMotion",localPlayer:GetAttribute("ReduceHUDMotion")~=true) end)
+localPlayer:GetAttributeChangedSignal("ReduceHUDMotion"):Connect(refreshMotion)
+refreshMotion()
 settings.Parent=screenGui

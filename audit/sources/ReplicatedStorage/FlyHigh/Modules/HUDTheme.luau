@@ -6,6 +6,7 @@ local AdventureCatalog = require(script.Parent.HUDAdventureCatalog)
 local Input = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
+local Motion = require(script.Parent.HUDMotion)
 local Theme = {}
 
 -- {1: GlyphKey, 2: FallbackTitle, 3: Sprite, 4: Style ("dock", "round", "wide", "tile")}
@@ -83,6 +84,7 @@ local function box(o, x, y, w, h)
 end
 
 local function frame(parent, name)
+	parent = Motion.Visual(parent)
 	local f = parent:FindFirstChild(name) or Instance.new("Frame")
 	f.Name = name
 	f.BorderSizePixel = 0
@@ -154,6 +156,7 @@ local function fitLine(lbl, textBoost)
 end
 
 local function label(parent, name, size, font, color, strokeColor, strokeThickness)
+	parent = Motion.Visual(parent)
 	local l = parent:FindFirstChild(name) or Instance.new("TextLabel")
 	l.Name = name
 	l.BackgroundTransparency = 1
@@ -196,17 +199,18 @@ local surfaceKeys = {
 }
 
 local function raster(o, key, z, tint, completeKey, mode)
+	if o:IsA("GuiButton") then o.BackgroundTransparency=1 o=Motion.Visual(o) end
 	local adventureKey = completeKey or adventurePanels[key]
 	local complete, adventureImage = Adventure.Draw(o, adventureKey, z,
 		mode or ((o:IsA("ScrollingFrame") or key == "shop_panel" or key == "ping_panel" or key == "kit_card" or key == "rifle_card") and "stretch" or "wide"), tint)
-	local image = o:FindFirstChild("HUDRaster")
+	local image = o:FindFirstChild("HUDRaster",true)
 	local loaded = complete
 	if complete then
 		if image then image.Visible = false end
 	else
 		if not image then image = Assets.Mount(o, key) end
 		loaded = Assets.Apply(image, key)
-		Assets.Surface(image, key, o.AbsoluteSize)
+		Assets.Surface(image, key, o.Name=="HUDMotionVisual" and o.Parent.AbsoluteSize or o.AbsoluteSize)
 		image.Visible = true
 		image.ZIndex = z
 		image.ImageColor3 = tint or Color3.new(1, 1, 1)
@@ -624,7 +628,7 @@ function Theme.Start(gui, player)
 				if style == "ping" then
 					local iconSize = math.max(1, math.min(h - 8, 36))
 					local left = iconSize + 16
-					local fallback = o:FindFirstChild("HUDRaster")
+					local fallback = o:FindFirstChild("HUDRaster",true)
 					if fallback then fallback.Visible = false end
 					o.BackgroundColor3 = r.pressed and Color3.fromRGB(27, 78, 111) or Color3.fromRGB(16, 41, 81)
 					o.BackgroundTransparency = 0
@@ -665,7 +669,7 @@ function Theme.Start(gui, player)
 						illustration.ScaleType = Enum.ScaleType.Stretch
 						box(illustration, iconX, 1, iconSize, iconSize)
 					end
-					box(o:FindFirstChild("HUDRaster"), iconX, 1, iconSize, iconSize)
+					box(o:FindFirstChild("HUDRaster",true), iconX, 1, iconSize, iconSize)
 					local glyphSize = math.round(iconSize * .68)
 					box(r.glyphBox, (w - glyphSize) / 2, 1 + (iconSize - glyphSize) / 2, glyphSize, glyphSize)
 					r.captionPill.BackgroundTransparency = 1

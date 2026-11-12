@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"close\":true,\"noGameplayMutation\":true,\"open\":true,\"barTargetPreserved\":true,\"opacitySettled\":true,\"instanceCountStable\":true,\"reduced\":true,\"rootStable\":true,\"rapidReopen\":true}"
+    }
+  ],
+  "isError": false
+}

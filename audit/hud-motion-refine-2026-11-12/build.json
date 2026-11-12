@@ -1,0 +1,194 @@
+{
+  "placeHash": "E6BC4F1A97536D2ADE17749F8683768D010F57772F5936C1A7C7320680A637EE",
+  "sourceHashes": [
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\BalloonThemes.luau",
+      "sha256": "AC1B00E0796F1CB9F879ACB7783C7C2B947E4D70ECEB535A598E42BD500849C9"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\BiomeScenery.luau",
+      "sha256": "8C864B658C1B8A950CEC8B1870006218F1DB426DCA1BFC84B33699F52A8415C8"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\FlightControlMath.luau",
+      "sha256": "5C8AF9642EF634D5240AFA28DA9FD798182BFA1684AFACAE30E578E72AD0692B"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\FlyHighConfig.luau",
+      "sha256": "605D21161D3EE1878385565E9B60D68E38A1C58B3799C02BC322ABD7DFD59647"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDAdventureArt.luau",
+      "sha256": "E094D6C69694B273B87EFEAE629EA96F2C4E57A405ED7F11CD5F59A649999AA1"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDAdventureCatalog.luau",
+      "sha256": "711A014A13C52BAF97AA463FE582D1EB1A8CFB351B94506A126501F24B6305D8"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDGlyphs.luau",
+      "sha256": "4E930103C7244F2561CFD0B3C1FE7566865D52CA5871CE7D2556673046E20960"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDImageAssets.luau",
+      "sha256": "50A3E7E0294E0B591AE341CEDBB6AF7BD7A2C2F25065A692B9CBA149C96F33EB"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDLayout.luau",
+      "sha256": "ABEECE4A8D8A47F2E0EB60608C3B80F554569C53C7E5EC985C87B3A6BE3290C8"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDMotion.luau",
+      "sha256": "5F191B6CCB80540F82A9F8BB8222921D4169B747AF58831ACF7688F5FACADCFD"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\HUDTheme.luau",
+      "sha256": "899FA9FEF492AA28F2EA87798EB1164C8A974A54F98D445EE887BD72943BC6A2"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ReplicatedStorage\\FlyHigh\\Modules\\WeaponPresentation.luau",
+      "sha256": "BDB2068F5EE7CCB139D9B6493BCEC7DE52D328B7B85EE1ECB8E2945B0A002458"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\BalloonManager.luau",
+      "sha256": "04C2D2B3F679810CBF7D4BE7B80FAD2B8E34B8397F63CAD38A7ABF8AB1B2B009"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\CrewAccessGuard.luau",
+      "sha256": "F3B93D7F8F8B1751E3F5EB941ADB730EF506F3CFE0608910B5E2526F340329FC"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\DataManager.luau",
+      "sha256": "154A6A20D2951FC60AE26B2577992B80CE9AAAB22C54E51FAD7D8BA369370875"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\FlightSpace.luau",
+      "sha256": "3A2B1D8774DE434979F3AC9B9E49DB6A68AE6C842E70C538E76ED38299BFA372"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\IslandWildlifeController.luau",
+      "sha256": "397D3EF94F76B631227B678981558C0A1930F8B9F3583CB80D16B501DA8B0413"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\JumpManager.luau",
+      "sha256": "B66E44ED109381A8048FC0F38D3C6305BF397DB70CE6F573F25C36549C879766"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\LargeChallengeManager.luau",
+      "sha256": "62B5670A7F7ABC5071A158A8FE08E87ABEB652F780E1A0892428E71854592FEA"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\ObstacleArt.luau",
+      "sha256": "9C653FA95307B1F401BD6E6D0D5532BCAEA169E43E7A5BDED2F6D14D9686A9E2"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\ObstacleManager.luau",
+      "sha256": "59A3CBEDA4E59D39730CB530891E86F336B7CDF5CA820433015539AD0B5D2B8F"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\ObstacleMotion.luau",
+      "sha256": "E9D4A8DB30BAE0AFB8915F76D6AF823371D506AA39644ACBE2C2650918D27E34"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\OverheadManager.luau",
+      "sha256": "9AFCE659DB8F4086C09575F99C8139CA3CFB06E8937589045D840282DE8D8816"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\PalaceArrival.luau",
+      "sha256": "035AAF7C619A7521B8419DD1232BDC2AD6C92FEC05B9D7F9F0D0C81BA324AC8A"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\PalaceManager.luau",
+      "sha256": "57DBEE29CB2A811A175653097F6AFFCAFEFA5B57F6A4FB7D56BC8EDD3D7B6875"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\PodManager.luau",
+      "sha256": "77D1BB87CFF0A72F39313C50AD1096FC242F68941FE836DAF4CA4BE96D043ED1"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\ServerUtils.luau",
+      "sha256": "4819C7D347FA948A118CE55F84E2339BAC2E6C9EEC36556C0D0E81595E76588D"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\ShopManager.luau",
+      "sha256": "6D5691C1DBEB0FA4EB463C78AB5715E101FA8497C42E3DAC610ACC2D14D01782"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\TetherManager.luau",
+      "sha256": "8FB7766471E42F351F138ABC1CA7FE4BA015F71C040EF55B2E9298FCBA12E262"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\WeaponManager.luau",
+      "sha256": "60255A22020950D34A79CD856D71FC86E28342CB92C8AB86730039832DC15CA7"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\ServerScriptService\\FlyHighServer\\WeaponRackPresentation.luau",
+      "sha256": "788DC8DD1E2481FBB1EF12A1E9B160CDAA3EA0E0155789ABB5DCE0276AF184F9"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\BalloonFleetAnimator.luau",
+      "sha256": "4E325D3095BC4BA3131D85027896B3F52E6998AEDB2B33A011113DAE613FE0DD"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\BiomeLightingController.luau",
+      "sha256": "D055322D6CD94CA987263194E224910052BD2AFB35C37DEFAA02726185E7B041"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\FlightHUDController.luau",
+      "sha256": "37229E522A1D22DE2B8482063A7E48811F48B602BCCA337D3BBDAA5D34DF08DF"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\FlightJumpController.luau",
+      "sha256": "A0C891D7E16503E9EAE5DE85B6A1CDB0BC6F90105F27501B778186736DE047D3"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\IslandNatureAnimator.luau",
+      "sha256": "6E4B1F48399B7C846132C4E9E3D82B99BC87E544ED45BD1ED79FDE3C422CC9C5"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\PalacePresentation.luau",
+      "sha256": "577A2BD39656CC9BB122AFCB387322E84870738FDF83F54192079AC78D2B3B33"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\ShopClientController.luau",
+      "sha256": "A71F0D6A07FD28B98982CE0E0B1779F98D6C734D80908CCFC72BC93F8575515F"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\StormCurtainPresentation.luau",
+      "sha256": "AA73D012AE02C77AF328F1298851B7E88712BF691ADA7E29B5EB7F23FB4F2556"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\WarningAudioController.luau",
+      "sha256": "22C7C79724E2A06B96198683BC8171997A6A5099EA4C33E104958B92880B0E29"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\WeaponClientController.luau",
+      "sha256": "AA423D6D3521E08C0085013F421AD90051303646D9071792464F10BC6E4E14CD"
+    },
+    {
+      "path": "E:\\Antigravity\\Fly High\\audit\\sources\\StarterPlayer\\StarterPlayerScripts\\WorldUISkins.luau",
+      "sha256": "14FF52546575C7E8F79B6B6B1789CE622EEBF2D0CE1EAEAFA9F162B2CB305B1E"
+    }
+  ],
+  "binaryReopened": false,
+  "capturedUTC": "2026-11-12T15:27:55.4896417+00:00",
+  "timezone": "Asia/Jakarta",
+  "dirty": [
+    " M \"Fly High.rbxl\"",
+    " M HANDOVER.md",
+    " M PRD_Fly_High.md",
+    " M PROGRESS.md",
+    " M audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureArt.luau",
+    " M audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+    " M audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+    " M audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+    " M design/features/hud-motion/design.md",
+    "?? \"audit/Fly High.before-arcade-refine.rbxl\"",
+    "?? audit/hud-motion-2026-11-12/",
+    "?? audit/hud-motion-refine-2026-11-12/",
+    "?? audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau"
+  ],
+  "baseCommit": "94591f0cc71c094f9288fae23a8bb6c9abf4cc4d"
+}

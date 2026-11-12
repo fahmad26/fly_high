@@ -1,0 +1,50 @@
+{
+  "runtime": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"close\":true,\"noGameplayMutation\":true,\"open\":true,\"barTargetPreserved\":true,\"opacitySettled\":true,\"instanceCountStable\":true,\"reduced\":true,\"rootStable\":true,\"rapidReopen\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "hoverSequence": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"rootStable\":true,\"samples\":[{\"scale\":1,\"t\":0.016863400116562845,\"stable\":true,\"y\":0},{\"scale\":1.0365480184555054,\"t\":0.0774474001955241,\"stable\":true,\"y\":-1},{\"scale\":1.065327525138855,\"t\":0.1441890001296997,\"stable\":true,\"y\":-2},{\"scale\":1.0791560411453248,\"t\":0.20780650014057756,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.27609660010784867,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.3418768001720309,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.4151645000092685,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.48149320017546418,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.5434110001660883,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.6076680000405759,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.6747564000543207,\"stable\":true,\"y\":-2},{\"scale\":1.0800000429153443,\"t\":0.7416748001705855,\"stable\":true,\"y\":-2}],\"monotonic\":true,\"settled\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "shape": {
+    "imageMask": true,
+    "noOutline": true,
+    "sameSprite": true
+  },
+  "source": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"fixtures\":[],\"exact\":{\"ReplicatedStorage.FlyHigh.Modules.HUDTheme\":true,\"ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt\":true,\"ReplicatedStorage.FlyHigh.Modules.HUDMotion\":true,\"StarterPlayer.StarterPlayerScripts.ShopClientController\":true,\"ReplicatedStorage.FlyHigh.Modules.HUDLayout\":true},\"compiled\":42,\"errors\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "[DataManager] Unpublished Studio: isolated mock data; checkout disabled."
+      }
+    ],
+    "isError": false
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "viewport": "default",
+    "clients": 1,
+    "fixtures": [],
+    "binaryReopened": false
+  }
+}

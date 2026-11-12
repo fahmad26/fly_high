@@ -1,0 +1,29 @@
+{
+  "mouseAttempt": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ammo\":8,\"tool\":\"Pistol\",\"label\":\"8 / ∞\"}"
+      }
+    ],
+    "isError": false
+  },
+  "gamepadShot": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ammo\":7,\"life\":100,\"role\":\"Gunner\",\"modal\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "gamepadReload": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ammo\":8,\"reloading\":false,\"label\":\"8 / ∞\"}"
+      }
+    ],
+    "isError": false
+  }
+}

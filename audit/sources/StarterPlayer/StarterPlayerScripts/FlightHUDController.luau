@@ -324,6 +324,11 @@ localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
 end)
 updateKit()
 
+local motionBiome: number? = nil
+local motionVictory=false
+localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
+ if not localPlayer:GetAttribute("InFlight") then motionBiome=nil motionVictory=false end
+end)
 -- Server Flight State Listener
 flightSyncEvent.OnClientEvent:Connect(function(data)
 	screenGui:SetAttribute("FlightHUDReady", not data.isGameOver and not data.isVictory)
@@ -345,7 +350,15 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 		holePenalty.Text = "GAME OVER"
 	end
 	-- Update Altimeter
-	local pct = math.clamp(altKm / 10000, 0, 1)
+	local biome=math.min(4,math.floor(altKm/2000))
+ if motionBiome~=nil and biome>motionBiome and not data.isVictory and not data.isGameOver then
+  screenGui:SetAttribute("HUDMotionNotice","✦ Bioma baru · "..tostring(biome*2000).." km")
+ end
+ motionBiome=math.max(motionBiome or biome,biome)
+ if data.isVictory and not motionVictory then
+  motionVictory=true screenGui:SetAttribute("HUDMotionNotice","✦ Tiba di Istana Awan!")
+ end
+ local pct = math.clamp(altKm / 10000, 0, 1)
 	altLabel.Text = string.format("Ketinggian: %d km / 10.000 km (%.1f%%)", math.floor(altKm), pct * 100)
 	barFill.Size = UDim2.new(pct, 0, 1, 0)
 	local speed=data.verticalSpeedKmPerSec or 0

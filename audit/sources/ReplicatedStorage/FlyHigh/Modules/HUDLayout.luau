@@ -27,6 +27,7 @@ end
 
 function Layout.Start(gui, player)
 	local theme = require(script.Parent.HUDTheme).Start(gui, player)
+	local motion = require(script.Parent.HUDMotion).Start(gui, player)
 	local assets = require(script.Parent.HUDImageAssets)
 	local input = game:GetService("UserInputService")
 	local guiService = game:GetService("GuiService")
@@ -51,16 +52,19 @@ function Layout.Start(gui, player)
 	scrim.Activated:Connect(function()
 		for _, name in { "ShopModal", "TacticalPingWheel", "WeaponSettingsModal" } do
 			local o = get(name)
-			if o then o.Visible = false end
+			if o then require(script.Parent.HUDMotion).SetVisible(o, false) end
 		end
-		scrim.Visible = false
+		-- Scrim stays active until the closing animation completes.
 	end)
 
 	local activeModal
 	local elapsed = 1
-	local connection
-	connection = game:GetService("RunService").RenderStepped:Connect(function(dt)
+	local render = game:GetService("RunService")
+	local layoutStep = "FlyHighHUDLayout_" .. game:GetService("HttpService"):GenerateGUID(false)
+	local connection = {Disconnect = function() render:UnbindFromRenderStep(layoutStep) end}
+	render:BindToRenderStep(layoutStep, Enum.RenderPriority.Last.Value + 10, function(dt)
 		if not gui.Parent then
+			motion.Destroy()
 			theme.Destroy()
 			connection:Disconnect()
 			return
@@ -69,6 +73,7 @@ function Layout.Start(gui, player)
 		elapsed = (elapsed or 0) + dt
 		if elapsed < 0.04 then return end
 		elapsed = 0
+		motion.BeforeLayout()
 
 		local w, h = gui.AbsoluteSize.X, gui.AbsoluteSize.Y
 		if w < 1 or h < 1 then return end
@@ -295,7 +300,7 @@ function Layout.Start(gui, player)
 			-- Align the controls inside the artwork's navy area, below the compass.
 			local pad = math.round(mw * .13)
 			local innerWidth = mw - pad * 2
-			local innerTop, innerBottom = math.round(mh * .24), math.round(mh * .91)
+			local innerTop, innerBottom = math.round(mh * .22), math.round(mh * .82)
 			local available = innerBottom - innerTop
 			local short = available < 243
 			local titleH, inventoryH = short and 22 or 25, short and 18 or 20
@@ -316,8 +321,11 @@ function Layout.Start(gui, player)
 				box(settings:FindFirstChild("AK47Slot" .. slot), pad + labelW + choiceW + 8, row, choiceW, 44)
 			end
 			local labelRow = firstRow + 2 * (44 + rowGap)
-			box(settings:FindFirstChild("PlayerLabelsLabel"), pad, labelRow, innerWidth - choiceW - 8, 44)
-			box(settings:FindFirstChild("PlayerLabelsToggle"), mw - pad - choiceW, labelRow, choiceW, 44)
+			local labelsTitle = settings:FindFirstChild("PlayerLabelsLabel")
+			if labelsTitle then labelsTitle.Visible = false end
+			local generalW = math.floor((innerWidth - 8) / 2)
+			box(settings:FindFirstChild("ReduceMotionToggle"), pad + generalW + 8, labelRow, generalW, 44)
+			box(settings:FindFirstChild("PlayerLabelsToggle"), pad, labelRow, generalW, 44)
 			local footerY = labelRow + 44 + sectionGap
 			box(settings:FindFirstChild("LaunchNote"), pad, footerY, innerWidth, footerH)
 			box(settings:FindFirstChild("SettingsFeedback"), pad, footerY, innerWidth, footerH)
@@ -387,6 +395,7 @@ function Layout.Start(gui, player)
 		end
 
 		theme.Step()
+		motion.Capture()
 	end)
 end
 

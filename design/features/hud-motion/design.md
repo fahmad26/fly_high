@@ -1,10 +1,12 @@
 # Fly High — rencana animasi HUD Sky Adventure
 
-Status: draft
+Status: approved — pengguna menyetujui implementasi langsung Studio pada 12 November 2026. Implementasi awal dan QA terarah tersedia; rincian yang belum terpasang/teruji ada di [laporan](../../../audit/hud-motion-2026-11-12/README.md).
 
-Tanggal sesi: 11–12 November 2026, Asia/Jakarta. Permintaan pengguna: analisis dua video referensi dan rencana untuk HUD saat ini. Dokumen ini belum menjadi persetujuan implementasi; kode, gambar, font dan layout game belum diubah.
+Tanggal sesi analisis: 11–12 November 2026, Asia/Jakarta. Analisis di bawah dipertahankan sebagai dasar rancangan. Sesudah analisis, pengguna menyetujui implementasi; laporan implementasi di atas menggantikan status awal "belum diubah", bukan mengubah bukti historis referensi.
 
 ## Tujuan dan acuan
+
+Revisi 12 November sesudah review pengguna: hover awal dinilai glitchy dan kurang menarik. Gunakan satu child visual UIScale untuk tombol, render layout sebelum motion, easing Sine tanpa overshoot, serta silhouette dari PNG asli. Jangan memakai UIStroke pada bounding rectangle untuk meniru glow gambar kapsul/lingkaran. [Bukti revisi](../../../audit/hud-motion-refine-2026-11-12/README.md) menggantikan penilaian kualitas awal; rasa akhir tetap memerlukan review manusia.
 
 Membuat HUD terasa responsif sekaligus memperjelas tindakan, bahaya dan keberhasilan. Pertahankan gaya gambar lengkap Sky Adventure, posisi kontrol yang sudah dirapikan, angka dinamis dan aturan role di [PRD bagian 12](../../../PRD_Fly_High.md). Animasi mencakup bingkai/lingkaran tombol beserta ikon, bukan hanya ikon di dalamnya.
 
