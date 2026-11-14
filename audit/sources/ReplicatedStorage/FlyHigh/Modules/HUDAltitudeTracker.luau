@@ -151,14 +151,23 @@ local function ensureChrome(container: Frame)
 
 	local topLabel = Instance.new("TextLabel")
 	topLabel.Name = "Label"
-	topLabel.Size = UDim2.fromScale(1, 1)
+	topLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+	topLabel.Position = UDim2.fromScale(0.5, 0.5)
+	topLabel.Size = UDim2.new(1, -12, 1, -2)
 	topLabel.BackgroundTransparency = 1
 	topLabel.Font = Enum.Font.GothamBlack
 	topLabel.Text = "10.000 km"
 	topLabel.TextColor3 = TEXT_CREAM
 	topLabel.TextSize = 11
+	topLabel.TextScaled = true
+	topLabel.TextWrapped = false
 	topLabel.Active = false
 	topLabel.Parent = topPill
+	local topConstraint = Instance.new("UITextSizeConstraint")
+	topConstraint.Name = "SizeConstraint"
+	topConstraint.MinTextSize = 7
+	topConstraint.MaxTextSize = 11
+	topConstraint.Parent = topLabel
 
 	-- 2. Outer cyan-gold vertical rail spine
 	local railOuter = Instance.new("Frame")
@@ -288,14 +297,23 @@ local function ensureChrome(container: Frame)
 
 	local botLabel = Instance.new("TextLabel")
 	botLabel.Name = "Label"
-	botLabel.Size = UDim2.fromScale(1, 1)
+	botLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+	botLabel.Position = UDim2.fromScale(0.5, 0.5)
+	botLabel.Size = UDim2.new(1, -10, 1, -2)
 	botLabel.BackgroundTransparency = 1
 	botLabel.Font = Enum.Font.GothamBlack
 	botLabel.Text = "0 km"
 	botLabel.TextColor3 = TEXT_CREAM
 	botLabel.TextSize = 11
+	botLabel.TextScaled = true
+	botLabel.TextWrapped = false
 	botLabel.Active = false
 	botLabel.Parent = botPill
+	local botConstraint = Instance.new("UITextSizeConstraint")
+	botConstraint.Name = "SizeConstraint"
+	botConstraint.MinTextSize = 7
+	botConstraint.MaxTextSize = 12
+	botConstraint.Parent = botLabel
 
 	-- 5. Dynamic markers layer
 	local markers = Instance.new("Frame")
@@ -628,8 +646,8 @@ function Tracker.Step(container: Frame, dt: number, compact: boolean, textBoost:
 	local topPillH = h >= 220 and 20 or (h >= 150 and 16 or 14)
 	local botPillH = h >= 220 and 22 or (h >= 150 and 18 or 16)
 	local crestD = (not compact and h >= 280) and 42 or (h >= 200 and 34 or (h >= 140 and 28 or 22))
-	local topPillW = math.clamp(compact and 66 or 76, 56, 84) + textBoost * 2
-	local botPillW = math.clamp(compact and 72 or 84, 62, 92) + textBoost * 2
+	local topPillW = (compact and 84 or 94) + textBoost * 2
+	local botPillW = (compact and 80 or 90) + textBoost * 2
 	local railOuterW = compact and 18 or 22
 
 	local railCenterX = w - math.max(crestD, botPillW, topPillW) / 2
@@ -662,7 +680,10 @@ function Tracker.Step(container: Frame, dt: number, compact: boolean, textBoost:
 		local lbl = topPill:FindFirstChild("Label") :: TextLabel?
 		if lbl then
 			lbl.ZIndex = z + 4
-			lbl.TextSize = topPillH >= 19 and 11 or 9
+			local maxTopSz = (topPillH >= 19 and 11 or 9) + math.min(2, textBoost)
+			lbl.TextSize = maxTopSz
+			local tc = lbl:FindFirstChild("SizeConstraint") :: UITextSizeConstraint?
+			if tc then tc.MaxTextSize = maxTopSz end
 		end
 	end
 
@@ -721,7 +742,10 @@ function Tracker.Step(container: Frame, dt: number, compact: boolean, textBoost:
 		local lbl = botPill:FindFirstChild("Label") :: TextLabel?
 		if lbl then
 			lbl.ZIndex = z + 5
-			lbl.TextSize = botPillH >= 20 and 12 or 10
+			local maxBotSz = (botPillH >= 20 and 12 or 10) + math.min(2, textBoost)
+			lbl.TextSize = maxBotSz
+			local bc = lbl:FindFirstChild("SizeConstraint") :: UITextSizeConstraint?
+			if bc then bc.MaxTextSize = maxBotSz end
 			lbl.Text = formatKm(localAltitudeKm)
 		end
 	end

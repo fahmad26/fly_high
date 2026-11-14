@@ -207,7 +207,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		local cc = Instance.new("UICorner")
 		cc.CornerRadius = UDim.new(0, 15)
 		cc.Parent = card
-		stroke(card, Color3.fromRGB(59, 130, 246), 1.6, 0.25)
+		stroke(card, Color3.fromRGB(59, 130, 246), 2, 0.14)
 		local cGrad = Instance.new("UIGradient")
 		cGrad.Rotation = 90
 		cGrad.Color = ColorSequence.new(Color3.fromRGB(16, 43, 96), Color3.fromRGB(8, 26, 63))
@@ -310,9 +310,10 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 	cosListLayout.Parent = cosScroll
 
 	local cosPad = Instance.new("UIPadding")
-	cosPad.PaddingRight = UDim.new(0, 8)
-	cosPad.PaddingTop = UDim.new(0, 2)
-	cosPad.PaddingBottom = UDim.new(0, 4)
+	cosPad.PaddingLeft = UDim.new(0, 4)
+	cosPad.PaddingRight = UDim.new(0, 10)
+	cosPad.PaddingTop = UDim.new(0, 4)
+	cosPad.PaddingBottom = UDim.new(0, 6)
 	cosPad.Parent = cosScroll
 
 	local cosmeticRows = {}
@@ -328,7 +329,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		local rc = Instance.new("UICorner")
 		rc.CornerRadius = UDim.new(0, 14)
 		rc.Parent = row
-		local rowStroke = stroke(row, Color3.fromRGB(47, 104, 175), 1.5, 0.15)
+		local rowStroke = stroke(row, Color3.fromRGB(59, 130, 246), 2, 0.14)
 		local rowGrad = Instance.new("UIGradient")
 		rowGrad.Rotation = 90
 		rowGrad.Color = ColorSequence.new(Color3.fromRGB(12, 35, 82), Color3.fromRGB(7, 23, 58))
@@ -503,7 +504,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 				cr.actRim.Color = Color3.fromRGB(125, 211, 252)
 				cr.actLbl.Text = "PAKAI"
 			else
-				cr.stroke.Color = Color3.fromRGB(47, 104, 175)
+				cr.stroke.Color = Color3.fromRGB(59, 130, 246)
 				if coins >= it.price then
 					cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(253, 224, 71), Color3.fromRGB(180, 83, 9))
 					cr.actRim.Color = Color3.fromRGB(254, 240, 138)
@@ -669,28 +670,31 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		local sw = suppliesFrame.AbsoluteSize.X
 		local sh = suppliesFrame.AbsoluteSize.Y
 		if sw < 1 or sh < 1 then return end
+		local inset = 4
+		local availW = math.max(120, sw - inset * 2)
+		local availH = math.max(100, sh - inset * 2)
 		local phoneStack = sw < 380 or (shopModal.AbsoluteSize.X < 460 and sh >= 240)
 		local list = { supplyCards.turbo_gas, supplyCards.tali_awet }
 		if phoneStack then
 			local gap = 10
-			local ch = math.floor((sh - gap) / 2)
+			local ch = math.floor((availH - gap) / 2)
 			for i, sc in ipairs(list) do
-				layoutHorizontalCard(sc, 0, (i - 1) * (ch + gap), sw, ch, 40)
+				layoutHorizontalCard(sc, inset, inset + (i - 1) * (ch + gap), availW, ch, 40)
 			end
 		elseif sh < 250 then
 			local gap = 14
-			local cw = math.floor((sw - gap) / 2)
+			local cw = math.floor((availW - gap) / 2)
 			for i, sc in ipairs(list) do
-				layoutHorizontalCard(sc, (i - 1) * (cw + gap), 0, cw, sh, 40)
+				layoutHorizontalCard(sc, inset + (i - 1) * (cw + gap), inset, cw, availH, 40)
 			end
 		else
 			local gap = 14
-			local cw = math.floor((sw - gap) / 2)
+			local cw = math.floor((availW - gap) / 2)
 			for i, sc in ipairs(list) do
-				local cx = (i - 1) * (cw + gap)
-				sc.card.Position = UDim2.fromOffset(cx, 0)
-				sc.card.Size = UDim2.fromOffset(cw, sh)
-				local stageH = math.clamp(math.round(sh * 0.34), 60, 100)
+				local cx = inset + (i - 1) * (cw + gap)
+				sc.card.Position = UDim2.fromOffset(cx, inset)
+				sc.card.Size = UDim2.fromOffset(cw, availH)
+				local stageH = math.clamp(math.round(availH * 0.34), 60, 100)
 				sc.stage.Position = UDim2.fromOffset(12, 10)
 				sc.stage.Size = UDim2.fromOffset(cw - 24, stageH)
 				sc.stockPill.Position = UDim2.new(1, -78, 0, 6)
@@ -703,7 +707,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 				sc.tag.Size = UDim2.fromOffset(cw - 24, 16)
 				sc.title.Position = UDim2.fromOffset(12, curY + 18)
 				sc.title.Size = UDim2.fromOffset(cw - 24, 22)
-				local btnY = sh - 54
+				local btnY = availH - 54
 				local descH = math.max(20, btnY - 6 - (curY + 42))
 				sc.desc.Position = UDim2.fromOffset(12, curY + 42)
 				sc.desc.Size = UDim2.fromOffset(cw - 24, descH)

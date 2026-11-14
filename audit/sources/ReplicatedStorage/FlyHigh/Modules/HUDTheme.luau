@@ -1178,10 +1178,10 @@ end
 					local rightInset = narrow and 14 or 16
 					local gap = narrow and 8 or 10
 					local centerY = h / 2
-					local titleY = centerY - 9 - textBoost / 2
-					local detailY = centerY + 10 + textBoost / 2
-					local titleH = 22 + textBoost
-					local detailH = 14 + textBoost
+					local titleY = centerY - 6 - textBoost / 2
+					local detailY = centerY + 8 + textBoost / 2
+					local titleH = 18 + textBoost
+					local detailH = 12 + textBoost
 					local speedW = (narrow and 94 or 106) + 4 * textBoost
 					local speedH = (narrow and 26 or 28) + textBoost
 					local speedX = w - rightInset - speedW
@@ -1204,7 +1204,7 @@ end
 						local descending = flightReady and vVal <= -0.05
 						r.head.Text = flightReady and zoneInfo.title or "MEMUAT ZONA"
 						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
-						r.head.TextSize = narrow and 16 or 19
+						r.head.TextSize = narrow and 15 or 18
 						r.goal.Text = not flightReady and "Menghitung ketinggian..."
 							or descending and (zoneInfo.zone .. " · Balon Menurun!")
 							or (zoneInfo.zone .. " · Target Istana Awan")
@@ -1214,7 +1214,7 @@ end
 					elseif atPalace or (outcome == "result_victory" and os.clock() < resultUntil) then
 						r.head.Text = "ISTANA AWAN"
 						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
-						r.head.TextSize = 19
+						r.head.TextSize = 18
 						r.goal.Text = "Puncak · 10.000 km"
 						r.goal.TextColor3 = Color3.fromRGB(253, 224, 71)
 					else
@@ -1222,7 +1222,7 @@ end
 						local podLetter = pod and pod:match("^Pod_([A-E])$")
 						r.head.Text = podLetter and "DERMAGA " .. podLetter or "FLY HIGH"
 						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
-						r.head.TextSize = 19
+						r.head.TextSize = 18
 						r.goal.Text = "Pilih dermaga"
 						r.goal.TextColor3 = Color3.fromRGB(213, 237, 255)
 						if podLetter then
@@ -1234,6 +1234,8 @@ end
 							r.goal.Text = string.format("%d/3 kru · %s", crew, action)
 						end
 					end
+					r.head.TextYAlignment = Enum.TextYAlignment.Center
+					r.goal.TextYAlignment = Enum.TextYAlignment.Center
 					box(r.head, headingX, titleY - titleH / 2, headingWidth, titleH)
 					box(r.goal, headingX, detailY - detailH / 2, goalWidth, detailH)
 					fitLine(r.head, textBoost)
@@ -1581,7 +1583,7 @@ end
 				o.BackgroundColor3 = Color3.new(1, 1, 1)
 				o.BackgroundTransparency = 0
 				round(o, 15)
-				stroke(o, Color3.fromRGB(59, 130, 246), 1.6, 0.25)
+				stroke(o, Color3.fromRGB(59, 130, 246), 2, 0.14)
 				local cardGrad = ensurePanelChild(o, "UIGradient", "HUDCardGrad", function(g)
 					g.Rotation = 90
 					g.Color = ColorSequence.new(Color3.fromRGB(16, 43, 96), Color3.fromRGB(8, 26, 63))

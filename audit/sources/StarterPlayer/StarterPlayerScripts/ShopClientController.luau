@@ -156,7 +156,7 @@ local function makeRobuxCard(spec)
 	card.Parent = robuxScroll
 
 	local cardCorner = Instance.new("UICorner")
-	cardCorner.CornerRadius = UDim.new(0, 10)
+	cardCorner.CornerRadius = UDim.new(0, 15)
 	cardCorner.Parent = card
 
 	local cardTitle = Instance.new("TextLabel")
