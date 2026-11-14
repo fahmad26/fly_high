@@ -637,34 +637,57 @@ function Layout.Start(gui, player)
 
 			local cardY = toolbarY + toolbarH + headerGap
 			local cardAreaH = math.max(120, (mh - bottomPad - footerH - footerGap) - cardY)
-			local card1 = modal:FindFirstChild("Card1")
-			local card2 = modal:FindFirstChild("Card2")
 			local activeTab = modal:GetAttribute("ActiveShopTab") or "robux"
+			local robuxScroll = modal:FindFirstChild("RobuxScroll")
+			local cardRoot = robuxScroll or modal
+			if robuxScroll then
+				robuxScroll.Visible = (activeTab == "robux")
+				box(robuxScroll, pad, cardY, innerW, cardAreaH)
+				robuxScroll.ZIndex = 23
+			end
 
-			if card1 then card1.Visible = (activeTab == "robux") end
-			if card2 then card2.Visible = (activeTab == "robux") end
-
-			if phoneStack then
-				local cardGap = 10
-				local cardH = math.floor((cardAreaH - cardGap) / 2)
-				if card1 then
-					box(card1, pad, cardY, innerW, cardH)
-					card1.ZIndex = 23
+			local cards = {}
+			for i = 1, 4 do
+				local c = cardRoot:FindFirstChild("Card" .. i) or modal:FindFirstChild("Card" .. i)
+				if c then
+					c.Visible = (activeTab == "robux")
+					c.ZIndex = 23
+					table.insert(cards, c)
 				end
-				if card2 then
-					box(card2, pad, cardY + cardH + cardGap, innerW, cardH)
-					card2.ZIndex = 23
+			end
+
+			local baseX = robuxScroll and 0 or pad
+			local baseY = robuxScroll and 0 or cardY
+			if phoneStack or innerW < 450 then
+				local cardGap = 10
+				local cardH = (#cards <= 2 and math.floor((cardAreaH - cardGap) / math.max(1, #cards))) or 140
+				local totalH = #cards * cardH + math.max(0, #cards - 1) * cardGap
+				local needScroll = robuxScroll ~= nil and totalH > cardAreaH
+				local cardW = innerW - (needScroll and 10 or 0)
+				for idx, c in ipairs(cards) do
+					box(c, baseX, baseY + (idx - 1) * (cardH + cardGap), cardW, cardH)
+				end
+				if robuxScroll and robuxScroll:IsA("ScrollingFrame") then
+					robuxScroll.CanvasSize = UDim2.fromOffset(0, totalH + (needScroll and 4 or 0))
+					robuxScroll.ScrollingEnabled = needScroll
 				end
 			else
-				local cardGap = math.max(12, math.round(mw * .026))
-				local cardW = math.floor((innerW - cardGap) / 2)
-				if card1 then
-					box(card1, pad, cardY, cardW, cardAreaH)
-					card1.ZIndex = 23
+				local colGap = math.max(10, math.round(mw * .022))
+				local rowGap = 10
+				local rows = math.max(1, math.ceil(#cards / 2))
+				local rawRowH = math.floor((cardAreaH - math.max(0, rows - 1) * rowGap) / rows)
+				local needScroll = robuxScroll ~= nil and rawRowH < 152
+				local rowH = needScroll and 148 or rawRowH
+				local totalH = rows * rowH + math.max(0, rows - 1) * rowGap
+				local cardW = math.floor((innerW - (needScroll and 10 or 0) - colGap) / 2)
+				for idx, c in ipairs(cards) do
+					local col = (idx - 1) % 2
+					local row = math.floor((idx - 1) / 2)
+					box(c, baseX + col * (cardW + colGap), baseY + row * (rowH + rowGap), cardW, rowH)
 				end
-				if card2 then
-					box(card2, pad + cardW + cardGap, cardY, cardW, cardAreaH)
-					card2.ZIndex = 23
+				if robuxScroll and robuxScroll:IsA("ScrollingFrame") then
+					robuxScroll.CanvasSize = UDim2.fromOffset(0, totalH + (needScroll and 4 or 0))
+					robuxScroll.ScrollingEnabled = needScroll
 				end
 			end
 

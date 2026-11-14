@@ -84,7 +84,13 @@ local function makeStyledButton(parent: Instance, name: string, zBase: number): 
 	local lbl = makeLabel(fill, "Caption", "", 13, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Enum.TextXAlignment.Center)
 	lbl.Size = UDim2.new(1, -10, 1, 0)
 	lbl.Position = UDim2.fromOffset(5, 0)
+	lbl.TextWrapped = false
+	lbl.TextScaled = true
 	lbl.ZIndex = zBase + 2
+	local capConstraint = Instance.new("UITextSizeConstraint")
+	capConstraint.MinTextSize = 8
+	capConstraint.MaxTextSize = 13
+	capConstraint.Parent = lbl
 
 	return btn, fill, rim, grad, lbl
 end
@@ -109,7 +115,7 @@ local function formatRemainingTrial(expiry: number): string
 	return "SEGERA HABIS"
 end
 
-function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback: (string) -> ())
+function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback: (string) -> (), onRobuxPurchase: ((string) -> ())?)
 	local remotes = ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 	local coinShopFn = remotes:WaitForChild("ShopCoinFunction", 15) :: RemoteFunction?
 
@@ -261,6 +267,11 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		local buyBtn, _, buyRim, buyGrad, buyLbl = makeStyledButton(card, "BuyCoin_" .. spec.id, 25)
 		buyBtn:SetAttribute("ItemId", spec.id)
 
+		local robuxBtn, _, robuxRim, robuxGrad, robuxLbl = makeStyledButton(card, "BuyRobux_" .. spec.id, 25)
+		robuxBtn:SetAttribute("ProductKey", spec.productKey or "")
+		robuxGrad.Color = ColorSequence.new(Color3.fromRGB(58, 224, 122), Color3.fromRGB(20, 134, 60))
+		robuxRim.Color = Color3.fromRGB(134, 239, 172)
+
 		supplyCards[spec.id] = {
 			spec = spec,
 			card = card,
@@ -273,6 +284,10 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			buyRim = buyRim,
 			buyGrad = buyGrad,
 			buyLbl = buyLbl,
+			robuxBtn = robuxBtn,
+			robuxRim = robuxRim,
+			robuxGrad = robuxGrad,
+			robuxLbl = robuxLbl,
 		}
 	end
 
@@ -416,10 +431,13 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			tb.lbl.TextColor3 = selected and Color3.new(1, 1, 1) or Color3.fromRGB(165, 195, 235)
 		end
 
-		local c1 = shopModal:FindFirstChild("Card1") :: GuiObject?
-		local c2 = shopModal:FindFirstChild("Card2") :: GuiObject?
-		if c1 then c1.Visible = (activeTab == "robux") end
-		if c2 then c2.Visible = (activeTab == "robux") end
+		local rs = shopModal:FindFirstChild("RobuxScroll") :: GuiObject?
+		if rs then rs.Visible = (activeTab == "robux") end
+		local searchRoot = rs or shopModal
+		for _, cname in { "Card1", "Card2", "Card3", "Card4" } do
+			local cardObj = searchRoot:FindFirstChild(cname) :: GuiObject?
+			if cardObj then cardObj.Visible = (activeTab == "robux") end
+		end
 		suppliesFrame.Visible = (activeTab == "perbekalan")
 		cosScroll.Visible = (activeTab == "kosmetik")
 
@@ -439,6 +457,21 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			else
 				sc.buyGrad.Color = ColorSequence.new(Color3.fromRGB(51, 65, 85), Color3.fromRGB(30, 41, 59))
 				sc.buyRim.Color = Color3.fromRGB(100, 116, 139)
+			end
+
+			local pKey = sc.spec.productKey
+			local robuxPrice = pKey and shopModal:GetAttribute(pKey .. "Price")
+			local robuxBusy = pKey and shopModal:GetAttribute(pKey .. "Busy") == true
+			sc.robuxBtn.Visible = (pKey ~= nil and onRobuxPurchase ~= nil)
+			sc.robuxBtn.Active = not robuxBusy
+			if robuxBusy then
+				sc.robuxLbl.Text = "MEMBUKA..."
+				sc.robuxGrad.Color = ColorSequence.new(Color3.fromRGB(56, 189, 248), Color3.fromRGB(3, 105, 161))
+				sc.robuxRim.Color = Color3.fromRGB(125, 211, 252)
+			else
+				sc.robuxLbl.Text = type(robuxPrice) == "number" and (tostring(robuxPrice) .. " Robux") or "Beli Robux"
+				sc.robuxGrad.Color = ColorSequence.new(Color3.fromRGB(58, 224, 122), Color3.fromRGB(20, 134, 60))
+				sc.robuxRim.Color = Color3.fromRGB(134, 239, 172)
 			end
 		end
 
@@ -549,6 +582,10 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			end
 			refreshUI()
 		end)
+		sc.robuxBtn.Activated:Connect(function()
+			if not onRobuxPurchase or not sc.spec.productKey then return end
+			onRobuxPurchase(sc.spec.productKey)
+		end)
 	end
 
 	-- Wire cosmetic actions
@@ -590,6 +627,20 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 	end
 
 	-- Deterministic card positioning for SupplyCards inside SuppliesContainer
+	local function placeDualButtons(sc, x: number, y: number, w: number, h: number)
+		if onRobuxPurchase and sc.spec.productKey then
+			local gap = 8
+			local halfW = math.floor((w - gap) / 2)
+			sc.buyBtn.Position = UDim2.fromOffset(x, y)
+			sc.buyBtn.Size = UDim2.fromOffset(halfW, h)
+			sc.robuxBtn.Position = UDim2.fromOffset(x + halfW + gap, y)
+			sc.robuxBtn.Size = UDim2.fromOffset(w - halfW - gap, h)
+		else
+			sc.buyBtn.Position = UDim2.fromOffset(x, y)
+			sc.buyBtn.Size = UDim2.fromOffset(w, h)
+		end
+	end
+
 	local function layoutHorizontalCard(sc, cardX: number, cardY: number, cardW: number, cardH: number, btnH: number)
 		sc.card.Position = UDim2.fromOffset(cardX, cardY)
 		sc.card.Size = UDim2.fromOffset(cardW, cardH)
@@ -611,8 +662,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		sc.title.Size = UDim2.fromOffset(tw, 20)
 		sc.desc.Position = UDim2.fromOffset(tx, 45)
 		sc.desc.Size = UDim2.fromOffset(tw, math.max(18, btnY - 51))
-		sc.buyBtn.Position = UDim2.fromOffset(10, btnY)
-		sc.buyBtn.Size = UDim2.fromOffset(cardW - 20, btnH)
+		placeDualButtons(sc, 10, btnY, cardW - 20, btnH)
 	end
 
 	local function layoutSupplies()
@@ -625,13 +675,13 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			local gap = 10
 			local ch = math.floor((sh - gap) / 2)
 			for i, sc in ipairs(list) do
-				layoutHorizontalCard(sc, 0, (i - 1) * (ch + gap), sw, ch, 38)
+				layoutHorizontalCard(sc, 0, (i - 1) * (ch + gap), sw, ch, 40)
 			end
 		elseif sh < 250 then
 			local gap = 14
 			local cw = math.floor((sw - gap) / 2)
 			for i, sc in ipairs(list) do
-				layoutHorizontalCard(sc, (i - 1) * (cw + gap), 0, cw, sh, 38)
+				layoutHorizontalCard(sc, (i - 1) * (cw + gap), 0, cw, sh, 40)
 			end
 		else
 			local gap = 14
@@ -657,8 +707,7 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 				local descH = math.max(20, btnY - 6 - (curY + 42))
 				sc.desc.Position = UDim2.fromOffset(12, curY + 42)
 				sc.desc.Size = UDim2.fromOffset(cw - 24, descH)
-				sc.buyBtn.Position = UDim2.fromOffset(12, btnY)
-				sc.buyBtn.Size = UDim2.fromOffset(cw - 24, 44)
+				placeDualButtons(sc, 12, btnY, cw - 24, 44)
 			end
 		end
 	end
@@ -667,6 +716,9 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 	shopModal:GetPropertyChangedSignal("AbsoluteSize"):Connect(refreshUI)
 	for _, attr in { "SkyCoins", "SpeedBoostStock", "RopeBuffStock", "EquippedFrame", "EquippedTracer", "EquippedTitle", "OwnedCosmeticsJson", "TempCosmeticsJson" } do
 		player:GetAttributeChangedSignal(attr):Connect(refreshUI)
+	end
+	for _, mAttr in { "TurboGasPrice", "TaliAwetPrice", "TurboGasBusy", "TaliAwetBusy" } do
+		shopModal:GetAttributeChangedSignal(mAttr):Connect(refreshUI)
 	end
 	shopModal:GetAttributeChangedSignal("ActiveShopTab"):Connect(function()
 		refreshUI()

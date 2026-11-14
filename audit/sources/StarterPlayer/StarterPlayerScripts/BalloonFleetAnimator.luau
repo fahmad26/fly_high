@@ -2,6 +2,7 @@ local Players=game:GetService("Players")
 local RunService=game:GetService("RunService")
 local RS=game:GetService("ReplicatedStorage")
 local Input=game:GetService("UserInputService")
+local BalloonVFX=require(RS:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("BalloonVFX"))
 local touches={}
 local touchBegan=Input.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.Touch then touches[i]=true end end)
 local touchEnded=Input.InputEnded:Connect(function(i)touches[i]=nil end)
@@ -28,6 +29,7 @@ local function register(model)
  if not model:IsA("Model") or flights[model] or not model:GetAttribute("BalloonThemeId") or model:GetAttribute("IsFleetPreview") then return end
  local entry={model=model,prompts={},motors={},connections={}}
  flights[model]=entry
+ BalloonVFX.Attach(model)
  local function add(o)
   if o:IsA("ProximityPrompt") then
    -- Mask new prompts before the first visibility pass; otherwise every
@@ -80,6 +82,7 @@ local function register(model)
  for _,o in ipairs(model:GetDescendants()) do add(o) end
  table.insert(entry.connections,model.DescendantAdded:Connect(add))
  table.insert(entry.connections,model.Destroying:Connect(function()
+  BalloonVFX.Detach(model)
   for _,c in ipairs(entry.connections) do c:Disconnect() end flights[model]=nil
  end))
 end
@@ -111,9 +114,15 @@ local function inBasket(character,balloon)
 end
 local elapsed=0
 RunService.PreSimulation:Connect(function(dt)
- elapsed+=dt if elapsed<1/30 then return end elapsed=0
- local camera=workspace.CurrentCamera if not camera then return end
+ local camera=workspace.CurrentCamera
+ local tickVfx=BalloonVFX.HasActiveEffects()
+ elapsed+=dt
+ local runSlow=elapsed>=1/30
+ if runSlow then elapsed=0 end
+ if not camera then return end
  local eye=camera.CFrame.Position local t=workspace:GetServerTimeNow()
+ if tickVfx or runSlow then BalloonVFX.Step(t,eye) end
+ if not runSlow then return end
  for model,base in pairs(previews) do
   if not model.Parent then previews[model]=nil
   elseif base and (base.Position-eye).Magnitude<95 then
@@ -122,6 +131,7 @@ RunService.PreSimulation:Connect(function(dt)
  end
  for model,entry in pairs(flights) do
   if not model.Parent then
+   BalloonVFX.Detach(model)
    for _,c in ipairs(entry.connections) do c:Disconnect() end flights[model]=nil
   else
    local root=model.PrimaryPart

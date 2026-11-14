@@ -34,11 +34,12 @@ function Manager.Spawn(zone,fd)
  local id=Http:GenerateGUID(false)
  model:SetAttribute("ChallengeId",id)model:SetAttribute("ZoneKm",zone)model:SetAttribute("Stage","Warning")
  model:SetAttribute("IsObstacle",true)model:SetAttribute("Shootable",false)
+ model:SetAttribute("HitColor",Color3.fromRGB(147,197,253))
  for _,p in ipairs(model:GetDescendants())do
   if p.Name:match("^Lightning_") or p.Name=="StormSign" or p.Name=="CurledCloudWisp" then
    p:Destroy()
   elseif p:IsA("BasePart") then
-   p.Anchored=true p.CanCollide=false p.CanTouch=false p.CanQuery=false
+   p.Anchored=true p.CanCollide=false p.CanTouch=false p.CanQuery=(p~=model.PrimaryPart)
    if p~=model.PrimaryPart then p.Transparency=.42 end
   end
  end

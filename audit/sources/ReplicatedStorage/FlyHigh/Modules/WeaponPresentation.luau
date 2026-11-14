@@ -3,6 +3,7 @@ local Debris = game:GetService("Debris")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Run = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 
 local WEAPON_VISIBILITY_STEP = "FlyHighWeaponVisibility"
@@ -498,7 +499,12 @@ local function createWeaponView(player, tool, template, profile)
 		-- Soft CQB pull-back keeps long barrels from poking visually through gondola railings flush against the player.
 		local targetPush = 0
 		if char then
-			rayParams.FilterDescendantsInstances = { char, vmRoot }
+			local excluded = { char, vmRoot }
+			local obsFolder = Workspace:FindFirstChild("FlyHighObstacles")
+			if obsFolder then table.insert(excluded, obsFolder) end
+			local largeFolder = Workspace:FindFirstChild("FlyHighLargeChallenges")
+			if largeFolder then table.insert(excluded, largeFolder) end
+			rayParams.FilterDescendantsInstances = excluded
 			local hit = Workspace:Raycast(camCF.Position, look * 2.05, rayParams)
 			if hit then
 				targetPush = math.clamp((2.05 - hit.Distance) * 0.28, 0, 0.24)
@@ -568,7 +574,7 @@ local function createWeaponView(player, tool, template, profile)
 	}
 end
 
-function Presentation.Start(player, remote, owner, _hud)
+function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 	local AudioMixer = require(script.Parent.AudioMixer)
 	local DailyAndShopCatalog = require(script.Parent:WaitForChild("DailyAndShopCatalog"))
 	AudioMixer.Bind(player)
@@ -651,15 +657,300 @@ function Presentation.Start(player, remote, owner, _hud)
 		table.insert(sounds, s)
 	end
 
+	local impactEmitters = {}
+	local impactAudioBank = {}
+	local impactIndex = 0
+	local function makePoolSound(name, soundId, speed, volume, parent)
+		local s = Instance.new("Sound")
+		s.Name = name
+		s.SoundId = soundId
+		s.PlaybackSpeed = speed
+		s.Volume = volume
+		s.RollOffMinDistance = 12
+		s.RollOffMaxDistance = 240
+		s.Looped = false
+		s.SoundGroup = sfxGroup
+		s.Parent = parent
+		return s
+	end
+	for _ = 1, 6 do
+		local p = Instance.new("Part")
+		p.Name = "ImpactEmitter"
+		p.Size = Vector3.new(0.1, 0.1, 0.1)
+		p.Transparency = 1
+		p.Anchored = true
+		p.CanCollide = false
+		p.CanTouch = false
+		p.CanQuery = false
+		p.Parent = Workspace
+		local killBoom = shotTemplate:Clone()
+		killBoom.Name = "KillBoomSFX"
+		killBoom.PlaybackSpeed = 0.54
+		killBoom.Volume = 0.78
+		killBoom.RollOffMinDistance = 16
+		killBoom.RollOffMaxDistance = 260
+		killBoom.Looped = false
+		killBoom.SoundGroup = sfxGroup
+		killBoom.Parent = p
+		table.insert(impactEmitters, p)
+		table.insert(impactAudioBank, {
+			hitTick = makePoolSound("HitTickSFX", "rbxasset://sounds/clickfast.wav", 1.28, 0.62, p),
+			hitPunch = makePoolSound("HitPunchSFX", "rbxasset://sounds/switch.wav", 0.72, 0.52, p),
+			killBoom = killBoom,
+			killChime = makePoolSound("KillChimeSFX", "rbxasset://sounds/electronicpingshort.wav", 1.38, 0.48, p),
+			immunePing = makePoolSound("ImmunePingSFX", "rbxasset://sounds/button.wav", 1.9, 0.6, p),
+			immuneClank = makePoolSound("ImmuneClankSFX", "rbxasset://sounds/switch.wav", 2.35, 0.68, p),
+		})
+	end
+
 	local preload = table.clone(sounds)
 	if reloadSound then table.insert(preload, reloadSound) end
+	for _, slot in ipairs(impactAudioBank) do
+		for _, s in pairs(slot) do table.insert(preload, s) end
+	end
 	task.spawn(function()
 		pcall(function() game:GetService("ContentProvider"):PreloadAsync(preload) end)
 	end)
 
+	local function playImpactSound(kind, pos)
+		if #impactEmitters == 0 then return end
+		impactIndex = impactIndex % #impactEmitters + 1
+		impactEmitters[impactIndex].Position = pos
+		local bank = impactAudioBank[impactIndex]
+		local function playOne(snd)
+			snd:Stop()
+			snd.TimePosition = 0
+			snd:Play()
+		end
+		if kind == "Kill" then
+			playOne(bank.killBoom)
+			playOne(bank.killChime)
+		elseif kind == "Immune" then
+			playOne(bank.immunePing)
+			playOne(bank.immuneClank)
+		elseif kind == "Hit" then
+			playOne(bank.hitTick)
+			playOne(bank.hitPunch)
+		end
+	end
+
+	local function flashModelHighlight(model, fillColor, outlineColor, durationSec)
+		if typeof(model) ~= "Instance" or not model:IsA("Model") or not model.Parent then return end
+		local prev = model:FindFirstChild("FlyHighImpactHighlight")
+		if prev then prev:Destroy() end
+		local hl = Instance.new("Highlight")
+		hl.Name = "FlyHighImpactHighlight"
+		hl.Adornee = model
+		hl.DepthMode = Enum.HighlightDepthMode.Occluded
+		hl.FillColor = fillColor
+		hl.OutlineColor = outlineColor
+		hl.FillTransparency = 0.36
+		hl.OutlineTransparency = 0.05
+		hl.Parent = model
+		TweenService:Create(hl, TweenInfo.new(durationSec, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			FillTransparency = 1,
+			OutlineTransparency = 1,
+		}):Play()
+		Debris:AddItem(hl, durationSec + 0.03)
+	end
+
+	local function makeVfxPart(name, shape, size, cf, color, transparency)
+		local p = Instance.new("Part")
+		p.Name = name
+		p.Shape = shape
+		p.Size = size
+		p.CFrame = cf
+		p.Color = color
+		p.Material = Enum.Material.Neon
+		p.Transparency = transparency or 0.1
+		p.Anchored = true
+		p.CanCollide = false
+		p.CanTouch = false
+		p.CanQuery = false
+		p.CastShadow = false
+		p.Parent = Workspace
+		return p
+	end
+
+	local function emitBurstParticles(pos, color, secondaryColor, sparkCount, smokeCount, sizeScale)
+		local host = Instance.new("Part")
+		host.Name = "WeaponImpactParticles"
+		host.Size = Vector3.new(0.2, 0.2, 0.2)
+		host.Transparency = 1
+		host.Anchored = true
+		host.CanCollide = false
+		host.CanTouch = false
+		host.CanQuery = false
+		host.Position = pos
+		host.Parent = Workspace
+
+		local sparks = Instance.new("ParticleEmitter")
+		sparks.Name = "ImpactSparks"
+		sparks.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+		sparks.Color = ColorSequence.new(color, secondaryColor)
+		sparks.LightEmission = 1
+		sparks.Size = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.45 * sizeScale),
+			NumberSequenceKeypoint.new(1, 0),
+		})
+		sparks.Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0),
+			NumberSequenceKeypoint.new(1, 1),
+		})
+		sparks.Speed = NumberRange.new(14 * sizeScale, 32 * sizeScale)
+		sparks.Lifetime = NumberRange.new(0.18, 0.34)
+		sparks.SpreadAngle = Vector2.new(180, 180)
+		sparks.Rate = 0
+		sparks.Enabled = false
+		sparks.Parent = host
+		sparks:Emit(sparkCount)
+
+		if smokeCount > 0 then
+			local smoke = Instance.new("ParticleEmitter")
+			smoke.Name = "ImpactSmoke"
+			smoke.Texture = "rbxasset://textures/particles/smoke_main.dds"
+			smoke.Color = ColorSequence.new(secondaryColor, Color3.fromRGB(70, 78, 95))
+			smoke.Size = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 1.4 * sizeScale),
+				NumberSequenceKeypoint.new(1, 3.6 * sizeScale),
+			})
+			smoke.Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.38),
+				NumberSequenceKeypoint.new(1, 1),
+			})
+			smoke.Speed = NumberRange.new(4, 12)
+			smoke.Lifetime = NumberRange.new(0.32, 0.58)
+			smoke.SpreadAngle = Vector2.new(180, 180)
+			smoke.Rate = 0
+			smoke.Enabled = false
+			smoke.Parent = host
+			smoke:Emit(smokeCount)
+		end
+
+		Debris:AddItem(host, 0.85)
+	end
+
+	local function spawnImpactEffect(pos, shotDir, impact)
+		if type(impact) ~= "table" or type(impact.kind) ~= "string" then return end
+		local kind = impact.kind
+		local normal = (typeof(impact.normal) == "Vector3" and impact.normal.Magnitude > 0.01) and impact.normal.Unit or (-shotDir)
+		local accent = typeof(impact.color) == "Color3" and impact.color or Color3.fromRGB(255, 196, 70)
+
+		playImpactSound(kind, pos)
+
+		if kind == "Hit" then
+			local core = makeVfxPart("WeaponHitBurst", Enum.PartType.Ball, Vector3.new(0.45, 0.45, 0.45), CFrame.new(pos), Color3.fromRGB(255, 226, 112), 0.08)
+			TweenService:Create(core, TweenInfo.new(0.16, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(2.6, 2.6, 2.6),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(core, 0.18)
+
+			for s = 1, 5 do
+				local spreadDir = (normal + Vector3.new(math.random(-70, 70) / 100, math.random(-70, 70) / 100, math.random(-70, 70) / 100)).Unit
+				local shard = makeVfxPart("WeaponHitSpark", Enum.PartType.Block, Vector3.new(0.16, 0.16, 0.65), CFrame.lookAt(pos, pos + spreadDir), s % 2 == 0 and Color3.fromRGB(255, 240, 150) or accent, 0.05)
+				TweenService:Create(shard, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					CFrame = CFrame.lookAt(pos + spreadDir * 3.4, pos + spreadDir * 4.4),
+					Size = Vector3.new(0.05, 0.05, 0.25),
+					Transparency = 1,
+				}):Play()
+				Debris:AddItem(shard, 0.2)
+			end
+			emitBurstParticles(pos, Color3.fromRGB(255, 232, 128), accent, 9, 0, 0.9)
+			flashModelHighlight(impact.target, Color3.fromRGB(255, 224, 102), Color3.new(1, 1, 1), 0.13)
+
+		elseif kind == "Kill" then
+			local inner = makeVfxPart("WeaponKillCore", Enum.PartType.Ball, Vector3.new(0.9, 0.9, 0.9), CFrame.new(pos), Color3.fromRGB(255, 248, 210), 0.05)
+			TweenService:Create(inner, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(5.2, 5.2, 5.2),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(inner, 0.24)
+
+			local outer = makeVfxPart("WeaponKillExplosion", Enum.PartType.Ball, Vector3.new(1.2, 1.2, 1.2), CFrame.new(pos), accent, 0.22)
+			TweenService:Create(outer, TweenInfo.new(0.32, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(9.2, 9.2, 9.2),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(outer, 0.34)
+
+			local ring = makeVfxPart("WeaponKillShockRing", Enum.PartType.Cylinder, Vector3.new(0.22, 1.6, 1.6), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(255, 214, 102), 0.18)
+			TweenService:Create(ring, TweenInfo.new(0.30, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(0.08, 11.5, 11.5),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(ring, 0.32)
+
+			for k = 1, 9 do
+				local phi = (k / 9) * math.pi * 2 + math.random() * 0.4
+				local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
+				local piece = makeVfxPart("WeaponKillDebris", Enum.PartType.Block, Vector3.new(0.55, 0.45, 0.75), CFrame.lookAt(pos, pos + radial), k % 3 == 0 and Color3.fromRGB(255, 210, 88) or accent, 0.05)
+				TweenService:Create(piece, TweenInfo.new(0.38, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					CFrame = CFrame.new(pos + radial * math.random(7, 13)) * CFrame.Angles(math.random() * 4, math.random() * 4, math.random() * 4),
+					Size = Vector3.new(0.12, 0.12, 0.12),
+					Transparency = 1,
+				}):Play()
+				Debris:AddItem(piece, 0.4)
+			end
+			emitBurstParticles(pos, Color3.fromRGB(255, 232, 130), accent, 18, 8, 1.45)
+
+		elseif kind == "Immune" then
+			local shieldCF = CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0)
+			local disc = makeVfxPart("WeaponImmuneShieldDisc", Enum.PartType.Cylinder, Vector3.new(0.16, 1.1, 1.1), shieldCF, Color3.fromRGB(125, 211, 252), 0.25)
+			TweenService:Create(disc, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(0.08, 5.4, 5.4),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(disc, 0.26)
+
+			local outerRing = makeVfxPart("WeaponImmuneShieldHalo", Enum.PartType.Cylinder, Vector3.new(0.12, 1.3, 1.3), shieldCF, Color3.fromRGB(224, 242, 254), 0.15)
+			TweenService:Create(outerRing, TweenInfo.new(0.28, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(0.06, 6.8, 6.8),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(outerRing, 0.3)
+
+			local reflect = shotDir - 2 * shotDir:Dot(normal) * normal
+			local rDir = reflect.Magnitude > 0.05 and reflect.Unit or normal
+			local ricochetStart = pos + normal * 0.25
+			local ricochetEnd = ricochetStart + rDir * 16
+			local bolt = makeVfxPart("WeaponRicochetBolt", Enum.PartType.Ball, Vector3.new(0.2, 0.2, 1.15), CFrame.lookAt(ricochetStart, ricochetEnd), Color3.fromRGB(224, 242, 254), 0.02)
+			local ra0 = Instance.new("Attachment", bolt)
+			ra0.Position = Vector3.new(-0.08, 0, 0.35)
+			local ra1 = Instance.new("Attachment", bolt)
+			ra1.Position = Vector3.new(0.08, 0, 0.35)
+			local rTrail = Instance.new("Trail", bolt)
+			rTrail.Attachment0 = ra0
+			rTrail.Attachment1 = ra1
+			rTrail.FaceCamera = true
+			rTrail.Lifetime = 0.14
+			rTrail.LightEmission = 1
+			rTrail.Color = ColorSequence.new(Color3.fromRGB(224, 242, 254), Color3.fromRGB(56, 189, 248))
+			rTrail.Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.08), NumberSequenceKeypoint.new(1, 1) })
+			TweenService:Create(bolt, TweenInfo.new(0.16, Enum.EasingStyle.Linear), {
+				CFrame = CFrame.lookAt(ricochetEnd, ricochetEnd + rDir),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(bolt, 0.22)
+
+			for r = 1, 6 do
+				local coneDir = (rDir + Vector3.new(math.random(-65, 65) / 100, math.random(-65, 65) / 100, math.random(-65, 65) / 100)).Unit
+				local spark = makeVfxPart("WeaponImmuneSpark", Enum.PartType.Block, Vector3.new(0.14, 0.14, 0.72), CFrame.lookAt(ricochetStart, ricochetStart + coneDir), r % 2 == 0 and Color3.fromRGB(240, 249, 255) or Color3.fromRGB(56, 189, 248), 0.04)
+				TweenService:Create(spark, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					CFrame = CFrame.lookAt(ricochetStart + coneDir * 4.8, ricochetStart + coneDir * 5.8),
+					Size = Vector3.new(0.05, 0.05, 0.2),
+					Transparency = 1,
+				}):Play()
+				Debris:AddItem(spark, 0.24)
+			end
+			emitBurstParticles(pos, Color3.fromRGB(224, 242, 254), Color3.fromRGB(56, 189, 248), 12, 0, 1.05)
+			flashModelHighlight(impact.target, Color3.fromRGB(125, 211, 252), Color3.fromRGB(224, 242, 254), 0.16)
+		end
+	end
+
 	local active = {}
 	local dead = false
-	local event = remote.OnClientEvent:Connect(function(shooter, origin, target)
+	local event = remote.OnClientEvent:Connect(function(shooter, origin, target, impact)
 		if dead or typeof(origin) ~= "Vector3" or typeof(target) ~= "Vector3" then return end
 		local camera = Workspace.CurrentCamera
 		if not camera or (origin - camera.CFrame.Position).Magnitude > 180 then return end
@@ -756,8 +1047,17 @@ function Presentation.Start(player, remote, owner, _hud)
 		Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
 
 		streak.Parent = Workspace
-		local duration = math.clamp(distance / 160, 0.25, 1.8)
-		table.insert(active, { part = streak, start = start, direction = direction, distance = distance, elapsed = 0, duration = duration })
+		local duration = math.clamp(distance / 360, 0.035, 0.65)
+		table.insert(active, {
+			part = streak,
+			start = start,
+			direction = direction,
+			distance = distance,
+			elapsed = 0,
+			duration = duration,
+			impact = impact,
+			isLocalShooter = shooter == player,
+		})
 		if #active > 32 then
 			local oldest = table.remove(active, 1)
 			oldest.part:Destroy()
@@ -771,10 +1071,17 @@ function Presentation.Start(player, remote, owner, _hud)
 			if not a.part.Parent then
 				table.remove(active, i)
 			elseif a.elapsed >= a.duration then
-				a.part.CFrame = CFrame.lookAt(a.start + a.direction * a.distance, a.start + a.direction * (a.distance + 1))
+				local endPos = a.start + a.direction * a.distance
+				a.part.CFrame = CFrame.lookAt(endPos, endPos + a.direction)
 				a.part.Transparency = 1
 				a.part.BulletGlow.Enabled = false
 				a.part.BulletTrail.Enabled = false
+				if a.impact then
+					spawnImpactEffect(endPos, a.direction, a.impact)
+					if a.isLocalShooter and type(onLocalImpact) == "function" then
+						task.spawn(onLocalImpact, a.impact)
+					end
+				end
 				Debris:AddItem(a.part, 0.13)
 				table.remove(active, i)
 			else
@@ -792,6 +1099,7 @@ function Presentation.Start(player, remote, owner, _hud)
 		event:Disconnect()
 		render:Disconnect()
 		for _, p in emitters do p:Destroy() end
+		for _, p in impactEmitters do p:Destroy() end
 		for _, a in active do a.part:Destroy() end
 	end)
 

@@ -80,6 +80,12 @@ remote.OnServerEvent:Connect(function(p,item)
  local ok=pcall(function() Marketplace:PromptProductPurchase(p,id) end)
  if not ok then remote:FireClient(p,"Toko belum dapat dibuka. Silakan coba kembali.") end
 end)
+local RECEIPT_MESSAGES={
+ EmergencyKit="Emergency Kit ditambahkan ke stok.",
+ AK47Upgrade="1 AK-47 permanen ditambahkan ke inventaris.",
+ TurboGas="1× Turbo Gas (+25%) ditambahkan ke perbekalan.",
+ TaliAwet="1× Tali Awet ditambahkan ke perbekalan.",
+}
 function Manager.ProcessReceipt(receipt)
  local p=Players:GetPlayerByUserId(receipt.PlayerId)
  if not p or not _G.FlyHighDataManager then return Enum.ProductPurchaseDecision.NotProcessedYet end
@@ -89,7 +95,7 @@ function Manager.ProcessReceipt(receipt)
  local granted,isNew=_G.FlyHighDataManager.GrantReceipt(p,tostring(receipt.PurchaseId),item)
  if not granted then return Enum.ProductPurchaseDecision.NotProcessedYet end
  if isNew then
-  remote:FireClient(p,item=="EmergencyKit" and "Emergency Kit ditambahkan ke stok." or "1 AK-47 permanen ditambahkan ke inventaris.")
+  remote:FireClient(p,RECEIPT_MESSAGES[item] or "Pembelian berhasil ditambahkan.")
  end
  return Enum.ProductPurchaseDecision.PurchaseGranted
 end

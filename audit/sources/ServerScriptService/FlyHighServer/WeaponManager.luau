@@ -209,6 +209,13 @@ local function liveObstacle(model)
  end
  return false
 end
+local function immuneObstacle(model)
+ if typeof(model)~="Instance" or not model:IsA("Model") then return false end
+ local obsFolder=workspace:FindFirstChild("FlyHighObstacles")
+ local largeFolder=workspace:FindFirstChild("FlyHighLargeChallenges")
+ if model.Parent~=obsFolder and model.Parent~=largeFolder then return false end
+ return model:GetAttribute("IsObstacle")==true and model:GetAttribute("Shootable")==false
+end
 local dropRate=U.RateLimiter(0.2)
 remotes.WeaponDropEvent.OnServerEvent:Connect(function(p)
  if dropRate(p) then Manager.CleanupPlayer(p) end
@@ -276,12 +283,22 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target,cl
  local part=hit and hit.Instance
  if part==fd.balloon.Envelope then _G.FlyHighBalloonManager.ApplyPuncture(fd,"SelfShot")end
  local model=part and part:FindFirstAncestorOfClass("Model")
+ local impact
  if liveObstacle(model) then
   local hp=(model:GetAttribute("Health") or 50)-s.cfg.Damage
+  local hitColor=model:GetAttribute("HitColor")
+  local targetName=model.Name
   model:SetAttribute("Health",hp)
-  if hp<=0 then model:Destroy() end
+  if hp<=0 then
+   model:Destroy()
+   impact={kind="Kill",color=hitColor,normal=hit.Normal,targetName=targetName}
+  else
+   impact={kind="Hit",target=model,color=hitColor,normal=hit.Normal,targetName=targetName}
+  end
+ elseif immuneObstacle(model) then
+  impact={kind="Immune",target=model,color=model:GetAttribute("HitColor"),normal=hit.Normal,targetName=model.Name}
  end
- remotes.WeaponFireEvent:FireAllClients(p,origin,hit and hit.Position or origin+direction*500)
+ remotes.WeaponFireEvent:FireAllClients(p,origin,hit and hit.Position or origin+direction*500,impact)
  if s.ammo<=0 then reload(p,s) end
 end)
 Players.PlayerRemoving:Connect(Manager.CleanupPlayer)

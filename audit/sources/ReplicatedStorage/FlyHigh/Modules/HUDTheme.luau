@@ -44,6 +44,8 @@ local configs = {
 	PullCrewButton = { "rescue", "TARIK REKAN", "pull", "wide" },
 	BuyEmergencyKitButton = { "kit", "BELI 1 KIT • 29 R$", "buy_kit", "wide" },
 	BuyAK47Button = { "weapon", "BELI 1 AK-47", "buy_rifle", "wide" },
+	BuyTurboGasButton = { "turbo", "BELI 1 TURBO • 29 R$", "buy_turbo", "wide" },
+	BuyTaliAwetButton = { "rope", "BELI 1 TALI • 19 R$", "buy_rope", "wide" },
 	SpotHazardButton = { "warning", "TANDAI BAHAYA", "spot", "wide" },
 	CloseButton = { "close", "", "close", "round" },
 	DailyCloseButton = { "close", "", "close", "round" },
@@ -66,7 +68,7 @@ local fullButtons = {
 	reload = "reload_v2", drop = "drop_normal", attach = "tether_attach",
 	detach = "tether_detach", climb = "tether_climb", descend = "tether_descend",
 	patch = "tether_patch", repair_rope = "tether_repair_rope", pull = "tether_pull",
-	buy_kit = "buy_button", buy_rifle = "buy_button", close = "btn_close_v2",
+	buy_kit = "buy_button", buy_rifle = "buy_button", buy_turbo = "buy_button", buy_rope = "buy_button", close = "btn_close_v2",
 	ping1 = "ping_thrust", ping2 = "ping_danger", ping3 = "ping_rope",
 	ping4 = "ping_repair", ping5 = "ping_target", spot = "context_panel",
 }
@@ -228,6 +230,8 @@ local surfaceKeys = {
 	CrewPingBanner = "hint",
 	Card1 = "kit_card",
 	Card2 = "rifle_card",
+	Card3 = "kit_card",
+	Card4 = "rifle_card",
 }
 
 local unreadySince = setmetatable({}, { __mode = "k" })
@@ -684,7 +688,7 @@ end
 			build(o, "ping_banner")
 		elseif o.Name == "WeaponReticle" then
 			build(o, "reticle")
-		elseif o.Name == "Card1" or o.Name == "Card2" then
+		elseif o.Name == "Card1" or o.Name == "Card2" or o.Name == "Card3" or o.Name == "Card4" then
 			build(o, "card")
 		elseif surfaceKeys[o.Name] then
 			build(o, "panel")
@@ -825,13 +829,19 @@ end
 					end
 				end
 
-				local purchase = o.Name == "BuyEmergencyKitButton" or o.Name == "BuyAK47Button"
+				local ROBUX_BUY_FALLBACKS = {
+					BuyEmergencyKitButton = "Beli 1 Kit • Cek Harga",
+					BuyAK47Button = "Beli 1 AK-47 • Cek Harga",
+					BuyTurboGasButton = "Beli 1 Turbo • Cek Harga",
+					BuyTaliAwetButton = "Beli 1 Tali • Cek Harga",
+				}
+				local purchase = ROBUX_BUY_FALLBACKS[o.Name] ~= nil
 				local reason = o:GetAttribute("HUDLockReason")
 				if purchase then
 					title = o.Text:find("Gunakan Kredit", 1, true) and "Pakai Kredit Gratis"
 						or (o.Text:find("%.%.%.") and "Memuat…")
 						or (o.Text:find("Robux", 1, true) and o.Text)
-						or (o.Text:find("lihat harga", 1, true) and (o.Name == "BuyEmergencyKitButton" and "Beli 1 Kit • Cek Harga" or "Beli 1 AK-47 • Cek Harga"))
+						or (o.Text:find("lihat harga", 1, true) and ROBUX_BUY_FALLBACKS[o.Name])
 						or o.Text
 				elseif sprite == "audio_off" then
 					title = "BISU"
@@ -971,7 +981,8 @@ end
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
 					box(r.captionPill, 10, 3, math.max(1, w - 20), math.max(1, h - 6))
-					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 14, color = Color3.new(1, 1, 1), strokeColor = Color3.fromRGB(8, 61, 27), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Center })
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 14, color = Color3.new(1, 1, 1), strokeColor = Color3.fromRGB(8, 61, 27), strokeThickness = 1.6, wrapped = false, scaled = true, align = Enum.TextXAlignment.Center })
+					fitLine(r.caption, math.min(1, textBoost), 8)
 
 				elseif style == "wide" then
 					r.captionPill.BackgroundTransparency = 1
@@ -1577,9 +1588,48 @@ end
 				end)
 				cardGrad.Enabled = true
 
-				local isKit = o.Name == "Card1"
-				local compactCard = (o.Parent and o.Parent:GetAttribute("HUDCompactCard") == true) or h < 230
-				local horizontal = compactCard and w >= 290 and h <= 210
+				local ROBUX_CARD_META = {
+					Card1 = {
+						badge = "SEKALI PER TERBANG",
+						badgeBg = Color3.fromRGB(12, 74, 110),
+						badgeFg = Color3.fromRGB(125, 211, 252),
+						artKey = "art_shop_kit_v2",
+						fallbackArt = "art_kit",
+						badgeMaxW = 154,
+						badgeCompactW = 144,
+					},
+					Card2 = {
+						badge = "PERMANEN · RAK SETELAN",
+						badgeBg = Color3.fromRGB(88, 35, 6),
+						badgeFg = Color3.fromRGB(253, 224, 71),
+						artKey = "art_shop_ak_v2",
+						fallbackArt = "art_rifle",
+						badgeMaxW = 184,
+						badgeCompactW = 172,
+					},
+					Card3 = {
+						badge = "BUFF +25% · 60 DETIK",
+						badgeBg = Color3.fromRGB(12, 74, 110),
+						badgeFg = Color3.fromRGB(56, 189, 248),
+						artKey = "art_turbo_gas",
+						fallbackArt = "art_balloon",
+						badgeMaxW = 166,
+						badgeCompactW = 154,
+					},
+					Card4 = {
+						badge = "TAHAN TALI -30% · 1 FLIGHT",
+						badgeBg = Color3.fromRGB(120, 53, 15),
+						badgeFg = Color3.fromRGB(251, 191, 36),
+						artKey = "art_tali_awet",
+						fallbackArt = "art_kit",
+						badgeMaxW = 184,
+						badgeCompactW = 168,
+					},
+				}
+				local meta = ROBUX_CARD_META[o.Name] or ROBUX_CARD_META.Card1
+				local modalRoot = (o.Parent and o.Parent.Name == "RobuxScroll") and o.Parent.Parent or o.Parent
+				local compactCard = (modalRoot and modalRoot:GetAttribute("HUDCompactCard") == true) or h <= 220
+				local horizontal = (h <= 220) or (compactCard and w >= 220 and h <= 220)
 
 				local stage = ensurePanelChild(o, "Frame", "HUDCardStage", function(f)
 					f.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
@@ -1606,9 +1656,9 @@ end
 					lbl.TextXAlignment = Enum.TextXAlignment.Center
 					lbl.TextYAlignment = Enum.TextYAlignment.Center
 				end)
-				badgeLbl.Text = isKit and "SEKALI PER TERBANG" or "PERMANEN · RAK SETELAN"
-				badge.BackgroundColor3 = isKit and Color3.fromRGB(12, 74, 110) or Color3.fromRGB(88, 35, 6)
-				badgeLbl.TextColor3 = isKit and Color3.fromRGB(125, 211, 252) or Color3.fromRGB(253, 224, 71)
+				badgeLbl.Text = meta.badge
+				badge.BackgroundColor3 = meta.badgeBg
+				badgeLbl.TextColor3 = meta.badgeFg
 				local bStroke = stroke(badge, badgeLbl.TextColor3, 1.2, 0.32)
 				bStroke.Enabled = true
 				badge.ZIndex = z + 3
@@ -1617,48 +1667,49 @@ end
 				local title = o:FindFirstChild("ProductTitle")
 				local detail = o:FindFirstChild("ProductDescription")
 				local purchase = o:FindFirstChildWhichIsA("TextButton")
-				local artKey = isKit and "art_shop_kit_v2" or "art_shop_ak_v2"
+				local artKey = meta.artKey
 
 				if horizontal then
-					local buttonH = 44
-					local stageW = math.clamp(math.round(w * 0.30), 86, 108)
-					local stageH = math.max(64, h - buttonH - 28)
-					box(stage, 10, 10, stageW, stageH)
+					local buttonH = (h >= 136) and 44 or 40
+					local topZone = h - buttonH - 16
+					local stageW = math.clamp(math.round(w * 0.28), 68, 94)
+					local stageH = math.clamp(topZone, 62, 96)
+					box(stage, 10, 8, stageW, stageH)
 					box(r.artBox, 6, 4, stageW - 12, stageH - 8)
 					r.artBox.Parent = stage
 					r.artBox.Visible = true
 					ztree(r.artBox, z + 2)
 					local loaded = Adventure.Draw(r.artBox, artKey, z + 2, "fit")
 					r.art.Visible = not loaded
-					if not loaded then use(r.art, isKit and "art_kit" or "art_rifle") end
+					if not loaded then use(r.art, meta.fallbackArt) end
 
-					local tx = 10 + stageW + 12
+					local tx = 10 + stageW + 10
 					local tw = math.max(80, w - tx - 10)
-					badge.Visible = stageH >= 74
-					local curY = 10
+					badge.Visible = topZone >= 66
+					local curY = 8
 					if title then
-						box(title, tx, curY, tw, 22)
+						box(title, tx, curY, tw, 20)
 						title.ZIndex = z + 3
-						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Left })
-						fitLine(title, math.min(2, textBoost), 11)
-						curY += 23
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 15, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, scaled = true, align = Enum.TextXAlignment.Left })
+						fitLine(title, math.min(2, textBoost), 10)
+						curY += 21
 					end
 					if badge.Visible then
-						local bw = math.min(tw, isKit and 144 or 172)
-						box(badge, tx, curY, bw, 20)
-						applyTextStyle(badgeLbl, { font = Enum.Font.GothamBlack, size = 10, color = badgeLbl.TextColor3, strokeThickness = 0.4, wrapped = false, align = Enum.TextXAlignment.Center })
-						fitLine(badgeLbl, 0, 8)
-						curY += 22
+						local bw = math.min(tw, meta.badgeCompactW)
+						box(badge, tx, curY, bw, 18)
+						applyTextStyle(badgeLbl, { font = Enum.Font.GothamBlack, size = 9, color = badgeLbl.TextColor3, strokeThickness = 0.4, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(badgeLbl, 0, 7)
+						curY += 20
 					end
 					if detail then
-						box(detail, tx, curY, tw, math.max(18, 10 + stageH - curY))
+						box(detail, tx, curY, tw, math.max(18, (h - buttonH - 8) - curY - 4))
 						detail.ZIndex = z + 3
-						applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(203, 226, 255), strokeThickness = 1, wrapped = true, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Top, scaled = true })
-						fitLine(detail, textBoost, 9)
+						applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 11, color = Color3.fromRGB(203, 226, 255), strokeThickness = 1, wrapped = true, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Top, scaled = true })
+						fitLine(detail, textBoost, 8)
 					end
 					if purchase then
 						purchase.ZIndex = z + 4
-						box(purchase, 10, h - buttonH - 10, w - 20, buttonH)
+						box(purchase, 10, h - buttonH - 8, w - 20, buttonH)
 					end
 				else
 					local buttonH = 44
@@ -1671,13 +1722,13 @@ end
 					ztree(r.artBox, z + 2)
 					local loaded = Adventure.Draw(r.artBox, artKey, z + 2, "fit")
 					r.art.Visible = not loaded
-					if not loaded then use(r.art, isKit and "art_kit" or "art_rifle") end
+					if not loaded then use(r.art, meta.fallbackArt) end
 
 					local curY = 10 + stageH + 8
 					local showBadge = h >= 238
 					badge.Visible = showBadge
 					if showBadge then
-						local bw = math.min(w - 24, isKit and 154 or 184)
+						local bw = math.min(w - 24, meta.badgeMaxW)
 						box(badge, (w - bw) / 2, curY, bw, 22)
 						applyTextStyle(badgeLbl, { font = Enum.Font.GothamBlack, size = 11, color = badgeLbl.TextColor3, strokeThickness = 0.4, wrapped = false, align = Enum.TextXAlignment.Center })
 						fitLine(badgeLbl, 0, 8)
@@ -1686,8 +1737,8 @@ end
 					if title then
 						box(title, 12, curY, w - 24, 22)
 						title.ZIndex = z + 3
-						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 17, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Center })
-						fitLine(title, math.min(2, textBoost), 11)
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 17, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, scaled = true, align = Enum.TextXAlignment.Center })
+						fitLine(title, math.min(2, textBoost), 10)
 						curY += 24
 					end
 					if detail then

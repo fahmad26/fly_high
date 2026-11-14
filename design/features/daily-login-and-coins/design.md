@@ -1,8 +1,8 @@
 # Rancangan Fitur: Daily Login 7-Hari Non-Hangus, Sky Coins, Buff Perbekalan, & Toko 3-Tab
 
-Status: `draft` — Proposal telah disetujui pengguna; sedang memasuki tahap mockup UI di Figma sebelum implementasi Luau di Roblox Studio.
+Status: `terpasang lokal (15 November 2026)` — Mockup Figma disetujui dan diimplementasikan di Roblox Studio beserta opsi beli Robux `TurboGas` (`3731342382`) & `TaliAwet` (`3731343075`); verifikasi live `MarketplaceService` pasca-publikasi mengikuti `DEFER-01`.
 
-Dokumen acuan implementasi aktif tetap mengacu pada [PRD_Fly_High.md](../../../PRD_Fly_High.md), [PROGRESS.md](../../../PROGRESS.md), dan [HANDOVER.md](../../../HANDOVER.md). Perubahan Roblox Studio **tidak dilakukan** sebelum mockup Figma disetujui pengguna.
+Dokumen acuan implementasi aktif dan bukti QA mengikuti [PRD_Fly_High.md](../../../PRD_Fly_High.md), [PROGRESS.md](../../../PROGRESS.md), dan [HANDOVER.md](../../../HANDOVER.md).
 
 ---
 
@@ -12,6 +12,7 @@ Dokumen acuan implementasi aktif tetap mengacu pada [PRD_Fly_High.md](../../../P
 2. **Menjaga Nilai Monetisasi Robux:**
    - **AK-47 Permanen (`79 Robux`)** tetap **100% eksklusif Robux**; tidak ada kartu sewa/pinjam AK-47 pada Daily Login ataupun Toko Koin.
    - **EmergencyKit (`29 Robux`)** tetap produk Robux utama; versi gratis hanya diberikan terbatas `1×` sebagai Grand Reward Hari ke-7 Daily Login.
+   - **Turbo Gas (+25%) (`29 Robux`, Product ID `3731342382` | `120 Koin`)** & **Tali Awet (`19 Robux`, Product ID `3731343075` | `100 Koin`)** mendukung pembelian ganda baik dengan **Robux** maupun **Sky Coins** (persediaan buff sama-sama masuk ke `SpeedBoostStock` / `RopeBuffStock`).
 3. **Hadiah Terintegrasi Alur Co-op & Ruang Udara Bersama:**
    - Buff (*Turbo Gas* & *Tali Awet*) membantu tim mencapai ketinggian `10.000 km`, sedangkan kosmetik (*Bingkai Tracker*, *Tracer Warna*, *Gelar Overhead*) memberi kebanggaan sosial yang terlihat oleh kru dan tim lain di server.
 
@@ -70,8 +71,8 @@ Dokumen acuan implementasi aktif tetap mengacu pada [PRD_Fly_High.md](../../../P
 ## 5. Ekspansi `ShopModal` (3 Tab) & Integrasi HUD
 
 - **`ShopModal` 3 Tab (`Sky Adventure` 9-Slice):**
-  1. **Tab `ROBUX`:** `Emergency Kit` (`29 Robux`) dan `AK-47 Permanen` (`79 Robux`).
-  2. **Tab `PERBEKALAN` (`Sky Coins`):** `Turbo Gas` (`120 Koin`) dan `Tali Awet` (`100 Koin`), lengkap dengan informasi stok pemain saat ini.
+  1. **Tab `ROBUX`:** `Emergency Kit` (`29 Robux`), `AK-47 Permanen` (`79 Robux`), `Turbo Gas (+25%)` (`29 Robux`), dan `Tali Awet` (`19 Robux`) dalam daftar gulir `RobuxScroll` (grid `2×2` di Desktop/Tablet/Phone Landscape, `1` kolom di Phone Portrait), harga diambil dinamis dari `MarketplaceService:GetProductInfoAsync`.
+  2. **Tab `PERBEKALAN` (Opsi Ganda Koin & Robux):** `Turbo Gas (+25%)` (`120 Koin` | `29 Robux`) dan `Tali Awet` (`100 Koin` | `19 Robux`) dengan tombol beli berdampingan serta info stok pemain saat ini.
   3. **Tab `KOSMETIK` (`Sky Coins`):** Daftar *Bingkai Tracker*, *Warna Tracer Peluru*, dan *Gelar Overhead* dengan tombol `BELI` / `PAKAI` / `✓ DIPAKAI`.
 - **Saldo `Sky Coins`:** Ditampilkan di pojok header kanan pada `DailyLoginModal` dan `ShopModal` tanpa menambah clutter di HUD utama saat terbang.
 - **Layout Responsif Multi-Device ([`HUDLayout`](../../../audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau)):** Menjamin target sentuh minimal `44×44 px` dan tata letak ringkas di Desktop, Tablet, Phone Landscape, serta Phone Portrait.

@@ -45,12 +45,38 @@ local trajectories = {
 }
 local wingParts = {Wing = true, FlightFeather = true, Membrane = true, WingTip = true, AmberWing = true, CrystalWing = true}
 
-local function add(model, position, velocity, name, effect, delaySeconds, lifespan, health)
+local queryableHazards = {
+	Debris = true,
+	Magnetic = true,
+	Spike = true,
+	Lightning = true,
+}
+
+local function add(model, position, velocity, name, effect, delaySeconds, lifespan, health, accentColor)
 	local shootable = health ~= nil
 	model.Name = name
 	model:SetAttribute("IsObstacle", true)
 	model:SetAttribute("Shootable", shootable)
 	model:SetAttribute("Health", health or 0)
+	if health ~= nil then
+		model:SetAttribute("MaxHealth", health)
+	end
+	if typeof(accentColor) == "Color3" then
+		model:SetAttribute("HitColor", accentColor)
+	end
+	if not shootable and (effect == "Tornado" or effect == "Storm") and model.PrimaryPart then
+		local vortexCore = Instance.new("Part")
+		vortexCore.Name = "VortexQueryCore"
+		vortexCore.Shape = Enum.PartType.Cylinder
+		vortexCore.Size = effect == "Storm" and Vector3.new(44, 18, 18) or Vector3.new(36, 13, 13)
+		vortexCore.CFrame = CFrame.new(model.PrimaryPart.Position) * CFrame.Angles(0, 0, math.pi / 2)
+		vortexCore.Transparency = 1
+		vortexCore.Anchored = true
+		vortexCore.CanCollide = false
+		vortexCore.CanTouch = false
+		vortexCore.CanQuery = true
+		vortexCore.Parent = model
+	end
 	local _, size = model:GetBoundingBox()
 	local minY = safeY + size.Y / 2
 	local beams = {}
@@ -60,7 +86,15 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 	local rails = {}
 	for _, object in model:GetDescendants() do
 		if object:IsA("BasePart") then
-			object.CanQuery = shootable and not object:GetAttribute("Decoration")
+			if shootable then
+				object.CanQuery = not object:GetAttribute("Decoration")
+			elseif object.Name == "VortexQueryCore" then
+				object.CanQuery = true
+			elseif object.Name == "MeteorFragment" then
+				object.CanQuery = false
+			else
+				object.CanQuery = queryableHazards[effect] == true and (not object:GetAttribute("Decoration")) and object.Transparency < 0.99
+			end
 			if object.Name == "MeteorFragment" then
 				fragments[object] = object.Transparency
 				object.Transparency = 1
@@ -127,7 +161,7 @@ local function spawnEnemy(spec, pacing, aim, bearing, slot, riseSpeed)
 	local target,approach=Motion.VerticalIntercept(start,aim,pacing.speed,riseSpeed or 0)
  local travel=target-start
 	local item = add(Art.Enemy(spec.enemy), start, travel.Unit * pacing.speed,
-		spec.enemy, spec.enemy, 0, approach + 4, pacing.health)
+		spec.enemy, spec.enemy, 0, approach + 4, pacing.health, spec.color)
 	item.approach = approach
 	return item
 end
@@ -164,7 +198,7 @@ function Manager.SpawnBand(index, fd, hazard)
 	local start = impact - path / 2
 	local cells = spec.effect == "Storm" and stormCells or ruinCells
 	local model = Art.Hazard(spec.effect, spec.color, path, cells)
-	local item = add(model, start, path / hazardSeconds, spec.hazard, spec.effect, warningSeconds, hazardSeconds)
+	local item = add(model, start, path / hazardSeconds, spec.hazard, spec.effect, warningSeconds, hazardSeconds, nil, spec.color)
 	if path.Magnitude > 0 then item.path = path end
 	if spec.effect == "Meteor" or spec.effect == "Debris" then
 		item.groups = {}
@@ -287,7 +321,10 @@ local function updateMeteor(item, age)
 		if lane:GetAttribute("Visible") ~= visible then
 			lane:SetAttribute("Visible", visible)
 			for _, part in lane:GetDescendants() do
-				if item.fragments[part] ~= nil then part.Transparency = visible and item.fragments[part] or 1 end
+				if item.fragments[part] ~= nil then
+					part.Transparency = visible and item.fragments[part] or 1
+					part.CanQuery = visible
+				end
 				if part:IsA("Beam") then part.Enabled = visible end
 				if part:IsA("ParticleEmitter") then
 					part.Enabled = visible
@@ -449,7 +486,7 @@ RunService.Heartbeat:Connect(function(dt)
 				model:SetAttribute("Charging", false)
 				model.Aperture.Color = Color3.fromRGB(249, 171, 48)
 				if delta.Magnitude > 0.01 and #Manager.activeObstacles < obstacleLimit then
-					add(Art.Spike(), nextPose.Position, delta.Unit * 43, "Paku Sihir", "Spike", 0, 2.2)
+					add(Art.Spike(), nextPose.Position, delta.Unit * 43, "Paku Sihir", "Spike", 0, 2.2, nil, Color3.fromRGB(255, 190, 95))
 				end
 			elseif not item.chargeAge and age > 0.9 and #Manager.activeObstacles < obstacleLimit then
 				for _, flight in ipairs(current) do

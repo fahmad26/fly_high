@@ -82,147 +82,176 @@ local closeCorner = Instance.new("UICorner")
 closeCorner.CornerRadius = UDim.new(1, 0)
 closeCorner.Parent = closeBtn
 
--- Card 1: Emergency Kit
-local card1 = Instance.new("Frame")
-card1.Name = "Card1"
-card1.Size = UDim2.new(1, -30, 0, 135)
-card1.Position = UDim2.new(0, 15, 0, 60)
-card1.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
-card1.BorderSizePixel = 0
-card1.Active = true
-card1.Parent = shopModal
+-- Tab 1 Robux Scrollable Container
+local robuxScroll = Instance.new("ScrollingFrame")
+robuxScroll.Name = "RobuxScroll"
+robuxScroll.BackgroundTransparency = 1
+robuxScroll.BorderSizePixel = 0
+robuxScroll.ScrollBarThickness = 5
+robuxScroll.ScrollBarImageColor3 = Color3.fromRGB(56, 189, 248)
+robuxScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+robuxScroll.ZIndex = 23
+robuxScroll.Parent = shopModal
 
-local c1Corner = Instance.new("UICorner")
-c1Corner.CornerRadius = UDim.new(0, 10)
-c1Corner.Parent = card1
+local ROBUX_CARDS = {
+	{
+		item = "EmergencyKit",
+		cardName = "Card1",
+		y = 60,
+		title = "Emergency Kit",
+		titleColor = Color3.fromRGB(80, 220, 255),
+		desc = "Tambal semua lubang. Kebal 60 dtk. Sekali per terbang.",
+		btnName = "BuyEmergencyKitButton",
+		btnColor = Color3.fromRGB(0, 180, 120),
+		btnFallback = "Dapatkan Emergency Kit (Klik Beli)",
+		btnPrefix = "Beli 1 Kit",
+	},
+	{
+		item = "AK47Upgrade",
+		cardName = "Card2",
+		y = 205,
+		title = "AK-47 Permanen",
+		titleColor = Color3.fromRGB(255, 200, 50),
+		desc = "Satu AK-47 permanen. Pilih raknya di Setelan.",
+		btnName = "BuyAK47Button",
+		btnColor = Color3.fromRGB(210, 120, 20),
+		btnFallback = "Beli 1 AK-47",
+		btnPrefix = "Beli 1 AK-47",
+	},
+	{
+		item = "TurboGas",
+		cardName = "Card3",
+		y = 350,
+		title = "Turbo Gas (+25%)",
+		titleColor = Color3.fromRGB(56, 189, 248),
+		desc = "Kecepatan naik & kendali +25% selama 60 detik untuk satu balon.",
+		btnName = "BuyTurboGasButton",
+		btnColor = Color3.fromRGB(14, 165, 233),
+		btnFallback = "Beli 1 Turbo Gas • 29 Robux",
+		btnPrefix = "Beli 1 Turbo",
+	},
+	{
+		item = "TaliAwet",
+		cardName = "Card4",
+		y = 495,
+		title = "Tali Awet",
+		titleColor = Color3.fromRGB(251, 191, 36),
+		desc = "Kurangi pengikisan tali luar -30% (3.5 HP/s) sepanjang 1 penerbangan.",
+		btnName = "BuyTaliAwetButton",
+		btnColor = Color3.fromRGB(217, 119, 6),
+		btnFallback = "Beli 1 Tali Awet • 19 Robux",
+		btnPrefix = "Beli 1 Tali",
+	},
+}
 
-local c1Title = Instance.new("TextLabel")
-c1Title.Name = "ProductTitle"
-c1Title.Size = UDim2.new(1, -20, 0, 24)
-c1Title.Position = UDim2.new(0, 10, 0, 6)
-c1Title.BackgroundTransparency = 1
-c1Title.Text = "Emergency Kit"
-c1Title.TextColor3 = Color3.fromRGB(80, 220, 255)
-c1Title.Font = Enum.Font.FredokaOne
-c1Title.TextSize = 15
-c1Title.TextXAlignment = Enum.TextXAlignment.Left
-c1Title.Parent = card1
+local robuxButtons = {}
+local function makeRobuxCard(spec)
+	local card = Instance.new("Frame")
+	card.Name = spec.cardName
+	card.Size = UDim2.new(1, -30, 0, 135)
+	card.Position = UDim2.new(0, 15, 0, spec.y)
+	card.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
+	card.BorderSizePixel = 0
+	card.Active = true
+	card.Parent = robuxScroll
 
-local c1Desc = Instance.new("TextLabel")
-c1Desc.Name = "ProductDescription"
-c1Desc.Size = UDim2.new(1, -20, 0, 42)
-c1Desc.Position = UDim2.new(0, 10, 0, 32)
-c1Desc.BackgroundTransparency = 1
-c1Desc.Text = "Tambal semua lubang. Kebal 60 dtk. Sekali per terbang."
-c1Desc.TextColor3 = Color3.fromRGB(200, 220, 240)
-c1Desc.Font = Enum.Font.Gotham
-c1Desc.TextSize = 12
-c1Desc.TextWrapped = true
-c1Desc.TextXAlignment = Enum.TextXAlignment.Left
-c1Desc.Parent = card1
+	local cardCorner = Instance.new("UICorner")
+	cardCorner.CornerRadius = UDim.new(0, 10)
+	cardCorner.Parent = card
 
-local buyKitBtn = Instance.new("TextButton")
-buyKitBtn.Name="BuyEmergencyKitButton"
-buyKitBtn.Size = UDim2.new(1, -20, 0, 44)
-buyKitBtn.Position = UDim2.new(0, 10, 0, 80)
-buyKitBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 120)
-buyKitBtn.Text = "Dapatkan Emergency Kit (Klik Beli)"
-buyKitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-buyKitBtn.Font = Enum.Font.FredokaOne
-buyKitBtn.TextSize = 13
-buyKitBtn.BorderSizePixel = 0
-buyKitBtn.Parent = card1
+	local cardTitle = Instance.new("TextLabel")
+	cardTitle.Name = "ProductTitle"
+	cardTitle.Size = UDim2.new(1, -20, 0, 24)
+	cardTitle.Position = UDim2.new(0, 10, 0, 6)
+	cardTitle.BackgroundTransparency = 1
+	cardTitle.Text = spec.title
+	cardTitle.TextColor3 = spec.titleColor
+	cardTitle.Font = Enum.Font.FredokaOne
+	cardTitle.TextSize = 15
+	cardTitle.TextXAlignment = Enum.TextXAlignment.Left
+	cardTitle.Parent = card
 
-local bKitCorner = Instance.new("UICorner")
-bKitCorner.CornerRadius = UDim.new(0, 8)
-bKitCorner.Parent = buyKitBtn
+	local cardDesc = Instance.new("TextLabel")
+	cardDesc.Name = "ProductDescription"
+	cardDesc.Size = UDim2.new(1, -20, 0, 42)
+	cardDesc.Position = UDim2.new(0, 10, 0, 32)
+	cardDesc.BackgroundTransparency = 1
+	cardDesc.Text = spec.desc
+	cardDesc.TextColor3 = Color3.fromRGB(200, 220, 240)
+	cardDesc.Font = Enum.Font.Gotham
+	cardDesc.TextSize = 12
+	cardDesc.TextWrapped = true
+	cardDesc.TextXAlignment = Enum.TextXAlignment.Left
+	cardDesc.Parent = card
 
--- Card 2: AK-47 Upgrade
-local card2 = Instance.new("Frame")
-card2.Name = "Card2"
-card2.Size = UDim2.new(1, -30, 0, 135)
-card2.Position = UDim2.new(0, 15, 0, 205)
-card2.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
-card2.BorderSizePixel = 0
-card2.Active = true
-card2.Parent = shopModal
+	local buyBtn = Instance.new("TextButton")
+	buyBtn.Name = spec.btnName
+	buyBtn.Size = UDim2.new(1, -20, 0, 44)
+	buyBtn.Position = UDim2.new(0, 10, 0, 80)
+	buyBtn.BackgroundColor3 = spec.btnColor
+	buyBtn.Text = spec.btnFallback
+	buyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	buyBtn.Font = Enum.Font.FredokaOne
+	buyBtn.TextSize = 13
+	buyBtn.BorderSizePixel = 0
+	buyBtn.Parent = card
 
-local c2Corner = Instance.new("UICorner")
-c2Corner.CornerRadius = UDim.new(0, 10)
-c2Corner.Parent = card2
+	local btnCorner = Instance.new("UICorner")
+	btnCorner.CornerRadius = UDim.new(0, 8)
+	btnCorner.Parent = buyBtn
 
-local c2Title = Instance.new("TextLabel")
-c2Title.Name = "ProductTitle"
-c2Title.Size = UDim2.new(1, -20, 0, 24)
-c2Title.Position = UDim2.new(0, 10, 0, 6)
-c2Title.BackgroundTransparency = 1
-c2Title.Text = "AK-47 Permanen"
-c2Title.TextColor3 = Color3.fromRGB(255, 200, 50)
-c2Title.Font = Enum.Font.FredokaOne
-c2Title.TextSize = 15
-c2Title.TextXAlignment = Enum.TextXAlignment.Left
-c2Title.Parent = card2
+	robuxButtons[spec.item] = buyBtn
+	return buyBtn
+end
 
-local c2Desc = Instance.new("TextLabel")
-c2Desc.Name = "ProductDescription"
-c2Desc.Size = UDim2.new(1, -20, 0, 42)
-c2Desc.Position = UDim2.new(0, 10, 0, 32)
-c2Desc.BackgroundTransparency = 1
-c2Desc.Text = "Satu AK-47 permanen. Pilih raknya di Setelan."
-c2Desc.TextColor3 = Color3.fromRGB(200, 220, 240)
-c2Desc.Font = Enum.Font.Gotham
-c2Desc.TextSize = 12
-c2Desc.TextWrapped = true
-c2Desc.TextXAlignment = Enum.TextXAlignment.Left
-c2Desc.Parent = card2
-
-local buyAKBtn = Instance.new("TextButton")
-buyAKBtn.Name="BuyAK47Button"
-buyAKBtn.Size = UDim2.new(1, -20, 0, 44)
-buyAKBtn.Position = UDim2.new(0, 10, 0, 80)
-buyAKBtn.BackgroundColor3 = Color3.fromRGB(210, 120, 20)
-buyAKBtn.Text = "Beli 1 AK-47"
-buyAKBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-buyAKBtn.Font = Enum.Font.FredokaOne
-buyAKBtn.TextSize = 13
-buyAKBtn.BorderSizePixel = 0
-buyAKBtn.Parent = card2
-
-local bAKCorner = Instance.new("UICorner")
-bAKCorner.CornerRadius = UDim.new(0, 8)
-bAKCorner.Parent = buyAKBtn
+for _, spec in ipairs(ROBUX_CARDS) do
+	makeRobuxCard(spec)
+end
 
 -- Prices are retrieved on the client so regional prices match Roblox checkout.
 local feedback=Instance.new("TextLabel",shopModal)
 feedback.Name="ShopFeedback" feedback.Size=UDim2.new(1,-20,0,30) feedback.Position=UDim2.fromOffset(10,348)
 feedback.BackgroundTransparency=1 feedback.TextColor3=Color3.fromRGB(255,230,140) feedback.TextSize=12 feedback.TextWrapped=true feedback.Text=""
-local refreshShopTabs=ShopTabsController.Attach(shopModal,localPlayer,function(msg) feedback.Text=msg or "" end)
-DailyLoginModal.Ensure(screenGui,localPlayer)
 local prices={}local busy={}local loading=false local refreshedAt=-math.huge
 local function price(item)
- return prices[item] and (tostring(prices[item]).." Robux")or "lihat harga Roblox"
+ return prices[item] and (tostring(prices[item]).." Robux") or "lihat harga Roblox"
+end
+local function syncBusyAttributes()
+ for _,spec in ipairs(ROBUX_CARDS) do
+  shopModal:SetAttribute(spec.item.."Busy", busy[spec.item]==true)
+ end
 end
 local function refreshButtons()
- buyKitBtn.Text=busy.EmergencyKit and "Membuka toko..." or ("Beli 1 Kit • "..price("EmergencyKit"))
- buyAKBtn.Text=busy.AK47Upgrade and "Membuka toko..." or ("Beli 1 AK-47 • "..price("AK47Upgrade"))
-end
-local function refreshPrices()
- if loading or os.clock()-refreshedAt<60 then return end
- loading=true
- for _,item in ipairs({"EmergencyKit","AK47Upgrade"})do
-  local ok,info=pcall(function()return Marketplace:GetProductInfoAsync(Config.PRODUCT_IDS[item],Enum.InfoType.Product)end)
-  if ok and type(info.PriceInRobux)=="number"then
-   prices[item]=info.PriceInRobux
-   shopModal:SetAttribute(item.."Price",info.PriceInRobux)
+ syncBusyAttributes()
+ for _,spec in ipairs(ROBUX_CARDS) do
+  local btn=robuxButtons[spec.item]
+  if btn then
+   btn.Text=busy[spec.item] and "Membuka toko..." or (spec.btnPrefix.." • "..price(spec.item))
   end
  end
- refreshedAt=os.clock() loading=false refreshButtons()
 end
 local function request(item)
- if busy[item]then return end
+ if busy[item] or not Config.PRODUCT_IDS[item] then return end
  if localPlayer:GetAttribute("DataReady")~=true then feedback.Text="Data pemain sedang dimuat. Silakan coba sebentar lagi."return end
  busy[item]=true feedback.Text=""refreshButtons()
  shopPurchaseEvent:FireServer(item)
+end
+local refreshShopTabs=ShopTabsController.Attach(shopModal,localPlayer,function(msg) feedback.Text=msg or "" end,request)
+DailyLoginModal.Ensure(screenGui,localPlayer)
+local function refreshPrices()
+ if loading or os.clock()-refreshedAt<60 then return end
+ loading=true
+ for _,spec in ipairs(ROBUX_CARDS)do
+  local pid=Config.PRODUCT_IDS[spec.item]
+  if pid and pid>0 then
+   local ok,info=pcall(function()return Marketplace:GetProductInfoAsync(pid,Enum.InfoType.Product)end)
+   if ok and type(info)=="table" and type(info.PriceInRobux)=="number"then
+    prices[spec.item]=info.PriceInRobux
+    shopModal:SetAttribute(spec.item.."Price",info.PriceInRobux)
+   end
+  end
+ end
+ refreshedAt=os.clock() loading=false refreshButtons()
 end
 shopToggleBtn.Activated:Connect(function()
  HUDMotion.Toggle(shopModal)
@@ -233,8 +262,10 @@ shopToggleBtn.Activated:Connect(function()
  end
 end)
 closeBtn.Activated:Connect(function()HUDMotion.SetVisible(shopModal,false) end)
-buyKitBtn.Activated:Connect(function()request("EmergencyKit")end)
-buyAKBtn.Activated:Connect(function()request("AK47Upgrade")end)
+for _,spec in ipairs(ROBUX_CARDS) do
+ local btn=robuxButtons[spec.item]
+ if btn then btn.Activated:Connect(function()request(spec.item)end) end
+end
 shopPurchaseEvent.OnClientEvent:Connect(function(message)
  feedback.Text=message busy={}refreshButtons()
 end)

@@ -184,6 +184,30 @@ local savedZoomMin,savedZoomMax
 local cameraToken=0
 local setWeaponPresentation
 local reticle=Instance.new("TextLabel")reticle.Name="WeaponReticle"reticle.Size=UDim2.fromOffset(28,28)reticle.AnchorPoint=Vector2.new(.5,.5)reticle.Position=UDim2.fromScale(.5,.5)reticle.BackgroundTransparency=1 reticle.Text="+"reticle.TextColor3=Color3.new(1,1,1)reticle.TextStrokeTransparency=.4 reticle.TextSize=26 reticle.Visible=false reticle.Parent=screenGui
+local hitFeedbackPill=Instance.new("TextLabel")hitFeedbackPill.Name="HitFeedbackPill"hitFeedbackPill.AnchorPoint=Vector2.new(.5,0)hitFeedbackPill.Position=UDim2.new(.5,0,.5,24)hitFeedbackPill.Size=UDim2.fromOffset(108,22)hitFeedbackPill.BackgroundColor3=Color3.fromRGB(15,23,42)hitFeedbackPill.BackgroundTransparency=.18 hitFeedbackPill.BorderSizePixel=0 hitFeedbackPill.Font=Enum.Font.GothamBold hitFeedbackPill.TextSize=12 hitFeedbackPill.Text=""hitFeedbackPill.TextColor3=Color3.new(1,1,1)hitFeedbackPill.Visible=false hitFeedbackPill.ZIndex=18 hitFeedbackPill.Parent=screenGui
+Instance.new("UICorner",hitFeedbackPill).CornerRadius=UDim.new(1,0)
+local hitFeedbackStroke=Instance.new("UIStroke",hitFeedbackPill)hitFeedbackStroke.Thickness=1.5 hitFeedbackStroke.Color=Color3.fromRGB(250,204,21)
+local feedbackUntil=0 local feedbackText="" local feedbackColor=Color3.new(1,1,1) local feedbackSize=26
+local function onLocalWeaponImpact(impact)
+ if type(impact)~="table" then return end
+ local kind=impact.kind
+ local now=os.clock()
+ if kind=="Hit" then
+  feedbackUntil=now+0.22 feedbackText="> x <" feedbackColor=Color3.fromRGB(250,204,21) feedbackSize=26
+  hitFeedbackPill.Visible=false
+ elseif kind=="Kill" then
+  feedbackUntil=now+0.44 feedbackText="[ * ]" feedbackColor=Color3.fromRGB(250,204,21) feedbackSize=28
+  hitFeedbackPill.Text="HANCUR!" hitFeedbackPill.TextColor3=Color3.fromRGB(254,240,138) hitFeedbackPill.BackgroundColor3=Color3.fromRGB(66,32,6)
+  hitFeedbackStroke.Color=Color3.fromRGB(250,204,21) hitFeedbackPill.Visible=currentWeapon~=nil
+ elseif kind=="Immune" then
+  feedbackUntil=now+0.44 feedbackText="[ ! ]" feedbackColor=Color3.fromRGB(125,211,252) feedbackSize=26
+  hitFeedbackPill.Text="KEBAL" hitFeedbackPill.TextColor3=Color3.fromRGB(224,242,254) hitFeedbackPill.BackgroundColor3=Color3.fromRGB(12,46,82)
+  hitFeedbackStroke.Color=Color3.fromRGB(56,189,248) hitFeedbackPill.Visible=currentWeapon~=nil
+ end
+ if currentWeapon and feedbackUntil>now then
+  reticle.Text=feedbackText reticle.TextSize=feedbackSize reticle.TextColor3=feedbackColor
+ end
+end
 local function updateAmmoUI()
  if not currentWeapon then return end
  currentAmmo=currentWeapon:GetAttribute("CurrentMag") or 0
@@ -201,6 +225,7 @@ local function setWeapon(tool)
  reticle:SetAttribute("AimLocked",false)
  cameraToken+=1 local token=cameraToken
  reticle.Visible=tool~=nil
+ if not tool then feedbackUntil=0 hitFeedbackPill.Visible=false end
  if tool then
   if previousCameraMode==nil then previousCameraMode=localPlayer.CameraMode if savedZoomMin==nil then savedZoomMin=localPlayer.CameraMinZoomDistance savedZoomMax=localPlayer.CameraMaxZoomDistance end end
   localPlayer.CameraMode=Enum.CameraMode.LockFirstPerson
@@ -430,7 +455,7 @@ local function onCharacter(char)
  char.ChildRemoved:Connect(function(child) if child==currentWeapon then setWeapon(nil) end end)
  for _,child in ipairs(char:GetChildren()) do if child:IsA("Tool") and Config.WEAPONS[child.Name] then setWeapon(child) end end
 end
-setWeaponPresentation=require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script,screenGui)
+setWeaponPresentation=require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script,screenGui,onLocalWeaponImpact)
 if localPlayer.Character then onCharacter(localPlayer.Character) end
 localPlayer.CharacterAdded:Connect(onCharacter)
 tetherEvent.OnClientEvent:Connect(function(data)
@@ -720,11 +745,18 @@ RunService:BindToRenderStep(aimRenderStep,Enum.RenderPriority.Camera.Value+1,fun
  if currentWeapon and camera then
   local center=camera.ViewportSize/2-GuiService:GetGuiInset()
   reticle.Position=UDim2.fromOffset(center.X,center.Y)
+  hitFeedbackPill.Position=UDim2.fromOffset(center.X,center.Y+24)
   local touchAim=usesTouchAim()
   local targetPos,targetModel=findAutoAimTarget(camera,touchAim,currentWeapon)
   lockedTarget=targetModel
   local locked=targetModel~=nil
-  if reticle:GetAttribute("AimLocked")~=locked then
+  local nowClock=os.clock()
+  if nowClock<feedbackUntil then
+   reticle.Text=feedbackText
+   reticle.TextSize=feedbackSize
+   reticle.TextColor3=feedbackColor
+  else
+   if hitFeedbackPill.Visible then hitFeedbackPill.Visible=false end
    reticle:SetAttribute("AimLocked",locked)
    reticle.Text=locked and "[ + ]" or "+"
    reticle.TextSize=locked and 24 or 26

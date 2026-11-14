@@ -114,7 +114,8 @@ Catalog.DAILY_REWARDS = {
 Catalog.SUPPLIES = {
 	{
 		id = "turbo_gas",
-		name = "Turbo Gas",
+		productKey = "TurboGas",
+		name = "Turbo Gas (+25%)",
 		tag = "BUFF KECEPATAN",
 		description = "Kecepatan naik & kendali +25% selama 60 detik untuk satu balon.",
 		price = 120,
@@ -124,6 +125,7 @@ Catalog.SUPPLIES = {
 	},
 	{
 		id = "tali_awet",
+		productKey = "TaliAwet",
 		name = "Tali Awet",
 		tag = "KETAHANAN TALI",
 		description = "Kurangi pengikisan tali luar keranjang -30% (3.5 HP/s) sepanjang 1 penerbangan.",
@@ -247,6 +249,24 @@ end
 function Catalog.GetUTC7Day(unixTime: number?): number
 	local t = unixTime or os.time()
 	return math.floor((t + Catalog.UTC7_OFFSET_SECONDS) / 86400)
+end
+
+local MONTH_LABELS_ID = {
+	"Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+	"Jul", "Agu", "Sep", "Okt", "Nov", "Des",
+}
+
+function Catalog.GetUTC7YearMonth(unixTime: number?): (number, number, number)
+	local t = (unixTime or os.time()) + Catalog.UTC7_OFFSET_SECONDS
+	local dt = os.date("!*t", t)
+	local year = dt.year
+	local month = dt.month
+	return year * 100 + month, year, month
+end
+
+function Catalog.FormatMonthLabelWIB(year: number, month: number): string
+	local label = MONTH_LABELS_ID[month] or string.format("B%02d", month)
+	return string.format("%s %d", label, year)
 end
 
 function Catalog.SecondsUntilNextUTC7Day(unixTime: number?): number

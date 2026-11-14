@@ -96,7 +96,11 @@ function Manager.EndFlight(fd,victory)
  fd.isVictory=victory==true fd.isGameOver=not victory
  for p,item in pairs(fd.boarding or {})do if item.root.Parent then item.root.Anchored=item.anchored end p:SetAttribute("BoardingFlight",nil)end fd.boarding=nil
  fd.pilot=nil fd.pilotSteer=Vector3.zero fd.isGasActive=false fd.autoGas=false
+ fd.shieldActiveState=false fd.turboActiveState=false
  fd.balloon:SetAttribute("AutoGas",false)
+ fd.balloon:SetAttribute("ShieldActive",false) fd.balloon:SetAttribute("ShieldUntil",0)
+ fd.balloon:SetAttribute("TurboActive",false) fd.balloon:SetAttribute("TurboUntil",0)
+ fd.balloon:SetAttribute("BurnerActive",false)
  fd.jumpDropRemaining=0
  _G.FlyHighTetherManager.CleanupBalloon(fd.balloon)
  _G.FlyHighWeaponManager.CleanupBalloon(fd.balloon)
@@ -193,6 +197,10 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
   targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+20,boarding={},boardingAutoSettle=os.clock()+4,boardingDeadline=os.clock()+20}
  fd.alignPos.Position=start fd.alignOri.CFrame=CFrame.identity
  b:SetAttribute("AutoGas",false)
+ b:SetAttribute("ShieldUntil",0) b:SetAttribute("ShieldDuration",0) b:SetAttribute("ShieldActive",false)
+ b:SetAttribute("KitBurstSeq",0) b:SetAttribute("KitRepairedSlots","")
+ b:SetAttribute("TurboUntil",0) b:SetAttribute("TurboDuration",0) b:SetAttribute("TurboActive",false)
+ b:SetAttribute("TurboBurstSeq",0) b:SetAttribute("BurnerActive",false)
  -- Only the invisible envelope proxy is a shot target; cosmetic parts do not block weapons.
  b.Envelope.CanQuery=true
  table.insert(Manager.activeFlights,fd)
@@ -347,9 +355,15 @@ function Manager.UseEmergencyKit(p)
  if not fd or not U.Alive(p,fd) or fd.usedKits[p.UserId] or fd.shieldTime>0 then return false end
  if fd.isFreefalling and (fd.altitudeKm<=0 or fd.root.Position.Y<=fd.groundY+0.1) then return false end
  if not _G.FlyHighDataManager.ModifyEmergencyKits(p,-1) then return false end
+ local repaired={} for i=1,Config.MAX_HOLES do if fd.holeSet[i] then table.insert(repaired,tostring(i)) end end
  fd.usedKits[p.UserId]=true p:SetAttribute("UsedEmergencyKitThisFlight",true)
  fd.holes=0 fd.holeSet={} fd.selfShotHoles={} fd.isFreefalling=false fd.jumpDropRemaining=0
- fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime
+ fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime fd.shieldActiveState=true
+ fd.balloon:SetAttribute("KitRepairedSlots",table.concat(repaired,","))
+ fd.balloon:SetAttribute("ShieldDuration",fd.shieldTime)
+ fd.balloon:SetAttribute("ShieldUntil",workspace:GetServerTimeNow()+fd.shieldTime)
+ fd.balloon:SetAttribute("ShieldActive",true)
+ fd.balloon:SetAttribute("KitBurstSeq",(fd.balloon:GetAttribute("KitBurstSeq") or 0)+1)
  fd.targetPosition=fd.root.Position fd.alignPos.Position=fd.targetPosition fd.root.AssemblyLinearVelocity=Vector3.zero
  fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=os.clock()fd.velocitySampleY=fd.root.Position.Y
  renderHoles(fd) sync(fd) return true
@@ -377,6 +391,11 @@ function Manager.UseBuff(p,buffId)
   fd.turboUses[p.UserId]=used+1
   fd.turboTime=DailyCatalog.BUFF_RULES.TURBO_DURATION_SEC
   fd.turboOwner=p.DisplayName
+  fd.turboActiveState=true
+  fd.balloon:SetAttribute("TurboDuration",fd.turboTime)
+  fd.balloon:SetAttribute("TurboUntil",workspace:GetServerTimeNow()+fd.turboTime)
+  fd.balloon:SetAttribute("TurboActive",true)
+  fd.balloon:SetAttribute("TurboBurstSeq",(fd.balloon:GetAttribute("TurboBurstSeq") or 0)+1)
   sync(fd)
   return true,"Turbo Gas aktif! (+25% kecepatan 60 detik)"
  elseif buffId=="tali_awet" then
@@ -485,11 +504,22 @@ RunService.Heartbeat:Connect(function(dt)
   else fd.groundedSince=nil end
   fd.invulnTime=math.max(0,fd.invulnTime-dt) fd.shieldTime=math.max(0,fd.shieldTime-dt)
   fd.turboTime=math.max(0,(fd.turboTime or 0)-dt)
+  local shieldNow=fd.shieldTime>0
+  if fd.shieldActiveState~=shieldNow then
+   fd.shieldActiveState=shieldNow
+   fd.balloon:SetAttribute("ShieldActive",shieldNow)
+   if not shieldNow then fd.balloon:SetAttribute("ShieldUntil",0) end
+  end
+  local turboActive=(fd.turboTime or 0)>0
+  if fd.turboActiveState~=turboActive then
+   fd.turboActiveState=turboActive
+   fd.balloon:SetAttribute("TurboActive",turboActive)
+   if not turboActive then fd.balloon:SetAttribute("TurboUntil",0) end
+  end
   local alerting=os.clock()<(fd.hazardUntil or 0)
   fd.sirenLight.Brightness=(fd.invulnTime>0 or alerting) and (math.floor(os.clock()*8)%2==0 and 4 or 0) or 0
   local effect=Config.HOLE_EFFECTS[fd.holes]
   local base=Config.MAX_ALTITUDE_KM/Config.BASE_FLIGHT_DURATION_SEC
-  local turboActive=(fd.turboTime or 0)>0
   local turboMult=turboActive and DailyCatalog.BUFF_RULES.TURBO_SPEED_MULTIPLIER or 1
   local speed
   if fd.holes==5 then speed=-Config.FREEFALL_KM_PER_SEC
@@ -500,6 +530,7 @@ RunService.Heartbeat:Connect(function(dt)
   if fd.burnerBoost~=burnerBoost or fd.turboFlameActive~=turboFlame then
    fd.burnerBoost=burnerBoost
    fd.turboFlameActive=turboFlame
+   fd.balloon:SetAttribute("BurnerActive",burnerBoost)
    fd.burnerFlame.Rate=turboFlame and 92 or (burnerBoost and 66 or 32)
    fd.burnerFlame.Speed=turboFlame and NumberRange.new(15,20) or (burnerBoost and NumberRange.new(12,16) or NumberRange.new(8,12))
    fd.burnerLight.Brightness=turboFlame and 5.5 or (burnerBoost and 4 or 1.5)

@@ -64,6 +64,19 @@ local function pruneExpiredTemp(d,now)
  end
  return changed
 end
+local function currentMonthKey(nowUnix)
+ return (select(1,Catalog.GetUTC7YearMonth(nowUnix)))
+end
+local function ensureMonthlyBucket(d,nowUnix)
+ local key=currentMonthKey(nowUnix)
+ if d.MonthlyKey~=key then
+  d.MonthlyKey=key
+  d.MonthlySummitCount=0
+  d.MonthlyMaxAltitude=0
+  return true
+ end
+ return false
+end
 local function clean(d)
  d=type(d)=="table" and d or {}
  local owned=number(d.AKOwned==nil and d.AKCredits or d.AKOwned)
@@ -71,12 +84,14 @@ local function clean(d)
  local slot2=owned>=(slot1 and 2 or 1) and d.AKSlot2==true
  local progress=d.DailyProgress==nil and 1 or number(d.DailyProgress)
  local cleaned={MaxAltitude=math.min(10000,number(d.MaxAltitude)),SummitCount=number(d.SummitCount),
+  MonthlyKey=number(d.MonthlyKey),MonthlySummitCount=number(d.MonthlySummitCount),MonthlyMaxAltitude=math.min(10000,number(d.MonthlyMaxAltitude)),
   EmergencyKits=number(d.EmergencyKits),AKOwned=owned,AKSlot1=slot1,AKSlot2=slot2,ShowPlayerLabels=d.ShowPlayerLabels~=false,
   SkyCoins=number(d.SkyCoins),DailyProgress=math.clamp(progress<1 and 1 or progress,1,7),
   LastDailyClaimDay=number(d.LastDailyClaimDay),SpeedBoostStock=number(d.SpeedBoostStock),RopeBuffStock=number(d.RopeBuffStock),
   OwnedCosmetics=cleanOwned(d.OwnedCosmetics),TempCosmetics=cleanTemp(d.TempCosmetics),EquippedCosmetics=cleanEquipped(d.EquippedCosmetics),
   Receipts=type(d.Receipts)=="table" and d.Receipts or {},Session=d.Session}
  pruneExpiredTemp(cleaned)
+ ensureMonthlyBucket(cleaned)
  return cleaned
 end
 local function snapshot(d)
@@ -89,7 +104,8 @@ local function snapshot(d)
 end
 local function attributes(p,d)
  pruneExpiredTemp(d)
- for _,key in ipairs({"MaxAltitude","SummitCount","EmergencyKits","AKOwned","AKSlot1","AKSlot2","ShowPlayerLabels","SkyCoins","DailyProgress","LastDailyClaimDay","SpeedBoostStock","RopeBuffStock"}) do p:SetAttribute(key,d[key]) end
+ ensureMonthlyBucket(d)
+ for _,key in ipairs({"MaxAltitude","SummitCount","MonthlyKey","MonthlySummitCount","MonthlyMaxAltitude","EmergencyKits","AKOwned","AKSlot1","AKSlot2","ShowPlayerLabels","SkyCoins","DailyProgress","LastDailyClaimDay","SpeedBoostStock","RopeBuffStock"}) do p:SetAttribute(key,d[key]) end
  p:SetAttribute("DailyClaimedToday",d.LastDailyClaimDay>=Catalog.GetUTC7Day())
  p:SetAttribute("EquippedFrame",d.EquippedCosmetics.frame)
  p:SetAttribute("EquippedTracer",d.EquippedCosmetics.tracer)
@@ -177,12 +193,49 @@ local function added(p)
 end
 function Manager.UpdateAltitude(p,km)
  local s=sessions[p]
- if writable(s) and km==km and km>s.data.MaxAltitude then s.data.MaxAltitude=math.clamp(math.floor(km),0,10000) attributes(p,s.data) end
+ if writable(s) and km==km then
+  local rolled=ensureMonthlyBucket(s.data)
+  local floored=math.clamp(math.floor(km),0,10000)
+  local changed=rolled
+  if floored>s.data.MaxAltitude then s.data.MaxAltitude=floored changed=true end
+  if floored>s.data.MonthlyMaxAltitude then s.data.MonthlyMaxAltitude=floored changed=true end
+  if changed then
+   attributes(p,s.data)
+   if _G.FlyHighLeaderboardManager and _G.FlyHighLeaderboardManager.RecordPlayer then
+    _G.FlyHighLeaderboardManager.RecordPlayer(p,s.data,false)
+   end
+  end
+ end
 end
 function Manager.AddSummit(p)
  local s=sessions[p] if not writable(s) then return end
- s.data.SummitCount+=1 s.data.MaxAltitude=10000 attributes(p,s.data)
+ ensureMonthlyBucket(s.data)
+ s.data.SummitCount+=1 s.data.MaxAltitude=10000
+ s.data.MonthlySummitCount+=1 s.data.MonthlyMaxAltitude=10000
+ attributes(p,s.data)
+ if _G.FlyHighLeaderboardManager and _G.FlyHighLeaderboardManager.RecordPlayer then
+  _G.FlyHighLeaderboardManager.RecordPlayer(p,s.data,true)
+ end
  task.spawn(Manager.Save,p,false)
+end
+function Manager.GetLeaderboardData(p)
+ local s=sessions[p] if not s or not s.data then return nil end
+ return {
+  userId=p.UserId,
+  name=(p.DisplayName~="" and p.DisplayName) or p.Name,
+  allTime={summits=s.data.SummitCount,maxAlt=s.data.MaxAltitude},
+  monthly={key=s.data.MonthlyKey,summits=s.data.MonthlySummitCount,maxAlt=s.data.MonthlyMaxAltitude},
+ }
+end
+function Manager.RolloverMonthly(targetMonthKey)
+ for p,s in pairs(sessions) do
+  if writable(s) and s.data.MonthlyKey~=targetMonthKey then
+   s.data.MonthlyKey=targetMonthKey
+   s.data.MonthlySummitCount=0
+   s.data.MonthlyMaxAltitude=0
+   attributes(p,s.data)
+  end
+ end
 end
 function Manager.ModifyEmergencyKits(p,delta)
  local s=sessions[p]
@@ -472,13 +525,18 @@ function Manager.GrantReceipt(p,id,item)
  local beforeCoins=s.data.SkyCoins
  local d=snapshot(s.data)
  d.Receipts[id]=item
- if item=="EmergencyKit" then d.EmergencyKits+=1 elseif item=="AK47Upgrade" then d.AKOwned+=1 else s.busy=false return false end
+ if item=="EmergencyKit" then d.EmergencyKits+=1
+ elseif item=="AK47Upgrade" then d.AKOwned+=1
+ elseif item=="TurboGas" then d.SpeedBoostStock=math.clamp(d.SpeedBoostStock+1,0,1e9)
+ elseif item=="TaliAwet" then d.RopeBuffStock=math.clamp(d.RopeBuffStock+1,0,1e9)
+ else s.busy=false return false end
  local ok=write(p,s,d,false)
  if ok then
   -- Preserve altitude/summit/coin updates that happened while UpdateAsync yielded.
   local externalDelta=s.data.SkyCoins-beforeCoins
   if externalDelta>0 then d.SkyCoins=math.clamp(d.SkyCoins+externalDelta,0,1e9) end
   s.data.SkyCoins=d.SkyCoins s.data.Receipts=d.Receipts s.data.EmergencyKits=d.EmergencyKits s.data.AKOwned=d.AKOwned
+  s.data.SpeedBoostStock=d.SpeedBoostStock s.data.RopeBuffStock=d.RopeBuffStock
   attributes(p,s.data)
  end
  s.busy=false return ok,ok

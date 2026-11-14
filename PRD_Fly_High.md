@@ -13,7 +13,7 @@ Detail state dan tata letak ada di [desain kedatangan](design/features/flight-ar
 
 > Dokumen ini memuat spesifikasi beserta revisi bertanggal. Untuk **status implementasi, bukti pengujian dan temuan terbuka**, baca [HANDOVER](HANDOVER.md) dan [PROGRESS](PROGRESS.md). Revisi terbaru yang disetujui menggantikan aturan lama yang bertentangan. Desain HUD aktif adalah Sky Adventure pada bagian 12; catatan tray AKSI dan Sky Arcade bertanggal lama merupakan riwayat desain.
 >
-> **Rancangan Dalam Review Figma (14 November 2026):** Proposal **Daily Login 7-Hari Non-Hangus, Sky Coins, Turbo Gas (`+25%` 60 dtk), Tali Awet (`-30%` aus), Kosmetik Sosial, & Toko 3-Tab** dicatat di [desain Daily Login & Koin](design/features/daily-login-and-coins/design.md) (`draft`; belum diimplementasikan di Roblox Studio sambil menunggu persetujuan UI Figma).
+> **Pembaruan Ekonomi, Buff & Toko 3-Tab (15 November 2026):** Fitur **Daily Login 7-Hari Non-Hangus, Sky Coins, Turbo Gas (`+25%` 60 dtk, 120 Koin / `29 Robux` ID `3731342382`), Tali Awet (`-30%` aus, 100 Koin / `19 Robux` ID `3731343075`), Kosmetik Sosial, & Toko 3-Tab** beserta efek visual/audio balon udara (`BalloonVFX`) sudah diimplementasikan lokal di Roblox Studio; detail desain ada di [desain Daily Login & Koin](design/features/daily-login-and-coins/design.md) dan status verifikasi di [PROGRESS](PROGRESS.md).
 
 ---
 
@@ -575,3 +575,13 @@ Ketika durabilitas tali mencapai 0, tali putus dan avatar terlebih dahulu terlem
 ## Keterbacaan Peluru — 31 Oktober 2026
 
 Setiap tembakan sah menampilkan peluru melayang dengan badan yang terlihat dan jejak pendek. Animasi dari laras menuju titik benturan dibuat cukup lama agar dapat diikuti mata pada first person maupun oleh rekan tim. Peluru kosmetik berhenti di titik benturan yang ditentukan server dan dibersihkan setelah efek jejak berakhir.
+
+## Efek Balon & Opsi Robux Perbekalan — 15 November 2026
+
+- **Efek Visual & Audio Balon (`BalloonVFX`):** Aktivasi **Emergency Kit** memicu burst emas-zamrud di slot robekan yang diperbaiki, cincin kejut, `Highlight` sesaat (mengikuti setelan `ReduceHUDMotion`), kubah `ForceField` pelindung `60` detik (berkedip pada `1,5` detik terakhir), serta SFX grup `SFX`. Aktivasi **Turbo Gas (+25%)** memicu ledakan inisiatif, pembakar cyan dua lapis yang peka `BurnerActive`, jejak ekuator & tiang, serta aliran angin yang mereda pada `5,0` detik terakhir.
+- **Opsi Beli Robux untuk Perbekalan (`TurboGas` & `TaliAwet`):** Selain pembelian via Sky Coins di Tab `PERBEKALAN`, pemain dapat membeli **Turbo Gas (+25%)** (`29 Robux`, Developer Product ID `3731342382`, masuk ke `SpeedBoostStock` +1) dan **Tali Awet** (`19 Robux`, Developer Product ID `3731343075`, masuk ke `RopeBuffStock` +1) baik dari **Tab `ROBUX`** (`Card1..Card4`) maupun tombol opsi ganda pada **Tab `PERBEKALAN`**.
+
+## Papan Peringkat Puncak Spawn & Efek Dampak Tembakan — 15 November 2026
+
+- **Dua Papan Peringkat Top 10 di Dekat Spawn:** Di area `LobbySpawn` tersedia dua papan berdampingan bergaya Sky Adventure: **Top 10 Puncak · All Time** dan **Top 10 Puncak · 1 Bulan**. Papan bulanan melakukan reset otomatis setiap **tanggal 1 pukul 00:00 WIB (UTC+7)**. Peringkat mengutamakan pemain dengan **jumlah mencapai puncak (10.000 km) terbanyak**, lalu mengisi sisa slot atau kondisi saat belum ada pemuncak menggunakan **rekor ketinggian tertinggi** dalam periode masing-masing, dengan jaminan setiap pemain yang pernah mencapai puncak (`>= 1x`) selalu berada di atas pemain yang belum pernah mencapai puncak (`0` puncak). Entri berskor `0` (`0` puncak dan `0 km`) tidak ditampilkan.
+- **Efek Dampak Tembakan (`Hit` / `Kill` vs `Immune` Non-Shootable):** Tembakan sah ke objek yang dapat ditembak menampilkan efek `Hit` (kilatan warna target, percikan emas, audio dampak, reticle `> x <`) dan `Kill` saat HP habis (ledakan berlapis, cincin kejut, serpihan partikel, audio hancur, serta label `"HANCUR!"`). Tembakan ke **obstacle/hazard lingkungan yang tidak dapat ditembak (`IsObstacle == true` dan `Shootable == false`)** memunculkan efek **kebal/pantul** (cakram & halo perisai energi cyan/putih sejajar permukaan benturan, kilatan perisai, sinar/percikan pantulan, audio pantul, dan penanda `"[ ! ]"` / `"KEBAL"`) tanpa mengurangi HP hazard maupun memicu pantulan palsu pada langit kosong atau hazard atmosferik tak berfisik.
