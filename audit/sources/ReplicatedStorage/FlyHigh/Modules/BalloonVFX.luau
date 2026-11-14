@@ -2,6 +2,7 @@
 local Players = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
 local ContentProvider = game:GetService("ContentProvider")
+local Lighting = game:GetService("Lighting")
 
 local AudioMixer = require(RS.FlyHigh.Modules.AudioMixer)
 
@@ -22,11 +23,25 @@ local SHIELD_BLINK_WINDOW = 1.5
 local TURBO_COOLDOWN_WINDOW = 5.0
 local CULL_DISTANCE = 320
 local RING_SEGMENTS = 16
+local DECK_GLOW_PLANK_OFFSET = 0.035
+local DECK_GLOW_LAYERS = 18
+local DECK_GLOW_WARM_COLOR = Color3.fromRGB(255, 162, 62)
+local DECK_GLOW_TURBO_COLOR = Color3.fromRGB(64, 200, 255)
+local STATIC_LIGHT_CULL_DISTANCE = 380
+local STATIC_LIGHT_REFRESH_SEC = 0.5
+
+type StaticLightEntry = {
+	light: PointLight,
+	pos: Vector3,
+	defaultEnabled: boolean,
+}
 
 local vfxRootFolder: Folder? = nil
 local tracked: { [Model]: any } = {}
 local preloaded = false
 local nextVfxId = 0
+local staticLights: { StaticLightEntry }? = nil
+local lastStaticLightCheck = 0
 
 export type RingHandle = {
 	setFrame: (radius: number, yOffset: number, width: number, alpha: number) -> (),
@@ -109,6 +124,168 @@ local function makeNonPhysicalPart(
 	weld.Parent = part
 	part.Parent = parent
 	return part
+end
+
+export type DeckGlowHandle = {
+	setVisual: (enabled: boolean, color: Color3, intensity: number) -> (),
+}
+
+local function createDeckGlow(folder: Instance, root: BasePart, basket: Instance?, burner: Instance?): DeckGlowHandle
+	local basketRel = if basket and basket:IsA("BasePart")
+		then root.CFrame:PointToObjectSpace(basket.Position)
+		else Vector3.zero
+	local basketSize = if basket and basket:IsA("BasePart")
+		then basket.Size
+		else Vector3.new(28, 1.2, 28)
+	local deckW = math.max(18, basketSize.X - 1.5)
+	local deckD = math.max(18, basketSize.Z - 1.5)
+	local plateY = basketRel.Y + basketSize.Y * 0.5 + DECK_GLOW_PLANK_OFFSET
+
+	local plate = makeNonPhysicalPart(
+		"DeckBurnerGlowPlate",
+		Enum.PartType.Block,
+		Vector3.new(deckW, 0.01, deckD),
+		Enum.Material.SmoothPlastic,
+		Color3.new(1, 1, 1),
+		1,
+		folder,
+		root.CFrame * CFrame.new(basketRel.X, plateY, basketRel.Z),
+		root
+	)
+
+	local burnerRel = if burner and burner:IsA("BasePart")
+		then root.CFrame:PointToObjectSpace(burner.Position)
+		else Vector3.zero
+	local offsetX = math.clamp(burnerRel.X - basketRel.X, -4, 4)
+	local offsetZ = math.clamp(burnerRel.Z - basketRel.Z, -4, 4)
+	-- On NormalId.Top, UI +U follows +Z and UI +V follows -X.
+	local centerU = 0.5 + (offsetZ / deckD)
+	local centerV = 0.5 - (offsetX / deckW)
+
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "BurnerDeckGlowGui"
+	gui.Face = Enum.NormalId.Top
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 16
+	gui.LightInfluence = 0
+	gui.Brightness = 1
+	gui.AlwaysOnTop = false
+	gui.ZOffset = 0.02
+	gui.ClipsDescendants = true
+	gui.Enabled = false
+	gui.Adornee = plate
+	gui.Parent = plate
+
+	local layers: { Frame } = table.create(DECK_GLOW_LAYERS)
+	for i = 1, DECK_GLOW_LAYERS do
+		local t = (i - 1) / math.max(1, DECK_GLOW_LAYERS - 1)
+		local diameterScale = 1.08 - t * 0.92
+		local frame = Instance.new("Frame")
+		frame.Name = "GlowRing" .. tostring(i)
+		frame.AnchorPoint = Vector2.new(0.5, 0.5)
+		frame.Position = UDim2.fromScale(centerU, centerV)
+		frame.Size = UDim2.fromScale(diameterScale, diameterScale)
+		frame.SizeConstraint = Enum.SizeConstraint.RelativeXX
+		frame.BorderSizePixel = 0
+		frame.BackgroundColor3 = DECK_GLOW_WARM_COLOR
+		frame.BackgroundTransparency = 1
+		frame.ZIndex = i
+		frame.Parent = gui
+
+		local corner = Instance.new("UICorner")
+		corner.CornerRadius = UDim.new(1, 0)
+		corner.Parent = frame
+		layers[i] = frame
+	end
+
+	local lastEnabled = false
+	local lastColor: Color3? = nil
+	local lastIntensity = -1
+
+	return {
+		setVisual = function(enabled: boolean, color: Color3, intensity: number)
+			local clampedIntensity = math.clamp(intensity, 0, 1.3)
+			if
+				enabled == lastEnabled
+				and lastColor == color
+				and math.abs(clampedIntensity - lastIntensity) < 0.006
+			then
+				return
+			end
+			lastEnabled = enabled
+			lastColor = color
+			lastIntensity = clampedIntensity
+			gui.Enabled = enabled and clampedIntensity > 0.005
+			if not gui.Enabled then
+				return
+			end
+			local layerTrans = 1 - math.clamp(0.041 * clampedIntensity, 0, 0.22)
+			for _, frame in ipairs(layers) do
+				frame.BackgroundColor3 = color
+				frame.BackgroundTransparency = layerTrans
+			end
+		end,
+	}
+end
+
+local function collectStaticLights(): { StaticLightEntry }
+	if staticLights then
+		return staticLights
+	end
+	local list: { StaticLightEntry } = {}
+	local containers = {
+		workspace:FindFirstChild("FlyHighLobby"),
+		workspace:FindFirstChild("CloudPalace"),
+	}
+	for _, rootObj in ipairs(containers) do
+		if rootObj then
+			for _, desc in ipairs(rootObj:GetDescendants()) do
+				if desc:IsA("PointLight") then
+					local p = desc.Parent
+					local pos = if p and p:IsA("BasePart")
+						then p.Position
+						elseif p and p:IsA("Attachment") then p.WorldPosition
+						else nil
+					if pos then
+						table.insert(list, {
+							light = desc,
+							pos = pos,
+							defaultEnabled = desc.Enabled,
+						})
+					end
+				end
+			end
+		end
+	end
+	staticLights = list
+	return list
+end
+
+local function updateDistantStaticLights(eyePos: Vector3, clockNow: number)
+	if (clockNow - lastStaticLightCheck) < STATIC_LIGHT_REFRESH_SEC then
+		return
+	end
+	lastStaticLightCheck = clockNow
+	for _, entry in ipairs(collectStaticLights()) do
+		if entry.light.Parent then
+			local within = (entry.pos - eyePos).Magnitude <= STATIC_LIGHT_CULL_DISTANCE
+			local target = if within then entry.defaultEnabled else false
+			if entry.light.Enabled ~= target then
+				entry.light.Enabled = target
+			end
+		end
+	end
+end
+
+local function restoreStaticLights()
+	if not staticLights then
+		return
+	end
+	for _, entry in ipairs(staticLights) do
+		if entry.light.Parent and entry.light.Enabled ~= entry.defaultEnabled then
+			entry.light.Enabled = entry.defaultEnabled
+		end
+	end
 end
 
 local function createBeamRing(name: string, anchorPart: BasePart, colorSeq: ColorSequence): RingHandle
@@ -380,6 +557,7 @@ function BalloonVFX.Attach(model: Model)
 		root
 	)
 	local shieldIdleEmitter = makeEmitter(shieldBeltAnchor, "ShieldIdleMotes", {
+		LockedToPart = true,
 		Texture = TEX_SPARKS,
 		Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 232, 120)),
@@ -416,6 +594,7 @@ function BalloonVFX.Attach(model: Model)
 				att.CFrame = CFrame.lookAt(relPos, relPos + outward)
 				att.Parent = anchor
 				holeEmitters[i] = makeEmitter(att, "KitPatchBurst", {
+					LockedToPart = true,
 					Texture = TEX_SPARKS,
 					Color = ColorSequence.new({
 						ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 246, 178)),
@@ -500,6 +679,7 @@ function BalloonVFX.Attach(model: Model)
 	nozzleAtt.Parent = nozzleAnchor
 
 	local turboCoreJet = makeEmitter(nozzleAtt, "TurboCoreJet", {
+		LockedToPart = true,
 		Texture = TEX_FIRE,
 		Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(245, 253, 255)),
@@ -524,6 +704,7 @@ function BalloonVFX.Attach(model: Model)
 	})
 
 	local turboEmberSparks = makeEmitter(nozzleAtt, "TurboEmberSparks", {
+		LockedToPart = true,
 		Texture = TEX_SPARKS,
 		Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(224, 248, 255)),
@@ -542,6 +723,7 @@ function BalloonVFX.Attach(model: Model)
 	})
 
 	local turboIgnitionEmitter = makeEmitter(nozzleAtt, "TurboIgnitionBurst", {
+		LockedToPart = true,
 		Texture = TEX_FIRE,
 		Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(240, 253, 255)),
@@ -662,6 +844,7 @@ function BalloonVFX.Attach(model: Model)
 	local kitSoundBody = createSpatialSound(anchor, "KitSaveBody", SFX_PULSE_ID, 0.30, 1.18, sfxGroup)
 	local turboSoundWhoosh = createSpatialSound(nozzleAnchor, "TurboIgniteWhoosh", SFX_WHOOSH_ID, 0.42, 0.68, sfxGroup)
 	local turboSoundPulse = createSpatialSound(nozzleAnchor, "TurboIgnitePulse", SFX_CHIME_ID, 0.24, 1.82, sfxGroup)
+	local deckGlow = createDeckGlow(folder, root, basket, burner)
 
 	local state = {
 		model = model,
@@ -688,6 +871,7 @@ function BalloonVFX.Attach(model: Model)
 		kitSoundBody = kitSoundBody,
 		turboSoundWhoosh = turboSoundWhoosh,
 		turboSoundPulse = turboSoundPulse,
+		deckGlow = deckGlow,
 		kitRingStartedAt = nil :: number?,
 		kitHighlightStartedAt = nil :: number?,
 		turboRingStartedAt = nil :: number?,
@@ -732,6 +916,9 @@ function BalloonVFX.Detach(model: Model)
 	end
 	if state.folder and state.folder.Parent then
 		state.folder:Destroy()
+	end
+	if next(tracked) == nil then
+		restoreStaticLights()
 	end
 end
 
@@ -888,9 +1075,33 @@ local function updateTurboState(
 	end
 end
 
+local function updateDeckGlow(state: any, clockNow: number, inRange: boolean, reduced: boolean)
+	if not inRange then
+		state.deckGlow.setVisual(false, DECK_GLOW_WARM_COLOR, 0)
+		return
+	end
+	local model = state.model
+	local burnerActive = model:GetAttribute("BurnerActive") == true
+	local turboActive = model:GetAttribute("TurboActive") == true
+	local nightWeight = math.clamp(1 - (Lighting.Brightness / 3.2), 0.28, 1)
+	local shimmer = if reduced then 0 else math.sin(clockNow * 7.2) * 0.025
+
+	if turboActive then
+		local base = if burnerActive then 0.56 + 0.18 * nightWeight else 0.24 + 0.12 * nightWeight
+		state.deckGlow.setVisual(true, DECK_GLOW_TURBO_COLOR, base + shimmer)
+	elseif burnerActive then
+		local base = 0.44 + 0.16 * nightWeight
+		state.deckGlow.setVisual(true, DECK_GLOW_WARM_COLOR, base + shimmer)
+	else
+		local base = 0.11 + 0.13 * nightWeight
+		state.deckGlow.setVisual(true, DECK_GLOW_WARM_COLOR, base + shimmer * 0.5)
+	end
+end
+
 function BalloonVFX.Step(serverNow: number, eyePos: Vector3)
 	local clockNow = os.clock()
 	local reduced = isReducedMotion()
+	updateDistantStaticLights(eyePos, clockNow)
 	for model, state in pairs(tracked) do
 		if not model.Parent or not state.root.Parent then
 			BalloonVFX.Detach(model)
@@ -906,6 +1117,7 @@ function BalloonVFX.Step(serverNow: number, eyePos: Vector3)
 			updateTurboBurstVisuals(state, clockNow)
 			updateShieldState(state, serverNow, clockNow, inRange, reduced)
 			updateTurboState(state, serverNow, speedMag, inRange, reduced)
+			updateDeckGlow(state, clockNow, inRange, reduced)
 		end
 	end
 end
