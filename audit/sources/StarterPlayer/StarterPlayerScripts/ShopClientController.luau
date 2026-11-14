@@ -6,6 +6,8 @@ local Marketplace=game:GetService("MarketplaceService")
 local modules=ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules")
 local Config=require(modules.FlyHighConfig)
 local Assets=require(modules.HUDImageAssets)
+local ShopTabsController=require(modules:WaitForChild("ShopTabsController"))
+local DailyLoginModal=require(modules:WaitForChild("DailyLoginModal"))
 
 local localPlayer = Players.LocalPlayer
 local playerGui = localPlayer:WaitForChild("PlayerGui")
@@ -44,6 +46,7 @@ shopModal.Size = UDim2.new(0, 440, 0, 390)
 shopModal.Position = UDim2.new(0.5, -220, 0.5, -195)
 shopModal.BackgroundColor3 = Color3.fromRGB(25, 30, 40)
 shopModal.BorderSizePixel = 0
+shopModal.Active = true
 shopModal.Visible = false
 shopModal.Parent = screenGui
 
@@ -86,6 +89,7 @@ card1.Size = UDim2.new(1, -30, 0, 135)
 card1.Position = UDim2.new(0, 15, 0, 60)
 card1.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
 card1.BorderSizePixel = 0
+card1.Active = true
 card1.Parent = shopModal
 
 local c1Corner = Instance.new("UICorner")
@@ -140,6 +144,7 @@ card2.Size = UDim2.new(1, -30, 0, 135)
 card2.Position = UDim2.new(0, 15, 0, 205)
 card2.BackgroundColor3 = Color3.fromRGB(35, 42, 55)
 card2.BorderSizePixel = 0
+card2.Active = true
 card2.Parent = shopModal
 
 local c2Corner = Instance.new("UICorner")
@@ -191,6 +196,8 @@ bAKCorner.Parent = buyAKBtn
 local feedback=Instance.new("TextLabel",shopModal)
 feedback.Name="ShopFeedback" feedback.Size=UDim2.new(1,-20,0,30) feedback.Position=UDim2.fromOffset(10,348)
 feedback.BackgroundTransparency=1 feedback.TextColor3=Color3.fromRGB(255,230,140) feedback.TextSize=12 feedback.TextWrapped=true feedback.Text=""
+local refreshShopTabs=ShopTabsController.Attach(shopModal,localPlayer,function(msg) feedback.Text=msg or "" end)
+DailyLoginModal.Ensure(screenGui,localPlayer)
 local prices={}local busy={}local loading=false local refreshedAt=-math.huge
 local function price(item)
  return prices[item] and (tostring(prices[item]).." Robux")or "lihat harga Roblox"
@@ -219,7 +226,11 @@ local function request(item)
 end
 shopToggleBtn.Activated:Connect(function()
  HUDMotion.Toggle(shopModal)
- if shopModal.Visible then task.spawn(refreshPrices)end
+ if shopModal.Visible then
+  feedback.Text=""
+  if refreshShopTabs then refreshShopTabs() end
+  task.spawn(refreshPrices)
+ end
 end)
 closeBtn.Activated:Connect(function()HUDMotion.SetVisible(shopModal,false) end)
 buyKitBtn.Activated:Connect(function()request("EmergencyKit")end)
@@ -271,6 +282,7 @@ local settings=Instance.new("Frame")
 settings.Name="WeaponSettingsModal"
 settings.BackgroundColor3=Color3.fromRGB(13,32,56)
 settings.BorderSizePixel=0
+settings.Active=true
 settings.Visible=false
 settings.ZIndex=22
 local corners=Instance.new("UICorner",settings)
@@ -300,50 +312,112 @@ local function loadoutLocked()
  return localPlayer:GetAttribute("InFlight")==true
 end
 local function addChoiceArt(button)
- local image=Assets.Mount(HUDMotion.Visual(button),"speed")
- image.ZIndex=button.ZIndex+1
- local label=Instance.new("TextLabel")
- label.Name="ChoiceCaption"
- label.Size=UDim2.fromScale(1,1)
- label.BackgroundTransparency=1
- label.Font=Enum.Font.FredokaOne
- label.TextSize=14
- label.TextColor3=Color3.new(1,1,1)
- label.TextStrokeTransparency=.3
- label.ZIndex=button.ZIndex+2
- label.Parent=HUDMotion.Visual(button)
- button.TextTransparency=1
- local function refresh()
-  button.BackgroundTransparency=image.IsLoaded and 1 or 0
+ button.BackgroundTransparency=1
+ local oldStroke=button:FindFirstChildOfClass("UIStroke")
+ if oldStroke then oldStroke.Enabled=false end
+ local visual=HUDMotion.Visual(button)
+ visual.BackgroundTransparency=1
+ local pill=visual:FindFirstChild("ChoicePill")
+ if not pill then
+  pill=Instance.new("Frame")
+  pill.Name="ChoicePill"
+  pill.Size=UDim2.fromScale(1,1)
+  pill.BorderSizePixel=0
+  pill.Active=false
+  pill.ZIndex=button.ZIndex+1
+  pill.Parent=visual
+  local corner=Instance.new("UICorner",pill)
+  corner.CornerRadius=UDim.new(0,10)
+  local rim=Instance.new("UIStroke",pill)
+  rim.Name="ChoiceBorder"
+  rim.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+  rim.Thickness=1.6
+  local grad=Instance.new("UIGradient",pill)
+  grad.Rotation=90
+  grad.Color=ColorSequence.new(Color3.fromRGB(255,255,255),Color3.fromRGB(196,208,224))
  end
- image:GetPropertyChangedSignal("IsLoaded"):Connect(refresh)
- refresh()
+ pill.BackgroundTransparency=0
+ local label=visual:FindFirstChild("ChoiceCaption")
+ if not label then
+  label=Instance.new("TextLabel")
+  label.Name="ChoiceCaption"
+  label.AnchorPoint=Vector2.new(.5,.5)
+  label.Position=UDim2.fromScale(.5,.5)
+  label.Size=UDim2.new(1,-16,1,-6)
+  label.BackgroundTransparency=1
+  label.Font=Enum.Font.FredokaOne
+  label.TextSize=14
+  label.TextScaled=true
+  label.TextWrapped=false
+  label.TextColor3=Color3.new(1,1,1)
+  label.TextStrokeTransparency=1
+  label.ZIndex=button.ZIndex+2
+  label.Parent=visual
+  local constraint=Instance.new("UITextSizeConstraint",label)
+  constraint.MinTextSize=9
+  constraint.MaxTextSize=14
+  local textStroke=Instance.new("UIStroke",label)
+  textStroke.ApplyStrokeMode=Enum.ApplyStrokeMode.Contextual
+  textStroke.Thickness=1.4
+  textStroke.Color=Color3.fromRGB(4,10,24)
+ end
+ button.TextTransparency=1
 end
-local function paintChoice(button,text,selected)
+local function paintChoice(button,text,selected,accentColor,accentRim)
  button.Text=text
- button:FindFirstChild("ChoiceCaption",true).Text=text
- button.BackgroundColor3=selected and teal or blue
- Assets.Apply(button:FindFirstChild("HUDRaster",true),selected and "buy_kit" or "speed")
- button:FindFirstChild("HUDRaster",true).ImageColor3=selected and Color3.fromRGB(146,205,192) or Color3.new(1,1,1)
+ local visual=HUDMotion.Visual(button)
+ local pill=visual:FindFirstChild("ChoicePill")
+ if pill then
+  pill.BackgroundColor3=accentColor or (selected and Color3.fromRGB(36,186,92) or Color3.fromRGB(36,56,88))
+  pill.BackgroundTransparency=0
+  local rim=pill:FindFirstChildOfClass("UIStroke")
+  if rim then
+   rim.Color=accentRim or (selected and Color3.fromRGB(110,231,183) or Color3.fromRGB(90,119,163))
+   rim.Transparency=selected and .08 or .22
+  end
+ end
+ local cap=visual:FindFirstChild("ChoiceCaption",true)
+ if cap then cap.Text=text cap.TextColor3=Color3.new(1,1,1) end
 end
 local function refreshLoadout()
  local owned=localPlayer:GetAttribute("AKOwned") or 0
  local count=(localPlayer:GetAttribute("AKSlot1") and 1 or 0)+(localPlayer:GetAttribute("AKSlot2") and 1 or 0)
  local locked=loadoutLocked()
- inventory.Text=string.format("AK-47 dimiliki %d  ·  Di inventaris %d",owned,math.max(0,owned-count))
+ inventory.Text=string.format("AK-47 dimiliki: %d  ·  Di inventaris: %d",owned,math.max(0,owned-count))
  for slot,buttons in ipairs(slots) do
   local equipped=localPlayer:GetAttribute("AKSlot"..slot)==true
-  paintChoice(buttons.handgun,equipped and "Handgun" or "✓ Handgun",not equipped)
-  paintChoice(buttons.rifle,equipped and "✓ AK-47" or "AK-47",equipped)
-  if not equipped and owned<=count then
-   buttons.rifle:FindFirstChild("HUDRaster",true).ImageColor3=Color3.new(.66,.66,.66)
-   buttons.rifle.BackgroundColor3=dim
+  local hgText=(equipped and "Handgun" or "✓ Handgun")
+  local akText=(equipped and "✓ AK-47" or "AK-47")
+  if locked then
+   hgText=(not equipped and "🔒 " or "")..hgText
+   akText=(equipped and "🔒 " or "")..akText
+  end
+  paintChoice(buttons.handgun,hgText,not equipped,
+   locked and (not equipped and Color3.fromRGB(34,88,150) or dim) or nil,
+   locked and (not equipped and Color3.fromRGB(96,165,250) or Color3.fromRGB(64,80,108)) or nil)
+  paintChoice(buttons.rifle,akText,equipped,
+   locked and (equipped and Color3.fromRGB(34,88,150) or dim) or nil,
+   locked and (equipped and Color3.fromRGB(96,165,250) or Color3.fromRGB(64,80,108)) or nil)
+  if not locked and not equipped and owned<=count then
+   local visual=HUDMotion.Visual(buttons.rifle)
+   local pill=visual:FindFirstChild("ChoicePill")
+   if pill then
+    pill.BackgroundColor3=dim
+    local rim=pill:FindFirstChildOfClass("UIStroke")
+    if rim then rim.Color=Color3.fromRGB(78,94,122) end
+   end
+   local cap=visual:FindFirstChild("ChoiceCaption",true)
+   if cap then cap.TextColor3=Color3.fromRGB(168,184,210) end
   end
   for _,button in {buttons.handgun,buttons.rifle} do
    button.Interactable=not locked
    button.Selectable=not locked
-   button:FindFirstChild("ChoiceCaption",true).TextTransparency=locked and .24 or 0
-   if locked then button:FindFirstChild("HUDRaster",true).ImageColor3=button:FindFirstChild("HUDRaster",true).ImageColor3:Lerp(Color3.new(0,0,0),.38) end
+   local visual=HUDMotion.Visual(button)
+   local cap=visual:FindFirstChild("ChoiceCaption",true)
+   if cap then
+    cap.TextTransparency=locked and .16 or 0
+    if locked then cap.TextColor3=Color3.fromRGB(185,204,230) end
+   end
   end
  end
 end
@@ -410,7 +484,9 @@ local motionToggle=styleButton(settingsText("TextButton","ReduceMotionToggle",se
 addChoiceArt(motionToggle)
 local function refreshMotion()
  local reduced=localPlayer:GetAttribute("ReduceHUDMotion")==true
- paintChoice(motionToggle,reduced and "Animasi: Ringan" or "Animasi: Penuh",reduced)
+ paintChoice(motionToggle,reduced and "Animasi: Ringan" or "Animasi: Penuh",true,
+  reduced and Color3.fromRGB(22,126,184) or Color3.fromRGB(36,112,216),
+  reduced and Color3.fromRGB(125,211,252) or Color3.fromRGB(96,165,250))
 end
 motionToggle.Activated:Connect(function() localPlayer:SetAttribute("ReduceHUDMotion",localPlayer:GetAttribute("ReduceHUDMotion")~=true) end)
 localPlayer:GetAttributeChangedSignal("ReduceHUDMotion"):Connect(refreshMotion)

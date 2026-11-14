@@ -13,7 +13,7 @@ local pilotControlEvent = remotes:WaitForChild("PilotControlEvent")
 local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
 local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
 local preparingBoarding={}
-flightActionEvent.OnClientEvent:Connect(function(action,balloon,token)
+flightActionEvent.OnClientEvent:Connect(function(action,balloon,payload)
  if action=="ReleaseRejectedHelm"then
   local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
   task.spawn(function()
@@ -26,20 +26,43 @@ flightActionEvent.OnClientEvent:Connect(function(action,balloon,token)
   end)
   return
  end
- if action~="PrepareBoarding"or preparingBoarding[token]then return end
- preparingBoarding[token]=true
+ if action=="CompleteBoarding"then
+  local char=localPlayer.Character
+  local hum=char and char:FindFirstChildOfClass("Humanoid")
+  local hrp=char and char:FindFirstChild("HumanoidRootPart")
+  if hum then hum.Sit=false hum.PlatformStand=false hum:ChangeState(Enum.HumanoidStateType.GettingUp) end
+  if hrp and typeof(payload)=="CFrame" then
+   local floor=balloon and balloon:FindFirstChild("BasketFloor")
+   local needsSnap=not floor
+   if floor then
+    local rel=floor.CFrame:PointToObjectSpace(hrp.Position)
+    needsSnap=math.abs(rel.X)>floor.Size.X/2-1 or math.abs(rel.Z)>floor.Size.Z/2-1 or rel.Y<1.2 or rel.Y>8
+   end
+   if needsSnap then
+    hrp.AssemblyLinearVelocity=Vector3.zero
+    hrp.CFrame=payload
+   end
+  end
+  return
+ end
+ if action~="PrepareBoarding"or preparingBoarding[payload]then return end
+ preparingBoarding[payload]=true
  task.spawn(function()
+  local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+  if hum then hum.Sit=false hum.PlatformStand=false end
   if balloon and balloon.Parent and balloon:WaitForChild("BasketFloor",8)and balloon:WaitForChild("RootPart",8)and balloon:WaitForChild("TetherStation",8)then
    RunService.RenderStepped:Wait()RunService.RenderStepped:Wait()
-   flightActionEvent:FireServer("BoardReady",token)
+   flightActionEvent:FireServer("BoardReady",payload)
   end
-  preparingBoarding[token]=nil
+  preparingBoarding[payload]=nil
  end)
 end)
 local autoGas=false
 local emergencyKitEvent = remotes:WaitForChild("EmergencyKitEvent")
 local hazardAlertEvent = remotes:WaitForChild("HazardAlertEvent")
 local tacticalPingEvent = remotes:WaitForChild("TacticalPingEvent")
+local useBuffEvent = remotes:WaitForChild("UseBuffEvent", 10)
+local coinToastEvent = remotes:WaitForChild("CoinToastEvent", 10)
 
 -- 1. Create Flight ScreenGui
 local screenGui = playerGui:FindFirstChild("FlyHighHUD")
@@ -189,6 +212,39 @@ local cornerEm = Instance.new("UICorner")
 cornerEm.CornerRadius = UDim.new(0, 10)
 cornerEm.Parent = emBtn
 
+-- Turbo Gas & Tali Awet In-Flight Buff Dock Buttons
+local turboBtn = Instance.new("TextButton")
+turboBtn.Name = "TurboGasButton"
+turboBtn.Size = UDim2.fromOffset(50, 58)
+turboBtn.Position = UDim2.fromOffset(20, 265)
+turboBtn.BackgroundColor3 = Color3.fromRGB(14, 165, 233)
+turboBtn.Text = "TURBO"
+turboBtn.TextColor3 = Color3.new(1, 1, 1)
+turboBtn.Font = Enum.Font.FredokaOne
+turboBtn.TextSize = 11
+turboBtn.BorderSizePixel = 0
+turboBtn.Visible = false
+turboBtn.Parent = screenGui
+local cornerTurbo = Instance.new("UICorner")
+cornerTurbo.CornerRadius = UDim.new(0, 10)
+cornerTurbo.Parent = turboBtn
+
+local ropeBtn = Instance.new("TextButton")
+ropeBtn.Name = "RopeBuffButton"
+ropeBtn.Size = UDim2.fromOffset(50, 58)
+ropeBtn.Position = UDim2.fromOffset(20, 330)
+ropeBtn.BackgroundColor3 = Color3.fromRGB(245, 158, 11)
+ropeBtn.Text = "TALI AWET"
+ropeBtn.TextColor3 = Color3.new(1, 1, 1)
+ropeBtn.Font = Enum.Font.FredokaOne
+ropeBtn.TextSize = 11
+ropeBtn.BorderSizePixel = 0
+ropeBtn.Visible = false
+ropeBtn.Parent = screenGui
+local cornerRope = Instance.new("UICorner")
+cornerRope.CornerRadius = UDim.new(0, 10)
+cornerRope.Parent = ropeBtn
+
 -- Large Gas / Naik Button (Right Center for Mobile & PC)
 local gasBtn = Instance.new("TextButton")
 gasBtn.Name = "GasButton"
@@ -267,6 +323,48 @@ groundNotice.Position=UDim2.new(.5,-210,0,65)groundNotice.BackgroundColor3=Color
 groundNotice.TextColor3=Color3.fromRGB(255,225,164)groundNotice.TextSize=14 groundNotice.Font=Enum.Font.GothamBold
 groundNotice.Visible=false groundNotice.Parent=screenGui
 
+-- Tactical Crew Ping & Ghost Spot HUD Banner
+local crewPingBanner = Instance.new("Frame")
+crewPingBanner.Name = "CrewPingBanner"
+crewPingBanner.Size = UDim2.fromOffset(340, 54)
+crewPingBanner.Position = UDim2.new(0.5, -170, 0, 145)
+crewPingBanner.BackgroundColor3 = Color3.fromRGB(14, 34, 72)
+crewPingBanner.BackgroundTransparency = 0.12
+crewPingBanner.BorderSizePixel = 0
+crewPingBanner.ZIndex = 16
+crewPingBanner.Visible = false
+crewPingBanner.Parent = screenGui
+
+local pingCorner = Instance.new("UICorner")
+pingCorner.CornerRadius = UDim.new(0.5, 0)
+pingCorner.Parent = crewPingBanner
+
+local pingStroke = Instance.new("UIStroke")
+pingStroke.Name = "HUDFallbackStroke"
+pingStroke.Color = Color3.fromRGB(255, 206, 94)
+pingStroke.Thickness = 2
+pingStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+pingStroke.Parent = crewPingBanner
+
+local pingNonce = 0
+tacticalPingEvent.OnClientEvent:Connect(function(_pos, message, name, kind, senderUserId)
+ if localPlayer:GetAttribute("InFlight") ~= true then return end
+ pingNonce += 1
+ local isGhost = kind == "GhostSpot"
+ local senderName = (type(name) == "string" and name ~= "") and name or (isGhost and "Arwah" or "Kru")
+ local msgText = (type(message) == "string" and message ~= "") and message or "Bahaya terdeteksi oleh arwah!"
+ local expiresAt = os.clock() + (isGhost and 3.8 or 4.0)
+ crewPingBanner:SetAttribute("PingKind", isGhost and "ghost" or "quick")
+ crewPingBanner:SetAttribute("PingSender", senderName)
+ crewPingBanner:SetAttribute("PingMessage", msgText)
+ crewPingBanner:SetAttribute("PingExpiresAt", expiresAt)
+ crewPingBanner:SetAttribute("PingFromSelf", senderUserId == localPlayer.UserId)
+ crewPingBanner:SetAttribute("HUDMotionClosing", false)
+ crewPingBanner:SetAttribute("PingSeq", pingNonce)
+ crewPingBanner.Visible = true
+ screenGui:SetAttribute("HUDMotionPingCue", (isGhost and "ghost:" or "quick:") .. tostring(pingNonce))
+end)
+
 -- State tracking
 local isGasHeld = false
 local gasInput
@@ -300,6 +398,7 @@ emBtn.MouseButton1Click:Connect(function()
 end)
 
 local kitBlocked
+local flightFinished = false
 local function updateKit()
 	local kits = localPlayer:GetAttribute("EmergencyKits")
 	local inFlight = localPlayer:GetAttribute("InFlight") == true
@@ -312,17 +411,92 @@ local function updateKit()
 	emBtn:SetAttribute("HUDLockReason", reason)
 	emBtn.Active = inFlight and localPlayer:GetAttribute("FlightGhost") ~= true and reason == nil
 end
+local function updateBuffButtons()
+	local inFlight = localPlayer:GetAttribute("InFlight") == true
+	local ready = screenGui:GetAttribute("FlightHUDReady") == true
+	local ghost = localPlayer:GetAttribute("FlightGhost") == true
+	local speedStock = tonumber(localPlayer:GetAttribute("SpeedBoostStock")) or 0
+	local ropeStock = tonumber(localPlayer:GetAttribute("RopeBuffStock")) or 0
+	local turboRem = tonumber(localPlayer:GetAttribute("TurboRemaining")) or 0
+	local usedTurbo = tonumber(localPlayer:GetAttribute("UsedTurboCount")) or 0
+	local ropeActive = localPlayer:GetAttribute("RopeBuffActive") == true
+
+	local turboAvail = inFlight and (speedStock > 0 or turboRem > 0 or usedTurbo > 0)
+	turboBtn:SetAttribute("HUDAvailable", turboAvail)
+	local tReason = nil
+	if flightFinished then
+		tReason = "Selesai"
+	elseif not ready then
+		tReason = "Memuat"
+	elseif turboRem > 0 then
+		tReason = string.format("%ds", math.ceil(turboRem))
+	elseif usedTurbo >= 2 then
+		tReason = "Maks 2×"
+	elseif speedStock <= 0 then
+		tReason = "Habis"
+	end
+	turboBtn:SetAttribute("HUDLockReason", tReason)
+	turboBtn.Active = inFlight and not ghost and tReason == nil
+
+	local ropeAvail = inFlight and (ropeStock > 0 or ropeActive)
+	ropeBtn:SetAttribute("HUDAvailable", ropeAvail)
+	local rReason = nil
+	if flightFinished then
+		rReason = "Selesai"
+	elseif not ready then
+		rReason = "Memuat"
+	elseif ropeActive then
+		rReason = "AKTIF"
+	elseif ropeStock <= 0 then
+		rReason = "Habis"
+	end
+	ropeBtn:SetAttribute("HUDLockReason", rReason)
+	ropeBtn.Active = inFlight and not ghost and rReason == nil
+end
+turboBtn.Activated:Connect(function()
+	if turboBtn.Active and localPlayer:GetAttribute("InFlight") == true and useBuffEvent then
+		useBuffEvent:FireServer("turbo_gas")
+	end
+end)
+ropeBtn.Activated:Connect(function()
+	if ropeBtn.Active and localPlayer:GetAttribute("InFlight") == true and useBuffEvent then
+		useBuffEvent:FireServer("tali_awet")
+	end
+end)
+if useBuffEvent then
+	useBuffEvent.OnClientEvent:Connect(function(ok, msg)
+		if type(msg) == "string" and msg ~= "" then
+			screenGui:SetAttribute("HUDMotionNotice", (ok and "⚡ " or "⚠ ") .. msg)
+		end
+	end)
+end
+if coinToastEvent then
+	coinToastEvent.OnClientEvent:Connect(function(amount, reason)
+		if type(amount) == "number" and amount > 0 then
+			local detail = (type(reason) == "string" and reason ~= "") and (" · " .. reason) or ""
+			screenGui:SetAttribute("HUDMotionNotice", string.format("+%d Koin%s", math.floor(amount), detail))
+		end
+	end)
+end
+for _, attr in { "SpeedBoostStock", "RopeBuffStock", "TurboRemaining", "RopeBuffActive", "UsedTurboCount", "FlightGhost" } do
+	localPlayer:GetAttributeChangedSignal(attr):Connect(updateBuffButtons)
+end
 localPlayer:GetAttributeChangedSignal("EmergencyKits"):Connect(updateKit)
 localPlayer:GetAttributeChangedSignal("FlightGhost"):Connect(updateKit)
 localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
 	if not localPlayer:GetAttribute("InFlight") then
 		screenGui:SetAttribute("FlightHUDReady", false)
 		screenGui:SetAttribute("HUDGroundedSeconds", nil)
+		altFrame:SetAttribute("TurboRemaining", 0)
+		altFrame:SetAttribute("TurboOwner", "")
 		kitBlocked = nil
+		flightFinished = false
 	end
 	updateKit()
+	updateBuffButtons()
 end)
 updateKit()
+updateBuffButtons()
 
 local motionBiome: number? = nil
 local motionVictory=false
@@ -413,6 +587,10 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 	end
 
 	-- Emergency Button update
+	flightFinished = data.isGameOver == true or data.isVictory == true
+	local turboRem = math.ceil(math.max(0, tonumber(data.turboTime) or 0))
+	altFrame:SetAttribute("TurboRemaining", turboRem)
+	altFrame:SetAttribute("TurboOwner", type(data.turboOwner) == "string" and data.turboOwner or "")
 	kitBlocked = (data.isGameOver or data.isVictory) and "Penerbangan selesai"
 		or usedKit and "Kit terpakai"
 		or (data.shieldTime or 0) > 0 and "Perisai aktif"
@@ -436,6 +614,7 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 		emBtn.Active = true
 	end
 	updateKit()
+	updateBuffButtons()
 end)
 
 local alertVersion=0
@@ -459,6 +638,9 @@ localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
  if localPlayer:GetAttribute("InFlight") then return end
  alertVersion+=1
  alertBanner:SetAttribute("HUDAlertActive",false)
+ crewPingBanner:SetAttribute("PingExpiresAt", 0)
+ crewPingBanner:SetAttribute("HUDMotionClosing", false)
+ crewPingBanner.Visible = false
 end)
 UserInputService.InputEnded:Connect(function(input)
  if gasInput==input or (gasInput and gasInput.UserInputType==Enum.UserInputType.MouseButton1
@@ -549,5 +731,48 @@ task.spawn(function()
   task.delay(8,function() if version==photoVersion then screenGui.Enabled=true end end)
  end)
 end)
+-- Vertical all-flyers server altitude tracker & live flight sync
+local trackerModule = require(ReplicatedStorage.FlyHigh.Modules:WaitForChild("HUDAltitudeTracker"))
+local trackerFrame = Instance.new("Frame")
+trackerFrame.Name = "ServerAltitudeTracker"
+trackerFrame.BackgroundTransparency = 1
+trackerFrame.BorderSizePixel = 0
+trackerFrame.ClipsDescendants = false
+trackerFrame.Visible = false
+trackerFrame.ZIndex = 6
+trackerFrame.Parent = screenGui
+
+flightSyncEvent.OnClientEvent:Connect(function(data)
+ if type(data) ~= "table" then return end
+ if type(data.altitudeKm) == "number" then
+  altFrame:SetAttribute("AltitudeKm", data.altitudeKm)
+  trackerModule.SetLocalAltitude(data.altitudeKm)
+ end
+end)
+
+local serverFlightsSyncEvent = remotes:FindFirstChild("ServerFlightsSyncEvent")
+ if not serverFlightsSyncEvent then
+  local conn
+  conn = remotes.ChildAdded:Connect(function(child)
+   if child.Name == "ServerFlightsSyncEvent" and child:IsA("RemoteEvent") then
+    conn:Disconnect()
+    child.OnClientEvent:Connect(function(snapshot)
+     trackerModule.SetServerFlights(snapshot)
+    end)
+   end
+  end)
+ else
+  serverFlightsSyncEvent.OnClientEvent:Connect(function(snapshot)
+   trackerModule.SetServerFlights(snapshot)
+  end)
+ end
+
+localPlayer:GetAttributeChangedSignal("InFlight"):Connect(function()
+ if localPlayer:GetAttribute("InFlight") ~= true then
+  altFrame:SetAttribute("AltitudeKm", nil)
+  trackerModule.Reset()
+ end
+end)
+
 -- Shared layout keeps touch targets usable and accounts for the safe GUI area.
 require(ReplicatedStorage.FlyHigh.Modules:WaitForChild("HUDLayout")).Start(screenGui, localPlayer)

@@ -213,6 +213,10 @@ local rects = {
   world_sign = { 3, Vector2.new(466, 210), Vector2.new(448, 192) },
 }
 
+function Assets.Has(key)
+  return rects[key] ~= nil
+end
+
 function Assets.Apply(image, key)
   local rect = assert(rects[key], "Unknown Fly High UI sprite: " .. key)
   if image:GetAttribute("HUDTextureKey") ~= key then

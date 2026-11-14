@@ -3,12 +3,53 @@ local RunService=game:GetService("RunService")
 local RS=game:GetService("ReplicatedStorage")
 local PhysicsService=game:GetService("PhysicsService")
 local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
+local DailyCatalog=require(RS.FlyHigh.Modules.DailyAndShopCatalog)
 local U=require(script.Parent.ServerUtils)
 local Themes=require(RS.FlyHigh.Modules.BalloonThemes)
 local Space=require(script.Parent.FlightSpace)
 local Arrival=require(script.Parent.PalaceArrival)
 local remotes=RS.FlyHigh.Remotes
+local serverSyncRemote=remotes:FindFirstChild("ServerFlightsSyncEvent")
+if not serverSyncRemote then
+ serverSyncRemote=Instance.new("RemoteEvent")
+ serverSyncRemote.Name="ServerFlightsSyncEvent"
+ serverSyncRemote.Parent=remotes
+end
 local Manager={activeFlights={}}
+local nextFlightId=0
+local lastAllFlightsAt=0
+local hadActiveFlightsBroadcast=false
+local function broadcastFlights(force)
+ local now=os.clock()
+ if not force and now-lastAllFlightsAt<0.25 then return end
+ local snapshot={}
+ for _,fd in ipairs(Manager.activeFlights) do
+  if fd.balloon.Parent and not fd.isGameOver and not fd.isVictory then
+   local members={}
+   for _,p in ipairs(fd.players) do
+    if p.Parent==Players and not (fd.left and fd.left[p]) then
+     table.insert(members,{
+      uid=p.UserId,
+      master=(p==fd.master),
+      dead=(fd.dead[p]==true) or not U.Alive(p,fd),
+      frame=(_G.FlyHighDataManager and _G.FlyHighDataManager.GetActiveCosmetic(p,"frame")) or "none",
+     })
+    end
+   end
+   if #members>0 then
+    table.insert(snapshot,{
+     id=fd.flightId or 0,
+     alt=math.floor((fd.altitudeKm or 0)*100+0.5)/100,
+     members=members,
+    })
+   end
+  end
+ end
+ if #snapshot==0 and not hadActiveFlightsBroadcast and not force then return end
+ lastAllFlightsAt=now
+ hadActiveFlightsBroadcast=#snapshot>0
+ serverSyncRemote:FireAllClients(snapshot)
+end
 local HORIZONTAL_SPEED_SCALE_BY_CREW = { 1, 0.75, 0.6 }
 _G.FlyHighBalloonManager=Manager
 pcall(function() PhysicsService:RegisterCollisionGroup("FlyHighBalloons") end)
@@ -25,13 +66,20 @@ local function sync(fd)
  elseif not fd.velocitySampleAt then
   fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=now fd.velocitySampleY=fd.root.Position.Y
  end
+ local turboRem=math.max(0,fd.turboTime or 0)
  for _,p in ipairs(fd.players) do
   if p.Parent==Players then
+   p:SetAttribute("TurboRemaining",math.ceil(turboRem))
+   p:SetAttribute("RopeBuffActive",(fd.ropeBuffUsers and fd.ropeBuffUsers[p.UserId])==true)
+   p:SetAttribute("UsedTurboCount",(fd.turboUses and fd.turboUses[p.UserId]) or 0)
    remotes.FlightStateSyncEvent:FireClient(p,{
     altitudeKm=fd.altitudeKm,verticalSpeedKmPerSec=fd.verticalSpeedKmPerSec or 0,holes=fd.holes,invulnTime=fd.invulnTime,shieldTime=fd.shieldTime,
     autoGas=fd.autoGas==true,groundedRemaining=fd.groundedSince and math.max(0,Config.GROUNDED_TIMEOUT_SEC-(os.clock()-fd.groundedSince)) or nil,
     isGasActive=fd.isGasActive,isFreefalling=fd.isFreefalling,isGameOver=fd.isGameOver,isVictory=fd.isVictory,
-    usedEmergencyKit=fd.usedKits[p.UserId] or false})
+    usedEmergencyKit=fd.usedKits[p.UserId] or false,
+    turboTime=turboRem,turboOwner=turboRem>0 and (fd.turboOwner or "") or "",
+    usedTurboCount=(fd.turboUses and fd.turboUses[p.UserId]) or 0,
+    ropeBuffActive=(fd.ropeBuffUsers and fd.ropeBuffUsers[p.UserId])==true})
   end
  end
 end
@@ -53,10 +101,15 @@ function Manager.EndFlight(fd,victory)
  _G.FlyHighTetherManager.CleanupBalloon(fd.balloon)
  _G.FlyHighWeaponManager.CleanupBalloon(fd.balloon)
  for _,p in ipairs(fd.players) do
+  local wasAlive=victory and U.Alive(p,fd)
   p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false) p:SetAttribute("CrewRole",nil)
+  p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
   if p.Parent==Players then
    _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p] or 0)
-   if victory then _G.FlyHighDataManager.AddSummit(p)end
+   if victory then
+    _G.FlyHighDataManager.AddSummit(p)
+    if wasAlive then _G.FlyHighDataManager.GrantCoins(p,DailyCatalog.COINS.PALACE_ARRIVAL,"Tiba di Istana Awan") end
+   end
   end
  end
  if victory then
@@ -64,17 +117,53 @@ function Manager.EndFlight(fd,victory)
  else
   for _,p in ipairs(fd.players) do if U.Alive(p,fd) then p.Character:FindFirstChildOfClass("Humanoid").Health=0 end end
  end
- renderHoles(fd) sync(fd)
+ renderHoles(fd) sync(fd) broadcastFlights(true)
  if not victory then task.delay(4,function() if fd.balloon.Parent then fd.balloon:Destroy() end end)end
 end
-function Manager.LaunchBalloon(players,master,spawnPos,podName)
+local function finishBoarding(fd)
+ if not fd.boarding or fd.boardingSettling or not fd.balloon.Parent or fd.isGameOver then return end
+ fd.boardingSettling=true
+ for crew,x in pairs(fd.boarding) do
+  if x.root.Parent and U.Alive(crew,fd) then
+   local hum=crew.Character and crew.Character:FindFirstChildOfClass("Humanoid")
+   if hum then hum.Sit=false hum.PlatformStand=false end
+   local targetCF=fd.root.CFrame*CFrame.new(x.offset)
+   x.root.Anchored=true
+   x.root.AssemblyLinearVelocity=Vector3.zero
+   x.root.AssemblyAngularVelocity=Vector3.zero
+   x.root.CFrame=targetCF
+  end
+ end
+ task.delay(.2,function()
+  if not fd.boarding or not fd.balloon.Parent or fd.isGameOver then return end
+  fd.root.Anchored=false
+  fd.root.AssemblyLinearVelocity=Vector3.zero
+  fd.root.AssemblyAngularVelocity=Vector3.zero
+  pcall(function() fd.root:SetNetworkOwner(nil) end)
+  for crew,x in pairs(fd.boarding) do
+   if x.root.Parent then
+    local targetCF=fd.root.CFrame*CFrame.new(x.offset)
+    x.root.CFrame=targetCF
+    x.root.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity
+    x.root.AssemblyAngularVelocity=Vector3.zero
+    x.root.Anchored=x.anchored
+    if crew.Parent==Players then remotes.FlightActionEvent:FireClient(crew,"CompleteBoarding",fd.balloon,targetCF) end
+   end
+   crew:SetAttribute("BoardingFlight",nil)
+  end
+  fd.groundedSince=os.clock()
+  fd.boarding=nil
+  fd.boardingUntil=os.clock()+3
+ end)
+end
+function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
  if not _G.FlyHighDataManager or not _G.FlyHighWeaponManager or not _G.FlyHighTetherManager then return nil end
  if #players<1 or #players>Config.MAX_PLAYERS_PER_POD or not table.find(players,master) then return nil end
  if _G.FlyHighDataManager.IsWeaponLoadoutSaving(master) then return nil end
  for _,p in ipairs(players) do
-  if not U.Alive(p) or U.Flight(p,true) or not p:GetAttribute("DataReady") then return nil end
+  if not U.Alive(p) or U.Flight(p,true) or p:GetAttribute("InFlight")==true or p:GetAttribute("BoardingFlight")==true or not p:GetAttribute("DataReady") then return nil end
  end
- local start=Space.SpawnPosition(spawnPos or Vector3.new(0,0,-2))
+ local start=Space.SpawnPosition(spawnOrigin or Vector3.new(0,0,-2), podName)
  if Space.Blocker(start,Manager.activeFlights) then return nil end
  local theme=Themes.Get(podName)
  local variants=RS.FlyHigh.Templates:FindFirstChild("BalloonVariants")
@@ -85,19 +174,23 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
  b:SetAttribute("SourcePod",podName or "Pod_A")
  b.Name="Balloon_"..master.Name
   b.ModelStreamingMode=Enum.ModelStreamingMode.Persistent
-  b:PivotTo(CFrame.new(start)) b.Parent=workspace
+  b:PivotTo(CFrame.new(start))
  for _,part in ipairs(b:GetDescendants()) do if part:IsA("BasePart") then part.CollisionGroup="FlyHighBalloons" end end
  local root=b.PrimaryPart
- root:SetNetworkOwner(nil)
+ root.Anchored=true
+ root.AssemblyLinearVelocity=Vector3.zero
+ root.AssemblyAngularVelocity=Vector3.zero
  root.AlignPosition.RigidityEnabled=false
  root.AlignPosition.ApplyAtCenterOfMass=true
  root.AlignPosition.Responsiveness=20
- local fd={balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
-  burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
-  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},personalBest={},connections={},
+ nextFlightId+=1
+ local fd={flightId=nextFlightId,balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
+  burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,baseFlameColor=b.Burner.BurnerNozzle.BurnerFlame.Color,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
+  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},left={},personalBest={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
-  holes=0,holeSet={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
-  usedKits={},targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+20,boarding={},boardingDeadline=os.clock()+20}
+  holes=0,holeSet={},selfShotHoles={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
+  usedKits={},awardedBiomes={},actionCoins={},turboTime=0,turboOwner=nil,turboUses={},ropeBuffUsers={},
+  targetPosition=start,engineerTilt=Vector3.zero,boardingUntil=os.clock()+20,boarding={},boardingAutoSettle=os.clock()+4,boardingDeadline=os.clock()+20}
  fd.alignPos.Position=start fd.alignOri.CFrame=CFrame.identity
  b:SetAttribute("AutoGas",false)
  -- Only the invisible envelope proxy is a shot target; cosmetic parts do not block weapons.
@@ -108,11 +201,21 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   fd.personalBest[p]=0
   p:SetAttribute("CurrentPod",nil) p:SetAttribute("IsMaster",p==master) p:SetAttribute("InFlight",true)
   p:SetAttribute("FlightGhost",false) p:SetAttribute("UsedEmergencyKitThisFlight",false)
+  p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
   local ref=p:FindFirstChild("FlightBalloon") or Instance.new("ObjectValue",p)
   ref.Name="FlightBalloon" ref.Value=b
+  U.Unseat(p)
+  local hum=p.Character:FindFirstChildOfClass("Humanoid")
+  if hum then hum.Sit=false hum.PlatformStand=false hum:ChangeState(Enum.HumanoidStateType.GettingUp) end
   local hrp=p.Character.HumanoidRootPart
-  fd.boarding[p]={root=hrp,anchored=hrp.Anchored,token=game:GetService("HttpService"):GenerateGUID(false),offset=Vector3.new((i-2)*5,4,0)}
-  hrp.Anchored=true p:SetAttribute("BoardingFlight",true)
+  local offset=Vector3.new((i-(#players+1)/2)*5,4.8,0)
+  fd.boarding[p]={root=hrp,anchored=false,token=game:GetService("HttpService"):GenerateGUID(false),offset=offset}
+  hrp.Anchored=true
+  hrp.AssemblyLinearVelocity=Vector3.zero
+  hrp.AssemblyAngularVelocity=Vector3.zero
+  -- Lift crew above BasketFloor height before parenting the balloon so the basket never spawns over players.
+  hrp.CFrame=CFrame.new(start+offset)
+  p:SetAttribute("BoardingFlight",true)
   table.insert(fd.connections,p.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
    if not fd.isVictory and not fd.isGameOver then
     fd.personalBest[p]=math.max(fd.personalBest[p] or 0,math.clamp((fd.root.Position.Y-Config.GROUND_Y)/Config.STUDS_PER_KM,0,Config.MAX_ALTITUDE_KM))
@@ -122,8 +225,10 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
    if fd.pilot==p then fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero end
    _G.FlyHighTetherManager.CleanupPlayer(p)
    _G.FlyHighWeaponManager.CleanupPlayer(p)
+   broadcastFlights(true)
   end))
  end
+ b.Parent=workspace
  local helm=b.HelmSeat
  helm.HeadsUpDisplay=false
  helm.CanTouch=false -- Acquire steering through the prompt, not incidental contact.
@@ -172,25 +277,47 @@ function Manager.LaunchBalloon(players,master,spawnPos,podName)
   for _,p in ipairs(fd.players) do
    if not U.Flight(p) or U.Flight(p)==fd then
     p:SetAttribute("InFlight",false) p:SetAttribute("FlightGhost",false) p:SetAttribute("IsMaster",false)
+    p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
    end
   end
   local i=table.find(Manager.activeFlights,fd)
   if i then table.remove(Manager.activeFlights,i) end
+  broadcastFlights(true)
  end)
  sync(fd)
+ broadcastFlights(true)
  return fd
 end
 function Manager.ApplyPuncture(fd,cause)
  local deliberate=cause=="Collision" or cause=="SelfShot"
  if fd.isGameOver or fd.isVictory or fd.balloon:GetAttribute("ArrivalProtected") or (not deliberate and fd.altitudeKm<Config.SAFE_TAKEOFF_KM) or fd.invulnTime>0 or fd.shieldTime>0 or fd.holes>=Config.MAX_HOLES then return false end
- for i=1,Config.MAX_HOLES do if not fd.holeSet[i] then fd.holeSet[i]=true break end end
+ local holeIndex
+ for i=1,Config.MAX_HOLES do if not fd.holeSet[i] then fd.holeSet[i]=true holeIndex=i break end end
+ if holeIndex then
+  fd.selfShotHoles=fd.selfShotHoles or {}
+  fd.selfShotHoles[holeIndex]=(cause=="SelfShot") or nil
+ end
  fd.holes+=1 fd.invulnTime=Config.PASSIVE_INVULN_DURATION fd.isFreefalling=fd.holes==Config.MAX_HOLES
  if fd.isFreefalling then fd.targetPosition=fd.root.Position end
  renderHoles(fd) return true
 end
 function Manager.RepairHole(fd,n)
- if fd.isGameOver or fd.isVictory or fd.holes>=Config.MAX_HOLES or not fd.holeSet[n] then return false end
- fd.holeSet[n]=nil fd.holes-=1 renderHoles(fd) return true
+ if fd.isGameOver or fd.isVictory or fd.holes>=Config.MAX_HOLES or not fd.holeSet[n] then return false,false end
+ local wasSelfShot=fd.selfShotHoles and fd.selfShotHoles[n]==true or false
+ if fd.selfShotHoles then fd.selfShotHoles[n]=nil end
+ fd.holeSet[n]=nil fd.holes-=1 renderHoles(fd) return true,wasSelfShot
+end
+function Manager.AwardActionCoins(fd,p,amount,reason)
+ if not fd or fd.isGameOver or fd.isVictory or not p or p.Parent~=Players or not U.Alive(p,fd) or not _G.FlyHighDataManager then return 0 end
+ if type(amount)~="number" or amount<=0 then return 0 end
+ fd.actionCoins=fd.actionCoins or {}
+ local cap=DailyCatalog.COINS.FLIGHT_ACTION_CAP
+ local used=fd.actionCoins[p.UserId] or 0
+ local allow=math.min(math.floor(amount),math.max(0,cap-used))
+ if allow<=0 then return 0 end
+ fd.actionCoins[p.UserId]=used+allow
+ _G.FlyHighDataManager.GrantCoins(p,allow,reason)
+ return allow
 end
 function Manager.ResolveCollisions(fd,proposed)
  local clamped=Space.ClampMovement(fd,proposed,Manager.activeFlights)
@@ -221,13 +348,62 @@ function Manager.UseEmergencyKit(p)
  if fd.isFreefalling and (fd.altitudeKm<=0 or fd.root.Position.Y<=fd.groundY+0.1) then return false end
  if not _G.FlyHighDataManager.ModifyEmergencyKits(p,-1) then return false end
  fd.usedKits[p.UserId]=true p:SetAttribute("UsedEmergencyKitThisFlight",true)
- fd.holes=0 fd.holeSet={} fd.isFreefalling=false fd.jumpDropRemaining=0
+ fd.holes=0 fd.holeSet={} fd.selfShotHoles={} fd.isFreefalling=false fd.jumpDropRemaining=0
  fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime
  fd.targetPosition=fd.root.Position fd.alignPos.Position=fd.targetPosition fd.root.AssemblyLinearVelocity=Vector3.zero
  fd.verticalSpeedKmPerSec=0 fd.velocitySampleAt=os.clock()fd.velocitySampleY=fd.root.Position.Y
  renderHoles(fd) sync(fd) return true
 end
 remotes.EmergencyKitEvent.OnServerEvent:Connect(function(p) if kitRate(p) then Manager.UseEmergencyKit(p) end end)
+local buffRate=U.RateLimiter(0.5)
+function Manager.UseBuff(p,buffId)
+ local fd=U.Flight(p)
+ if type(buffId)~="string" or not fd or fd.boarding or fd.isGameOver or fd.isVictory or not U.Alive(p,fd) then
+  return false,"Hanya dapat dipakai saat terbang!"
+ end
+ if not _G.FlyHighDataManager or not _G.FlyHighDataManager.HasSession(p) then
+  return false,"Data belum siap."
+ end
+ if buffId=="turbo_gas" then
+  if (fd.turboTime or 0)>0 then return false,"Turbo Gas tim masih aktif!" end
+  fd.turboUses=fd.turboUses or {}
+  local used=fd.turboUses[p.UserId] or 0
+  if used>=DailyCatalog.BUFF_RULES.MAX_TURBO_USES_PER_FLIGHT then
+   return false,"Batas pemakaian Turbo Gas per penerbangan habis."
+  end
+  if not _G.FlyHighDataManager.ConsumeSupply(p,"turbo_gas") then
+   return false,"Stok Turbo Gas kosong! Beli di Toko."
+  end
+  fd.turboUses[p.UserId]=used+1
+  fd.turboTime=DailyCatalog.BUFF_RULES.TURBO_DURATION_SEC
+  fd.turboOwner=p.DisplayName
+  sync(fd)
+  return true,"Turbo Gas aktif! (+25% kecepatan 60 detik)"
+ elseif buffId=="tali_awet" then
+  fd.ropeBuffUsers=fd.ropeBuffUsers or {}
+  if fd.ropeBuffUsers[p.UserId] then
+   return false,"Tali Awet sudah aktif di penerbangan ini."
+  end
+  if not _G.FlyHighDataManager.ConsumeSupply(p,"tali_awet") then
+   return false,"Stok Tali Awet kosong! Beli di Toko."
+  end
+  fd.ropeBuffUsers[p.UserId]=true
+  sync(fd)
+  return true,"Tali Awet aktif (-30% pengikisan tali luar keranjang)!"
+ end
+ return false,"Buff tidak valid."
+end
+local useBuffRemote=remotes:FindFirstChild("UseBuffEvent")
+if not useBuffRemote then
+ useBuffRemote=Instance.new("RemoteEvent")
+ useBuffRemote.Name="UseBuffEvent"
+ useBuffRemote.Parent=remotes
+end
+useBuffRemote.OnServerEvent:Connect(function(p,buffId)
+ if not buffRate(p) or type(buffId)~="string" then return end
+ local ok,msg=Manager.UseBuff(p,buffId)
+ useBuffRemote:FireClient(p,ok,msg)
+end)
 local pilotRate=U.RateLimiter(0.07)
 remotes.PilotControlEvent.OnServerEvent:Connect(function(p,steer,gas)
  local fd=U.Flight(p)
@@ -244,15 +420,7 @@ function Manager.FlightAction(p,action,value)
   if not item or value~=item.token or p.Character~=fd.characters[p]then return false end
   item.ready=true
   local all=true for _,x in pairs(fd.boarding)do if not x.ready then all=false end end
-  if all and not fd.boardingSettling then
-   fd.boardingSettling=true
-   for crew,x in pairs(fd.boarding)do crew.Character:PivotTo(fd.root.CFrame*CFrame.new(x.offset))x.root.AssemblyLinearVelocity=Vector3.zero end
-   task.delay(.3,function()
-    if not fd.boarding or not fd.balloon.Parent or fd.isGameOver then return end
-    for crew,x in pairs(fd.boarding)do if x.root.Parent then crew.Character:PivotTo(fd.root.CFrame*CFrame.new(x.offset))x.root.Anchored=x.anchored x.root.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity end crew:SetAttribute("BoardingFlight",nil)end
-    fd.boarding=nil fd.boardingUntil=os.clock()+3
-   end)
-  end
+  if all then finishBoarding(fd) end
   return true
  end
  if fd.boarding then return false end
@@ -274,11 +442,11 @@ function Manager.FlightAction(p,action,value)
  return false
 end
 remotes.FlightActionEvent.OnServerEvent:Connect(function(p,action,value)
- if actionRate(p)then Manager.FlightAction(p,action,value)end
+ if action=="BoardReady" or actionRate(p)then Manager.FlightAction(p,action,value)end
 end)
 
 Players.PlayerRemoving:Connect(function(p)
- local fd=U.Flight(p)if not fd then return end fd.dead[p]=true
+ local fd=U.Flight(p)if not fd then return end fd.dead[p]=true fd.left=fd.left or {} fd.left[p]=true
  local item=fd.boarding and fd.boarding[p]
  if item then
   if item.root.Parent then item.root.Anchored=item.anchored end fd.boarding[p]=nil
@@ -286,12 +454,14 @@ Players.PlayerRemoving:Connect(function(p)
   if not crew then Manager.EndFlight(fd,false)
   elseif nextItem.ready then Manager.FlightAction(crew,"BoardReady",nextItem.token)end
  end
+ broadcastFlights(true)
 end)
 RunService.Heartbeat:Connect(function(dt)
  for _,fd in ipairs(table.clone(Manager.activeFlights)) do
   if fd.isGameOver or fd.isVictory then continue end
   if fd.boarding then
-   if os.clock()>fd.boardingDeadline then Manager.EndFlight(fd,false)end
+   if os.clock()>fd.boardingDeadline then Manager.EndFlight(fd,false)
+   elseif fd.boardingAutoSettle and os.clock()>=fd.boardingAutoSettle then finishBoarding(fd) end
    continue
   end
   local alive=0
@@ -314,20 +484,26 @@ RunService.Heartbeat:Connect(function(dt)
    if os.clock()-fd.groundedSince>=Config.GROUNDED_TIMEOUT_SEC then Manager.EndFlight(fd,false)continue end
   else fd.groundedSince=nil end
   fd.invulnTime=math.max(0,fd.invulnTime-dt) fd.shieldTime=math.max(0,fd.shieldTime-dt)
+  fd.turboTime=math.max(0,(fd.turboTime or 0)-dt)
   local alerting=os.clock()<(fd.hazardUntil or 0)
   fd.sirenLight.Brightness=(fd.invulnTime>0 or alerting) and (math.floor(os.clock()*8)%2==0 and 4 or 0) or 0
   local effect=Config.HOLE_EFFECTS[fd.holes]
   local base=Config.MAX_ALTITUDE_KM/Config.BASE_FLIGHT_DURATION_SEC
+  local turboActive=(fd.turboTime or 0)>0
+  local turboMult=turboActive and DailyCatalog.BUFF_RULES.TURBO_SPEED_MULTIPLIER or 1
   local speed
   if fd.holes==5 then speed=-Config.FREEFALL_KM_PER_SEC
-  elseif burning then speed=effect.can_ascend and base*effect.ascend_rate or (fd.holes==2 and 0 or -base*0.4*effect.descend_mult*0.5)
+  elseif burning then speed=effect.can_ascend and base*effect.ascend_rate*turboMult or (fd.holes==2 and 0 or -base*0.4*effect.descend_mult*0.5)
   else speed=-base*0.4*effect.descend_mult end
   local burnerBoost=burning and fd.holes<5
-  if fd.burnerBoost~=burnerBoost then
+  local turboFlame=turboActive and burnerBoost
+  if fd.burnerBoost~=burnerBoost or fd.turboFlameActive~=turboFlame then
    fd.burnerBoost=burnerBoost
-   fd.burnerFlame.Rate=burnerBoost and 66 or 32
-   fd.burnerFlame.Speed=burnerBoost and NumberRange.new(12,16) or NumberRange.new(8,12)
-   fd.burnerLight.Brightness=burnerBoost and 4 or 1.5
+   fd.turboFlameActive=turboFlame
+   fd.burnerFlame.Rate=turboFlame and 92 or (burnerBoost and 66 or 32)
+   fd.burnerFlame.Speed=turboFlame and NumberRange.new(15,20) or (burnerBoost and NumberRange.new(12,16) or NumberRange.new(8,12))
+   fd.burnerLight.Brightness=turboFlame and 5.5 or (burnerBoost and 4 or 1.5)
+   fd.burnerFlame.Color=turboFlame and ColorSequence.new(Color3.fromRGB(56,189,248),Color3.fromRGB(254,240,138)) or (fd.baseFlameColor or fd.burnerFlame.Color)
   end
   local maxY=Config.GROUND_Y+Config.MAX_ALTITUDE_KM*Config.STUDS_PER_KM
   local jumpStep=0
@@ -345,7 +521,7 @@ RunService.Heartbeat:Connect(function(dt)
    local fade = (fd.windUntil - now) / 0.5
    push = fd.wind * math.clamp(math.min(ramp, fade), 0, 1)
   end
-  local steerSpeed = 30 * HORIZONTAL_SPEED_SCALE_BY_CREW[alive]
+  local steerSpeed = 30 * HORIZONTAL_SPEED_SCALE_BY_CREW[alive] * turboMult
   fd.targetPosition=Vector3.new(math.clamp(fd.targetPosition.X+(steer.X*steerSpeed+push.X)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT),
    y,math.clamp(fd.targetPosition.Z+(steer.Z*steerSpeed+push.Z)*dt,-Config.CORRIDOR_CENTER_LIMIT,Config.CORRIDOR_CENTER_LIMIT))
   local clamped=Manager.ResolveCollisions(fd,fd.targetPosition)
@@ -371,7 +547,25 @@ RunService.Heartbeat:Connect(function(dt)
   fd.alignPos.Position=fd.targetPosition
   fd.altitudeKm=math.clamp((fd.root.Position.Y-Config.GROUND_Y)/Config.STUDS_PER_KM,0,Config.MAX_ALTITUDE_KM)
   if fd.altitudeKm>1 then fd.hasLiftedOff=true end
-  for _,p in ipairs(fd.players)do if U.Alive(p,fd)then fd.personalBest[p]=math.max(fd.personalBest[p] or 0,fd.altitudeKm)end end
+  for _,p in ipairs(fd.players)do
+   if U.Alive(p,fd)then
+    fd.personalBest[p]=math.max(fd.personalBest[p] or 0,fd.altitudeKm)
+    if _G.FlyHighDataManager then
+     fd.awardedBiomes=fd.awardedBiomes or {}
+     local map=fd.awardedBiomes[p.UserId]
+     if not map then map={} fd.awardedBiomes[p.UserId]=map end
+     for _,milestoneKm in ipairs(DailyCatalog.COINS.BIOME_ORDER) do
+      if fd.altitudeKm>=milestoneKm and not map[milestoneKm] then
+       map[milestoneKm]=true
+       local bonus=DailyCatalog.COINS.BIOME_MILESTONES[milestoneKm]
+       if bonus and bonus>0 then
+        _G.FlyHighDataManager.GrantCoins(p,bonus,string.format("Zona %dk km",math.floor(milestoneKm/1000)))
+       end
+      end
+     end
+    end
+   end
+  end
   local tilt=fd.engineerTilt or Vector3.zero
   fd.alignOri.CFrame=fd.alignOri.CFrame:Lerp(CFrame.Angles(math.clamp(steer.Z*0.08+tilt.X,-0.18,0.18),0,math.clamp(-steer.X*0.08+tilt.Z,-0.18,0.18)),1-math.exp(-8*dt))
   if fd.holes==5 and fd.root.Position.Y<=Config.GROUND_Y+0.15 then Manager.EndFlight(fd,false) continue end
@@ -382,4 +576,5 @@ RunService.Heartbeat:Connect(function(dt)
    sync(fd)
   end
  end
+ broadcastFlights(false)
 end)

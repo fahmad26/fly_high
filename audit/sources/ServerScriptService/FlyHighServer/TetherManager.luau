@@ -2,6 +2,7 @@ local Players=game:GetService("Players")
 local RunService=game:GetService("RunService")
 local RS=game:GetService("ReplicatedStorage")
 local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
+local DailyCatalog=require(RS.FlyHigh.Modules.DailyAndShopCatalog)
 local U=require(script.Parent.ServerUtils)
 local remotes=RS.FlyHigh.Remotes
 local Physics=game:GetService("PhysicsService")
@@ -352,7 +353,11 @@ function Manager.FinishRepair(p)
  if not repair or os.clock()-repair.start<repair.duration-.08 then return false end
  t.repair=nil
  if not fd or t.balloon~=fd.balloon or t.winch or t.stage~="Catwalk"or not U.CrewNear(p,fd.balloon,repair.hole,PATCH_REACH)then return false end
- return _G.FlyHighBalloonManager.RepairHole(fd,repair.number)
+ local repaired,wasSelfShot=_G.FlyHighBalloonManager.RepairHole(fd,repair.number)
+ if repaired and not wasSelfShot then
+  _G.FlyHighBalloonManager.AwardActionCoins(fd,p,DailyCatalog.COINS.REPAIR_HOLE,"Tambal Lubang")
+ end
+ return repaired
 end
 -- Native prompt events are also forwarded by the owning client.
 -- All progress, reach, role, duration and completion remain server validated.
@@ -423,7 +428,12 @@ RunService.Heartbeat:Connect(function(dt)
     t.hum:Move(Vector3.zero,false)t.winch=nil
     independentOwner(t,false)
     if w.detach then Manager.CleanupPlayer(p)continue end
-    if w.rescue then t.needsRescue=false t.stage="Basket"releaseHelper(t)
+    if w.rescue then
+     local rescuer=t.helper
+     t.needsRescue=false t.stage="Basket"releaseHelper(t)
+     if rescuer and _G.FlyHighBalloonManager then
+      _G.FlyHighBalloonManager.AwardActionCoins(fd,rescuer,DailyCatalog.COINS.RESCUE_CREW,"Tarik Rekan")
+     end
     else t.stage="Catwalk"end
    end
   end
@@ -438,7 +448,8 @@ RunService.Heartbeat:Connect(function(dt)
   local rescueCount=0 for _,other in pairs(Manager.activeTethers)do if other.balloon==t.balloon and (other.needsRescue or other.stage=="Catwalk")and not other.winch then rescueCount+=1 end end
   t.station:SetAttribute("RescueWaiting",rescueCount)
   if not inside then
-   t.durability=math.max(0,t.durability-Config.ROPE_DECAY_PER_SEC*dt)
+   local ropeMult=(fd.ropeBuffUsers and fd.ropeBuffUsers[p.UserId]) and DailyCatalog.BUFF_RULES.ROPE_DECAY_MULTIPLIER or 1
+   t.durability=math.max(0,t.durability-Config.ROPE_DECAY_PER_SEC*ropeMult*dt)
    local offset=fd.root.CFrame:PointToObjectSpace(t.hrp.Position)
    fd.engineerTilt+=Vector3.new(math.clamp(offset.Z*.005,-.12,.12),0,math.clamp(-offset.X*.005,-.12,.12))
   end
@@ -456,5 +467,5 @@ remotes.TacticalPingEvent.OnServerEvent:Connect(function(p,kind,position,message
  if kind~="GhostSpot"and kind~="QuickPing"then return end
  if kind=="GhostSpot"then message="Bahaya terdeteksi oleh arwah!"
  elseif not table.find(Config.TACTICAL_MESSAGES,message)or ghost then return end
- for _,crew in ipairs(fd.players)do if crew.Parent==Players then remotes.TacticalPingEvent:FireClient(crew,position,message,p.DisplayName)end end
+ for _,crew in ipairs(fd.players)do if crew.Parent==Players then remotes.TacticalPingEvent:FireClient(crew,position,message,p.DisplayName,kind,p.UserId)end end
 end)

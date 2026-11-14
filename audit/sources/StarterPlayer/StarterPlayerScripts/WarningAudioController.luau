@@ -5,14 +5,21 @@ local Run=game:GetService("RunService")
 local Content=game:GetService("ContentProvider")
 local p=Players.LocalPlayer
 local fly=RS:WaitForChild("FlyHigh")
-local config=require(fly:WaitForChild("Modules"):WaitForChild("FlyHighConfig")).AUDIO_WARNINGS
+local modules=fly:WaitForChild("Modules")
+local config=require(modules:WaitForChild("FlyHighConfig")).AUDIO_WARNINGS
+local AudioMixer=require(modules:WaitForChild("AudioMixer"))
+local AudioSettingsModal=require(modules:WaitForChild("AudioSettingsModal"))
+local HUDMotion=require(modules:WaitForChild("HUDMotion"))
 local remotes=fly:WaitForChild("Remotes")
 local assets=fly:WaitForChild("AudioAssets")
 local gui=p:WaitForChild("PlayerGui"):WaitForChild("FlyHighHUD")
 
+AudioMixer.Bind(p)
+local audioModal=AudioSettingsModal.Ensure(gui,p)
+
 -- Script ownership also removes the sound pool if this controller is destroyed.
 local folder=Instance.new("Folder")folder.Name="FlyHighWarningAudio"folder.Parent=script
-local group=Instance.new("SoundGroup")group.Name="Warnings"group.Volume=config.VOLUME group.Parent=folder
+local group=Instance.new("SoundGroup")group.Name="Warnings"group.Volume=config.VOLUME*AudioMixer.GetSFXScale(p)group.Parent=folder
 local sounds={}
 for _,name in {"WarningTone","WarningSiren"}do
  local sound=assets:WaitForChild(name):Clone()
@@ -54,14 +61,17 @@ local function eligible()
  return p:GetAttribute("InFlight")==true and p:GetAttribute("FlightGhost")~=true and hum and hum.Health>0 and ref and ref.Value and ref.Value.Parent and ref.Value~=finishedBalloon
 end
 local function refreshMute()
- muted=p:GetAttribute("WarningAudioMuted")==true
- group.Volume=muted and 0 or config.VOLUME
- toggle.Text=muted and "SUARA PERINGATAN: OFF"or "SUARA PERINGATAN: ON"
+ local sfxScale=AudioMixer.GetSFXScale(p)
+ muted=sfxScale<=0
+ group.Volume=config.VOLUME*sfxScale
+ local silenced=AudioMixer.IsOverallMuted(p)
+ toggle.Text=silenced and "BISU"or "SUARA"
  folder:SetAttribute("Muted",muted)
+ folder:SetAttribute("SFXScale",sfxScale)
  if muted then cycle=nil stopVoice()end
 end
-connect(toggle.Activated,function()p:SetAttribute("WarningAudioMuted",not muted)end)
-connect(p:GetAttributeChangedSignal("WarningAudioMuted"),refreshMute)
+connect(toggle.Activated,function()HUDMotion.Toggle(audioModal)end)
+table.insert(connections,AudioMixer.Observe(p,refreshMute))
 refreshMute()
 local function inactive()if not eligible()then clear()end end
 connect(p:GetAttributeChangedSignal("InFlight"),inactive)
@@ -126,7 +136,7 @@ local function cleanup()
  if coroutine.status(preloadTask)~="dead"then task.cancel(preloadTask)end
  if connection then connection:Disconnect()end
  for _,c in connections do c:Disconnect()end table.clear(connections)
- stopVoice()toggle:Destroy()folder:Destroy()
+ stopVoice()toggle:Destroy()if audioModal then audioModal:Destroy()end folder:Destroy()
 end
 connect(script.Destroying,cleanup)
 connection=Run.Heartbeat:Connect(function(dt)
@@ -138,7 +148,6 @@ connection=Run.Heartbeat:Connect(function(dt)
  if currentBalloon~=previousBalloon then
   previousBalloon=currentBalloon finishedBalloon=nil clear()
  end
- toggle.Visible=p:GetAttribute("InFlight")==true
  if not eligible()then if key~=""or cycle or voice then clear()end return end
  local now=workspace:GetServerTimeNow()
  local wanted=choose(now)

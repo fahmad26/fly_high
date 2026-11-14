@@ -7,6 +7,109 @@ local RackArt=require(script.Parent.WeaponRackPresentation)
 local remotes=RS.FlyHigh.Remotes
 local Manager={held={},racks=setmetatable({},{__mode="k"})}
 _G.FlyHighWeaponManager=Manager
+local IK_AIM_NAME="FlyHighRightAimIK"
+local IK_SUPPORT_NAME="FlyHighLeftSupportIK"
+local HOLD_PROFILES={
+ AK47={
+  reachRatio=0.24,minZ=0.34,maxZ=0.62,
+  offsetXRatio=0.32,offsetYRatio=-0.22,offsetYConst=-0.08,
+  pitchDeg=-11.5,yawDeg=15,
+  leftPart="WoodHandguard",leftTargetOffset=Vector3.new(-0.04,-0.16,0.35),
+ },
+ Pistol={
+  useBoneReach=true,
+  reachRatio=0.72,frontMargin=0.14,maxZ=1.35,
+  shoulderXRatio=0.42,offsetXRatio=0.14,offsetYRatio=-0.08,offsetYConst=0,
+  pitchDeg=0,yawDeg=-12,
+  leftPart="Handle",leftTargetOffset=Vector3.new(-0.06,-0.10,0.04),
+ },
+}
+local function cleanupTwoHandIK(character)
+ if not character then return end
+ local hum=character:FindFirstChildOfClass("Humanoid")
+ if hum then
+  for _,child in ipairs(hum:GetChildren()) do
+   if child:IsA("IKControl") and (child.Name==IK_AIM_NAME or child.Name==IK_SUPPORT_NAME) then
+    child:Destroy()
+   end
+  end
+ end
+ local torso=character:FindFirstChild("UpperTorso")
+ local aimAtt=torso and torso:FindFirstChild("RightAimTarget")
+ if aimAtt then aimAtt:Destroy() end
+end
+local function measureArmReach(torso,rUA,rLA)
+ local sAtt=rUA:FindFirstChild("RightShoulderRigAttachment")
+ local eAtt=rUA:FindFirstChild("RightElbowRigAttachment")
+ local wAtt=rLA and rLA:FindFirstChild("RightWristRigAttachment")
+ if sAtt and eAtt and wAtt then
+  return (eAtt.WorldPosition-sAtt.WorldPosition).Magnitude+(wAtt.WorldPosition-eAtt.WorldPosition).Magnitude,
+   torso.CFrame:PointToObjectSpace(sAtt.WorldPosition)
+ end
+ return rUA.Size.Y+(rLA and rLA.Size.Y or rUA.Size.Y),
+  Vector3.new(torso.Size.X*0.5,torso.Size.Y*0.35,0)
+end
+local function applyTwoHandIK(character,tool,weaponType)
+ local profile=HOLD_PROFILES[weaponType]
+ if not (character and tool and profile) then return end
+ cleanupTwoHandIK(character)
+ local hum=character:FindFirstChildOfClass("Humanoid")
+ local torso=character:FindFirstChild("UpperTorso")
+ local rUA=character:FindFirstChild("RightUpperArm")
+ local rLA=character:FindFirstChild("RightLowerArm")
+ local rH=character:FindFirstChild("RightHand")
+ local lUA=character:FindFirstChild("LeftUpperArm")
+ local lH=character:FindFirstChild("LeftHand")
+ local rGripAtt=rH and rH:FindFirstChild("RightGripAttachment")
+ if not (hum and torso and rUA and rH and lUA and lH and rGripAtt) then return end
+ if not hum:FindFirstChildOfClass("Animator") then Instance.new("Animator",hum) end
+ local torsoW,torsoH=torso.Size.X,torso.Size.Y
+ local distZ,posX
+ if profile.useBoneReach then
+  local boneReach,sRel=measureArmReach(torso,rUA,rLA)
+  distZ=-math.clamp(-sRel.Z+boneReach*profile.reachRatio,torso.Size.Z*0.5+profile.frontMargin,profile.maxZ)
+  posX=sRel.X*profile.shoulderXRatio
+ else
+  local armReach=rUA.Size.Y+(rLA and rLA.Size.Y or rUA.Size.Y)
+  distZ=-math.clamp(armReach*profile.reachRatio,profile.minZ,profile.maxZ)
+  posX=torsoW*profile.offsetXRatio
+ end
+ local handleRelTorso=CFrame.new(posX,torsoH*profile.offsetYRatio+profile.offsetYConst,distZ)
+  *CFrame.Angles(0,math.rad(profile.yawDeg),0)
+  *CFrame.Angles(math.rad(profile.pitchDeg),0,0)
+ local aimAtt=Instance.new("Attachment")
+ aimAtt.Name="RightAimTarget"
+ aimAtt.CFrame=handleRelTorso*tool.Grip*rGripAtt.CFrame:Inverse()
+ aimAtt.Parent=torso
+ local gripPart=tool:FindFirstChild(profile.leftPart) or tool:FindFirstChild("Handle")
+ local leftTarget=gripPart and gripPart:FindFirstChild("LeftHandGripTarget")
+ if gripPart and not leftTarget then
+  leftTarget=Instance.new("Attachment")
+  leftTarget.Name="LeftHandGripTarget"
+  leftTarget.Position=profile.leftTargetOffset
+  leftTarget.Parent=gripPart
+ end
+ local rIK=Instance.new("IKControl")
+ rIK.Name=IK_AIM_NAME
+ rIK.Type=Enum.IKControlType.Transform
+ rIK.ChainRoot=rUA
+ rIK.EndEffector=rH
+ rIK.Target=aimAtt
+ rIK.SmoothTime=0.08
+ rIK.Weight=1
+ rIK.Parent=hum
+ if leftTarget then
+  local lIK=Instance.new("IKControl")
+  lIK.Name=IK_SUPPORT_NAME
+  lIK.Type=Enum.IKControlType.Position
+  lIK.ChainRoot=lUA
+  lIK.EndEffector=lH
+  lIK.Target=leftTarget
+  lIK.SmoothTime=0.08
+  lIK.Weight=1
+  lIK.Parent=hum
+ end
+end
 local function state(s)
  s.tool:SetAttribute("CurrentMag",s.ammo)
  s.tool:SetAttribute("Reloading",s.reloading==true)
@@ -16,6 +119,9 @@ function Manager.CleanupPlayer(p)
  if not s then return end
  Manager.held[p]=nil
  if s.unequipped then s.unequipped:Disconnect() end
+ if s.died then s.died:Disconnect() end
+ if s.charRemoving then s.charRemoving:Disconnect() end
+ cleanupTwoHandIK(s.character or p.Character)
  if p.Parent==Players then p:SetAttribute("CrewRole",nil) end
  s.tool:Destroy()
  if s.rack.Parent then
@@ -52,10 +158,21 @@ function Manager.TryEquip(p,b,rack)
    RackArt.Update(rack)
    p:SetAttribute("CrewRole","Gunner")
    tool.Parent=p.Backpack
-   p.Character:FindFirstChildOfClass("Humanoid"):EquipTool(tool)
+   local char=p.Character
+   local hum=char and char:FindFirstChildOfClass("Humanoid")
+   if not hum then Manager.CleanupPlayer(p) return false end
+   s.character=char
+   hum:EquipTool(tool)
+   applyTwoHandIK(char,tool,weaponType)
    -- Roblox's number key/backpack unequip must return the gun to its rack too.
    s.unequipped=tool.Unequipped:Connect(function()
     task.defer(function()if Manager.held[p]==s and tool.Parent~=p.Character then Manager.CleanupPlayer(p)end end)
+   end)
+   s.died=hum.Died:Connect(function()
+    if Manager.held[p]==s then Manager.CleanupPlayer(p) end
+   end)
+   s.charRemoving=p.CharacterRemoving:Connect(function(oldChar)
+    if Manager.held[p]==s and oldChar==s.character then Manager.CleanupPlayer(p) end
    end)
  return true
 end

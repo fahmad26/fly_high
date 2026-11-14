@@ -172,8 +172,9 @@ RunService.Heartbeat:Connect(function(dt)
   end
  end
  for _,pod in ipairs(pods:GetChildren()) do
+  local floorPad=pod:FindFirstChild("FloorPad")
   local console=pod:FindFirstChild("Console")
-  local prompt=console and console:FindFirstChild("StartPrompt")
+  local prompt=(floorPad and floorPad:FindFirstChild("StartPrompt",true))or(console and console:FindFirstChild("StartPrompt",true))
   if prompt then prompt.Enabled=alive and not active and player:GetAttribute("CurrentPod")==pod.Name and player:GetAttribute("IsMaster")==true and pod:GetAttribute("LaunchBlocked")~=true end
  end
 end)

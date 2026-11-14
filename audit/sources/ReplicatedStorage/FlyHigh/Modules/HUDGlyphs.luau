@@ -3,7 +3,8 @@ local Assets = require(script.Parent.HUDImageAssets)
 local Glyphs = {}
 
 local fallback = {
-	shop = "T", kit = "+", sound = "♪", muted = "×", ping = "!",
+	shop = "T", daily = "★", kit = "+", turbo = "⚡", rope = "◈",
+	sound = "♪", muted = "×", ping = "!",
 	jump = "↑", climb = "↑", descend = "↓", fire = "⊕", aim = "+",
 	close = "×", gas = "▲", auto = "↻", warning = "!",
 }
@@ -13,17 +14,22 @@ function Glyphs.Draw(parent, key)
 	root.Name = "HUDGlyph"
 	root.Size = UDim2.fromScale(1, 1)
 	root.BackgroundTransparency = 1
-	local image = Assets.Mount(root, "icon_" .. key, true)
-	image.Name = "HUDGlyphImage"
 	local text = Instance.new("TextLabel")
 	text.Name = "HUDGlyphFallback"
 	text.Size = UDim2.fromScale(1, 1)
 	text.BackgroundTransparency = 1
-	text.Text = fallback[key] or ""
+	text.Text = fallback[key] or "?"
 	text.TextColor3 = Color3.new(1, 1, 1)
 	text.TextScaled = true
 	text.Font = Enum.Font.GothamBlack
 	text.Parent = root
+	local spriteKey = "icon_" .. key
+	if not Assets.Has(spriteKey) then
+		root.Parent = parent
+		return root
+	end
+	local image = Assets.Mount(root, spriteKey, true)
+	image.Name = "HUDGlyphImage"
 	local function refresh()
 		local ready = image.IsLoaded
 		image.Visible = ready

@@ -14,7 +14,7 @@ for _, podModel in ipairs(podsFolder:GetChildren()) do
 	if podModel:IsA("Model") then
 		local floorPad = podModel:WaitForChild("FloorPad")
 		local console = podModel:WaitForChild("Console")
-		local prompt = console:WaitForChild("StartPrompt")
+		local prompt = floorPad:FindFirstChild("StartPrompt", true) or console:FindFirstChild("StartPrompt", true) or console:WaitForChild("StartPrompt")
 		local statusGui = console:WaitForChild("StatusGui")
 
 		podStates[podModel.Name] = {
@@ -33,7 +33,7 @@ end
 local Space=require(script.Parent.FlightSpace)
 local function blocked(data)
  local bm=_G.FlyHighBalloonManager
- return bm and Space.Blocker(Space.SpawnPosition(data.pad.Position),bm.activeFlights)~=nil
+ return bm and Space.Blocker(Space.SpawnPosition(data.pad, data.model.Name),bm.activeFlights)~=nil
 end
 local Themes=require(ReplicatedStorage.FlyHigh.Modules.BalloonThemes)
 local function updatePodVisuals(data)
@@ -49,7 +49,7 @@ local function updatePodVisuals(data)
  if master then master.Text=data.master and ("MASTER • "..data.master.DisplayName) or "MASTER • Belum ada" end
  local label=gui:FindFirstChild("StatusLabel")
  if label then
-  label.Text=data.isStarting and "Menyiapkan balon..." or (busy and "Tunggu balon di depan dermaga menjauh" or nil) or (count>0 and "Siap berangkat bersama Master" or "Masuk ke dermaga untuk bergabung")
+  label.Text=data.isStarting and "Menyiapkan balon..." or (busy and "Tunggu balon di dermaga menjauh" or nil) or (count>0 and "Siap berangkat bersama Master" or "Masuk ke dermaga untuk bergabung")
   label.TextColor3=color
  end
  for i=1,FlyHighConfig.MAX_PLAYERS_PER_POD do
@@ -69,11 +69,17 @@ local function updatePodVisuals(data)
 end
 
 local U=require(script.Parent.ServerUtils)
+local function isPlayerBusyInFlight(p)
+ if U.Flight(p,true) then return true end
+ if p:GetAttribute("InFlight")==true or p:GetAttribute("BoardingFlight")==true then return true end
+ local fb=p:FindFirstChild("FlightBalloon")
+ return fb and fb:IsA("ObjectValue") and fb.Value~=nil and fb.Value.Parent~=nil or false
+end
 local function playersOnPad(data)
  local found={}
  for _,p in ipairs(Players:GetPlayers()) do
   local root=p.Character and p.Character:FindFirstChild("HumanoidRootPart")
-  if root and U.Alive(p) and p:GetAttribute("DataReady") and not U.Flight(p,true) then
+  if root and U.Alive(p) and p:GetAttribute("DataReady") and not isPlayerBusyInFlight(p) then
    local v=data.pad.CFrame:PointToObjectSpace(root.Position)
    if math.abs(v.X)<=data.pad.Size.X/2+1 and math.abs(v.Z)<=data.pad.Size.Z/2+1 and v.Y>=0 and v.Y<=10 then found[p]=true end
   end
@@ -107,21 +113,21 @@ local function refresh(data,name)
    p:SetAttribute("CurrentPod",name) p:SetAttribute("IsMaster",p==data.master)
   elseif p:GetAttribute("CurrentPod")==name then
    p:SetAttribute("CurrentPod",nil)
-   if not U.Flight(p) then p:SetAttribute("IsMaster",false) end
+   if not isPlayerBusyInFlight(p) then p:SetAttribute("IsMaster",false) end
   end
  end
  updatePodVisuals(data)
 end
 for name,data in pairs(podStates) do
  data.prompt.Triggered:Connect(function(p)
-  if data.isStarting or not U.Near(p,data.console,12) then return end
+  if data.isStarting or isPlayerBusyInFlight(p) or not U.Near(p,data.pad,14) then return end
   refresh(data,name)
   if data.master~=p then return end
   local bm=_G.FlyHighBalloonManager
   if not bm then return end
   if blocked(data)then return end
   data.isStarting=true data.prompt.Enabled=false updatePodVisuals(data)
-  local fd=bm.LaunchBalloon(data.players,data.master,data.pad.Position,name)
+  local fd=bm.LaunchBalloon(data.players,data.master,data.pad,name)
   if fd then
    data.players={} data.master=nil
   end

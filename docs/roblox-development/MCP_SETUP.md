@@ -2,7 +2,9 @@
 
 ## Status
 
-- **Figma:** integrasi resmi Figma pada Codex sudah dihubungkan pengguna. Tool whoami berhasil dan tool Figma tersedia di sesi ini. Tidak membuat/mengubah file desain untuk tes koneksi; izin edit per file tetap mengikuti akun. Tidak memasang server desktop duplikat atau memasukkan token ke repo.
+- **Figma (Antigravity & Codex):**
+  - **Antigravity (14 November 2026):** plugin resmi **Figma** (`antigravity-plugins-partners/plugin/figma`, terpasang di `C:/Users/fahma/.gemini/config/plugins/figma`) dan server MCP `figma_figma` beserta 17 skill Figma sudah aktif. Panggilan verifikasi `whoami` berhasil (`handle: "Fikri Ahmad"`, `user_id: "1702381256978829211"`, `plans: "Fikri Ahmad's team"`, `code_layers_enabled: true`, `specs_enabled: true`).
+  - **Codex (11 November 2026):** integrasi resmi Figma pada Codex sudah dihubungkan pengguna (`whoami` lulus). Tidak membuat/mengubah file desain untuk tes koneksi; izin edit per file tetap mengikuti akun. Tidak memasang server desktop duplikat atau memasukkan token ke repo.
 - **Blender:** add-on aktif di Blender 5.3.0 yang sudah terbuka, listener localhost:9876. Server stdio terdaftar global pada Codex sebagai blender. Handshake, daftar sembilan tool, get_addon_status dan get_scene_info lulus melalui SDK MCP terpisah. Scene masih Cube/Camera/Light; geometri tidak diubah.
 - **Batas sesi:** Blender belum menjadi tool native pada chat yang sudah berjalan sebelum konfigurasi ditambahkan. Tutup dan buka ulang Codex untuk memuat server; Blender boleh tetap terbuka.
 

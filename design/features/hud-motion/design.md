@@ -1,6 +1,6 @@
 # Fly High — rencana animasi HUD Sky Adventure
 
-Status: approved — pengguna menyetujui implementasi langsung Studio pada 12 November 2026. Implementasi awal dan QA terarah tersedia; rincian yang belum terpasang/teruji ada di [laporan](../../../audit/hud-motion-2026-11-12/README.md).
+Status: diperbarui pada 13 November 2026 dengan peningkatan animasi `HUDMotion` (Back-out modal + blur + stagger, tilt/sparkle tombol, sheen tombol lebar, shimmer progres bar, shake/pop telemetri penerbangan, dan audio UI lembut); rincian implementasi dan QA terbaru ada di [laporan pembaruan](../../../audit/hud-motion-upgrade-2026-11-13/README.md). Implementasi awal dan QA sebelumnya ada di [laporan](../../../audit/hud-motion-2026-11-12/README.md).
 
 Tanggal sesi analisis: 11–12 November 2026, Asia/Jakarta. Analisis di bawah dipertahankan sebagai dasar rancangan. Sesudah analisis, pengguna menyetujui implementasi; laporan implementasi di atas menggantikan status awal "belum diubah", bukan mengubah bukti historis referensi.
 

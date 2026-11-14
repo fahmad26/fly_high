@@ -6,14 +6,28 @@ local AdventureCatalog = require(script.Parent.HUDAdventureCatalog)
 local Input = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
+local AudioMixer = require(script.Parent.AudioMixer)
 local Motion = require(script.Parent.HUDMotion)
+local AltitudeTracker = require(script.Parent.HUDAltitudeTracker)
+local FlyHighConfig = require(script.Parent.FlyHighConfig)
 local Theme = {}
+
+local BIOME_ZONES = {
+	{ title = "LANGIT CERAH", zone = "Zona 1" },
+	{ title = "AWAN MENDUNG", zone = "Zona 2" },
+	{ title = "PULAU SENJA", zone = "Zona 3" },
+	{ title = "LANGIT BINTANG", zone = "Zona 4" },
+	{ title = "GERBANG SURGAWI", zone = "Zona 5" },
+}
 
 -- {1: GlyphKey, 2: FallbackTitle, 3: Sprite, 4: Style ("dock", "round", "wide", "tile")}
 local configs = {
 	ShopToggleButton = { "shop", "TOKO", "shop_toggle", "dock" },
+	DailyToggleButton = { "daily", "HARIAN", "daily_toggle", "dock" },
 	SettingsToggleButton = { "settings", "SETELAN", "buy_rifle", "dock" },
 	EmergencyKitButton = { "kit", "KIT", "kit_use", "dock" },
+	TurboGasButton = { "turbo", "TURBO", "turbo_toggle", "dock" },
+	RopeBuffButton = { "rope", "TALI", "rope_toggle", "dock" },
 	PingButton = { "ping", "PING", "ping_toggle", "dock" },
 	WarningAudioToggleButton = { "sound", "SUARA", "audio_on", "dock" },
 	MobileShootButton = { "fire", "", "shoot", "round" },
@@ -32,24 +46,27 @@ local configs = {
 	BuyAK47Button = { "weapon", "BELI 1 AK-47", "buy_rifle", "wide" },
 	SpotHazardButton = { "warning", "TANDAI BAHAYA", "spot", "wide" },
 	CloseButton = { "close", "", "close", "round" },
+	DailyCloseButton = { "close", "", "close", "round" },
 	SettingsCloseButton = { "close", "", "close", "round" },
+	AudioCloseButton = { "close", "", "close", "round" },
 	PingCloseButton = { "close", "", "close", "round" },
-	Ping1 = { "gas", "Gas sekarang!", "ping1", "ping" },
-	Ping2 = { "warning", "Awas tornado!", "ping2", "ping" },
-	Ping3 = { "rope", "Tali menipis!", "ping3", "ping" },
-	Ping4 = { "repair", "Saya perbaiki!", "ping4", "ping" },
-	Ping5 = { "aim", "Tembak rintangan!", "ping5", "ping" },
+	Ping1 = { "gas", "Gas Api Sekarang!", "ping1", "ping" },
+	Ping2 = { "warning", "Awas Tornado Menghindar!", "ping2", "ping" },
+	Ping3 = { "rope", "Tali Saya Mau Habis!", "ping3", "ping" },
+	Ping4 = { "repair", "Saya yang Perbaiki!", "ping4", "ping" },
+	Ping5 = { "aim", "Fokus Tembak Rintangan!", "ping5", "ping" },
 }
 
 local fullButtons = {
-	shop_toggle = "shop_normal", kit_use = "kit_normal", kit_clutch = "kit_clutch",
+	shop_toggle = "shop_normal", daily_toggle = "daily_normal", turbo_toggle = "turbo_normal", rope_toggle = "rope_normal",
+	kit_use = "kit_normal", kit_clutch = "kit_clutch",
 	ping_toggle = "ping_normal", audio_on = "sound_on", audio_off = "sound_off",
 	shoot = "fire_normal", jump = "jump_normal", gas = "gas_normal",
 	auto_off = "auto_off", auto_on = "auto_on", release = "release_helm_normal",
 	reload = "reload_v2", drop = "drop_normal", attach = "tether_attach",
 	detach = "tether_detach", climb = "tether_climb", descend = "tether_descend",
 	patch = "tether_patch", repair_rope = "tether_repair_rope", pull = "tether_pull",
-	buy_kit = "buy_button", buy_rifle = "buy_button", close = "close_normal",
+	buy_kit = "buy_button", buy_rifle = "buy_button", close = "btn_close_v2",
 	ping1 = "ping_thrust", ping2 = "ping_danger", ping3 = "ping_rope",
 	ping4 = "ping_repair", ping5 = "ping_target", spot = "context_panel",
 }
@@ -64,6 +81,14 @@ local adventurePanels = {
 	kit_card = "shop_kit_card", rifle_card = "shop_ak_card",
 }
 
+local pingMessageIcons = {
+	["Gas Api Sekarang!"] = "ping_thrust",
+	["Awas Tornado Menghindar!"] = "ping_danger",
+	["Tali Saya Mau Habis!"] = "ping_rope",
+	["Saya yang Perbaiki!"] = "ping_repair",
+	["Fokus Tembak Rintangan!"] = "ping_target",
+}
+
 -- Crop the transparent padding from the dock sprites. The kit states retain
 -- the same framing so swapping state never changes the visible button size.
 local dockCrops = {
@@ -74,6 +99,9 @@ local dockCrops = {
 	sound_on = Rect.new(3, 3, 252, 253),
 	sound_off = Rect.new(3, 4, 253, 253),
 	shop_normal = Rect.new(4, 3, 253, 253),
+	daily_normal = Rect.new(4, 4, 252, 252),
+	turbo_normal = Rect.new(4, 4, 252, 252),
+	rope_normal = Rect.new(4, 4, 252, 252),
 	settings_normal = Rect.new(3, 3, 253, 253),
 }
 
@@ -125,8 +153,8 @@ local function applyTextStyle(lbl, opts)
 	lbl.TextSize = opts.size or 14
 	if not lbl:FindFirstChildOfClass("UITextSizeConstraint") then
 		lbl.TextScaled = opts.scaled == true
-		lbl.TextWrapped = opts.wrapped ~= false
 	end
+	lbl.TextWrapped = opts.wrapped ~= false
 	lbl.RichText = opts.rich ~= false
 	lbl.TextColor3 = opts.color or Color3.new(1, 1, 1)
 	lbl.TextStrokeTransparency = 1 -- Disable legacy jagged stroke
@@ -142,15 +170,16 @@ local function applyTextStyle(lbl, opts)
 	return s
 end
 
--- Keep a single line inside its artwork, with a cap that honors text preference.
-local function fitLine(lbl, textBoost)
+-- Keep text cleanly constrained inside its container while honoring text preference.
+local function fitLine(lbl, textBoost, minSize)
 	local constraint = lbl:FindFirstChildOfClass("UITextSizeConstraint")
 	if not constraint then
 		constraint = Instance.new("UITextSizeConstraint")
-		constraint.MinTextSize = 9
 		constraint.Parent = lbl
 	end
-	constraint.MaxTextSize = math.max(9, lbl.TextSize + textBoost)
+	local floorSize = minSize or 9
+	constraint.MinTextSize = floorSize
+	constraint.MaxTextSize = math.max(floorSize, lbl.TextSize + textBoost)
 	lbl.TextTruncate = Enum.TextTruncate.None
 	lbl.TextScaled = true
 end
@@ -191,15 +220,34 @@ local surfaceKeys = {
 	AlertBanner = "alert",
 	StormChallengePanel = "storm",
 	ShopModal = "shop_panel",
+	DailyLoginModal = "ping_panel",
 	WeaponSettingsModal = "ping_panel",
+	AudioSettingsModal = "ping_panel",
 	TacticalPingWheel = "ping_panel",
 	GhostSpotterFrame = "spot_panel",
+	CrewPingBanner = "hint",
 	Card1 = "kit_card",
 	Card2 = "rifle_card",
 }
 
+local unreadySince = setmetatable({}, { __mode = "k" })
+
+local function isGuiTreeVisible(o)
+	local cur = o
+	while cur do
+		if cur:IsA("ScreenGui") then
+			return cur.Enabled
+		elseif cur:IsA("GuiObject") then
+			if not cur.Visible then return false end
+		end
+		cur = cur.Parent
+	end
+	return false
+end
+
 local function raster(o, key, z, tint, completeKey, mode)
-	if o:IsA("GuiButton") then o.BackgroundTransparency=1 o=Motion.Visual(o) end
+	local buttonOwner = o:IsA("GuiButton") and o or nil
+	if buttonOwner then o.BackgroundTransparency=1 o=Motion.Visual(o) end
 	local adventureKey = completeKey or adventurePanels[key]
 	local complete, adventureImage = Adventure.Draw(o, adventureKey, z,
 		mode or ((o:IsA("ScrollingFrame") or key == "shop_panel" or key == "ping_panel" or key == "kit_card" or key == "rifle_card") and "stretch" or "wide"), tint)
@@ -207,7 +255,7 @@ local function raster(o, key, z, tint, completeKey, mode)
 	local loaded = complete
 	if complete then
 		if image then image.Visible = false end
-	else
+	elseif Assets.Has(key) then
 		if not image then image = Assets.Mount(o, key) end
 		loaded = Assets.Apply(image, key)
 		Assets.Surface(image, key, o.Name=="HUDMotionVisual" and o.Parent.AbsoluteSize or o.AbsoluteSize)
@@ -218,10 +266,31 @@ local function raster(o, key, z, tint, completeKey, mode)
 			image.Position = UDim2.fromOffset(o.CanvasPosition.X, o.CanvasPosition.Y)
 			image.Size = UDim2.fromOffset(o.AbsoluteWindowSize.X, o.AbsoluteWindowSize.Y)
 		end
+	else
+		if image then image.Visible = false end
 	end
-	o.BackgroundTransparency = loaded and 1 or 0.12
+	local showFallback = false
+	if loaded then
+		unreadySince[o] = nil
+	else
+		local hasCatalogArt = adventureKey ~= nil and AdventureCatalog[adventureKey] ~= nil
+		if not hasCatalogArt then
+			showFallback = true
+		elseif isGuiTreeVisible(buttonOwner or o) then
+			local now = os.clock()
+			local startedAt = unreadySince[o]
+			if not startedAt then
+				unreadySince[o] = now
+			elseif now - startedAt >= 0.5 then
+				showFallback = true
+			end
+		else
+			unreadySince[o] = nil
+		end
+	end
+	o.BackgroundTransparency = showFallback and 0.12 or 1
 	local outline = o:FindFirstChildOfClass("UIStroke")
-	if outline and outline.ApplyStrokeMode == Enum.ApplyStrokeMode.Border then outline.Enabled = not loaded end
+	if outline and outline.ApplyStrokeMode == Enum.ApplyStrokeMode.Border then outline.Enabled = showFallback end
 	return complete, adventureImage
 end
 
@@ -259,22 +328,114 @@ function Theme.Start(gui, player)
 		label.TextTransparency = 0
 		return label.TextBounds.X
 	end
+local pingTileColors = {
+	Ping1 = Color3.fromRGB(234, 88, 12),
+	Ping2 = Color3.fromRGB(220, 38, 38),
+	Ping3 = Color3.fromRGB(217, 119, 6),
+	Ping4 = Color3.fromRGB(5, 150, 105),
+	Ping5 = Color3.fromRGB(2, 132, 199),
+}
+
+local modalPanelSet = {
+	ShopModal = true,
+	DailyLoginModal = true,
+	WeaponSettingsModal = true,
+	AudioSettingsModal = true,
+	TacticalPingWheel = true,
+}
+
+local function applyModalChrome(o, frameKey, crestKey, z)
+	o.ClipsDescendants = false
+	for _, legacyName in { "HUDRaster", "HUDAdventureRaster" } do
+		local legacy = o:FindFirstChild(legacyName)
+		if legacy and legacy:IsA("GuiObject") then legacy.Visible = false end
+	end
+	local sliceCenter = Rect.new(88, 84, 232, 236)
+	local loaded, frameImg = Adventure.DrawSlice(o, frameKey, z, sliceCenter, 0.5, "HUDModalFrame")
+	if frameImg then
+		frameImg.Position = UDim2.fromOffset(-4, -3)
+		frameImg.Size = UDim2.new(1, 8, 1, 9)
+	end
+	local oldStroke = o:FindFirstChildOfClass("UIStroke")
+	if oldStroke then oldStroke.Enabled = not loaded end
+	o.BackgroundColor3 = frameKey == "modal_frame_crimson_9slice" and Color3.fromRGB(36, 18, 44) or Color3.fromRGB(10, 30, 74)
+	o.BackgroundTransparency = loaded and 1 or 0.06
+
+	local crest = o:FindFirstChild("HUDModalCrest")
+	if not crest then
+		crest = Instance.new("ImageLabel")
+		crest.Name = "HUDModalCrest"
+		crest.BackgroundTransparency = 1
+		crest.BorderSizePixel = 0
+		crest.Active = false
+		crest.Selectable = false
+		crest.ScaleType = Enum.ScaleType.Fit
+		local ratio = Instance.new("UIAspectRatioConstraint")
+		ratio.AspectRatio = 408 / 168
+		ratio.Parent = crest
+		crest.Parent = o
+	end
+	local sprite = AdventureCatalog[crestKey]
+	if sprite and crest:GetAttribute("HUDCrestKey") ~= crestKey then
+		crest.Image = sprite[1]
+		crest:SetAttribute("HUDCrestKey", crestKey)
+	end
+	local crestH = o.Name == "HUDFlightResult" and 62 or (o.AbsoluteSize.Y > 0 and o.AbsoluteSize.Y < 395 and 56 or 68)
+	crest.AnchorPoint = Vector2.new(0.5, 0.5)
+	crest.Position = UDim2.new(0.5, 0, 0, 4)
+	crest.Size = UDim2.fromOffset(math.round(crestH * (408 / 168)), crestH)
+	crest.ZIndex = z + 6
+	crest.Visible = true
+end
+
+local function ensurePanelChild(parent, className, name, setup)
+	local obj = parent:FindFirstChild(name)
+	if not obj then
+		obj = Instance.new(className)
+		obj.Name = name
+		if obj:IsA("GuiObject") then
+			obj.Active = false
+			obj.BorderSizePixel = 0
+		end
+		obj.Parent = parent
+		if setup then setup(obj) end
+	end
+	return obj
+end
+
 	local result = frame(gui, "HUDFlightResult")
 	result.AnchorPoint = Vector2.new(0.5, 0.5)
-	result.Position = UDim2.fromScale(0.5, 0.45)
-	result.Size = UDim2.new(0.74, 0, 0, 140)
+	result.Position = UDim2.fromScale(0.5, 0.44)
+	result.Size = UDim2.new(0.84, 0, 0, 174)
+	result.ClipsDescendants = false
 	local resultSize = Instance.new("UISizeConstraint")
-	resultSize.MaxSize = Vector2.new(380, 140)
+	resultSize.MinSize = Vector2.new(280, 152)
+	resultSize.MaxSize = Vector2.new(450, 174)
 	resultSize.Parent = result
 	result.BackgroundColor3 = Color3.fromRGB(14, 37, 66)
 	result.ZIndex = 17
 	result.Visible = false
 	round(result, 18)
-	local resultText = label(result, "HUDResultTitle", 23, Enum.Font.GothamBlack)
-	resultText.Position = UDim2.fromScale(0.09, 0.43)
-	resultText.Size = UDim2.fromScale(0.82, 0.38)
-	resultText.TextScaled = true
-	resultText.ZIndex = 18
+	local resultText = label(result, "HUDResultTitle", 22, Enum.Font.GothamBlack, Color3.fromRGB(254, 240, 138))
+	resultText.Position = UDim2.new(0, 26, 0, 42)
+	resultText.Size = UDim2.new(1, -52, 0, 32)
+	resultText.ZIndex = 20
+	local resultSub = label(result, "HUDResultSubtitle", 13, Enum.Font.GothamBold, Color3.fromRGB(224, 242, 254))
+	resultSub.Position = UDim2.new(0, 26, 0, 76)
+	resultSub.Size = UDim2.new(1, -52, 0, 24)
+	resultSub.ZIndex = 20
+	local resultPill = frame(result, "HUDResultPill")
+	resultPill.AnchorPoint = Vector2.new(0.5, 0)
+	resultPill.Position = UDim2.new(0.5, 0, 0, 110)
+	resultPill.Size = UDim2.fromOffset(224, 28)
+	resultPill.BackgroundTransparency = 0
+	resultPill.ZIndex = 20
+	round(resultPill, 14)
+	stroke(resultPill, Color3.fromRGB(52, 211, 153), 1.4, 0.1)
+	local resultPillLbl = label(resultPill, "HUDResultPillLabel", 12, Enum.Font.GothamBlack, Color3.fromRGB(167, 243, 208))
+	resultPillLbl.Size = UDim2.new(1, -16, 1, 0)
+	resultPillLbl.Position = UDim2.fromOffset(8, 0)
+	resultPillLbl.ZIndex = 21
 	local lastResult, resultUntil = nil, 0
 
 	local function connect(signal, fn)
@@ -382,13 +543,18 @@ function Theme.Start(gui, player)
 			r.percent.TextXAlignment = Enum.TextXAlignment.Center
 			r.percent.TextWrapped = false
 
-			-- Dedicated Speed Telemetry Pill Box & Label (eliminates duplicate writes and text flapping)
+			r.divider = frame(o, "HUDTopDivider")
+			r.divider.BackgroundColor3 = Color3.fromRGB(45, 92, 152)
+			r.divider.BackgroundTransparency = 0.25
+
+			-- Dedicated Speed Telemetry Pill Box & Label (Option B emerald/crimson/navy capsule)
 			r.speedPill = frame(o, "HUDSpeedPill")
 			r.speedPill.BackgroundColor3 = Color3.fromRGB(6, 16, 34)
-			r.speedPill.BackgroundTransparency = 0.25
-			round(r.speedPill, 6)
-			local pillStroke = stroke(r.speedPill, Color3.fromRGB(28, 54, 96), 1)
+			r.speedPill.BackgroundTransparency = 0.08
+			round(r.speedPill, 999)
+			local pillStroke = stroke(r.speedPill, Color3.fromRGB(56, 189, 248), 1.4)
 			pillStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+			r.speedStroke = pillStroke
 
 			r.speed = label(r.speedPill, "HUDSpeedText", 12, Enum.Font.GothamBlack, Color3.fromRGB(147, 197, 253), Color3.fromRGB(4, 12, 28), 1.5)
 			r.speed.TextXAlignment = Enum.TextXAlignment.Center
@@ -448,6 +614,40 @@ function Theme.Start(gui, player)
 			r.emblem.BackgroundTransparency = 1
 			r.glyph = Glyphs.Draw(r.emblem, "warning")
 
+		elseif kind == "ping_banner" then
+			r.emblem = frame(o, "HUDPingEmblem")
+			r.emblem.BackgroundTransparency = 1
+			r.glyph = Glyphs.Draw(r.emblem, "ping")
+			r.sender = label(o, "HUDPingSender", 11, Enum.Font.GothamBlack, Color3.fromRGB(132, 232, 255), Color3.fromRGB(4, 10, 24), 1.6)
+			r.sender.TextXAlignment = Enum.TextXAlignment.Left
+			r.sender.TextWrapped = false
+			r.sender.TextTruncate = Enum.TextTruncate.AtEnd
+			r.message = label(o, "HUDPingMessage", 15, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Color3.fromRGB(4, 10, 24), 1.8)
+			r.message.TextXAlignment = Enum.TextXAlignment.Left
+			r.message.TextWrapped = false
+			table.insert(r.links, o:GetAttributeChangedSignal("PingSeq"):Connect(function()
+				local z = o.ZIndex
+				local w, h = o.AbsoluteSize.X, o.AbsoluteSize.Y
+				if w < 1 or h < 1 then return end
+				local isGhost = o:GetAttribute("PingKind") == "ghost"
+				local fullPanel = raster(o, isGhost and "alert" or "hint", z, nil, isGhost and "warning_critical" or "nameplate")
+				local msg = o:GetAttribute("PingMessage") or ""
+				local sender = o:GetAttribute("PingSender") or (isGhost and "Arwah" or "Kru")
+				r.sender.Text = (isGhost and "ARWAH • " or "KRU • ") .. sender
+				r.sender.TextColor3 = isGhost and Color3.fromRGB(255, 224, 130) or Color3.fromRGB(132, 232, 255)
+				r.message.Text = msg
+				if isGhost then
+					r.emblem.Visible = not fullPanel
+					if r.glyph then r.glyph.Visible = not fullPanel end
+					local iconImg = r.emblem:FindFirstChild("HUDAdventureRaster")
+					if iconImg then iconImg.Visible = false end
+				else
+					r.emblem.Visible = true
+					local ready = Adventure.Draw(r.emblem, pingMessageIcons[msg] or "ping_normal", z + 4, "fit")
+					if r.glyph then r.glyph.Visible = not ready end
+				end
+			end))
+
 		elseif kind == "reticle" then
 			o.TextTransparency = 1
 			r.glyph = Glyphs.Draw(o, "aim")
@@ -480,6 +680,8 @@ function Theme.Start(gui, player)
 			build(o, "countdown")
 		elseif o.Name == "AlertBanner" or o.Name == "StormChallengePanel" then
 			build(o, "alert")
+		elseif o.Name == "CrewPingBanner" then
+			build(o, "ping_banner")
 		elseif o.Name == "WeaponReticle" then
 			build(o, "reticle")
 		elseif o.Name == "Card1" or o.Name == "Card2" then
@@ -521,10 +723,20 @@ function Theme.Start(gui, player)
 		})
 	end
 
+	local lastStepAt = os.clock()
+
 	function state.Step()
+		local now = os.clock()
+		local dt = math.clamp(now - lastStepAt, 1 / 240, 0.1)
+		lastStepAt = now
 		local compact = gui:GetAttribute("CompactLayout") == true
 		local textBoost = gui:GetAttribute("HUDTextBoost") or 0
 		local inFlight = player:GetAttribute("InFlight") == true
+
+		local trackerFrame = gui:FindFirstChild("ServerAltitudeTracker")
+		if trackerFrame and trackerFrame:IsA("Frame") and trackerFrame.Visible then
+			AltitudeTracker.Step(trackerFrame, dt, compact, textBoost)
+		end
 		local character = player.Character
 		local root = character and character:FindFirstChild("HumanoidRootPart")
 		local palace = not inFlight and workspace:FindFirstChild("CloudPalace")
@@ -539,13 +751,30 @@ function Theme.Start(gui, player)
 			or penalty.Text:find("Tiba di Istana Awan", 1, true) and "result_victory")
 		if outcome and outcome ~= lastResult then
 			resultUntil = os.clock() + 4
-			resultText.Text = outcome == "result_victory" and "Tiba di Istana Awan!" or "Penerbangan berakhir"
+			local won = outcome == "result_victory"
+			resultText.Text = won and "TIBA DI ISTANA AWAN!" or "GAME OVER"
+			resultText.TextColor3 = won and Color3.fromRGB(254, 240, 138) or Color3.fromRGB(252, 165, 165)
+			resultSub.Text = won and "Selamat! Kru berhasil mencapai puncak langit 10.000 km" or "Balon tidak selamat di tengah badai"
+			resultSub.TextColor3 = won and Color3.fromRGB(224, 242, 254) or Color3.fromRGB(254, 205, 211)
+			resultPill.BackgroundColor3 = won and Color3.fromRGB(6, 78, 59) or Color3.fromRGB(127, 29, 29)
+			local pStroke = resultPill:FindFirstChildOfClass("UIStroke")
+			if pStroke then
+				pStroke.Color = won and Color3.fromRGB(52, 211, 153) or Color3.fromRGB(248, 113, 113)
+			end
+			resultPillLbl.Text = won and "✓  PENERBANGAN SUKSES" or "BALON HANCUR  ·  COBA LAGI"
+			resultPillLbl.TextColor3 = won and Color3.fromRGB(167, 243, 208) or Color3.fromRGB(254, 202, 202)
 		end
 		lastResult = outcome
 		result.Visible = outcome ~= nil and outcome ~= false and os.clock() < resultUntil
 		if result.Visible then
-			local full = Adventure.Draw(result, outcome, result.ZIndex, "stretch")
-			result.BackgroundTransparency = full and 1 or 0.1
+			local won = outcome == "result_victory"
+			applyModalChrome(result, won and "modal_frame_9slice" or "modal_frame_crimson_9slice", won and "crest_victory" or "crest_gameover", 17)
+			applyTextStyle(resultText, { font = Enum.Font.GothamBlack, size = 22, color = resultText.TextColor3, strokeThickness = 2.4, wrapped = false, align = Enum.TextXAlignment.Center })
+			fitLine(resultText, textBoost, 13)
+			applyTextStyle(resultSub, { font = Enum.Font.GothamBold, size = 13, color = resultSub.TextColor3, strokeThickness = 1.4, wrapped = false, align = Enum.TextXAlignment.Center })
+			fitLine(resultSub, textBoost, 9)
+			applyTextStyle(resultPillLbl, { font = Enum.Font.GothamBlack, size = 12, color = resultPillLbl.TextColor3, strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center })
+			fitLine(resultPillLbl, math.min(2, textBoost), 9)
 		end
 		for o, r in records do
 			if not o:IsDescendantOf(gui) then
@@ -558,10 +787,16 @@ function Theme.Start(gui, player)
 			local w, h = o.AbsoluteSize.X, o.AbsoluteSize.Y
 
 			local background = surfaceKeys[o.Name]
-			if r.kind == "card" and h < 228 then background = "speed" end
+			local completeKey
+			if o.Name == "CrewPingBanner" then
+				local isGhost = o:GetAttribute("PingKind") == "ghost"
+				background = isGhost and "alert" or "hint"
+				completeKey = isGhost and "warning_critical" or "nameplate"
+			end
+			if r.kind == "card" and h < 236 then background = "speed" end
 			local fullPanel = false
-			if background and r.kind ~= "status" then
-				fullPanel = raster(o, background, z, nil, nil, o.Name == "TacticalPingWheel" and "stretch" or nil)
+			if background and r.kind ~= "status" and r.kind ~= "card" and not modalPanelSet[o.Name] then
+				fullPanel = raster(o, background, z, nil, completeKey, nil)
 			end
 
 			if r.kind == "button" then
@@ -571,7 +806,7 @@ function Theme.Start(gui, player)
 				local title = cfg[2] or o.Text
 
 				if o.Name == "WarningAudioToggleButton" then
-					local muted = player:GetAttribute("WarningAudioMuted") == true
+					local muted = AudioMixer.IsOverallMuted(player)
 					key = muted and "muted" or "sound"
 					sprite = muted and "audio_off" or "audio_on"
 					if r.lastKey ~= key then
@@ -593,10 +828,11 @@ function Theme.Start(gui, player)
 				local purchase = o.Name == "BuyEmergencyKitButton" or o.Name == "BuyAK47Button"
 				local reason = o:GetAttribute("HUDLockReason")
 				if purchase then
-					title = o.Text:match("(%d+ Robux)")
-						or (o.Text:find("Gunakan Kredit", 1, true) and "Pakai kredit")
+					title = o.Text:find("Gunakan Kredit", 1, true) and "Pakai Kredit Gratis"
 						or (o.Text:find("%.%.%.") and "Memuat…")
-						or "Lihat harga"
+						or (o.Text:find("Robux", 1, true) and o.Text)
+						or (o.Text:find("lihat harga", 1, true) and (o.Name == "BuyEmergencyKitButton" and "Beli 1 Kit • Cek Harga" or "Beli 1 AK-47 • Cek Harga"))
+						or o.Text
 				elseif sprite == "audio_off" then
 					title = "BISU"
 				elseif reason then
@@ -615,10 +851,20 @@ function Theme.Start(gui, player)
 				elseif o.Name == "EmergencyKitButton" and reason == "Kit habis" then
 					fullKey, shade = "kit_empty", 1
 				end
-				local complete, illustration = raster(o, sprite, z + 1, Color3.new(shade, shade, shade),
-					fullKey, purchase and "stretch" or style == "wide" and "wide" or "fit")
+				local complete, illustration = false, nil
+				if not purchase and style ~= "ping" then
+					complete, illustration = raster(o, sprite, z + 1, Color3.new(shade, shade, shade),
+						fullKey, style == "wide" and "wide" or "fit")
+				else
+					o.BackgroundTransparency = 1
+					local vis = Motion.Visual(o)
+					local oldR = vis:FindFirstChild("HUDRaster")
+					if oldR and oldR:IsA("GuiObject") then oldR.Visible = false end
+					local oldAR = vis:FindFirstChild("HUDAdventureRaster")
+					if oldAR and oldAR:IsA("GuiObject") then oldAR.Visible = false end
+				end
 				-- The jump glyph falls back to a local arrow if its image also fails.
-				r.glyphBox.Visible = not complete
+				r.glyphBox.Visible = not complete and not purchase and style ~= "ping"
 				r.captionPill.Visible = style ~= "round"
 				if complete and illustration then
 					if style == "tile" then
@@ -626,17 +872,106 @@ function Theme.Start(gui, player)
 					end
 				end
 				if style == "ping" then
-					local iconSize = math.max(1, math.min(h - 8, 36))
-					local left = iconSize + 16
-					local fallback = o:FindFirstChild("HUDRaster",true)
-					if fallback then fallback.Visible = false end
-					o.BackgroundColor3 = r.pressed and Color3.fromRGB(27, 78, 111) or Color3.fromRGB(16, 41, 81)
-					o.BackgroundTransparency = 0
-					box(illustration, 7, (h - iconSize) / 2, iconSize, iconSize)
-					box(r.glyphBox, 7, (h - iconSize) / 2, iconSize, iconSize)
+					local visual = Motion.Visual(o)
+					local vStroke = visual:FindFirstChildOfClass("UIStroke")
+					if vStroke then vStroke.Enabled = false end
+					local pingFill = ensurePanelChild(visual, "Frame", "HUDPingFill", function(f)
+						f.BackgroundColor3 = Color3.new(1, 1, 1)
+						f.BackgroundTransparency = 0
+						f.Size = UDim2.fromScale(1, 1)
+						round(f, 12)
+					end)
+					pingFill.Size = UDim2.fromScale(1, 1)
+					pingFill.ZIndex = z
+					stroke(pingFill, r.pressed and Color3.fromRGB(125, 211, 252) or Color3.fromRGB(47, 104, 175), 1.5, r.pressed and 0.05 or 0.18)
+					local rowGrad = ensurePanelChild(pingFill, "UIGradient", "HUDPingRowGrad", function(g)
+						g.Rotation = 90
+					end)
+					rowGrad.Color = r.pressed
+						and ColorSequence.new(Color3.fromRGB(28, 76, 138), Color3.fromRGB(14, 42, 86))
+						or ColorSequence.new(Color3.fromRGB(18, 50, 112), Color3.fromRGB(8, 25, 62))
+
+					local tileSize = math.clamp(h - 14, 28, 36)
+					local badgeTile = ensurePanelChild(visual, "Frame", "HUDPingBadgeTile", function(f)
+						f.BorderSizePixel = 0
+						round(f, 9)
+						stroke(f, Color3.fromRGB(6, 18, 44), 1.8, 0)
+					end)
+					badgeTile.BackgroundColor3 = pingTileColors[o.Name] or Color3.fromRGB(2, 132, 199)
+					badgeTile.BackgroundTransparency = 0
+					badgeTile.Visible = true
+					box(badgeTile, 10, (h - tileSize) / 2, tileSize, tileSize)
+					badgeTile.ZIndex = z + 2
+					local tileReady = Adventure.Draw(badgeTile, fullKey, z + 3, "fit")
+					if tileReady then
+						local tileImg = badgeTile:FindFirstChild("HUDAdventureRaster")
+						if tileImg and tileImg:IsA("ImageLabel") then
+							tileImg.Position = UDim2.fromOffset(3, 3)
+							tileImg.Size = UDim2.new(1, -6, 1, -6)
+						end
+					end
+
+					local idx = o.Name:match("^Ping(%d)$")
+					local showShortcut = idx ~= nil and not Input.TouchEnabled and w >= 200
+					local scPill = ensurePanelChild(visual, "TextLabel", "HUDPingShortcut", function(lbl)
+						lbl.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
+						lbl.BackgroundTransparency = 0
+						lbl.TextColor3 = Color3.fromRGB(125, 211, 252)
+						lbl.Font = Enum.Font.Nunito
+						lbl.TextSize = 12
+						lbl.TextXAlignment = Enum.TextXAlignment.Center
+						lbl.TextYAlignment = Enum.TextYAlignment.Center
+						round(lbl, 6)
+						stroke(lbl, Color3.fromRGB(45, 98, 168), 1.2, 0.15)
+					end)
+					scPill.Visible = showShortcut
+					if showShortcut then
+						scPill.Text = tostring(idx)
+						box(scPill, w - 36, (h - 22) / 2, 26, 22)
+						scPill.ZIndex = z + 3
+					end
+
+					local left = 10 + tileSize + 12
+					local rightGap = showShortcut and 44 or 12
 					r.captionPill.BackgroundTransparency = 1
-					box(r.captionPill, left, 2, math.max(1, w - left - 8), h - 4)
-					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 15 + math.min(2, textBoost), strokeThickness = 1, align = Enum.TextXAlignment.Left })
+					box(r.captionPill, left, 3, math.max(1, w - left - rightGap), math.max(1, h - 6))
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 15 + math.min(2, textBoost), strokeThickness = 1.5, wrapped = false, align = Enum.TextXAlignment.Left })
+
+				elseif purchase then
+					local visual = Motion.Visual(o)
+					local vStroke = visual:FindFirstChildOfClass("UIStroke")
+					if vStroke then vStroke.Enabled = false end
+					local ctaFill = ensurePanelChild(visual, "Frame", "HUDCtaFill", function(f)
+						f.BackgroundColor3 = Color3.new(1, 1, 1)
+						f.BackgroundTransparency = 0
+						f.Size = UDim2.fromScale(1, 1)
+						f.ClipsDescendants = true
+						round(f, 11)
+					end)
+					ctaFill.Size = UDim2.fromScale(1, 1)
+					ctaFill.ZIndex = z
+					stroke(ctaFill, Color3.fromRGB(134, 239, 172), 1.6, 0.1)
+					local ctaGrad = ensurePanelChild(ctaFill, "UIGradient", "HUDCtaGrad", function(g)
+						g.Rotation = 90
+					end)
+					ctaGrad.Color = r.pressed
+						and ColorSequence.new(Color3.fromRGB(32, 160, 86), Color3.fromRGB(14, 96, 46))
+						or ColorSequence.new(Color3.fromRGB(58, 224, 122), Color3.fromRGB(20, 134, 60))
+					local gloss = ensurePanelChild(ctaFill, "Frame", "HUDCtaGloss", function(f)
+						f.BackgroundColor3 = Color3.new(1, 1, 1)
+						f.BackgroundTransparency = 0.78
+						round(f, 8)
+					end)
+					gloss.Position = UDim2.fromOffset(6, 3)
+					gloss.Size = UDim2.new(1, -12, 0, math.max(8, math.round(h * 0.34)))
+					gloss.ZIndex = z + 1
+					gloss.Visible = true
+
+					r.captionPill.BackgroundTransparency = 1
+					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
+					if pStroke then pStroke.Enabled = false end
+					box(r.captionPill, 10, 3, math.max(1, w - 20), math.max(1, h - 6))
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 14, color = Color3.new(1, 1, 1), strokeColor = Color3.fromRGB(8, 61, 27), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Center })
 
 				elseif style == "wide" then
 					r.captionPill.BackgroundTransparency = 1
@@ -654,30 +989,31 @@ function Theme.Start(gui, player)
 						applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 14, strokeThickness = 2, align = Enum.TextXAlignment.Left })
 					end
 					if complete then
-						local left = purchase and math.round(w * 0.26) or math.max(39, math.round(h * 1.15))
+						local left = math.max(39, math.round(h * 1.15))
 						box(r.captionPill, left, 4, math.max(1, w - left - 15), h - 8)
 					end
 
 				elseif style == "dock" then
 					local captionHeight = 14 + textBoost
-					local iconSize = math.max(1, math.min(w - 4, h - captionHeight - 2))
+					local bottomPad = 3
+					local iconSize = math.max(1, math.min(w - 6, h - captionHeight - bottomPad - 3))
 					local iconX = (w - iconSize) / 2
 					local crop, sprite = dockCrops[fullKey], AdventureCatalog[fullKey]
 					if illustration and crop and sprite then
 						illustration.ImageRectOffset = Vector2.new(sprite[2], sprite[3]) + crop.Min
 						illustration.ImageRectSize = crop.Max - crop.Min
 						illustration.ScaleType = Enum.ScaleType.Stretch
-						box(illustration, iconX, 1, iconSize, iconSize)
+						box(illustration, iconX, 2, iconSize, iconSize)
 					end
-					box(o:FindFirstChild("HUDRaster",true), iconX, 1, iconSize, iconSize)
+					box(o:FindFirstChild("HUDRaster",true), iconX, 2, iconSize, iconSize)
 					local glyphSize = math.round(iconSize * .68)
-					box(r.glyphBox, (w - glyphSize) / 2, 1 + (iconSize - glyphSize) / 2, glyphSize, glyphSize)
+					box(r.glyphBox, (w - glyphSize) / 2, 2 + (iconSize - glyphSize) / 2, glyphSize, glyphSize)
 					r.captionPill.BackgroundTransparency = 1
 					local pStroke = r.captionPill:FindFirstChildOfClass("UIStroke")
 					if pStroke then pStroke.Enabled = false end
 
-					box(r.captionPill, 0, h - captionHeight, w, captionHeight)
-					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, color = Color3.new(1, 1, 1), strokeThickness = 1.8, align = Enum.TextXAlignment.Center })
+					box(r.captionPill, 1, h - captionHeight - bottomPad, w - 2, captionHeight)
+					applyTextStyle(r.caption, { font = Enum.Font.GothamBlack, size = 11, color = Color3.new(1, 1, 1), strokeThickness = 1.8, wrapped = false, align = Enum.TextXAlignment.Center })
 
 				elseif style == "round" then
 					-- Circular action buttons: perfectly centered icon, NO rectangular caption pills!
@@ -707,8 +1043,8 @@ function Theme.Start(gui, player)
 				local captionH = math.min(r.captionPill.Size.Y.Offset, r.caption.TextSize + textBoost + 2)
 				r.caption.AnchorPoint = Vector2.new(0.5, 0.5)
 				r.caption.Position = UDim2.fromScale(0.5, 0.5)
-				r.caption.Size = UDim2.new(1, -4, 0, math.max(1, captionH))
-				fitLine(r.caption, textBoost)
+				r.caption.Size = UDim2.new(1, style == "dock" and -2 or -4, 0, math.max(1, captionH))
+				fitLine(r.caption, textBoost, style == "dock" and 7 or nil)
 				local fixed = title ~= "" and not purchase and not reason and title ~= "ISI ULANG"
 				local lockKeys = {
 					["Kit habis"]="kit_empty", ["Memuat kit"]="kit_loading",
@@ -717,7 +1053,7 @@ function Theme.Start(gui, player)
 				letter(r.caption, style ~= "dock" and (fixed and sprite or lockKeys[title]) or nil)
 
 				local hint = o.Text:match("%[([^%]]+)%]")
-				r.hint.Visible = not Input.TouchEnabled and hint ~= nil and #hint <= 7 and hint ~= "GUNAKAN"
+				r.hint.Visible = style ~= "ping" and not Input.TouchEnabled and hint ~= nil and #hint <= 7 and hint ~= "GUNAKAN"
 				if r.hint.Visible then
 					r.hint.Text = hint:match("^%w+") or ""
 					box(r.hint, w - 20, 2, 18, 14)
@@ -735,6 +1071,7 @@ function Theme.Start(gui, player)
 
 				-- Smart Notification Badge
 				local cooldown = math.max(0, (player:GetAttribute("FlightJumpReadyAt") or 0) - workspace:GetServerTimeNow())
+				local useRedBadge = false
 				if o.Name == "EmergencyKitButton" then
 					local kits = player:GetAttribute("EmergencyKits") or 0
 					if kits > 0 then
@@ -744,12 +1081,49 @@ function Theme.Start(gui, player)
 					else
 						r.badge.Visible = false
 					end
+				elseif o.Name == "DailyToggleButton" then
+					local claimed = player:GetAttribute("DailyClaimedToday") == true
+					r.badge.Visible = true
+					r.badge.Text = claimed and "✓" or "!"
+					useRedBadge = not claimed
+					r.badge.BackgroundColor3 = claimed and Color3.fromRGB(16, 185, 129) or Color3.fromRGB(239, 68, 68)
+				elseif o.Name == "TurboGasButton" then
+					local turboRem = tonumber(player:GetAttribute("TurboRemaining")) or 0
+					local stock = tonumber(player:GetAttribute("SpeedBoostStock")) or 0
+					if turboRem > 0 then
+						r.badge.Visible = true
+						r.badge.Text = math.ceil(turboRem) .. "s"
+						useRedBadge = true
+						r.badge.BackgroundColor3 = Color3.fromRGB(14, 165, 233)
+					elseif stock > 0 then
+						r.badge.Visible = true
+						r.badge.Text = tostring(stock)
+						r.badge.BackgroundColor3 = Color3.fromRGB(36, 212, 85)
+					else
+						r.badge.Visible = false
+					end
+				elseif o.Name == "RopeBuffButton" then
+					local ropeActive = player:GetAttribute("RopeBuffActive") == true
+					local stock = tonumber(player:GetAttribute("RopeBuffStock")) or 0
+					if ropeActive then
+						r.badge.Visible = true
+						r.badge.Text = "✓"
+						r.badge.BackgroundColor3 = Color3.fromRGB(16, 185, 129)
+					elseif stock > 0 then
+						r.badge.Visible = true
+						r.badge.Text = tostring(stock)
+						r.badge.BackgroundColor3 = Color3.fromRGB(36, 212, 85)
+					else
+						r.badge.Visible = false
+					end
 				elseif o.Name == "JumpButton" and not o.Active and not complete then
 					r.badge.Visible = true
 					r.badge.Text = "!"
+					useRedBadge = true
 				elseif o.Name == "JumpButton" and inFlight and cooldown > 0 then
 					r.badge.Visible = true
 					r.badge.Text = math.ceil(cooldown) .. "s"
+					useRedBadge = true
 					r.badge.BackgroundColor3 = Color3.fromRGB(255, 45, 80)
 				else
 					r.badge.Visible = false
@@ -759,7 +1133,7 @@ function Theme.Start(gui, player)
 					box(r.badge, w - 18, -4, 22, 22)
 					applyTextStyle(r.badge, { font = Enum.Font.GothamBlack, size = 11, strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
 				end
-				chip(r.badge, o.Name == "JumpButton" and "badge_red" or "badge_green", z + 5)
+				chip(r.badge, (o.Name == "JumpButton" or useRedBadge) and "badge_red" or "badge_green", z + 5)
 				if r.badge.Visible then
 					local digits = r.badge.Text:match("^(%d+)")
 					meter(r.badge, digits, 17, nil, r.badge.Text:find("s", 1, true) and "meter_glyph_seconds_short" or nil)
@@ -782,7 +1156,7 @@ function Theme.Start(gui, player)
 
 					-- 1. Balloon Icon on Left (Pure transparency, perfectly centered!)
 					local narrow = w < 380
-					local iconSize = narrow and 32 or compact and 40 or 46
+					local iconSize = narrow and 32 or compact and 40 or 44
 					box(r.emblem, 12, (h - iconSize) / 2, iconSize, iconSize)
 					local loaded = use(r.art, "art_balloon")
 					r.glyph.Visible = not loaded
@@ -790,41 +1164,56 @@ function Theme.Start(gui, player)
 					ztree(r.emblem, z + 3)
 
 					local headingX = fullPanel and math.max(iconSize + 18, h + 4) or iconSize + 18
-					local rightInset = 18
-					local gap = 10
+					local rightInset = narrow and 14 or 16
+					local gap = narrow and 8 or 10
 					local centerY = h / 2
-					local stacked = narrow and inFlight
-					local titleY = centerY - (stacked and 15 or 9) - textBoost / 2
-					local detailY = centerY + (stacked and 3 or 9) + (stacked and 0 or textBoost / 2)
-					local titleH = 24 + textBoost
+					local titleY = centerY - 9 - textBoost / 2
+					local detailY = centerY + 10 + textBoost / 2
+					local titleH = 22 + textBoost
 					local detailH = 14 + textBoost
-					local speedW = (narrow and 100 or 108) + 4 * textBoost
-					local speedH = 24 + textBoost
+					local speedW = (narrow and 94 or 106) + 4 * textBoost
+					local speedH = (narrow and 26 or 28) + textBoost
 					local speedX = w - rightInset - speedW
+					local turboRem = math.ceil(math.max(0, tonumber(o:GetAttribute("TurboRemaining")) or tonumber(player:GetAttribute("TurboRemaining")) or 0))
+					local showTurboInline = inFlight and turboRem > 0 and w >= 365
+					local turboW = showTurboInline and (58 + 2 * textBoost) or 0
+					local turboX = speedX - (showTurboInline and (turboW + 6) or 0)
+					local dividerX = (showTurboInline and turboX or speedX) - gap
+					local vVal = o:GetAttribute("VerticalSpeed") or (speed and speed:GetAttribute("VerticalSpeed")) or 0
 
 					local headingWidth = w - headingX - rightInset
 					local goalWidth = headingWidth
 					if inFlight then
-						local formatted = altitude:reverse():gsub("(%d%d%d)", "%1."):reverse():gsub("^%.", "")
-						r.head.Text = flightReady and (formatted .. ' <font color="#B9E7FF">km</font>') or "—"
-						r.head.TextSize = w < 320 and 20 or 23
-						r.goal.Text = "Istana Awan · 10.000 km"
-						if stacked then
-							headingWidth = speedX - gap - headingX
-						else
-							headingWidth = 138 + 5 * textBoost
-							goalWidth = headingWidth
-						end
+						local attrAlt = tonumber(o:GetAttribute("AltitudeKm"))
+						local lblAlt = tonumber(altitude) or 0
+						local altNum = (attrAlt and math.abs(attrAlt - lblAlt) <= 2) and attrAlt or lblAlt
+						local biomeStep = FlyHighConfig.BIOME_STEP_KM or 2000
+						local biomeIdx = math.clamp(math.floor(altNum / biomeStep) + 1, 1, #BIOME_ZONES)
+						local zoneInfo = BIOME_ZONES[biomeIdx] or BIOME_ZONES[1]
+						local descending = flightReady and vVal <= -0.05
+						r.head.Text = flightReady and zoneInfo.title or "MEMUAT ZONA"
+						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
+						r.head.TextSize = narrow and 16 or 19
+						r.goal.Text = not flightReady and "Menghitung ketinggian..."
+							or descending and (zoneInfo.zone .. " · Balon Menurun!")
+							or (zoneInfo.zone .. " · Target Istana Awan")
+						r.goal.TextColor3 = descending and Color3.fromRGB(252, 165, 165) or Color3.fromRGB(147, 197, 253)
+						headingWidth = math.max(60, dividerX - gap - headingX)
+						goalWidth = headingWidth
 					elseif atPalace or (outcome == "result_victory" and os.clock() < resultUntil) then
 						r.head.Text = "ISTANA AWAN"
-						r.head.TextSize = 20
+						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
+						r.head.TextSize = 19
 						r.goal.Text = "Puncak · 10.000 km"
+						r.goal.TextColor3 = Color3.fromRGB(253, 224, 71)
 					else
 						local pod = player:GetAttribute("CurrentPod")
 						local podLetter = pod and pod:match("^Pod_([A-E])$")
 						r.head.Text = podLetter and "DERMAGA " .. podLetter or "FLY HIGH"
-						r.head.TextSize = 20
+						r.head.TextColor3 = Color3.fromRGB(254, 249, 231)
+						r.head.TextSize = 19
 						r.goal.Text = "Pilih dermaga"
+						r.goal.TextColor3 = Color3.fromRGB(213, 237, 255)
 						if podLetter then
 							local crew = 0
 							for _, member in Players:GetPlayers() do
@@ -841,29 +1230,66 @@ function Theme.Start(gui, player)
 					r.head.ZIndex = z + 4
 					r.goal.ZIndex = z + 4
 
-					local vVal = o:GetAttribute("VerticalSpeed") or (speed and speed:GetAttribute("VerticalSpeed")) or 0
+					if r.divider then
+						r.divider.Visible = inFlight
+						box(r.divider, dividerX, centerY - 14, 1, 28)
+						r.divider.ZIndex = z + 3
+					end
+
+					local turboPill = ensurePanelChild(o, "Frame", "HUDTurboPill", function(f)
+						f.BackgroundColor3 = Color3.fromRGB(12, 54, 108)
+						f.BackgroundTransparency = 0.06
+						round(f, 10)
+						stroke(f, Color3.fromRGB(250, 204, 21), 1.4, 0.08)
+						local tLbl = ensurePanelChild(f, "TextLabel", "HUDTurboText", function(lbl)
+							lbl.BackgroundTransparency = 1
+							lbl.Size = UDim2.fromScale(1, 1)
+						end)
+						applyTextStyle(tLbl, { font = Enum.Font.GothamBlack, size = 12, color = Color3.fromRGB(254, 240, 138), strokeThickness = 1.4, align = Enum.TextXAlignment.Center })
+					end)
+					turboPill.Visible = showTurboInline
+					if showTurboInline then
+						box(turboPill, turboX, centerY - speedH / 2, turboW, speedH)
+						turboPill.ZIndex = z + 4
+						local tLbl = turboPill:FindFirstChild("HUDTurboText")
+						if tLbl and tLbl:IsA("TextLabel") then
+							tLbl.Text = "⚡ " .. tostring(turboRem) .. "s"
+							tLbl.ZIndex = z + 5
+							fitLine(tLbl, textBoost, 9)
+						end
+					end
+
 					local direction, value, color = "●", "0.0 km/s", Color3.fromRGB(147, 197, 253)
+					local pillBg, pillRim = Color3.fromRGB(6, 16, 34), Color3.fromRGB(56, 189, 248)
 					if vVal >= 0.05 then
 						direction, value, color = "▲", string.format("+%.1f km/s", vVal), Color3.fromRGB(74, 222, 128)
+						pillBg, pillRim = Color3.fromRGB(10, 61, 46), Color3.fromRGB(52, 211, 153)
 					elseif vVal <= -0.05 then
 						direction, value, color = "▼", string.format("%.1f km/s", vVal), Color3.fromRGB(248, 113, 113)
+						pillBg, pillRim = Color3.fromRGB(69, 10, 10), Color3.fromRGB(248, 113, 113)
 					end
-					r.speed.Text = flightReady and ('<font color="#D5EDFF">' .. direction .. '</font>  ' .. value) or "—"
+					r.speed.Text = flightReady and (direction .. " " .. value) or "—"
 					r.speed.TextColor3 = color
-					box(r.speedPill, speedX, (stacked and titleY or centerY) - speedH / 2, speedW, speedH)
-					-- Center the glyphs on the capsule face above its lower shadow.
-					box(r.speed, 8, -3, speedW - 16, speedH)
+					box(r.speedPill, speedX, centerY - speedH / 2, speedW, speedH)
+					box(r.speed, 6, 0, speedW - 12, speedH)
 					fitLine(r.speed, textBoost)
+					r.speedPill.BackgroundColor3 = pillBg
+					r.speedPill.BackgroundTransparency = 0.08
+					if r.speedStroke then r.speedStroke.Color = pillRim end
 					r.speedPill.ZIndex = z + 4
 					r.speedPill.Visible = inFlight
-					raster(r.speedPill, "speed", z + 4)
+					for _, legacyRasterName in { "HUDRaster", "HUDAdventureRaster" } do
+						local legacyRaster = r.speedPill:FindFirstChild(legacyRasterName)
+						if legacyRaster and legacyRaster:IsA("GuiObject") then legacyRaster.Visible = false end
+					end
 					r.speed.ZIndex = z + 5
 
-					-- Put the percentage over the track, or directly beside it on narrow screens.
-					local barX = stacked and headingX or headingX + headingWidth + gap
+					-- Hidden legacy horizontal bar computations kept out of Option B display
+					local stacked = false
+					local barX = headingX + headingWidth + gap
 					local percentW = 48 + 3 * textBoost
 					local percentH = 16 + textBoost
-					local barEnd = stacked and w - (rightInset + 6) - percentW - gap or speedX - gap
+					local barEnd = speedX - gap
 					local barWidth = math.max(1, barEnd - barX)
 					local barY = stacked and centerY + 16 + textBoost / 2 or detailY
 					box(bar, barX, barY - 4, barWidth, 8)
@@ -900,6 +1326,9 @@ function Theme.Start(gui, player)
 						raster(fill, "progress", z + 4)
 					end
 
+					bar.Visible = false
+					r.percent.Visible = false
+					if r.markerSlot then r.markerSlot.Visible = false end
 				end
 
 			elseif r.kind == "status" then
@@ -1088,40 +1517,189 @@ function Theme.Start(gui, player)
 					detail.ZIndex = z + 3
 				end
 
+			elseif r.kind == "ping_banner" then
+				local isGhost = o:GetAttribute("PingKind") == "ghost"
+				local msg = o:GetAttribute("PingMessage") or ""
+				local sender = o:GetAttribute("PingSender") or (isGhost and "Arwah" or "Kru")
+				o.BackgroundColor3 = isGhost and Color3.fromRGB(92, 18, 28) or Color3.fromRGB(14, 34, 72)
+				local fbStroke = o:FindFirstChild("HUDFallbackStroke")
+				if fbStroke and fbStroke:IsA("UIStroke") then
+					fbStroke.Color = isGhost and Color3.fromRGB(255, 198, 96) or Color3.fromRGB(115, 224, 255)
+				end
+				local iconSize = math.max(24, math.round(h * 0.56))
+				local iconX = isGhost and 10 or math.round(h * 0.36)
+				box(r.emblem, iconX, (h - iconSize) / 2, iconSize, iconSize)
+				ztree(r.emblem, z + 4)
+				if isGhost then
+					r.emblem.Visible = not fullPanel
+					if r.glyph then r.glyph.Visible = not fullPanel end
+					local iconImg = r.emblem:FindFirstChild("HUDAdventureRaster")
+					if iconImg then iconImg.Visible = false end
+				else
+					r.emblem.Visible = true
+					local ready = Adventure.Draw(r.emblem, pingMessageIcons[msg] or "ping_normal", z + 4, "fit")
+					if r.glyph then r.glyph.Visible = not ready end
+				end
+				local textX = isGhost and (fullPanel and math.round(math.min(h * 1.08, w * 0.25)) or (iconX + iconSize + 8)) or (iconX + iconSize + 8)
+				local rightPad = math.round(h * 0.34)
+				local textW = math.max(1, w - textX - rightPad)
+				local topPad = math.max(7, math.round(h * 0.17))
+				local senderH = 14 + math.floor(textBoost / 2)
+				local msgH = math.max(16, h - topPad * 2 - senderH)
+				box(r.sender, textX, topPad, textW, senderH)
+				r.sender.Text = (isGhost and "ARWAH • " or "KRU • ") .. sender
+				applyTextStyle(r.sender, { font = Enum.Font.GothamBlack, size = 11 + math.floor(textBoost / 2),
+					color = isGhost and Color3.fromRGB(255, 224, 130) or Color3.fromRGB(132, 232, 255),
+					strokeThickness = 1.6, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Center, wrapped = false })
+				r.sender.TextTruncate = Enum.TextTruncate.AtEnd
+				r.sender.ZIndex = z + 4
+				box(r.message, textX, topPad + senderH, textW, msgH)
+				r.message.Text = msg
+				applyTextStyle(r.message, { font = Enum.Font.GothamBlack, size = compact and 14 or 15,
+					color = Color3.new(1, 1, 1), strokeThickness = 1.8,
+					align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Center, wrapped = false })
+				fitLine(r.message, textBoost, 10)
+				r.message.ZIndex = z + 4
+
 			elseif r.kind == "card" then
 				o.ZIndex = z
-				r.artBox.Visible = not fullPanel
-				local previewH = math.min(72, math.round(h * .32))
-				local previewW = math.min(w - 20, math.round(previewH * 1.4))
-				box(r.artBox, (w - previewW) / 2, 8, previewW, previewH)
-				ztree(r.artBox, z + 2)
-				if not fullPanel then
-					use(r.art, o.Name == "Card1" and "art_kit" or "art_rifle")
+				for _, legacyName in { "HUDRaster", "HUDAdventureRaster" } do
+					local legacy = o:FindFirstChild(legacyName)
+					if legacy and legacy:IsA("GuiObject") then legacy.Visible = false end
 				end
+				o.BackgroundColor3 = Color3.new(1, 1, 1)
+				o.BackgroundTransparency = 0
+				round(o, 15)
+				stroke(o, Color3.fromRGB(59, 130, 246), 1.6, 0.25)
+				local cardGrad = ensurePanelChild(o, "UIGradient", "HUDCardGrad", function(g)
+					g.Rotation = 90
+					g.Color = ColorSequence.new(Color3.fromRGB(16, 43, 96), Color3.fromRGB(8, 26, 63))
+				end)
+				cardGrad.Enabled = true
 
-				local inset = math.max(10, math.round(w * .10))
-				local titleY = fullPanel and math.round(h * .51) + 2 or previewH + 12
-				local buttonY = h - 44 - math.max(9, math.round(h * .058))
+				local isKit = o.Name == "Card1"
+				local compactCard = (o.Parent and o.Parent:GetAttribute("HUDCompactCard") == true) or h < 230
+				local horizontal = compactCard and w >= 290 and h <= 210
+
+				local stage = ensurePanelChild(o, "Frame", "HUDCardStage", function(f)
+					f.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
+					f.BackgroundTransparency = 0
+					round(f, 11)
+					stroke(f, Color3.fromRGB(30, 75, 138), 1.3, 0.1)
+				end)
+				stage.ZIndex = z + 1
+				stage.Visible = true
+
+				local badge = ensurePanelChild(o, "Frame", "HUDCardBadge", function(f)
+					f.BackgroundTransparency = 0
+					round(f, 10)
+				end)
+				local badgeLbl = ensurePanelChild(badge, "TextLabel", "HUDCardBadgeText", function(lbl)
+					lbl.BackgroundTransparency = 1
+					lbl.AnchorPoint = Vector2.new(0.5, 0.5)
+					lbl.Position = UDim2.fromScale(0.5, 0.5)
+					lbl.Size = UDim2.new(1, -10, 1, -2)
+					lbl.Font = Enum.Font.FredokaOne
+					lbl.TextWrapped = false
+					lbl.TextScaled = true
+					lbl.TextStrokeTransparency = 1
+					lbl.TextXAlignment = Enum.TextXAlignment.Center
+					lbl.TextYAlignment = Enum.TextYAlignment.Center
+				end)
+				badgeLbl.Text = isKit and "SEKALI PER TERBANG" or "PERMANEN · RAK SETELAN"
+				badge.BackgroundColor3 = isKit and Color3.fromRGB(12, 74, 110) or Color3.fromRGB(88, 35, 6)
+				badgeLbl.TextColor3 = isKit and Color3.fromRGB(125, 211, 252) or Color3.fromRGB(253, 224, 71)
+				local bStroke = stroke(badge, badgeLbl.TextColor3, 1.2, 0.32)
+				bStroke.Enabled = true
+				badge.ZIndex = z + 3
+				badgeLbl.ZIndex = z + 4
+
 				local title = o:FindFirstChild("ProductTitle")
 				local detail = o:FindFirstChild("ProductDescription")
 				local purchase = o:FindFirstChildWhichIsA("TextButton")
-				if title then
-					box(title, inset, titleY, w - inset * 2, 22)
-					title.ZIndex = z + 3
-					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, color = Color3.fromRGB(255, 230, 135),
-						strokeThickness = 2, wrapped = false, align = Enum.TextXAlignment.Left })
-					fitLine(title, textBoost)
-				end
-				if detail then
-					box(detail, inset, titleY + 22, w - inset * 2, math.max(1, buttonY - titleY - 25))
-					detail.ZIndex = z + 3
-					applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 13, color = Color3.fromRGB(232, 241, 255),
-						strokeThickness = 1.2, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Top, scaled = true })
-					fitLine(detail, textBoost)
-				end
-				if purchase then
-					purchase.ZIndex = z + 4
-					box(purchase, inset, buttonY, w - inset * 2, 44)
+				local artKey = isKit and "art_shop_kit_v2" or "art_shop_ak_v2"
+
+				if horizontal then
+					local buttonH = 44
+					local stageW = math.clamp(math.round(w * 0.30), 86, 108)
+					local stageH = math.max(64, h - buttonH - 28)
+					box(stage, 10, 10, stageW, stageH)
+					box(r.artBox, 6, 4, stageW - 12, stageH - 8)
+					r.artBox.Parent = stage
+					r.artBox.Visible = true
+					ztree(r.artBox, z + 2)
+					local loaded = Adventure.Draw(r.artBox, artKey, z + 2, "fit")
+					r.art.Visible = not loaded
+					if not loaded then use(r.art, isKit and "art_kit" or "art_rifle") end
+
+					local tx = 10 + stageW + 12
+					local tw = math.max(80, w - tx - 10)
+					badge.Visible = stageH >= 74
+					local curY = 10
+					if title then
+						box(title, tx, curY, tw, 22)
+						title.ZIndex = z + 3
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Left })
+						fitLine(title, math.min(2, textBoost), 11)
+						curY += 23
+					end
+					if badge.Visible then
+						local bw = math.min(tw, isKit and 144 or 172)
+						box(badge, tx, curY, bw, 20)
+						applyTextStyle(badgeLbl, { font = Enum.Font.GothamBlack, size = 10, color = badgeLbl.TextColor3, strokeThickness = 0.4, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(badgeLbl, 0, 8)
+						curY += 22
+					end
+					if detail then
+						box(detail, tx, curY, tw, math.max(18, 10 + stageH - curY))
+						detail.ZIndex = z + 3
+						applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(203, 226, 255), strokeThickness = 1, wrapped = true, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Top, scaled = true })
+						fitLine(detail, textBoost, 9)
+					end
+					if purchase then
+						purchase.ZIndex = z + 4
+						box(purchase, 10, h - buttonH - 10, w - 20, buttonH)
+					end
+				else
+					local buttonH = 44
+					local buttonY = h - buttonH - 10
+					local stageH = math.clamp(math.round(h * 0.34), 52, 106)
+					box(stage, 12, 10, w - 24, stageH)
+					box(r.artBox, 8, 4, w - 40, stageH - 8)
+					r.artBox.Parent = stage
+					r.artBox.Visible = true
+					ztree(r.artBox, z + 2)
+					local loaded = Adventure.Draw(r.artBox, artKey, z + 2, "fit")
+					r.art.Visible = not loaded
+					if not loaded then use(r.art, isKit and "art_kit" or "art_rifle") end
+
+					local curY = 10 + stageH + 8
+					local showBadge = h >= 238
+					badge.Visible = showBadge
+					if showBadge then
+						local bw = math.min(w - 24, isKit and 154 or 184)
+						box(badge, (w - bw) / 2, curY, bw, 22)
+						applyTextStyle(badgeLbl, { font = Enum.Font.GothamBlack, size = 11, color = badgeLbl.TextColor3, strokeThickness = 0.4, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(badgeLbl, 0, 8)
+						curY += 28
+					end
+					if title then
+						box(title, 12, curY, w - 24, 22)
+						title.ZIndex = z + 3
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 17, color = Color3.new(1, 1, 1), strokeThickness = 1.6, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(title, math.min(2, textBoost), 11)
+						curY += 24
+					end
+					if detail then
+						box(detail, 14, curY, w - 28, math.max(16, buttonY - curY - 6))
+						detail.ZIndex = z + 3
+						applyTextStyle(detail, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(203, 226, 255), strokeThickness = 1, wrapped = true, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Top, scaled = true })
+						fitLine(detail, textBoost, 8)
+					end
+					if purchase then
+						purchase.ZIndex = z + 4
+						box(purchase, 12, buttonY, w - 24, buttonH)
+					end
 				end
 
 			elseif r.kind == "reticle" then
@@ -1132,22 +1710,190 @@ function Theme.Start(gui, player)
 
 			elseif r.kind == "panel" then
 				o.ZIndex = z
-				local title = o:FindFirstChild("ModalTitle")
-				if title then
-					title.Text = "TOKO PERBEKALAN"
-					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 18, color = Color3.fromRGB(255, 220, 80), strokeThickness = 2.5, align = Enum.TextXAlignment.Center })
-					box(title, 60, math.round(h * .12) - 12, w - 120, 25)
-					title.ZIndex = z + 3
-					letter(title, "shop_title", 22)
-				end
-				local feedback = o:FindFirstChild("ShopFeedback")
-				if feedback then
-					applyTextStyle(feedback, { font = Enum.Font.GothamBold, size = 11, strokeThickness = 1.5, align = Enum.TextXAlignment.Center })
-					feedback.ZIndex = z + 3
-					local card = o:FindFirstChild("Card1")
-					local y = card and (card.Position.Y.Offset + card.Size.Y.Offset + 2) or h - 30
-					local inset = math.round(w * .13)
-					box(feedback, inset, y, w - inset * 2, 23)
+				if o.Name == "ShopModal" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_shop", z)
+					local title = o:FindFirstChild("ModalTitle")
+					if title then
+						title.Text = "TOKO SKY ADVENTURE"
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(title, math.min(2, textBoost), 13)
+						title.ZIndex = z + 3
+					end
+					local sub = ensurePanelChild(o, "TextLabel", "ShopSubtitle", function(lbl)
+						lbl.BackgroundTransparency = 1
+						lbl.Text = "Perkuat balon, perbekalan kru & kosmetik"
+					end)
+					sub.Text = "Perkuat balon, perbekalan kru & kosmetik"
+					applyTextStyle(sub, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(186, 220, 255), strokeThickness = 1.1, wrapped = false, align = Enum.TextXAlignment.Center })
+					fitLine(sub, math.min(2, textBoost), 9)
+					sub.ZIndex = z + 3
+
+					local feedback = o:FindFirstChild("ShopFeedback")
+					local idleHint = ensurePanelChild(o, "TextLabel", "ShopIdleHint", function(lbl)
+						lbl.BackgroundTransparency = 1
+						lbl.Text = "Pilih item untuk membeli lewat Roblox."
+					end)
+					if feedback then
+						applyTextStyle(feedback, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(255, 232, 148), strokeThickness = 1.4, wrapped = true, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
+						fitLine(feedback, math.min(2, textBoost), 8)
+						feedback.ZIndex = z + 3
+						idleHint.Position = feedback.Position
+						idleHint.Size = feedback.Size
+						idleHint.ZIndex = z + 3
+						idleHint.Visible = feedback.Text == ""
+						applyTextStyle(idleHint, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(147, 197, 253), strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(idleHint, math.min(2, textBoost), 8)
+					end
+				elseif o.Name == "DailyLoginModal" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_daily", z)
+					local dTitle = o:FindFirstChild("DailyTitle")
+					if dTitle then
+						applyTextStyle(dTitle, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(dTitle, math.min(2, textBoost), 13)
+						dTitle.ZIndex = z + 4
+					end
+					local dSub = o:FindFirstChild("DailySubtitle")
+					if dSub then
+						applyTextStyle(dSub, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(147, 197, 253), strokeThickness = 1.1, wrapped = false, align = dSub.TextXAlignment })
+						fitLine(dSub, math.min(1, textBoost), 9)
+						dSub.ZIndex = z + 4
+					end
+					local dFooter = o:FindFirstChild("DailyFooterNote")
+					if dFooter then
+						fitLine(dFooter, math.min(1, textBoost), 8)
+						dFooter.ZIndex = z + 4
+					end
+				elseif o.Name == "TacticalPingWheel" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_ping", z)
+					local pingTitle = o:FindFirstChild("PingTitle")
+					if pingTitle then
+						applyTextStyle(pingTitle, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(pingTitle, math.min(2, textBoost), 13)
+						pingTitle.ZIndex = z + 4
+					end
+					local pSub = ensurePanelChild(o, "TextLabel", "PingSubtitle", function(lbl)
+						lbl.BackgroundTransparency = 1
+						lbl.Text = "Kirim sinyal cepat ke kru balon"
+					end)
+					applyTextStyle(pSub, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(147, 197, 253), strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center })
+					fitLine(pSub, math.min(2, textBoost), 9)
+					pSub.ZIndex = z + 4
+					local pFooter = ensurePanelChild(o, "TextLabel", "PingFooterHint", function(lbl)
+						lbl.BackgroundTransparency = 1
+					end)
+					pFooter.Text = Input.TouchEnabled and "Ketuk pesan untuk langsung kirim ke kru" or "Tekan [V] untuk buka / tutup  ·  Klik pesan untuk kirim"
+					applyTextStyle(pFooter, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(186, 220, 255), strokeThickness = 1.1, wrapped = false, align = Enum.TextXAlignment.Center })
+					fitLine(pFooter, math.min(1, textBoost), 8)
+					pFooter.ZIndex = z + 4
+				elseif o.Name == "WeaponSettingsModal" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_weapon", z)
+					local title = o:FindFirstChild("Title")
+					if title then
+						title.Text = "SENJATA BALON"
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(title, math.min(2, textBoost), 13)
+						title.ZIndex = z + 4
+					end
+					local invPill = ensurePanelChild(o, "Frame", "HUDInventoryPill", function(f)
+						f.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
+						f.BackgroundTransparency = 0
+						round(f, 12)
+						stroke(f, Color3.fromRGB(45, 98, 168), 1.3, 0.15)
+					end)
+					invPill.ZIndex = z + 3
+					local inv = o:FindFirstChild("InventoryCount")
+					if inv then
+						applyTextStyle(inv, { font = Enum.Font.GothamBold, size = 13, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.1, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(inv, math.min(2, textBoost), 8)
+						inv.ZIndex = z + 4
+					end
+					for slot = 1, 2 do
+						local rackRow = ensurePanelChild(o, "Frame", "HUDRackRow" .. slot, function(f)
+							f.BackgroundColor3 = Color3.new(1, 1, 1)
+							f.BackgroundTransparency = 0
+							round(f, 13)
+							stroke(f, Color3.fromRGB(47, 104, 175), 1.4, 0.2)
+							local rg = Instance.new("UIGradient")
+							rg.Rotation = 90
+							rg.Color = ColorSequence.new(Color3.fromRGB(12, 35, 82), Color3.fromRGB(7, 23, 58))
+							rg.Parent = f
+						end)
+						rackRow.ZIndex = z + 1
+						local slotLbl = o:FindFirstChild("SlotLabel" .. slot)
+						if slotLbl then
+							applyTextStyle(slotLbl, { font = Enum.Font.GothamBold, size = 14, color = Color3.fromRGB(224, 242, 254), strokeThickness = 1.4, wrapped = false, align = Enum.TextXAlignment.Left })
+							fitLine(slotLbl, math.min(2, textBoost))
+							slotLbl.ZIndex = z + 4
+						end
+					end
+					local div = ensurePanelChild(o, "Frame", "HUDWeaponDivider", function(f)
+						f.BackgroundColor3 = Color3.fromRGB(45, 98, 168)
+						f.BackgroundTransparency = 0.52
+					end)
+					div.ZIndex = z + 2
+					local footerPill = ensurePanelChild(o, "Frame", "HUDWeaponFooterPill", function(f)
+						f.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
+						f.BackgroundTransparency = 0.25
+						round(f, 10)
+					end)
+					footerPill.ZIndex = z + 2
+					for _, noteSpec in {
+						{ "LaunchNote", player:GetAttribute("InFlight") == true and Color3.fromRGB(252, 211, 77) or Color3.fromRGB(147, 197, 253) },
+						{ "SettingsFeedback", Color3.fromRGB(255, 219, 143) },
+					} do
+						local lbl = o:FindFirstChild(noteSpec[1])
+						if lbl then
+							applyTextStyle(lbl, { font = Enum.Font.GothamBold, size = 12, color = noteSpec[2], strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center, valign = Enum.TextYAlignment.Center })
+							fitLine(lbl, math.min(2, textBoost), 8)
+							lbl.ZIndex = z + 4
+						end
+					end
+					for _, child in o:GetChildren() do
+						if child:IsA("TextButton") and child.Name ~= "SettingsCloseButton" then
+							local cap = child:FindFirstChild("ChoiceCaption", true)
+							if cap and cap:IsA("TextLabel") then
+								cap.ZIndex = z + 5
+								fitLine(cap, math.min(2, textBoost))
+							end
+						end
+					end
+				elseif o.Name == "AudioSettingsModal" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_audio", z)
+					local title = o:FindFirstChild("AudioTitle")
+					if title then
+						applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(title, math.min(2, textBoost), 13)
+						title.ZIndex = z + 4
+					end
+					local sub = o:FindFirstChild("AudioSubtitle")
+					if sub then
+						applyTextStyle(sub, { font = Enum.Font.GothamBold, size = 12, color = sub.TextColor3, strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(sub, math.min(2, textBoost), 8)
+						sub.ZIndex = z + 4
+					end
+					local aFooter = o:FindFirstChild("AudioFooterHint")
+					if aFooter then
+						applyTextStyle(aFooter, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(186, 220, 255), strokeThickness = 1.1, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(aFooter, math.min(1, textBoost), 8)
+						aFooter.ZIndex = z + 4
+					end
+					for _, keyName in { "Master", "Music", "SFX" } do
+						local row = o:FindFirstChild("AudioRow" .. keyName)
+						if row then
+							local chLbl = row:FindFirstChild("ChannelLabel")
+							if chLbl then
+								applyTextStyle(chLbl, { font = Enum.Font.GothamBold, size = 14, color = Color3.fromRGB(240, 246, 255), strokeThickness = 1.4, wrapped = false, align = Enum.TextXAlignment.Left })
+								fitLine(chLbl, math.min(2, textBoost), 9)
+								chLbl.ZIndex = z + 3
+							end
+							local chVal = row:FindFirstChild("ChannelValue")
+							if chVal then
+								applyTextStyle(chVal, { font = Enum.Font.GothamBlack, size = 13, color = chVal.TextColor3, strokeThickness = 1.4, wrapped = false, align = Enum.TextXAlignment.Right })
+								fitLine(chVal, math.min(2, textBoost), 9)
+								chVal.ZIndex = z + 3
+							end
+						end
+					end
 				end
 			end
 		end

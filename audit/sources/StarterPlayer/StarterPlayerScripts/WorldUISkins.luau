@@ -165,8 +165,6 @@ local function style(gui)
 		key = "palace_sign"
 	elseif gui.Name == "StormSign" then
 		key = "storm_sign"
-	elseif parent.Name == "TeamSpotterMarker" then
-		key = "marker"
 	end
 	if not key then return end
 	gui:SetAttribute("FlyHighRasterWorld", true)

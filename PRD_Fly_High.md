@@ -12,6 +12,8 @@ Seluruh anggota roster penerbangan yang masih terhubung mendapat satu puncak jik
 Detail state dan tata letak ada di [desain kedatangan](design/features/flight-arrival/design.md); status verifikasi di [PROGRESS](PROGRESS.md).
 
 > Dokumen ini memuat spesifikasi beserta revisi bertanggal. Untuk **status implementasi, bukti pengujian dan temuan terbuka**, baca [HANDOVER](HANDOVER.md) dan [PROGRESS](PROGRESS.md). Revisi terbaru yang disetujui menggantikan aturan lama yang bertentangan. Desain HUD aktif adalah Sky Adventure pada bagian 12; catatan tray AKSI dan Sky Arcade bertanggal lama merupakan riwayat desain.
+>
+> **Rancangan Dalam Review Figma (14 November 2026):** Proposal **Daily Login 7-Hari Non-Hangus, Sky Coins, Turbo Gas (`+25%` 60 dtk), Tali Awet (`-30%` aus), Kosmetik Sosial, & Toko 3-Tab** dicatat di [desain Daily Login & Koin](design/features/daily-login-and-coins/design.md) (`draft`; belum diimplementasikan di Roblox Studio sambil menunggu persetujuan UI Figma).
 
 ---
 

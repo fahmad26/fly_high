@@ -59,9 +59,18 @@ function Art.Draw(parent, key, z, mode, tint)
 	local id, x, y, w, h = table.unpack(sprite)
 	if image:GetAttribute("AdventureArtKey") ~= key then
 		image.Image = id
-		image.ImageRectOffset = Vector2.new(x, y)
-		image.ImageRectSize = Vector2.new(w, h)
+		if x == 0 and y == 0 then
+			image.ImageRectOffset = Vector2.zero
+			image.ImageRectSize = Vector2.zero
+		else
+			image.ImageRectOffset = Vector2.new(x, y)
+			image.ImageRectSize = Vector2.new(w, h)
+		end
 		image:SetAttribute("AdventureArtKey", key)
+	end
+	if image.ScaleType == Enum.ScaleType.Slice then
+		image.SliceCenter = Rect.new(0, 0, 0, 0)
+		image.SliceScale = 1
 	end
 	image.ZIndex = z
 	image.ImageColor3 = tint or Color3.new(1, 1, 1)
@@ -95,6 +104,39 @@ function Art.Draw(parent, key, z, mode, tint)
 	image.ImageTransparency = mode == "wide" and 1 or 0
 	local loaded = (mode == "wide" and segmentsLoaded) or (mode ~= "wide" and image.IsLoaded)
 	return loaded, image
+end
+
+function Art.DrawSlice(parent, key, z, sliceCenter, sliceScale, childName, tint)
+	local name = childName or "HUDAdventureRaster"
+	local image = parent:FindFirstChild(name)
+	local sprite = Catalog[key]
+	if not sprite then
+		if image then image.Visible = false end
+		return false, image
+	end
+	if not image then
+		image = Instance.new("ImageLabel")
+		image.Name = name
+		image.BackgroundTransparency = 1
+		image.BorderSizePixel = 0
+		image.Active = false
+		image.Selectable = false
+		image.Visible = false
+		image.Parent = parent
+	end
+	if image:GetAttribute("AdventureArtKey") ~= key then
+		image.Image = sprite[1]
+		image.ImageRectOffset = Vector2.zero
+		image.ImageRectSize = Vector2.zero
+		image:SetAttribute("AdventureArtKey", key)
+	end
+	image.ScaleType = Enum.ScaleType.Slice
+	image.SliceCenter = sliceCenter
+	image.SliceScale = sliceScale or 0.5
+	image.ImageColor3 = tint or Color3.new(1, 1, 1)
+	image.ZIndex = z
+	image.Visible = true
+	return image.IsLoaded, image
 end
 
 return Art

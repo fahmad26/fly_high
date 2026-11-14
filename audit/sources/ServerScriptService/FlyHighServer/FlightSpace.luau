@@ -1,7 +1,32 @@
 local Config=require(game.ReplicatedStorage.FlyHigh.Modules.FlyHighConfig)
 local Space={}
-function Space.SpawnPosition(padPosition)
- return Vector3.new(padPosition.X,Config.GROUND_Y,padPosition.Z-18)
+local SPAWN_FORWARD_DISTANCE = 0
+
+local function resolvePadCFrame(origin, podName)
+ if typeof(origin) == "Instance" and origin:IsA("BasePart") then
+  return origin.CFrame
+ elseif typeof(origin) == "CFrame" then
+  return origin
+ elseif typeof(origin) == "Vector3" then
+  local lobby = workspace:FindFirstChild("FlyHighLobby")
+  local pods = lobby and lobby:FindFirstChild("MatchmakingPods")
+  local pod = podName and pods and pods:FindFirstChild(podName)
+  local pad = pod and pod:FindFirstChild("FloorPad")
+  if pad and pad:IsA("BasePart") then
+   return pad.CFrame
+  end
+  return CFrame.new(origin)
+ end
+ return CFrame.new(0, Config.GROUND_Y, 0)
+end
+
+function Space.SpawnPosition(origin, podName)
+ local cf = resolvePadCFrame(origin, podName)
+ local look = Vector3.new(cf.LookVector.X, 0, cf.LookVector.Z)
+ look = look.Magnitude > 0.01 and look.Unit or -Vector3.zAxis
+ local raw = cf.Position + look * SPAWN_FORWARD_DISTANCE
+ local limit = Config.CORRIDOR_CENTER_LIMIT
+ return Vector3.new(math.clamp(raw.X, -limit, limit), Config.GROUND_Y, math.clamp(raw.Z, -limit, limit))
 end
 function Space.IsGrounded(fd,flights)
  if fd.root.Position.Y<=Config.GROUND_Y+1 then return true end

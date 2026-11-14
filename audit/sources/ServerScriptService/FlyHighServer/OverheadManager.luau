@@ -1,4 +1,6 @@
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Catalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("DailyAndShopCatalog"))
 
 local function formatAltitude(km)
 	km = km or 0
@@ -8,11 +10,15 @@ end
 local function updateOverheadTitle(player, billboard)
 	local titleLabel = billboard:FindFirstChild("TitleLabel")
 	local masterLabel = billboard:FindFirstChild("MasterLabel")
+	local cosmeticLabel = billboard:FindFirstChild("CosmeticTitleLabel")
+	local nameLabel = billboard:FindFirstChild("NameLabel")
 	if not titleLabel then return end
 
 	local maxAltitude = player:GetAttribute("MaxAltitude") or 0
 	local summitCount = player:GetAttribute("SummitCount") or 0
 	local isMaster = player:GetAttribute("IsMaster") or false
+	local equippedTitleId = player:GetAttribute("EquippedTitle")
+	local cosmeticItem = type(equippedTitleId) == "string" and Catalog.GetCosmetic("title", equippedTitleId) or nil
 
 	if masterLabel then
 		masterLabel.Visible = isMaster
@@ -27,6 +33,24 @@ local function updateOverheadTitle(player, billboard)
 		titleLabel.TextColor3 = Color3.fromRGB(80, 220, 255) -- Cyan
 		titleLabel.TextStrokeColor3 = Color3.fromRGB(0, 60, 100)
 	end
+
+	local hasTitle = cosmeticItem ~= nil
+	if cosmeticLabel then
+		cosmeticLabel.Visible = hasTitle
+		if hasTitle and cosmeticItem then
+			cosmeticLabel.Text = "★ " .. (cosmeticItem.titleText or cosmeticItem.name)
+			cosmeticLabel.TextColor3 = cosmeticItem.primaryColor or Color3.fromRGB(254, 240, 138)
+			cosmeticLabel.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
+			local rim = cosmeticLabel:FindFirstChildOfClass("UIStroke")
+			if rim then
+				rim.Color = cosmeticItem.primaryColor or Color3.fromRGB(251, 191, 36)
+			end
+		end
+	end
+	if nameLabel then
+		nameLabel.Position = UDim2.new(0, 0, 0, hasTitle and 60 or 36)
+	end
+	billboard.Size = UDim2.new(0, 220, 0, hasTitle and 84 or 65)
 end
 
 local function setupOverheadGui(player, character)
@@ -75,6 +99,31 @@ local function setupOverheadGui(player, character)
 	titleLabel.TextSize = 15
 	titleLabel.Parent = billboard
 
+	-- Cosmetic Overhead Title Pill (below Rekor/Puncak)
+	local cosmeticLabel = Instance.new("TextLabel")
+	cosmeticLabel.Name = "CosmeticTitleLabel"
+	cosmeticLabel.Size = UDim2.new(0.86, 0, 0, 18)
+	cosmeticLabel.Position = UDim2.new(0.07, 0, 0, 38)
+	cosmeticLabel.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
+	cosmeticLabel.BackgroundTransparency = 0.12
+	cosmeticLabel.BorderSizePixel = 0
+	cosmeticLabel.Text = ""
+	cosmeticLabel.TextColor3 = Color3.fromRGB(254, 240, 138)
+	cosmeticLabel.TextStrokeTransparency = 0.25
+	cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(6, 18, 44)
+	cosmeticLabel.Font = Enum.Font.GothamBlack
+	cosmeticLabel.TextSize = 11
+	cosmeticLabel.Visible = false
+	cosmeticLabel.Parent = billboard
+	local cCorner = Instance.new("UICorner")
+	cCorner.CornerRadius = UDim.new(1, 0)
+	cCorner.Parent = cosmeticLabel
+	local cStroke = Instance.new("UIStroke")
+	cStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	cStroke.Thickness = 1.3
+	cStroke.Color = Color3.fromRGB(251, 191, 36)
+	cStroke.Parent = cosmeticLabel
+
 	-- Name Label
 	local nameLabel = Instance.new("TextLabel")
 	nameLabel.Name = "NameLabel"
@@ -105,6 +154,9 @@ local function setupOverheadGui(player, character)
 		updateOverheadTitle(player, billboard)
 	end))
 	table.insert(connections, player:GetAttributeChangedSignal("IsMaster"):Connect(function()
+		updateOverheadTitle(player, billboard)
+	end))
+	table.insert(connections, player:GetAttributeChangedSignal("EquippedTitle"):Connect(function()
 		updateOverheadTitle(player, billboard)
 	end))
 end
