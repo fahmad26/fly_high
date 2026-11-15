@@ -35,14 +35,23 @@ local obstacleLimit = 60
 local safeY = Config.GROUND_Y + Config.SAFE_TAKEOFF_KM * Config.STUDS_PER_KM
 local stormCells = {-28, 0, 28}
 local ruinCells = {
-	Vector3.new(-28, 0, -36), Vector3.new(24, 0, -9),
+	Vector3.new(-28, 0, -36), Vector3.new(31, 0, -12),
 	Vector3.new(-33, 0, 19), Vector3.new(31, 0, 45),
 }
-local trajectories = {
-	Tornado = Vector3.new(70, 0, 0),
-	Heat = Vector3.new(0, 0, 66),
-	Meteor = Vector3.new(54, -58, 92),
-}
+local function pickTrajectory(effect)
+	if effect == "Tornado" then
+		return Vector3.new(140 * (math.random(0, 1) == 0 and 1 or -1), 0, 0)
+	elseif effect == "Heat" then
+		return Vector3.new(0, 0, 136)
+	elseif effect == "Wind" then
+		return Vector3.new(136, 0, 0)
+	elseif effect == "Fog" then
+		return Vector3.new(0, 0, 120 * (math.random(0, 1) == 0 and 1 or -1))
+	elseif effect == "Meteor" then
+		return Vector3.new(78 * (math.random(0, 1) == 0 and 1 or -1), -76, 138)
+	end
+	return Vector3.zero
+end
 local wingParts = {Wing = true, FlightFeather = true, Membrane = true, WingTip = true, AmberWing = true, CrystalWing = true}
 
 local queryableHazards = {
@@ -79,8 +88,11 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 	end
 	local _, size = model:GetBoundingBox()
 	local minY = safeY + size.Y / 2
+	local visualScale = model:GetAttribute("VisualScale") or 1
+	local fadeDuration = (shootable and delaySeconds == 0) and 0.45 or (delaySeconds > 0 and 0.85 or 0)
 	local beams = {}
 	local fragments = {}
+	local fadeParts = {}
 	local animated = {}
 	local spirals = {}
 	local rails = {}
@@ -98,6 +110,10 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 			if object.Name == "MeteorFragment" then
 				fragments[object] = object.Transparency
 				object.Transparency = 1
+			elseif fadeDuration > 0 and object.Name ~= "VortexQueryCore" and object.Transparency < 1 then
+				table.insert(fadeParts, { part = object, target = object.Transparency, query = object.CanQuery })
+				object.Transparency = 1
+				object.CanQuery = false
 			end
 		elseif object:IsA("Beam") then
 			table.insert(beams, object)
@@ -118,7 +134,8 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 		if part:IsA("BasePart") and (wingParts[part.Name] or part:GetAttribute("FlockCenter")
 			or part.Name == "Thunderhead" or part.Name == "ChargedCrystal") then
 			local center = part:GetAttribute("FlockCenter") or Vector3.zero
-			table.insert(animated, { part = part, rest = pose:ToObjectSpace(part.CFrame), center = center })
+			local jointScale = part:GetAttribute("JointScale") or visualScale
+			table.insert(animated, { part = part, rest = pose:ToObjectSpace(part.CFrame), center = center, jointScale = jointScale })
 		end
 	end
 	model.Parent = folder
@@ -127,10 +144,26 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 		instance = model, velocity = velocity, shootable = shootable, effect = effect,
 		born = now, activeAt = now + delaySeconds, expires = now + delaySeconds + lifespan,
 		minY = minY, hit = {}, beams = beams, fragments = fragments, animated = animated, origin = pose,
-		spirals = spirals, rails = rails,
+		spirals = spirals, rails = rails, visualScale = visualScale, fadeParts = fadeParts,
+		fadeDuration = fadeDuration, fadeDone = (fadeDuration <= 0 or #fadeParts == 0),
 	}
 	table.insert(Manager.activeObstacles, item)
 	return item
+end
+
+local function stepFade(item, now)
+	local alpha = math.clamp((now - item.born) / item.fadeDuration, 0, 1)
+	local queryReady = alpha >= 0.25
+	for _, entry in ipairs(item.fadeParts) do
+		entry.part.Transparency = 1 - (1 - entry.target) * alpha
+		if queryReady and not entry.querySet then
+			entry.querySet = true
+			entry.part.CanQuery = entry.query
+		end
+	end
+	if alpha >= 1 then
+		item.fadeDone = true
+	end
 end
 
 local function hazardDirection(fd, position)
@@ -153,9 +186,18 @@ local function predictedEnvelope(fd,seconds)
  return fd.balloon.Envelope.Position+Vector3.yAxis*verticalSpeed(fd)*(seconds or 0)
 end
 
+local function horizLead(fd, seconds, maxStuds)
+	local v = fd.root.AssemblyLinearVelocity
+	local lead = Vector3.new(v.X, 0, v.Z) * (seconds or 0)
+	if lead.Magnitude > maxStuds then
+		lead = lead.Unit * maxStuds
+	end
+	return lead
+end
+
 local function spawnEnemy(spec, pacing, aim, bearing, slot, riseSpeed)
 	local outward = Vector3.new(math.sin(bearing), 0, -math.cos(bearing))
-	local range = math.max(95, pacing.speed * 3.15) + (slot - 1) * pacing.speed * 0.75
+	local range = math.max(145, pacing.speed * 4.4) + (slot - 1) * pacing.speed * 0.85
 	local height = spec.enemy == "Hailstone" and 42 or 10
 	local start = aim + outward * range + Vector3.yAxis * height
 	local target,approach=Motion.VerticalIntercept(start,aim,pacing.speed,riseSpeed or 0)
@@ -168,11 +210,9 @@ end
 
 local function spawnEnemyWave(index, fd, count)
 	local spec, pacing = bands[index], Config.OBSTACLE_PACING[index]
-	local velocity = fd.root.AssemblyLinearVelocity
-	local lead = Vector3.new(velocity.X, 0, velocity.Z) * 0.9
-	if lead.Magnitude > 24 then lead = lead.Unit * 24 end
+	local lead = horizLead(fd, 0.9, 24)
 	local aim = predictedEnvelope(fd) + lead
-	local heading = count == 1 and math.rad(math.random(-25, 25)) or math.random() * math.pi * 2
+	local heading = count == 1 and math.rad(math.random(-55, 55)) or math.rad(math.random(-110, 110))
 	local flank = math.rad(68) * (math.random(0, 1) == 0 and -1 or 1)
 	local bearings = {heading, heading + flank, heading - flank}
 	local sideways = Vector3.new(math.cos(heading), 0, math.sin(heading)) * 8
@@ -190,15 +230,26 @@ function Manager.SpawnBand(index, fd, hazard)
 
 	local predicted = predictedEnvelope(fd)
 	if not hazard then
-		return spawnEnemy(spec, pacing, predicted, math.rad(math.random(-25, 25)), 1, verticalSpeed(fd))
+		return spawnEnemy(spec, pacing, predicted + horizLead(fd, 1.5, 20), math.rad(math.random(-55, 55)), 1, verticalSpeed(fd))
 	end
 
-	local path = trajectories[spec.effect] or Vector3.zero
-	local impact = predictedEnvelope(fd,warningSeconds+hazardSeconds/2) + Vector3.new(0, 0, -12)
+	local path = pickTrajectory(spec.effect)
+	local lead = horizLead(fd, warningSeconds * 0.65, 28)
+	if lead.Magnitude < 3 and (spec.effect == "Lightning" or spec.effect == "Storm") then
+		lead = Vector3.new(math.random(-14, 14), 0, math.random(-22, -6))
+	end
+	local impact = predictedEnvelope(fd, warningSeconds + hazardSeconds / 2) + lead
 	local start = impact - path / 2
+	local warningApproach = nil
+	if spec.effect == "Debris" or spec.effect == "Magnetic" then
+		local angle = math.rad(math.random(-120, 120))
+		warningApproach = Vector3.new(math.sin(angle) * 82, 18, -math.cos(angle) * 82)
+	end
 	local cells = spec.effect == "Storm" and stormCells or ruinCells
 	local model = Art.Hazard(spec.effect, spec.color, path, cells)
-	local item = add(model, start, path / hazardSeconds, spec.hazard, spec.effect, warningSeconds, hazardSeconds, nil, spec.color)
+	local item = add(model, start + (warningApproach or Vector3.zero), path / hazardSeconds, spec.hazard, spec.effect, warningSeconds, hazardSeconds, nil, spec.color)
+	item.origin = CFrame.new(Vector3.new(start.X, math.max(item.minY, start.Y), start.Z))
+	item.warningApproach = warningApproach
 	if path.Magnitude > 0 then item.path = path end
 	if spec.effect == "Meteor" or spec.effect == "Debris" then
 		item.groups = {}
@@ -295,17 +346,18 @@ local function animateParts(item, pose, age)
 		local part, rest, center = data.part, data.rest, data.center
 		local phase = math.sign(center.X) * 1.6
 		if item.shootable then
-			local spread = Vector3.xAxis * math.sign(center.X) * math.abs(math.sin(age * 1.55)) * 1.3
+			local spread = Vector3.xAxis * math.sign(center.X) * math.abs(math.sin(age * 1.55)) * (1.3 * item.visualScale)
 			local transform = CFrame.new(spread)
 			if wingParts[part.Name] then
 				local side = math.sign(rest.Position.X - center.X)
-				local joint = center + Vector3.new(side * 0.68, 0.35, 0)
+				local joint = center + Vector3.new(side * 0.68, 0.35, 0) * data.jointScale
 				local flap = side * Motion.WingAngle(item.effect, age, phase)
 				transform *= CFrame.new(joint) * CFrame.Angles(0, 0, flap) * CFrame.new(-joint)
 			end
 			part.CFrame = pose * transform * rest
 		elseif part.Name == "Thunderhead" then
-			part.CFrame = pose * (rest + Vector3.new(math.sin(age * 1.1 + index) * 2.5, math.sin(age * 1.3 + index) * 1.2, 0))
+			local descendY = age < warningSeconds and (1 - math.clamp(age / (warningSeconds * 0.75), 0, 1)) ^ 2 * 28 or 0
+			part.CFrame = pose * (rest + Vector3.new(math.sin(age * 1.1 + index) * 2.5, descendY + math.sin(age * 1.3 + index) * 1.2, 0))
 		else
 			part.CFrame = pose * rest * CFrame.Angles(age * 0.45, age * 0.8, 0)
 		end
@@ -406,9 +458,18 @@ RunService.Heartbeat:Connect(function(dt)
 			table.remove(Manager.activeObstacles, index)
 			continue
 		end
+		if not item.fadeDone then
+			stepFade(item, now)
+		end
 		local age = now - item.activeAt
 		if age < 0 then
-			animateParts(item, model:GetPivot(), now - item.born)
+			local warnElapsed = now - item.born
+			if item.warningApproach and warningSeconds > 0 then
+				local u = math.clamp(warnElapsed / (warningSeconds * 0.85), 0, 1)
+				local ease = 1 - (1 - u) ^ 3
+				model:PivotTo(CFrame.new(item.origin.Position + item.warningApproach * (1 - ease)))
+			end
+			animateParts(item, model:GetPivot(), warnElapsed)
 			continue
 		end
 		if not item.activated then
@@ -486,7 +547,7 @@ RunService.Heartbeat:Connect(function(dt)
 				model:SetAttribute("Charging", false)
 				model.Aperture.Color = Color3.fromRGB(249, 171, 48)
 				if delta.Magnitude > 0.01 and #Manager.activeObstacles < obstacleLimit then
-					add(Art.Spike(), nextPose.Position, delta.Unit * 43, "Paku Sihir", "Spike", 0, 2.2, nil, Color3.fromRGB(255, 190, 95))
+					add(Art.Spike(), nextPose.Position + delta.Unit * 4.5, delta.Unit * 43, "Paku Sihir", "Spike", 0, 2.2, nil, Color3.fromRGB(255, 190, 95))
 				end
 			elseif not item.chargeAge and age > 0.9 and #Manager.activeObstacles < obstacleLimit then
 				for _, flight in ipairs(current) do

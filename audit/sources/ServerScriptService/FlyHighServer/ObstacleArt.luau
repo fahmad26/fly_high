@@ -101,12 +101,13 @@ local enemyBuilders = {
 		for _, side in {-1, 1} do
 			local companion = Instance.new("Model")
 			feathered(companion, side < 0 and ivory or rgb(118, 80, 50), rgb(76, 59, 52), false)
-			companion:ScaleTo(0.55)
+			companion:ScaleTo(0.72)
 			local center = Vector(side * 7, side * 1.5, 4)
 			companion.WorldPivot = CFrame.identity
 			companion:PivotTo(CFrame.new(center))
 			for _, part in companion:GetChildren() do
 				part:SetAttribute("FlockCenter", center)
+				part:SetAttribute("JointScale", 0.72)
 				part.Parent = model
 			end
 			companion:Destroy()
@@ -239,6 +240,52 @@ local enemyBuilders = {
 	end,
 }
 
+local ENEMY_SCALES = {
+	WildBird = 1.9,
+	StormBat = 2.0,
+	Hailstone = 2.1,
+	GuardianDrone = 2.0,
+	FireBee = 2.1,
+	CrystalWyvern = 2.2,
+	ShadowPhantom = 2.1,
+	SatelliteDebris = 2.0,
+	CelestialPhoenix = 2.6,
+}
+
+local function scaleNumberSequence(seq, factor)
+	local keypoints = {}
+	for _, kp in ipairs(seq.Keypoints) do
+		table.insert(keypoints, NumberSequenceKeypoint.new(kp.Time, kp.Value * factor, kp.Envelope * factor))
+	end
+	return NumberSequence.new(keypoints)
+end
+
+local function scaleModelVisuals(model, scale)
+	model:SetAttribute("VisualScale", scale)
+	if scale == 1 then
+		return
+	end
+	model:ScaleTo(scale)
+	for _, desc in ipairs(model:GetDescendants()) do
+		if desc:IsA("BasePart") then
+			local center = desc:GetAttribute("FlockCenter")
+			if typeof(center) == "Vector3" then
+				desc:SetAttribute("FlockCenter", center * scale)
+			end
+			local jointScale = desc:GetAttribute("JointScale")
+			if typeof(jointScale) == "number" then
+				desc:SetAttribute("JointScale", jointScale * scale)
+			end
+		elseif desc:IsA("ParticleEmitter") then
+			desc.Size = scaleNumberSequence(desc.Size, scale)
+			desc.Speed = NumberRange.new(desc.Speed.Min * scale, desc.Speed.Max * scale)
+		elseif desc:IsA("Beam") then
+			desc.Width0 *= scale
+			desc.Width1 *= scale
+		end
+	end
+end
+
 local enemyTemplates = {}
 
 function Art.Enemy(name)
@@ -246,6 +293,7 @@ function Art.Enemy(name)
 	if not template then
 		template = modelWithCore(name, {3.2, 2.6, 3.5})
 		enemyBuilders[name](template)
+		scaleModelVisuals(template, ENEMY_SCALES[name] or 1.9)
 		enemyTemplates[name] = template
 	end
 	return template:Clone()
@@ -452,15 +500,15 @@ function Art.Hazard(effect, color, path, cells)
 			end
 			for fragment = 1, 5 do
 				local basalt = fragment % 2 == 0 and rgb(96, 44, 36) or rgb(55, 42, 51)
-				piece(lane, "MeteorFragment", {4.65, 5.3 - fragment * 0.23, 4.1},
-					{(fragment - 3) * 0.67, (fragment % 2) * 0.65, 0}, basalt,
+				piece(lane, "MeteorFragment", {7.2, 8.2 - fragment * 0.35, 6.4},
+					{(fragment - 3) * 1.0, (fragment % 2) * 1.0, 0}, basalt,
 					"Wedge", {index * 31, fragment * 89, fragment * 39}, Enum.Material.Basalt)
-				piece(lane, "MeteorFragment", {0.46, 2.4, 1.5},
-					{(fragment - 3) * 1.2, 0.9 + (fragment % 2) * 1.3, fragment % 2 == 0 and -1.25 or 1.25},
+				piece(lane, "MeteorFragment", {0.72, 3.7, 2.3},
+					{(fragment - 3) * 1.85, 1.4 + (fragment % 2) * 2.0, fragment % 2 == 0 and -1.95 or 1.95},
 					fragment % 2 == 0 and gold or rgb(255, 92, 36),
 					"Wedge", {index * 31, fragment * 89, fragment * 39}, glow)
 			end
-			local wake = streak(lane, Vector3.zero, -path.Unit * 26, rgb(255, 135, 49), 6, true)
+			local wake = streak(lane, Vector3.zero, -path.Unit * 34, rgb(255, 135, 49), 9, true)
 			wake.Name = "MeteorWake"
 			wake.Width1 = 0.2
 			wake.Color = ColorSequence.new(rgb(255, 224, 142), rgb(238, 61, 19))
@@ -491,6 +539,9 @@ function Art.Hazard(effect, color, path, cells)
 		end
 	else
 		if effect == "Wind" then
+			if path.Magnitude > 1 then
+				streak(model, Vector(0, -12, 0), path + Vector(0, -12, 0), color, 0.55).Name = "PathBeam"
+			end
 			local wind = Instance.new("ParticleEmitter")
 			wind.Texture = "rbxasset://textures/particles/smoke_main.dds"
 			wind.Color = ColorSequence.new(color, ivory)
@@ -536,9 +587,11 @@ function Art.Hazard(effect, color, path, cells)
 				NumberSequenceKeypoint.new(1, 0.94),
 			})
 			if effect == "Magnetic" then
-				piece(model, "ChargedCrystal", {2.4, 7.8, 2.7}, {index * 10, 0, index * 4},
+				local crystalAngle = index * 1.35 + 0.5
+				piece(model, "ChargedCrystal", {3.0, 9.6, 3.3},
+					{math.cos(crystalAngle) * 24, (index % 2) * 3 - 1, math.sin(crystalAngle) * 24},
 					color, "Wedge", {index * 30, index * 45, index * 18}, glow)
-				particle(model.PrimaryPart, Vector(index * 10, 2, index * 4), {
+				particle(model.PrimaryPart, Vector(math.cos(crystalAngle) * 24, 2, math.sin(crystalAngle) * 24), {
 					texture = sparkTexture, color = color, fade = ice, size = 1.25, endSize = 0.2, life = 0.46,
 					rate = 4, speed = 5, opacity = 0.28, emission = 0.72,
 				})
@@ -549,10 +602,10 @@ function Art.Hazard(effect, color, path, cells)
 end
 
 function Art.Spike()
-	local model = modelWithCore("Paku Sihir", {1, 1, 1})
-	piece(model, "Spike", {0.7, 0.8, 4.4}, {0, 0, 0}, violet, "Wedge", {0, 180, 0}, glow)
-	accent(model, "SpikeFacet", {0.42, 0.35, 2.7}, {0, 0.3, -0.42}, rgb(217, 193, 255), "Wedge", {0, 180, 0}, glow)
-	local wake = streak(model, Vector(0, 0, 1), Vector(0, 0, 12), violet, 1.2)
+	local model = modelWithCore("Paku Sihir", {1.8, 1.8, 1.8})
+	piece(model, "Spike", {1.4, 1.6, 8.8}, {0, 0, 0}, violet, "Wedge", {0, 180, 0}, glow)
+	accent(model, "SpikeFacet", {0.84, 0.7, 5.4}, {0, 0.6, -0.84}, rgb(217, 193, 255), "Wedge", {0, 180, 0}, glow)
+	local wake = streak(model, Vector(0, 0, 2), Vector(0, 0, 22), violet, 2.2)
 	wake.Width1 = 0.06
 	wake.Color = ColorSequence.new(rgb(236, 219, 255), violet)
 	wake.Transparency = NumberSequence.new(0.14, 1)

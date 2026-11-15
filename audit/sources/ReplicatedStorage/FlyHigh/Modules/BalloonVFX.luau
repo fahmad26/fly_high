@@ -15,6 +15,21 @@ local TEX_SMOKE = "rbxasset://textures/particles/smoke_main.dds"
 local SFX_CHIME_ID = "rbxasset://sounds/electronicpingshort.wav"
 local SFX_PULSE_ID = "rbxasset://sounds/button.wav"
 local SFX_WHOOSH_ID = "rbxasset://sounds/volume_slider.ogg"
+local SFX_SWITCH_ID = "rbxasset://sounds/switch.wav"
+
+local function resolveAudioAssetId(assetName: string, fallbackId: string): string
+	local flyHigh = RS:FindFirstChild("FlyHigh")
+	local audioFolder = flyHigh and flyHigh:FindFirstChild("AudioAssets")
+	local asset = audioFolder and audioFolder:FindFirstChild(assetName)
+	if asset and asset:IsA("Sound") and asset.SoundId ~= "" then
+		return asset.SoundId
+	end
+	return fallbackId
+end
+
+local SFX_PUNCTURE_POP_ID = "rbxassetid://9113263649"
+local SFX_PUNCTURE_TEAR_ID = "rbxassetid://9113825868"
+local SFX_PUNCTURE_CRIT_ID = resolveAudioAssetId("WarningTone", SFX_PULSE_ID)
 
 local KIT_HIGHLIGHT_DURATION = 0.85
 local KIT_RING_DURATION = 0.65
@@ -55,7 +70,7 @@ local function ensurePreload()
 	preloaded = true
 	task.spawn(function()
 		local assets: { Instance } = {}
-		for _, id in { SFX_CHIME_ID, SFX_PULSE_ID, SFX_WHOOSH_ID } do
+		for _, id in { SFX_CHIME_ID, SFX_PULSE_ID, SFX_WHOOSH_ID, SFX_SWITCH_ID, SFX_PUNCTURE_POP_ID, SFX_PUNCTURE_TEAR_ID, SFX_PUNCTURE_CRIT_ID } do
 			local s = Instance.new("Sound")
 			s.SoundId = id
 			table.insert(assets, s)
@@ -384,19 +399,98 @@ local function makeEmitter(parent: Instance, name: string, props: { [string]: an
 	return em
 end
 
-local function createSpatialSound(parent: Instance, name: string, soundId: string, volume: number, pitch: number, sfxGroup: SoundGroup): Sound
+local function createSpatialSound(parent: Instance, name: string, soundId: string, volume: number, pitch: number, sfxGroup: SoundGroup, is2D: boolean?): Sound
 	local s = Instance.new("Sound")
 	s.Name = name
 	s.SoundId = soundId
 	s.Volume = volume
 	s.PlaybackSpeed = pitch
 	s.Looped = false
-	s.RollOffMinDistance = 24
-	s.RollOffMaxDistance = 260
-	s.RollOffMode = Enum.RollOffMode.InverseTapered
+	if not is2D then
+		s.RollOffMinDistance = 24
+		s.RollOffMaxDistance = 260
+		s.RollOffMode = Enum.RollOffMode.InverseTapered
+	end
 	s.SoundGroup = sfxGroup
 	s.Parent = parent
 	return s
+end
+
+local function playLoadedSound(sound: Sound?, fallback: Sound?)
+	if sound and sound.IsLoaded then
+		sound.TimePosition = 0
+		sound:Play()
+		return
+	end
+	if fallback and fallback.IsLoaded then
+		fallback.TimePosition = 0
+		fallback:Play()
+	end
+end
+
+local function isOwnFlightBalloon(model: Model): boolean
+	local lp = Players.LocalPlayer
+	local ref = lp and lp:FindFirstChild("FlightBalloon")
+	return ref ~= nil and ref:IsA("ObjectValue") and ref.Value == model
+end
+
+local function positionHoleAudio(state: any, holeIdx: number)
+	if not state.holeAudioAtt then
+		return
+	end
+	local rel = state.holeRelPositions and state.holeRelPositions[holeIdx]
+	state.holeAudioAtt.Position = rel or Vector3.new(0, state.envRelY, 0)
+end
+
+local function triggerPunctureSfx(state: any)
+	if AudioMixer.GetSFXScale(Players.LocalPlayer) <= 0 then
+		return
+	end
+	local now = os.clock()
+	if now - (state.lastPunctureSoundAt or -99) < 0.14 then
+		return
+	end
+	state.lastPunctureSoundAt = now
+	local holeIdx = tonumber(state.model:GetAttribute("LastPunctureHole")) or 0
+	positionHoleAudio(state, holeIdx)
+	playLoadedSound(state.punctureSpatialThud)
+	playLoadedSound(state.punctureSpatialHiss)
+	if isOwnFlightBalloon(state.model) then
+		playLoadedSound(state.punctureLocalSnap, state.punctureSpatialThud)
+		local holes = tonumber(state.model:GetAttribute("Holes")) or 0
+		if holes >= 4 then
+			playLoadedSound(state.punctureLocalCrit)
+		end
+	end
+end
+
+local function triggerPatchSfx(state: any)
+	local now = os.clock()
+	if now - (state.kitRingStartedAt or -99) < 0.25 then
+		return
+	end
+	local holeIdx = tonumber(state.model:GetAttribute("LastPatchHole")) or 0
+	local em = state.holeEmitters and state.holeEmitters[holeIdx]
+	if em then
+		em:Emit(isReducedMotion() and 6 or 14)
+	end
+	if AudioMixer.GetSFXScale(Players.LocalPlayer) <= 0 then
+		return
+	end
+	if now - (state.lastPatchSoundAt or -99) < 0.1 then
+		return
+	end
+	state.lastPatchSoundAt = now
+	positionHoleAudio(state, holeIdx)
+	playLoadedSound(state.patchSpatialSnap)
+	if isOwnFlightBalloon(state.model) then
+		playLoadedSound(state.patchLocalChimeLow)
+		task.delay(0.09, function()
+			if tracked[state.model] == state and AudioMixer.GetSFXScale(Players.LocalPlayer) > 0 then
+				playLoadedSound(state.patchLocalChimeHigh)
+			end
+		end)
+	end
 end
 
 local function parseRepairedSlots(csv: any): { number }
@@ -578,11 +672,13 @@ function BalloonVFX.Attach(model: Model)
 
 	-- Per-hole emerald-gold patch burst emitters aligned to Hole1..Hole5 local offsets.
 	local holeEmitters: { [number]: ParticleEmitter } = {}
+	local holeRelPositions: { [number]: Vector3 } = {}
 	if holeSlots then
 		for i = 1, 5 do
 			local h = holeSlots:FindFirstChild("Hole" .. i)
 			if h and h:IsA("BasePart") then
 				local relPos = root.CFrame:PointToObjectSpace(h.Position)
+				holeRelPositions[i] = relPos
 				local outward = Vector3.new(relPos.X, 0, relPos.Z)
 				if outward.Magnitude < 0.01 then
 					outward = Vector3.new(0, 0, -1)
@@ -844,12 +940,32 @@ function BalloonVFX.Attach(model: Model)
 	local kitSoundBody = createSpatialSound(anchor, "KitSaveBody", SFX_PULSE_ID, 0.30, 1.18, sfxGroup)
 	local turboSoundWhoosh = createSpatialSound(nozzleAnchor, "TurboIgniteWhoosh", SFX_WHOOSH_ID, 0.42, 0.68, sfxGroup)
 	local turboSoundPulse = createSpatialSound(nozzleAnchor, "TurboIgnitePulse", SFX_CHIME_ID, 0.24, 1.82, sfxGroup)
+
+	local holeAudioAtt = Instance.new("Attachment")
+	holeAudioAtt.Name = "HoleAudioAtt"
+	holeAudioAtt.Position = Vector3.new(0, envRelPos.Y, 0)
+	holeAudioAtt.Parent = anchor
+
+	local localAudioFolder = Instance.new("Folder")
+	localAudioFolder.Name = "VFX2D_" .. tostring(nextVfxId) .. "_" .. model.Name
+	localAudioFolder.Parent = game:GetService("SoundService")
+
+	local punctureSpatialThud = createSpatialSound(holeAudioAtt, "PunctureThud", SFX_PUNCTURE_POP_ID, 0.312, 0.95, sfxGroup)
+	local punctureSpatialHiss = createSpatialSound(holeAudioAtt, "PunctureHiss", SFX_WHOOSH_ID, 0.273, 1.48, sfxGroup)
+	local punctureLocalSnap = createSpatialSound(localAudioFolder, "PunctureCrewSnap", SFX_PUNCTURE_TEAR_ID, 0.234, 1.02, sfxGroup, true)
+	local punctureLocalCrit = createSpatialSound(localAudioFolder, "PunctureCrewCrit", SFX_PUNCTURE_CRIT_ID, 0.182, 0.80, sfxGroup, true)
+	local patchSpatialSnap = createSpatialSound(holeAudioAtt, "PatchSnap", SFX_SWITCH_ID, 0.46, 1.16, sfxGroup)
+	local patchLocalChimeLow = createSpatialSound(localAudioFolder, "PatchCrewChimeLow", SFX_CHIME_ID, 0.28, 1.28, sfxGroup, true)
+	local patchLocalChimeHigh = createSpatialSound(localAudioFolder, "PatchCrewChimeHigh", SFX_CHIME_ID, 0.26, 1.60, sfxGroup, true)
 	local deckGlow = createDeckGlow(folder, root, basket, burner)
 
 	local state = {
 		model = model,
 		root = root,
 		folder = folder,
+		localAudioFolder = localAudioFolder,
+		holeAudioAtt = holeAudioAtt,
+		holeRelPositions = holeRelPositions,
 		nozzleRelY = nozzleRelPos.Y,
 		envRelY = envRelPos.Y,
 		envR = envR,
@@ -871,12 +987,23 @@ function BalloonVFX.Attach(model: Model)
 		kitSoundBody = kitSoundBody,
 		turboSoundWhoosh = turboSoundWhoosh,
 		turboSoundPulse = turboSoundPulse,
+		punctureSpatialThud = punctureSpatialThud,
+		punctureSpatialHiss = punctureSpatialHiss,
+		punctureLocalSnap = punctureLocalSnap,
+		punctureLocalCrit = punctureLocalCrit,
+		patchSpatialSnap = patchSpatialSnap,
+		patchLocalChimeLow = patchLocalChimeLow,
+		patchLocalChimeHigh = patchLocalChimeHigh,
 		deckGlow = deckGlow,
 		kitRingStartedAt = nil :: number?,
 		kitHighlightStartedAt = nil :: number?,
 		turboRingStartedAt = nil :: number?,
 		lastKitSeq = tonumber(model:GetAttribute("KitBurstSeq")) or 0,
 		lastTurboSeq = tonumber(model:GetAttribute("TurboBurstSeq")) or 0,
+		lastPunctureSeq = tonumber(model:GetAttribute("PunctureSeq")) or 0,
+		lastPatchSeq = tonumber(model:GetAttribute("PatchSeq")) or 0,
+		lastPunctureSoundAt = -99,
+		lastPatchSoundAt = -99,
 		lastPos = root.Position,
 		lastStepClock = os.clock(),
 		connections = {} :: { RBXScriptConnection },
@@ -898,6 +1025,22 @@ function BalloonVFX.Attach(model: Model)
 		end
 	end))
 
+	table.insert(state.connections, model:GetAttributeChangedSignal("PunctureSeq"):Connect(function()
+		local seq = tonumber(model:GetAttribute("PunctureSeq")) or 0
+		if seq > state.lastPunctureSeq then
+			state.lastPunctureSeq = seq
+			triggerPunctureSfx(state)
+		end
+	end))
+
+	table.insert(state.connections, model:GetAttributeChangedSignal("PatchSeq"):Connect(function()
+		local seq = tonumber(model:GetAttribute("PatchSeq")) or 0
+		if seq > state.lastPatchSeq then
+			state.lastPatchSeq = seq
+			triggerPatchSfx(state)
+		end
+	end))
+
 	table.insert(state.connections, model.Destroying:Connect(function()
 		BalloonVFX.Detach(model)
 	end))
@@ -916,6 +1059,9 @@ function BalloonVFX.Detach(model: Model)
 	end
 	if state.folder and state.folder.Parent then
 		state.folder:Destroy()
+	end
+	if state.localAudioFolder and state.localAudioFolder.Parent then
+		state.localAudioFolder:Destroy()
 	end
 	if next(tracked) == nil then
 		restoreStaticLights()

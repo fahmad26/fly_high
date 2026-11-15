@@ -199,6 +199,8 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
  b:SetAttribute("AutoGas",false)
  b:SetAttribute("ShieldUntil",0) b:SetAttribute("ShieldDuration",0) b:SetAttribute("ShieldActive",false)
  b:SetAttribute("KitBurstSeq",0) b:SetAttribute("KitRepairedSlots","")
+ b:SetAttribute("Holes",0) b:SetAttribute("PunctureSeq",0) b:SetAttribute("LastPunctureHole",0)
+ b:SetAttribute("PatchSeq",0) b:SetAttribute("LastPatchHole",0)
  b:SetAttribute("TurboUntil",0) b:SetAttribute("TurboDuration",0) b:SetAttribute("TurboActive",false)
  b:SetAttribute("TurboBurstSeq",0) b:SetAttribute("BurnerActive",false)
  -- Only the invisible envelope proxy is a shot target; cosmetic parts do not block weapons.
@@ -307,13 +309,20 @@ function Manager.ApplyPuncture(fd,cause)
  end
  fd.holes+=1 fd.invulnTime=Config.PASSIVE_INVULN_DURATION fd.isFreefalling=fd.holes==Config.MAX_HOLES
  if fd.isFreefalling then fd.targetPosition=fd.root.Position end
+ fd.balloon:SetAttribute("Holes",fd.holes)
+ fd.balloon:SetAttribute("LastPunctureHole",holeIndex or 0)
+ fd.balloon:SetAttribute("PunctureSeq",(fd.balloon:GetAttribute("PunctureSeq") or 0)+1)
  renderHoles(fd) return true
 end
 function Manager.RepairHole(fd,n)
  if fd.isGameOver or fd.isVictory or fd.holes>=Config.MAX_HOLES or not fd.holeSet[n] then return false,false end
  local wasSelfShot=fd.selfShotHoles and fd.selfShotHoles[n]==true or false
  if fd.selfShotHoles then fd.selfShotHoles[n]=nil end
- fd.holeSet[n]=nil fd.holes-=1 renderHoles(fd) return true,wasSelfShot
+ fd.holeSet[n]=nil fd.holes-=1
+ fd.balloon:SetAttribute("Holes",fd.holes)
+ fd.balloon:SetAttribute("LastPatchHole",n)
+ fd.balloon:SetAttribute("PatchSeq",(fd.balloon:GetAttribute("PatchSeq") or 0)+1)
+ renderHoles(fd) return true,wasSelfShot
 end
 function Manager.AwardActionCoins(fd,p,amount,reason)
  if not fd or fd.isGameOver or fd.isVictory or not p or p.Parent~=Players or not U.Alive(p,fd) or not _G.FlyHighDataManager then return 0 end
@@ -360,6 +369,7 @@ function Manager.UseEmergencyKit(p)
  fd.holes=0 fd.holeSet={} fd.selfShotHoles={} fd.isFreefalling=false fd.jumpDropRemaining=0
  fd.shieldTime=Config.CLUTCH_SAVE_INVULN_DURATION fd.invulnTime=fd.shieldTime fd.shieldActiveState=true
  fd.balloon:SetAttribute("KitRepairedSlots",table.concat(repaired,","))
+ fd.balloon:SetAttribute("Holes",0)
  fd.balloon:SetAttribute("ShieldDuration",fd.shieldTime)
  fd.balloon:SetAttribute("ShieldUntil",workspace:GetServerTimeNow()+fd.shieldTime)
  fd.balloon:SetAttribute("ShieldActive",true)
