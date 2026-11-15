@@ -1,5 +1,8 @@
 # QA Report — Fix Lentera 4 Sudut Keranjang Balon (`14 November 2026`)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## 1. Identitas
 - **Tanggal:** 14 November 2026 (WIB / Asia/Jakarta)
 - **Lingkup:** Perbaikan lampu lentera (`Lantern*`) pada `GondolaCraft` di seluruh 6 template balon berukuran penuh agar terpasang simetris di keempat sudut tiang dan tidak lagi menembus/tumpang tindih dengan `SupportPole1..4`.

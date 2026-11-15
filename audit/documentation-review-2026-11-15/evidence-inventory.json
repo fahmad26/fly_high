@@ -1,0 +1,344 @@
+{
+  "reviewDate": "2026-11-15",
+  "timezone": "Asia/Jakarta",
+  "scope": "Filesystem documentation inspection only; not replayed QA.",
+  "folders": [
+    {
+      "folder": "audit/altitude-tracker-redesign-2026-11-14",
+      "files": [
+        "README.md",
+        "screenshots"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/audio-popup-2026-11-14",
+      "files": [
+        "README.md",
+        "qa_desktop_dragged_30_20_50.jpg",
+        "qa_desktop_inflight_active.jpg",
+        "qa_desktop_lobby_default.jpg",
+        "qa_desktop_master_muted_bisu.jpg",
+        "qa_edit_default_clean.jpg",
+        "qa_music_edit_clean.jpg",
+        "qa_music_lobby_popup_60.jpg",
+        "qa_music_palace_intro.jpg",
+        "qa_responsive_tablet_phone_cards.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/balloon-vfx-2026-11-15",
+      "files": [
+        "01_turbo_gas_active.jpg",
+        "02_emergency_kit_shield.jpg",
+        "03_kit_shield_basket_view.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/basket-interior-motifs-2026-11-14",
+      "files": [
+        "Edit_Cleanup_Final.jpg",
+        "PlaySolo_PodA_DawnExplorer_Ext.jpg",
+        "PlaySolo_PodA_DawnExplorer_IntFwd.jpg",
+        "PlaySolo_PodB_FloatingGarden_Ext.jpg",
+        "PlaySolo_PodB_FloatingGarden_IntBack.jpg",
+        "PlaySolo_PodB_FloatingGarden_IntFwd.jpg",
+        "PlaySolo_PodC_SkyKoi_Ext.jpg",
+        "PlaySolo_PodC_SkyKoi_IntBack.jpg",
+        "PlaySolo_PodC_SkyKoi_IntFwd.jpg",
+        "PlaySolo_PodD_SaturnVoyager_Ext.jpg",
+        "PlaySolo_PodD_SaturnVoyager_IntBack.jpg",
+        "PlaySolo_PodD_SaturnVoyager_IntFwd.jpg",
+        "PlaySolo_PodE_PalaceLantern_Ext.jpg",
+        "PlaySolo_PodE_PalaceLantern_IntFwd.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/basket-lanterns-fix-2026-11-14",
+      "files": [
+        "README.md",
+        "play_podA_4corners_ext.jpg",
+        "play_podA_both_wall.jpg",
+        "play_podA_inside_wall.jpg",
+        "play_podB_corner_closeup.jpg",
+        "play_podB_interior_rear.jpg",
+        "play_podE_4corners_ext.jpg",
+        "play_podE_corner_closeup.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/bugfix-spawn-modal-scrim-2026-11-14",
+      "files": [
+        "README.md",
+        "edit_podA_boulder1_post_adjust.jpg",
+        "edit_podE_boulder7_post_adjust.jpg",
+        "qa_final_ping_scrim_full_after_shop.jpg",
+        "qa_final_podE_balloon_level.jpg",
+        "qa_final_settings_scrim_full.jpg",
+        "qa_final_shop_scrim_full.jpg",
+        "repro_podE_balloon_tilt.jpg",
+        "repro_shop_top_inset_uncovered.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/burner-light-lag-fix-2026-11-15",
+      "files": [
+        "01-lobby-realistic-edit.jpg",
+        "02-skykoi-night-auto-moving-w.jpg",
+        "03-skykoi-night-level01-aligned-moving-w.jpg",
+        "04-skykoi-night-level01-buffs-moving-a.jpg",
+        "05-skykoi-day-auto-buffs-moving-s.jpg",
+        "06-palacelantern-dusk-level01-walk.jpg",
+        "07-palacelantern-dusk-level01-moving-w.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/daily-login-shop-2026-11-14",
+      "files": [
+        "01_daily_unclaimed_desktop.jpg",
+        "02_daily_claimed_desktop.jpg",
+        "03_shop_tab1_robux_desktop.jpg",
+        "04_shop_tab2_perbekalan_desktop.jpg",
+        "05_shop_tab3_kosmetik_desktop.jpg",
+        "06_flight_turbo_tracker_desktop.jpg",
+        "07_flight_hud_and_coins.jpg",
+        "08_phone_portrait_390x844_v2.jpg",
+        "09_phone_landscape_844x390_fixed.jpg",
+        "10_tablet_1024x768_fixed.jpg",
+        "11_shop_tab3_kosmetik_top_v3.jpg",
+        "12_shop_tab3_kosmetik_bottom_v3.jpg",
+        "13_phone_portrait_390x844_v3.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/dock-center-spawn-isolation-2026-11-14",
+      "files": [
+        "Playtest_PodA_BoardedClean.jpg",
+        "Playtest_PodA_ExteriorClean.jpg",
+        "Playtest_PodC_BoardedClean.jpg",
+        "Playtest_PodC_DeckView.jpg",
+        "Playtest_PodC_LaunchedCenter.jpg",
+        "Playtest_PodC_PromptVisible.jpg",
+        "Playtest_PodE_LaunchedCenter.jpg",
+        "PodA_EntryConsole_EditView.jpg",
+        "PodC_EntryConsole_EditView.jpg",
+        "PodC_ForwardConsole_EditView.jpg",
+        "PodE_EntryConsole_EditView.jpg",
+        "PodE_ForwardConsole_EditView.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/hud-motion-upgrade-2026-11-13",
+      "files": [
+        "01-lobby-baseline.jpg",
+        "02-shopbtn-hover.jpg",
+        "03-shop-modal-blur.jpg",
+        "04-settings-modal-blur.jpg",
+        "05-inflight-boarded-hud.jpg",
+        "06-ping-wheel-modal-blur.jpg",
+        "07-inflight-climb-hull-4of5.jpg",
+        "08-inflight-critical-hull-1of5.jpg",
+        "09-postfinal-lobby-settled.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/hud-text-tidy-2026-11-13",
+      "files": [
+        "README.md",
+        "qa_final_shop_desktop.jpg",
+        "qa_inflight_hud_desktop.jpg",
+        "qa_ping_wheel_desktop.jpg",
+        "qa_weapon_settings_desktop.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/ipad-hud-border-fixes-2026-11-15",
+      "files": [
+        "01_ipad_shop_robux.jpg",
+        "02_ipad_shop_perbekalan.jpg",
+        "03_ipad_shop_kosmetik.jpg",
+        "04_ipad_flight_hud_1024x768.jpg",
+        "05_desktop_flight_hud.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/island-floating-assets-fix-2026-11-14",
+      "files": [
+        "README.md",
+        "after_broadleaf_north.jpg",
+        "after_broadleaf_overview.jpg",
+        "after_broadleaf_west_east.jpg",
+        "after_edit_default_camera.jpg",
+        "after_flowers_pod_a.jpg",
+        "after_promenade_garden.jpg",
+        "after_rocks_ferns_batch1.jpg",
+        "after_rocks_slopes.jpg",
+        "before_broadleaf_roots.jpg",
+        "before_flowers_pod_a.jpg",
+        "before_hillsides_and_rocks.jpg",
+        "before_promenade_garden.jpg",
+        "qa_playsolo_poda_flowers_butterfly.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/leaderboard-and-hit-effects-2026-11-15",
+      "files": [
+        "01-edit-spawn-leaderboards.jpg",
+        "02-playsolo-spawn-boards-populated-distance.jpg",
+        "03-playsolo-spawn-boards-populated-closeup.jpg",
+        "04-playsolo-spawn-boards-empty-state.jpg",
+        "05-playsolo-live-flight-422km-updated.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/obstacle-scale-spawn-and-hull-sfx-2026-11-15",
+      "files": [
+        "01-playtest-storm-horizon.jpg",
+        "02-playtest-scaled-enemies-phoenix.jpg",
+        "03-playtest-flock-spike-meteor-magnetic.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/palace-eaves-and-preview-distance-2026-11-14",
+      "files": [
+        "README.md",
+        "after_podA_dock.jpg",
+        "after_podB_dock.jpg",
+        "after_podC_dock.jpg",
+        "after_podD_dock.jpg",
+        "after_podE_dock.jpg",
+        "after_podE_preview_closeup.jpg",
+        "before_podC_dock.jpg",
+        "before_podE_preview.jpg",
+        "playtest_podA_ext.jpg",
+        "playtest_podE_palace_ext.jpg",
+        "playtest_podE_palace_front.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/path-circle-junctions-fix-2026-11-14",
+      "files": [
+        "README.md",
+        "after_arrival_hub.jpg",
+        "after_edit_overview.jpg",
+        "after_main_ring_t.jpg",
+        "after_pod_a_elbow.jpg",
+        "after_pod_b_junction.jpg",
+        "after_pod_c_junction.jpg",
+        "after_pod_d_junction.jpg",
+        "after_pod_e_elbow.jpg",
+        "before_arrival_hub.jpg",
+        "before_main_ring_t.jpg",
+        "before_pod_a_elbow.jpg",
+        "before_pod_b_junction.jpg",
+        "before_pod_c_junction.jpg",
+        "before_pod_d_junction.jpg",
+        "before_pod_e_elbow.jpg",
+        "build-surface.luau"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/robux-supplies-2026-11-15",
+      "files": [
+        "01_shop_tab_robux_desktop.jpg",
+        "02_shop_tab_perbekalan_desktop.jpg",
+        "03_shop_tab_robux_phone_portrait.jpg",
+        "04_shop_tab_perbekalan_phone_portrait.jpg",
+        "README.md"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/tactical-ping-fix-2026-11-13",
+      "files": [
+        "README.md",
+        "qa_final_arrows_clear_gas_desktop.jpg",
+        "qa_final_arrows_opposite_desktop.jpg",
+        "qa_final_quick_ping_desktop.jpg",
+        "qa_pre_arrow_solver_ghost_marker.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/ui-popups-revamp-2026-11-14",
+      "files": [
+        "README.md",
+        "qa_audio_desktop.jpg",
+        "qa_audio_muted_desktop.jpg",
+        "qa_edit_clean.jpg",
+        "qa_ping_desktop.jpg",
+        "qa_result_gameover_desktop.jpg",
+        "qa_result_victory_desktop.jpg",
+        "qa_shop_desktop.jpg",
+        "qa_weapon_desktop.jpg",
+        "qa_weapon_locked_desktop.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    },
+    {
+      "folder": "audit/weapon-hands-2026-11-14",
+      "files": [
+        "README.md",
+        "qa_ak47_1p.jpg",
+        "qa_ak47_1p_near_railing.jpg",
+        "qa_ak47_1p_polished.jpg",
+        "qa_ak47_1p_viewmodel.jpg",
+        "qa_ak47_3p.jpg",
+        "qa_ak47_reload_complete.jpg",
+        "qa_pistol_1p_final.jpg",
+        "qa_pistol_1p_polished.jpg",
+        "qa_pistol_1p_viewmodel.jpg",
+        "qa_pistol_3p_chibi_r15_tune.jpg",
+        "qa_pistol_3p_final.jpg",
+        "qa_pistol_reload_complete.jpg"
+      ],
+      "rawArtifacts": [],
+      "note": "No separate raw log/manifest file found; README narrative and screenshots retained."
+    }
+  ]
+}

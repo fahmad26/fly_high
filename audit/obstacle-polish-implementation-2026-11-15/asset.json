@@ -1,0 +1,12 @@
+{
+  "status": "fulfilled",
+  "value": {
+    "content": [
+      {
+        "type": "text",
+        "text": "GET https://apis.roblox.com/assets/v1/assets/99873351598859 -> 200 OK\n\n{\"path\":\"assets/99873351598859\",\"revisionId\":\"1\",\"revisionCreateTime\":\"2026-11-15T06:27:53.673Z\",\"assetId\":\"99873351598859\",\"displayName\":\"Fly High - Polished Obstacle Models\",\"description\":\"Original Fly High obstacle meshes with separate animated wings and a shared palette atlas.\",\"assetType\":\"Model\",\"creationContext\":{\"creator\":{\"userId\":\"8635452105\"}},\"moderationResult\":{\"moderationState\":\"Approved\"},\"state\":\"Active\",\"isPublished\":true}"
+      }
+    ],
+    "isError": false
+  }
+}

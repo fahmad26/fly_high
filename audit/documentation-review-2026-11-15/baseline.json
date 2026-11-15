@@ -1,0 +1,226 @@
+{
+  "capturedUTC": "2026-11-15T05:00:32.3421039+00:00",
+  "newGameplayQA": false,
+  "placeSHA256": "4C8CE3A5BFD3F9F1E549FF845DBF36038C862A9976A489812DEE235C848194D3",
+  "remoteVerified": false,
+  "originMainLocal": "969892d826627383d70a5a27c1df906958159f6d",
+  "head": "969892d826627383d70a5a27c1df906958159f6d",
+  "binaryReopened": false,
+  "preexistingUntracked": [
+    "audit/Fly High.before-arcade-refine.rbxl"
+  ],
+  "timezone": "Asia/Jakarta",
+  "sourceCount": 52,
+  "placeBytes": 1916916,
+  "studioCompared": false,
+  "sources": [
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioMixer.luau",
+      "sha256": "c19b1971a783714511e2ed2a1eb9753a57c880d8e21d6684cb113d9ced40c90b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+      "sha256": "f471f17162b53596e6c06b8e03584b80e7635b21d31d2aebf5276ce4da70c381"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BalloonThemes.luau",
+      "sha256": "ac1b00e0796f1cb9f879acb7783c7c2b947e4d70eceb535a598e42bd500849c9"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BalloonVFX.luau",
+      "sha256": "aa86f6c4759cbe4ac505d3146f3abfb9a6c13e57ce7bc84bd469b9aef71084b8"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau",
+      "sha256": "8c864b658c1b8a950cec8b1870006218f1db426dca1bfc84b33699f52a8415c8"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+      "sha256": "9923a89f69fa29e6d5bad8bd4b23961937729d7603111c5bc5fdc850c60d1254"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+      "sha256": "963446e51ae1e5bb07f46fa77828ebc8691c1c1ca097f9b6b6706c7fe04bf324"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlightControlMath.luau",
+      "sha256": "5c8af9642ef634d5240afa28da9fd798182bfa1684afacae30e578e72ad0692b"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau",
+      "sha256": "ff162f2d90e7fb437b3dc84b6ac52f8e4dd2ebc6ed9e566e51465d97c1af6cf8"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureArt.luau",
+      "sha256": "e690be45a771efe8b67b2c59f2e59872c5083eadf5d1b9114631cc52d1078beb"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureCatalog.luau",
+      "sha256": "0bd12b6a6b6736e1dd61f2874ec95fc310b62ffef5e98fae1624eb46258ec890"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAltitudeTracker.luau",
+      "sha256": "389bdd2092ff2e459308879f7da76da2d1c066248038827f3ec90dc42eb9dd21"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDGlyphs.luau",
+      "sha256": "e8311b70feaf8ea4c689d753549ef5d6889e181da3e45d33e4d811be8bc66da2"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDImageAssets.luau",
+      "sha256": "0ea4e105196c05914c0358fb62821fa6677201c3dcb14825c34639d0d1e98d83"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+      "sha256": "0b9dd3eafb44404204f5eacf4a172898def65000c3adf8d9f57066f02a226c5a"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau",
+      "sha256": "e532284c8084dc7cf155f006c7b22d7a88724f7510db2efb415bf3fb85ed4c28"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+      "sha256": "5417ac30016238a77d5e1f909b6c8e72e6fc22d010e159d2205eb5f04185d0f7"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/LeaderboardBoardRenderer.luau",
+      "sha256": "6948c87f68e4032bcd3fcbf8d90ff1e67e04e6f6a3c461f9f540bf5b01b1d8f3"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+      "sha256": "d6b5fd0aefe770a5992ff0195795b71a5a28b0571cdf4532eafa23a99d4770b3"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/WeaponPresentation.luau",
+      "sha256": "18f0551cb2ad6b7bc3a32d896a88d09332e3b60d3ab9ff654f7190619aab5146"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+      "sha256": "cfaba5aebd2579be07724fe9ae5e62c591e74d77462577e3dba2848232e6a1eb"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/CrewAccessGuard.luau",
+      "sha256": "b01ec95de9651d6deef826bddc39ac4a95904a7eb47303230359e25cb259c380"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+      "sha256": "4fa7986b01bf9d9ece1ece479a2eec9c03d7a8e127e1eac2cb6c303e09fdf190"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau",
+      "sha256": "2d830bf9cc3964898d52a4068e17875db807bef3d82d88e1d8ca4b5e46c94a58"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/IslandWildlifeController.luau",
+      "sha256": "397d3ef94f76b631227b678981558c0a1930f8b9f3583cb80d16b501da8b0413"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+      "sha256": "b66e44ed109381a8048fc0f38d3c6305bf397db70ce6f573f25c36549c879766"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/LargeChallengeManager.luau",
+      "sha256": "5bd4017ca340955874e810166f08a43e8bc65b34c2c5552bb80ce9a4cb7680cb"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/LeaderboardManager.luau",
+      "sha256": "ee334287ed928b12a3f519559061557eff17c859980d0022784da4400b024c00"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleArt.luau",
+      "sha256": "dcb80bb03dc264efb074bfed60eb185af48c2212f37b65611c3d417fef019f00"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+      "sha256": "3e14256e9352cf7a33b439703a036e31d65b00d80097e3edf19f6f6298c8f8ce"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleMotion.luau",
+      "sha256": "e9d4a8db30bae0afb8915f76d6af823371d506aa39644acbe2c2650918d27e34"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+      "sha256": "3513cb2559fceae2ddd55478e777e030e2bcc8fb35db8edbfeb6ca061e8705df"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PalaceArrival.luau",
+      "sha256": "035aaf7c619a7521b8419dd1232bdc2ad6c92fec05b9d7f9f0d0c81ba324ac8a"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PalaceManager.luau",
+      "sha256": "57dbee29cb2a811a175653097f6affcafefa5b57f6a4fb7d56bc8edd3d7b6875"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+      "sha256": "28e9e897b3710c029f91657ed1741177bfcf651b37a84b039ba3c64ef04a653b"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ServerUtils.luau",
+      "sha256": "4819c7d347fa948a118ce55f84e2339bac2e6c9eec36556c0d0e81595e76588d"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+      "sha256": "1286cb001e67691a5e61b7d7c0d2c8571ec4c0e9f21a605d595d30ccaf6d68c4"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+      "sha256": "a961943901619fbf080c891a4dbfa2844c587a82c00114d8c782ecc7babaeb87"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+      "sha256": "467af176fb39ed5e92e74b8b4b0d80a219b970645f5bc4e03d0e2cc48cf281d6"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/WeaponRackPresentation.luau",
+      "sha256": "788dc8dd1e2481fbb1ef12a1e9b160cdaa3ea0e0155789abb5dce0276af184f9"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau",
+      "sha256": "946e371418e528a0c9c701af5e939990b6cfde550d9493933d28a4ba7d3d8c0e"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/BiomeLightingController.luau",
+      "sha256": "d055322d6cd94ca987263194e224910052bd2afb35c37defaa02726185e7b041"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+      "sha256": "9f3a3829f2464743dda179b572785046b0018f1afb3d5bfa5f0297928fc4e658"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+      "sha256": "a0c891d7e16503e9eae5de85b6a1cdb0bc6f90105f27501b778186736de047d3"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/IslandNatureAnimator.luau",
+      "sha256": "6e4b1f48399b7c846132c4e9e3d82b99bc87e544ed45bd1ed79fde3c422cc9c5"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/MusicController.luau",
+      "sha256": "3c3683460263a0ee6f24f6effe0f8e6ca9f6aeb715b65e06d2a7d31bab31d40f"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/PalacePresentation.luau",
+      "sha256": "577a2bd39656cc9bb122afcb387322e84870738fdf83f54192079ac78d2b3b33"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+      "sha256": "15d7fe893e79ecb294d23636bc3446d520ad8abe393fc1a64e04947f5671b5b4"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/StormCurtainPresentation.luau",
+      "sha256": "aa73d012ae02c77af328f1298851b7e88712bf691ada7e29b5eb7f23fb4f2556"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WarningAudioController.luau",
+      "sha256": "b7bdca9200dcf0c3ee819dd198313201b882652b471be577326115bd3765a795"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+      "sha256": "6867e9cef34f4d7cc60109faf661a3a9337cb2233d014ac49f6ac142b92a66ff"
+    },
+    {
+      "path": "audit/sources/StarterPlayer/StarterPlayerScripts/WorldUISkins.luau",
+      "sha256": "768b8718771d2968caf63cd8e552130ae292f8e88823dd6d6ca91b0487b03fa0"
+    }
+  ]
+}

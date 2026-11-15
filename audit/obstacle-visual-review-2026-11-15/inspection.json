@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-15 Asia/Jakarta",
+  "kind": "visual review and proposal, no art implementation",
+  "environment": "Windows Studio Play Solo, 1 client; temporary isolated samples at 5000,100,5000",
+  "fixtures": [
+    "Existing Art.Enemy builders; clones normalized to maximum dimension 20 studs for shape comparison, fixed 22 degree yaw",
+    "Existing Art.Hazard builders; original size, isolated in groups; builder-default warning/VFX state, no manager lifecycle",
+    "Free inspection camera; HUD temporarily disabled; first camera attempt was overridden by player camera and excluded from evidence",
+    "Particles and active-phase readability not established by static hazard captures; source and historical flight screenshots supplement review"
+  ],
+  "sources": {
+    "ObstacleArt": "Studio/mirror contents equal after LF+trimEnd",
+    "ObstacleManager": "Studio/mirror contents equal after LF+trimEnd",
+    "LargeChallengeManager": "Studio/mirror contents equal after LF+trimEnd"
+  },
+  "enemies": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"name\":\"WildBird\",\"presentationFactor\":0.4757967031969769,\"originalSize\":\"42.034759521484375, 8.907959938049316, 19.048015594482422\",\"counts\":{\"meshes\":0,\"wedges\":48,\"parts\":64}},\"3\":{\"name\":\"Hailstone\",\"presentationFactor\":1.9164958212087433,\"originalSize\":\"10.435712814331055, 8.626195907592773, 7.931310653686523\",\"counts\":{\"meshes\":0,\"wedges\":6,\"parts\":7}},\"2\":{\"name\":\"StormBat\",\"presentationFactor\":0.8109708632366026,\"originalSize\":\"24.66179847717285, 6.809616565704346, 9.220550537109375\",\"counts\":{\"meshes\":0,\"wedges\":14,\"parts\":19}}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"name\":\"GuardianDrone\",\"presentationFactor\":1.3261179701634334,\"originalSize\":\"15.08161449432373, 5.199999809265137, 7.420000076293945\",\"counts\":{\"meshes\":0,\"wedges\":8,\"parts\":15}},\"3\":{\"name\":\"CrystalWyvern\",\"presentationFactor\":0.7612488600244308,\"originalSize\":\"26.27261734008789, 7.742464065551758, 18.62588882446289\",\"counts\":{\"meshes\":0,\"wedges\":15,\"parts\":19}},\"2\":{\"name\":\"FireBee\",\"presentationFactor\":1.538036621833374,\"originalSize\":\"13.003591537475586, 5.987853050231934, 9.985499382019043\",\"counts\":{\"meshes\":0,\"wedges\":4,\"parts\":14}}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"name\":\"ShadowPhantom\",\"presentationFactor\":1.1710466332029586,\"originalSize\":\"17.078739166259766, 6.886533737182617, 9.791614532470703\",\"counts\":{\"meshes\":0,\"wedges\":6,\"parts\":10}},\"3\":{\"name\":\"CelestialPhoenix\",\"presentationFactor\":0.6817778697874594,\"originalSize\":\"29.335067749023438, 9.548181533813477, 21.085418701171875\",\"counts\":{\"meshes\":0,\"wedges\":20,\"parts\":26}},\"2\":{\"name\":\"SatelliteDebris\",\"presentationFactor\":1,\"originalSize\":\"20, 6.98085355758667, 7\",\"counts\":{\"meshes\":0,\"wedges\":0,\"parts\":24}}}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "hazards": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"effect\":\"Tornado\",\"partCount\":36,\"size\":\"1, 1, 1\"},\"2\":{\"effect\":\"Storm\",\"partCount\":174,\"size\":\"1, 1, 1\"}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"effect\":\"Lightning\",\"partCount\":67,\"size\":\"45.137939453125, 45.15383529663086, 23.19739532470703\"},\"2\":{\"effect\":\"Magnetic\",\"partCount\":43,\"size\":\"48.170997619628906, 13.159322738647461, 50.64037322998047\"}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"effect\":\"Debris\",\"partCount\":64,\"size\":\"82.81463623046875, 19.059383392333984, 100.42950439453125\"},\"2\":{\"effect\":\"Meteor\",\"partCount\":139,\"size\":\"108.91195678710938, 11.986724853515625, 65.484619140625\"}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"1\":{\"effect\":\"Wind\",\"partCount\":21,\"size\":\"1, 1, 1\"},\"3\":{\"effect\":\"Fog\",\"partCount\":11,\"size\":\"1, 1, 1\"},\"2\":{\"effect\":\"Heat\",\"partCount\":28,\"size\":\"1, 1, 1\"}}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "stormTemplate": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"template\":\"ReplicatedStorage.FlyHigh.Templates.Obstacles.StormCurtain\",\"parts\":{\"35\":{\"class\":\"UnionOperation\",\"transparency\":0,\"name\":\"CurledCloudWisp\",\"size\":\"80, 16, 18\"},\"29\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_1_Reverse\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"1\":{\"class\":\"Part\",\"transparency\":1,\"name\":\"StormCore\",\"size\":\"360, 120, 32\"},\"3\":{\"class\":\"UnionOperation\",\"transparency\":0,\"name\":\"SculptedStormFront\",\"size\":\"360, 105, 27\"},\"2\":{\"class\":\"UnionOperation\",\"transparency\":0,\"name\":\"RearBillowingRidge\",\"size\":\"360, 100, 20\"},\"5\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_1\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"4\":{\"class\":\"UnionOperation\",\"transparency\":0,\"name\":\"SilverCloudCrown\",\"size\":\"350, 34, 13\"},\"7\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_3\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"6\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_2\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"9\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_2\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"8\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_1\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"27\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_2_Reverse\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"17\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_1\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"13\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_3\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"21\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_2_Reverse\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"11\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_1\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"23\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_1_Reverse\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"36\":{\"class\":\"UnionOperation\",\"transparency\":0,\"name\":\"CurledCloudWisp\",\"size\":\"80, 16, 18\"},\"34\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_3_Reverse\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"28\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_3_Reverse\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"33\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_2_Reverse\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"32\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_1_Reverse\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"31\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_3_Reverse\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"30\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_2_Reverse\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"15\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_2\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"18\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_2\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"19\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_2_3\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"25\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_3_Reverse\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"14\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_1\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"24\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_2_Reverse\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"16\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_1_3\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"26\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_1_Reverse\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"20\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_1_Reverse\",\"size\":\"28.24889373779297, 1.25, 1.25\"},\"12\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_0_2\",\"size\":\"9.219544410705566, 1.25, 1.25\"},\"22\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-2_3_Reverse\",\"size\":\"39.86226272583008, 1.25, 1.25\"},\"10\":{\"class\":\"Part\",\"transparency\":0,\"name\":\"Lightning_-1_3\",\"size\":\"39.86226272583008, 1.25, 1.25\"}}}"
+      }
+    ],
+    "isError": false
+  }
+}

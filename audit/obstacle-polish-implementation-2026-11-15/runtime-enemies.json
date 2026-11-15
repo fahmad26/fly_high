@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"fixture\":\"Run/0 players; synthetic target; no persistence\",\"remaining\":0,\"enemies\":{\"1\":{\"band\":1,\"animated\":8,\"name\":\"WildBird\",\"meshCount\":9,\"revision\":2,\"wingMoved\":true,\"queryableMeshes\":9,\"health\":50},\"3\":{\"band\":3,\"animated\":0,\"name\":\"Hailstone\",\"meshCount\":1,\"revision\":2,\"wingMoved\":false,\"queryableMeshes\":1,\"health\":70},\"2\":{\"band\":2,\"animated\":2,\"name\":\"StormBat\",\"meshCount\":3,\"revision\":2,\"wingMoved\":true,\"queryableMeshes\":3,\"health\":50},\"5\":{\"band\":5,\"animated\":2,\"name\":\"FireBee\",\"meshCount\":3,\"revision\":2,\"wingMoved\":true,\"queryableMeshes\":3,\"health\":70},\"4\":{\"band\":4,\"animated\":0,\"name\":\"GuardianDrone\",\"meshCount\":2,\"revision\":2,\"wingMoved\":false,\"queryableMeshes\":2,\"health\":70},\"7\":{\"band\":7,\"animated\":0,\"name\":\"ShadowPhantom\",\"meshCount\":2,\"revision\":2,\"wingMoved\":false,\"queryableMeshes\":2,\"health\":85},\"6\":{\"band\":6,\"animated\":2,\"name\":\"CrystalWyvern\",\"meshCount\":3,\"revision\":2,\"wingMoved\":true,\"queryableMeshes\":3,\"health\":85},\"9\":{\"band\":9,\"animated\":2,\"name\":\"CelestialPhoenix\",\"meshCount\":3,\"revision\":2,\"wingMoved\":true,\"queryableMeshes\":3,\"health\":100},\"8\":{\"band\":8,\"animated\":0,\"name\":\"SatelliteDebris\",\"meshCount\":3,\"revision\":2,\"wingMoved\":false,\"queryableMeshes\":3,\"health\":100}}}"
+    }
+  ],
+  "isError": false
+}

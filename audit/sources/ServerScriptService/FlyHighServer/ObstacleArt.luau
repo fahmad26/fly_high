@@ -1,5 +1,6 @@
 local Art = {}
 local Motion = require(script.Parent.ObstacleMotion)
+local Visuals = require(script.Parent.ObstacleVisuals)
 local rgb = Color3.fromRGB
 local metal = Enum.Material.Metal
 local glow = Enum.Material.Neon
@@ -287,14 +288,26 @@ local function scaleModelVisuals(model, scale)
 end
 
 local enemyTemplates = {}
+local hailVariant = 0
 
 function Art.Enemy(name)
-	local template = enemyTemplates[name]
+	local templateName = name
+	if name == "Hailstone" then
+		hailVariant = hailVariant % 3 + 1
+		templateName = hailVariant == 1 and name or name .. hailVariant
+	end
+	local template = enemyTemplates[templateName]
 	if not template then
-		template = modelWithCore(name, {3.2, 2.6, 3.5})
-		enemyBuilders[name](template)
+		template = Visuals.Enemy(templateName)
+		if template then
+			template.Name = name
+			Visuals.EnemyEffects(template, name)
+		else
+			template = modelWithCore(name, {3.2, 2.6, 3.5})
+			enemyBuilders[name](template)
+		end
 		scaleModelVisuals(template, ENEMY_SCALES[name] or 1.9)
-		enemyTemplates[name] = template
+		enemyTemplates[templateName] = template
 	end
 	return template:Clone()
 end
@@ -384,11 +397,7 @@ local function vortex(model, color, radius, height)
 				endpoint:SetAttribute("SpiralRate", layer * 0.33 + arm * 0.17)
 			end
 		end
-		local fog = particle(root, Vector(0, y, 0), {
-			color = shadow, fade = color, size = 8 + layer * 3.6, life = 1.2, rate = 7,
-			speed = 7, spread = 90, opacity = 0.43, emission = 0.28,
-		})
-		fog.LockedToPart = true
+
 	end
 end
 
@@ -409,6 +418,12 @@ local function bolt(model, start, finish, color, strike)
 end
 
 local function ruinModel(index, offset)
+	local imported = Visuals.Clone("Ruin" .. ((index - 1) % 3 + 1))
+	if imported then
+		imported.Name = "Ruin" .. index
+		imported:PivotTo(CFrame.new(offset))
+		return imported
+	end
 	local ruin = modelWithCore("Ruin" .. index, {1, 1, 1})
 	local slate = rgb(77, 87, 103)
 	local stone = index % 2 == 0 and rgb(168, 143, 112) or rgb(195, 171, 134)
@@ -443,6 +458,7 @@ function Art.Hazard(effect, color, path, cells)
 	local model = modelWithCore(effect, {1, 1, 1})
 	if effect == "Tornado" or effect == "Storm" then
 		vortex(model, color, effect == "Storm" and 22 or 15, 43)
+		Visuals.Vortex(model, color, effect == "Storm")
 		if effect == "Tornado" then
 			streak(model, Vector(0, -13, 0), path + Vector(0, -13, 0), ice, 0.6).Name = "PathBeam"
 		else
@@ -458,16 +474,7 @@ function Art.Hazard(effect, color, path, cells)
 			end
 		end
 	elseif effect == "Lightning" then
-		for index = -2, 2 do
-			local cloud = piece(model, "Thunderhead", {26, 7 + index % 3 * 3, 17},
-				{index * 7, 34 + index % 2 * 3, index % 2 * 6}, color:Lerp(dark, 0.45), "Ball",
-				{index * 4, index * 12, index * -6})
-			cloud.Transparency = 0.62
-			particle(cloud, Vector3.zero, {
-				color = dark, fade = color, size = 18, endSize = 27, life = 1.7, rate = 5,
-				speed = 3.2, spread = 75, opacity = 0.24, emission = 0.25,
-			})
-		end
+		Visuals.Thunderheads(model, color)
 		local warning = rgb(255, 100, 134)
 		streak(model, Vector(0, 34, 0), Vector(0, -22, 0), warning, 0.46)
 		ring(model, Vector3.zero, Motion.LightningRadius, warning, "LightningBoundary")
@@ -498,15 +505,17 @@ function Art.Hazard(effect, color, path, cells)
 					arrow.Name = "PathBeam"
 				end
 			end
-			for fragment = 1, 5 do
-				local basalt = fragment % 2 == 0 and rgb(96, 44, 36) or rgb(55, 42, 51)
-				piece(lane, "MeteorFragment", {7.2, 8.2 - fragment * 0.35, 6.4},
-					{(fragment - 3) * 1.0, (fragment % 2) * 1.0, 0}, basalt,
-					"Wedge", {index * 31, fragment * 89, fragment * 39}, Enum.Material.Basalt)
-				piece(lane, "MeteorFragment", {0.72, 3.7, 2.3},
-					{(fragment - 3) * 1.85, 1.4 + (fragment % 2) * 2.0, fragment % 2 == 0 and -1.95 or 1.95},
-					fragment % 2 == 0 and gold or rgb(255, 92, 36),
-					"Wedge", {index * 31, fragment * 89, fragment * 39}, glow)
+			if not Visuals.Attach("Meteor", lane, CFrame.identity, 1.2, "MeteorFragment") then
+				for fragment = 1, 5 do
+					local basalt = fragment % 2 == 0 and rgb(96, 44, 36) or rgb(55, 42, 51)
+					piece(lane, "MeteorFragment", {7.2, 8.2 - fragment * 0.35, 6.4},
+						{(fragment - 3) * 1.0, (fragment % 2) * 1.0, 0}, basalt,
+						"Wedge", {index * 31, fragment * 89, fragment * 39}, Enum.Material.Basalt)
+					piece(lane, "MeteorFragment", {0.72, 3.7, 2.3},
+						{(fragment - 3) * 1.85, 1.4 + (fragment % 2) * 2.0, fragment % 2 == 0 and -1.95 or 1.95},
+						fragment % 2 == 0 and gold or rgb(255, 92, 36),
+						"Wedge", {index * 31, fragment * 89, fragment * 39}, glow)
+				end
 			end
 			local wake = streak(lane, Vector3.zero, -path.Unit * 34, rgb(255, 135, 49), 9, true)
 			wake.Name = "MeteorWake"
@@ -530,33 +539,13 @@ function Art.Hazard(effect, color, path, cells)
 			lane.Parent = model
 		end
 	elseif effect == "Fog" then
-		for index = -2, 2 do
-			particle(model.PrimaryPart, Vector(index * 11, index % 2 * 3 - 6, (index % 3 - 1) * 9), {
-				color = color:Lerp(dark, 0.45), fade = rgb(144, 118, 173), size = 24, endSize = 32,
-				life = 2.25, rate = 5, speed = 6, direction = Enum.NormalId.Right, spread = 50,
-				opacity = 0.39, emission = 0.22,
-			})
-		end
+		-- Layered, fading volumes are added by Visuals.Weather below.
 	else
 		if effect == "Wind" then
 			if path.Magnitude > 1 then
 				streak(model, Vector(0, -12, 0), path + Vector(0, -12, 0), color, 0.55).Name = "PathBeam"
 			end
-			local wind = Instance.new("ParticleEmitter")
-			wind.Texture = "rbxasset://textures/particles/smoke_main.dds"
-			wind.Color = ColorSequence.new(color, ivory)
-			wind.LightEmission = 0.35
-			wind.Size = NumberSequence.new(4, 9)
-			wind.Transparency = NumberSequence.new(0.28, 1)
-			wind.Lifetime = NumberRange.new(0.5, 0.9)
-			wind.EmissionDirection = Enum.NormalId.Right
-			wind.Speed = NumberRange.new(29, 42)
-			wind.SpreadAngle = Vector2.new(12, 20)
-			wind.Rate = 14
-			local nozzle = Instance.new("Attachment")
-			nozzle.Position = Vector(-31, 0, 0)
-			nozzle.Parent = model.PrimaryPart
-			wind.Parent = nozzle
+			-- Directional mist is added once by Visuals.Weather.
 		end
 		if effect == "Heat" then
 			streak(model, Vector(0, -12, 0), path + Vector(0, -12, 0), gold, 0.6).Name = "PathBeam"
@@ -564,8 +553,8 @@ function Art.Hazard(effect, color, path, cells)
 			front.Color = ColorSequence.new(rgb(255, 88, 30), gold)
 			for _, x in {-27, 0, 27} do
 				particle(model.PrimaryPart, Vector(x, -3, 17), {
-					texture = sparkTexture, color = gold, fade = rgb(255, 59, 35), size = 1.75, endSize = 0.25,
-					life = 0.6, rate = 12, speed = 9, opacity = 0.17, emission = 0.7,
+					texture = sparkTexture, color = gold, fade = rgb(255, 59, 35), size = 0.9, endSize = 0.15,
+					life = 0.6, rate = 3, speed = 9, opacity = 0.3, emission = 0.45,
 				})
 			end
 		end
@@ -588,9 +577,13 @@ function Art.Hazard(effect, color, path, cells)
 			})
 			if effect == "Magnetic" then
 				local crystalAngle = index * 1.35 + 0.5
-				piece(model, "ChargedCrystal", {3.0, 9.6, 3.3},
-					{math.cos(crystalAngle) * 24, (index % 2) * 3 - 1, math.sin(crystalAngle) * 24},
-					color, "Wedge", {index * 30, index * 45, index * 18}, glow)
+				local pose = CFrame.new(math.cos(crystalAngle) * 24, (index % 2) * 3 - 1, math.sin(crystalAngle) * 24)
+					* CFrame.Angles(math.rad(index * 30), math.rad(index * 45), math.rad(index * 18))
+				if not Visuals.Attach("ChargedCrystal", model, pose, 1, "ChargedCrystal") then
+					piece(model, "ChargedCrystal", {3.0, 9.6, 3.3},
+						{math.cos(crystalAngle) * 24, (index % 2) * 3 - 1, math.sin(crystalAngle) * 24},
+						color, "Wedge", {index * 30, index * 45, index * 18}, glow)
+				end
 				particle(model.PrimaryPart, Vector(math.cos(crystalAngle) * 24, 2, math.sin(crystalAngle) * 24), {
 					texture = sparkTexture, color = color, fade = ice, size = 1.25, endSize = 0.2, life = 0.46,
 					rate = 4, speed = 5, opacity = 0.28, emission = 0.72,
@@ -598,13 +591,16 @@ function Art.Hazard(effect, color, path, cells)
 			end
 		end
 	end
+	Visuals.Weather(model, effect, color)
 	return model
 end
 
 function Art.Spike()
 	local model = modelWithCore("Paku Sihir", {1.8, 1.8, 1.8})
-	piece(model, "Spike", {1.4, 1.6, 8.8}, {0, 0, 0}, violet, "Wedge", {0, 180, 0}, glow)
-	accent(model, "SpikeFacet", {0.84, 0.7, 5.4}, {0, 0.6, -0.84}, rgb(217, 193, 255), "Wedge", {0, 180, 0}, glow)
+	if not Visuals.Attach("MagicSpike", model, CFrame.identity, 1, "Spike") then
+		piece(model, "Spike", {1.4, 1.6, 8.8}, {0, 0, 0}, violet, "Wedge", {0, 180, 0}, glow)
+		accent(model, "SpikeFacet", {0.84, 0.7, 5.4}, {0, 0.6, -0.84}, rgb(217, 193, 255), "Wedge", {0, 180, 0}, glow)
+	end
 	local wake = streak(model, Vector(0, 0, 2), Vector(0, 0, 22), violet, 2.2)
 	wake.Width1 = 0.06
 	wake.Color = ColorSequence.new(rgb(236, 219, 255), violet)

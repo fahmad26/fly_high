@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"fixture\":\"steady emission; no Emit burst; no flight or data changes\",\"specs\":{\"1\":{\"name\":\"Tornado\",\"position\":{\"1\":0,\"3\":0,\"2\":600},\"minPartTransparency\":1,\"emitters\":10,\"rate\":40,\"parts\":0},\"3\":{\"name\":\"Wind\",\"position\":{\"1\":440,\"3\":0,\"2\":600},\"minPartTransparency\":1,\"emitters\":3,\"rate\":12,\"parts\":0},\"2\":{\"name\":\"Lightning\",\"position\":{\"1\":220,\"3\":0,\"2\":600},\"minPartTransparency\":0.8799999952316284,\"emitters\":6,\"rate\":30,\"parts\":6},\"5\":{\"name\":\"Fog\",\"position\":{\"1\":880,\"3\":0,\"2\":600},\"minPartTransparency\":1,\"emitters\":3,\"rate\":12,\"parts\":0},\"4\":{\"name\":\"Heat\",\"position\":{\"1\":660,\"3\":0,\"2\":600},\"minPartTransparency\":1,\"emitters\":6,\"rate\":18,\"parts\":0},\"6\":{\"name\":\"Storm\",\"position\":{\"1\":1100,\"3\":0,\"2\":600},\"minPartTransparency\":1,\"emitters\":10,\"rate\":40,\"parts\":0}},\"players\":1}"
+    }
+  ],
+  "isError": false
+}

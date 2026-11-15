@@ -57,12 +57,16 @@ Setiap run yang dipakai untuk status terverifikasi menyimpan catatan berikut dal
 - Rekam altitude target dan altitude aktual terpisah. Nama screenshot atau angka bulat pada narasi tidak menggantikan pengukuran.
 - Konflik historis 1.850/1.900 km tetap OPEN-03 sampai ada bukti yang tepat. Jangan memilih salah satu atau menganggap keduanya lulus.
 - Jangan memakai screenshot pass awal sebagai bukti polesan berikutnya. Tuliskan tanggal/pass yang benar.
+- Untuk VFX cuaca/hazard, periksa Play Solo dengan emisi normal setelah warm-up dan pada awal warning. Capture Edit dengan Emit burst tidak cukup untuk persetujuan keterlihatan. Periksa terang/gelap dan kualitas rendah; hazard penting harus tetap terbaca ketika partikel berkurang atau dimatikan dalam fixture. Nilai Transparency 0 berarti padat, 1 berarti tidak terlihat. Simpan screenshot steady-state dan log build yang sama.
 - Untuk jalan bercabang/melengkung, ambil dan periksa gambar dekat setiap sambungan A–E, termasuk kedua ujung busur dan simpang tengah. Uji berjalan terpisah dari QA visual; foto B/C atau foto lebar tidak mewakili A/E. Capture kosong berarti visual belum diverifikasi.
 - Hasil yang hanya ada di chat diberi status dilaporkan di sesi. Ekspor bukti sebelum menaikkan status menjadi selesai terverifikasi.
 - Raw report gagal tetap gagal meskipun rute mencapai puncak. Verifikasi terminal terpisah tidak menjadikan seluruh run end-to-end hijau.
 - Simpan kegagalan fixture dan pengulangannya sebagai run berbeda. Pisahkan error alat, error game dan pesan mock, dengan log mentah tetap utuh.
 - Source yang berubah setelah QA membuat bukti sebelumnya historis untuk source tersebut. Ulangi pemeriksaan relevan atau nyatakan batasnya.
 - Jika Studio terputus atau QA gagal, tandai belum diverifikasi. Pembaruan dokumentasi tidak menghasilkan bukti gameplay baru.
+- Folder yang hanya berisi README dan screenshot belum menyediakan log mentah untuk klaim numerik parity, compile, event atau lifecycle. Pertahankan narasi asli sebagai laporan historis; inventarisasikan bukti yang benar-benar ada dan catat kekurangannya di PROGRESS. Jangan membuat log pengganti yang seolah berasal dari run lama.
+- Sebutan "exact" harus didukung pembandingan isi source. Panjang + FNV/DJB/hash rolling saja dilabeli pemeriksaan checksum, bukan kesamaan isi persis. Hash disk tanpa ekspor/hash Studio tidak membuktikan kesamaan Studio.
+- Laporan QA yang sudah masuk Git tetap menyimpan status pada waktu run. Tambahkan penanda historis dan rujukan checkpoint Git terkini; jangan menimpa hash/build run lama dengan hash HEAD atau menganggap belum commit/push pada run lama sebagai status sekarang.
 
 ## Progres dan penutupan
 

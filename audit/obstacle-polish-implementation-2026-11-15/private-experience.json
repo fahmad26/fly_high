@@ -1,0 +1,12 @@
+{
+  "status": "fulfilled",
+  "value": {
+    "content": [
+      {
+        "type": "text",
+        "text": "GET https://apis.roblox.com/cloud/v2/universes/10776821830 -> 200 OK\n\n{\"path\":\"universes/10776821830\",\"createTime\":\"2026-11-15T06:15:58.080Z\",\"updateTime\":\"2026-11-15T06:16:04.516Z\",\"displayName\":\"Fly High - Private Development\",\"description\":\"\",\"user\":\"users/8635452105\",\"visibility\":\"PRIVATE\",\"voiceChatEnabled\":true,\"ageRating\":\"AGE_RATING_13_PLUS\",\"desktopEnabled\":true,\"mobileEnabled\":true,\"tabletEnabled\":true,\"consoleEnabled\":false,\"vrEnabled\":true,\"rootPlace\":\"universes/10776821830/places/97043730132219\",\"templateRootPlace\":\"\"}"
+      }
+    ],
+    "isError": false
+  }
+}

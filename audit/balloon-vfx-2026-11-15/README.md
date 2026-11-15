@@ -1,5 +1,8 @@
 # QA Efek Balon Udara — Emergency Kit & Turbo Gas (15 November 2026)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 Dokumen bukti implementasi & QA untuk efek visual/audio balon udara pada pemakaian **Emergency Kit** (*Golden Clutch Save & Shield*) dan **Turbo Gas** (*Sky-Cyan Jet & Slipstream*).
 
 ## Ringkasan Perubahan Kode (`50/50` Parity Studio ↔ Mirror, `compileErrorCount = 0`)

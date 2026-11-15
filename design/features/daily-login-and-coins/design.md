@@ -4,6 +4,8 @@ Status: `terpasang lokal (15 November 2026)` — Mockup Figma disetujui dan diim
 
 Dokumen acuan implementasi aktif dan bukti QA mengikuti [PRD_Fly_High.md](../../../PRD_Fly_High.md), [PROGRESS.md](../../../PROGRESS.md), dan [HANDOVER.md](../../../HANDOVER.md).
 
+Penyesuaian ikon HARIAN 15 November: mengikuti permintaan pengguna agar konsisten dengan HUD game, gunakan bingkai navy/emas dan enamel cyan dengan gloss. Simbol kalender/bintang tetap memakai SVG Figma asli node `6:439`; latar emas pada mockup `6:428` diadaptasi ke keluarga dock game. Ikon 256×256, ukuran target sentuh dan layout tetap dikendalikan `HUDLayout`/`HUDTheme`; badge merah/centang tetap dinamis. [Sumber vektor](../../../assets/ui/sky-adventure/source/daily-dock/) dan [QA lokal](../../../audit/daily-dock-icon-2026-11-15/README.md).
+
 ---
 
 ## 1. Tujuan & Prinsip Keseimbangan
@@ -91,7 +93,8 @@ Dokumen acuan implementasi aktif dan bukti QA mengikuti [PRD_Fly_High.md](../../
 
 ---
 
-## 7. Urutan Pengerjaan
+## 7. Implementasi Tersedia dan QA Tersisa
 
-1. **Review Desain UI di Figma (`V1` — Tahap Sekarang):** Susun `DailyLoginModal` (Desktop + Phone), `ShopModal` 3 Tab (Desktop + Phone), ikon dock `HARIAN`, tombol buff `Turbo Gas` & `Tali Awet`, serta pratinjau kosmetik di Figma untuk disetujui pengguna.
-2. **Ekspor Aset & Implementasi Luau:** Setelah visual Figma disetujui, ekspor sprite crest/ikon ke `assets/ui/sky-adventure/`, bangun server handler (`DataManager`, `ShopManager`, `BalloonManager`, `TetherManager`) & HUD UI, lalu jalankan QA kompilasi, Playtest, dan multi-device.
+- **Desain dan implementasi tersedia:** mockup Figma telah disetujui; DailyLoginModal, Toko 3-Tab, ikon HARIAN, buff, kosmetik dan handler server telah dipasang. Jangan membangun ulang sebagai fitur yang belum dimulai.
+- **QA lokal dilaporkan:** lihat [laporan Daily Login/Toko](../../../audit/daily-login-shop-2026-11-14/README.md) dan [opsi Robux](../../../audit/robux-supplies-2026-11-15/README.md). Bukti visual tersedia; kelengkapan log mentah ditrack pada OPEN-07 di PROGRESS.
+- **Berikutnya:** checkout/persistensi cloud tetap DEFER-01, multiplayer 2–3 klien dan perangkat sentuh fisik tetap OPEN-04, perjalanan penuh tetap OPEN-05, serta buka ulang binary tersimpan untuk pembandingan. Memperbarui dokumen ini tidak menjalankan QA baru.

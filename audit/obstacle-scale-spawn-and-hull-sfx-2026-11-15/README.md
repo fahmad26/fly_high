@@ -1,5 +1,8 @@
 # Laporan QA: Poles Spawn & Skala Visual Rintangan + SFX Lubang Balon (Opsi A)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 Tanggal: 15 November 2026 (Asia/Jakarta)  
 Build / Tempat: Lokal Roblox Studio `Edit`/`Play Solo` (`E:/Antigravity/Fly High/Fly High.rbxl`, `1.916.916` B, `2026-11-15T11:47:49+07:00`, SHA-256 `4C8CE3A5BFD3F9F1E549FF845DBF36038C862A9976A489812DEE235C848194D3`, belum dibuka ulang pasca-save).  
 Lingkungan uji: Windows `Play Solo` `1` klien (`Fikki2621`, `GameId == 0`), ditambah harness transient `ServerScriptService._PlaytestBridgeRunner` + `ServerStorage._PlaytestBridge` & spy event `Sound.Played` klien selama Playtest saja (hilang bersih saat kembali ke `Edit`).

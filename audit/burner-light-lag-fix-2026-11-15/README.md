@@ -1,5 +1,8 @@
 # QA Perbaikan Cahaya Api & Partikel Balon Tertinggal (`GAME-02` — 15 November 2026)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## Ringkasan akar masalah
 Reproduksi langsung di Studio `Play Solo` (`Pod_C` / `SkyKoi`, `ClockTime = 0`, `Brightness = 0`) menunjukkan dua penyebab utama laporan pengguna (baik dengan maupun tanpa buff):
 1. **`Lighting.LightingStyle` bernilai `Enum.LightingStyle.Soft`:** Evaluasi `PointLight` melalui voxel lighting throttle menjatuhkan/meninggalkan cahaya `Burner.BurnerLight` di belakang lantai keranjang ketika balon bergerak horizontal (`~20–30 stud/s`). Mengubah ke `Enum.LightingStyle.Realistic` menstabilkan `QualityLevel.Automatic`, **tetapi** saat `QualityLevel.Level01` (simulasi profil rendah iPad/mobile), Roblox tetap menjatuhkan/menggeser `PointLight` voxel ke sudut belakang saat bergerak.

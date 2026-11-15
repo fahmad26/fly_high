@@ -1,5 +1,6 @@
 -- Local scenery only. Models never take part in flight physics or target selection.
 local Config = require(script.Parent.FlyHighConfig)
+local HabitatArt = require(script.Parent.SceneryHabitatArt)
 local Scenery = {}
 
 local rgb = Color3.fromRGB
@@ -642,47 +643,30 @@ end
 
 local function buildSeabirdFlock(parent, centerCf, birdCount, scale)
 	local flock = model(parent, "DistantSeabirdFlock")
-	local plumage = rgb(248, 249, 252)
-	local chestCol = rgb(232, 238, 246)
-	local wingTip = rgb(52, 68, 92)
-	local beakColor = rgb(242, 178, 68)
-
+	local poses = {}
 	for i = 1, birdCount do
 		local side = i == 1 and 0 or (i % 2 == 0 and 1 or -1)
 		local rank = math.floor(i / 2)
-		local offset = Vector3.new(side * rank * 8.2 * scale, math.abs(rank) * 1.5 * scale + (i % 2) * 0.9, rank * 6.8 * scale)
-		local bcf = centerCf * CFrame.new(offset)
-		local bird = model(flock, "Seabird")
-
-		part(bird, "Body", Vector3.new(2.1, 1.6, 4.9) * scale, bcf, plumage, plastic, ball)
-		part(bird, "Chest", Vector3.new(1.8, 1.35, 2.7) * scale, bcf * CFrame.new(0, -0.18 * scale, -0.95 * scale), chestCol, plastic, ball)
-		part(bird, "Head", Vector3.new(1.45, 1.35, 1.75) * scale, bcf * CFrame.new(0, 0.42 * scale, -2.25 * scale), plumage, plastic, ball)
-		part(bird, "Beak", Vector3.new(0.55, 0.48, 1.65) * scale,
-			bcf * CFrame.new(0, 0.28 * scale, -3.35 * scale) * CFrame.Angles(math.rad(8), 0, 0), beakColor, plastic, "Wedge")
-
-		for _, wSide in { -1, 1 } do
-			local innerCf = bcf * CFrame.new(wSide * 2.5 * scale, 0.35 * scale, -0.15 * scale)
-				* CFrame.Angles(0, wSide * -0.1, wSide * 0.24)
-			local outerCf = innerCf * CFrame.new(wSide * 2.9 * scale, 0.28 * scale, 0.45 * scale)
-				* CFrame.Angles(0, wSide * -0.16, wSide * -0.32)
-			part(bird, "InnerWing", Vector3.new(5.2, 0.42, 2.2) * scale, innerCf, plumage, plastic, "Wedge")
-			part(bird, "OuterWing", Vector3.new(4.4, 0.34, 1.7) * scale, outerCf, wingTip, plastic, "Wedge")
-			for f = 1, 3 do
-				part(bird, "FlightFeather", Vector3.new(1.8, 0.18, 0.65) * scale,
-					outerCf * CFrame.new(wSide * (0.6 + f * 0.48) * scale, -0.05 * scale, (0.35 + f * 0.22) * scale)
-						* CFrame.Angles(0, wSide * 0.18, 0),
-					f == 3 and wingTip or chestCol, plastic)
-			end
-		end
-		for t = -1, 1 do
-			part(bird, "TailFeather", Vector3.new(0.58, 0.18, 1.95) * scale,
-				bcf * CFrame.new(t * 0.42 * scale, 0.08 * scale, 2.85 * scale)
-					* CFrame.Angles(math.rad(-8), math.rad(t * 12), 0),
-				math.abs(t) == 1 and wingTip or plumage, plastic, "Wedge")
-		end
+		local offset = Vector3.new(side * rank * 11 * scale, rank * 1.5 * scale, rank * 9 * scale)
+		local bird = HabitatArt.Clone(i == birdCount and "Eagle" or "Seagull", flock,
+			centerCf * CFrame.new(offset), scale)
+		if bird then table.insert(poses, HabitatArt.Pose(bird, i * 1.7, 4.6, 0.18)) end
 	end
 	flock.WorldPivot = centerCf
-	return flock
+	return flock, poses
+end
+
+-- Small wildlife habitats follow existing landmarks, never the balloon or a player.
+local function animateHabitats(items, time)
+	for _, item in items do
+		if item.orbit then
+			local a = time * item.speed + item.phase
+			local offset = Vector3.new(math.cos(a) * item.radius, math.sin(a * 1.7) * item.bob, math.sin(a) * item.radius)
+			local tangent = Vector3.new(-math.sin(a), 0, math.cos(a))
+			item.model:PivotTo(CFrame.lookAt(item.origin.Position + offset, item.origin.Position + offset + tangent))
+		end
+		if item.pose then HabitatArt.Animate(item.pose, time) end
+	end
 end
 
 local function dawn(parent)
@@ -789,8 +773,8 @@ local function dawn(parent)
 		local y = altitude(spec.km)
 		local pos = Vector3.new(math.cos(spec.baseAngle) * spec.radius, y, math.sin(spec.baseAngle) * spec.radius)
 		local cf = CFrame.new(pos)
-		local flock = buildSeabirdFlock(parent, cf, spec.count, spec.scale)
-		birdFlocks[idx] = { flock = flock, spec = spec, y = y }
+		local flock, poses = buildSeabirdFlock(parent, cf, spec.count, spec.scale)
+		birdFlocks[idx] = { flock = flock, spec = spec, y = y, poses = poses }
 	end
 
 	local cloudColors = { rgb(195, 215, 240), rgb(255, 251, 235), rgb(231, 242, 253) }
@@ -836,6 +820,7 @@ local function dawn(parent)
 			local p0 = Vector3.new(math.cos(angle) * s.radius, item.y + math.sin(time * 0.5 + i) * 3.5, math.sin(angle) * s.radius)
 			local p1 = Vector3.new(math.cos(nextAngle) * s.radius, item.y, math.sin(nextAngle) * s.radius)
 			item.flock:PivotTo(CFrame.lookAt(p0, p1) * CFrame.Angles(0, 0, math.sin(time * 0.9 + i) * 0.08))
+			for _, pose in item.poses do HabitatArt.Animate(pose, time) end
 		end
 	end
 end
@@ -844,7 +829,7 @@ local function buildStormVortex(parent, name, basePos, topWidth, bottomWidth, he
 	local vortex = model(parent, name)
 	local base = CFrame.new(basePos)
 	vortex.WorldPivot = base
-	local shade, body, top = rgb(55, 53, 87), rgb(81, 83, 126), rgb(129, 130, 172)
+	local shade, body, top = rgb(51, 61, 85), rgb(108, 121, 153), rgb(138, 144, 179)
 	local function section(t)
 		local radius = (bottomWidth + (topWidth - bottomWidth) * t ^ 1.62) / 2
 		local center = basePos + Vector3.new(math.sin(t * 2.9) * topWidth * 0.14,
@@ -945,8 +930,8 @@ end
 
 local function thundercloud(parent)
 	local banks, rain = {}, {}
-	local indigo = { rgb(55, 59, 100), rgb(107, 115, 170), rgb(81, 89, 136) }
-	local anvilPalette = { rgb(64, 58, 108), rgb(88, 82, 146), rgb(118, 114, 182) }
+	local indigo = { rgb(51, 61, 85), rgb(136, 142, 177), rgb(116, 121, 156) }
+	local anvilPalette = indigo
 	local random = Random.new(2020)
 
 	-- Leave a low cloud layer under the flight corridor after the distant ocean fades.
@@ -964,7 +949,7 @@ local function thundercloud(parent)
 		local y = altitude(2060 + i * 188) + random:NextNumber(-28, 28)
 		local position = Vector3.new(math.cos(angle) * radius, y, math.sin(angle) * radius)
 		local size = Vector3.new(random:NextNumber(155, 235), random:NextNumber(72, 155), random:NextNumber(110, 168))
-		local clouds = band(parent, "ThunderheadCliff", position, size, indigo, i * 19)
+		local clouds = band(parent, "ThunderheadCliff", position, size, indigo, i * 19, "stormAnvil")
 		if clouds[1] then
 			banks[#banks + 1] = { lobes = clouds, colors = table.create(#clouds) }
 			for n, cloud in clouds do banks[#banks].colors[n] = cloud.Color end
@@ -999,7 +984,7 @@ local function thundercloud(parent)
 	for i, spec in anvilSpecs do
 		local center, scale = table.unpack(spec)
 		local anvilLobes = band(parent, "StormAnvil", center,
-			Vector3.new(255, 89, 153) * scale, anvilPalette, 300 + i * 29)
+			Vector3.new(255, 89, 153) * scale, anvilPalette, 300 + i * 29, "stormAnvil")
 		banks[#banks + 1] = { lobes = anvilLobes, colors = table.create(#anvilLobes) }
 		for n, cloud in anvilLobes do banks[#banks].colors[n] = cloud.Color end
 	end
@@ -1017,10 +1002,24 @@ local function thundercloud(parent)
 		{ km = 3740, x = -125, z = -235, scale = 1.05 },
 	}
 	local fragments = {}
+	local habitats = {}
 	for idx, spec in fragmentSpecs do
 		local cf = CFrame.new(spec.x, altitude(spec.km), spec.z) * CFrame.Angles(0, idx * 1.1, 0)
 		local frag = buildStormRockFragment(parent, cf, spec.scale, 2600 + idx)
 		fragments[idx] = { model = frag, origin = cf }
+		if spec.km >= 3000 then
+			HabitatArt.Frost(frag, cf * CFrame.new(0, 4 * spec.scale, 0), spec.scale)
+		elseif idx <= 2 then
+			for n = 1, 2 do
+				local origin = cf * CFrame.new(0, 20, 0)
+				local bat = HabitatArt.Clone("StormBat", frag, origin, 0.85)
+				if bat then
+					table.insert(habitats, {model = bat, origin = origin, orbit = true,
+						phase = n * math.pi, speed = 0.24, radius = 14, bob = 2,
+						pose = HabitatArt.Pose(bat, n, 7, 0.28)})
+				end
+			end
+		end
 	end
 
 	local lastRimLight = 0
@@ -1050,6 +1049,7 @@ local function thundercloud(parent)
 			frag.model:PivotTo(frag.origin * CFrame.new(0, math.sin(time * 0.48 + i) * 3.5, 0)
 				* CFrame.Angles(math.sin(time * 0.25 + i) * 0.06, time * 0.08, 0))
 		end
+		animateHabitats(habitats, time)
 	end
 end
 
@@ -1308,6 +1308,7 @@ local function skyIsles(parent)
 	}
 	local islandPositions = {}
 	local chimes = {}
+	local habitats = {}
 
 	for i, spec in islandSpecs do
 		local p = spec.pos
@@ -1383,6 +1384,23 @@ local function skyIsles(parent)
 		end
 
 		local topY = 13.5 * scale
+		if i <= 4 then HabitatArt.Ruins(island, cf, scale, i) end
+		if i >= 5 then
+			local flowerBed = cf * CFrame.new(18 * scale, topY, 10 * scale)
+			for f = 1, 4 do
+				local a = f * math.pi / 2
+				natureAsset(island, "Flower", "AmberNectarFlower", flowerBed * CFrame.new(math.cos(a) * 5, 0, math.sin(a) * 5), 1.7 * scale, function(d)
+					if d.Name == "PetalCorolla" then d.Color = rgb(255, 181, 83) end
+				end)
+			end
+			for b = 1, 2 do
+				local origin = flowerBed * CFrame.new(0, 7 * scale, 0)
+				local bee = HabitatArt.Clone("FireBee", island, origin, 0.6 * scale)
+				if bee then table.insert(habitats, {model = bee, origin = origin, orbit = true,
+					phase = b * math.pi, speed = 0.45, radius = 5 * scale, bob = 1.3 * scale,
+					pose = HabitatArt.Pose(bee, b, 24, 0.23)}) end
+			end
+		end
 		for j = 1, 3 do
 			local a = (j - 1) * math.pi * 2 / 3 + i * 0.5
 			natureAsset(island, "Boulder", "SunsetBoulder",
@@ -1506,6 +1524,7 @@ local function skyIsles(parent)
 			local swayZ = math.cos(time * 0.92 + chime.phase) * 0.06
 			chime.model:PivotTo(chime.origin * CFrame.Angles(swayX, 0, swayZ))
 		end
+		animateHabitats(habitats, time)
 	end
 end
 
@@ -1532,34 +1551,8 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		cloudTransparency = 0.24,
 	}, false)
 
-	local clusterSpecs = {
-		{ pos = Vector3.new(0, 16, 0), rot = Vector3.new(0, 0, 0), sc = 1.05, col = 2 },
-		{ pos = Vector3.new(-22, 14, -8), rot = Vector3.new(0.16, 1.2, 0.18), sc = 0.72, col = 1 },
-		{ pos = Vector3.new(24, 15, 6), rot = Vector3.new(-0.14, -1.1, -0.2), sc = 0.76, col = 3 },
-		{ pos = Vector3.new(4, 12, 18), rot = Vector3.new(0.22, 2.4, -0.12), sc = 0.58, col = 4 },
-	}
-	for _, cs in clusterSpecs do
-		local cColor = crystalColors[cs.col]
-		local cCf = cf * CFrame.new(cs.pos * scale) * CFrame.Angles(cs.rot.X, cs.rot.Y, cs.rot.Z)
-		local cluster = landmark(island, "Cosmic", cCf, cs.sc * scale)
-		if cluster then
-			cluster.Name = "FacetedCrystalCluster"
-			for _, d in cluster:GetDescendants() do
-				if d:IsA("BasePart") then
-					if d.Name == "Astral" then
-						d.Color = astralObsidian
-						d.Material = slate
-					elseif d.Name == "Violet" then
-						d.Color = cColor:Lerp(astralSlate, 0.35)
-						d.Material = glassMat
-					elseif d.Name == "Crystal" then
-						d.Color = cColor
-						d.Material = neon
-					end
-				end
-			end
-		end
-	end
+	HabitatArt.Crystals(island, cf * CFrame.new(-12 * scale, 10.5 * scale, -9 * scale), scale * 1.1, 5)
+	HabitatArt.Crystals(island, cf * CFrame.new(15 * scale, 10.5 * scale, 9 * scale), scale * 0.72, 3)
 
 	for i = 1, 4 do
 		local a = (i - 1) * math.pi / 2 + 0.5
@@ -1764,8 +1757,15 @@ local function exosphere(parent)
 	local random = Random.new(607)
 	local satellites = {}
 	local armillaryRings = {}
+	local habitats = {}
 
-	buildCosmicCrystalIsland(parent, CFrame.new(-226, altitude(6900), -355) * CFrame.Angles(0, 0.38, 0), 0.92, satellites, 610)
+	local nestOrigin = CFrame.new(-226, altitude(6900), -355) * CFrame.Angles(0, 0.38, 0)
+	local nest = buildCosmicCrystalIsland(parent, nestOrigin, 0.92, satellites, 610)
+	local wyvern = HabitatArt.Clone("CrystalWyvern", nest, nestOrigin * CFrame.new(2, 10.5, 0), 1.9)
+	if wyvern then
+		HabitatArt.RestOn(wyvern, nestOrigin * CFrame.new(2, 10.5, 0))
+		table.insert(habitats, {pose = HabitatArt.Pose(wyvern, 1, 0.9, 0.035)})
+	end
 	buildCosmicCrystalIsland(parent, CFrame.new(258, altitude(6980), -22) * CFrame.Angles(0, -1.25, 0), 0.85, satellites, 620)
 	buildCosmicCrystalIsland(parent, CFrame.new(-88, altitude(7480), -262) * CFrame.Angles(0, 0.45, 0), 0.84, satellites, 630)
 
@@ -1781,7 +1781,12 @@ local function exosphere(parent)
 	for _, spec in archSpecs do
 		local pos = Vector3.new(math.cos(spec.angle) * spec.radius, altitude(spec.km), math.sin(spec.angle) * spec.radius)
 		local cf = CFrame.new(pos) * CFrame.Angles(0, spec.angle + math.pi / 2, 0)
-		buildDistantCosmicArch(parent, cf, spec.scale)
+		local arch = buildDistantCosmicArch(parent, cf, spec.scale)
+		if spec.km >= 7400 then
+			for _, side in {-1, 1} do
+				HabitatArt.PhantomMonument(arch, cf * CFrame.new(side * 12 * spec.scale, 0, 16 * spec.scale), spec.scale)
+			end
+		end
 	end
 
 	for i = 1, 6 do
@@ -1856,6 +1861,7 @@ local function exosphere(parent)
 	end
 
 	return function(_, time)
+		animateHabitats(habitats, time)
 		for _, node in nodes do
 			local phase = node.phase
 			node.part.Position = node.origin + Vector3.new(
@@ -1935,6 +1941,9 @@ local function buildFloatingCrystalGate(parent, cf, scale, gateCrystals)
 			1.65 * scale, cyanCrystal)
 	end
 
+	for _, side in {-1, 1} do
+		HabitatArt.PhoenixCrest(gate, daisCf * CFrame.new(side * 27 * scale, 0.7 * scale, 10 * scale), scale * 0.9)
+	end
 	local crystalOrigin = daisCf * CFrame.new(0, 18.5 * scale, 3 * scale)
 	local diamond = model(gate, "SuspendedDiamondCrystal")
 	local crystalMesh = landmark(diamond, "Cosmic", crystalOrigin, 0.24 * scale)
@@ -2153,6 +2162,16 @@ local function palaceUpperSky(parent, anchor)
 		local name, center, excursion, period, phase, scale = table.unpack(route)
 		local ship = landmark(sky, name, anchor * CFrame.new(center), scale)
 		if ship then
+			local hull = ship:FindFirstChild("SkyHullLight")
+			if hull then
+				local mount = ship:GetPivot() * CFrame.new(hull.Size.X * 0.45, 10 * scale, 0)
+					* CFrame.Angles(0, -math.pi / 2, 0)
+				local crest = HabitatArt.Clone("CelestialPhoenix", ship, mount, 1.25 * scale, rgb(243, 188, 83))
+				if crest then
+					crest.Name = "PhoenixFigurehead"
+					HabitatArt.Animate(HabitatArt.Pose(crest, math.pi / 2, 0, 0.65), 0)
+				end
+			end
 			local sail = ship:FindFirstChild("SkySail")
 			table.insert(fleet, {
 				ship = ship, center = center, excursion = excursion, period = period, phase = phase,
@@ -2172,7 +2191,9 @@ local function palaceUpperSky(parent, anchor)
 		end
 		for _, flight in fleet do
 			if lastVisibility ~= visibility then
-				for _, piece in flight.ship:GetChildren() do piece.Transparency = 1 - visibility end
+				for _, piece in flight.ship:GetDescendants() do
+					if piece:IsA("BasePart") and piece.Name ~= "Core" then piece.Transparency = 1 - visibility end
+				end
 			end
 			if visibility > 0 then
 				local angle = elapsed * (2 * math.pi / flight.period) + flight.phase
@@ -2208,6 +2229,16 @@ local function gateway(parent)
 	end
 
 	local gateCrystals = {}
+	local orbitalRings = {}
+	local outpostCf = CFrame.new(-310, altitude(8350), -340) * CFrame.Angles(0, 0.4, 0)
+	local outpost = buildFloatingObservatory(parent, outpostCf, 0.85, orbitalRings)
+	outpost.Name = "AbandonedOrbitalObservatory"
+	for i = 1, 2 do
+		HabitatArt.Clone("SatelliteDebris", outpost, outpostCf * CFrame.new((i == 1 and -1 or 1) * 105, 42, 60) * CFrame.Angles(0.15, i * 0.8, 0.25), 2.1)
+	end
+	for i = 1, 4 do
+		HabitatArt.Clone("Meteor", outpost, outpostCf * CFrame.new(i * 34 - 85, -45 - (i % 2) * 12, 92) * CFrame.Angles(i, i * 0.7, i * 0.3), 0.8 + (i % 2) * 0.3)
+	end
 	buildFloatingCrystalGate(parent, CFrame.new(168, altitude(8980), -253) * CFrame.Angles(0, -0.35, 0), 1.04, gateCrystals)
 
 	local clouds = { rgb(252, 232, 179), rgb(255, 244, 210), rgb(246, 221, 162) }
@@ -2329,6 +2360,10 @@ local function gateway(parent)
 
 	return function(km, time)
 		if animateSky then animateSky(km, time) end
+		for _, ring in orbitalRings do
+			local r = ring.speed
+			ring.model:PivotTo(ring.origin * CFrame.Angles(time * r.X, time * r.Y, time * r.Z))
+		end
 		for i, item in gateCrystals do
 			item.model:PivotTo(item.origin * CFrame.new(0, math.sin(time * 0.65 + i) * 2.8, 0) * CFrame.Angles(0, time * 0.45, 0))
 		end

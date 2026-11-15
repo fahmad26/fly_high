@@ -1,0 +1,352 @@
+{
+  "controls": 0,
+  "pythonImports": {
+    "skills/blender-asset-qa/scripts/_bpyx.py": [
+      "import argparse",
+      "import json",
+      "import sys",
+      "import bpy"
+    ],
+    "skills/blender-asset-qa/scripts/qa_check.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "from collections import Counter, defaultdict",
+      "import bmesh",
+      "import bpy",
+      "import numpy as np",
+      "from mathutils import Vector",
+      "from mathutils.bvhtree import BVHTree",
+      "from mathutils.kdtree import KDTree",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-asset-qa/scripts/review_shots.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "import tempfile",
+      "import bpy",
+      "import numpy as np",
+      "from mathutils import Vector",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-core/scripts/_bpyx.py": [
+      "import argparse",
+      "import json",
+      "import sys",
+      "import bpy"
+    ],
+    "skills/blender-core/scripts/env_report.py": [
+      "import os",
+      "import sys",
+      "import addon_utils",
+      "import bpy",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-core/scripts/run_in_blender.py": [
+      "import glob",
+      "import json",
+      "import os",
+      "import re",
+      "import shutil",
+      "import subprocess",
+      "import sys"
+    ],
+    "skills/blender-environment-kits/scripts/_bpyx.py": [
+      "import argparse",
+      "import json",
+      "import sys",
+      "import bpy"
+    ],
+    "skills/blender-environment-kits/scripts/kit_check.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "import bmesh",
+      "import bpy",
+      "import numpy as np",
+      "from mathutils import Matrix, Vector",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-environment-kits/scripts/scatter.py": [
+      "import json",
+      "import math",
+      "import os",
+      "import sys",
+      "import bpy",
+      "from mathutils import Vector, geometry",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-environment-kits/scripts/terrain.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "import bpy",
+      "import numpy as np",
+      "from mathutils import Vector, noise",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-hardsurface-modeling/scripts/_bpyx.py": [
+      "import argparse",
+      "import json",
+      "import sys",
+      "import bpy"
+    ],
+    "skills/blender-hardsurface-modeling/scripts/apply_stack.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "import bpy",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-weather-fx/scripts/_bpyx.py": [
+      "import argparse",
+      "import json",
+      "import sys",
+      "import bpy"
+    ],
+    "skills/blender-weather-fx/scripts/lightning.py": [
+      "import math",
+      "import os",
+      "import random",
+      "import sys",
+      "import bpy",
+      "from mathutils import Vector",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-weather-fx/scripts/precipitation.py": [
+      "import math",
+      "import os",
+      "import sys",
+      "import bpy",
+      "from mathutils import Vector",
+      "import _bpyx as bx"
+    ],
+    "skills/blender-weather-fx/scripts/surface_weather.py": [
+      "import json",
+      "import math",
+      "import os",
+      "import sys",
+      "import bpy",
+      "from mathutils import Vector, noise",
+      "import _bpyx as bx"
+    ]
+  },
+  "findings": [
+    {
+      "path": "skills/blender-asset-qa/SKILL.md",
+      "line": 45,
+      "text": "| unused slot / Non-Color base color | leftovers, wrong tag | remove the slot; base color and emission are sRGB |"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/qa_check.py",
+      "line": 43,
+      "text": "    \"\"\"(node type, input name) pairs a socket reaches through up to `depth` nodes.\"\"\""
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/review_shots.py",
+      "line": 107,
+      "text": "            bpy.data.images.remove(im)"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/review_shots.py",
+      "line": 121,
+      "text": "        bpy.data.images.remove(im)"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/review_shots.py",
+      "line": 125,
+      "text": "            bpy.data.objects.remove(o)"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/review_shots.py",
+      "line": 127,
+      "text": "                bpy.data.cameras.remove(data)"
+    },
+    {
+      "path": "skills/blender-core/SKILL.md",
+      "line": 72,
+      "text": "- **Live sessions are the user's work**: never `read_factory_settings`, never delete data you didn't create, and save a backup copy before destructive batch edits."
+    },
+    {
+      "path": "skills/blender-core/references/api-changes-5x.md",
+      "line": 39,
+      "text": "| Compare / Random Value socket identifiers | changed (5.2): look up by name, not identifier |"
+    },
+    {
+      "path": "skills/blender-core/references/bpy-patterns.md",
+      "line": 126,
+      "text": "Prefer simple expressions (`var`, `x*0.5`, `max(a,b)`), which run without Python auto-exec. Use `d.type=\"SUM\"/\"AVERAGE\"` when possible."
+    },
+    {
+      "path": "skills/blender-core/references/bpy-patterns.md",
+      "line": 172,
+      "text": "bpy.app.handlers.frame_change_post.remove(on_frame)"
+    },
+    {
+      "path": "skills/blender-core/scripts/env_report.py",
+      "line": 49,
+      "text": "        \"units\": {\"system\": us.system, \"scale_length\": us.scale_length, \"length\": us.length_unit},"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 4,
+      "text": "Host-side (system Python 3.9+, no bpy). Finds Blender automatically:"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 17,
+      "text": "import shutil"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 18,
+      "text": "import subprocess"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 30,
+      "text": "    env = os.environ.get(\"BLENDER_EXE\")"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 33,
+      "text": "    hit = shutil.which(\"blender\")"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "line": 76,
+      "text": "    p = subprocess.run(cmd, capture_output=True, text=True, encoding=\"utf-8\", errors=\"replace\")"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/scatter.py",
+      "line": 30,
+      "text": "    \"\"\"Enabled socket by name: Random Value keeps one hidden Min/Max/Value per data type (5.2 renamed ids).\"\"\""
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/terrain.py",
+      "line": 88,
+      "text": "        nt.nodes.remove(n)"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/terrain.py",
+      "line": 153,
+      "text": "        bpy.data.images.remove(img)"
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/SKILL.md",
+      "line": 33,
+      "text": "- **Weighted Normal** after Bevel: `mode=\"FACE_AREA\"`, `keep_sharp=True`, weight 50. Needs smooth faces (remove the `sharp_face` attribute or call `shade_smooth`)."
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/scripts/apply_stack.py",
+      "line": 29,
+      "text": "        me.attributes.remove(a)"
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/scripts/apply_stack.py",
+      "line": 46,
+      "text": "            ob.modifiers.remove(m)"
+    },
+    {
+      "path": "skills/blender-weather-fx/SKILL.md",
+      "line": 21,
+      "text": "scripts/surface_weather.py -- --objects Street Car Walls --remove     # exact restore"
+    },
+    {
+      "path": "skills/blender-weather-fx/SKILL.md",
+      "line": 36,
+      "text": "- Puts one `ENV_Weather` shader group in front of each Principled BSDF and records the originals on the material. `--remove` restores links and values exactly."
+    },
+    {
+      "path": "skills/blender-weather-fx/SKILL.md",
+      "line": 39,
+      "text": "- **Ripples**: expanding rings, one per ~17 cm cell, driven by a `frame` driver (a simple expression, so it works without auto-run scripts). They only show inside puddles."
+    },
+    {
+      "path": "skills/blender-weather-fx/SKILL.md",
+      "line": 57,
+      "text": "Weather is an engine system (Unreal Niagara, Unity VFX Graph, Roblox ParticleEmitter). From Blender, export the **masks**: the vertex color attribute (`--vertex-mask`) or baked textures (`blender-texture-baking` self-bake of the wet material), plus snow cover meshes. Details are in [references/realtime-engines.md](references/realtime-engines.md). Physical values and the look library are in [references/weather-values.md](references/weather-values.md)."
+    },
+    {
+      "path": "skills/blender-weather-fx/references/realtime-engines.md",
+      "line": 3,
+      "text": "In engines, weather is a runtime system: particles, post-processing and material parameters. Blender's job is to deliver **meshes and masks** that the engine shaders read. Never export rain or snow instances as geometry."
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/lightning.py",
+      "line": 28,
+      "text": "        bpy.data.objects.remove(o)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/lightning.py",
+      "line": 31,
+      "text": "                coll.remove(coll[data.name])"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/lightning.py",
+      "line": 35,
+      "text": "        bpy.data.materials.remove(m)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/precipitation.py",
+      "line": 1,
+      "text": "\"\"\"Rain, snow, dust, ash or embers as a seamlessly looping Geometry Nodes system (no simulation:"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/precipitation.py",
+      "line": 314,
+      "text": "        ob.modifiers.remove(m)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/precipitation.py",
+      "line": 321,
+      "text": "            gcol.objects.unlink(o)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 6,
+      "text": "materials; the original links/values are stored on the material and --remove restores them exactly."
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 12,
+      "text": "  blender -b f.blend -P surface_weather.py -- --objects Street Car --remove"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 235,
+      "text": "                nt.links.remove(lk)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 241,
+      "text": "        nt.nodes.remove(n)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 318,
+      "text": "        porosity=0.6, scale=3.0, vertex_mask=False, remove=False, **_):"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 322,
+      "text": "    if remove:"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 327,
+      "text": "                o.modifiers.remove(md)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 330,
+      "text": "                o.data.color_attributes.remove(ca)"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "line": 365,
+      "text": "    p.add_argument(\"--remove\", action=\"store_true\")"
+    }
+  ]
+}

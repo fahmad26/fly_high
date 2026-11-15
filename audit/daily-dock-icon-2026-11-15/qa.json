@@ -1,0 +1,54 @@
+{
+  "time": "2026-11-15 Asia/Jakarta",
+  "baseCommit": "969892d",
+  "environment": "Windows Studio Play Solo, 1 client Fikki2621, isolated unpublished mock data",
+  "figma": {
+    "file": "hsDf2FbnHnlSViAOq5DPJt",
+    "node": "6:428",
+    "glyph": "6:439",
+    "session": "338471a6-da08-494e-9931-1f4940034888"
+  },
+  "asset": "rbxassetid://109624962100172",
+  "phone": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"preload\":{\"1\":{\"id\":\"rbxassetid://109624962100172\",\"status\":\"Success\"}},\"fixture\":{\"viewport\":{\"1\":390,\"2\":844},\"touch\":true},\"buttons\":{\"1\":{\"visible\":true,\"image\":\"rbxassetid://109624962100172\",\"name\":\"DailyToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":54},\"icon\":{\"1\":34,\"2\":34},\"pos\":{\"1\":12,\"2\":78}},\"4\":{\"visible\":true,\"image\":\"rbxassetid://115506667687968\",\"name\":\"WarningAudioToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":54},\"icon\":{\"1\":34,\"2\":34},\"pos\":{\"1\":12,\"2\":140}},\"3\":{\"visible\":true,\"image\":\"rbxassetid://98150165686462\",\"name\":\"SettingsToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":54},\"icon\":{\"1\":34,\"2\":34},\"pos\":{\"1\":12,\"2\":264}},\"2\":{\"visible\":true,\"image\":\"rbxassetid://115506667687968\",\"name\":\"ShopToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":54},\"icon\":{\"1\":34,\"2\":34},\"pos\":{\"1\":12,\"2\":202}}}}"
+      }
+    ],
+    "isError": false
+  },
+  "tablet": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"fixture\":{\"viewport\":{\"1\":1024,\"2\":768},\"touch\":true,\"claimedClientOnly\":true},\"badges\":{\"1\":{\"name\":\"HUDGlyphFallback\",\"text\":\"★\"},\"3\":{\"name\":\"HUDBadge\",\"text\":\"✓\"},\"2\":{\"name\":\"HUDCaption\",\"text\":\"HARIAN\"}},\"buttons\":{\"1\":{\"visible\":true,\"name\":\"DailyToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":58},\"icon\":{\"1\":38,\"2\":38},\"pos\":{\"1\":18,\"2\":78}},\"4\":{\"visible\":true,\"name\":\"WarningAudioToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":58},\"icon\":{\"1\":38,\"2\":38},\"pos\":{\"1\":18,\"2\":144}},\"3\":{\"visible\":true,\"name\":\"SettingsToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":58},\"icon\":{\"1\":38,\"2\":38},\"pos\":{\"1\":18,\"2\":276}},\"2\":{\"visible\":true,\"name\":\"ShopToggleButton\",\"loaded\":true,\"target\":{\"1\":50,\"2\":58},\"icon\":{\"1\":38,\"2\":38},\"pos\":{\"1\":18,\"2\":210}}}}"
+      }
+    ],
+    "isError": false
+  },
+  "interaction": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"phoneLandscape\":{\"loaded\":true,\"icon\":{\"1\":34,\"2\":34},\"target\":{\"1\":50,\"2\":54}},\"hiddenInFlightClientFixture\":true,\"fixtureRemoved\":true,\"restoredVisible\":true,\"openedByMouse\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "[DataManager] Unpublished Studio: isolated mock data; checkout disabled."
+      }
+    ],
+    "isError": false
+  },
+  "limits": [
+    "Phone/tablet QA_ViewportSize + QA_Touch layout fixture, not device emulation/physical device",
+    "ClaimedToday and InFlight altered client-side only, no reward request",
+    "Initial preload by string returned Failure; later ImageLabel preload returned Success; rendered asset IsLoaded true",
+    "Binary place not reopened"
+  ]
+}

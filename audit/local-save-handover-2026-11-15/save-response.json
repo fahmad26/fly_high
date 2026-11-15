@@ -1,0 +1,13 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "NotNeeded: The place has no unsaved changes."
+    },
+    {
+      "type": "text",
+      "text": "{\"message\":\"The place has no unsaved changes.\",\"status\":\"NotNeeded\",\"filePath\":\"E:/Antigravity/Fly High/Fly High.rbxl\",\"location\":\"LocalFile\"}"
+    }
+  ],
+  "isError": false
+}

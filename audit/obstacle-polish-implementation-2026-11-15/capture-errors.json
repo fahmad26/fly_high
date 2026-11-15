@@ -1,0 +1,29 @@
+{
+  "weather1": {
+    "content": [
+      {
+        "type": "text",
+        "text": "tool call error: tool call failed for `Roblox_Studio/screen_capture`\n\nCaused by:\n    Mcp error: -32603: Failed to parse tool result: missing field `data`"
+      }
+    ],
+    "isError": true
+  },
+  "weather2": {
+    "content": [
+      {
+        "type": "text",
+        "text": "tool call error: tool call failed for `Roblox_Studio/screen_capture`\n\nCaused by:\n    Mcp error: -32603: Failed to parse tool result: missing field `data`"
+      }
+    ],
+    "isError": true
+  },
+  "weather3": {
+    "content": [
+      {
+        "type": "text",
+        "text": "tool call error: tool call failed for `Roblox_Studio/screen_capture`\n\nCaused by:\n    Mcp error: -32603: Failed to parse tool result: missing field `data`"
+      }
+    ],
+    "isError": true
+  }
+}

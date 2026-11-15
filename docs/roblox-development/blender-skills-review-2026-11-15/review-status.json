@@ -1,0 +1,21 @@
+{
+  "source": "https://github.com/EL4CTEO/blender-skills",
+  "commit": "b1b21dfb73bc40b874ebf2aa12645931bfed3523",
+  "verdict": "Approved for scoped installation after static inspection; not a guarantee of runtime correctness or universal safety",
+  "method": ["git clone without checkout or upstream hooks", "export only five selected skill directories", "reject symlinks and non-regular files", "SHA-256 manifest", "Python AST parsing and import inspection", "scan control characters and suspicious calls", "manual review of entry points, process launch, writes, removals, shared data edits and rendering cleanup"],
+  "filesReviewed": 25,
+  "upstreamScriptsExecuted": false,
+  "maliciousNetworkOrCredentialAccessFound": false,
+  "controlsFound": 0,
+  "caveats": [
+    "run_in_blender.py deliberately runs an explicitly supplied script or expression in a local subprocess; never use downloaded/unreviewed code and do not invoke during this planning task",
+    "lightning.py deletes objects/materials named ENV_Storm_*; use an isolated owned scene and check existing names before any future execution",
+    "kit_check --fix changes mesh transforms and origins, including linked data; run only on owned export copies",
+    "surface_weather edits shared materials; copy materials first to avoid altering other objects",
+    "review_shots changes render and object display settings; not all state such as image format and object color is restored; use a disposable review copy",
+    "common --save writes to a caller-supplied path; do not overwrite the user's source blend",
+    "Blender 5.2+/5.3 assumptions must be verified against the actual runtime; no Blender upgrade is authorized by skill installation",
+    "Roblox QA profile values are skill heuristics rather than universal engine requirements; transparent/open VFX geometry needs explicit review exceptions",
+    "Blender node shaders, Geometry Nodes weather and volumetrics do not transfer automatically into Roblox"
+  ]
+}

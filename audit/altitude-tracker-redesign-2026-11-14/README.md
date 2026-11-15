@@ -1,18 +1,21 @@
 # Audit Implementasi & QA: Tracker Ketinggian Vertikal Kanan, Top HUD Option B, & Multi-Device Layout (`UI-01`)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## Identitas
 
 - **Fitur / Task:** Pemindahan tracker ketinggian ke sisi kanan vertikal (`ServerAltitudeTracker`), sinkronisasi seluruh kru di server (`ServerFlightsSyncEvent`), dukungan Solo & Party `2–3` pemain tanpa latar kapsul di belakang foto profil maupun pil teks di kiri avatar (sesuai revisi Figma V2), mahkota Party Master & avatar abu-abu untuk pemain mati, redesain Top HUD Option B, serta penyesuaian layout multi-device (`HUDLayout`).
 - **Tanggal QA:** 14 November 2026 (`Asia/Jakarta`, sesi pasca-edit final s.d. `21:40:20 +07:00`)
 - **Kode / Target:**
   - `ReplicatedStorage/FlyHigh/Remotes/ServerFlightsSyncEvent` (`RemoteEvent`, `remoteExists = true`)
-  - [`HUDAltitudeTracker.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDAltitudeTracker.luau) (`30,054` B stripped LF, Adler-32 `2377015608`, `MATCH=True strip`)
-  - [`FlightHUDController.luau`](../../sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau) (`26,543` B LF, Adler-32 `2856922865`, `MATCH=True nl`)
-  - [`HUDLayout.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) (`28,901` B LF, Adler-32 `768019915`, `MATCH=True nl`)
-  - [`HUDTheme.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau) (`78,084` B LF, Adler-32 `2799358645`, `MATCH=True nl`)
-  - [`HUDMotion.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau) (`53,769` B LF, Adler-32 `2437916041`, `MATCH=True nl`)
-  - [`BalloonManager.luau`](../../sources/ServerScriptService/FlyHighServer/BalloonManager.luau) (`24,015` B LF, Adler-32 `3818491015`, `MATCH=True nl`)
-  - [`WeaponClientController.luau`](../../sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau) (`43,738` B LF, Adler-32 `2726659153`, `MATCH=True nl`)
+  - [`HUDAltitudeTracker.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDAltitudeTracker.luau) (`30,054` B stripped LF, Adler-32 `2377015608`, `MATCH=True strip`)
+  - [`FlightHUDController.luau`](../sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau) (`26,543` B LF, Adler-32 `2856922865`, `MATCH=True nl`)
+  - [`HUDLayout.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) (`28,901` B LF, Adler-32 `768019915`, `MATCH=True nl`)
+  - [`HUDTheme.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau) (`78,084` B LF, Adler-32 `2799358645`, `MATCH=True nl`)
+  - [`HUDMotion.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau) (`53,769` B LF, Adler-32 `2437916041`, `MATCH=True nl`)
+  - [`BalloonManager.luau`](../sources/ServerScriptService/FlyHighServer/BalloonManager.luau) (`24,015` B LF, Adler-32 `3818491015`, `MATCH=True nl`)
+  - [`WeaponClientController.luau`](../sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau) (`43,738` B LF, Adler-32 `2726659153`, `MATCH=True nl`)
 - **Commit Git dasar saat inspeksi:** Branch `main`, `HEAD f5aa15d` (belum `git commit` / belum `git push`).
 
 ## Build & Sinkronisasi
@@ -24,7 +27,7 @@
 ## Lingkungan
 
 - **Live Playtest:** Windows Roblox Studio (`2aa6cbef-a4c5-43f8-a312-6b3f42eedd2d`), mode **Play Solo** (1 klien lokal `Fikki2621`, `AutoGas` dikontrol saat pengujian turun).
-- **Simulasi Geometri Multi-Device:** Skrip Python yang mengevaluasi formula [`HUDLayout.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) pasca-edit final di `8` ukuran viewport (`Desktop 1920x1080`, `Studio 2090x694`, `Laptop 1280x720`, `Tablet 1024x768`, `PhoneLand 844x390`, `PhoneSmLand 667x375`, `PhonePort 390x844`, `PhoneSmPort 360x640`) × peran (`Pilot`, `Gunner`, `Passenger`) × `textBoost` (`0` serta maksimum `3`/`6`) + `AlertBanner` (+ `CrewPingBanner` di `PhonePort 390x844`).
+- **Simulasi Geometri Multi-Device:** Skrip Python yang mengevaluasi formula [`HUDLayout.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) pasca-edit final di `8` ukuran viewport (`Desktop 1920x1080`, `Studio 2090x694`, `Laptop 1280x720`, `Tablet 1024x768`, `PhoneLand 844x390`, `PhoneSmLand 667x375`, `PhonePort 390x844`, `PhoneSmPort 360x640`) × peran (`Pilot`, `Gunner`, `Passenger`) × `textBoost` (`0` serta maksimum `3`/`6`) + `AlertBanner` (+ `CrewPingBanner` di `PhonePort 390x844`).
 
 ## Skenario
 
@@ -37,7 +40,7 @@
 ## Fixture
 
 - **Skenario 3 (Play Solo 1 klien):** Payload injeksi `ServerFlightsSyncEvent` 4 kru (`FlightRow_10`–`FlightRow_40`) dijalankan langsung pada sesi Play Solo untuk mensimulasikan beberapa tim, party `2–3` anggota, dan pemain/Party Master berstatus mati.
-- **Skenario 5:** Simulasi matematis Python di luar engine render Roblox atas formula [`HUDLayout.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) pasca-edit final.
+- **Skenario 5:** Simulasi matematis Python di luar engine render Roblox atas formula [`HUDLayout.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau) pasca-edit final.
 
 ## Bukti
 
@@ -49,7 +52,7 @@
 
 ## Hasil
 
-- **Kompilasi & Parity:** `46/46` script Studio tersinkron dengan mirror (`edSameCount = 46`) dan lolos kompilasi (`compileErrors = []`); `ServerFlightsSyncEvent` ada (`remoteExists = true`). Bug sesi uji awal (`(row :: any)._handles` diganti weak table `rowHandles`, serta `altimeterFrame` -> `altFrame` di [`FlightHUDController.luau`](../../sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau)) teratasi penuh pada build final.
+- **Kompilasi & Parity:** `46/46` script Studio tersinkron dengan mirror (`edSameCount = 46`) dan lolos kompilasi (`compileErrors = []`); `ServerFlightsSyncEvent` ada (`remoteExists = true`). Bug sesi uji awal (`(row :: any)._handles` diganti weak table `rowHandles`, serta `altimeterFrame` -> `altFrame` di [`FlightHUDController.luau`](../sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau)) teratasi penuh pada build final.
 - **Play Solo Live (Pasca-Edit Final):**
   - Lobby & Solo Climb terkonfirmasi: pada sampel `385 km`, `trackerPos=[1893,14]`, `trackerSize=[179,430]`, `speedText="▲ +7.4 km/s"`; tangkapan layar `413 km` menampilkan rail kanan & Top HUD Option B utuh.
   - Fixture 4-kru pada pendakian live terkonfirmasi: `FlightRow_10` (`236..263 km`, 3 anggota, latar transparan, 1 mati greyscale + `X`), `FlightRow_20` (`9750 km`, bebas tabrakan dengan `PalaceCrest`), stagger `FlightRow_30` (`5620 km`, `dotY=228, pY=228`) vs `FlightRow_40` (`5500 km`, `dotY=232, pY=276, elbowVis=true`) dengan Party Master mati (`DeadVeil=true, DeadBadge=true, MasterCrown.Visible=true, crownClr=[170,180,195]`), dan `overlaps=[]`.
@@ -59,8 +62,8 @@
 ## Batas
 
 1. Status multi-kru (`4` tim), party `2–3` pemain, dan avatar/Party Master mati baru diuji lewat injeksi fixture `ServerFlightsSyncEvent` pada Play Solo 1 klien (`Fikki2621`), belum lewat sesi Server + 3 klien Studio/publik nyata.
-2. Evaluasi `8` viewport (`32` konfigurasi) multi-device masih berbasis perhitungan geometri Python atas [`HUDLayout.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau), belum tangkapan render di Device Emulator Studio maupun tablet/HP fisik.
-3. Live Playtest pasca-edit final baru mencakup Lobby `Pod_A` dan Zona 1 (`LANGIT CERAH` naik/turun); Zona 2 (`AWAN MENDUNG`) sempat diamati sebelum polish final `HUDLayout`/`HUDAltitudeTracker`, sedangkan Zona 3–5 & ketibaan `10.000 km` Istana Awan pada [`HUDTheme.luau`](../../sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau) baru diverifikasi via inspeksi kode + kompilasi.
+2. Evaluasi `8` viewport (`32` konfigurasi) multi-device masih berbasis perhitungan geometri Python atas [`HUDLayout.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau), belum tangkapan render di Device Emulator Studio maupun tablet/HP fisik.
+3. Live Playtest pasca-edit final baru mencakup Lobby `Pod_A` dan Zona 1 (`LANGIT CERAH` naik/turun); Zona 2 (`AWAN MENDUNG`) sempat diamati sebelum polish final `HUDLayout`/`HUDAltitudeTracker`, sedangkan Zona 3–5 & ketibaan `10.000 km` Istana Awan pada [`HUDTheme.luau`](../sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau) baru diverifikasi via inspeksi kode + kompilasi.
 4. `Fly High.rbxl` tersimpan (`1,873,905` B, `SHA256=F8381D2BCFB12EAF71549ED98ACBC6C3531813EB52B1B6F1F518DFA18DD514D3`), tetapi belum dibuka ulang di sesi Studio baru dan belum di-commit/push ke Git.
 
 ## Cleanup

@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"fixture\":\"gallery only; native body and beams must stay readable\",\"disabledReviewEmitters\":59,\"quality\":\"Enum.QualityLevel.Level01\"}"
+    }
+  ],
+  "isError": false
+}

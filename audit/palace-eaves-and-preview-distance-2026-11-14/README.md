@@ -1,5 +1,8 @@
 # QA Perbaikan Sudut Keranjang PalaceLantern & Jarak Display Balon Dermaga (14 November 2026)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## Identitas & Build
 - **Tanggal**: 14 November 2026 (Asia/Jakarta)
 - **Commit dasar**: `f5aa15d` (belum commit / belum push; working tree berisi perubahan sesi ini dan perubahan sebelumnya yang belum di-commit)

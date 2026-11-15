@@ -1,0 +1,181 @@
+[
+  {
+    "file": "final-dawn.jpg",
+    "biome": 1,
+    "visualKm": 860,
+    "camera": [
+      250,
+      242,
+      -35
+    ],
+    "target": [
+      240,
+      228,
+      -10
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-bats.jpg",
+    "biome": 2,
+    "visualKm": 2640,
+    "camera": [
+      154,
+      708,
+      -186
+    ],
+    "target": [
+      165,
+      692,
+      -230
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-storm.jpg",
+    "biome": 2,
+    "visualKm": 3380,
+    "camera": [
+      115,
+      880,
+      -207
+    ],
+    "target": [
+      92,
+      865,
+      -242
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-sunset.jpg",
+    "biome": 3,
+    "visualKm": 4520,
+    "camera": [
+      157,
+      1170,
+      -217
+    ],
+    "target": [
+      130,
+      1158,
+      -249
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-bees.jpg",
+    "biome": 3,
+    "visualKm": 5480,
+    "camera": [
+      -65,
+      1408,
+      -232
+    ],
+    "target": [
+      -76,
+      1397,
+      -251
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-cosmic.jpg",
+    "biome": 4,
+    "visualKm": 6900,
+    "camera": [
+      -184,
+      1770,
+      -305
+    ],
+    "target": [
+      -226,
+      1754,
+      -355
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-phantom.jpg",
+    "biome": 4,
+    "visualKm": 7420,
+    "camera": [
+      382,
+      1888,
+      -285
+    ],
+    "target": [
+      367,
+      1873,
+      -323
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-outpost.jpg",
+    "biome": 5,
+    "visualKm": 8350,
+    "camera": [
+      -210,
+      2170,
+      -168
+    ],
+    "target": [
+      -310,
+      2120,
+      -340
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-gateway.jpg",
+    "biome": 5,
+    "visualKm": 8980,
+    "camera": [
+      207,
+      2300,
+      -195
+    ],
+    "target": [
+      168,
+      2278,
+      -253
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-palace.jpg",
+    "biome": 5,
+    "visualKm": 10000,
+    "camera": [
+      0,
+      2614,
+      64
+    ],
+    "target": [
+      0,
+      2610,
+      -4
+    ],
+    "fov": 60,
+    "fixture": true
+  },
+  {
+    "file": "final-fleet.jpg",
+    "biome": 5,
+    "visualKm": 9700,
+    "camera": "relative to highest CloudCutter: [62,23,38]",
+    "target": "PhoenixFigurehead pivot",
+    "fov": 60,
+    "fixture": true
+  }
+]

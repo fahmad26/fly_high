@@ -1,5 +1,8 @@
 # QA Papan Peringkat Puncak Spawn & Efek Dampak Tembakan — 15 November 2026
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 Implementasi dan verifikasi dua fitur baru pada **Fly High**:
 1. **Dua Papan Peringkat Top 10 Puncak Berdampingan di Dekat Spawn** (`ALL TIME` & `1 BULAN` reset otomatis tanggal 1 pukul `00:00 WIB`).
 2. **Efek Dampak Tembakan Senjata** untuk objek dapat ditembak (`Hit` & `Kill`) versus efek kebal/pantul **khusus** untuk obstacle/hazard non-shootable (`Immune`).
@@ -49,7 +52,7 @@ Implementasi dan verifikasi dua fitur baru pada **Fly High**:
     - Menembak **`Angin Topan`** (non-shootable): target tidak menerima kerusakan (`Immune`: `WeaponImmuneShieldDisc`, `WeaponImmuneShieldHalo`, `WeaponRicochetBolt`, `WeaponImmuneSpark x6`, HUD `"[ ! ]"` + `"KEBAL"`).
     - Menembak **langit kosong**: menghasilkan `impact = "none"` tanpa efek pantul palsu.
 - **QA 3 — Boot Bersih ke-2 & Penerbangan Nyata (`Pod_A` -> `422 km`):**
-  - Penerbangan nyata dari `Pod_A` (`~432 km` lalu Game Over pada `422 km`) memperbarui **kedua papan** (`LeaderboardAllTime` & `LeaderboardMonthly`) secara otomatis dengan `#1` `Ajooes` · `^ 422 km` beserta avatar thumbnail (`05-playsolo-live-flight-422km-updated.jpg`).
+  - **Konflik bukti OPEN-08 (belum terselesaikan):** narasi run menyebut `~432 km` lalu Game Over pada `422 km`, sedangkan screenshot papan menunjukkan `422 km`. Aturan PRD tetap ketinggian tertinggi selama pemain masih hidup; angka mana yang benar belum ditetapkan. Data ini bukan bukti bahwa rekor personal telah benar. Laporan sesi semula menyebut run tersebut memperbarui **kedua papan** (`LeaderboardAllTime` & `LeaderboardMonthly`) secara otomatis dengan `#1` `Ajooes` · `^ 422 km` beserta avatar thumbnail (`05-playsolo-live-flight-422km-updated.jpg`).
   - Pengecekan CQB & part queryable mengonfirmasi `StormCurtain` dikecualikan dari `wallPush` (`cqbStormIgnored = true, combatStormDetected = true`) dan `Wind`/`Heat`/`Fog` memiliki `0` part solid dibanding `Debris=9`, `Magnetic=5`, `Lightning=5`.
   - Log console akhir bersih dari error maupun warning gameplay (hanya pesan startup standar `[DataManager] Unpublished Studio: isolated mock data; checkout disabled.`).
 - **Pemulihan Edit & Penyimpanan Place:**

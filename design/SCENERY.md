@@ -15,9 +15,15 @@ Inventaris implementasi lokal per 11 November 2026. Dokumen ini menggabungkan ba
 
 Aset P1/P2 dari daftar lama sudah tersedia. Kolom QA menjelaskan pekerjaan berikutnya tanpa memerintahkan pembuatan ulang seluruh inventaris. Persetujuan estetika final tetap mengikuti review pengguna.
 
+## Konsistensi dengan rintangan — 15 November 2026
+
+Implementasi tersedia: scenery memakai ulang 17 keluarga mesh rintangan lewat `SceneryHabitatArt`. Burung latar memakai camar/elang terbaru; area badai memiliki kelelawar dan es; reruntuhan memiliki puing/penjaga nonaktif serta habitat lebah amber; pulau kristal memakai ChargedCrystal dan wyvern istirahat; lengkungan memiliki monumen Phantom. Area gerbang memiliki observatorium orbital/satelit/meteor serta motif phoenix di gerbang, kapal dan pintu istana.
+
+Dekorasi ditempatkan jauh dari koridor dan tidak ikut collision, query atau target senjata. Kesamaan bentuk tidak menjadikan dekorasi musuh aktif. Patung memakai batu/emas; fauna melakukan gerak tenang mengikuti habitat. Tidak ada perubahan aturan spawn atau damage. [Bukti per area, log, source dan batas QA](../audit/scenery-obstacle-consistency-2026-11-15/README.md). Ini QA fixture Play Solo, bukan penerbangan penuh atau uji perangkat fisik. Bentuk landmark lama yang masih kasar tetap merupakan pekerjaan polesan tersendiri.
+
 ## Source dan objek acuan
 
-- BiomeScenery membangun scenery dekoratif lokal. BiomeLightingController mengatur pergantian zona, cleanup, pencahayaan dan reveal istana.
+- BiomeScenery membangun scenery dekoratif lokal; SceneryHabitatArt menyalin visual dari Templates.ObstacleMeshes. BiomeLightingController mengatur pergantian zona, cleanup, pencahayaan dan reveal istana.
 - EnvironmentAssets.BiomeLandmarkMeshes, flora EnvironmentAssets, Templates.FleetGeometry dan BalloonSkins menyediakan bentuk yang dipakai ulang.
 - Workspace.CloudPalace menyimpan plaza interaktif. Vista jauh mengambil bentuk dari CustomArchitecture, CloudCascades serta titik FallingWater.
 - assets/generate-scenery-meshes.cjs menghasilkan GLB. Edit generator belum mengubah template di Studio.

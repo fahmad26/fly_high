@@ -12,7 +12,7 @@ return table.freeze({
 	art_cosmetic_tracer_violet = { "rbxassetid://125330903488863", 0, 0, 240, 200 },
 	art_cosmetic_title = { "rbxassetid://103572099545971", 0, 0, 240, 200 },
 	art_cosmetic_title_cyan = { "rbxassetid://96050086697784", 0, 0, 240, 200 },
-	daily_normal = { "rbxassetid://74634924421515", 0, 0, 256, 256 },
+	daily_normal = { "rbxassetid://109624962100172", 0, 0, 256, 256 },
 	turbo_normal = { "rbxassetid://125127753124623", 0, 0, 256, 256 },
 	rope_normal = { "rbxassetid://128957165942637", 0, 0, 256, 256 },
 	altitude_panel = { "rbxassetid://72068668225179", 4, 771, 768, 188 },

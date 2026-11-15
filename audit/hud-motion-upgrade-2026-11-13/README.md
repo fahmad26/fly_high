@@ -1,5 +1,8 @@
 # Pembaruan Animasi HUD (`HUDMotion`) — 13 November 2026
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## Build & Sinkronisasi
 - **Target module**: `ReplicatedStorage.FlyHigh.Modules.HUDMotion` (`audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau`), satu-satunya source script yang diubah (`51.135` byte setelah normalisasi newline, Adler-32 `0x4df175cc`).
 - **Lingkungan Studio**: `Fly High.rbxl` (`Edit` mode setelah Playtest selesai), `42` `LuaSourceContainer` terdeteksi, `loadstring` compile `HUDMotion` lulus tanpa error.

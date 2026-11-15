@@ -1,0 +1,564 @@
+{
+ "comparedAtUtc": "2026-11-15T14:20:41Z",
+ "method": "length + FNV-1a 32-bit on normalized text (checksum, not exact content equality)",
+ "studioCount": 54,
+ "mirrorCount": 54,
+ "mismatches": 0,
+ "onlyInMirror": [],
+ "mirror": {
+  "ReplicatedStorage.FlyHigh.Modules.AudioMixer": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioMixer.luau",
+   "bytes": 6992,
+   "fnv1a": "e46016d5",
+   "sha256_normalized": "c19b1971a783714511e2ed2a1eb9753a57c880d8e21d6684cb113d9ced40c90b"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+   "bytes": 14903,
+   "fnv1a": "b5b3ee6d",
+   "sha256_normalized": "ffc2d9a6bf86341e9f0424a8f1ad786e9d3a65d5d779c2cd14c8a01a8ea9e29c"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.BalloonThemes": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BalloonThemes.luau",
+   "bytes": 1118,
+   "fnv1a": "a57936ec",
+   "sha256_normalized": "bb2109d032d8961099b61dba94afa4028b103a6ea43fafe0158cf7c5138ca914"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.BalloonVFX": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BalloonVFX.luau",
+   "bytes": 40968,
+   "fnv1a": "d95aa1bc",
+   "sha256_normalized": "3504cd7a30c9a21dca7440214d2ca15922d32849ac8cb5b71f1f2b85050479ec"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.BiomeScenery": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau",
+   "bytes": 103082,
+   "fnv1a": "27b96fa8",
+   "sha256_normalized": "a55e8df3b9a1073b5c751750ab9c03e0fa2e8813682b3370fbceff3c4d65b6ee"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+   "bytes": 7703,
+   "fnv1a": "0d40d152",
+   "sha256_normalized": "6e0f872e00ff5c15e5928d415f16cab00a5694ec7857bd67d3771da235db12f2"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+   "bytes": 18173,
+   "fnv1a": "879776d4",
+   "sha256_normalized": "bfa5853220c87ab77607c679e5d873b403f8298504eb0d388f49ad04bf5d9aaa"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.FlightControlMath": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlightControlMath.luau",
+   "bytes": 482,
+   "fnv1a": "bd1969fc",
+   "sha256_normalized": "62d791d84492ac21de7d130ae3a0a16b95d6c11b2bd3d88ed3baea22204db925"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau",
+   "bytes": 4289,
+   "fnv1a": "4deb457c",
+   "sha256_normalized": "a110b0a30bf3a37f4f11f1fbe219a5a716422c368937bf58dc758b960864a474"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureArt.luau",
+   "bytes": 4996,
+   "fnv1a": "d17c232a",
+   "sha256_normalized": "1ec5100d88ecba55ece6cfd9f9bf5cbf91eb8fa67528d86960dd0f8a268c1aad"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureCatalog.luau",
+   "bytes": 5639,
+   "fnv1a": "6c682dce",
+   "sha256_normalized": "9786bf4471aadeba2418a16f5e14f117a4db6458bdcabb131419bc6d8b50a94e"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAltitudeTracker.luau",
+   "bytes": 32443,
+   "fnv1a": "b8803288",
+   "sha256_normalized": "b85e8c0e421252d86e19dc19740b2fa141258d0bba12a89c35b0ad672b468b14"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDGlyphs.luau",
+   "bytes": 1526,
+   "fnv1a": "33c944d3",
+   "sha256_normalized": "90511c513f62bc896af43cbf4f17e7f99af85608d37c68ee29c7d5fe7dc1cb08"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDImageAssets.luau",
+   "bytes": 21002,
+   "fnv1a": "eee7df68",
+   "sha256_normalized": "db57b111f597b942d0d464bf06d86f6d560941378dee72cded613c364bb75dc0"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDLayout": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+   "bytes": 39276,
+   "fnv1a": "8eded8dc",
+   "sha256_normalized": "54461f5c56074d79246d144c93e51a7cc8b91ccbca8821f4dee84ce76353f293"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDMotion": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau",
+   "bytes": 53925,
+   "fnv1a": "16bc0760",
+   "sha256_normalized": "816595520697aa7bd49371445b85270dfe790aa04c865d5af59f71eece80f039"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.HUDTheme": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+   "bytes": 84378,
+   "fnv1a": "af4fe75d",
+   "sha256_normalized": "43d10f4aca940d891d107421c82d47200f1054f38e8d10ec33e5460177cd69f2"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/LeaderboardBoardRenderer.luau",
+   "bytes": 15433,
+   "fnv1a": "dd88bbe9",
+   "sha256_normalized": "39ff59c9de89bef8b5fd065a31b81494d5493ec0fa8513c6d9f027defdf559e6"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/SceneryHabitatArt.luau",
+   "bytes": 6424,
+   "fnv1a": "72b9eabf",
+   "sha256_normalized": "f79079717312ac1f70a2446237a9cf95216b3634e9d2d5fea30b02ca92a21e0a"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.ShopTabsController": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+   "bytes": 27302,
+   "fnv1a": "eab9acec",
+   "sha256_normalized": "134da4a4f13838239e6a46c0ad445e1993f0f3b854cd56abeda26ff1e1f5519f"
+  },
+  "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/WeaponPresentation.luau",
+   "bytes": 40446,
+   "fnv1a": "908c9364",
+   "sha256_normalized": "4007fabf76f53214197f6d6c51a84e29f895629028ead22c98df0412eec705f7"
+  },
+  "ServerScriptService.FlyHighServer.BalloonManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+   "bytes": 31763,
+   "fnv1a": "fc0facaa",
+   "sha256_normalized": "f1189c07c09cff7723cd58c948d22e3bd87e8958f24da03a67c0c5745b234489"
+  },
+  "ServerScriptService.FlyHighServer.CrewAccessGuard": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/CrewAccessGuard.luau",
+   "bytes": 1105,
+   "fnv1a": "f62171cc",
+   "sha256_normalized": "8c968e15f664f1600dec9e390cc7b8436e8563d832754a4cfad120e31db07543"
+  },
+  "ServerScriptService.FlyHighServer.DataManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+   "bytes": 22333,
+   "fnv1a": "12d2b6da",
+   "sha256_normalized": "bd858b5e6decf9cd992a2a94fd773972b1de86403af39f72eaa7f3e59182bed0"
+  },
+  "ServerScriptService.FlyHighServer.FlightSpace": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau",
+   "bytes": 3423,
+   "fnv1a": "09c1b994",
+   "sha256_normalized": "42e98bbaca5da26329aa034822d3b3e0614a924bf9c9f14ae5170843c609da57"
+  },
+  "ServerScriptService.FlyHighServer.IslandWildlifeController": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/IslandWildlifeController.luau",
+   "bytes": 4201,
+   "fnv1a": "68c053cd",
+   "sha256_normalized": "4c35b404ccf8f65f1ffb5b1ecfdf30c47d46ab552a1d826e2b6dd08e374a8234"
+  },
+  "ServerScriptService.FlyHighServer.JumpManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+   "bytes": 6446,
+   "fnv1a": "02d90605",
+   "sha256_normalized": "efaa53ad0a37b886e4a917a2b2bf7a548433968d273cbf988a25e571c43f1571"
+  },
+  "ServerScriptService.FlyHighServer.LargeChallengeManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/LargeChallengeManager.luau",
+   "bytes": 5735,
+   "fnv1a": "2170ab2a",
+   "sha256_normalized": "315267eef2443dfea48659c0a9b9b3421d53990e07b0b0d486c4db1eedf6a99c"
+  },
+  "ServerScriptService.FlyHighServer.LeaderboardManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/LeaderboardManager.luau",
+   "bytes": 13036,
+   "fnv1a": "98204513",
+   "sha256_normalized": "d01dbe6be1c046876c86e524e34dd462d1b1692bbd0a41ce427017b580e9ed43"
+  },
+  "ServerScriptService.FlyHighServer.ObstacleArt": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ObstacleArt.luau",
+   "bytes": 26837,
+   "fnv1a": "6a9700c3",
+   "sha256_normalized": "4205eb86b0d5359fb6b8ac9c35752313c92462be9fdebfd250db80c90d0885e2"
+  },
+  "ServerScriptService.FlyHighServer.ObstacleManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+   "bytes": 23498,
+   "fnv1a": "66c7ef2c",
+   "sha256_normalized": "7c46fc934594788188c07935927aad90a2f00eeb2935adc45b036337129ae212"
+  },
+  "ServerScriptService.FlyHighServer.ObstacleMotion": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ObstacleMotion.luau",
+   "bytes": 3867,
+   "fnv1a": "e328448c",
+   "sha256_normalized": "b0add4b1e87cef3e6aaafe4cf14c0777382c7dc00b94abe46411b105bfadafdf"
+  },
+  "ServerScriptService.FlyHighServer.ObstacleVisuals": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ObstacleVisuals.luau",
+   "bytes": 12169,
+   "fnv1a": "1f3e0ad9",
+   "sha256_normalized": "061755216b0e7be30739960bcf7662502cb55aba93f8f111def667fd51e695f2"
+  },
+  "ServerScriptService.FlyHighServer.OverheadManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+   "bytes": 6607,
+   "fnv1a": "ea6267c7",
+   "sha256_normalized": "720c8e6cb8871a0364f70d53cd73b31202bce4b7c7f721e67aa04b12402f02b7"
+  },
+  "ServerScriptService.FlyHighServer.PalaceArrival": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/PalaceArrival.luau",
+   "bytes": 4171,
+   "fnv1a": "28126afc",
+   "sha256_normalized": "2ece077ec5f9b4d5c7cf4e7a4040cbcd73ee1451382818f7b30a1caf8d37bd98"
+  },
+  "ServerScriptService.FlyHighServer.PalaceManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/PalaceManager.luau",
+   "bytes": 2285,
+   "fnv1a": "9e12a6d0",
+   "sha256_normalized": "8fa7321eb9e63929fea6797acd19549db2a35f002be1fbe21574bb44fabcc7ae"
+  },
+  "ServerScriptService.FlyHighServer.PodManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+   "bytes": 5886,
+   "fnv1a": "acfbb042",
+   "sha256_normalized": "d7df0fc997f492184b640ecf7cb2344628e9202f09d73536fe54ae25ac7453f9"
+  },
+  "ServerScriptService.FlyHighServer.ServerUtils": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ServerUtils.luau",
+   "bytes": 2464,
+   "fnv1a": "1992bbdf",
+   "sha256_normalized": "1ca75e716a0675bdeb4b9815aae96489e1f77b74b4078526f0fd719dd2733dd6"
+  },
+  "ServerScriptService.FlyHighServer.ShopManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+   "bytes": 4904,
+   "fnv1a": "f8d9141d",
+   "sha256_normalized": "c26ddb3f74d56d55a89cceaae45bc2ca4a28f0169dc42f1629a44e6ab92b99d8"
+  },
+  "ServerScriptService.FlyHighServer.TetherManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+   "bytes": 24191,
+   "fnv1a": "ec845032",
+   "sha256_normalized": "d3a3f411640f159692af4d97764adc0eff4001e67fc1aec386e533220e7ba930"
+  },
+  "ServerScriptService.FlyHighServer.WeaponManager": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+   "bytes": 13641,
+   "fnv1a": "c6092a79",
+   "sha256_normalized": "d2c3c73a38441760320e88a9d5634a44742deabdadceb3531990a1ee5b74442e"
+  },
+  "ServerScriptService.FlyHighServer.WeaponRackPresentation": {
+   "file": "audit/sources/ServerScriptService/FlyHighServer/WeaponRackPresentation.luau",
+   "bytes": 2989,
+   "fnv1a": "8eb53f85",
+   "sha256_normalized": "310551fe6a6889b1119a75aa8ac2d6636abeded3eaf11882630d414115b3431c"
+  },
+  "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau",
+   "bytes": 9688,
+   "fnv1a": "f3d7f2d1",
+   "sha256_normalized": "5707a8c122f506bd482900a5478ceea306a00ce025e5c5183c15fc563c376166"
+  },
+  "StarterPlayer.StarterPlayerScripts.BiomeLightingController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/BiomeLightingController.luau",
+   "bytes": 11380,
+   "fnv1a": "da7d7be9",
+   "sha256_normalized": "27868f891091225b327f28b727d9692389a07fca479681c3d28ba4b64c719065"
+  },
+  "StarterPlayer.StarterPlayerScripts.FlightHUDController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+   "bytes": 30993,
+   "fnv1a": "450bf4fb",
+   "sha256_normalized": "3119c1f743bb278454ceedf967d11f9e60135632df44948338859b636fcda1f9"
+  },
+  "StarterPlayer.StarterPlayerScripts.FlightJumpController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+   "bytes": 7218,
+   "fnv1a": "a1b6676a",
+   "sha256_normalized": "025a4971a43dd95c91d241534df923f665bb665bad075567ec765def1ca3986d"
+  },
+  "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/IslandNatureAnimator.luau",
+   "bytes": 4940,
+   "fnv1a": "0124a77e",
+   "sha256_normalized": "aa4c088adb6da91320315a14fb56fb15862cb3c1099172fca0f4d9fcf7e81500"
+  },
+  "StarterPlayer.StarterPlayerScripts.MusicController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/MusicController.luau",
+   "bytes": 14289,
+   "fnv1a": "d7702424",
+   "sha256_normalized": "3c3683460263a0ee6f24f6effe0f8e6ca9f6aeb715b65e06d2a7d31bab31d40f"
+  },
+  "StarterPlayer.StarterPlayerScripts.PalacePresentation": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalacePresentation.luau",
+   "bytes": 3981,
+   "fnv1a": "d3e4f76a",
+   "sha256_normalized": "13c513c0aa6f5a4e3a6487bbe30c96fd76612240235a79ddeb4bc5bcede917d0"
+  },
+  "StarterPlayer.StarterPlayerScripts.ShopClientController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+   "bytes": 20250,
+   "fnv1a": "c11a1541",
+   "sha256_normalized": "33dca1e79dd2642d5dfea30d7435476222570f441733611a2db1f58f483df09e"
+  },
+  "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/StormCurtainPresentation.luau",
+   "bytes": 9535,
+   "fnv1a": "9968e2b4",
+   "sha256_normalized": "e1ebd5061357e3afc45cf10e1d43d20e6018a464753eadf479c827f337982ad4"
+  },
+  "StarterPlayer.StarterPlayerScripts.WarningAudioController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WarningAudioController.luau",
+   "bytes": 7794,
+   "fnv1a": "f48538ed",
+   "sha256_normalized": "decf140af84e05d6a0246d6080e35706440c2cad796aeeca7f40f4e93b0f20a5"
+  },
+  "StarterPlayer.StarterPlayerScripts.WeaponClientController": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+   "bytes": 46153,
+   "fnv1a": "e4d26d84",
+   "sha256_normalized": "c455970897aefe791073cd9d271af341745bbb89f5a6e5dd64479641c2b01c1f"
+  },
+  "StarterPlayer.StarterPlayerScripts.WorldUISkins": {
+   "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WorldUISkins.luau",
+   "bytes": 6022,
+   "fnv1a": "1e4ae049",
+   "sha256_normalized": "4239c8c1a58f78053ee3e5df96e886aa22cd7972755eaa5f928149627a48b836"
+  }
+ },
+ "results": [
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+   "match": true
+  },
+  {
+   "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.BalloonManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.DataManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.FlightSpace",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.JumpManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.OverheadManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.PalaceManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.PodManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ServerUtils",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.ShopManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.TetherManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.WeaponManager",
+   "match": true
+  },
+  {
+   "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+   "match": true
+  },
+  {
+   "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+   "match": true
+  }
+ ],
+ "placeFile": {
+  "path": "Fly High.rbxl",
+  "bytes": 2164854,
+  "sha256": "EA632B7B6AE0219EE5802DB6843203734AB33D79E32C5EE16D0B3E3B0D072495",
+  "mtimeUtc": "2026-11-15T11:25:42Z"
+ },
+ "git": {
+  "branch": "main",
+  "head": "969892d826627383d70a5a27c1df906958159f6d",
+  "originMainLocal": "969892d826627383d70a5a27c1df906958159f6d",
+  "dirtyEntries": 60
+ }
+}

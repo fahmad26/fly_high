@@ -1,0 +1,397 @@
+{
+  "scene": "FlyHigh_Obstacle_Atelier",
+  "modelCount": 18,
+  "meshCount": 34,
+  "totalTriangles": 57768,
+  "exportDirectory": "E:/Antigravity/Fly High/assets/models/obstacles/generated/",
+  "models": {
+    "CrystalWyvern": {
+      "parts": [
+        {
+          "name": "CrystalWyvern__Body",
+          "triangles": 4822
+        },
+        {
+          "name": "CrystalWyvern__WingL",
+          "triangles": 694
+        },
+        {
+          "name": "CrystalWyvern__WingR",
+          "triangles": 694
+        }
+      ],
+      "sizeMetres": [
+        3.248000144958496,
+        3.0110357999801636,
+        1.2367112338542938
+      ],
+      "sizeStudsXYZ": [
+        11.600000517708914,
+        4.416825835193906,
+        10.75369928564344
+      ]
+    },
+    "ShadowPhantom": {
+      "parts": [
+        {
+          "name": "ShadowPhantom__Body",
+          "triangles": 3716
+        },
+        {
+          "name": "ShadowPhantom__Arms",
+          "triangles": 1360
+        }
+      ],
+      "sizeMetres": [
+        1.3503375053405762,
+        0.6348318755626678,
+        1.7362175583839417
+      ],
+      "sizeStudsXYZ": [
+        4.822633947644914,
+        6.200776994228362,
+        2.267256698438099
+      ]
+    },
+    "CelestialPhoenix": {
+      "parts": [
+        {
+          "name": "CelestialPhoenix__Body",
+          "triangles": 3396
+        },
+        {
+          "name": "CelestialPhoenix__WingL",
+          "triangles": 1196
+        },
+        {
+          "name": "CelestialPhoenix__WingR",
+          "triangles": 1196
+        }
+      ],
+      "sizeMetres": [
+        2.828000068664551,
+        2.781205475330353,
+        0.9122836887836456
+      ],
+      "sizeStudsXYZ": [
+        10.100000245230538,
+        3.2581560313701625,
+        9.932876697608402
+      ]
+    },
+    "Seagull": {
+      "parts": [
+        {
+          "name": "Seagull__Body",
+          "triangles": 2580
+        },
+        {
+          "name": "Seagull__WingL",
+          "triangles": 1196
+        },
+        {
+          "name": "Seagull__WingR",
+          "triangles": 1196
+        }
+      ],
+      "sizeMetres": [
+        2.828000068664551,
+        1.844784677028656,
+        0.629702240228653
+      ],
+      "sizeStudsXYZ": [
+        10.100000245230538,
+        2.248936572245189,
+        6.588516703673771
+      ]
+    },
+    "Eagle": {
+      "parts": [
+        {
+          "name": "Eagle__Body",
+          "triangles": 2804
+        },
+        {
+          "name": "Eagle__WingL",
+          "triangles": 1196
+        },
+        {
+          "name": "Eagle__WingR",
+          "triangles": 1196
+        }
+      ],
+      "sizeMetres": [
+        2.828000068664551,
+        1.8479344844818115,
+        0.629702240228653
+      ],
+      "sizeStudsXYZ": [
+        10.100000245230538,
+        2.248936572245189,
+        6.599766016006469
+      ]
+    },
+    "StormBat": {
+      "parts": [
+        {
+          "name": "StormBat__Body",
+          "triangles": 2156
+        },
+        {
+          "name": "StormBat__WingL",
+          "triangles": 618
+        },
+        {
+          "name": "StormBat__WingR",
+          "triangles": 618
+        }
+      ],
+      "sizeMetres": [
+        3.274963140487671,
+        1.0640000104904175,
+        0.8462139070034027
+      ],
+      "sizeStudsXYZ": [
+        11.696296930313109,
+        3.0221925250121524,
+        3.8000000374657765
+      ]
+    },
+    "FireBee": {
+      "parts": [
+        {
+          "name": "FireBee__Body",
+          "triangles": 4656
+        },
+        {
+          "name": "FireBee__WingL",
+          "triangles": 660
+        },
+        {
+          "name": "FireBee__WingR",
+          "triangles": 660
+        }
+      ],
+      "sizeMetres": [
+        1.739537239074707,
+        1.4226745963096619,
+        0.7976064682006836
+      ],
+      "sizeStudsXYZ": [
+        6.2126329966953815,
+        2.8485945292881554,
+        5.0809807011059345
+      ]
+    },
+    "GuardianDrone": {
+      "parts": [
+        {
+          "name": "GuardianDrone__Body",
+          "triangles": 4044
+        },
+        {
+          "name": "GuardianDrone__Aperture",
+          "triangles": 880
+        }
+      ],
+      "sizeMetres": [
+        1.5399999618530273,
+        0.8917999863624573,
+        0.539000004529953
+      ],
+      "sizeStudsXYZ": [
+        5.499999863760811,
+        1.9250000161784033,
+        3.1849999512944898
+      ]
+    },
+    "SatelliteDebris": {
+      "parts": [
+        {
+          "name": "SatelliteDebris__Body",
+          "triangles": 1404
+        },
+        {
+          "name": "SatelliteDebris__Panels",
+          "triangles": 5760
+        },
+        {
+          "name": "SatelliteDebris__Dish",
+          "triangles": 1280
+        }
+      ],
+      "sizeMetres": [
+        2.7720000743865967,
+        1.2495298385620117,
+        0.9225999712944031
+      ],
+      "sizeStudsXYZ": [
+        9.900000265666415,
+        3.2949998974800105,
+        4.462606566292899
+      ]
+    },
+    "Hailstone": {
+      "parts": [
+        {
+          "name": "Hailstone__Body",
+          "triangles": 310
+        }
+      ],
+      "sizeMetres": [
+        0.9141762554645538,
+        0.9274529814720154,
+        1.3548907041549683
+      ],
+      "sizeStudsXYZ": [
+        3.264915198087692,
+        4.838895371982029,
+        3.312332076685769
+      ]
+    },
+    "Hailstone2": {
+      "parts": [
+        {
+          "name": "Hailstone2__Body",
+          "triangles": 310
+        }
+      ],
+      "sizeMetres": [
+        0.9469020366668701,
+        0.9344037175178528,
+        1.2836315631866455
+      ],
+      "sizeStudsXYZ": [
+        3.3817929880959645,
+        4.584398439952305,
+        3.3371561339923312
+      ]
+    },
+    "Hailstone3": {
+      "parts": [
+        {
+          "name": "Hailstone3__Body",
+          "triangles": 310
+        }
+      ],
+      "sizeMetres": [
+        0.9553549587726593,
+        0.9101453423500061,
+        1.3040493726730347
+      ],
+      "sizeStudsXYZ": [
+        3.41198199561664,
+        4.657319188117981,
+        3.25051907982145
+      ]
+    },
+    "Meteor": {
+      "parts": [
+        {
+          "name": "Meteor__Body",
+          "triangles": 704
+        }
+      ],
+      "sizeMetres": [
+        1.9816536903381348,
+        1.950830101966858,
+        2.6010061502456665
+      ],
+      "sizeStudsXYZ": [
+        7.077334608350481,
+        9.289307679448807,
+        6.967250364167349
+      ]
+    },
+    "ChargedCrystal": {
+      "parts": [
+        {
+          "name": "ChargedCrystal__Body",
+          "triangles": 68
+        }
+      ],
+      "sizeMetres": [
+        0.9336600005626678,
+        0.8002074956893921,
+        2.5199999809265137
+      ],
+      "sizeStudsXYZ": [
+        3.334500002009528,
+        8.999999931880405,
+        2.8578839131764
+      ]
+    },
+    "MagicSpike": {
+      "parts": [
+        {
+          "name": "MagicSpike__Body",
+          "triangles": 44
+        }
+      ],
+      "sizeMetres": [
+        0.3247999846935272,
+        2.4639999866485596,
+        0.28128504753112793
+      ],
+      "sizeStudsXYZ": [
+        1.1599999453340257,
+        1.004589455468314,
+        8.799999952316284
+      ]
+    },
+    "Ruin1": {
+      "parts": [
+        {
+          "name": "Ruin1__Body",
+          "triangles": 1992
+        }
+      ],
+      "sizeMetres": [
+        3.5170645713806152,
+        2.9786216020584106,
+        4.0393394231796265
+      ],
+      "sizeStudsXYZ": [
+        12.56094489778791,
+        14.426212225641521,
+        10.63793429306575
+      ]
+    },
+    "Ruin2": {
+      "parts": [
+        {
+          "name": "Ruin2__Body",
+          "triangles": 2084
+        }
+      ],
+      "sizeMetres": [
+        3.5484611988067627,
+        2.9719218015670776,
+        3.9543721675872803
+      ],
+      "sizeStudsXYZ": [
+        12.67307571002415,
+        14.122757741383143,
+        10.614006434168134
+      ]
+    },
+    "Ruin3": {
+      "parts": [
+        {
+          "name": "Ruin3__Body",
+          "triangles": 1968
+        }
+      ],
+      "sizeMetres": [
+        3.3896706104278564,
+        2.9541146755218506,
+        2.9880093336105347
+      ],
+      "sizeStudsXYZ": [
+        12.105966465813772,
+        10.671461905751908,
+        10.550409555435179
+      ]
+    }
+  }
+}

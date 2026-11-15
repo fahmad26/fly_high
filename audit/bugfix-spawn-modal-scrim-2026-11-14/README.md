@@ -1,5 +1,8 @@
 # Laporan QA Bugfix Spawn Balon Dermaga, Modal Click & Scrim Topbar — 14 November 2026
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 - **Tanggal:** 14 November 2026 (Asia/Jakarta)
 - **Build / Basis:** `HEAD` `f5aa15d` (lokal belum commit/push), Studio ID `eec13bfa-b2e6-4b11-83a9-d00c8edf4b4d`, `Fly High.rbxl` (`1.740.013` B, SHA-256 `A4364004F400DC2766E28C6557822A65E810A290BD8639D8FD2A024DA08BA437`, tersimpan lokal via `save_place`).
 - **Lingkungan Uji:** Roblox Studio Desktop Play Solo (`View=(2090, 752)`, safe area `GuiAbs=(2090, 694)`, `GetGuiInset()=(0, 58 | 0, 0)`), 1 pemain (`Fikki2621`), tanpa fixture test eksternal tersisa sesudah Stop.

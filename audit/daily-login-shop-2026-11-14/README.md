@@ -1,5 +1,8 @@
 # QA Daily Login (7-Hari Non-Reset), Ekonomi Sky Coins, Toko 3-Tab & Audit Responsif
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 - **ID Run:** `daily-login-shop-2026-11-14`
 - **Tanggal/Waktu/Timezone:** 14–15 November 2026 (update pasca-polesan UI final: `2026-11-15T00:40:46+07:00`, Asia/Jakarta)
 - **Build:** Base commit `f5aa15d` (`main`), dirty working tree + `14` PNG 2× RGBA [`assets/ui/sky-adventure/generated/daily-shop/`](../../assets/ui/sky-adventure/generated/daily-shop/) (`34` kunci ID di [`roblox-texture-ids.json`](../../assets/ui/sky-adventure/roblox-texture-ids.json)), mirror [`audit/sources/`](../sources/) `49/49` identik terhadap Studio `Edit` pasca-normalisasi StripBOM/LF/TrimEnd (UTF-8 byte length + FNV-1a-32 + DJB2-32; `0` error `loadstring`), place tersimpan [`Fly High.rbxl`](../../Fly%20High.rbxl) (`1.893.898` B, `2026-11-15T00:40:46+07:00`, SHA-256 `04EF01A363C8DC96B972DC1F005A7F729369AF92E42540EE63D508086CAFB5A6`, isi binary belum dibuka ulang).

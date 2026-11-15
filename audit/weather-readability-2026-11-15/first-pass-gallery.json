@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"fixture\":\"normal steady rate; no Emit\",\"specs\":{\"1\":{\"volumes\":2,\"revision\":3,\"name\":\"Tornado\",\"minPartTransparency\":1,\"emitters\":10,\"rate\":40,\"parts\":0},\"8\":{\"volumes\":0,\"name\":\"Meteor\",\"minPartTransparency\":0,\"emitters\":6,\"rate\":123,\"parts\":6},\"3\":{\"volumes\":3,\"revision\":3,\"name\":\"Wind\",\"minPartTransparency\":1,\"emitters\":3,\"rate\":12,\"parts\":0},\"2\":{\"volumes\":0,\"revision\":3,\"name\":\"Lightning\",\"minPartTransparency\":0.30000001192092898,\"emitters\":6,\"rate\":30,\"parts\":6},\"5\":{\"volumes\":2,\"revision\":3,\"name\":\"Fog\",\"minPartTransparency\":1,\"emitters\":3,\"rate\":12,\"parts\":0},\"4\":{\"volumes\":1,\"revision\":3,\"name\":\"Heat\",\"minPartTransparency\":1,\"emitters\":6,\"rate\":18,\"parts\":0},\"7\":{\"volumes\":0,\"name\":\"Magnetic\",\"minPartTransparency\":0,\"emitters\":5,\"rate\":20,\"parts\":5},\"6\":{\"volumes\":2,\"revision\":3,\"name\":\"Storm\",\"minPartTransparency\":1,\"emitters\":10,\"rate\":40,\"parts\":0}},\"players\":1}"
+    }
+  ],
+  "isError": false
+}

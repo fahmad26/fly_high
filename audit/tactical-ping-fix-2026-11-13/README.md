@@ -1,5 +1,8 @@
 # QA & Audit Perbaikan Notifikasi Ping Taktis (13 November 2026)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## 1. Identitas Build & Repository
 
 - **Tanggal Verifikasi**: 13 November 2026 (`23:57:36 +07:00` simpan `.rbxl`, `23:58:38 +07:00` audit hash & status repo)

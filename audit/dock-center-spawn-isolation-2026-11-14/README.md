@@ -1,5 +1,8 @@
 # QA Spawn Balon di Pusat Dermaga & Isolasi Antrean Kru (14 November 2026)
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 Ringkasan verifikasi pascapilihan **Opsi 1** (`Fly High.rbxl`, Git HEAD `f5aa15d`, Studio Edit/Play Solo Desktop, belum commit/push).
 
 ## Perubahan yang diterapkan

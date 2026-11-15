@@ -58,7 +58,13 @@ Arsip 23 skill inti berada di skills/el4cteo/skills/. Empat skill tambahan yang 
 | Receipt atau inventory tidak tersimpan | data-stores atau monetization | security, testing |
 | Rintangan terlalu sulit/mudah | game-systems | analytics-liveops, testing; amati manusia juga |
 
-## Kandidat yang tidak dipasang
+## Tambahan Blender — 15 November 2026
+
+Lima skill dari [EL4CTEO/blender-skills](https://github.com/EL4CTEO/blender-skills/tree/b1b21dfb73bc40b874ebf2aa12645931bfed3523) dipasang pada commit terkunci setelah audit baru: `blender-core`, `blender-environment-kits`, `blender-asset-qa`, `blender-hardsurface-modeling`, dan `blender-weather-fx`. Core adalah fondasi empat spesialis; jangan memuat seluruh paket otomatis. [Snapshot, kegunaan, hasil hash instalasi dan batas eksekusi](blender-skills-review-2026-11-15/README.md).
+
+Blender tersambung 5.3.0, sesuai rentang paket. Skill tersedia otomatis mulai giliran setelah instalasi. Script upstream belum dijalankan pada tugas audit; tidak ada perubahan game. Rencana penggunaan: [revisi seni lingkungan](../../design/features/environment-art-revision/plan.md). Kandidat NPR/toon, simulasi dan art-director generik tidak dipasang karena tidak diperlukan untuk cakupan saat ini.
+
+## Kandidat lama yang tidak dipasang
 
 - roblox-playtest-qa: [arsip](skills/ash/roblox-playtest-qa/SKILL.md). Tumpang tindih dengan testing/mobile; juga meminta human approval untuk penutupan roadmap. Tidak dijadikan gerbang tambahan Fly High.
 - roblox-economy-balancing: [arsip](skills/ash/roblox-economy-balancing/SKILL.md). Opsional bila ada permintaan perubahan ekonomi; tidak diperlukan untuk perbaikan jalan/fisika saat ini.

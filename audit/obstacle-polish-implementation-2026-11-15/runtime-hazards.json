@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"warning\":{\"1\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Tornado\"},\"3\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Wind\"},\"2\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Lightning\"},\"5\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Heat\"},\"4\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Debris\"},\"7\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Fog\"},\"6\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Magnetic\"},\"9\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Storm\"},\"8\":{\"activeBeams\":0,\"activated\":false,\"effect\":\"Meteor\"}},\"active\":{\"1\":{\"effect\":\"Tornado\",\"meshCount\":0,\"activated\":true,\"age\":0.37136709998594599,\"visibleMeshes\":0},\"3\":{\"effect\":\"Wind\",\"meshCount\":0,\"activated\":true,\"age\":0.3701565000228584,\"visibleMeshes\":0},\"2\":{\"effect\":\"Lightning\",\"meshCount\":0,\"activated\":true,\"age\":0.3705543999967631,\"visibleMeshes\":0},\"5\":{\"effect\":\"Heat\",\"meshCount\":0,\"activated\":true,\"age\":0.36909779999405148,\"visibleMeshes\":0},\"4\":{\"effect\":\"Debris\",\"meshCount\":4,\"activated\":true,\"age\":0.3695786999887787,\"visibleMeshes\":4},\"7\":{\"effect\":\"Fog\",\"meshCount\":0,\"activated\":true,\"age\":0.3679048999911174,\"visibleMeshes\":0},\"6\":{\"effect\":\"Magnetic\",\"meshCount\":5,\"activated\":true,\"age\":0.36810849999892528,\"visibleMeshes\":5},\"9\":{\"effect\":\"Storm\",\"meshCount\":0,\"activated\":true,\"age\":0.36415469998610208,\"visibleMeshes\":0},\"8\":{\"effect\":\"Meteor\",\"meshCount\":3,\"activated\":true,\"age\":0.3663408000138588,\"visibleMeshes\":2}}}"
+    }
+  ],
+  "isError": false
+}

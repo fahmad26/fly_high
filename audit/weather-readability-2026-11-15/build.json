@@ -1,0 +1,58 @@
+{
+  "baselineCommit": "969892d826627383d70a5a27c1df906958159f6d",
+  "timestamp": "2026-11-15T10:50:25Z",
+  "compileCount": 53,
+  "compileErrors": [],
+  "parity": [
+    {
+      "name": "ObstacleArt",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 26837,
+      "sha256": "4205eb86b0d5359fb6b8ac9c35752313c92462be9fdebfd250db80c90d0885e2"
+    },
+    {
+      "name": "ObstacleVisuals",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 12169,
+      "sha256": "061755216b0e7be30739960bcf7662502cb55aba93f8f111def667fd51e695f2"
+    },
+    {
+      "name": "ObstacleManager",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 23498,
+      "sha256": "7c46fc934594788188c07935927aad90a2f00eeb2935adc45b036337129ae212"
+    },
+    {
+      "name": "LargeChallengeManager",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 5735,
+      "sha256": "315267eef2443dfea48659c0a9b9b3421d53990e07b0b0d486c4db1eedf6a99c"
+    }
+  ],
+  "place": {
+    "bytes": 2162224,
+    "sha256": "8d7f0955db8a80b1ae85b150a784c7af6b88e7f7abdf8bc2108339f0c38a9f80",
+    "reopened": false
+  },
+  "cleanup": {
+    "fixture": false,
+    "players": 0
+  },
+  "screenshots": [
+    "after-celestial-storm.jpg",
+    "after-fog.jpg",
+    "after-heat.jpg",
+    "after-lightning.jpg",
+    "after-storm-curtain.jpg",
+    "after-tornado.jpg",
+    "after-wind.jpg",
+    "before-fog.jpg",
+    "before-lightning.jpg",
+    "before-tornado.jpg",
+    "before-wind.jpg",
+    "low-lightning.jpg",
+    "low-tornado.jpg",
+    "low-wind.jpg",
+    "night-lightning.jpg"
+  ]
+}

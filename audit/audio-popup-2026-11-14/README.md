@@ -1,5 +1,8 @@
 # Laporan QA Popup Pengaturan Suara (`SUARA`), Mixer Audio 3-Kanal & Sistem Musik Latar
 
+> **Status historis — peninjauan dokumentasi 15 November:** laporan ini mempertahankan tanggal/build/hasil run semula. Sebutan belum commit/push di bawah berlaku saat run, bukan HEAD kini; lihat [acuan Git](../../HANDOVER.md) dan [status fitur/OPEN-07](../../PROGRESS.md). Folder ini belum menyertakan log/manifest mentah terpisah; klaim QA naratif belum diverifikasi ulang. Screenshot tetap bukti visual sesuai cakupannya. Penandaan ini bukan Playtest baru.
+
+
 ## Ringkasan Pekerjaan
 
 - **ID fitur/temuan:** `UI-01` / Audio Settings Popup, 3-Channel Audio Mixer & Multiplayer-Safe Music System (Fase 1 + Fase 2 selesai terimplementasi & QA)

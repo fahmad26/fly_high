@@ -1,0 +1,7 @@
+{
+  "normalization": "CRLF to LF, trimEnd",
+  "catalogContentsMatch": true,
+  "players": 0,
+  "camera": "0, 48, 25, 0.99772352, -0.0627048835, 0.0248167235, 1.86264515e-09, 0.367997736, 0.929826736, -0.0674371719, -0.927709997, 0.367159992",
+  "compileOk": true
+}

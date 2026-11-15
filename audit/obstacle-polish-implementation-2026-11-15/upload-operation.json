@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "POST https://apis.roblox.com/assets/v1/assets -> 200 OK\n\n{\"path\":\"operations/7c7ea2c3-53f7-4c6b-88e1-c90dc52e22e0\",\"operationId\":\"7c7ea2c3-53f7-4c6b-88e1-c90dc52e22e0\",\"done\":false}"
+    }
+  ],
+  "isError": false
+}

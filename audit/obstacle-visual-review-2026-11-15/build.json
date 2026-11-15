@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-11-15T05:46:24.100Z",
+  "baseCommit": "969892d",
+  "files": [
+    {
+      "path": "Fly High.rbxl",
+      "bytes": 1916916,
+      "sha256": "0127344498e083b397bdb9091351031481cb515e7a3940f8a66a4d06a705be3a"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleArt.luau",
+      "bytes": 27155,
+      "sha256": "dcb80bb03dc264efb074bfed60eb185af48c2212f37b65611c3d417fef019f00"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+      "bytes": 23499,
+      "sha256": "3e14256e9352cf7a33b439703a036e31d65b00d80097e3edf19f6f6298c8f8ce"
+    },
+    {
+      "path": "audit/sources/ServerScriptService/FlyHighServer/LargeChallengeManager.luau",
+      "bytes": 5619,
+      "sha256": "5bd4017ca340955874e810166f08a43e8bc65b34c2c5552bb80ce9a4cb7680cb"
+    }
+  ]
+}

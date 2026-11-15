@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-11-15T05:33:09.730Z",
+  "baseCommit": "969892d826627383d70a5a27c1df906958159f6d",
+  "files": [
+    {
+      "path": "Fly High.rbxl",
+      "bytes": 1916916,
+      "sha256": "0127344498e083b397bdb9091351031481cb515e7a3940f8a66a4d06a705be3a"
+    },
+    {
+      "path": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDAdventureCatalog.luau",
+      "bytes": 5640,
+      "sha256": "f9e312ffc6fc0e8c7832c066746281886959f485d19bc2e4a6a04cba54f1b8e6"
+    },
+    {
+      "path": "assets/ui/sky-adventure/generated/daily-shop/icon_daily_dock.png",
+      "bytes": 30036,
+      "sha256": "9ad96d288b80fee2543c164e8f6b8eacffebc88edff2aa04f1a49c2b92c2b508"
+    },
+    {
+      "path": "assets/ui/sky-adventure/source/daily-dock/calendar.svg",
+      "bytes": 1760,
+      "sha256": "21e837176017412dbbfe06b470efdbb1f626cad1c1ebe044f997c334deca0286"
+    },
+    {
+      "path": "assets/ui/sky-adventure/source/daily-dock/frame.svg",
+      "bytes": 1722,
+      "sha256": "b7db847647cab58231d9122a080c213e3f7d6b36e9d52476b91ac0cd54ecb2f2"
+    }
+  ]
+}

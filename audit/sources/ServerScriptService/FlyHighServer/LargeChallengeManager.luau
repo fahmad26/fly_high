@@ -1,6 +1,7 @@
 local Run=game:GetService("RunService")local RS=game:GetService("ReplicatedStorage")
 local Players=game:GetService("Players")local Http=game:GetService("HttpService")
 local C=require(RS.FlyHigh.Modules.FlyHighConfig)
+local Visuals=require(script.Parent.ObstacleVisuals)
 local event=RS.FlyHigh.Remotes.LargeChallengeEvent
 local folder=Instance.new("Folder")folder.Name="FlyHighLargeChallenges"folder.Parent=workspace
 local Manager={active={},byZone={},Paused=false}
@@ -31,6 +32,7 @@ function Manager.Spawn(zone,fd)
  model.ModelStreamingMode=Enum.ModelStreamingMode.Atomic
  local center=Vector3.new(0,bottom+C.LARGE_HEIGHT/2,-C.LARGE_START_Z)
  model:PivotTo(CFrame.new(center))
+ Visuals.PolishStorm(model)
  local id=Http:GenerateGUID(false)
  model:SetAttribute("ChallengeId",id)model:SetAttribute("ZoneKm",zone)model:SetAttribute("Stage","Warning")
  model:SetAttribute("IsObstacle",true)model:SetAttribute("Shootable",false)
@@ -40,7 +42,7 @@ function Manager.Spawn(zone,fd)
    p:Destroy()
   elseif p:IsA("BasePart") then
    p.Anchored=true p.CanCollide=false p.CanTouch=false p.CanQuery=(p~=model.PrimaryPart)
-   if p~=model.PrimaryPart then p.Transparency=.42 end
+   if p~=model.PrimaryPart then p.Transparency=p:GetAttribute("WeatherOpacity") or .42 end
   end
  end
  model.Parent=folder

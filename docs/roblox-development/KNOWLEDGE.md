@@ -63,6 +63,14 @@ Tentukan silhouette, palet, material, skala terhadap avatar dan tingkat detail s
 
 Untuk Fly High, pertahankan lima tema bioma dan Istana Awan dari PRD. Buat daftar aset, posisi/rentang ketinggian, skala, collision dan anggaran performanya. Periksa dari balon, karakter berjalan dan perangkat kecil. Ini rekomendasi desain proyek, bukan batas engine.
 
+### Catatan audit seni lingkungan — 15 November 2026
+
+Kesamaan mesh dan geometri yang tertutup tidak membuktikan kualitas seni. Periksa bentuk besar dan komposisi dari kamera balon, FPS/third person, posisi repair, pandangan atas/bawah serta jarak sebenarnya. Buat satu area contoh yang lolos sebelum mereplikasi kit. Pemandangan tidak diperbaiki dengan menaikkan jumlah aset atau opacity saja. [Rencana dan kriteria review](../../design/features/environment-art-revision/plan.md).
+
+Fauna aktif, ambient, ornamen dan jauh dapat berbagi motif sambil memakai geometri/animasi/LOD berbeda. Mesh detail tinggi yang bagus pada galeri tidak perlu dipakai pada setiap burung kecil di horizon. Transparansi bertumpuk menambah overdraw; instance mesh/tekstur yang sama dapat membantu batching. Ini faktor yang perlu diukur, bukan alasan menyimpulkan FPS dari triangle count. [Roblox performance](https://create.roblox.com/docs/performance-optimization/improve).
+
+Shader/volume/Geometry Nodes Blender tidak otomatis dibawa ke Roblox; gunakan mesh/tekstur/mask yang dapat diimpor dan efek native yang diuji di engine. Baca batas [skill Blender yang diaudit](blender-skills-review-2026-11-15/README.md), khususnya perubahan shared material, cleanup berbasis nama dan parameter save. Jangan menjalankan script pada scene pengguna tanpa isolasi yang sesuai tugas.
+
 ## 8. UI responsif dan input lintas perangkat
 
 Scale dan Offset memiliki peran berbeda; gunakan AnchorPoint, layout dan constraint sesuai kebutuhan. Tetapkan area teks yang terukur dan kebijakan wrap/truncate. Angka dinamis sebaiknya tetap berupa teks, sedangkan frame/dekorasi dapat berupa image. Memakai PNG tidak otomatis menyelesaikan layout responsif. [Posisi/ukuran UI](https://create.roblox.com/docs/ui/position-and-size).

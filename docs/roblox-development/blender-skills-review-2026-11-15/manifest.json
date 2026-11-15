@@ -1,0 +1,164 @@
+{
+  "source": "https://github.com/EL4CTEO/blender-skills",
+  "commit": "b1b21dfb73bc40b874ebf2aa12645931bfed3523",
+  "skills": [
+    "blender-core",
+    "blender-environment-kits",
+    "blender-asset-qa",
+    "blender-hardsurface-modeling",
+    "blender-weather-fx"
+  ],
+  "files": [
+    {
+      "path": "skills/blender-asset-qa/SKILL.md",
+      "mode": "100644",
+      "bytes": 5185,
+      "sha256": "968e4435eeba040f0952cc335c8e9e7182e1d7008aa4295f202ddb836fa49ec9"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/_bpyx.py",
+      "mode": "100644",
+      "bytes": 4524,
+      "sha256": "90f44d70198b199cd922e4e57f7e55c56a3041d3a498ef7d444b019f9795d2ff"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/qa_check.py",
+      "mode": "100644",
+      "bytes": 20244,
+      "sha256": "37d01051f98fdafd3a9f13f7525804174c68a7bacb446d5bd5b2f43fc2785cca"
+    },
+    {
+      "path": "skills/blender-asset-qa/scripts/review_shots.py",
+      "mode": "100644",
+      "bytes": 6443,
+      "sha256": "63da4d7a3a42e81b51773071bdad3eba74fcacd3cf54df4364bd5676ef24a647"
+    },
+    {
+      "path": "skills/blender-core/SKILL.md",
+      "mode": "100644",
+      "bytes": 7964,
+      "sha256": "85c6161bf7a8e648735bd04957caba76f5e9c7b8506b38afd8496cc795563789"
+    },
+    {
+      "path": "skills/blender-core/references/api-changes-5x.md",
+      "mode": "100644",
+      "bytes": 9347,
+      "sha256": "e34f2e39a97833d75b6177c2e281ff9481405efd88bfd2d67003560f0c421fe1"
+    },
+    {
+      "path": "skills/blender-core/references/bpy-patterns.md",
+      "mode": "100644",
+      "bytes": 7793,
+      "sha256": "ba7bbc708bf198bdcdfa59d9d41d830a4ae119c24ae9457830b73d9e818e2af8"
+    },
+    {
+      "path": "skills/blender-core/scripts/_bpyx.py",
+      "mode": "100644",
+      "bytes": 4524,
+      "sha256": "90f44d70198b199cd922e4e57f7e55c56a3041d3a498ef7d444b019f9795d2ff"
+    },
+    {
+      "path": "skills/blender-core/scripts/env_report.py",
+      "mode": "100644",
+      "bytes": 2015,
+      "sha256": "e628feed806dd265e0c1ce803d92591aac208a9f463d8c47cbb939476d3b347a"
+    },
+    {
+      "path": "skills/blender-core/scripts/run_in_blender.py",
+      "mode": "100644",
+      "bytes": 3292,
+      "sha256": "e97e078c1b52475d386af2b8f9d27c7578a55c250ccd43ff50bed9c33d380355"
+    },
+    {
+      "path": "skills/blender-environment-kits/SKILL.md",
+      "mode": "100644",
+      "bytes": 5184,
+      "sha256": "11dbeb81d04722bee6413b796546da87761c7460299ab2fb8ae1027e35ec510a"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/_bpyx.py",
+      "mode": "100644",
+      "bytes": 4524,
+      "sha256": "90f44d70198b199cd922e4e57f7e55c56a3041d3a498ef7d444b019f9795d2ff"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/kit_check.py",
+      "mode": "100644",
+      "bytes": 6179,
+      "sha256": "5130ad74e2c19dd1839e354a06abd204bafeead277cc447107db017f359e20e5"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/scatter.py",
+      "mode": "100644",
+      "bytes": 12215,
+      "sha256": "bebb83449a88e1672ab4b41f007169de2f341a90b620106b55721262ac66b0e4"
+    },
+    {
+      "path": "skills/blender-environment-kits/scripts/terrain.py",
+      "mode": "100644",
+      "bytes": 11311,
+      "sha256": "f86d6e9132e924e7c1877845ab134317a7e77da32180bbede5fab62f2f79ba8f"
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/SKILL.md",
+      "mode": "100644",
+      "bytes": 5924,
+      "sha256": "558d18dc0641975d45f80f48c9371c2c0bef1f3c087a2da38cd2738a9659498f"
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/scripts/_bpyx.py",
+      "mode": "100644",
+      "bytes": 4524,
+      "sha256": "90f44d70198b199cd922e4e57f7e55c56a3041d3a498ef7d444b019f9795d2ff"
+    },
+    {
+      "path": "skills/blender-hardsurface-modeling/scripts/apply_stack.py",
+      "mode": "100644",
+      "bytes": 4877,
+      "sha256": "95127944b90646b75c73c55cb47d2a4a8e9616b4edd1c0489b94132bcd7f24e9"
+    },
+    {
+      "path": "skills/blender-weather-fx/SKILL.md",
+      "mode": "100644",
+      "bytes": 6649,
+      "sha256": "7fa1633e5cfa5f183a6d5a451f9b021a305c53e5d14071708a503ecdac687dc7"
+    },
+    {
+      "path": "skills/blender-weather-fx/references/realtime-engines.md",
+      "mode": "100644",
+      "bytes": 2659,
+      "sha256": "c7584f496ba56c115ab809034cbabee41afa008236553c9436f814c7341d78ec"
+    },
+    {
+      "path": "skills/blender-weather-fx/references/weather-values.md",
+      "mode": "100644",
+      "bytes": 3142,
+      "sha256": "c8be7c985f3d28833b075e71257dd5130d8487ce0b63716a9f237f76592295c3"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/_bpyx.py",
+      "mode": "100644",
+      "bytes": 4524,
+      "sha256": "90f44d70198b199cd922e4e57f7e55c56a3041d3a498ef7d444b019f9795d2ff"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/lightning.py",
+      "mode": "100644",
+      "bytes": 7844,
+      "sha256": "68177d83b754e8140ea8807962c8d3c984667c32332ed6a258c15d271750854e"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/precipitation.py",
+      "mode": "100644",
+      "bytes": 19038,
+      "sha256": "063fde91806f683b01172a1478c946a6bf8fd7b7f451f76111017766873f047b"
+    },
+    {
+      "path": "skills/blender-weather-fx/scripts/surface_weather.py",
+      "mode": "100644",
+      "bytes": 17896,
+      "sha256": "9ab45b1e6b668d25956296595e4d617dbf553af2af1bd0523bf0cccb40baea77"
+    }
+  ],
+  "licenseSha256": "d81d0037e3a29a01ccfefaae420d5ba73e905cabf3995700e9075c7205c06cc5"
+}

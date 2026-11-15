@@ -1,0 +1,15 @@
+{
+  "status": "fulfilled",
+  "value": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Scene 'FlyHigh_Obstacle_Atelier' | 19 empty, 37 mesh | active SatelliteDebris | selected SatelliteDebris | mode OBJECT\nE:\\Antigravity\\Fly High\\assets\\models\\obstacles\\generated\\FlyHigh_Obstacle_Atelier.blend | engine BLENDER_EEVEE | frames 1-250 (now 81) at 24 fps | 1920x1080 | camera none | HDRI none | unit scale 1.0\n\nShowing 8 of 19 (name | type | details | children):\nCrystalWyvern | empty | 3 children\nShadowPhantom | empty | 2 children\nCelestialPhoenix | empty | 3 children\nSeagull | empty | 3 children\nEagle | empty | 3 children\nStormBat | empty | 3 children\nFireBee | empty | 3 children\nGuardianDrone | empty | 2 children\n... 11 more. Narrow with query= or root=, or raise limit."
+      }
+    ],
+    "structuredContent": {
+      "result": "Scene 'FlyHigh_Obstacle_Atelier' | 19 empty, 37 mesh | active SatelliteDebris | selected SatelliteDebris | mode OBJECT\nE:\\Antigravity\\Fly High\\assets\\models\\obstacles\\generated\\FlyHigh_Obstacle_Atelier.blend | engine BLENDER_EEVEE | frames 1-250 (now 81) at 24 fps | 1920x1080 | camera none | HDRI none | unit scale 1.0\n\nShowing 8 of 19 (name | type | details | children):\nCrystalWyvern | empty | 3 children\nShadowPhantom | empty | 2 children\nCelestialPhoenix | empty | 3 children\nSeagull | empty | 3 children\nEagle | empty | 3 children\nStormBat | empty | 3 children\nFireBee | empty | 3 children\nGuardianDrone | empty | 2 children\n... 11 more. Narrow with query= or root=, or raise limit."
+    },
+    "isError": false
+  }
+}

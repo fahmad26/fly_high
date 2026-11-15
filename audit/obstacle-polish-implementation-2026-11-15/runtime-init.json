@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"players\":0,\"spawned\":0,\"query\":4000,\"ready\":true}"
+    }
+  ],
+  "isError": false
+}

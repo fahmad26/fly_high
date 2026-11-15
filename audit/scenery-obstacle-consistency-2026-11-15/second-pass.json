@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"viewport\":[2090,752],\"dataReady\":true,\"results\":[{\"meshes\":76,\"index\":2,\"identityMismatch\":0,\"families\":{\"Hailstone3\":5,\"Hailstone2\":5,\"Hailstone\":5,\"StormBat\":4},\"conservativeClearance\":234.78470774824025,\"km\":2640,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":237.79244995117188,\"badPhysics\":0,\"shared\":19,\"parts\":280},{\"meshes\":331,\"index\":3,\"identityMismatch\":0,\"families\":{\"GuardianDrone\":2,\"Ruin3\":1,\"Ruin2\":1,\"Ruin1\":2,\"FireBee\":6},\"conservativeClearance\":250.54423406914149,\"km\":4520,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":254.3155059814453,\"badPhysics\":0,\"shared\":12,\"parts\":1025},{\"meshes\":148,\"index\":4,\"identityMismatch\":0,\"families\":{\"ChargedCrystal\":24,\"ShadowPhantom\":4,\"CrystalWyvern\":1},\"conservativeClearance\":250.8690150263542,\"km\":7420,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":251.80682373046876,\"badPhysics\":0,\"shared\":29,\"parts\":409},{\"meshes\":154,\"index\":5,\"identityMismatch\":0,\"families\":{\"CelestialPhoenix\":2,\"Meteor\":4,\"SatelliteDebris\":2},\"conservativeClearance\":279.75996526653577,\"km\":8350,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":286.205810546875,\"badPhysics\":0,\"shared\":8,\"parts\":573},{\"meshes\":331,\"index\":3,\"identityMismatch\":0,\"families\":{\"GuardianDrone\":2,\"Ruin3\":1,\"Ruin2\":1,\"Ruin1\":2,\"FireBee\":6},\"conservativeClearance\":250.54423406914149,\"km\":4520,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":254.3155059814453,\"badPhysics\":0,\"shared\":12,\"parts\":1025},{\"meshes\":331,\"index\":3,\"identityMismatch\":0,\"families\":{\"GuardianDrone\":2,\"Ruin3\":1,\"Ruin2\":1,\"Ruin1\":2,\"FireBee\":6},\"conservativeClearance\":250.54423406914149,\"km\":4520,\"targetFlags\":0,\"scripts\":0,\"minimumRadius\":254.3155059814453,\"badPhysics\":0,\"shared\":12,\"parts\":1025}]}"
+    }
+  ],
+  "isError": false
+}

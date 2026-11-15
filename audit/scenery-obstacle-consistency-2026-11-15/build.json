@@ -1,0 +1,47 @@
+{
+  "baselineCommit": "969892d826627383d70a5a27c1df906958159f6d",
+  "timestamp": "2026-11-15T11:25:26Z",
+  "compiled": 54,
+  "compileErrors": [],
+  "parity": [
+    {
+      "name": "BiomeScenery",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 103082,
+      "sha256": "a55e8df3b9a1073b5c751750ab9c03e0fa2e8813682b3370fbceff3c4d65b6ee"
+    },
+    {
+      "name": "SceneryHabitatArt",
+      "exactAfterLFTrimEnd": true,
+      "bytes": 6424,
+      "sha256": "f79079717312ac1f70a2446237a9cf95216b3634e9d2d5fea30b02ca92a21e0a"
+    }
+  ],
+  "place": {
+    "bytes": 2164854,
+    "sha256": "ea632b7b6ae0219ee5802db6843203734ab33d79e32c5ee16d0b3e3b0d072495",
+    "reopened": false,
+    "save": "LocalFile"
+  },
+  "cleanup": {
+    "fixture": false,
+    "players": 0
+  },
+  "screenshots": [
+    "01-dawn.jpg",
+    "final-bats.jpg",
+    "final-bees.jpg",
+    "final-cosmic.jpg",
+    "final-dawn.jpg",
+    "final-fleet.jpg",
+    "final-gateway.jpg",
+    "final-outpost.jpg",
+    "final-palace.jpg",
+    "final-phantom.jpg",
+    "final-storm.jpg",
+    "final-sunset.jpg",
+    "first-pass-bats.jpg",
+    "first-pass-outpost.jpg",
+    "first-pass-phantom.jpg"
+  ]
+}

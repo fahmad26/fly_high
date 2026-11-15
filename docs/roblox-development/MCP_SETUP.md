@@ -1,6 +1,16 @@
 # Figma dan Blender MCP — 11 November 2026
 
-## Status
+## Pemeriksaan ulang 15 November 2026 — Codex
+
+Plugin Figma masih terdaftar aktif, tetapi panggilan native chat (`figma.whoami` dan `figma.create_session`) gagal dengan `Unknown tool`. Status terpasang dan hasil `whoami` lama di bawah tidak membuktikan koneksi chat saat ini berfungsi.
+
+Pemulihan: menambahkan server remote resmi bernama `figma` melalui `codex mcp add figma --url https://mcp.figma.com/mcp`. Login OAuth berhasil. Probe app-server Codex yang baru diinisialisasi berhasil menemukan **Figma MCP Server 1.0.0**, `authStatus=oAuth`, **47 tool**, `toolsError=null`. [Bukti dan batas pemeriksaan](../../audit/figma-reconnect-2026-11-15/README.md).
+
+Konfigurasi sebelum perubahan dicadangkan di `C:/Users/fahma/.codex/config.before-figma-reconnect-20261115.toml`. Konfigurasi Roblox dan Blender tetap sama. Entri `node_repl.args` terdeteksi berbeda saat pemeriksaan setelah login; tidak dipulihkan dari backup agar perubahan sesi tidak tertimpa. Tidak mengubah scene, source, atau place.
+
+**Pemeriksaan lanjutan 15 November, 12:33 WIB:** server `mcp__figma` tersedia di chat; `whoami` berhasil, session `338471a6-da08-494e-9931-1f4940034888` dibuat, dan `get_design_context` berhasil membaca file `hsDf2FbnHnlSViAOq5DPJt` node `6:2`, panel `6:428`, serta glyph `6:439`. Respons panel memuat screenshot dan konteks detail. Koneksi baca Figma kini terverifikasi. [Implementasi dan QA ikon Daily Login](../../audit/daily-dock-icon-2026-11-15/README.md). Koneksi lama `codex_apps/figma.*` sebelumnya gagal; gunakan namespace server baru, bukan menganggap semua jalur plugin telah pulih.
+
+## Status historis 11–14 November
 
 - **Figma (Antigravity & Codex):**
   - **Antigravity (14 November 2026):** plugin resmi **Figma** (`antigravity-plugins-partners/plugin/figma`, terpasang di `C:/Users/fahma/.gemini/config/plugins/figma`) dan server MCP `figma_figma` beserta 17 skill Figma sudah aktif. Panggilan verifikasi `whoami` berhasil (`handle: "Fikri Ahmad"`, `user_id: "1702381256978829211"`, `plans: "Fikri Ahmad's team"`, `code_layers_enabled: true`, `specs_enabled: true`).
@@ -52,3 +62,13 @@ Tes pertama sebelum aktivasi berhasil menemukan tool tetapi belum dapat terhubun
 Jika MCP tidak muncul setelah restart Codex: cek server blender pada Settings → MCP servers, pastikan path executable masih ada, lalu cek listener melalui sidebar Blender. Untuk membatalkan setup, hapus hanya entri mcp_servers.blender, disable add-on Blender, dan hapus file add-on hanya setelah memastikan tidak ada modifikasi pengguna. Jangan menimpa seluruh config dari backup jika ada perubahan lain sesudahnya.
 
 Rujukan primer: [Konfigurasi MCP Codex](https://learn.chatgpt.com/docs/extend/mcp?surface=cli), [Figma desktop MCP](https://developers.figma.com/docs/figma-mcp-server/local-server-installation/), [MCP for Blender](https://github.com/ahujasid/mcp-for-blender).
+
+## Unggah model Roblox — 15 November 2026
+
+Atas persetujuan pengguna dibuat experience development privat: universe `10776821830`, place `97043730132219`, akun `8635452105`. PRIVATE terverifikasi lewat Open Cloud. Scope `asset:read` dan `asset:write` aktif dan izin direktori `E:/Antigravity/Fly High/assets/models/obstacles/generated` disetujui pengguna. Jangan memperluas ke seluruh workspace.
+
+Di Assistant Settings → MCP Permissions, penambahan direktori belum berlaku sampai tombol **Save di bagian paling bawah panel** ditekan. Mengklik Select Folder saja hanya menambah draft. Bila unggahan masih ditolak, buka ulang panel dan verifikasi persistensi sebelum mencoba ulang; jangan mengubah format path, memindah file atau memakai endpoint lain untuk melewati penolakan.
+
+Paket model `99873351598859` berhasil diunggah/Approved dan dipasang. [Bukti, struktur impor dan batas QA](../../audit/obstacle-polish-implementation-2026-11-15/README.md). `save_place` pada sesi ini tetap menulis file lokal. Pembuatan experience privat tidak membuktikan bahwa perubahan lokal sesudahnya sudah tersimpan sebagai versi cloud terbaru.
+
+GameId nonzero mengubah jalur DataManager dari mock unpublished ke persistensi. API Services Studio belum diaktifkan, sehingga Play Solo berhenti pada pemuatan data. Jangan mengaktifkan akses data hanya untuk menghindari pesan error; pisahkan pengujian visual terisolasi dari pengujian persistensi yang perlu otorisasi dan fixture tersendiri.

@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"players\":1,\"stormParts\":{\"1\":{\"name\":\"SilverCloudCrown\",\"transparency\":0.5799999833106995},\"3\":{\"name\":\"RearBillowingRidge\",\"transparency\":0.5},\"2\":{\"name\":\"SculptedStormFront\",\"transparency\":0.4000000059604645}},\"qualityRestored\":\"Enum.QualityLevel.Automatic\",\"hazards\":{\"1\":{\"name\":\"Tornado\",\"weatherVolumes\":2,\"damageTelegraphBeamsOff\":true},\"8\":{\"name\":\"Meteor\",\"weatherVolumes\":0,\"damageTelegraphBeamsOff\":true},\"3\":{\"name\":\"Wind\",\"weatherVolumes\":3,\"damageTelegraphBeamsOff\":true},\"2\":{\"name\":\"Lightning\",\"weatherVolumes\":0,\"damageTelegraphBeamsOff\":true},\"5\":{\"name\":\"Fog\",\"weatherVolumes\":2,\"damageTelegraphBeamsOff\":true},\"4\":{\"name\":\"Heat\",\"weatherVolumes\":1,\"damageTelegraphBeamsOff\":true},\"7\":{\"name\":\"Magnetic\",\"weatherVolumes\":0,\"damageTelegraphBeamsOff\":true},\"6\":{\"name\":\"Storm\",\"weatherVolumes\":2,\"damageTelegraphBeamsOff\":true}}}"
+    }
+  ],
+  "isError": false
+}

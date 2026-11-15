@@ -1,0 +1,35 @@
+{
+  "baselineCommit": "969892d826627383d70a5a27c1df906958159f6d",
+  "source": [
+    {
+      "name": "ObstacleArt",
+      "exactAfterLFTrimEnd": true,
+      "sha256": "4205eb86b0d5359fb6b8ac9c35752313c92462be9fdebfd250db80c90d0885e2",
+      "bytes": 26837
+    },
+    {
+      "name": "ObstacleVisuals",
+      "exactAfterLFTrimEnd": true,
+      "sha256": "d239714ec252f66187691d4211df69572e7d58d3ed153dc8d9adc190cc0bee1e",
+      "bytes": 9240
+    },
+    {
+      "name": "LargeChallengeManager",
+      "exactAfterLFTrimEnd": true,
+      "sha256": "315267eef2443dfea48659c0a9b9b3421d53990e07b0b0d486c4db1eedf6a99c",
+      "bytes": 5735
+    }
+  ],
+  "place": {
+    "bytes": 2161622,
+    "sha256": "ff730ed77a450f69745b3033c1ce209001fd8e439b6bcd62637566b1ac4d8608",
+    "mtime": "2026-11-15T10:11:54.921Z",
+    "binaryReopened": false
+  },
+  "runtimeFixture": {
+    "mode": "Run",
+    "players": 0,
+    "syntheticTarget": true,
+    "productionScriptsDisabled": false
+  }
+}

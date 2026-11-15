@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <!-- Dock family: navy silhouette, slim gold rim, cyan enamel and soft gloss.
+       The unmodified Figma calendar SVG is placed above this frame at build time. -->
+  <defs>
+    <linearGradient id="gold" x1="25" y1="15" x2="208" y2="246" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7BF"/><stop offset=".36" stop-color="#FFD864"/><stop offset=".72" stop-color="#EAA32B"/><stop offset="1" stop-color="#FFF0A4"/>
+    </linearGradient>
+    <linearGradient id="enamel" x1="54" y1="24" x2="203" y2="243" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38F3DD"/><stop offset=".36" stop-color="#0FC5DE"/><stop offset=".7" stop-color="#058EBD"/><stop offset="1" stop-color="#064B78"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="64" y1="24" x2="113" y2="121" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".7"/><stop offset="1" stop-color="#C7FFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="250" height="250" rx="61" fill="#05172C"/>
+  <rect x="13" y="13" width="230" height="230" rx="52" fill="url(#gold)"/>
+  <rect x="21" y="21" width="214" height="214" rx="44" fill="url(#enamel)" stroke="#A5FFF2" stroke-width="2.5"/>
+  <path d="M31 84C31 47 46 30 83 30H171C190 30 207 35 216 48C163 32 88 65 49 104C40 113 31 104 31 84Z" fill="url(#shine)"/>
+  <path d="M37 51C44 39 56 34 73 33" stroke="#FFFCE3" stroke-opacity=".92" stroke-width="10" stroke-linecap="round"/>
+  <path d="M35 181V190C35 214 49 225 74 225H180C200 225 215 218 222 202" stroke="#014867" stroke-opacity=".3" stroke-width="7" stroke-linecap="round"/>
+</svg>
