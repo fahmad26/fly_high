@@ -2,6 +2,39 @@
 
 Snapshot aktif per 15 November 2026, Asia/Jakarta. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
 
+## Konsep efek suara rintangan dan cutscene Istana — 16 November 2026, 23:29 WIB
+
+Disetujui pengguna, belum diimplementasikan:
+- [Efek suara rintangan](design/features/obstacle-audio/design.md): seluruh musuh dan hazard, termasuk Dinding Badai. Hanya menambah suara yang belum ada; suara lubang/tambal balon tidak diubah.
+- [Cutscene Istana Awan](design/features/palace-cutscenes/design.md): tiba sekitar 8 detik, kru gugur bangkit (hadiah tetap seperti sekarang), dan portal turun sekitar 6 detik dengan montase lima zona. Tanpa versi singkat dan tidak bisa dilewati; ada sakelar Nyala/Mati di SETELAN (bawaan Nyala).
+
+Status di PROGRESS: AUDIO-01 dan CINE-01.
+
+## Scenery round 5 — 16 November 2026, 22:55 WIB
+
+Poin 1–7 dari review visual (poin 8 ponsel/low-graphics dan 9 Play Solo ditunda pengguna):
+- **Alam lobby dan zona:** nature kit v2 (aset 131635585352473) menggantikan pohon/palem/pakis/batu/bunga low-poly; 269 model lobby ditukar di tempat, collider dipertahankan. Cadangan di `ServerStorage.NatureAssets_Legacy` dan `LobbyNature_Legacy`.
+- **Sunset:** akar gantung mesh (`HangingRoots`) menggantikan batang lurus; reruntuhan mini diganti `SmallRuinArch`.
+- **Peringatan tekstur badai:** pesan "No asset content representation" adalah noise Studio; uji A/B membuktikan tekstur tampil. ID asli dipertahankan.
+- **Seagull** lebih tebal + dihedral sayap (juga Eagle); **ShadowPhantom v5** (aset 102599416782119, jubah berlipat, lengan, cakar).
+- **Kosmik:** batu orbit/satelit kristal kini batu IslandKit kecil + kristal, cincin lebih tipis.
+- **Gateway:** awan krem memakai LUT siang + tepi lebih halus.
+
+**Lobby dirapikan (23:05 WIB, Cloud v18):** 7 SteppingStone di dek spawn dihapus; 12 batu besar + 114 kerikil memakai batu alami baru `EnvironmentAssets.LobbyRocks` (aset 111074492228074) tanpa topi lumut dan tertanam di tanah; 10 tanaman dan 2 ayam (Home) dijauhkan dari dermaga; ArrivalFern digeser dari bibir dek. Audit: 0 tumpang tindih, 0 batu melayang.
+
+**Tangan senjata 1P (23:20 WIB):** profil `WeaponPresentation` Pistol/AK47 disetel ulang: tangan kanan di grip (bukan pelindung pelatuk), lengan kiri dari kiri tanpa menyilang, jempol ke depan; diuji lewat harness IK di Edit, Play Solo belum. Studio kini tersimpan ke file lokal `Fly High.rbxl` (save_place LocalFile).
+
+Disimpan ke Cloud v17. `.rbxl` lokal belum diperbarui, mirror `audit/sources` BiomeScenery belum disinkronkan, belum commit. Sumber Blender: `assets/models/scenery/FlyHigh_SceneryKits_round5.blend`. [Rincian](audit/scenery-review5-2026-11-16/README.md).
+
+## Awan badai, bawah pulau, Hailstone — 16 November 2026, 22:40 WIB
+
+Perbaikan dari screenshot playtest pengguna:
+- **Awan badai:** piring gelap (gust shelf) di bawah menara dihapus, anvil dibuat lebih tembus, dan dek awan rendah dibuat lebih tebal.
+- **Pulau:** batu IslandKit v3 tanpa ujung jarum dan stalaktit (aset 77785941045525).
+- **Hailstone v5:** cangkang es tembus, inti beku dan kristal (aset 95048105166805).
+
+Disimpan ke Cloud v16. `.rbxl` lokal belum diperbarui. Belum commit. [Rincian](audit/storm-islands-hail-2026-11-16/README.md).
+
 ## Scenery round 3 — 16 November 2026, 20:20 WIB
 
 Model baru dipasang:

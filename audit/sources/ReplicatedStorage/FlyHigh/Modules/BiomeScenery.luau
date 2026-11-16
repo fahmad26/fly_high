@@ -278,7 +278,9 @@ local function brightCloud(group, template, base, size, body, foundation)
 	cloud.Name = "CloudLobe"
 	cloud.Size = target
 	cloud.CFrame = anchor * CFrame.new(sourceCenter * scale)
-	cloud.TextureID = warm and CLOUD_LUT_GOLD or CLOUD_LUT_DAY
+	-- The gold LUT read as flat cream plastic in the Gateway (review 16 Nov round 5); the day LUT keeps
+	-- blue-grey self-shadowing and the zone's warm sun supplies the gold.
+	cloud.TextureID = CLOUD_LUT_DAY
 	cloud.Material = Enum.Material.Fabric
 	cloud.Color = Color3.new(1, 1, 1)
 	cloud.Transparency = 0
@@ -292,11 +294,11 @@ local function brightCloud(group, template, base, size, body, foundation)
 	-- outline around every daylight cloud (review 16 Nov 19:30); a lit, wider rim keeps the edge soft instead.
 	local shell = cloud:Clone()
 	shell.Name = "CloudLobeSoftEdge"
-	shell.Size = target * 1.07
+	shell.Size = target * 1.04
 	shell.TextureID = ""
 	shell.Material = Enum.Material.SmoothPlastic
-	shell.Color = warm and Color3.fromRGB(255, 236, 205) or Color3.fromRGB(246, 249, 255)
-	shell.Transparency = 0.78
+	shell.Color = warm and Color3.fromRGB(255, 240, 222) or Color3.fromRGB(246, 249, 255)
+	shell.Transparency = 0.86
 	shell.Parent = group
 	return cloud, shell
 end
@@ -1359,7 +1361,7 @@ end
 local STORM_WIND = Vector3.new(0.66, 0, -0.75).Unit
 local STORM_WIND_YAW = math.atan2(-STORM_WIND.Z, STORM_WIND.X)
 local STORM_SMOKE = "rbxasset://textures/particles/smoke_main.dds"
-local VEIL_SIDE_T, VEIL_TOP_T = 0.55, 0.86 -- anvil veil transparency seen level vs from above
+local VEIL_SIDE_T, VEIL_TOP_T = 0.72, 0.9 -- 0.55 read as flat outlined plates behind the towers (playtest 16 Nov 22:20) -- anvil veil transparency seen level vs from above
 
 local function stormKit()
 	local assets = getEnvironmentAssets()
@@ -1614,8 +1616,9 @@ local function stormKitThundercloud(parent, kit)
 			STORM_WIND_YAW + random:NextNumber(-0.3, 0.3), Vector3.new(scale, scale * random:NextNumber(0.85, 1.1), scale))
 		if glow then table.insert(banks, { light = glow, phase = i * 3.19 }) end
 		if anvil then table.insert(veils, anvil) end
-		if cloud and kind == "Cumulonimbus" then
-			-- Seen from above the flat shelf top read as a dark plate under each tower (QA 16 Nov): fade it then.
+		-- Gust shelves removed: even faded from above, level with the gondola they read as dark saucers
+		-- under every tower (playtest screenshot 16 Nov 22:20). The base mist carries the cloud base instead.
+		if false and cloud and kind == "Cumulonimbus" then
 			for _, piece in { gustShelf(parent, kit, cloud, position, scale) } do
 				piece:SetAttribute("BaseT", piece.Transparency)
 				table.insert(gusts, piece)
@@ -1646,7 +1649,7 @@ local function stormKitThundercloud(parent, kit)
 		local s = random:NextNumber(0.7, 0.9)
 		-- Flattened congestus, not a stretched shelf: stretched shelf lobes read as stacked plates from above.
 		local shelf = kitPart(parent, kit, "Congestus", Vector3.new(math.cos(a) * r, altitude(1975 + i * 12), math.sin(a) * r),
-			a + math.pi / 2 + random:NextNumber(-0.2, 0.2), Vector3.new(s * 1.2, s * 0.32, s * 2.2))
+			a + math.pi / 2 + random:NextNumber(-0.2, 0.2), Vector3.new(s * 1.2, s * 0.55, s * 1.6))
 		if shelf then
 			table.insert(deck, shelf)
 			table.insert(deck, softShell(shelf, 1.05, 0.82))
@@ -1882,6 +1885,21 @@ local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 	return shrine
 end
 
+-- Curved, tapering root cluster (three roots with side tendrils; EnvironmentAssets.HangingRoots, authored
+-- 30 studs long) hung from a rim point. Replaces flat beam vines and straight cylinder roots that read as
+-- sticks (review 16 Nov 22:35). Returns nil when the template is missing so callers can fall back.
+local function hangingRoots(parent, top, length, yaw, name)
+	local environment = getEnvironmentAssets()
+	local template = environment and environment:FindFirstChild("HangingRoots")
+	if not template then return nil end
+	local roots = template:Clone()
+	roots.Name = name or "HangingRoots"
+	roots:ScaleTo(math.max(0.2, length / 30))
+	roots:PivotTo(CFrame.new(top) * CFrame.Angles(0, yaw or 0, 0))
+	roots.Parent = parent
+	return roots
+end
+
 local function ruinRelief(parent, cf, scale)
 	local carved = rgb(156, 101, 76)
 	for _, side in { -1, 1 } do
@@ -2023,8 +2041,10 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 
 		local rootStart = anchorPos + inward * (segLen * 0.82) + Vector3.new(0, -3, 0)
 		local rootMid = rootStart + Vector3.new(side * 2.5, -16 - seed % 5, 2)
+		if not hangingRoots(bridge, rootStart + Vector3.new(0, 2, 0), 26 + seed % 5, side * 0.8, "BridgeRoot") then
 		span(bridge, "BridgeRoot", rootStart, rootMid, 1.6, roots, woodMat)
 		span(bridge, "BridgeRootTip", rootMid, rootMid + Vector3.new(-side * 1.5, -12, -1.5), 0.85, roots, woodMat)
+		end
 	end
 	return bridge
 end
@@ -2136,7 +2156,23 @@ local function skyIsles(parent)
 		end
 
 		local topY = 13.5 * scale
-		if i <= 4 then HabitatArt.Ruins(island, cf, scale, i) end
+		if i <= 4 then
+			-- Small weathered arch from the same RuinArch kit; the old debris-ruin meshes clashed beside the
+			-- new temple arch (review 16 Nov 22:35). Temple islands already carry the full arch.
+			local archKit = getEnvironmentAssets()
+			archKit = archKit and archKit:FindFirstChild("RuinArch")
+			if island:FindFirstChild("TempleRuinArch", true) then
+				-- nothing extra
+			elseif archKit then
+				local small = archKit:Clone()
+				small.Name = "SmallRuinArch"
+				small:ScaleTo(0.32 * scale)
+				small:PivotTo(cf * CFrame.new(-14 * scale, topY - 1.5 * scale, -8 * scale) * CFrame.Angles(0, i * 1.3, 0))
+				small.Parent = island
+			else
+				HabitatArt.Ruins(island, cf, scale, i)
+			end
+		end
 		if i >= 5 then
 			local flowerBed = cf * CFrame.new(18 * scale, topY, 10 * scale)
 			for f = 1, 4 do
@@ -2163,18 +2199,28 @@ local function skyIsles(parent)
 				1.3 * scale)
 			-- Review 15 Nov: straight block roots read as sticks. Tapered, sagging vines spill over the rim instead.
 			local lip = cf * CFrame.new((j - 2) * 24 * scale, 2 * scale, 31 * scale)
+			-- Hang from the real turf rim; at 31 studs the roots sat inside the wider kit rock (review 16 Nov).
+			local rimTurf = island:FindFirstChild("IslandTurf", true)
+			if rimTurf then
+				local localRim = rimTurf.CFrame:PointToObjectSpace(cf.Position)
+				local edge = rimTurf.CFrame * CFrame.new(-localRim.X + (j - 2) * rimTurf.Size.X * 0.18, rimTurf.Size.Y * 0.5 - 0.6, rimTurf.Size.Z * 0.47)
+				lip = CFrame.new(edge.Position) * cf.Rotation
+			end
 			local vine = rail(island, "HangingVine", lip.Position)
 			vine.Transparency = 1
 			local fall = (24 + j * 7 + i % 3 * 4) * scale
-			local strand = beam(socket(vine, Vector3.zero, Vector3.new(0, -0.3, 1)),
+			local _, rimYaw = cf:ToOrientation()
+			local strand = not hangingRoots(island, lip.Position, fall * 0.9, rimYaw + (j - 2) * 0.5, "HangingVine") and beam(socket(vine, Vector3.zero, Vector3.new(0, -0.3, 1)),
 				socket(vine, Vector3.new((j - 2) * 3 * scale, -fall, 6 * scale), Vector3.new(0, -1, 0.15)),
 				2.4 * scale, 0.35 * scale, ColorSequence.new(rgb(96, 120, 70), roots),
 				NumberSequence.new({ NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.8, 0.05),
 					NumberSequenceKeypoint.new(1, 0.6) }), 7 * scale)
-			strand.FaceCamera = true
-			strand.LightEmission = 0
-			strand.LightInfluence = 1
-			strand.Segments = 12
+			if strand then
+				strand.FaceCamera = true
+				strand.LightEmission = 0
+				strand.LightInfluence = 1
+				strand.Segments = 12
+			end
 		end
 
 		if i == 2 or i == 4 or i == 5 or i == 6 or i == 7 then
@@ -2244,8 +2290,10 @@ local function skyIsles(parent)
 			ruinRelief(anchorIsle, arch * CFrame.new(-10, 10, 3.55), 1.1)
 			local rootStart = (arch * CFrame.new(-8, -1, 2)).Position
 			local rootMid = (arch * CFrame.new(-13, -12, 5)).Position
+			if not hangingRoots(anchorIsle, rootStart, 24, 0.6, "HangingRoot") then
 			span(anchorIsle, "HangingRoot", rootStart, rootMid, 1.65, roots, woodMat)
 			span(anchorIsle, "RootTip", rootMid, rootMid + Vector3.new(-3, -8, 2), 0.82, roots, woodMat)
+			end
 		elseif idx == 2 then
 			buildBlossomTree(anchorIsle, anchorCf * CFrame.new(4, 7, -4), 0.82)
 		end
@@ -2291,6 +2339,35 @@ local function skyIsles(parent)
 		end
 		animateHabitats(habitats, time)
 	end
+end
+
+-- Small orbiting islet: a shrunken IslandKit crag (PBR rock) crowned with crystals, replacing the
+-- toy-like "Cosmic" landmark discs (review 16 Nov round 5). Returns false when the kit is missing.
+local function orbitShard(parent, cf, width, crystalColor, seed)
+	local assets = getEnvironmentAssets()
+	local kit = assets and assets:FindFirstChild("IslandKit")
+	if not kit or not kit:FindFirstChild("IslandCragRock") then return false end
+	local pick = ({ "IslandCragRock", "IslandTwinRock", "IslandShelfRock" })[seed % 3 + 1]
+	local template = kit:FindFirstChild(pick) or kit.IslandCragRock
+	local s = width / template.Size.X
+	local _, yaw = cf:ToOrientation()
+	local rock = kitPart(parent, kit, pick, cf.Position, yaw + seed * 0.7, Vector3.new(s, s * 0.9, s))
+	if rock then
+		rock.Name = "OrbitShardRock"
+		local pbr = rock:FindFirstChildOfClass("SurfaceAppearance")
+		if pbr then pbr.Color = rgb(150, 150, 205) end
+	end
+	local cluster = model(parent, "OrbitShardCrystals")
+	HabitatArt.Crystals(cluster, cf * CFrame.new(0, -0.2, 0), width / 20, 3 + seed % 2)
+	do
+		for _, d in cluster:GetDescendants() do
+			if d:IsA("BasePart") then
+				d.Color = crystalColor
+				d.Material = glassMat
+			end
+		end
+	end
+	return true
 end
 
 local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
@@ -2339,7 +2416,8 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		local satOrigin = cf * CFrame.new(math.cos(a) * satDist, (6 + (i % 2) * 12) * scale, math.sin(a) * satDist)
 		local sat = model(island, "CrystalSatellite")
 		local cCol = crystalColors[(i % #crystalColors) + 1]
-		local satMesh = landmark(sat, "Cosmic", satOrigin * CFrame.Angles(0.15, i * 0.8, -0.12), 0.24 * scale)
+		local satMesh = not orbitShard(sat, satOrigin * CFrame.Angles(0, i * 0.8, 0), 13 * scale, cCol, seed + i)
+			and landmark(sat, "Cosmic", satOrigin * CFrame.Angles(0.15, i * 0.8, -0.12), 0.24 * scale)
 		if satMesh then
 			for _, d in satMesh:GetDescendants() do
 				if d:IsA("BasePart") and d.Name == "Crystal" then
@@ -2350,7 +2428,7 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		end
 		fleetShape(sat, "DockRim", "SatOrbitalHalo",
 			satOrigin * CFrame.Angles(0.3, i, math.pi / 2),
-			Vector3.new(0.35, 14, 14) * scale, cCol, neon)
+			Vector3.new(0.18, 17, 17) * scale, cCol, neon)
 		sat.WorldPivot = satOrigin
 		table.insert(satellites, { model = sat, origin = satOrigin, phase = seed + i * 1.3 })
 	end
@@ -2577,7 +2655,8 @@ local function exosphere(parent)
 		local pebble = model(parent, "CosmicArcStone")
 		local sc = 0.55 + (1 - math.abs(t - 0.5)) * 0.45
 		local ringCol = i % 2 == 0 and rgb(92, 232, 255) or rgb(216, 112, 255)
-		local crag = landmark(pebble, "Cosmic", cf, 0.2 * sc)
+		local crag = not orbitShard(pebble, cf, 11 * sc, ringCol, i)
+			and landmark(pebble, "Cosmic", cf, 0.2 * sc)
 		if crag then
 			for _, d in crag:GetDescendants() do
 				if d:IsA("BasePart") and d.Name == "Crystal" then
@@ -2588,7 +2667,7 @@ local function exosphere(parent)
 		end
 		fleetShape(pebble, "SaturnRing", "GlowRing",
 			cf * CFrame.Angles(0.25, 0, math.pi / 2),
-			Vector3.new(0.4, 15, 15) * sc, ringCol, neon)
+			Vector3.new(0.2, 17, 17) * sc, ringCol, neon)
 		pebble.WorldPivot = cf
 		table.insert(satellites, { model = pebble, origin = cf, phase = 700 + i * 0.8 })
 	end
