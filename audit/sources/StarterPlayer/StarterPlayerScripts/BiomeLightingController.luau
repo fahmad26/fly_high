@@ -199,17 +199,19 @@ local BIOME_SETTINGS = {
 		AtmosphereColor = Color3.fromRGB(159, 153, 222),
 		AtmosphereDecay = Color3.fromRGB(71, 57, 123),
 		Tint = Color3.fromRGB(222, 222, 255),
+		MoonAngularSize = 3, -- a huge full moon broke the overcast storm mood (review 16 Nov)
 	},
 	[3] = { -- 4,000 - 6,000 km: Sunset of Forgotten Sky Isles
 		ClockTime = 17.8,
 		Brightness = 2.0,
 		FogColor = Color3.fromRGB(200, 100, 80),
 		FogEnd = 2000,
-		OutdoorAmbient = Color3.fromRGB(180, 96, 78),
-		Ambient = Color3.fromRGB(134, 110, 108),
+		-- Softer warm fill: the deep red ambient washed rock, turf and stone into one colour (review 16 Nov).
+		OutdoorAmbient = Color3.fromRGB(182, 148, 136),
+		Ambient = Color3.fromRGB(136, 124, 122),
 		AtmosphereColor = Color3.fromRGB(255, 188, 146),
 		AtmosphereDecay = Color3.fromRGB(180, 108, 127),
-		Tint = Color3.fromRGB(255, 224, 204),
+		Tint = Color3.fromRGB(255, 234, 220),
 		SunAngularSize = 6, -- the low sun read as a large flat disc beside the gondola (review 15 Nov)
 		MoonAngularSize = 4, -- rising moon filled the horizon behind the islands (QA 16 Nov)
 	},

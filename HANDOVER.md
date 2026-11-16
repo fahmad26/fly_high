@@ -2,6 +2,56 @@
 
 Snapshot aktif per 15 November 2026, Asia/Jakarta. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
 
+## Scenery round 3 — 16 November 2026, 20:20 WIB
+
+Model baru dipasang:
+- **Gerbang lonceng Sunset:** gaya torii (`ChimeGate`).
+- **Jembatan patah:** mesh setengah bentang (`BridgeHalf`). Pulau jangkar digeser agar dek tidak melintasi rumput.
+- **Teras awan Gateway:** diberi jarak sudut emas, sehingga menara awan di kanan hilang.
+- **Kapal langit v2:** lambung papan, tali dan layar mengembung. Nama part tetap.
+
+Generator ada di `tools/build_sunset_kit2.py` dan `tools/build_sky_ships.py`.
+
+**Verifikasi:**
+- Play Solo 500→9.990 km tanpa error script.
+- Ada peringatan engine untuk dua image tertanam template StormZone2 dari Batch 1. Asetnya Approved, perlu ditindaklanjuti terpisah.
+
+**Penyimpanan:** Cloud, lalu disimpan ke file oleh pengguna. Studio = file = mirror (BiomeScenery 142517/`0b20587a`).
+
+[Rincian](audit/scenery-review3-2026-11-16/README.md).
+
+## Review scenery lanjutan (semua zona) — 16 November 2026, 20:50 WIB
+
+Temuan sweep lima ketinggian sudah dikerjakan semua. Yang berubah:
+
+- **Zona 1 (Dawn):**
+  - Garis putih horizon hilang. Terrain Water diperluas sampai ±16.384 dan skirt part dihapus.
+  - Pulau laut dan headland memakai IslandKit dengan pantai dan karang halus.
+- **Zona 2 (badai):** bulan dikecilkan.
+- **Awan:** shell Neon yang membuat outline kartun diganti rim lembut.
+- **Zona 3 (Sunset):**
+  - Lempeng segitiga landmark lama dihapus. Pulau kuil mendapat `RuinArch` baru.
+  - `SakuraTree` baru dipasang.
+  - Peti diganti batu.
+  - Warna merah dikurangi.
+- **Zona 4 (kosmik):**
+  - Turf diberi tint teal.
+  - Ditambah 4 pulau pengapit.
+  - Planet dinaikkan.
+- **Zona 5 (Gateway):**
+  - Paviliun tidak lagi bertumpuk.
+  - Rute kapal keluar dari awan.
+  - Material kapal (kayu/kain/logam).
+
+**Verifikasi:**
+- **Play Solo:** 500→9.990 km, console bersih.
+- **Source:** Studio = file = mirror. BiomeScenery 140012/`c348b6be`, BiomeLightingController 12590/`6e3839eb`.
+- **File:** `Fly High.rbxl` LocalFile 2.960.273 B, SHA-256 `bfb369c6…`.
+
+**Tekstur:** sempat tidak tampil di sesi Studio lama. Setelah Studio dibuka ulang (20:05 WIB) tekstur PBR tampil normal.
+
+Ponsel dan grafik rendah belum diuji. [Rincian](audit/scenery-review2-2026-11-16/README.md).
+
 ## Galeri bentuk musuh/rintangan dan perbaikan yaw impor — 16 November 2026, 18:45 WIB
 
 Semua musuh dan rintangan dikumpulkan di satu fixture Edit, lalu di-screen capture dari beberapa sudut.

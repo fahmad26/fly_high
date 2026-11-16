@@ -288,14 +288,15 @@ local function brightCloud(group, template, base, size, body, foundation)
 	cloud.CanQuery = false
 	cloud.CastShadow = false
 	cloud.Parent = group
-	-- A faint self-lit shell keeps daylight cumulus white on its shadow side (QA 16 Nov: read as grey overcast).
+	-- Soft translucent rim. It was a self-lit Neon shell (QA 16 Nov), but the bloom drew a white cartoon
+	-- outline around every daylight cloud (review 16 Nov 19:30); a lit, wider rim keeps the edge soft instead.
 	local shell = cloud:Clone()
 	shell.Name = "CloudLobeSoftEdge"
-	shell.Size = target * 1.045
+	shell.Size = target * 1.07
 	shell.TextureID = ""
-	shell.Material = Enum.Material.Neon
+	shell.Material = Enum.Material.SmoothPlastic
 	shell.Color = warm and Color3.fromRGB(255, 236, 205) or Color3.fromRGB(246, 249, 255)
-	shell.Transparency = 0.86
+	shell.Transparency = 0.78
 	shell.Parent = group
 	return cloud, shell
 end
@@ -515,7 +516,8 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 		local _, yaw = cf:ToOrientation()
 		local origin = CFrame.new(top.Position) * CFrame.Angles(0, yaw, 0)
 		local rockTint = (palette.cliff or rgb(196, 182, 160)):Lerp(Color3.new(1, 1, 1), 0.5)
-		local turfTint = (palette.moss or rgb(82, 148, 88)):Lerp(Color3.new(1, 1, 1), 0.55)
+		-- turfLift: how far the tint is lifted toward white (lower = stronger tint, e.g. teal cosmic moss).
+		local turfTint = (palette.moss or rgb(82, 148, 88)):Lerp(Color3.new(1, 1, 1), palette.turfLift or 0.55)
 		for _, spec in { { rockTemplate, Vector3.new(sx, sy, sz), "IslandRock", rockTint },
 			{ turfTemplate, Vector3.new(sx, (sx + sz) / 2, sz), "IslandTurf", turfTint } } do
 			local template, s, name, tint = table.unpack(spec)
@@ -530,6 +532,22 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 		if basaltPart then basaltPart:Destroy() end
 		mossPart:Destroy()
 		mossPart, basaltPart = nil, nil
+		-- The old landmark's terracotta/sandstone strata stuck out of the kit rock as flat wedges, and its
+		-- blocky arch clashed with the PBR island (review 16 Nov 19:30). Temple ruins are added as
+		-- separate semi-realistic models (see templeRuin) instead.
+		local archTemplate = assets:FindFirstChild("RuinArch")
+		if keepTempleRuins and archTemplate and ivoryPart then
+			local arch = archTemplate:Clone()
+			arch.Name = "TempleRuinArch"
+			arch:ScaleTo(scale * 0.82)
+			local foot = ivoryPart.Position - Vector3.new(0, ivoryPart.Size.Y / 2 + 4.5 * scale, 0)
+			arch:PivotTo(CFrame.new(foot) * CFrame.Angles(0, yaw, 0))
+			arch.Parent = base
+		end
+		for _, piece in { terraPart, sandPart, ivoryPart, goldPart } do
+			if piece then piece:Destroy() end
+		end
+		terraPart, sandPart, ivoryPart, goldPart = nil, nil, nil, nil
 	end
 	if basaltPart then
 		basaltPart.Color = palette.basalt or rgb(82, 98, 108)
@@ -873,6 +891,67 @@ local function animateHabitats(items, time)
 	end
 end
 
+-- Swap a low-poly landmark body (faceted Rock + Grass cap) for an IslandKit PBR rock + turf pair fitted to the
+-- old cap footprint (review 16 Nov 19:30: sea atolls and the headland still read as low-poly cones).
+local function kitTopSwap(target, topName, rockName, rockTint, turfTint, topY)
+	local top = target and target:FindFirstChild(topName)
+	local kit = getEnvironmentAssets()
+	kit = kit and kit:FindFirstChild("IslandKit")
+	if not (top and kit) then return end
+	local p = top.Position
+	local variants = { "Shelf", "Crag", "Twin" }
+	local pick = variants[(math.floor(math.abs(p.X) * 0.41 + math.abs(p.Z) * 0.67) % 3) + 1]
+	local rockTemplate, turfTemplate = kit:FindFirstChild("Island" .. pick .. "Rock"), kit:FindFirstChild("Island" .. pick .. "Turf")
+	if not (rockTemplate and turfTemplate) then return end
+	local footX, footZ = top.Size.X * 1.06, top.Size.Z * 1.06
+	local sx, sz = footX / turfTemplate.Size.X, footZ / turfTemplate.Size.Z
+	-- Sea islands: a low rounded hump (the rock below the waterline only shows through the water).
+	local sy = (sx + sz) / 2 * (pick == "Crag" and 0.5 or 0.6)
+	local _, yaw = top.CFrame:ToOrientation()
+	-- The turf sits a few studs above the sea so only the flared top of the rock shows; the caller moves the
+	-- props by the returned height change.
+	local oldTop = p.Y + top.Size.Y * 0.45 - 0.4
+	local newTop = topY or oldTop
+	local origin = CFrame.new(p.X, newTop, p.Z) * CFrame.Angles(0, yaw, 0)
+	for _, spec in { { rockTemplate, Vector3.new(sx, sy, sz), "IslandRock", rockTint },
+		{ turfTemplate, Vector3.new(sx, (sx + sz) / 2, sz), "IslandTurf", turfTint } } do
+		local template, s, name, tint = table.unpack(spec)
+		local piece = template:Clone()
+		piece.Name = name
+		piece.Size = template.Size * s
+		piece.CFrame = origin * CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * s)
+		local pbr = piece:FindFirstChildOfClass("SurfaceAppearance")
+		if pbr then pbr.Color = tint end
+		piece.Parent = target
+	end
+	top:Destroy()
+	local rock = target:FindFirstChild(rockName)
+	if rock then rock:Destroy() end
+	-- Faceted sand/reef plates read as low-poly cut-outs on the water; a soft beach mound replaces them.
+	for _, name in { "Sand", "Reef" } do
+		local flat = target:FindFirstChild(name)
+		if flat then flat:Destroy() end
+	end
+	local beach = part(target, "BeachMound", Vector3.new(footX * 1.22, 3.2, footZ * 1.22),
+		CFrame.new(p.X, 0.35, p.Z) * CFrame.Angles(0, yaw, 0), rgb(232, 214, 176), sandMat or Enum.Material.Sand, ball)
+	local shallows = part(target, "ShallowReef", Vector3.new(footX * 1.6, 1.2, footZ * 1.6),
+		CFrame.new(p.X, -0.9, p.Z) * CFrame.Angles(0, yaw, 0), rgb(96, 214, 206), Enum.Material.SmoothPlastic, ball)
+	shallows.Transparency = 0.35
+	return newTop
+end
+
+-- Re-seat nature props on the new turf: their bounding-box bottom goes just under the surface.
+local function shiftProps(container, skip, topY)
+	if not topY then return end
+	for _, child in container:GetChildren() do
+		if child ~= skip and child:IsA("Model") and child.Name ~= "SculptedAtoll" then
+			local box, size = child:GetBoundingBox()
+			local bottom = box.Position.Y - size.Y / 2
+			child:PivotTo(child:GetPivot() + Vector3.new(0, topY - 0.6 - bottom, 0))
+		end
+	end
+end
+
 local function dawn(parent)
 	local random = Random.new(802)
 	local headland = landmark(parent, "Dawn", CFrame.new(115, -5, -308) * CFrame.Angles(0, 0.32, 0), 1.24)
@@ -884,6 +963,7 @@ local function dawn(parent)
 		natureAsset(headland, "BroadleafTree", "HeadlandTree", hCf * CFrame.new(-5, 18.6, 2.5) * CFrame.Angles(0, 1.5, 0), 0.78)
 		natureAsset(headland, "Boulder", "HeadlandBoulder", hCf * CFrame.new(22.3, 12.4, -9.9) * CFrame.Angles(0, 0.9, 0), 1.45)
 		natureAsset(headland, "Fern", "HeadlandFern", hCf * CFrame.new(-9.9, 17.4, 5), 1.25)
+		shiftProps(headland, nil, kitTopSwap(headland, "Grass", "Rock", rgb(226, 216, 198), rgb(196, 226, 170), 9))
 	end
 
 	for i = 1, 9 do
@@ -919,6 +999,10 @@ local function dawn(parent)
 		natureAsset(island, "Flower", "CoastalFlower",
 			cf * CFrame.new(4 * meshScale, crestY, -3 * meshScale) * CFrame.Angles(0, i * 2.1, 0),
 			1.15 * meshScale)
+		if sculptedDawn then
+			shiftProps(island, sculptedDawn,
+				kitTopSwap(sculptedDawn, "Grass", "Rock", rgb(226, 216, 198), rgb(196, 226, 170), 4.5 + width * 0.06))
+		end
 		island.WorldPivot = cf
 	end
 
@@ -1001,22 +1085,10 @@ local function dawn(parent)
 		end
 	end
 
-	-- Open-ocean skirt beyond the terrain water square (about +-2.048 studs), so the dawn horizon is sea
-	-- and haze instead of a hard water edge and corner (QA 16 Nov). Fades with the water (1.550-2.210 km).
-	local ocean = model(parent, "OceanHorizonSkirt")
+	-- The Terrain water itself now reaches +-8.192 studs (a 4-stud sheet around the deep 4.096 square), so the
+	-- dawn horizon is open sea without the white water-edge seam that the old part skirt could not hide (QA 16 Nov).
+	-- Terrain water fades globally through BiomeLightingController.updateWaterHorizon.
 	local oceanTiles = {}
-	for i = -4, 3 do
-		for j = -4, 3 do
-			local cx, cz = (i + 0.5) * 2048, (j + 0.5) * 2048
-			if math.abs(cx) > 2048 or math.abs(cz) > 2048 then
-				-- Slightly oversized and level with the water so it also covers the white water-edge seam.
-				local tile = part(ocean, "OceanTile", Vector3.new(2112, 1, 2112), CFrame.new(cx, -0.42, cz),
-					rgb(30, 104, 150), plastic)
-				tile.Reflectance = 0.25
-				table.insert(oceanTiles, tile)
-			end
-		end
-	end
 
 	local lastCloudTransparency, lastOceanFade
 	return function(km, time)
@@ -1670,6 +1742,29 @@ local function buildBlossomTree(parent, baseCf, scale)
 	local sakuraLight = rgb(255, 182, 208)
 	local sakuraDeep = rgb(232, 96, 142)
 
+	-- Semi-realistic sakura (trunk, branching limbs, clustered bloom canopy; tools/build_sunset_ruins.py),
+	-- replacing the recoloured broadleaf whose crown read as pink balls (review 16 Nov 19:30).
+	local environment = getEnvironmentAssets()
+	local sakura = environment and environment:FindFirstChild("SakuraTree")
+	if sakura then
+		local copy = sakura:Clone()
+		copy.Name = "SakuraPrimary"
+		copy:ScaleTo(scale * 0.72)
+		copy:PivotTo(baseCf * CFrame.Angles(0, (baseCf.Position.X * 0.37) % (math.pi * 2), 0))
+		copy.Parent = tree
+		for i = 1, 4 do
+			local a = (i - 1) * math.pi / 2 + 0.4
+			natureAsset(tree, "Flower", "RootBlossom",
+				baseCf * CFrame.new(math.cos(a) * 5.5 * scale, 0.2 * scale, math.sin(a) * 5.5 * scale) * CFrame.Angles(0, a, 0),
+				1.35 * scale,
+				function(d)
+					if d.Name == "PetalCorolla" then d.Color = i % 2 == 0 and sakuraLight or sakuraMain end
+				end)
+		end
+		tree.WorldPivot = baseCf
+		return tree
+	end
+
 	local mainTree = natureAsset(tree, "BroadleafTree", "SakuraPrimary", baseCf, scale * 1.25, function(d)
 		if d:IsA("MeshPart") then
 			d.TextureID = ""
@@ -1726,26 +1821,41 @@ local function buildWindChimeRuin(parent, baseCf, scale, chimeList)
 	clonePalacePodium(shrine, "ShrinePlinth", baseCf, 0.52 * scale, masonry, gold, sandstone, masonry, gold)
 	clonePalaceLantern(shrine, baseCf * CFrame.new(-4.5 * scale, 1.2 * scale, 3.5 * scale), 1.45 * scale, rgb(255, 214, 138))
 
+	local environment = getEnvironmentAssets()
+	local gateTemplate = environment and environment:FindFirstChild("ChimeGate")
+	local hangY = 24.2
+	if gateTemplate then
+		-- Lacquered torii-style chime gate (curved kasagi, nuki, stone footings; tools/build_sunset_kit2.py)
+		-- replacing the block-and-cylinder frame (review 16 Nov 20:06).
+		local gate = gateTemplate:Clone()
+		gate.Name = "ChimeGateFrame"
+		gate:ScaleTo(scale)
+		gate:PivotTo(baseCf * CFrame.new(0, 1.0 * scale, 0))
+		gate.Parent = shrine
+		hangY = 26.0
+	else
 	for _, side in { -1, 1 } do
-		local colX = (side == -1 and 0 or 18) * scale
-		local colH = (side == -1 and 25 or 21) * scale
-		part(shrine, "PillarBase", Vector3.new(6.8, 2.8, 6.8) * scale, baseCf * CFrame.new(colX, 2.4 * scale, 0), sandstone, sandstoneMat)
-		column(shrine, "ShrinePillar", (baseCf * CFrame.new(colX, 2.8 * scale + colH * 0.5, 0)).Position, 4.6 * scale, colH, masonry, limestoneMat)
-		part(shrine, "PillarCapital", Vector3.new(7.4, 2.6, 7.4) * scale, baseCf * CFrame.new(colX, 3.2 * scale + colH, 0), gold, metalMat)
-	end
+			local colX = (side == -1 and 0 or 18) * scale
+			local colH = (side == -1 and 25 or 21) * scale
+			part(shrine, "PillarBase", Vector3.new(6.8, 2.8, 6.8) * scale, baseCf * CFrame.new(colX, 2.4 * scale, 0), sandstone, sandstoneMat)
+			column(shrine, "ShrinePillar", (baseCf * CFrame.new(colX, 2.8 * scale + colH * 0.5, 0)).Position, 4.6 * scale, colH, masonry, limestoneMat)
+			part(shrine, "PillarCapital", Vector3.new(7.4, 2.6, 7.4) * scale, baseCf * CFrame.new(colX, 3.2 * scale + colH, 0), gold, metalMat)
+		end
 
-	part(shrine, "CrossBeam", Vector3.new(28, 2.4, 3.6) * scale, baseCf * CFrame.new(9 * scale, 25.5 * scale, 0), timber, woodMat)
-	part(shrine, "UpperRidgeBeam", Vector3.new(31, 1.6, 4.4) * scale, baseCf * CFrame.new(9 * scale, 27.2 * scale, 0), gold, metalMat)
-	fleetShape(shrine, "LotusPetal", "WestEaveFinial",
-		baseCf * CFrame.new(-6.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, 0, 0.65),
-		Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
-	fleetShape(shrine, "LotusPetal", "EastEaveFinial",
-		baseCf * CFrame.new(24.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, math.pi, 0.65),
-		Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
+		part(shrine, "CrossBeam", Vector3.new(28, 2.4, 3.6) * scale, baseCf * CFrame.new(9 * scale, 25.5 * scale, 0), timber, woodMat)
+		part(shrine, "UpperRidgeBeam", Vector3.new(31, 1.6, 4.4) * scale, baseCf * CFrame.new(9 * scale, 27.2 * scale, 0), gold, metalMat)
+		fleetShape(shrine, "LotusPetal", "WestEaveFinial",
+			baseCf * CFrame.new(-6.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, 0, 0.65),
+			Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
+		fleetShape(shrine, "LotusPetal", "EastEaveFinial",
+			baseCf * CFrame.new(24.5 * scale, 28.2 * scale, 0) * CFrame.Angles(0, math.pi, 0.65),
+			Vector3.new(1.8, 3.8, 6.5) * scale, gold, metalMat)
+
+	end
 
 	for i = 1, 4 do
 		local xOff = (2.2 + i * 3.6) * scale
-		local topPos = (baseCf * CFrame.new(xOff, 24.2 * scale, 0)).Position
+		local topPos = (baseCf * CFrame.new(xOff, hangY * scale, 0)).Position
 		local chimeLen = (8.2 + (i % 2) * 3.0) * scale
 		local chimeModel = model(shrine, "HangingWindChime")
 		local pivotCf = CFrame.new(topPos)
@@ -1819,66 +1929,96 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 			footing.Parent = bridge
 		end
 
-		part(bridge, "BridgeDeck", Vector3.new(13.5, 3.6, segLen), segCf, masonry, limestoneMat)
-		part(bridge, "DeckCornice", Vector3.new(14.6, 1.1, segLen * 0.98), segCf * CFrame.new(0, 1.6, 0), sandstone, sandstoneMat)
-		part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.4, segLen * 0.92), segCf * CFrame.new(0, 2.0, 0), gold, metalMat)
-
-		for _, railSide in { -1, 1 } do
-			local parapetLength = worn and (railSide == side and 0.41 or 0.23) or 0.84
-			part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * parapetLength),
-				segCf * CFrame.new(railSide * 5.6, 3.2, segLen * (1 - parapetLength) * 0.39), masonry, limestoneMat)
-			for post = 1, (worn and 1 or 3) do
-				local zOff = (post - 2) * segLen * 0.34
-				part(bridge, "BalustradePost", Vector3.new(2.4, 4.2, 2.4),
-					segCf * CFrame.new(railSide * 5.6, 3.8, zOff), sandstone, sandstoneMat)
-				part(bridge, "PostFinial", Vector3.new(1.8, 1.8, 1.8),
-					segCf * CFrame.new(railSide * 5.6, 6.2, zOff), gold, metalMat, ball)
-			end
-		end
-
+		local halfTemplate = getEnvironmentAssets()
+		halfTemplate = halfTemplate and halfTemplate:FindFirstChild("BridgeHalf")
 		local tipCf = CFrame.lookAt(anchorPos + inward * (segLen + 3.2), anchorPos + inward * (segLen + 10))
 			* CFrame.Angles(-0.16, idx * 0.22, side * 0.1)
-		part(bridge, "BrokenSpanTip", Vector3.new(11.2, 3.2, 8.2), tipCf, darkStone, slate)
-		natureAsset(bridge, "Boulder", "ChasmRubble", tipCf * CFrame.new(2.2, 1.8, 0), 1.45, function(d)
-			if d:IsA("MeshPart") then d.TextureID = "" end
-			d.Color = sandstone
-			d.Material = sandstoneMat
-		end)
-		for chip = 1, 3 do
-			local offset = Vector3.new((chip - 2) * 2.4, -3.5 - chip * 3, -1.5 - chip * 0.6)
-			part(bridge, "FracturedFallingMasonry", Vector3.new(5.4 - chip, 3.7 - chip * 0.5, 5 - chip * 0.65),
-				tipCf * CFrame.new(offset) * CFrame.Angles(0.23 * chip, 0.6 * chip, -0.35 * chip),
-				sandstone:Lerp(darkStone, chip * 0.18), sandstoneMat, "Wedge")
-		end
-		natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
-
-		-- Assemble a readable arch from the springing blocks up to the crown under the deck.
-		local run = segLen * 0.58
-		local rise = math.clamp(run * 0.42, 3.8, 12.5)
-		local spring = -3.4 - rise
-		local archOrigin = approachCf * CFrame.new(0, spring, -segLen * 0.49)
-		for p = 1, (worn and 1 or 2) do
-			local along = p == 1 and run * 0.5 or -run * 0.5
-			local pierCf = archOrigin * CFrame.new(0, 0, along)
-			part(bridge, "BridgePier", Vector3.new(6.4, rise + 10, 5.6),
-				pierCf * CFrame.new(0, -(rise + 10) * 0.5, 0), darkStone, slate)
-			part(bridge, "PierCapital", Vector3.new(8.8, 2.8, 7.1), pierCf, sandstone, sandstoneMat)
-			for _, side in { -1, 1 } do
-				ruinRelief(bridge, pierCf * CFrame.new(side * 4.43, 0, 0)
-					* CFrame.Angles(0, side * math.pi / 2, 0), 0.70)
+		if halfTemplate then
+			-- Semi-realistic half span (tools/build_sunset_kit2.py): paved deck, balustrade, voussoir arch,
+			-- spandrel and pier in one piece, stretched along its length to this span (review 16 Nov 20:06).
+			local stretch = segLen / 40
+			local half = halfTemplate:Clone()
+			half.Name = "BridgeSpanMesh"
+			local root = half.PrimaryPart
+			for _, piece in half:GetChildren() do
+				if piece:IsA("BasePart") and piece ~= root then
+					local rel = root.CFrame:ToObjectSpace(piece.CFrame)
+					piece.Size *= Vector3.new(1, 1, stretch)
+					piece.CFrame = root.CFrame * CFrame.new(rel.Position * Vector3.new(1, 1, stretch)) * rel.Rotation
+				end
 			end
-		end
-		local segments = 9
-		for stone = 1, (worn and 5 or segments) do
-			local a0 = math.pi * (stone - 1) / segments
-			local a1 = math.pi * stone / segments
-			local a = Vector3.new(0, math.sin(a0) * rise, math.cos(a0) * run * 0.5)
-			local b = Vector3.new(0, math.sin(a1) * rise, math.cos(a1) * run * 0.5)
-			local start = archOrigin:PointToWorldSpace(a)
-			local finish = archOrigin:PointToWorldSpace(b)
-			local center = start:Lerp(finish, 0.5)
-			part(bridge, "ArchVoussoir", Vector3.new(8.5, 3.2, (finish - start).Magnitude + 0.22),
-				CFrame.lookAt(center, finish), masonry:Lerp(sandstone, (stone % 3) * 0.10), limestoneMat)
+			half:PivotTo(approachCf)
+			half.Parent = bridge
+			part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.3, segLen * 0.8), segCf * CFrame.new(0, 1.9, segLen * 0.06), gold, metalMat)
+			natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
+			-- The mesh carries its own broken end and pier; the old faceted buttress read as a wedge.
+			for _, name in { "EmbeddedCliffButtress", "EmbeddedApproach" } do
+				local piece = bridge:FindFirstChild(name)
+				while piece do piece:Destroy() piece = bridge:FindFirstChild(name) end
+			end
+		else
+		part(bridge, "BridgeDeck", Vector3.new(13.5, 3.6, segLen), segCf, masonry, limestoneMat)
+			part(bridge, "DeckCornice", Vector3.new(14.6, 1.1, segLen * 0.98), segCf * CFrame.new(0, 1.6, 0), sandstone, sandstoneMat)
+			part(bridge, "GoldInlayRoad", Vector3.new(3.2, 0.4, segLen * 0.92), segCf * CFrame.new(0, 2.0, 0), gold, metalMat)
+
+			for _, railSide in { -1, 1 } do
+				local parapetLength = worn and (railSide == side and 0.41 or 0.23) or 0.84
+				part(bridge, "Parapet", Vector3.new(1.6, 2.8, segLen * parapetLength),
+					segCf * CFrame.new(railSide * 5.6, 3.2, segLen * (1 - parapetLength) * 0.39), masonry, limestoneMat)
+				for post = 1, (worn and 1 or 3) do
+					local zOff = (post - 2) * segLen * 0.34
+					part(bridge, "BalustradePost", Vector3.new(2.4, 4.2, 2.4),
+						segCf * CFrame.new(railSide * 5.6, 3.8, zOff), sandstone, sandstoneMat)
+					part(bridge, "PostFinial", Vector3.new(1.8, 1.8, 1.8),
+						segCf * CFrame.new(railSide * 5.6, 6.2, zOff), gold, metalMat, ball)
+				end
+			end
+
+			local tipCf = CFrame.lookAt(anchorPos + inward * (segLen + 3.2), anchorPos + inward * (segLen + 10))
+				* CFrame.Angles(-0.16, idx * 0.22, side * 0.1)
+			part(bridge, "BrokenSpanTip", Vector3.new(11.2, 3.2, 8.2), tipCf, darkStone, slate)
+			natureAsset(bridge, "Boulder", "ChasmRubble", tipCf * CFrame.new(2.2, 1.8, 0), 1.45, function(d)
+				if d:IsA("MeshPart") then d.TextureID = "" end
+				d.Color = sandstone
+				d.Material = sandstoneMat
+			end)
+			for chip = 1, 3 do
+				local offset = Vector3.new((chip - 2) * 2.4, -3.5 - chip * 3, -1.5 - chip * 0.6)
+				part(bridge, "FracturedFallingMasonry", Vector3.new(5.4 - chip, 3.7 - chip * 0.5, 5 - chip * 0.65),
+					tipCf * CFrame.new(offset) * CFrame.Angles(0.23 * chip, 0.6 * chip, -0.35 * chip),
+					sandstone:Lerp(darkStone, chip * 0.18), sandstoneMat, "Wedge")
+			end
+			natureAsset(bridge, "Fern", "BridgeOvergrowth", segCf * CFrame.new(3.2, 2.2, 4), 1.35)
+
+			-- Assemble a readable arch from the springing blocks up to the crown under the deck.
+			local run = segLen * 0.58
+			local rise = math.clamp(run * 0.42, 3.8, 12.5)
+			local spring = -3.4 - rise
+			local archOrigin = approachCf * CFrame.new(0, spring, -segLen * 0.49)
+			for p = 1, (worn and 1 or 2) do
+				local along = p == 1 and run * 0.5 or -run * 0.5
+				local pierCf = archOrigin * CFrame.new(0, 0, along)
+				part(bridge, "BridgePier", Vector3.new(6.4, rise + 10, 5.6),
+					pierCf * CFrame.new(0, -(rise + 10) * 0.5, 0), darkStone, slate)
+				part(bridge, "PierCapital", Vector3.new(8.8, 2.8, 7.1), pierCf, sandstone, sandstoneMat)
+				for _, side in { -1, 1 } do
+					ruinRelief(bridge, pierCf * CFrame.new(side * 4.43, 0, 0)
+						* CFrame.Angles(0, side * math.pi / 2, 0), 0.70)
+				end
+			end
+			local segments = 9
+			for stone = 1, (worn and 5 or segments) do
+				local a0 = math.pi * (stone - 1) / segments
+				local a1 = math.pi * stone / segments
+				local a = Vector3.new(0, math.sin(a0) * rise, math.cos(a0) * run * 0.5)
+				local b = Vector3.new(0, math.sin(a1) * rise, math.cos(a1) * run * 0.5)
+				local start = archOrigin:PointToWorldSpace(a)
+				local finish = archOrigin:PointToWorldSpace(b)
+				local center = start:Lerp(finish, 0.5)
+				part(bridge, "ArchVoussoir", Vector3.new(8.5, 3.2, (finish - start).Magnitude + 0.22),
+					CFrame.lookAt(center, finish), masonry:Lerp(sandstone, (stone % 3) * 0.10), limestoneMat)
+			end
+
 		end
 
 		local rootStart = anchorPos + inward * (segLen * 0.82) + Vector3.new(0, -3, 0)
@@ -1946,8 +2086,9 @@ local function skyIsles(parent)
 			-- The same carving appears on the temple's freestanding approach stones.
 			for _, side in { -1, 1 } do
 				local marker = cf * CFrame.new(side * 18 * scale, 16.5 * scale, 27 * scale)
-				part(island, "ProcessionalMarker", Vector3.new(5.2, 8, 4.6) * scale, marker, sandstoneCol, sandstoneMat)
-				ruinRelief(island, marker * CFrame.new(0, 0.45 * scale, 2.33 * scale), 1.25 * scale)
+				-- Weathered boulders instead of carved crates (review 16 Nov: read as boxes on the turf).
+				natureAsset(island, "Boulder", "ProcessionalMarker", marker * CFrame.new(0, -2.5 * scale, 0)
+					* CFrame.Angles(0, side * 0.9, 0), 1.9 * scale)
 			end
 		end
 		if i == 3 then
@@ -2074,7 +2215,10 @@ local function skyIsles(parent)
 	}
 	for idx, pair in bridgePairs do
 		buildBrokenStoneBridge(parent, pair.start, pair.finish, pair.seed)
-		local anchorCf = CFrame.new(pair.finish + Vector3.new(0, -10, 0)) * CFrame.Angles(0, idx * 0.9, 0)
+		-- The anchor island sits just beyond the bridge end, so the span meets its rim instead of
+		-- crossing its turf (review 16 Nov 20:06: deck and sakura overlapped).
+		local reach = (pair.finish - pair.start) * Vector3.new(1, 0, 1)
+		local anchorCf = CFrame.new(pair.finish + reach.Unit * 22 + Vector3.new(0, -10, 0)) * CFrame.Angles(0, idx * 0.9, 0)
 		local anchorIsle = model(parent, "BridgeAnchorIsle")
 		buildSculptedIslandTerrain(anchorIsle, anchorCf, 0.42, {
 			basalt = basaltCol,
@@ -2166,6 +2310,7 @@ local function buildCosmicCrystalIsland(parent, cf, scale, satellites, seed)
 		basalt = astralObsidian,
 		cliff = astralSlate,
 		moss = bioTeal,
+		turfLift = 0.08,
 		turfMat = slate,
 		cloudColor = rgb(86, 72, 152),
 		cloudShadow = rgb(54, 118, 164),
@@ -2228,6 +2373,7 @@ local function buildFloatingObservatory(parent, cf, scale, armillaryRings)
 		basalt = astralObsidian,
 		cliff = astralSlate,
 		moss = bioTeal,
+		turfLift = 0.08,
 		sandstone = astralSlate,
 		ivory = marble,
 		gold = gold,
@@ -2394,6 +2540,16 @@ local function exosphere(parent)
 	buildCosmicCrystalIsland(parent, CFrame.new(258, altitude(6980), -22) * CFrame.Angles(0, -1.25, 0), 0.85, satellites, 620)
 	buildCosmicCrystalIsland(parent, CFrame.new(-88, altitude(7480), -262) * CFrame.Angles(0, 0.45, 0), 0.84, satellites, 630)
 
+	-- Flank islets so the left/right of the ascent is not empty space (review 16 Nov 19:30).
+	for k, spec in {
+		{ Vector3.new(455, altitude(6420), 140), 0.6, 0.9 },
+		{ Vector3.new(-470, altitude(7220), 170), 0.66, -2.1 },
+		{ Vector3.new(420, altitude(7720), -360), 0.56, 2.6 },
+		{ Vector3.new(-430, altitude(6650), -40), 0.52, 1.4 },
+	} do
+		buildCosmicCrystalIsland(parent, CFrame.new(spec[1]) * CFrame.Angles(0, spec[3], 0), spec[2], satellites, 640 + k)
+	end
+
 	buildFloatingObservatory(parent, CFrame.new(112, altitude(7040), -290) * CFrame.Angles(0, -0.28, 0), 1.48, armillaryRings)
 
 	local archSpecs = {
@@ -2486,7 +2642,8 @@ local function exosphere(parent)
 	end
 
 	-- A large ringed planet low on the horizon gives the cosmic zone a focal point (semi-realistic pass, 16 Nov).
-	local planetCenter = Vector3.new(-1500, altitude(7000), -2600)
+	-- Raised clear of the island silhouettes it used to cut through (review 16 Nov 19:30).
+	local planetCenter = Vector3.new(-1650, altitude(7000) + 520, -2700)
 	local planet = part(parent, "RingedPlanet", Vector3.one * 760, CFrame.new(planetCenter), rgb(78, 100, 176), slate, ball)
 	for _, face in { Enum.NormalId.Front, Enum.NormalId.Right, Enum.NormalId.Top, Enum.NormalId.Left, Enum.NormalId.Back, Enum.NormalId.Bottom } do
 		local bands = Instance.new("Texture")
@@ -2705,13 +2862,15 @@ local function palaceHorizon(parent, anchor)
 	local cloudPalette = { rgb(183, 195, 222), rgb(255, 244, 223), rgb(232, 232, 237) }
 	local layouts = {
 		{ "HorizonPavilion", Vector3.new(-256, -532, -260), 0.48, -16 },
-		{ "HorizonPavilion", Vector3.new(-310, -448, -318), 0.57, -12, "WestArcade" },
+		-- Left-side landmarks were stacked in one column (four identical pavilions in view at once, review
+		-- 16 Nov 19:30); they now step around the ascent and vary in type.
+		{ "HorizonPavilion", Vector3.new(-430, -440, 70), 0.57, -12, "WestArcade" },
 		{ "HorizonSpire", Vector3.new(280, -435, -270), 0.53, 22 },
-		{ "HorizonPavilion", Vector3.new(265, -345, -35), 0.54, 28 },
-		{ "HorizonPavilion", Vector3.new(-276, -320, -302), 0.49, -14, "WestArcade" },
+		{ "HorizonPavilion", Vector3.new(455, -360, 150), 0.54, 28 },
+		{ "HorizonArch", Vector3.new(-470, -320, -150), 0.55, -20 },
 		{ "HorizonSpire", Vector3.new(-285, -295, -45), 0.64, -24 },
-		{ "HorizonArch", Vector3.new(339, -232, -344), 0.67, 18, "EastCauseway" },
-		{ "HorizonSpire", Vector3.new(-344, -188, -396), 0.39, -8 },
+		{ "HorizonArch", Vector3.new(250, -232, -470), 0.67, 18, "EastCauseway" },
+		{ "HorizonSpire", Vector3.new(-170, -175, -540), 0.46, -8 },
 		{ "HorizonPavilion", Vector3.new(-275, 1, -438), 0.72, -18 },
 		{ "HorizonSpire", Vector3.new(323, -12, -558), 0.78, 25 },
 		{ "HorizonCloud", Vector3.new(335, -22, 456), 0.83, -18 },
@@ -2825,10 +2984,12 @@ local function palaceUpperSky(parent, anchor)
 		ray.LightEmission = 0.18
 	end
 
+	-- The three low routes passed through cloud terraces, a pavilion and an arch (review 16 Nov 19:30);
+	-- they now sail in the open air between them.
 	local routes = {
-		{ "CloudSailer", Vector3.new(-356, -300, -296), Vector3.new(42, 6, 32), 84, 0.35, 1.08 },
-		{ "CloudKetch", Vector3.new(242, -315, -25), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
-		{ "CloudCutter", Vector3.new(397, -190, -362), Vector3.new(38, 8, 40), 108, 4.2, 0.88 },
+		{ "CloudSailer", Vector3.new(-380, -205, -230), Vector3.new(42, 6, 32), 84, 0.35, 1.08 },
+		{ "CloudKetch", Vector3.new(150, -250, 140), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
+		{ "CloudCutter", Vector3.new(440, -120, -190), Vector3.new(38, 8, 40), 108, 4.2, 0.88 },
 		{ "CloudSailer", Vector3.new(187, 66, -159), Vector3.new(42, 6, 39), 88, 0.12, 1.04 },
 		{ "CloudKetch", Vector3.new(425, 278, -715), Vector3.new(160, 13, 70), 133, 2.9, 0.92 },
 		{ "CloudCutter", Vector3.new(170, 460, 630), Vector3.new(122, 13, 69), 151, 5.2, 0.90 },
@@ -2920,7 +3081,9 @@ local function gateway(parent)
 	local clouds = { rgb(252, 232, 179), rgb(255, 244, 210), rgb(246, 221, 162) }
 	for i = 1, 12 do
 		local tier = math.floor((i - 1) / 4)
-		local angle = (i - 1) * math.pi / 2 + 0.48 + tier * 0.32
+		-- Golden-angle spacing: quarter turns per terrace stacked each tier into four cloud columns
+		-- (review 16 Nov 20:06, right side of the ascent).
+		local angle = (i - 1) * 2.39996 + 0.48
 		local radius = 390 + tier * 55
 		local x, z = math.cos(angle) * radius, math.sin(angle) * radius
 		-- Frame the palace vista from either side of the central ascent.
