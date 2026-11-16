@@ -2,6 +2,22 @@
 
 Snapshot aktif per 15 November 2026, Asia/Jakarta. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
 
+## Galeri bentuk musuh/rintangan dan perbaikan yaw impor — 16 November 2026, 18:45 WIB
+
+Semua musuh dan rintangan dikumpulkan di satu fixture Edit, lalu di-screen capture dari beberapa sudut.
+
+- **Penyebab phoenix "aneh":** impor glTF Roblox memutar mesh 180° di sumbu Y, sedangkan posisi part memakai pusat dari Blender.
+- **Perbaikan:** 7 template mesh diputar 180° pada pusatnya, dengan atribut `ImportYawFixed`. Template: Seagull, Eagle, Phoenix, Phantom, Wyvern, Bat, Bee.
+- **Meteor v5:** batu basalt dengan retakan lava Neon (aset 104097092302147).
+- **GuardianDrone v5:** bola penjaga dengan lensa, nacelle dan halo (aset 122179757209881).
+- **Satelit:** tidak diubah.
+- **Kepakan sayap:** dicek dengan simulasi Edit memakai rumus ObstacleManager. Belum dicek dengan Play Solo.
+- **Script:** tidak berubah, FNV sama dengan commit `1008f48`.
+- **Penyimpanan:** tersimpan ke **Cloud v9**. `Fly High.rbxl` lokal belum memuat template baru (perlu File → Save to File).
+- **Belum di-commit.**
+
+Installer berikutnya wajib memakai flip yaw (lihat docstring `tools/build_creatures.py`). [Rincian dan screenshot](audit/creature-gallery-2026-11-16/README.md).
+
 ## Revisi semi-realistis lanjutan (C–E) — 16 November 2026, 12:35 WIB
 
 Pekerjaan semi-realistis dilanjutkan dengan perubahan berikut:
