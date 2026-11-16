@@ -39,8 +39,11 @@ function Art.Clone(name: string, parent: Instance, cf: CFrame, scale: number, ti
 				piece.Transparency = 1
 			elseif tint then
 				if piece:IsA("MeshPart") then piece.TextureID = "" end
+				-- PBR feather maps would override the tint; gilded statues read as polished metal instead.
+				local pbr = piece:FindFirstChildOfClass("SurfaceAppearance")
+				if pbr then pbr:Destroy() end
 				piece.Color = tint
-				piece.Material = Enum.Material.SmoothPlastic
+				piece.Material = Enum.Material.Metal
 			end
 			piece.Parent = copy
 			if original.Name == "Core" then copy.PrimaryPart = piece end
@@ -152,3 +155,5 @@ function Art.PhantomMonument(parent: Instance, surface: CFrame, scale: number)
 end
 
 return Art
+
+

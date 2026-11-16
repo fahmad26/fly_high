@@ -1,6 +1,6 @@
 # Rencana revisi seni lingkungan dan aset Fly High
 
-Tanggal: 15 November 2026, Asia/Jakarta. **Status: proposal setelah audit; belum diimplementasikan.** Pengguna meminta audit, instalasi skill yang aman dan rencana terperinci, serta melarang perubahan aset pada tahap ini.
+Tanggal: 15 November 2026, Asia/Jakarta. **Status: proposal setelah audit; belum diimplementasikan.** **Pembaruan 15 Nov 21:47 WIB:** Batch 1 masuk tahap graybox/preview (menunggu persetujuan) — [bukti](../../../audit/storm-batch1-2026-11-15/README.md). Pengguna meminta audit, instalasi skill yang aman dan rencana terperinci, serta melarang perubahan aset pada tahap ini.
 
 Untuk AI penerima, baca [HANDOVER fitur](HANDOVER.md) dahulu: lokasi file lokal yang sudah tersimpan, status Studio, acuan source, skill dan urutan kerja. Status simpan lokal tidak berarti rencana ini sudah dikerjakan.
 
@@ -41,6 +41,8 @@ Lima skill dari EL4CTEO/blender-skills versi 1.2.0, commit `b1b21dfb73bc40b874eb
 Skill Roblox yang sudah tersedia tetap menangani komposisi, VFX native, impor dan pengujian. Script upstream belum dijalankan pada tugas audit ini. Shader toon/volume Blender dan Geometry Nodes hujan tidak dianggap dapat diekspor langsung ke Roblox. Blender dipakai untuk bentuk, tekstur/mask dan sumber model; VFX akhir dibuat serta diperiksa di Studio.
 
 ## 4. Arah seni dan aturan bersama
+
+**Pembaruan arah 15 Nov 2026, 21:48 WIB (keputusan pengguna):** scenery dan aset dibuat **semi-realistis** — awan bertekstur lembut dengan cahaya/bayangan meyakinkan, palet tetap mengikuti tema PRD per zona. Ketentuan kartun di bawah berlaku sejauh tidak bertentangan.
 
 **Arah:** fantasi petualangan bergaya kartun, dengan volume yang utuh, tepian terkontrol, material mudah dibaca dan warna sesuai lima tema PRD. Siluet dan komposisi didahulukan daripada detail kecil.
 

@@ -1,0 +1,257 @@
+{
+ "batch": "Environment art Batch 1 - Zone 2 storm (graybox, pending user approval)",
+ "generator": "tools/build_storm_batch1.py (Blender 5.3.0, scene FlyHigh_StormBatch1; units 1 BU = 1 stud)",
+ "uploads": [
+  {
+   "assetId": "94026780390187",
+   "displayName": "FlyHigh_StormBatch1_Graybox",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormBatch1.glb",
+   "sha256": "d8806450f4e09b49d6c166233fd71fdf92ef2b8e3ab1d063ec7aeddb97a3f1d8",
+   "moderation": "Approved",
+   "meshIds": {
+    "StormFunnel": "rbxassetid://125708744097172",
+    "StormFootSkirt": "rbxassetid://123938651723936",
+    "StormVortexHead": "rbxassetid://135369705514754",
+    "StormShelfBank": "rbxassetid://132839819009073",
+    "StormThunderhead_iter1_SUPERSEDED": "rbxassetid://105885034444895"
+   }
+  },
+  {
+   "assetId": "81199287960960",
+   "displayName": "FlyHigh_StormBatch1_Clouds2",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormBatch1_Clouds2.glb",
+   "sha256": "56de1ba2467ee9afba6bf0a474704448a20f2a506d17a1191549c65b8f708023",
+   "moderation": "Approved",
+   "meshIds": "StormThunderhead (iteration 2) and StormCongestus - read MeshId from the inserted package before integration"
+  },
+  {
+   "assetId": "123944629141701",
+   "displayName": "FlyHigh_StormLookDev",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormLookDev.glb",
+   "sha256": "b4c4f3aa3e759158cb93d126e40d974a86ba80effcc6ee35a6030f98a065d603",
+   "moderation": "Approved",
+   "note": "look-dev v1 (anvil plate, saturated palette) - SUPERSEDED"
+  },
+  {
+   "assetId": "95444165690383",
+   "displayName": "FlyHigh_StormLookDev2",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormLookDev2.glb",
+   "sha256": "62fabeb7546815de4241f3fea65bc685a79c91e04e05a32816e09278581da589",
+   "moderation": "Approved",
+   "note": "semi-realistic look-dev v2 under review; importer created TextureIDs (CloudLUT rbxassetid://108393120847173, funnel core 85039044500479, shell 105847463126332)"
+  },
+  {
+   "assetId": "96515546941911",
+   "displayName": "FlyHigh_StormZone2_v1",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormZone2_v1.glb",
+   "moderation": "Approved",
+   "note": "INSTALLED as ReplicatedStorage.FlyHigh.EnvironmentAssets.StormZone2 (Cumulonimbus, Congestus, ShelfBank, WallCloud, FunnelCore, FunnelShell; SourceCenter attribute; Fabric; no scripts, no package link)"
+  },
+  {
+   "assetId": "132205682977093",
+   "displayName": "FlyHigh_StormZone2_Cb_v2",
+   "file": "assets/models/scenery/storm/generated/FlyHigh_StormZone2_Cb_v2.glb",
+   "sha256": "d64672bc07ecedfeffedeb32c8b1c77e655023b68b1322335f7e0ff66458d254",
+   "moderation": "Approved",
+   "note": "INSTALLED as StormZone2.CbTower (7.430 tris) + StormZone2.CbAnvil (12.834 tris); SourceCenter tower (-0.451,118.668,-0.454), anvil (107.531,210.397,-12.46)"
+  }
+ ],
+ "meshes": {
+  "StormFunnel": {
+   "tris": 6240,
+   "size": [
+    173.02,
+    220.0,
+    176.73
+   ],
+   "center": [
+    -0.1,
+    106.0,
+    2.887
+   ]
+  },
+  "StormFootSkirt": {
+   "tris": 400,
+   "size": [
+    71.39,
+    6.58,
+    69.17
+   ],
+   "center": [
+    -0.187,
+    1.61,
+    0.248
+   ]
+  },
+  "StormVortexHead": {
+   "tris": 3000,
+   "size": [
+    274.9,
+    95.55,
+    272.55
+   ],
+   "center": [
+    10.01,
+    50.87,
+    -0.127
+   ]
+  },
+  "StormShelfBank": {
+   "tris": 3000,
+   "size": [
+    535.11,
+    77.1,
+    116.68
+   ],
+   "center": [
+    -3.746,
+    42.63,
+    1.488
+   ]
+  },
+  "StormThunderhead": {
+   "tris": 3800,
+   "size": [
+    406.25,
+    185.92,
+    159.56
+   ],
+   "center": [
+    38.19,
+    98.01,
+    0.377
+   ]
+  },
+  "StormCongestus": {
+   "tris": 3200,
+   "size": [
+    343.92,
+    152.37,
+    154.07
+   ],
+   "center": [
+    1.787,
+    81.29,
+    -0.15
+   ]
+  }
+ },
+ "geometryQA": "bmesh check per mesh: boundary 0, non-manifold 0, degenerate 0, n-gon 0, inconsistent winding 0, 1 island, positive signed volume, scale 1. qa_check.py itself not run (Blender MCP safe mode blocks importing skill scripts).",
+ "coordinateNote": "center/size in Roblox axes (X, Y-up, Z = -Blender Y). Roblox centres a MeshPart on its bbox: CFrame = CFrame.new(origin) * yaw * CFrame.new(center * scale).",
+ "lookdev2": {
+  "generator": "tools/build_storm_lookdev.py",
+  "artDirection": "semi-realistis (pengguna, 15 Nov 21:48 WIB)",
+  "meshes": {
+   "StormCumulonimbus": {
+    "tris": 10686,
+    "size": [
+     393.679,
+     226.557,
+     265.125
+    ],
+    "center": [
+     73.484,
+     116.731,
+     -11.357
+    ]
+   },
+   "StormWallCloud": {
+    "tris": 8000,
+    "size": [
+     280.798,
+     105.933,
+     267.095
+    ],
+    "center": [
+     9.708,
+     39.145,
+     -3.942
+    ]
+   },
+   "StormFunnelCore": {
+    "tris": 4880,
+    "size": [
+     173.04,
+     220.0,
+     176.841
+    ],
+    "center": [
+     -0.244,
+     106.0,
+     2.623
+    ]
+   },
+   "StormFunnelShell": {
+    "tris": 3528,
+    "size": [
+     215.823,
+     220.0,
+     219.541
+    ],
+    "center": [
+     1.122,
+     106.0,
+     -7.363
+    ]
+   }
+  },
+  "textures": {
+   "FH_CloudLUT.png": "ef05b5278cb431232d4ac78772594c2814db01789f1cd680c41a70f55353e2c8",
+   "FH_FunnelStreaks.png": "338fc615e832e2d3cd1f9b2360dc1d748985f03836bcf863b90723e954dd427d",
+   "FH_FunnelShellAlpha.png": "58147f878463506b37ae64238acee6f4a12e25ad996e3820c09bce834993cfb2"
+  },
+  "roblox": "MeshPart Material Fabric (SmoothPlastic showed plastic sheen); smoke ParticleEmitter mist at anvil edge/base, LightInfluence 1; shell Transparency 0.3",
+  "geometryQA": "all four: boundary 0, non-manifold 0, degenerate 0, n-gon 0, inconsistent 0, 1 island, positive volume"
+ },
+ "installed": {
+  "folder": "ReplicatedStorage.FlyHigh.EnvironmentAssets.StormZone2",
+  "templates": {
+   "Cumulonimbus": {
+    "tris": 10686,
+    "src": "StormCumulonimbus"
+   },
+   "Congestus": {
+    "tris": 8268,
+    "src": "StormCongestus2"
+   },
+   "ShelfBank": {
+    "tris": 8650,
+    "src": "StormShelfBank2"
+   },
+   "WallCloud": {
+    "tris": 8000,
+    "src": "StormWallCloud (LUT height 0.30-1.0)"
+   },
+   "FunnelCore": {
+    "tris": 4880
+   },
+   "FunnelShell": {
+    "tris": 3528
+   },
+   "CbTower": {
+    "tris": 7430
+   },
+   "CbAnvil": {
+    "tris": 12834,
+    "runtimeTransparency": 0.5
+   }
+  },
+  "source": {
+   "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/BiomeScenery.luau",
+   "bytesNormalized": 116839,
+   "fnv1a": "9b7c9c8b",
+   "studioMatch": true,
+   "compile": true
+  },
+  "sceneCounts": {
+   "parts": 231,
+   "meshParts": 125,
+   "translucentParts": 40,
+   "particleEmitters": 40,
+   "pointLights": 22,
+   "beams": 78,
+   "collisionFlags": 0,
+   "build_ms_edit": 9.0
+  }
+ }
+}

@@ -61,6 +61,17 @@ local function getTemplates()
 	return script.Parent.Parent:FindFirstChild("Templates")
 end
 
+-- PBR pieces ignore BasePart.Color; tint their SurfaceAppearance as well (Batch B, 16 Nov).
+local function tintPiece(piece, color, weight)
+	piece.Color = weight and piece.Color:Lerp(color, weight) or color
+	local pbr = piece:FindFirstChildOfClass("SurfaceAppearance")
+	if pbr then
+		-- Distance haze only lightly veils PBR maps; gilded pieces keep most of their warmth.
+		local keep = piece.Name:find("Gold") and 0.2 or 0.45
+		pbr.Color = weight and Color3.new(1, 1, 1):Lerp(color, weight * keep) or color:Lerp(Color3.new(1, 1, 1), 0.35)
+	end
+end
+
 local function landmark(parent, name, cf, scale)
 	local environment = getEnvironmentAssets()
 	local meshes = environment and environment:FindFirstChild("BiomeLandmarkMeshes")
@@ -239,6 +250,114 @@ local function column(parent, name, center, width, height, color, material)
 end
 
 -- A cloud bank has one silhouette and a small, matched set of rounded lobes.
+-- Bright semi-realistic cloud skin (review 15 Nov): the Zone 2 kit cumulus mesh with a daylight or golden
+-- shading LUT replaces the plastic ball clusters in Dawn and the Celestial Gateway.
+local CLOUD_LUT_DAY = "rbxassetid://77383340574029" -- FH_CloudLUT_Day (decal 86078801617606)
+local CLOUD_LUT_GOLD = "rbxassetid://97439095888170" -- FH_CloudLUT_Gold (decal 100619531545856)
+
+local function brightCloudTemplate()
+	local assets = getEnvironmentAssets()
+	local kit = assets and assets:FindFirstChild("StormZone2")
+	local mesh = kit and kit:FindFirstChild("Congestus")
+	return mesh and mesh:IsA("MeshPart") and mesh or nil
+end
+
+local function brightCloud(group, template, base, size, body, foundation)
+	local warm = body.R > body.B + 0.06
+	local target = foundation and size * Vector3.new(1.05, 1.3, 1.02) or size * Vector3.new(1.12, 1.25, 1.06)
+	if not foundation then
+		-- Very flat layouts read as discs with the cumulus mesh; keep some vertical billow (QA 16 Nov).
+		target = Vector3.new(target.X, math.max(target.Y, target.X * 0.4), target.Z)
+	end
+	local scale = target / template.Size
+	local sourceCenter = template:GetAttribute("SourceCenter") or Vector3.zero
+	-- Foundations hang the billows downward so masonry sits on the flat cloud base.
+	local orient = foundation and CFrame.Angles(math.pi, 0, 0) or CFrame.identity
+	local anchor = base * CFrame.new(0, foundation and size.Y * 0.42 or -size.Y * 0.45, 0) * orient
+	local cloud = template:Clone()
+	cloud.Name = "CloudLobe"
+	cloud.Size = target
+	cloud.CFrame = anchor * CFrame.new(sourceCenter * scale)
+	cloud.TextureID = warm and CLOUD_LUT_GOLD or CLOUD_LUT_DAY
+	cloud.Material = Enum.Material.Fabric
+	cloud.Color = Color3.new(1, 1, 1)
+	cloud.Transparency = 0
+	cloud.Anchored = true
+	cloud.CanCollide = false
+	cloud.CanTouch = false
+	cloud.CanQuery = false
+	cloud.CastShadow = false
+	cloud.Parent = group
+	-- A faint self-lit shell keeps daylight cumulus white on its shadow side (QA 16 Nov: read as grey overcast).
+	local shell = cloud:Clone()
+	shell.Name = "CloudLobeSoftEdge"
+	shell.Size = target * 1.045
+	shell.TextureID = ""
+	shell.Material = Enum.Material.Neon
+	shell.Color = warm and Color3.fromRGB(255, 236, 205) or Color3.fromRGB(246, 249, 255)
+	shell.Transparency = 0.86
+	shell.Parent = group
+	return cloud, shell
+end
+
+-- Sea of cloud far below the flight corridor. Without it the view under the horizon was a flat haze colour
+-- with a hard line against the sky (review 15 Nov). A stretched cloud mesh read as dunes (QA 16 Nov), so this
+-- is a tiling cloud-deck texture on two invisible layers, seamless across a 5x5 grid of 2.040-stud tiles.
+local CLOUD_DECK = "rbxassetid://88219497565542" -- FH_CloudDeck (decal 116548342084060)
+
+local function cloudSea(parent, km, tint)
+	local sea = model(parent, "CloudSea")
+	-- Opaque floor under the deck so gaps show deep cloud shadow, never the revealed seabed square.
+	local floor = Instance.new("Part")
+	floor.Name = "CloudSeaFloor"
+	floor.Size = Vector3.new(2040, 1, 2040)
+	floor.Color = tint:Lerp(Color3.new(0, 0, 0), 0.45)
+	floor.Material = Enum.Material.SmoothPlastic
+	floor.Anchored = true
+	floor.CanCollide = false
+	floor.CanTouch = false
+	floor.CanQuery = false
+	floor.CastShadow = false
+	for gx = -2, 2 do
+		for gz = -2, 2 do
+			local slab = floor:Clone()
+			slab.CFrame = CFrame.new(gx * 2040, altitude(km) - 30, gz * 2040)
+			slab.Parent = sea
+		end
+	end
+	floor:Destroy()
+	for layer, spec in { { 0, 1020, 0.05 }, { 26, 680, 0.45 } } do
+		local lift, tile, alpha = table.unpack(spec)
+		for gx = -2, 2 do
+			for gz = -2, 2 do
+				local plate = Instance.new("Part")
+				plate.Name = "CloudSeaTile"
+				plate.Size = Vector3.new(2040, 1, 2040)
+				plate.CFrame = CFrame.new(gx * 2040, altitude(km) + lift, gz * 2040)
+				plate.Transparency = 1
+				plate.Anchored = true
+				plate.CanCollide = false
+				plate.CanTouch = false
+				plate.CanQuery = false
+				plate.CastShadow = false
+				plate.Parent = sea
+				local deck = Instance.new("Texture")
+				deck.Name = "CloudDeck"
+				deck.Face = Enum.NormalId.Top
+				deck.Texture = CLOUD_DECK
+				deck.StudsPerTileU = tile
+				deck.StudsPerTileV = tile
+				deck.OffsetStudsU = layer * 333
+				deck.OffsetStudsV = layer * 157
+				deck.Color3 = tint
+				deck.Transparency = alpha
+				deck.Parent = plate
+			end
+		end
+	end
+	return sea
+end
+
 local function band(parent, name, center, size, colors, seed, profile, heading)
 	local group = model(parent, name)
 	local random = Random.new(seed)
@@ -271,6 +390,19 @@ local function band(parent, name, center, size, colors, seed, profile, heading)
 		texture.Parent = sprite
 	end
 
+	local template = (profile == nil or profile == "foundation") and brightCloudTemplate()
+	if template then
+		local cloud, shell = brightCloud(group, template, base, size, body, profile == "foundation")
+		table.insert(lobes, cloud)
+		table.insert(lobes, shell)
+		if profile == "foundation" then
+			veil(Vector3.new(-0.06, -0.50, 0.06), size.X * 0.85, size.Y * 1.1, shade, 0.80)
+		else
+			veil(Vector3.new(0, -0.05, 0), size.X * 1.15, size.Y * 1.35, body:Lerp(light, 0.4), 0.82)
+		end
+		group.WorldPivot = base
+		return lobes, group
+	end
 	if profile == "mist" then
 		veil(Vector3.zero, size.X, size.Y * 1.55, body:Lerp(light, 0.35), 0.50)
 	elseif profile == "stormAnvil" then
@@ -366,6 +498,39 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 	local ivoryPart = base:FindFirstChild("Ivory")
 	local goldPart = base:FindFirstChild("Gold")
 
+	-- Semi-realistic island body (environment art Batch A, 16 Nov 2026): one of three PBR rock + turf
+	-- pairs from IslandKit (tools/build_island_kit.py), fitted to the old moss footprint and tinted per zone.
+	local assets = getEnvironmentAssets()
+	local kit = assets and assets:FindFirstChild("IslandKit")
+	local variants = { "Shelf", "Crag", "Twin" }
+	local pick = variants[(math.floor(math.abs(cf.Position.X) * 0.37 + math.abs(cf.Position.Z) * 0.61 + cf.Position.Y * 0.13) % 3) + 1]
+	local rockTemplate = kit and kit:FindFirstChild("Island" .. pick .. "Rock")
+	local turfTemplate = kit and kit:FindFirstChild("Island" .. pick .. "Turf")
+	if rockTemplate and turfTemplate and mossPart then
+		local top = mossPart.CFrame * CFrame.new(0, mossPart.Size.Y / 2 - 0.6 * scale, 0)
+		local footX, footZ = mossPart.Size.X * 1.08, mossPart.Size.Z * 1.1
+		local sx, sz = footX / turfTemplate.Size.X, footZ / turfTemplate.Size.Z
+		-- Tall profiles made the Crag variant a spike (QA 16 Nov); cap the vertical stretch.
+		local sy = (sx + sz) / 2 * math.clamp(palette.rockProfile and palette.rockProfile.Y or 1, 0.7, 1) * (pick == "Crag" and 0.78 or 0.92)
+		local _, yaw = cf:ToOrientation()
+		local origin = CFrame.new(top.Position) * CFrame.Angles(0, yaw, 0)
+		local rockTint = (palette.cliff or rgb(196, 182, 160)):Lerp(Color3.new(1, 1, 1), 0.5)
+		local turfTint = (palette.moss or rgb(82, 148, 88)):Lerp(Color3.new(1, 1, 1), 0.55)
+		for _, spec in { { rockTemplate, Vector3.new(sx, sy, sz), "IslandRock", rockTint },
+			{ turfTemplate, Vector3.new(sx, (sx + sz) / 2, sz), "IslandTurf", turfTint } } do
+			local template, s, name, tint = table.unpack(spec)
+			local piece = template:Clone()
+			piece.Name = name
+			piece.Size = template.Size * s
+			piece.CFrame = origin * CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * s)
+			local pbr = piece:FindFirstChildOfClass("SurfaceAppearance")
+			if pbr then pbr.Color = tint end
+			piece.Parent = base
+		end
+		if basaltPart then basaltPart:Destroy() end
+		mossPart:Destroy()
+		mossPart, basaltPart = nil, nil
+	end
 	if basaltPart then
 		basaltPart.Color = palette.basalt or rgb(82, 98, 108)
 		basaltPart.Material = palette.rockMat or slate
@@ -431,6 +596,8 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 	return base
 end
 
+local WATER_STREAKS = "rbxassetid://85832877682740" -- FH_HazardFlow streaks reused as falling-water texture
+
 -- Attach a sculpted waterfall cascade
 local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterColor, foamColor, mistColor)
 	local wColor = waterColor or rgb(98, 196, 238)
@@ -448,27 +615,64 @@ local function attachSculptedWaterfall(parent, lipCf, dropHeight, scale, waterCo
 	local carrier = rail(parent, "ThinWaterfall", lipCf.Position)
 	carrier.CFrame = lipCf
 	carrier.Transparency = 1
-	for j = -1, 1 do
-		local off = Vector3.new(j * 2.65 * scale, 0, 0)
+	-- Review 15 Nov: straight strips that end in nothing. The fall now arcs off the lip, widens and
+	-- breaks into spray as it drops, with animated water streaks and a mist plume where it dissolves.
+	for j = -2, 2 do
+		local edge = math.abs(j)
+		local off = Vector3.new(j * 2.3 * scale, 0, 0)
+		local drop = dropHeight * (1 - edge * 0.07)
 		local fade = NumberSequence.new({
-			NumberSequenceKeypoint.new(0, 0.29),
-			NumberSequenceKeypoint.new(0.32, 0.30 + math.abs(j) * 0.07),
-			NumberSequenceKeypoint.new(0.67, 0.47),
-			NumberSequenceKeypoint.new(0.86, 0.73),
+			NumberSequenceKeypoint.new(0, 0.18 + edge * 0.08),
+			NumberSequenceKeypoint.new(0.3, 0.24 + edge * 0.1),
+			NumberSequenceKeypoint.new(0.62, 0.45 + edge * 0.08),
+			NumberSequenceKeypoint.new(0.85, 0.78),
 			NumberSequenceKeypoint.new(1, 1),
 		})
 		local stream = beam(
-			socket(carrier, off, Vector3.new(0, -0.36, 1)),
-			socket(carrier, off + Vector3.new(j * 0.72 * scale, -dropHeight * (1 - math.abs(j) * 0.11), 13 * scale),
-				Vector3.new(0, -1, 0.10)),
-			(3.2 + (1 - math.abs(j)) * 1.25) * scale, 1.8 * scale,
-			ColorSequence.new(wColor, fColor), fade, 9 * scale
+			socket(carrier, off, Vector3.new(0, -0.2, 1)),
+			socket(carrier, off + Vector3.new(j * 2.4 * scale, -drop, (15 + edge * 2) * scale), Vector3.new(j * 0.08, -1, 0.06)),
+			(3.6 + (2 - edge) * 1.1) * scale, (6.4 + (2 - edge) * 1.6) * scale,
+			ColorSequence.new(wColor:Lerp(fColor, 0.15), fColor), fade, 10 * scale
 		)
-		stream.LightEmission = 0.22
+		stream.Texture = WATER_STREAKS
+		stream.TextureMode = Enum.TextureMode.Wrap
+		stream.TextureLength = 18 * scale
+		stream.TextureSpeed = 0.9 + edge * 0.15
+		stream.Segments = 14
+		stream.LightEmission = 0.3
+	end
+	-- Lip foam and lower spray/mist volumes.
+	local lip = part(parent, "WaterfallLipFoam", Vector3.new(13, 1.2, 4) * scale,
+		lipCf * CFrame.new(0, 0.2 * scale, 0.6 * scale), fColor, glassMat, ball)
+	lip.Transparency = 0.35
+	for k, spec in { { 0.55, 10, 0.5, 6 }, { 0.9, 18, 0.35, 9 } } do
+		local at, width, alpha, count = table.unpack(spec)
+		local holder = rail(parent, "WaterfallSpray", lipCf:PointToWorldSpace(Vector3.new(0, -dropHeight * at, (13 + k * 2) * scale)))
+		holder.Transparency = 1
+		holder.Size = Vector3.new(width, 4, width * 0.6) * scale
+		local spray = Instance.new("ParticleEmitter")
+		spray.Name = "WaterfallMist"
+		spray.Texture = "rbxasset://textures/particles/smoke_main.dds"
+		spray.Color = ColorSequence.new(mColor)
+		spray.LightInfluence = 0.6
+		spray.Size = NumberSequence.new(width * 0.35 * scale, width * 0.9 * scale)
+		spray.Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(0.25, alpha),
+			NumberSequenceKeypoint.new(1, 1)})
+		spray.Lifetime = NumberRange.new(2.5, 4)
+		spray.Rate = count / 3
+		spray.Speed = NumberRange.new(0.5, 2)
+		spray.SpreadAngle = Vector2.new(60, 60)
+		spray.Acceleration = Vector3.new(0, 0.6, 0)
+		spray.Drag = 0.6
+		spray.Rotation = NumberRange.new(0, 360)
+		spray.RotSpeed = NumberRange.new(-8, 8)
+		spray.Shape = Enum.ParticleEmitterShape.Box
+		spray.Parent = holder
 	end
 
-	local mistCenter = lipCf:PointToWorldSpace(Vector3.new(0, -dropHeight * 0.89, 12 * scale))
-	band(parent, "WaterfallMistCloud", mistCenter, Vector3.new(25, 12, 19) * scale,
+	local mistCenter = lipCf:PointToWorldSpace(Vector3.new(0, -dropHeight * 0.89, 14 * scale))
+	band(parent, "WaterfallMistCloud", mistCenter, Vector3.new(30, 16, 22) * scale,
 		{ mColor, fColor, mColor }, math.floor(lipCf.Y), "mist")
 end
 
@@ -797,8 +1001,31 @@ local function dawn(parent)
 		end
 	end
 
-	local lastCloudTransparency
+	-- Open-ocean skirt beyond the terrain water square (about +-2.048 studs), so the dawn horizon is sea
+	-- and haze instead of a hard water edge and corner (QA 16 Nov). Fades with the water (1.550-2.210 km).
+	local ocean = model(parent, "OceanHorizonSkirt")
+	local oceanTiles = {}
+	for i = -4, 3 do
+		for j = -4, 3 do
+			local cx, cz = (i + 0.5) * 2048, (j + 0.5) * 2048
+			if math.abs(cx) > 2048 or math.abs(cz) > 2048 then
+				-- Slightly oversized and level with the water so it also covers the white water-edge seam.
+				local tile = part(ocean, "OceanTile", Vector3.new(2112, 1, 2112), CFrame.new(cx, -0.42, cz),
+					rgb(30, 104, 150), plastic)
+				tile.Reflectance = 0.25
+				table.insert(oceanTiles, tile)
+			end
+		end
+	end
+
+	local lastCloudTransparency, lastOceanFade
 	return function(km, time)
+		local oceanT = math.clamp((km - 1550) / 660, 0, 1)
+		local oceanFade = math.round(oceanT * oceanT * (3 - 2 * oceanT) * 40) / 40
+		if oceanFade ~= lastOceanFade then
+			lastOceanFade = oceanFade
+			for _, tile in oceanTiles do tile.Transparency = oceanFade end
+		end
 		local cloudTransparency = math.round(math.clamp((km - 1680) / 520, 0, 1) * 12) / 50
 		if cloudTransparency ~= lastCloudTransparency then
 			lastCloudTransparency = cloudTransparency
@@ -928,7 +1155,7 @@ local function buildStormRockFragment(parent, cf, scale, seed)
 	return frag
 end
 
-local function thundercloud(parent)
+local function thundercloudLegacy(parent)
 	local banks, rain = {}, {}
 	local indigo = { rgb(51, 61, 85), rgb(136, 142, 177), rgb(116, 121, 156) }
 	local anvilPalette = indigo
@@ -1051,6 +1278,389 @@ local function thundercloud(parent)
 		end
 		animateHabitats(habitats, time)
 	end
+end
+
+-- Zone 2 semi-realistic storm kit (environment art Batch 1, 15 Nov 2026; art direction "semi-realistis").
+-- Meshes: EnvironmentAssets.StormZone2 from tools/build_storm_lookdev.py. Each MeshPart keeps its source
+-- bbox centre in the SourceCenter attribute, so scaled pieces keep the Blender layout.
+-- Without the kit the legacy primitive scene above is used.
+local STORM_WIND = Vector3.new(0.66, 0, -0.75).Unit
+local STORM_WIND_YAW = math.atan2(-STORM_WIND.Z, STORM_WIND.X)
+local STORM_SMOKE = "rbxasset://textures/particles/smoke_main.dds"
+local VEIL_SIDE_T, VEIL_TOP_T = 0.55, 0.86 -- anvil veil transparency seen level vs from above
+
+local function stormKit()
+	local assets = getEnvironmentAssets()
+	local kit = assets and assets:FindFirstChild("StormZone2")
+	if kit and kit:FindFirstChild("Cumulonimbus") and kit:FindFirstChild("FunnelCore") then
+		return kit
+	end
+	return nil
+end
+
+local function kitPart(parent, kit, name, origin, yaw, scale, transparency)
+	local template = kit:FindFirstChild(name)
+	if not template then return nil end
+	local s = typeof(scale) == "Vector3" and scale or Vector3.one * scale
+	local item = template:Clone()
+	item.Size = template.Size * s
+	item.CFrame = CFrame.new(origin) * CFrame.Angles(0, yaw, 0)
+		* CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * s)
+	item.Transparency = transparency or 0
+	item.Anchored = true
+	item.CanCollide = false
+	item.CanTouch = false
+	item.CanQuery = false
+	item.CastShadow = false
+	item.Parent = parent
+	return item
+end
+
+-- A slightly larger translucent copy softens the hard mesh silhouette.
+local function softShell(cloud, grow, transparency)
+	local shell = cloud:Clone()
+	shell.Name = cloud.Name .. "SoftEdge"
+	shell.Size = cloud.Size * grow
+	shell.Transparency = transparency
+	shell.Parent = cloud.Parent
+	return shell
+end
+
+-- Lit smoke volume. Emitters are pre-filled once the scene is parented (primeMist).
+local function stormMist(parent, cf, size, spec)
+	local holder = Instance.new("Part")
+	holder.Name = spec.name or "StormMist"
+	holder.Size = size
+	holder.CFrame = cf
+	holder.Transparency = 1
+	holder.Anchored = true
+	holder.CanCollide = false
+	holder.CanTouch = false
+	holder.CanQuery = false
+	holder.Parent = parent
+	local emitter = Instance.new("ParticleEmitter")
+	emitter.Name = "Mist"
+	emitter.Texture = STORM_SMOKE
+	emitter.Color = ColorSequence.new(spec.color)
+	emitter.LightInfluence = 1
+	emitter.LightEmission = 0
+	emitter.Size = NumberSequence.new(spec.size * 0.65, spec.size * 1.15)
+	emitter.Transparency = NumberSequence.new({
+		NumberSequenceKeypoint.new(0, 1),
+		NumberSequenceKeypoint.new(0.22, spec.alpha),
+		NumberSequenceKeypoint.new(0.78, spec.alpha),
+		NumberSequenceKeypoint.new(1, 1),
+	})
+	emitter.Lifetime = NumberRange.new(spec.life * 0.8, spec.life)
+	emitter.Rate = spec.count / spec.life
+	emitter.Speed = NumberRange.new(spec.speed * 0.5, spec.speed)
+	emitter.SpreadAngle = Vector2.new(180, 180)
+	emitter.Rotation = NumberRange.new(0, 360)
+	emitter.RotSpeed = NumberRange.new(-(spec.spin or 4), spec.spin or 4)
+	emitter.Acceleration = spec.lift or Vector3.zero
+	emitter.Drag = spec.drag or 0.8
+	emitter.Shape = Enum.ParticleEmitterShape.Box
+	emitter.ShapeStyle = Enum.ParticleEmitterShapeStyle.Volume
+	emitter:SetAttribute("PrimeCount", spec.count)
+	emitter.Parent = holder
+	return emitter
+end
+
+local function primeMist(emitters)
+	for i = #emitters, 1, -1 do
+		local emitter = emitters[i]
+		if emitter.Parent == nil then
+			table.remove(emitters, i)
+		elseif emitter:IsDescendantOf(workspace) then
+			emitter:Emit(emitter:GetAttribute("PrimeCount") or 8)
+			table.remove(emitters, i)
+		end
+	end
+end
+
+local function stormCloud(parent, kit, mists, name, origin, yaw, scale)
+	-- Cumulonimbus is split: a dense cauliflower tower plus a separate translucent anvil veil,
+	-- so seen level from the gondola it never reads as a solid table/plate (playtest 15 Nov, 3.316 km).
+	local split = name == "Cumulonimbus" and kit:FindFirstChild("CbTower") and kit:FindFirstChild("CbAnvil")
+	local cloud = kitPart(parent, kit, split and "CbTower" or name, origin, yaw, scale)
+	if not cloud then return nil end
+	local anvil
+	softShell(cloud, 1.045, 0.8)
+	local size = cloud.Size
+	table.insert(mists, stormMist(parent, cloud.CFrame * CFrame.new(0, -size.Y * 0.44, 0),
+		Vector3.new(size.X * 0.55, 6, size.Z * 0.45), {
+			name = "CloudBaseMist", color = rgb(70, 68, 90), size = math.max(28, size.X * 0.22),
+			alpha = 0.55, life = 40, count = 10, speed = 0.4,
+		}))
+	if split then
+		-- No soft shell on the veil: a scaled copy reads as an outlined plate from above (review 15 Nov).
+		anvil = kitPart(parent, kit, "CbAnvil", origin, yaw, scale, VEIL_SIDE_T)
+		anvil.Name = "CbAnvilVeil"
+		local spread = anvil.Size
+		table.insert(mists, stormMist(parent, anvil.CFrame, Vector3.new(spread.X * 0.8, 8, spread.Z * 0.7), {
+			name = "AnvilVeilMist", color = rgb(150, 144, 172), size = math.max(36, spread.X * 0.22),
+			alpha = 0.6, life = 45, count = 16, speed = 0.4,
+		}))
+	elseif name == "Cumulonimbus" then
+		table.insert(mists, stormMist(parent, cloud.CFrame * CFrame.new(size.X * 0.2, size.Y * 0.36, 0),
+			Vector3.new(size.X * 0.7, 6, size.Z * 0.6), {
+				name = "AnvilEdgeMist", color = rgb(150, 144, 172), size = math.max(32, size.X * 0.26),
+				alpha = 0.62, life = 45, count = 14, speed = 0.4,
+			}))
+	end
+	local glow = Instance.new("PointLight")
+	glow.Name = "InnerLightning"
+	glow.Color = rgb(196, 192, 255)
+	glow.Range = 60
+	glow.Brightness = 0
+	glow.Shadows = false
+	glow.Parent = cloud
+	return cloud, glow, anvil
+end
+
+-- Gust-front shelf tucked under a cumulonimbus base on its downwind side. Long axis across the wind
+-- and stretched in depth so it never reads as a lone floating "cigar" (review 15 Nov, 3.500 km).
+local function gustShelf(parent, kit, cloud, position, scale)
+	local reach = cloud.Size.X * 0.34
+	local shelf = kitPart(parent, kit, "ShelfBank", position + STORM_WIND * reach - Vector3.new(0, 22 * scale, 0),
+		STORM_WIND_YAW + math.pi / 2, Vector3.new(scale * 0.8, scale * 0.5, scale * 2))
+	local shell = shelf and softShell(shelf, 1.05, 0.82)
+	return shelf, shell
+end
+
+-- Translucent vapour funnel: thin rope core, three rotating textured sheaths, lit vapour, debris and wall cloud.
+local function buildVaporTornado(parent, kit, mists, origin, yaw, s)
+	local tornado = model(parent, "VaporTornado")
+	tornado.WorldPivot = CFrame.new(origin)
+	local turn = CFrame.Angles(0, yaw, 0)
+	local function spine(t) -- matches funnel_uv() in tools/build_storm_lookdev.py
+		return turn * (Vector3.new(0.32 * 78 * (1 - t) ^ 1.7, t * 210, -0.08 * 78 * math.sin(t * 3.1 + 3)) * s)
+	end
+	local function radius(t)
+		return (6 + 72 * t ^ 1.8) * s
+	end
+	kitPart(tornado, kit, "FunnelCore", origin, yaw, Vector3.new(s * 0.5, s, s * 0.5), 0.18)
+	local foot, crown = spine(0), spine(1)
+	local up = (crown - foot).Unit
+	local right = up:Cross(Vector3.zAxis).Unit
+	local axis = CFrame.fromMatrix(foot, right, up)
+	local sheaths = {}
+	for _, spec in { { 0.72, 0.3, 0, 0.16 }, { 0.9, 0.45, 2.1, -0.11 }, { 1.08, 0.6, 4.2, 0.07 } } do
+		local sheath = kitPart(tornado, kit, "FunnelShell", origin, yaw, Vector3.new(s * spec[1], s, s * spec[1]), spec[2])
+		if sheath then
+			table.insert(sheaths, {
+				part = sheath, offset = CFrame.new(origin):ToObjectSpace(sheath.CFrame), phase = spec[3], speed = spec[4],
+			})
+		end
+	end
+	kitPart(tornado, kit, "WallCloud", origin + Vector3.new(0, 198 * s, 0), yaw, s * 1.05)
+	for i = 1, 7 do
+		local t = (i - 0.5) / 7
+		local r = radius(t)
+		table.insert(mists, stormMist(tornado, CFrame.new(origin + spine(t)), Vector3.new(r * 1.4, 12, r * 1.4), {
+			name = "FunnelVapor", color = rgb(165, 160, 185), size = r * 0.9 + 8, alpha = 0.52,
+			life = 8, count = 10, speed = 3, spin = 25, lift = Vector3.new(0, 2, 0), drag = 0.6,
+		}))
+	end
+	table.insert(mists, stormMist(tornado, CFrame.new(origin + foot + Vector3.new(0, 4, 0)), Vector3.new(60 * s, 10, 60 * s), {
+		name = "DebrisCloud", color = rgb(104, 96, 104), size = 34 * s, alpha = 0.55,
+		life = 10, count = 22, speed = 6, spin = 30, lift = Vector3.new(0, 3, 0), drag = 1,
+	}))
+	table.insert(mists, stormMist(tornado, CFrame.new(origin + Vector3.new(0, 192 * s, 0)), Vector3.new(220 * s, 12, 220 * s), {
+		name = "WallCloudSkirt", color = rgb(140, 134, 160), size = 64 * s, alpha = 0.47, life = 20, count = 14, speed = 1,
+	}))
+	return { model = tornado, origin = CFrame.new(origin), axis = axis, sheaths = sheaths, phase = 0.7 }
+end
+
+local function spinTornado(tornado, time)
+	local sway = math.sin(time * 0.2 + tornado.phase)
+	local base = tornado.origin * CFrame.Angles(0, sway * 0.05, sway * 0.012)
+	tornado.model:PivotTo(base)
+	for _, sheath in tornado.sheaths do
+		local spin = tornado.axis * CFrame.Angles(0, sheath.phase + time * sheath.speed, 0) * tornado.axis:Inverse()
+		sheath.part.CFrame = base * spin * sheath.offset
+	end
+end
+
+local function stormRain(parent, origin, random)
+	local carrier = rail(parent, "SlantedRainCurtain", origin)
+	carrier.Transparency = 1
+	for _ = 1, 13 do
+		local offset = Vector3.new(random:NextNumber(-66, 66), random:NextNumber(-33, 34), random:NextNumber(-36, 36))
+		local fall = random:NextNumber(88, 167)
+		local lean = fall * random:NextNumber(0.28, 0.4)
+		local streak = beam(
+			socket(carrier, offset),
+			socket(carrier, offset + Vector3.new(STORM_WIND.X * lean, -fall, STORM_WIND.Z * lean)),
+			random:NextNumber(0.55, 1.25), 0.25,
+			ColorSequence.new(rgb(158, 183, 232), rgb(116, 133, 194)),
+			softFade(1, random:NextNumber(0.69, 0.86))
+		)
+		streak.LightEmission = 0.25
+	end
+	return { part = carrier, origin = origin }
+end
+
+local function dampFragment(fragment)
+	for _, d in fragment:GetDescendants() do
+		if d:IsA("BasePart") then
+			if d.Name == "ChargedArcRing" then
+				d.Color = rgb(92, 84, 138)
+				d.Material = plastic
+				d.Transparency = 0.45
+			elseif d.Name == "Crystal" and d.Material == neon then
+				d.Color = d.Color:Lerp(rgb(60, 50, 100), 0.55)
+				d.Transparency = 0.25
+			end
+		end
+	end
+end
+
+local function stormKitThundercloud(parent, kit)
+	cloudSea(parent, 1000, rgb(86, 82, 132)) -- covers the revealed seabed; 250-750 studs below across 2.000-4.000 km
+	local mists, banks, rain = {}, {}, {}
+	local veils, deck, gusts = {}, {}, {}
+	local random = Random.new(2020)
+
+	local undercast = { rgb(46, 46, 82), rgb(85, 80, 116), rgb(67, 63, 103) }
+	for i = 1, 10 do
+		local angle = (i - 1) * math.pi / 5
+		local radius = 480 + (i % 3) * 64
+		local center = Vector3.new(math.cos(angle) * radius, altitude(1380 + (i % 4) * 95), math.sin(angle) * radius)
+		band(parent, "StormUndercast", center, Vector3.new(475, 164, 220), undercast, 2800 + i, "wisp")
+	end
+
+	-- Cumulonimbus/congestus ring around the corridor, one wind direction.
+	for i = 1, 9 do
+		local angle = (i - 1) * math.pi * 2 / 9 + 0.36 + random:NextNumber(-0.1, 0.1)
+		local radius = random:NextNumber(390, 520)
+		local y = altitude(2060 + i * 188) + random:NextNumber(-28, 28) - 45
+		local position = Vector3.new(math.cos(angle) * radius, y, math.sin(angle) * radius)
+		local scale = random:NextNumber(0.48, 0.62)
+		local kind = i % 3 == 2 and "Congestus" or "Cumulonimbus"
+		local cloud, glow, anvil = stormCloud(parent, kit, mists, kind, position,
+			STORM_WIND_YAW + random:NextNumber(-0.3, 0.3), Vector3.new(scale, scale * random:NextNumber(0.85, 1.1), scale))
+		if glow then table.insert(banks, { light = glow, phase = i * 3.19 }) end
+		if anvil then table.insert(veils, anvil) end
+		if cloud and kind == "Cumulonimbus" then
+			-- Seen from above the flat shelf top read as a dark plate under each tower (QA 16 Nov): fade it then.
+			for _, piece in { gustShelf(parent, kit, cloud, position, scale) } do
+				piece:SetAttribute("BaseT", piece.Transparency)
+				table.insert(gusts, piece)
+			end
+		end
+		if i % 2 == 0 or i == 3 or i == 9 then
+			table.insert(rain, stormRain(parent, position + Vector3.new(0, -30, 0), random))
+		end
+	end
+	local anvilSpecs = {
+		{ Vector3.new(301, altitude(2480), -270), 0.82 },
+		{ Vector3.new(-348, altitude(3620), -345), 1.0 },
+		{ Vector3.new(94, altitude(3750), -480), 1.08 },
+	}
+	for i, spec in anvilSpecs do
+		local center, s = table.unpack(spec)
+		local _, glow, anvil = stormCloud(parent, kit, mists, "Cumulonimbus", center - Vector3.new(0, 60, 0),
+			STORM_WIND_YAW + (i - 2) * 0.15, Vector3.new(0.72 * s, 0.56 * s, 0.66 * s))
+		if glow then table.insert(banks, { light = glow, phase = 30 + i * 3.19 }) end
+		if anvil then table.insert(veils, anvil) end
+	end
+
+	-- Low deck at the zone floor so the space under the gondola is never an empty void. It stays at or
+	-- below the entry altitude and fades out whenever the gondola drops beneath it.
+	for i = 0, 5 do
+		local a = i * 2.39996 + 0.4
+		local r = random:NextNumber(300, 470)
+		local s = random:NextNumber(0.7, 0.9)
+		-- Flattened congestus, not a stretched shelf: stretched shelf lobes read as stacked plates from above.
+		local shelf = kitPart(parent, kit, "Congestus", Vector3.new(math.cos(a) * r, altitude(1975 + i * 12), math.sin(a) * r),
+			a + math.pi / 2 + random:NextNumber(-0.2, 0.2), Vector3.new(s * 1.2, s * 0.32, s * 2.2))
+		if shelf then
+			table.insert(deck, shelf)
+			table.insert(deck, softShell(shelf, 1.05, 0.82))
+		end
+	end
+	for _, item in deck do item:SetAttribute("BaseT", item.Transparency) end
+
+	-- One distant background tornado, off-centre and away from the active corridor.
+	local tornado = buildVaporTornado(parent, kit, mists,
+		Vector3.new(-161, 0, -322).Unit * 480 + Vector3.new(0, altitude(2540), 0), STORM_WIND_YAW, 0.8)
+
+	local fragmentSpecs = {
+		{ km = 2320, x = -155, z = -225, scale = 1.1 },
+		{ km = 2640, x = 165, z = -230, scale = 1.0 },
+		{ km = 3040, x = 136, z = -288, scale = 0.94 },
+		{ km = 3030, x = 238, z = 38, scale = 1.15 },
+		{ km = 3070, x = -238, z = -42, scale = 1.1 },
+		{ km = 3380, x = 92, z = -242, scale = 1.15 },
+		{ km = 3740, x = -125, z = -235, scale = 1.05 },
+	}
+	local fragments, habitats = {}, {}
+	for idx, spec in fragmentSpecs do
+		local cf = CFrame.new(spec.x, altitude(spec.km), spec.z) * CFrame.Angles(0, idx * 1.1, 0)
+		local frag = buildStormRockFragment(parent, cf, spec.scale, 2600 + idx)
+		dampFragment(frag)
+		fragments[idx] = { model = frag, origin = cf }
+		if spec.km >= 3000 then
+			HabitatArt.Frost(frag, cf * CFrame.new(0, 4 * spec.scale, 0), spec.scale)
+		elseif idx <= 2 then
+			for n = 1, 2 do
+				local origin = cf * CFrame.new(0, 20, 0)
+				local bat = HabitatArt.Clone("StormBat", frag, origin, 0.85)
+				if bat then
+					table.insert(habitats, { model = bat, origin = origin, orbit = true,
+						phase = n * math.pi, speed = 0.24, radius = 14, bob = 2,
+						pose = HabitatArt.Pose(bat, n, 7, 0.28) })
+				end
+			end
+		end
+	end
+
+	local lastEye
+	return function(km, time)
+		if #mists > 0 then primeMist(mists) end
+		local eye = altitude(km or 2000) + 8
+		if eye ~= lastEye then
+			lastEye = eye
+			for _, veil in veils do
+				-- From above the veil thins out so it never shows a hard plate outline.
+				local above = math.clamp((eye - veil.Position.Y - 6) / 40, 0, 1)
+				veil.Transparency = VEIL_SIDE_T + (VEIL_TOP_T - VEIL_SIDE_T) * above
+			end
+			for _, shelf in gusts do
+				local above = math.clamp((eye - shelf.Position.Y - 15) / 40, 0, 1)
+				local base = shelf:GetAttribute("BaseT") or 0
+				shelf.Transparency = base + (0.92 - base) * above
+			end
+			for _, shelf in deck do
+				local under = math.clamp((shelf.Position.Y - eye + 12) / 30, 0, 1)
+				local base = shelf:GetAttribute("BaseT") or 0
+				shelf.Transparency = base + (1 - base) * under
+			end
+		end
+		for i, item in rain do
+			item.part.Position = item.origin + Vector3.new(math.sin(time * 0.4 + i) * 9, math.sin(time * 0.78 + i) * 12, 0)
+		end
+		for _, bank in banks do
+			-- Brief internal flashes; never a strobe (single soft peak every 13 s per bank).
+			local phase = (time + bank.phase) % 13
+			bank.light.Brightness = math.max(0, 1 - math.abs(phase - 1.3) / 0.35) * 5
+		end
+		spinTornado(tornado, time)
+		for i, frag in fragments do
+			frag.model:PivotTo(frag.origin * CFrame.new(0, math.sin(time * 0.48 + i) * 3.5, 0)
+				* CFrame.Angles(math.sin(time * 0.25 + i) * 0.06, time * 0.08, 0))
+		end
+		animateHabitats(habitats, time)
+	end
+end
+
+local function thundercloud(parent)
+	local kit = stormKit()
+	if kit then
+		return stormKitThundercloud(parent, kit)
+	end
+	return thundercloudLegacy(parent)
 end
 
 local function buildBlossomTree(parent, baseCf, scale)
@@ -1280,6 +1890,7 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 end
 
 local function skyIsles(parent)
+	cloudSea(parent, 2900, rgb(255, 206, 186)) -- 275-775 studs below across 4.000-6.000 km
 	local basaltCol = rgb(92, 62, 82)
 	local cliffCol = rgb(145, 101, 91)
 	local mossCol = rgb(118, 142, 104)
@@ -1409,10 +2020,20 @@ local function skyIsles(parent)
 			natureAsset(island, "Fern", "SunsetFern",
 				cf * CFrame.new(math.cos(a) * 22 * scale, topY, math.sin(a) * 18 * scale),
 				1.3 * scale)
-			local start = (cf * CFrame.new((j - 2) * 22 * scale, -8 * scale, 28 * scale)).Position
-			local elbow = start + Vector3.new(4, -18 * scale - j * 3, 2)
-			span(island, "HangingRoot", start, elbow, 2.2 * scale, roots, woodMat)
-			span(island, "RootTip", elbow, elbow + Vector3.new(j * 2 - 4, -14 * scale, 2), 1.1 * scale, roots, woodMat)
+			-- Review 15 Nov: straight block roots read as sticks. Tapered, sagging vines spill over the rim instead.
+			local lip = cf * CFrame.new((j - 2) * 24 * scale, 2 * scale, 31 * scale)
+			local vine = rail(island, "HangingVine", lip.Position)
+			vine.Transparency = 1
+			local fall = (24 + j * 7 + i % 3 * 4) * scale
+			local strand = beam(socket(vine, Vector3.zero, Vector3.new(0, -0.3, 1)),
+				socket(vine, Vector3.new((j - 2) * 3 * scale, -fall, 6 * scale), Vector3.new(0, -1, 0.15)),
+				2.4 * scale, 0.35 * scale, ColorSequence.new(rgb(96, 120, 70), roots),
+				NumberSequence.new({ NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.8, 0.05),
+					NumberSequenceKeypoint.new(1, 0.6) }), 7 * scale)
+			strand.FaceCamera = true
+			strand.LightEmission = 0
+			strand.LightInfluence = 1
+			strand.Segments = 12
 		end
 
 		if i == 2 or i == 4 or i == 5 or i == 6 or i == 7 then
@@ -1725,11 +2346,14 @@ local function buildDistantCosmicArch(parent, cf, scale)
 		for _, d in sculptedArch:GetDescendants() do
 			if d:IsA("BasePart") then
 				if d.Name == "HorizonStone" then
-					d.Color = stone
+					tintPiece(d, stone)
 					d.Material = slate
 				elseif d.Name == "HorizonGold" then
-					d.Color = runeInlay
+					tintPiece(d, runeInlay)
 					d.Material = metalMat
+				elseif d.Name == "HorizonGlass" then
+					d.Color = rgb(90, 200, 230)
+					d.Material = neon
 				elseif d.Name == "VistaIvory" then
 					d.Color = rgb(78, 72, 134)
 				elseif d.Name == "VistaShadow" then
@@ -1754,6 +2378,7 @@ local function buildDistantCosmicArch(parent, cf, scale)
 end
 
 local function exosphere(parent)
+	cloudSea(parent, 5000, rgb(64, 66, 132)) -- night cloud deck; 250-750 studs below across 6.000-8.000 km
 	local random = Random.new(607)
 	local satellites = {}
 	local armillaryRings = {}
@@ -1858,6 +2483,55 @@ local function exosphere(parent)
 			CFrame.new(origin), starColors[i % #starColors + 1], neon, ball)
 		point.Transparency = i <= 14 and 0.22 or 0.06
 		if i <= 14 then dust[i] = { part = point, origin = origin } end
+	end
+
+	-- A large ringed planet low on the horizon gives the cosmic zone a focal point (semi-realistic pass, 16 Nov).
+	local planetCenter = Vector3.new(-1500, altitude(7000), -2600)
+	local planet = part(parent, "RingedPlanet", Vector3.one * 760, CFrame.new(planetCenter), rgb(78, 100, 176), slate, ball)
+	for _, face in { Enum.NormalId.Front, Enum.NormalId.Right, Enum.NormalId.Top, Enum.NormalId.Left, Enum.NormalId.Back, Enum.NormalId.Bottom } do
+		local bands = Instance.new("Texture")
+		bands.Texture = CLOUD_DECK
+		bands.Face = face
+		bands.StudsPerTileU, bands.StudsPerTileV = 420, 260
+		bands.Color3 = rgb(170, 190, 255)
+		bands.Transparency = 0.55
+		bands.Parent = planet
+	end
+	local limb = part(parent, "PlanetAtmosphere", Vector3.one * 800, CFrame.new(planetCenter), rgb(110, 170, 255), neon, ball)
+	limb.Transparency = 0.86
+	for i, spec in { { 1500, 0.55, rgb(214, 190, 255) }, { 1240, 0.7, rgb(150, 200, 255) } } do
+		local ringCf = CFrame.new(planetCenter) * CFrame.Angles(0.32, 0.6, 0.18) * CFrame.Angles(0, 0, math.pi / 2)
+		local ring = fleetShape(parent, "SaturnRing", "PlanetRing" .. i, ringCf, Vector3.new(6, spec[1], spec[1]), spec[3], neon)
+		if ring then
+			for _, d in ring:GetDescendants() do
+				if d:IsA("BasePart") then d.Transparency = spec[2] end
+			end
+			if ring:IsA("BasePart") then ring.Transparency = spec[2] end
+		end
+	end
+
+	-- Distant emissive nebula banks give the night sky depth and a lit backdrop for silhouettes.
+	local nebulaColors = {
+		ColorSequence.new(rgb(84, 70, 190), rgb(196, 92, 214)),
+		ColorSequence.new(rgb(40, 140, 196), rgb(96, 84, 210)),
+		ColorSequence.new(rgb(150, 70, 190), rgb(60, 160, 200)),
+	}
+	for i = 1, 7 do
+		local angle = i * 0.9 + 0.3
+		local radius = random:NextNumber(720, 860)
+		local y = altitude(5900 + i * 300)
+		local center = Vector3.new(math.cos(angle) * radius, y, math.sin(angle) * radius)
+		local carrier = rail(parent, "NebulaBank", center)
+		carrier.Transparency = 1
+		local tangent = Vector3.new(-math.sin(angle), random:NextNumber(-0.25, 0.25), math.cos(angle))
+		local cloud = beam(socket(carrier, -tangent * 260), socket(carrier, tangent * 260),
+			random:NextNumber(160, 240), random:NextNumber(150, 230), nebulaColors[i % 3 + 1], softFade(1, 0.62), 40)
+		cloud.Segments = 16
+		cloud.Texture = "rbxasset://textures/particles/smoke_main.dds"
+		cloud.TextureMode = Enum.TextureMode.Stretch
+		cloud.TextureSpeed = 0
+		cloud.LightEmission = 1
+		cloud.LightInfluence = 0
 	end
 
 	return function(_, time)
@@ -2073,7 +2747,7 @@ local function palaceHorizon(parent, anchor)
 				if piece.Name == "VistaIvory" or piece.Name == "VistaShadow" then
 					piece:Destroy()
 				elseif piece:IsA("BasePart") then
-					piece.Color = piece.Color:Lerp(mistColor, haze)
+					tintPiece(piece, mistColor, haze)
 					if style == "WestArcade" then
 						local rel = facing:PointToObjectSpace(piece.Position)
 						piece.Size *= Vector3.new(1.18, 0.70, 1.08)
@@ -2144,8 +2818,10 @@ local function palaceUpperSky(parent, anchor)
 			NumberSequenceKeypoint.new(0.62, centerAlpha + 0.13),
 			NumberSequenceKeypoint.new(1, 1),
 		})
-		local ray = beam(start, finish, narrow, wide, ColorSequence.new(rgb(255, 232, 190)), fade)
+		local ray = beam(start, finish, narrow * 1.8, wide * 1.8, ColorSequence.new(rgb(255, 232, 190)), fade)
 		ray.Name = "CloudSunshaft"
+		ray.Texture = "rbxasset://textures/particles/smoke_main.dds"
+		ray.TextureMode = Enum.TextureMode.Stretch
 		ray.LightEmission = 0.18
 	end
 
@@ -2257,13 +2933,24 @@ local function gateway(parent)
 		if i % 2 == 0 then
 			local source = rail(parent, "Sunshaft", center + Vector3.new(0, 52, 0))
 			source.Transparency = 1
+			-- Soft, wide light shafts; the narrow opaque strips read as waterfalls falling into nothing (review 15 Nov).
 			for j = 1, 2 do
 				local offset = Vector3.new(j * 21, 0, j * -11)
-				beam(socket(source, offset), socket(source, offset + Vector3.new(-69, -205, 36)),
-					14, 63, ColorSequence.new(rgb(255, 239, 174)), softFade(1, 0.73))
+				local ray = beam(socket(source, offset), socket(source, offset + Vector3.new(-90, -170, 46)),
+					36, 120, ColorSequence.new(rgb(255, 242, 200)), NumberSequence.new({
+						NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(0.2, 0.88),
+						NumberSequenceKeypoint.new(0.55, 0.9), NumberSequenceKeypoint.new(1, 1)}))
+				ray.Name = "SoftSunshaft"
+				ray.Texture = "rbxasset://textures/particles/smoke_main.dds"
+				ray.TextureMode = Enum.TextureMode.Stretch
+				ray.LightEmission = 0.5
 			end
 		end
 	end
+
+	-- Sea of cloud far below the gateway. Without it the view under the horizon was a flat haze colour with a
+	-- hard line against the blue sky (review 15 Nov, 8.500-9.500 km). MeshParts cap at 2048 studs, so tile 3x3.
+	cloudSea(parent, 6900, rgb(255, 242, 222)) -- 275-775 studs below the gondola across 8.000-10.000 km
 
 	local palace = workspace:FindFirstChild("CloudPalace")
 	local silhouette = model(parent, "PalaceSilhouette")

@@ -2,6 +2,63 @@
 
 Snapshot aktif per 15 November 2026, Asia/Jakarta. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
 
+## Revisi semi-realistis lanjutan (C–E) — 16 November 2026, 12:35 WIB
+
+Pekerjaan semi-realistis dilanjutkan dengan perubahan berikut:
+
+- **Phoenix v4:** kepala dibuat lebih besar. Patung phoenix ber-tint kini menjadi emas Metal.
+- **Awan istana:** bola abu-abu diganti cumulus.
+- **Musuh baru:** Seagull, Eagle, Wyvern, Bat, Bee dan Phantom dibuat dari mesh Blender bertekstur. Hail, Drone, Satellite dan Meteor hanya dipoles materialnya.
+- **Rintangan:** gelembung bahaya dibuat lebih halus, dan angin diberi partikel debu.
+- **Cosmic:** ditambah planet bercincin.
+- **Air terjun:** dibuat lebih lebar.
+
+Template lama disimpan di `ServerStorage.*_Legacy`. Play Solo berjalan dengan konsol bersih.
+
+File disimpan LocalFile: 2.846.087 B, SHA-256 55DBECE0…AE55. Mirror (5 source) cocok dengan Studio. Belum commit.
+
+[Rincian, ID aset dan sisa](audit/semirealistic-batchCDE-2026-11-16/README.md).
+
+## Revisi semi-realistis Batch A, B, C (sebagian) — 16 November 2026, 12:20 WIB
+
+Pengguna menyetujui agar semua aset dibawa ke arah semi-realistis, dan agar phoenix boleh diperbaiki. Yang sudah dikerjakan:
+
+- **Pulau:** kit PBR baru dengan 3 varian, menggantikan kerucut lama di semua zona.
+- **Laut Dawn:** diperpanjang sampai horizon.
+- **Bulan Sunset:** diperkecil.
+- **Kastil Gateway:** remodel dengan marmer, emas, jendela dan arkade.
+- **Phoenix:** didesain ulang dengan bulu bertekstur. Nama part `Body`/`Wing` tetap.
+- **Outline musuh:** dilembutkan.
+
+Template lama di-backup di `ServerStorage.*_Legacy`. Play Solo berjalan dengan konsol bersih.
+
+`Fly High.rbxl` disimpan LocalFile: 2.639.402 B, SHA-256 2E1309D1…98F2. Mirror cocok dengan Studio.
+
+**Sisa:** 8 musuh lain, efek rintangan alami (D), dan Batch E. Belum commit. [Rincian dan ID aset](audit/semirealistic-batchABC-2026-11-16/README.md).
+
+## Perbaikan review visual 0–10.000 km terpasang dan dicek visual — 16 November 2026, 12:45 WIB
+
+Ketujuh temuan review ([daftar](audit/visual-review-0-10000km-2026-11-15/README.md)) sudah dikerjakan, lalu dicek visual dan disetel ulang setelah viewport Studio kembali normal. Perubahannya:
+
+- Gust shelf memudar dari atas, dan dek badai memakai Congestus pipih.
+- Telegraph rintangan berupa gelembung ForceField seukuran hitbox, lajur chevron sempit, dan aliran angin/panas.
+- Tornado dan Storm memakai corong uap dari kit.
+- Pencahayaan Cosmic dan nebula.
+- Awan semi-realistis putih/emas di Dawn dan Gateway.
+- Musuh diperbesar ×1,25, dengan outline dan cahaya.
+- Mesh pulau berlapis dan air terjun bertekstur, termasuk air terjun istana.
+- Lautan awan bertekstur (`FH_CloudDeck`) dengan lantai opak di empat zona. Ini menutup garis horizon keras dan dasar laut Terrain yang terlihat setelah air memudar.
+
+Play Solo 500→9.990 km berjalan dengan konsol bersih.
+
+Pengguna menyimpan place ke Roblox (place 97043730132219) agar izin MCP asset bisa diatur. Simpan terakhir masuk **Cloud versi 7**. **`Fly High.rbxl` lokal tertinggal dua perubahan kecil**, jadi simpan ulang lewat File → Save to File.
+
+Mirror cocok dengan Studio, misalnya BiomeScenery 129.707 / a4516689. Belum commit/push. [Rincian, gambar QA, aset dan sisa uji](audit/review-fixes-2026-11-16/README.md).
+
+## Batch 1 revisi seni Zona 2 terpasang — 15 November 2026, 22:41 WIB
+
+Arah seni diputuskan pengguna: **semi-realistis**, tornado **versi uap** (tembus pandang), biaya render bukan batasan. Kit `ReplicatedStorage.FlyHigh.EnvironmentAssets.StormZone2` (aset 96515546941911) dipasang; `BiomeScenery.thundercloud` kini memakai kit tersebut dan jatuh ke `thundercloudLegacy` bila kit hilang. Studio dan mirror cocok (116.109 B, FNV-1a 582624e6). Disimpan ke Cloud versi 4 (22:41), lalu pengguna menyimpan ke file; perbaikan cumulonimbus (menara + anvil tembus pandang, 22:53) disimpan **LocalFile**: 2.426.642 B, SHA-256 6C5CFAE159A6E29252847DA1D9E5A7BE426D90A990181827F4955787AD03B0B8 (belum dibuka ulang; cloud versi terbaru belum memuat perbaikan ini). Source Studio = mirror FNV-1a 9b7c9c8b. Belum commit/push setelah checkpoint `242adf2`. Generator: `tools/build_storm_batch1.py`, `tools/build_storm_lookdev.py`. [Bukti, angka dan sisa QA](audit/storm-batch1-2026-11-15/README.md).
+
 ## Publish experience privat dan MCP Claude — 15 November 2026, 21:20 WIB
 
 Pengguna mem-publish `E:/Antigravity/Fly High/Fly High.rbxl` ke experience privat **place 97043730132219 / universe 10776821830** (±21:13 WIB). Sesi Studio sesudahnya membuka file tersebut dengan status persistedToCloud; 54 source Studio cocok dengan mirror (panjang + checksum FNV-1a, 0 selisih). File lokal tidak berubah: 2.164.854 B, SHA-256 EA632B7B6AE0219EE5802DB6843203734AB33D79E32C5EE16D0B3E3B0D072495. Versi cloud sebelum publish lebih lama (52 source, tanpa ObstacleVisuals/SceneryHabitatArt) dan tidak disimpan ke file lokal. Studio juga sempat membuka place lain "Fly High: Cloud Palace" (107361757876418 / universe 10773510320) yang tidak tercatat di dokumentasi; tidak disentuh. [Bukti dan batas](audit/cloud-publish-parity-2026-11-15/README.md).

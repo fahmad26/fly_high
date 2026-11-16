@@ -290,6 +290,42 @@ end
 local enemyTemplates = {}
 local hailVariant = 0
 
+-- Readability pass (review 15 Nov): enemies read as dots at gameplay distance. Slightly larger, with a soft
+-- outline that contrasts with each zone's sky and a small glow in the dark zones. Damage radius is unchanged.
+local READABILITY_SCALE = 1.25
+local ENEMY_OUTLINES = {
+	WildBird = {rgb(40, 52, 78)},
+	StormBat = {rgb(214, 206, 255), rgb(170, 150, 255)},
+	Hailstone = {rgb(225, 248, 255), rgb(160, 225, 255)},
+	GuardianDrone = {rgb(48, 40, 34)},
+	FireBee = {rgb(74, 34, 18)},
+	CrystalWyvern = {rgb(170, 250, 255), rgb(110, 230, 255)},
+	ShadowPhantom = {rgb(226, 190, 255), rgb(180, 120, 255)},
+	SatelliteDebris = {rgb(44, 48, 70)},
+	CelestialPhoenix = {rgb(110, 36, 16)},
+}
+
+local function addReadability(model, name)
+	local spec = ENEMY_OUTLINES[name]
+	if not spec then return end
+	local outline = Instance.new("Highlight")
+	outline.Name = "ReadabilityOutline"
+	outline.FillTransparency = 1
+	outline.OutlineColor = spec[1]
+	outline.OutlineTransparency = 0.55 -- softer: a hard outline read as a sticker (QA 16 Nov)
+	outline.DepthMode = Enum.HighlightDepthMode.Occluded
+	outline.Parent = model
+	if spec[2] and model.PrimaryPart then
+		local glow = Instance.new("PointLight")
+		glow.Name = "ReadabilityGlow"
+		glow.Color = spec[2]
+		glow.Range = 16
+		glow.Brightness = 1.4
+		glow.Shadows = false
+		glow.Parent = model.PrimaryPart
+	end
+end
+
 function Art.Enemy(name)
 	local templateName = name
 	if name == "Hailstone" then
@@ -306,7 +342,8 @@ function Art.Enemy(name)
 			template = modelWithCore(name, {3.2, 2.6, 3.5})
 			enemyBuilders[name](template)
 		end
-		scaleModelVisuals(template, ENEMY_SCALES[name] or 1.9)
+		scaleModelVisuals(template, (ENEMY_SCALES[name] or 1.9) * READABILITY_SCALE)
+		addReadability(template, name)
 		enemyTemplates[templateName] = template
 	end
 	return template:Clone()
@@ -592,6 +629,7 @@ function Art.Hazard(effect, color, path, cells)
 		end
 	end
 	Visuals.Weather(model, effect, color)
+	Visuals.Telegraph(model, effect, color, path)
 	return model
 end
 

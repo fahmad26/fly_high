@@ -18,6 +18,9 @@ local baseAmbient = Lighting.Ambient
 local baseLatitude = Lighting.GeographicLatitude
 local baseShadowSoftness = Lighting.ShadowSoftness
 local baseSunTint = Lighting.ColorShift_Top
+local sky = Lighting:FindFirstChildOfClass("Sky")
+local baseSunSize = sky and sky.SunAngularSize
+local baseMoonSize = sky and sky.MoonAngularSize
 
 local sceneryRoot = Instance.new("Folder")
 sceneryRoot.Name = "ClientBiomeScenery"
@@ -154,6 +157,10 @@ end)
 script.Destroying:Connect(function()
 	animation:Disconnect()
 	updateWaterHorizon(0)
+	if sky and baseSunSize then
+		sky.SunAngularSize = baseSunSize
+		sky.MoonAngularSize = baseMoonSize
+	end
 	trackSummit(nil)
 	sceneryRoot:Destroy()
 	colorGrade:Destroy()
@@ -203,14 +210,25 @@ local BIOME_SETTINGS = {
 		AtmosphereColor = Color3.fromRGB(255, 188, 146),
 		AtmosphereDecay = Color3.fromRGB(180, 108, 127),
 		Tint = Color3.fromRGB(255, 224, 204),
+		SunAngularSize = 6, -- the low sun read as a large flat disc beside the gondola (review 15 Nov)
+		MoonAngularSize = 4, -- rising moon filled the horizon behind the islands (QA 16 Nov)
 	},
 	[4] = { -- 6,000 - 8,000 km: Bioluminescent Cosmic Exosphere
+		-- Night stays deep blue but readable: review 15 Nov found islands and enemies nearly black.
 		ClockTime = 23.5,
-		Brightness = 1.05,
-		FogColor = Color3.fromRGB(10, 15, 35),
+		Brightness = 2.4,
+		FogColor = Color3.fromRGB(18, 22, 52),
 		FogEnd = 4000,
-		OutdoorAmbient = Color3.fromRGB(82, 101, 150),
-		Ambient = Color3.fromRGB(104, 116, 153),
+		OutdoorAmbient = Color3.fromRGB(132, 146, 204),
+		Ambient = Color3.fromRGB(124, 132, 178),
+		ColorShift_Top = Color3.fromRGB(176, 196, 255),
+		AtmosphereColor = Color3.fromRGB(58, 64, 118),
+		AtmosphereDecay = Color3.fromRGB(34, 28, 74),
+		AtmosphereDensity = 0.22,
+		AtmosphereHaze = 0.45,
+		AtmosphereGlare = 0,
+		Tint = Color3.fromRGB(232, 236, 255),
+		Contrast = 0.07,
 	},
 	[5] = { -- 8,000 - 10,000 km: The Celestial Gateway
 		ClockTime = 8.55,
@@ -270,6 +288,12 @@ local function applyBiome(biomeIndex)
 		Ambient = cfg.Ambient or baseAmbient,
 	})
 	activeTween:Play()
+	if sky and baseSunSize then
+		TweenService:Create(sky, tweenInfo, {
+			SunAngularSize = cfg.SunAngularSize or baseSunSize,
+			MoonAngularSize = cfg.MoonAngularSize or baseMoonSize,
+		}):Play()
+	end
 
 	if colorGradeTween then colorGradeTween:Cancel() end
 	colorGradeTween = TweenService:Create(colorGrade, tweenInfo, {
