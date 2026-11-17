@@ -25,4 +25,3 @@ Typography: reserve open sky in upper-right so the title reads on a clean field 
 Avoid: exaggerated scream faces, duplicate characters, extra hands, tangled ropes, elaborate random gold curls, generic neon/glitter, sparkle clutter, UI/HUD, platform logos, watermarks, arrows, rewards, fake badges, treasure, dragons, motorcycles, unsupported mechanics, floating roads, photoreal human faces. Keep the game promise honest: balloon teamwork, sky journey, cloud palace.
 
 Brand consistency: use an ivory/vermilion koi envelope with brass belly burner collar and orange fabric fins; the pilot wears a teal shearling-collar aviator jacket, brown leather cap with brass goggles and a red scarf. Favor a rich clear azure sky and late-afternoon gold like the matching icon. Strong value separation, restrained saturation.
-
