@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-11-17T18:44:39.506Z",
+  "base": "1388ace3267c3231b29cfdcf9e1f4fce43fd777f",
+  "sourceCases": 18,
+  "allPass": true,
+  "promptChecks": [
+    {
+      "file": "tablet-en-idle.json",
+      "pass": true
+    },
+    {
+      "file": "tablet-en-hold.json",
+      "pass": true
+    },
+    {
+      "file": "tablet-en-complete.json",
+      "pass": true
+    },
+    {
+      "file": "tablet-id-idle.json",
+      "pass": true
+    },
+    {
+      "file": "phone-id-idle.json",
+      "pass": true
+    },
+    {
+      "file": "phone-en-idle.json",
+      "pass": true
+    },
+    {
+      "file": "desktop-keyboard-en.json",
+      "pass": true
+    }
+  ],
+  "previous493EntriesUnchanged": true,
+  "entries": 500,
+  "formats": 59,
+  "sourceCount": 64,
+  "sourceShaParity": true,
+  "cloudVersion": 44,
+  "cleanup": {
+    "edit": true,
+    "device": "default",
+    "fixtureRemoved": true
+  },
+  "physicalDeviceTested": false,
+  "nativeDisconnectChanged": false,
+  "binary": "a30ed7650cb60a8dc532d809131234993dcc3a0c9356fea515eef3df2bbac9c1",
+  "published": false,
+  "committed": false
+}

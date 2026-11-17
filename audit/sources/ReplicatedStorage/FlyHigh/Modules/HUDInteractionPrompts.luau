@@ -41,7 +41,7 @@ function Repair.Start(player: Player)
 		local hud = player:WaitForChild("PlayerGui"):FindFirstChild("FlyHighHUD")
 		gui.DisplayOrder = if hud and hud:IsA("ScreenGui") then hud.DisplayOrder - 1 else -1
 		local touch = inputType == Enum.ProximityPromptInputType.Touch
-		local width, height = 196, if touch then 52 else 50
+		local width, height = 196, if touch then 56 else 50
 		gui.ResetOnSpawn = false
 		gui.Parent = player:WaitForChild("PlayerGui")
 		local button = Instance.new("TextButton")
@@ -86,7 +86,7 @@ function Repair.Start(player: Player)
 			elseif inputType == Enum.ProximityPromptInputType.Gamepad then padKeys[prompt.GamepadKeyCode] or Input:GetStringForKeyCode(prompt.GamepadKeyCode)
 			else Input:GetStringForKeyCode(prompt.KeyboardKeyCode)
 		if key == "" then key = "TAHAN" end
-		local capSize = if touch then 40 else 34
+		local capSize = if touch then 44 else 34
 		local textX = 8 + capSize + 10
 		-- The key cap doubles as the hold gauge (playtest iPad 17 Nov: the old 2 px bar
 		-- under the text was invisible under a thumb). A teal disc fills it bottom-up.
@@ -140,6 +140,17 @@ function Repair.Start(player: Player)
 		cap.ZIndex = 3
 		cap.TextXAlignment = Enum.TextXAlignment.Center
 		cap.TextStrokeTransparency = 0.25
+		if touch then
+			-- Keep translated HOLD/TAHAN inside the circle, including devices with
+			-- larger preferred text. The centered inner box leaves room for the rim.
+			cap.Position = UDim2.fromOffset(6, 12)
+			cap.Size = UDim2.fromOffset(capSize - 12, 20)
+			cap.TextScaled = true
+			local capTextSize = Instance.new("UITextSizeConstraint")
+			capTextSize.MinTextSize = 9
+			capTextSize.MaxTextSize = 11
+			capTextSize.Parent = cap
+		end
 		local function actionTitle()
 			return if prompt.Name == "PickupPrompt" and prompt.ActionText ~= "" then string.upper(prompt.ActionText) else titles[prompt.Name]
 		end

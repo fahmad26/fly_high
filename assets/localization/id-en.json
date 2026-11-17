@@ -1970,5 +1970,33 @@
   {
     "source": "Bahaya ditandai! Kru melihat tanda di layar mereka",
     "en": "Danger marked! Your crew can see it on screen"
+  },
+  {
+    "source": "Target Istana Awan",
+    "en": "Reach Cloud Palace"
+  },
+  {
+    "source": "Balon Menurun!",
+    "en": "Descending!"
+  },
+  {
+    "source": "✦ Bioma baru",
+    "en": "✦ New biome"
+  },
+  {
+    "source": "ZONA %d",
+    "en": "ZONE %d"
+  },
+  {
+    "source": "Puncak ke-%d",
+    "en": "Summit #%d"
+  },
+  {
+    "source": "⚡ %s",
+    "en": "⚡ %s"
+  },
+  {
+    "source": "⚠ %s",
+    "en": "⚠ %s"
   }
 ]

@@ -1,0 +1,14 @@
+[
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.Localization",
+    "match": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.LocalizationCatalog",
+    "match": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+    "match": true
+  }
+]

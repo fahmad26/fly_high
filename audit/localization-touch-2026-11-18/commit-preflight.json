@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-11-18T01:59:33.8789407+07:00",
+  "baseCommit": "1388ace3267c3231b29cfdcf9e1f4fce43fd777f",
+  "scope": "Documentation cleanup and pre-commit checks; no new Studio playtest or Publish",
+  "catalogEntries": 500,
+  "dynamicFormats": 59,
+  "sourceManifest": "final-studio-manifest.json",
+  "sourceHashesMatched": 64,
+  "localLinkDocumentsChecked": 8,
+  "localLinkIssues": 0,
+  "descriptionUtf16Characters": 655,
+  "placeBytes": 3527164,
+  "placeSha256": "a30ed7650cb60a8dc532d809131234993dcc3a0c9356fea515eef3df2bbac9c1",
+  "binaryReopened": false
+}
