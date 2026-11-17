@@ -69,6 +69,14 @@ function Localization.Translate(source: string, locale: string?): string
 	return if (locale or Localization.GetLocale()) == "id" then source else translate(source, 0)
 end
 
+-- Presentation-only labels opt into translated writes before Text changes.
+-- Keep the source separately so language switching never loses the Indonesian copy.
+function Localization.SetDisplayText(object: TextLabel | TextButton, source: string)
+	object:SetAttribute("FlyHighDisplaySource", source)
+	object.AutoLocalize = false
+	object.Text = Localization.Translate(source)
+end
+
 function Localization.GetEntries(): { any }
 	return Rows
 end

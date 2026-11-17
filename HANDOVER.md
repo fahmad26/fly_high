@@ -4,6 +4,8 @@ Snapshot aktif per 18 November 2026, Asia/Jakarta. Catatan run terdahulu mempert
 
 ## Status terkini — 18 November 2026
 
+**Perbaikan action/countdown terbaru:** enam script diperbarui; teks dua baris 13 keluarga prompt kini dipusatkan berdasarkan ukuran aktual. Countdown berangkat/hazard/dinding diterjemahkan sebelum tampil, dengan sumber terpisah untuk pergantian bahasa; parser HUD tetap memakai sumber asli. [QA terbaru](audit/prompt-alignment-countdown-2026-11-18/README.md): 156 kasus geometri di enam viewport, hold/cancel/complete, font stress, 809 pemeriksaan countdown/374 frame tanpa mismatch. 64 SHA-256/compile cocok mirror. Cloud v48 tanpa Publish; file lokal 3.527.607 B SHA-256 `de9b6b97043672793d3dd1ddb810aab4a0378afbc2b1a3ca79bf16976a443656`, 64 source binary cocok, belum dibuka ulang. Edit/default device/fixture bersih. Revisi, place dan bukti QA tercakup commit checkpoint action/countdown 18 Nov. Batas perangkat fisik/account Large/gamepad/natural actions tetap terbuka. Tabel berikut merekam checkpoint sebelum perbaikan ini, bukan hash place terbaru.
+
 **L10N-01 / prompt touch:** enam kelompok kalimat gabungan kini tercakup (target, menurun, notice bioma, ZONA, puncak+durasi, pesan buff berikon). Katalog 500/59 format, key lama tetap. Touch lingkaran 44/tinggi 56, token 32×20 berbatas 9–11 px; keyboard tetap 34/50/font 17.
 
 | Pemeriksaan | Bukti dan batas |

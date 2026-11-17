@@ -11,6 +11,7 @@ local Motion = require(script.Parent.HUDMotion)
 local AltitudeTracker = require(script.Parent.HUDAltitudeTracker)
 local FlyHighConfig = require(script.Parent.FlyHighConfig)
 local Chrome = require(script.Parent.HUDTopChrome)
+local Localization = require(script.Parent.Localization)
 local Theme = {}
 
 local BIOME_ZONES = {
@@ -1497,7 +1498,7 @@ end
 				ztree(r.emblem, z + 3)
 				r.emblem.Visible = not fullPanel
 
-				r.notice.Text = o.Text
+				Localization.SetDisplayText(r.notice, o.Text)
 				local inset = fullPanel and math.round(h * 1.05) or 36
 				box(r.notice, inset, 2, w - inset - 15, h - 4)
 				applyTextStyle(r.notice, { font = Enum.Font.GothamBlack, size = w < 300 and 13 or 14, color = Color3.fromRGB(255, 250, 240), strokeColor = Color3.fromRGB(70, 20, 4), strokeThickness = 2, align = Enum.TextXAlignment.Left })

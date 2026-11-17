@@ -12,6 +12,7 @@ local flightSyncEvent = remotes:WaitForChild("FlightStateSyncEvent")
 local pilotControlEvent = remotes:WaitForChild("PilotControlEvent")
 local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
 local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
+local Localization=require(ReplicatedStorage.FlyHigh.Modules.Localization)
 local preparingBoarding={}
 flightActionEvent.OnClientEvent:Connect(function(action,balloon,payload)
  if action=="ReleaseRejectedHelm"then
@@ -621,14 +622,14 @@ local alertVersion=0
 hazardAlertEvent.OnClientEvent:Connect(function(data)
  if data.effect then return end
  alertVersion+=1 local version=alertVersion
- alertDesc.Text=(data.hazardName or "Bahaya").." dari "..string.lower(data.direction or "depan")
+ Localization.SetDisplayText(alertDesc,(data.hazardName or "Bahaya").." dari "..string.lower(data.direction or "depan"))
  local duration=tonumber(data.duration) or 3
  local deadline=os.clock()+duration
- alertTitle.Text=string.format("Waspada · %.1f dtk",duration):gsub("%.",",")
+ Localization.SetDisplayText(alertTitle,string.format("Waspada · %.1f dtk",duration):gsub("%.",","))
  alertBanner:SetAttribute("HUDAlertActive",true)
  task.spawn(function()
   while version==alertVersion and os.clock()<deadline do
-   alertTitle.Text=string.format("Waspada · %.1f dtk",math.max(0,deadline-os.clock())):gsub("%.",",")
+   Localization.SetDisplayText(alertTitle,string.format("Waspada · %.1f dtk",math.max(0,deadline-os.clock())):gsub("%.",","))
    task.wait(0.1)
   end
   if version==alertVersion then alertBanner:SetAttribute("HUDAlertActive",false) end

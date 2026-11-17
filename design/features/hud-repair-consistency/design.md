@@ -2,6 +2,10 @@
 
 Status: approved — scope follows the user's three explicit requests on 17 November 2026 and the approved flight-hud design; implementation details below use the existing Sky Adventure system.
 
+## Revision 4 — centre the measured action text block
+
+User request 18 November: all action title/detail pairs must be vertically centred on desktop, phone and tablet. Measure both rendered line heights, separate them by 2 px and centre the combined block. Keep at least 8 px top/bottom padding; capsule height may grow for larger fonts. Re-centre the input ring when height changes. Preserve transparency, world anchor, width fitting and native hold/input semantics. Touch uses the 56 px minimum / 44 px circle from the localization revision. Earlier dimensions below are historical.
+
 ## Revision 3 — use the empty topbar area and hide native weapon slots
 
 User requests a higher centre HUD and no native weapon hotbar on desktop, tablet or phone. The centre header moves into GuiService's TopbarSafeInsets rectangle with 6 px top spacing and 8 px horizontal spacing, clamped to the free area. The left hull panel keeps its safe position. On screens too narrow for the header plus native controls, retain the lower safe row. Warnings follow the header or the hull row according to available width. Modals and other controls retain CoreUISafeInsets.

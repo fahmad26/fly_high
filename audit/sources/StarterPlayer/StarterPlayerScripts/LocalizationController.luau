@@ -56,6 +56,21 @@ local function bind(object: Instance)
 	end
 	local function refresh()
 		if records[object] ~= record or not object.Parent then return end
+		local displaySource = object:GetAttribute("FlyHighDisplaySource")
+		if type(displaySource) == "string" then
+			-- This label has a localized writer: never expose the source while the
+			-- native renderer waits for a fresh per-string translation entry.
+			if record.table then
+				guiObject.RootLocalizationTable = record.nativeRoot
+				record.table:Destroy()
+				record.table = nil
+				record.previous = nil
+			end
+			guiObject.AutoLocalize = false
+			guiObject.Text = translated(displaySource)
+			object:SetAttribute("FlyHighDisplayText", guiObject.Text)
+			return
+		end
 		local locale = LocalizationService.RobloxLocaleId
 		local entries, state = {}, { L.GetLocale(), locale }
 		local known = false
@@ -87,6 +102,7 @@ local function bind(object: Instance)
 		object:SetAttribute("FlyHighDisplayText", translated(guiObject.Text))
 	end
 	record.refresh = refresh
+	table.insert(record.connections, object:GetAttributeChangedSignal("FlyHighDisplaySource"):Connect(refresh))
 	for _, property in properties do table.insert(record.connections, object:GetPropertyChangedSignal(property):Connect(refresh)) end
 	table.insert(record.connections, object.Destroying:Connect(function() unbind(object) end))
 	table.insert(record.connections, object.AncestryChanged:Connect(function()

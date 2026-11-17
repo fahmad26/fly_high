@@ -1,6 +1,7 @@
 local Players=game:GetService("Players")local RS=game:GetService("ReplicatedStorage")
 local Run=game:GetService("RunService")local Input=game:GetService("UserInputService")
 local p=Players.LocalPlayer local C=require(RS:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("FlyHighConfig"))
+local Localization=require(RS.FlyHigh.Modules.Localization)
 local remotes=RS.FlyHigh.Remotes local jump=remotes:WaitForChild("FlightJumpEvent")
 local challengeEvent=remotes:WaitForChild("LargeChallengeEvent")
 local gui=p.PlayerGui:WaitForChild("FlyHighHUD")
@@ -90,7 +91,7 @@ Run.Heartbeat:Connect(function(dt)
    local drop=root and math.max(0,root.Position.Y-active.safeRootY)or 0
    local safe=root and drop<=.1
    local countdown=math.max(0,active.warningEndsAt-now)
-   title.Text=countdown>0 and string.format("Dinding Badai · %.0f dtk",math.ceil(countdown)) or "Dinding Badai"
+   Localization.SetDisplayText(title,countdown>0 and string.format("Dinding Badai · %.0f dtk",math.ceil(countdown)) or "Dinding Badai")
    storm.BackgroundColor3=safe and Color3.fromRGB(31,98,77)or Color3.fromRGB(31,57,76)
    local pilot=hum and balloon and hum.SeatPart==balloon:FindFirstChild("HelmSeat")
    local auto=balloon and balloon:GetAttribute("AutoGas")==true

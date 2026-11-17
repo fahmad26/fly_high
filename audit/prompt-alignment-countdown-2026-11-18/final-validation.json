@@ -1,0 +1,25 @@
+{
+  "baseCommit": "47da17491a7ada35f6ebcc9e107ae558db2d4f45",
+  "cloudVersion": 48,
+  "sourceCount": 64,
+  "sourceShaParity": true,
+  "geometryCases": 156,
+  "countdown": {
+    "sources": {
+      "Title": "Dinding Badai · 2 dtk",
+      "AlertTitle": "Waspada · 1,8 dtk",
+      "AlertDesc": "Burung dari kiri",
+      "HUDCountdownNotice": "Pilot belum lepas landas · 22 dtk"
+    },
+    "checks": 809,
+    "failures": [],
+    "frames": 374,
+    "switches": 4
+  },
+  "placeBytes": 3527607,
+  "placeSha256": "de9b6b97043672793d3dd1ddb810aab4a0378afbc2b1a3ca79bf16976a443656",
+  "binaryReopened": false,
+  "published": false,
+  "committed": false,
+  "physicalDevicesTested": false
+}

@@ -14,6 +14,10 @@ Approved scope: the user's 17 November request to carry out the localization pro
 
 ## QA and bounds
 
+### Countdown stability — approved bugfix, 18 November 2026
+
+Presentation-only alert/countdown labels translate before Text is assigned, with native AutoLocalize disabled. Retain Indonesian source in FlyHighDisplaySource so switching languages translates from the original. Grounded countdown, hazard title/detail and storm countdown use this writer. Parser/state labels retain their original Text and other UI keeps native tables. Verify repeated ticks frame by frame, ID/EN round trips and cleanup; settled screenshots or translator lookups alone cannot catch a one-frame language flash. [Implementation QA](../../../audit/prompt-alignment-countdown-2026-11-18/README.md).
+
 ### Approved revision — 18 November 2026
 
 User approved the six audited string groups and touch prompt plan. Add catalog coverage for standalone Target Istana Awan/Balon Menurun!, biome notice prefix, uppercase numbered ZONA, summit count as a fragment when time is appended, and known ⚡/⚠ message wrappers. Preserve names, source Text and dynamic values. Touch prompt height 56 px (from 52), key circle 44 px (from 40), centered 32×20 text region with a bounded 9–11 px fit for HOLD/TAHAN. Keep existing location, transparency, progress, server input/hold semantics. Desktop/gamepad geometry and type remain unchanged. Test native rendered output and language switching in idle/hold/completion, phone/tablet and desktop. Physical iPad remains a separate acceptance check. Native disconnect dialogs are outside these two annotated requests.

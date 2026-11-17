@@ -12,6 +12,8 @@ Setelan → BAHASA/LANGUAGE menyediakan Auto (Roblox), Bahasa Indonesia dan Engl
 
 `LocalizationService.FlyHighTranslations` dalam place berisi seluruh katalog. CSV cloud menggunakan kolom `en`; tabel runtime memakai locale `en-us` dan locale aktual klien. Tabel dalam game bekerja tanpa menunggu terjemahan cloud.
 
+Pengecualian untuk countdown/alert cepat sejak 18 November: `Localization.SetDisplayText` menerjemahkan sebelum menulis Text pada label presentasi, menyimpan sumber di `FlyHighDisplaySource`, dan menonaktifkan AutoLocalize untuk label itu. Controller memperbaruinya saat pilihan bahasa berubah. Label state asli yang dibaca parser tetap Indonesia. Ini mencegah kilatan sumber saat tabel native belum mengejar perubahan detik. [QA lintas viewport dan per frame](../../audit/prompt-alignment-countdown-2026-11-18/README.md).
+
 ## Status Dashboard 17 November 2026
 
 Kedua universe `10773510320` dan `10776821830`: source Indonesian, supported English; auto translation untuk Experience Strings & Products serta Experience Information aktif. Kode game belum dipublish pada pekerjaan ini.

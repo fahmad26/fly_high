@@ -1,0 +1,14 @@
+[
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+    "equal": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.LocalizationController",
+    "equal": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+    "equal": true
+  }
+]

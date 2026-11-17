@@ -160,11 +160,19 @@ function Repair.Start(player: Player)
 		-- Size the pill to its (possibly translated or font-substituted) text so the
 		-- labels never run past the frame on iPad.
 		local function fitWidth()
+			local titleH = math.max(19, math.ceil(title.TextBounds.Y))
+			local detailH = math.max(15, math.ceil(detail.TextBounds.Y))
+			local blockH = titleH + 2 + detailH
+			local pillH = math.max(height, blockH + 16)
+			local top = (pillH - blockH) / 2
 			local textW = math.max(title.TextBounds.X, detail.TextBounds.X)
 			local w = math.max(150, math.ceil(textX + textW + 16))
-			button.Size = UDim2.fromOffset(w, height)
-			title.Size = UDim2.fromOffset(w - textX - 10, 19)
-			detail.Size = UDim2.fromOffset(w - textX - 10, 15)
+			button.Size = UDim2.fromOffset(w, pillH)
+			capRing.Position = UDim2.fromOffset(8, (pillH - capSize) / 2)
+			title.Position = UDim2.fromOffset(textX, top)
+			title.Size = UDim2.fromOffset(w - textX - 10, titleH)
+			detail.Position = UDim2.fromOffset(textX, top + titleH + 2)
+			detail.Size = UDim2.fromOffset(w - textX - 10, detailH)
 		end
 		title:GetPropertyChangedSignal("TextBounds"):Connect(fitWidth)
 		detail:GetPropertyChangedSignal("TextBounds"):Connect(fitWidth)
