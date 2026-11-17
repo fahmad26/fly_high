@@ -1,0 +1,281 @@
+{
+  "finishedUTC": "2026-11-17T08:06:32Z",
+  "nativePromptInput": "Client RepairHoleEvent bridge; native keyboard UI verified in separate solo run",
+  "errors": [],
+  "samples": [
+    {
+      "client": {
+        "q": "0.3272993564605713, 20.56073570251465, -16.33572006225586",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.400103569030762,
+      "stage": "Catwalk",
+      "serverQ": "0.18196141719818115, 20.561357498168945, -16.282136917114258"
+    },
+    {
+      "client": {
+        "q": "-0.5550518035888672, 20.76702880859375, -16.28223419189453",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.42399787902832,
+      "stage": "Catwalk",
+      "serverQ": "-0.5530246496200562, 20.613079071044922, -16.312089920043945"
+    },
+    {
+      "client": {
+        "q": "0.15566805005073547, 20.822525024414062, -16.527589797973633",
+        "jumpPower": 0,
+        "floor": "WoodPlanks",
+        "enabled": false,
+        "state": "Running"
+      },
+      "distance": 9.516674041748047,
+      "stage": "Catwalk",
+      "serverQ": "0.2512945532798767, 20.728504180908203, -16.46302032470703"
+    }
+  ],
+  "run": "repair-motion-trio-2026-11-17",
+  "fixtures": "3 real clients; altitude warp; shield; rope durability reset between independent trials; client position setup and following local catwalk point; manager begin/finish repair with production validation",
+  "executionCompleted": true,
+  "success": true,
+  "nativePrompt": true,
+  "attachDiagnostic": {
+    "boarding": false,
+    "role": "Engineer",
+    "alive": 100,
+    "client": {
+      "q": "0.04989224299788475, 2.5740966796875, 9.151809692382812",
+      "jumpPower": 50,
+      "floor": "WoodPlanks",
+      "enabled": true,
+      "state": "Running"
+    },
+    "anchored": false
+  },
+  "startedUTC": "2026-11-17T08:05:08Z",
+  "base": "de8c273",
+  "checks": [
+    {
+      "pass": true,
+      "name": "3 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player3"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "launch"
+    },
+    {
+      "pass": true,
+      "name": "attach",
+      "detail": "{\"boarding\":false,\"role\":\"Engineer\",\"alive\":100,\"client\":{\"q\":\"0.04989224299788475, 2.5740966796875, 9.151809692382812\",\"jumpPower\":50,\"floor\":\"WoodPlanks\",\"enabled\":true,\"state\":\"Running\"},\"anchored\":false}"
+    },
+    {
+      "pass": true,
+      "name": "climb settles"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 1",
+      "detail": "{\"client\":{\"q\":\"0.3272993564605713, 20.56073570251465, -16.33572006225586\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.400103569030762,\"stage\":\"Catwalk\",\"serverQ\":\"0.18196141719818115, 20.561357498168945, -16.282136917114258\"}"
+    },
+    {
+      "pass": true,
+      "name": "premature finish rejected 1"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 1",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 1"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 2",
+      "detail": "{\"client\":{\"q\":\"-0.5550518035888672, 20.76702880859375, -16.28223419189453\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.42399787902832,\"stage\":\"Catwalk\",\"serverQ\":\"-0.5530246496200562, 20.613079071044922, -16.312089920043945\"}"
+    },
+    {
+      "pass": true,
+      "name": "premature finish rejected 2"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 2",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 2"
+    },
+    {
+      "pass": true,
+      "name": "repair begins moving 3",
+      "detail": "{\"client\":{\"q\":\"0.15566805005073547, 20.822525024414062, -16.527589797973633\",\"jumpPower\":0,\"floor\":\"WoodPlanks\",\"enabled\":false,\"state\":\"Running\"},\"distance\":9.516674041748047,\"stage\":\"Catwalk\",\"serverQ\":\"0.2512945532798767, 20.728504180908203, -16.46302032470703\"}"
+    },
+    {
+      "pass": true,
+      "name": "premature finish rejected 3"
+    },
+    {
+      "pass": true,
+      "name": "repair finishes moving 3",
+      "detail": "Catwalk"
+    },
+    {
+      "pass": true,
+      "name": "no false hanging 3"
+    },
+    {
+      "pass": true,
+      "name": "invalid remote repair rejected"
+    },
+    {
+      "pass": true,
+      "name": "released remote hold stays cancelled"
+    },
+    {
+      "pass": true,
+      "name": "validated client remote hold moving",
+      "detail": true
+    },
+    {
+      "pass": true,
+      "name": "descent detaches"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed after descent",
+      "detail": {
+        "q": "0.011075258255004883, 2.572998046875, 6.9897613525390625",
+        "jumpPower": 50,
+        "floor": "WoodPlanks",
+        "enabled": true,
+        "state": "Running"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted after descent",
+      "detail": "{\"q\":\"0.009494375437498093, 9.152626037597656, 6.9233269691467285\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "pilot blocks jump"
+    },
+    {
+      "pass": true,
+      "name": "helm releases"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed after helm",
+      "detail": {
+        "q": "0.06350716203451157, 3.7004687786102295, 6.983779430389404",
+        "jumpPower": 50,
+        "floor": "Air",
+        "enabled": true,
+        "state": "Running"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted after helm",
+      "detail": "{\"q\":\"0.08360326290130615, 10.825424194335938, 7.000732421875\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "gunner equipped"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed holding weapon",
+      "detail": {
+        "q": "-4.053229331970215, 3.5981292724609375, 6.989768981933594",
+        "jumpPower": 50,
+        "floor": "Air",
+        "enabled": true,
+        "state": "Freefall"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted holding weapon",
+      "detail": "{\"q\":\"-4.074222564697266, 10.10893440246582, 6.961792945861816\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed after drop",
+      "detail": {
+        "q": "0.2742738723754883, 3.3902435302734375, 7.0021209716796875",
+        "jumpPower": 50,
+        "floor": "WoodPlanks",
+        "enabled": true,
+        "state": "Running"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted after drop",
+      "detail": "{\"q\":\"0.8384408950805664, 10.628097534179688, 6.992393493652344\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "reattach"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed attached in basket",
+      "detail": {
+        "q": "0.2836952209472656, 2.8732147216796875, 7.002357482910156",
+        "jumpPower": 50,
+        "floor": "Air",
+        "enabled": true,
+        "state": "Freefall"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted attached in basket",
+      "detail": "{\"q\":\"0.3652076721191406, 8.959060668945312, 7.003692626953125\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "jump allowed after detach",
+      "detail": {
+        "q": "0.2767925262451172, 2.798370361328125, 6.9701995849609375",
+        "jumpPower": 50,
+        "floor": "WoodPlanks",
+        "enabled": true,
+        "state": "Landed"
+      }
+    },
+    {
+      "pass": true,
+      "name": "jump counted after detach",
+      "detail": "{\"q\":\"0.36629676818847656, 9.184219360351562, 6.98406982421875\",\"jumpPower\":50,\"floor\":\"Air\",\"enabled\":true,\"state\":\"Freefall\"}"
+    },
+    {
+      "pass": true,
+      "name": "no runtime errors"
+    }
+  ]
+}

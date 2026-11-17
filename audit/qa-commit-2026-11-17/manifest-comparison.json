@@ -1,0 +1,11 @@
+{
+  "baseline": "de8c273 QA baseline",
+  "sections": {
+    "models": true,
+    "sources": true,
+    "environment": true,
+    "terrain": true,
+    "prompts": true
+  },
+  "limits": "Scoped property/terrain/source rolling checksums, not full DataModel equality. Newly saved binary was not reopened in Studio."
+}

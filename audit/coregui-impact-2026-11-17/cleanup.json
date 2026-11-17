@@ -1,0 +1,24 @@
+{
+  "players": 0,
+  "sources": 61,
+  "gameId": 0,
+  "compileErrors": [],
+  "viewport": "1066.40002, 536",
+  "running": false,
+  "fixtures": [],
+  "enabledBaseScripts": 29,
+  "originalStudioResponse": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":0,\"running\":false,\"fixtures\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "testWindowClosed": true,
+  "productionPlaceSaved": false,
+  "published": false,
+  "disposableCopyDeleted": true,
+  "originalPlaceSha256": "d5e1eed6295891ddba751603916490ab60903285621c50214a933a7f14f9603a"
+}

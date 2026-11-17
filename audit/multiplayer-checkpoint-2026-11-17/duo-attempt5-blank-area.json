@@ -1,0 +1,117 @@
+{
+  "finishedUTC": "2026-11-17T08:19:16Z",
+  "errors": [],
+  "run": "duo-checkpoint-2026-11-17",
+  "fixtures": "2 real local clients; unpublished GameId=0 mock; manager launch; altitude warp; paused hazard scheduling; anchored balloon for prompt/combat measurements; damaged rope and configured AK47 rack are runtime-only fixtures; broad registered target is a combat fixture, not art QA",
+  "failure": "ServerScriptService._QA_Duo:27: custom rope pointer hold reaches server {\"customVisible\":true,\"distance\":1.81028413772583,\"width\":196,\"center\":\"548, 328\",\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"enabled\":true,\"height\":50,\"mouse\":\"548, 328\",\"events\":{\"began\":0,\"globalPointer\":1,\"pointer\":0,\"triggered\":0,\"ended\":0},\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}\nServerScriptService._QA_Duo:27\nServerScriptService._QA_Duo:37\n",
+  "success": false,
+  "ropeEvents": [],
+  "snapshots": {
+    "ropePartial": {
+      "customVisible": true,
+      "distance": 1.81028413772583,
+      "width": 196,
+      "center": "548, 327",
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "enabled": true,
+      "height": 50,
+      "mouse": "548, 327",
+      "events": {
+        "began": 0,
+        "globalPointer": 1,
+        "pointer": 0,
+        "triggered": 0,
+        "ended": 0
+      },
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    },
+    "ropeFull": {
+      "customVisible": true,
+      "distance": 1.81028413772583,
+      "width": 196,
+      "center": "548, 328",
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "enabled": true,
+      "height": 50,
+      "mouse": "548, 328",
+      "events": {
+        "began": 0,
+        "globalPointer": 1,
+        "pointer": 0,
+        "triggered": 0,
+        "ended": 0
+      },
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    }
+  },
+  "startedUTC": "2026-11-17T08:18:40Z",
+  "base": "de8c273",
+  "checks": [
+    {
+      "pass": true,
+      "name": "isolated mock universe"
+    },
+    {
+      "pass": true,
+      "name": "2 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "duo launch"
+    },
+    {
+      "pass": true,
+      "name": "boarding completes"
+    },
+    {
+      "pass": true,
+      "name": "rope fixture attached"
+    },
+    {
+      "pass": true,
+      "name": "custom rope capsule appears",
+      "detail": "{\"customVisible\":true,\"distance\":1.81028413772583,\"width\":196,\"center\":\"548, 327\",\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"enabled\":true,\"height\":50,\"mouse\":\"548, 327\",\"events\":{\"began\":0,\"globalPointer\":1,\"pointer\":0,\"triggered\":0,\"ended\":0},\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    },
+    {
+      "pass": true,
+      "name": "early rope hold does not fill"
+    },
+    {
+      "pass": false,
+      "name": "custom rope pointer hold reaches server",
+      "detail": "{\"customVisible\":true,\"distance\":1.81028413772583,\"width\":196,\"center\":\"548, 328\",\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"enabled\":true,\"height\":50,\"mouse\":\"548, 328\",\"events\":{\"began\":0,\"globalPointer\":1,\"pointer\":0,\"triggered\":0,\"ended\":0},\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "base": "de8c273",
+  "file": "Fly High.rbxl",
+  "beforeStudioId": "5847b091-658c-4cee-b661-28c5ea116a09",
+  "reopenedStudioId": "d058cf7b-04d5-46bc-9b4e-0ed0ecaab1e4",
+  "sections": {
+    "models": true,
+    "sources": true,
+    "environment": true,
+    "terrain": true,
+    "prompts": true
+  },
+  "note": "Geometry and terrain use rolling checksums, not exact or cryptographic equality. Source strengthened separately."
+}

@@ -1,0 +1,17 @@
+{
+  "capturedUTC": "2026-11-17T08:24:39.558Z",
+  "baseCommit": "de8c273d311ec09f7fca997e60bfccd4c5a70ba6",
+  "placeBytes": 3495644,
+  "placeSha256": "d5e1eed6295891ddba751603916490ab60903285621c50214a933a7f14f9603a",
+  "placeModifiedUTC": "2026-11-17T05:38:45.087Z",
+  "sourceOrModelEdits": "No production source/model edits; temporary fixtures only in reopened read-only Studio session; no save/publish",
+  "driverSha256": {
+    "place-probe.luau": "c67879a02a6bd4ad5c016e0f1f75cce85f86579ebc2996b231942b8e80ad2dcc",
+    "repair-trio.server.luau": "1f9244db8c10101a28979b1634cb3ca00a70dd2619507900af6830724b599590",
+    "repair-trio.client.luau": "bd4f79683ae49188948d9ccf92ade640c381a0a472bfcacefe9d402dafd34e02",
+    "duo.server.luau": "1c799bbd1c923ce22acbb66ca44b5a5d8f6ec5fb5d8e539dd4ac829d1e28ba21",
+    "duo.client.luau": "9ca9af0a481d1b1a9a04377342bcb00dad0f10fa48eabb2965f89d3f2dabea01"
+  },
+  "environment": "Windows Roblox Studio, real local two/three-client simulations, default desktop, ideal local network, unpublished GameId=0 mock data",
+  "fixture": "See run-specific raw results and README; no persistent inventory grants"
+}

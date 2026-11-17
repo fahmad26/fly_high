@@ -1,0 +1,33 @@
+{
+  "players": 0,
+  "productionSources": 61,
+  "placeId": 0,
+  "fixtures": [],
+  "running": false,
+  "cameraType": "Fixed",
+  "compileErrors": [],
+  "viewport": "1066.40002, 536",
+  "gameId": 0,
+  "manifestSectionsMatchReopened": {
+    "models": true,
+    "sources": true,
+    "environment": true,
+    "terrain": true,
+    "prompts": true
+  },
+  "productionPlaceSaved": false,
+  "published": false,
+  "extraReadOnlyWindowClosed": true,
+  "originalStudio": {
+    "id": "5847b091-658c-4cee-b661-28c5ea116a09",
+    "players": 0,
+    "sources": 61,
+    "compileErrors": [],
+    "viewport": "984, 448.799988",
+    "running": false,
+    "fixtures": [],
+    "uiMode": "Test",
+    "device": "Current device / no simulator",
+    "preserved": true
+  }
+}

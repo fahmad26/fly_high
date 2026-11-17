@@ -1,0 +1,740 @@
+{
+  "finishedUTC": "2026-11-17T08:24:19Z",
+  "errors": [],
+  "run": "duo-checkpoint-2026-11-17",
+  "fixtures": "2 real local clients; unpublished GameId=0 mock; manager launch; altitude warp; paused hazard scheduling; anchored balloon for prompt/combat measurements; damaged rope and configured AK47 rack are runtime-only fixtures; broad registered target is a combat fixture, not art QA",
+  "success": true,
+  "ropeEvents": [
+    {
+      "repairing": false,
+      "kind": "Begin",
+      "player": "Player1"
+    },
+    {
+      "repairing": true,
+      "kind": "End",
+      "player": "Player1"
+    },
+    {
+      "repairing": false,
+      "kind": "Begin",
+      "player": "Player1"
+    },
+    {
+      "repairing": true,
+      "kind": "End",
+      "player": "Player1"
+    },
+    {
+      "value": 30,
+      "kind": "Triggered",
+      "player": "Player1"
+    }
+  ],
+  "snapshots": {
+    "AK47Observer": {
+      "errors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "platformErrors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "ammo": "8 / ∞",
+      "summits": 0,
+      "gameErrors": [],
+      "reloadVisible": false,
+      "revived": false,
+      "hotbar": true,
+      "shots": [
+        {
+          "target": "-57.911102294921875, 139.8272705078125, -78.81708526611328",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "-7.882828235626221, 139.530517578125, -78.98941040039062"
+        },
+        {
+          "target": "-57.91110610961914, 138.95745849609375, -78.9608154296875",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "-7.88894510269165, 139.5360870361328, -78.98870849609375"
+        },
+        {
+          "target": "57.282291412353516, 139.1636505126953, -80.41122436523438",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "7.2822771072387695, 139.32708740234375, -80.71586608886719"
+        },
+        {
+          "target": "57.28228759765625, 139.09384155273438, -80.98808288574219",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "7.361087322235107, 139.34457397460938, -80.72407531738281"
+        }
+      ],
+      "palace": false,
+      "crew": {
+        "Player2": {
+          "revived": false,
+          "palace": false
+        },
+        "Player1": {
+          "revived": false,
+          "palace": false
+        }
+      }
+    },
+    "PistolEquipped": {
+      "errors": [],
+      "platformErrors": [],
+      "ammo": "8 / ∞",
+      "summits": 0,
+      "gameErrors": [],
+      "crew": {
+        "Player1": {
+          "revived": false,
+          "palace": false
+        },
+        "Player2": {
+          "revived": false,
+          "palace": false
+        }
+      },
+      "reloadVisible": true,
+      "hotbar": false,
+      "revived": false,
+      "shots": [],
+      "palace": false,
+      "weapon": "Pistol"
+    },
+    "ropePartial": {
+      "customVisible": true,
+      "distance": 4.196761131286621,
+      "guiInset": "0, 58",
+      "width": 196,
+      "enabled": true,
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "events": {
+        "began": 1,
+        "globalPointer": 1,
+        "pointer": 1,
+        "triggered": 0,
+        "ended": 0
+      },
+      "height": 50,
+      "mouse": "543, 414",
+      "center": "543, 414",
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action",
+          "class": "TextLabel",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    },
+    "arrivalPlayer2": {
+      "errors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "platformErrors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "ammo": "8 / ∞",
+      "summits": 1,
+      "gameErrors": [],
+      "reloadVisible": false,
+      "revived": false,
+      "hotbar": true,
+      "shots": [
+        {
+          "target": "-57.911102294921875, 139.8272705078125, -78.81708526611328",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "-7.882828235626221, 139.530517578125, -78.98941040039062"
+        },
+        {
+          "target": "-57.91110610961914, 138.95745849609375, -78.9608154296875",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "-7.88894510269165, 139.5360870361328, -78.98870849609375"
+        },
+        {
+          "target": "57.282291412353516, 139.1636505126953, -80.41122436523438",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "7.2822771072387695, 139.32708740234375, -80.71586608886719"
+        },
+        {
+          "target": "57.28228759765625, 139.09384155273438, -80.98808288574219",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "7.361087322235107, 139.34457397460938, -80.72407531738281"
+        }
+      ],
+      "palace": true,
+      "crew": {
+        "Player2": {
+          "revived": false,
+          "palace": true
+        },
+        "Player1": {
+          "revived": true,
+          "palace": true
+        }
+      }
+    },
+    "PistolObserver": {
+      "errors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "platformErrors": [
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+        "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+        "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+      ],
+      "ammo": "8 / ∞",
+      "summits": 0,
+      "gameErrors": [],
+      "reloadVisible": false,
+      "revived": false,
+      "hotbar": true,
+      "shots": [
+        {
+          "target": "-57.911102294921875, 139.8272705078125, -78.81708526611328",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "-7.882828235626221, 139.530517578125, -78.98941040039062"
+        },
+        {
+          "target": "-57.91110610961914, 138.95745849609375, -78.9608154296875",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "-7.88894510269165, 139.5360870361328, -78.98870849609375"
+        }
+      ],
+      "palace": false,
+      "crew": {
+        "Player2": {
+          "revived": false,
+          "palace": false
+        },
+        "Player1": {
+          "revived": false,
+          "palace": false
+        }
+      }
+    },
+    "ropeFull": {
+      "customVisible": true,
+      "distance": 4.196761131286621,
+      "guiInset": "0, 58",
+      "width": 196,
+      "enabled": true,
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "events": {
+        "began": 1,
+        "globalPointer": 1,
+        "pointer": 1,
+        "triggered": 1,
+        "ended": 1
+      },
+      "height": 50,
+      "mouse": "543, 420",
+      "center": "543, 420",
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action",
+          "class": "TextLabel",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    },
+    "arrivalPlayer1": {
+      "errors": [],
+      "platformErrors": [],
+      "ammo": "30 / ∞",
+      "summits": 1,
+      "gameErrors": [],
+      "reloadVisible": false,
+      "revived": true,
+      "hotbar": true,
+      "shots": [
+        {
+          "target": "-57.911102294921875, 139.8272705078125, -78.81708526611328",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "-7.882828235626221, 139.530517578125, -78.98941040039062"
+        },
+        {
+          "target": "-57.91110610961914, 138.95745849609375, -78.9608154296875",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "-7.88894510269165, 139.5360870361328, -78.98870849609375"
+        },
+        {
+          "target": "57.282291412353516, 139.1636505126953, -80.41122436523438",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "7.2822771072387695, 139.32708740234375, -80.71586608886719"
+        },
+        {
+          "target": "57.28228759765625, 139.09384155273438, -80.98808288574219",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "7.361087322235107, 139.34457397460938, -80.72407531738281"
+        }
+      ],
+      "palace": true,
+      "crew": {
+        "Player1": {
+          "revived": true,
+          "palace": true
+        },
+        "Player2": {
+          "revived": false,
+          "palace": true
+        }
+      }
+    },
+    "patchPartial": {
+      "customVisible": true,
+      "distance": 9.52927303314209,
+      "guiInset": "0, 58",
+      "width": 196,
+      "enabled": true,
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "events": {
+        "began": 1,
+        "globalPointer": 1,
+        "pointer": 1,
+        "triggered": 0,
+        "ended": 0
+      },
+      "height": 50,
+      "mouse": "547, 418",
+      "center": "547, 418",
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action",
+          "class": "TextLabel",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    },
+    "AK47Equipped": {
+      "errors": [],
+      "platformErrors": [],
+      "ammo": "30 / ∞",
+      "summits": 0,
+      "gameErrors": [],
+      "crew": {
+        "Player1": {
+          "revived": false,
+          "palace": false
+        },
+        "Player2": {
+          "revived": false,
+          "palace": false
+        }
+      },
+      "reloadVisible": true,
+      "hotbar": false,
+      "revived": false,
+      "shots": [
+        {
+          "target": "-57.911102294921875, 139.8272705078125, -78.81708526611328",
+          "kind": "Hit",
+          "who": "Player1",
+          "origin": "-7.882828235626221, 139.530517578125, -78.98941040039062"
+        },
+        {
+          "target": "-57.91110610961914, 138.95745849609375, -78.9608154296875",
+          "kind": "Kill",
+          "who": "Player1",
+          "origin": "-7.88894510269165, 139.5360870361328, -78.98870849609375"
+        }
+      ],
+      "palace": false,
+      "weapon": "AK47"
+    },
+    "patchFull": {
+      "customVisible": true,
+      "distance": 9.52927303314209,
+      "guiInset": "0, 58",
+      "width": 196,
+      "enabled": true,
+      "transparency": 0.6499999761581421,
+      "style": "Custom",
+      "events": {
+        "began": 1,
+        "globalPointer": 1,
+        "pointer": 1,
+        "triggered": 1,
+        "ended": 1
+      },
+      "height": 50,
+      "mouse": "547, 418",
+      "center": "547, 418",
+      "hits": [
+        {
+          "path": "Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows",
+          "class": "Frame",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action",
+          "class": "TextLabel",
+          "active": false
+        },
+        {
+          "path": "Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget",
+          "class": "TextButton",
+          "active": true
+        }
+      ]
+    }
+  },
+  "startedUTC": "2026-11-17T08:23:19Z",
+  "base": "de8c273",
+  "checks": [
+    {
+      "pass": true,
+      "name": "isolated mock universe"
+    },
+    {
+      "pass": true,
+      "name": "2 clients ready"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player2"
+    },
+    {
+      "pass": true,
+      "name": "HUD ready Player1"
+    },
+    {
+      "pass": true,
+      "name": "duo launch"
+    },
+    {
+      "pass": true,
+      "name": "boarding completes"
+    },
+    {
+      "pass": true,
+      "name": "rope fixture attached"
+    },
+    {
+      "pass": true,
+      "name": "custom rope capsule appears",
+      "detail": "{\"customVisible\":true,\"distance\":4.196761131286621,\"guiInset\":\"0, 58\",\"width\":196,\"enabled\":true,\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"events\":{\"began\":1,\"globalPointer\":1,\"pointer\":1,\"triggered\":0,\"ended\":0},\"height\":50,\"mouse\":\"543, 414\",\"center\":\"543, 414\",\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action\",\"class\":\"TextLabel\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    },
+    {
+      "pass": true,
+      "name": "early rope hold does not fill"
+    },
+    {
+      "pass": true,
+      "name": "custom rope pointer hold reaches server",
+      "detail": "{\"customVisible\":true,\"distance\":4.196761131286621,\"guiInset\":\"0, 58\",\"width\":196,\"enabled\":true,\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"events\":{\"began\":1,\"globalPointer\":1,\"pointer\":1,\"triggered\":1,\"ended\":1},\"height\":50,\"mouse\":\"543, 420\",\"center\":\"543, 420\",\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action\",\"class\":\"TextLabel\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    },
+    {
+      "pass": true,
+      "name": "rope role released"
+    },
+    {
+      "pass": true,
+      "name": "patch fixture tether attached"
+    },
+    {
+      "pass": true,
+      "name": "patch fixture reaches catwalk"
+    },
+    {
+      "pass": true,
+      "name": "patch fixture puncture"
+    },
+    {
+      "pass": true,
+      "name": "custom patch capsule appears",
+      "detail": "{\"customVisible\":true,\"distance\":9.52927303314209,\"guiInset\":\"0, 58\",\"width\":196,\"enabled\":true,\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"events\":{\"began\":1,\"globalPointer\":1,\"pointer\":1,\"triggered\":0,\"ended\":0},\"height\":50,\"mouse\":\"547, 418\",\"center\":\"547, 418\",\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action\",\"class\":\"TextLabel\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    },
+    {
+      "pass": true,
+      "name": "early patch hold remains cancelled"
+    },
+    {
+      "pass": true,
+      "name": "custom patch pointer hold reaches server",
+      "detail": "{\"customVisible\":true,\"distance\":9.52927303314209,\"guiInset\":\"0, 58\",\"width\":196,\"enabled\":true,\"transparency\":0.6499999761581421,\"style\":\"Custom\",\"events\":{\"began\":1,\"globalPointer\":1,\"pointer\":1,\"triggered\":1,\"ended\":1},\"height\":50,\"mouse\":\"547, 418\",\"center\":\"547, 418\",\"hits\":[{\"path\":\"Players.Player1.PlayerGui.FlyHighHUD.GhostSpotArrows\",\"class\":\"Frame\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget.Action\",\"class\":\"TextLabel\",\"active\":false},{\"path\":\"Players.Player1.PlayerGui.HUDInteractionPrompt.ActionTarget\",\"class\":\"TextButton\",\"active\":true}]}"
+    },
+    {
+      "pass": true,
+      "name": "patch fixture descends"
+    },
+    {
+      "pass": true,
+      "name": "Pistol custom pickup visible",
+      "detail": "{\"customVisible\":true,\"distance\":4.45054292678833,\"width\":196,\"transparency\":0.6499999761581421,\"events\":{\"began\":1,\"globalPointer\":0,\"pointer\":0,\"triggered\":1,\"ended\":1},\"height\":50,\"mouse\":\"547, 418\",\"style\":\"Custom\",\"enabled\":true}"
+    },
+    {
+      "pass": true,
+      "name": "Pistol native key pickup accepted"
+    },
+    {
+      "pass": true,
+      "name": "Pistol correct magazine capacity"
+    },
+    {
+      "pass": true,
+      "name": "Pistol native hotbar hidden",
+      "detail": "{\"errors\":[],\"platformErrors\":[],\"ammo\":\"8 / ∞\",\"summits\":0,\"gameErrors\":[],\"crew\":{\"Player1\":{\"revived\":false,\"palace\":false},\"Player2\":{\"revived\":false,\"palace\":false}},\"reloadVisible\":true,\"hotbar\":false,\"revived\":false,\"shots\":[],\"palace\":false,\"weapon\":\"Pistol\"}"
+    },
+    {
+      "pass": true,
+      "name": "Pistol infinite reserve label",
+      "detail": "8 / ∞"
+    },
+    {
+      "pass": true,
+      "name": "Pistol target destroyed by server"
+    },
+    {
+      "pass": true,
+      "name": "Pistol two rounds spent",
+      "detail": 6
+    },
+    {
+      "pass": true,
+      "name": "Pistol reload begins without instant refill"
+    },
+    {
+      "pass": true,
+      "name": "Pistol magazine refills to cap"
+    },
+    {
+      "pass": true,
+      "name": "Pistol shots replicated to teammate",
+      "detail": "[{\"target\":\"-57.911102294921875, 139.8272705078125, -78.81708526611328\",\"kind\":\"Hit\",\"who\":\"Player1\",\"origin\":\"-7.882828235626221, 139.530517578125, -78.98941040039062\"},{\"target\":\"-57.91110610961914, 138.95745849609375, -78.9608154296875\",\"kind\":\"Kill\",\"who\":\"Player1\",\"origin\":\"-7.88894510269165, 139.5360870361328, -78.98870849609375\"}]"
+    },
+    {
+      "pass": true,
+      "name": "Pistol teammate hotbar unaffected"
+    },
+    {
+      "pass": true,
+      "name": "Pistol rack returned"
+    },
+    {
+      "pass": true,
+      "name": "Pistol hotbar restored"
+    },
+    {
+      "pass": true,
+      "name": "AK47 custom pickup visible",
+      "detail": "{\"customVisible\":true,\"distance\":4.409199237823486,\"width\":196,\"transparency\":0.6499999761581421,\"events\":{\"began\":1,\"globalPointer\":0,\"pointer\":0,\"triggered\":1,\"ended\":1},\"height\":50,\"mouse\":\"547.200012, 279.200012\",\"style\":\"Custom\",\"enabled\":true}"
+    },
+    {
+      "pass": true,
+      "name": "AK47 native key pickup accepted"
+    },
+    {
+      "pass": true,
+      "name": "AK47 correct magazine capacity"
+    },
+    {
+      "pass": true,
+      "name": "AK47 native hotbar hidden",
+      "detail": "{\"errors\":[],\"platformErrors\":[],\"ammo\":\"30 / ∞\",\"summits\":0,\"gameErrors\":[],\"crew\":{\"Player1\":{\"revived\":false,\"palace\":false},\"Player2\":{\"revived\":false,\"palace\":false}},\"reloadVisible\":true,\"hotbar\":false,\"revived\":false,\"shots\":[{\"target\":\"-57.911102294921875, 139.8272705078125, -78.81708526611328\",\"kind\":\"Hit\",\"who\":\"Player1\",\"origin\":\"-7.882828235626221, 139.530517578125, -78.98941040039062\"},{\"target\":\"-57.91110610961914, 138.95745849609375, -78.9608154296875\",\"kind\":\"Kill\",\"who\":\"Player1\",\"origin\":\"-7.88894510269165, 139.5360870361328, -78.98870849609375\"}],\"palace\":false,\"weapon\":\"AK47\"}"
+    },
+    {
+      "pass": true,
+      "name": "AK47 infinite reserve label",
+      "detail": "30 / ∞"
+    },
+    {
+      "pass": true,
+      "name": "AK47 target destroyed by server"
+    },
+    {
+      "pass": true,
+      "name": "AK47 two rounds spent",
+      "detail": 28
+    },
+    {
+      "pass": true,
+      "name": "AK47 reload begins without instant refill"
+    },
+    {
+      "pass": true,
+      "name": "AK47 magazine refills to cap"
+    },
+    {
+      "pass": true,
+      "name": "AK47 shots replicated to teammate",
+      "detail": "[{\"target\":\"-57.911102294921875, 139.8272705078125, -78.81708526611328\",\"kind\":\"Hit\",\"who\":\"Player1\",\"origin\":\"-7.882828235626221, 139.530517578125, -78.98941040039062\"},{\"target\":\"-57.91110610961914, 138.95745849609375, -78.9608154296875\",\"kind\":\"Kill\",\"who\":\"Player1\",\"origin\":\"-7.88894510269165, 139.5360870361328, -78.98870849609375\"},{\"target\":\"57.282291412353516, 139.1636505126953, -80.41122436523438\",\"kind\":\"Hit\",\"who\":\"Player1\",\"origin\":\"7.2822771072387695, 139.32708740234375, -80.71586608886719\"},{\"target\":\"57.28228759765625, 139.09384155273438, -80.98808288574219\",\"kind\":\"Kill\",\"who\":\"Player1\",\"origin\":\"7.361087322235107, 139.34457397460938, -80.72407531738281\"}]"
+    },
+    {
+      "pass": true,
+      "name": "AK47 teammate hotbar unaffected"
+    },
+    {
+      "pass": true,
+      "name": "AK47 rack returned"
+    },
+    {
+      "pass": true,
+      "name": "AK47 hotbar restored"
+    },
+    {
+      "pass": true,
+      "name": "dead teammate tracked"
+    },
+    {
+      "pass": true,
+      "name": "arrival blocks damage"
+    },
+    {
+      "pass": true,
+      "name": "arrival finishes and balloon departs"
+    },
+    {
+      "pass": true,
+      "name": "summit credited once Player2"
+    },
+    {
+      "pass": true,
+      "name": "alive at palace Player2"
+    },
+    {
+      "pass": true,
+      "name": "game client errors empty Player2",
+      "detail": "[]"
+    },
+    {
+      "pass": true,
+      "name": "summit credited once Player1"
+    },
+    {
+      "pass": true,
+      "name": "alive at palace Player1"
+    },
+    {
+      "pass": true,
+      "name": "game client errors empty Player1",
+      "detail": "[]"
+    },
+    {
+      "pass": true,
+      "name": "fallen teammate revival state replicated"
+    },
+    {
+      "pass": true,
+      "name": "no server runtime errors",
+      "detail": "[]"
+    }
+  ]
+}

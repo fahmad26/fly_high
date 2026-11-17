@@ -79,6 +79,8 @@ Perhatikan ScreenInsets, safe area, layering dan clipping. Jangan menggandakan n
 
 Keyboard, analog touch dan gamepad harus menuju kontrak input yang sama. Gerak balon mengikuti sumbu kamera yang diratakan ke XZ; cek saat kamera berputar 180 derajat. Input wajib kembali nol setelah lepas helm, fokus hilang atau modal terbuka. Driver virtual-key juga harus melepas tombol saat keluar role.
 
+Untuk fixture klik Studio, pisahkan koordinat GUI dan layar: hit test `GetGuiObjectsAtPosition` memakai titik GUI, sedangkan `VirtualInput:SendMouseButton` perlu titik layar setelah `GuiService:GetGuiInset()` ditambahkan. Jangan menganggap `IgnoreGuiInset` berarti nilai `AbsolutePosition` otomatis cocok dengan input layar. Rekam event tombol, hold prompt dan hasil server sebelum mengubah UI produksi; [diagnosis 17 Nov](../../audit/multiplayer-checkpoint-2026-11-17/README.md) membuktikan kegagalan fixture koordinat, bukan overlay HUD. [Referensi koordinat Roblox](https://create.roblox.com/docs/reference/engine/classes/GuiObject).
+
 ## 9. FPS weapon, aiming dan feedback
 
 Pisahkan target bidikan dari origin visual muzzle. Crosshair memberi arah tujuan; tracer/muzzle flash lokal harus bermula dari muzzle viewmodel yang terlihat. Server menghitung hit dari senjata dan konteks yang sah, bukan mempercayai origin dari client.

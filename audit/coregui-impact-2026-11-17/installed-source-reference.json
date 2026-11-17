@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-17T08:50:58.405Z",
+  "robloxStudioVersion": "version-63eb6055af4e4688",
+  "installedPlayerPermissionsSha256": "1350214d6e74edb88a6ec7587fb3e607bda9b468e76834aef1edda7635187b23",
+  "installedOwnerReadLines": [
+    252,
+    256
+  ],
+  "report": "https://devforum.roblox.com/t/playerpermissionsmodule-corescript-module-frequently-breaks-causing-cascading-problems/3130688",
+  "note": "Installed source corroborates CreatorType owner check; runtime shipped module line numbers may differ. No CoreScript files edited."
+}

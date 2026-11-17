@@ -1,0 +1,137 @@
+{
+  "layers": [
+    {
+      "enabled": true,
+      "path": "CoreGui.RobloxGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.RobloxGui.ScreenGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ScreenshotsCarousel"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.CaptureManager"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.CaptureOverlay"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.MomentsCreationFlow"
+    },
+    {
+      "enabled": false,
+      "path": "CoreGui.CursorContainer"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.RobloxNetworkPauseNotification"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.InExperienceInterventionApp"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.PurchasePromptApp"
+    },
+    {
+      "enabled": false,
+      "path": "CoreGui.MultiTouchGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ImmersiveBrandedAds"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.RewardedVideoAdPlayer"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ExperienceChat"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ExperienceChat.bubbleChat"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ToastNotification.ToastNotificationWrapper"
+    },
+    {
+      "enabled": false,
+      "path": "CoreGui.TeleportEffectGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.BulkPurchaseApp.BulkPurchaseApp"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.SystemScrim"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.UniversalShareSheetScreenGuiRoot.UniversalShareSheetScreenGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.InExperienceDetailsPromptApp.InExperienceDetailsPromptOverlay"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui._FullscreenTestGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui._DeviceTestGui"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.PlayerList"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.InGameFullscreenTitleBarScreen"
+    },
+    {
+      "enabled": false,
+      "path": "CoreGui.HeadsetDisconnectedDialog"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.ShortcutBar"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.TopBarApp.TopBarScrim"
+    },
+    {
+      "enabled": true,
+      "path": "CoreGui.TopBarApp.TopBarApp"
+    }
+  ],
+  "name": "Player2",
+  "settings": [
+    {
+      "visible": true,
+      "path": "CoreGui.RobloxGui.SettingsClippingShield"
+    },
+    {
+      "visible": false,
+      "path": "CoreGui.RobloxGui.SettingsClippingShield.SettingsShield"
+    },
+    {
+      "visible": true,
+      "path": "CoreGui.RobloxGui.SettingsClippingShield.SettingsShield.MenuContainer"
+    }
+  ],
+  "playerList": [],
+  "menu": false
+}

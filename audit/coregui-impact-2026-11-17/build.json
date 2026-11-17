@@ -1,0 +1,11 @@
+{
+  "baseCommit": "de8c273d311ec09f7fca997e60bfccd4c5a70ba6",
+  "sourceOrModelChanges": false,
+  "originalPlaceSha256": "d5e1eed6295891ddba751603916490ab60903285621c50214a933a7f14f9603a",
+  "environment": "Windows Studio version-63eb6055af4e4688, GameId=0, 2 real local clients per run, isolated mock profiles",
+  "scriptSha256": {
+    "probe.client.luau": "3c940ebc365e2610235276f7f0c4fee2c608ac3a1d6ed2237c4fdad1c7bb923c",
+    "probe.server.luau": "38a9bdc0616c4f05fa7595634cb56ac1871da261acaf37b70db066301afb9b7b",
+    "visual-inspection.server.luau": "a6cc33e68e1c7a7c2608eb76a6b9c433b75929094a7000f1b1af0c5813e7ecf1"
+  }
+}

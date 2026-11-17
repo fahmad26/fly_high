@@ -1,0 +1,254 @@
+{
+  "finishedUTC": "2026-11-17T08:49:20Z",
+  "clients": {
+    "Player1": {
+      "finishedUTC": "2026-11-17T08:48:00Z",
+      "jumpDeltaY": 7.1243896484375,
+      "beforeTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "case": "no-game-scripts",
+      "moveInput": {
+        "ok": true,
+        "value": true
+      },
+      "player": "Player1",
+      "userId": -1,
+      "tabInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "before": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "afterEscape": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "escapeInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "executionCompleted": true,
+      "jumpInput": {
+        "ok": true,
+        "value": true
+      },
+      "startedUTC": "2026-11-17T08:47:44Z",
+      "afterTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "moveDistance": 6.350185394287109
+    },
+    "Player2": {
+      "finishedUTC": "2026-11-17T08:48:00Z",
+      "jumpDeltaY": 6.372159957885742,
+      "beforeTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "case": "no-game-scripts",
+      "moveInput": {
+        "ok": true,
+        "value": true
+      },
+      "player": "Player2",
+      "userId": -2,
+      "tabInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "before": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "afterEscape": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "escapeInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "executionCompleted": true,
+      "jumpInput": {
+        "ok": true,
+        "value": true
+      },
+      "startedUTC": "2026-11-17T08:47:44Z",
+      "afterTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": false,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "moveDistance": 5.987513542175293
+    }
+  },
+  "environment": "Windows Studio, 2 real local clients, isolated GameId=0, default desktop; no metadata injection",
+  "serverErrors": [],
+  "startedUTC": "2026-11-17T08:47:29Z",
+  "base": "de8c273",
+  "case": "no-game-scripts"
+}

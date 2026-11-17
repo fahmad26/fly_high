@@ -1,0 +1,324 @@
+{
+  "finishedUTC": "2026-11-17T08:53:38Z",
+  "clients": {
+    "Player1": {
+      "userId": -1,
+      "before": {
+        "creatorId": 0,
+        "errors": [
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+        ],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": false,
+          "value": "Invalid value for enum CreatorType"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "escapeInput": {
+        "ok": true,
+        "value": true
+      },
+      "jumpInput": {
+        "ok": true,
+        "value": true
+      },
+      "moveDistance": 5.283738613128662,
+      "finishedUTC": "2026-11-17T08:51:47Z",
+      "jumpDeltaY": 6.66483211517334,
+      "beforeTab": {
+        "creatorId": 0,
+        "errors": [
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+        ],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": false,
+          "value": "Invalid value for enum CreatorType"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "customSettings": {
+        "ok": true,
+        "value": {
+          "opened": false,
+          "closed": true
+        }
+      },
+      "executionCompleted": true,
+      "player": "Player1",
+      "afterEscape": {
+        "creatorId": 0,
+        "errors": [
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+        ],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": false,
+          "value": "Invalid value for enum CreatorType"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "tabInput": {
+        "ok": true,
+        "value": true
+      },
+      "moveInput": {
+        "ok": true,
+        "value": true
+      },
+      "startedUTC": "2026-11-17T08:51:30Z",
+      "afterTab": {
+        "creatorId": 0,
+        "errors": [
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerPermissionsModule] Invalid value for enum CreatorType",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Thunks.MakePlayerInfoRequests] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.PlayerServiceConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Connection.EventConnections] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.Components.Presentation.PlayerListApp] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListSwitcher] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListController] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.PlayerList.PlayerListManager] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.GamepadConnector] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar.Components.TopBarScrim] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.Modules.TopBar] Requested module experienced an error while loading",
+          "[Roblox][CoreGui.RobloxGui.CoreScripts/InspectAndBuy] Requested module experienced an error while loading",
+          "[Roblox][Script Context.StarterScript] Script Context.StarterScript:525: Invalid value for enum CreatorType"
+        ],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": false,
+          "value": "Invalid value for enum CreatorType"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player1.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "case": "game"
+    },
+    "Player2": {
+      "userId": -2,
+      "before": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "escapeInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "jumpInput": {
+        "ok": true,
+        "value": true
+      },
+      "moveDistance": 6.536384105682373,
+      "finishedUTC": "2026-11-17T08:51:48Z",
+      "jumpDeltaY": 5.402039527893066,
+      "beforeTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "customSettings": {
+        "ok": true,
+        "value": {
+          "opened": false,
+          "closed": true
+        }
+      },
+      "executionCompleted": true,
+      "player": "Player2",
+      "afterEscape": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "tabInput": {
+        "ok": false,
+        "value": "VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+      },
+      "moveInput": {
+        "ok": true,
+        "value": true
+      },
+      "startedUTC": "2026-11-17T08:51:31Z",
+      "afterTab": {
+        "creatorId": 0,
+        "errors": [],
+        "placeId": 0,
+        "menuOpen": false,
+        "playerListEnabled": true,
+        "creatorType": {
+          "ok": true,
+          "value": "User"
+        },
+        "hud": true,
+        "native": [],
+        "gameId": 0,
+        "viewport": "1094.40002, 558.400024",
+        "backpackEnabled": true,
+        "topbar": {
+          "ok": true,
+          "value": true
+        },
+        "nativeAccess": {
+          "ok": false,
+          "value": "Players.Player2.PlayerScripts._QA_CoreImpact:36: attempt to index nil with 'GetDescendants'"
+        }
+      },
+      "case": "game"
+    }
+  },
+  "environment": "Windows Studio, 2 real local clients, isolated GameId=0, default desktop; no metadata injection",
+  "serverErrors": [],
+  "startedUTC": "2026-11-17T08:51:15Z",
+  "base": "de8c273",
+  "case": "game"
+}

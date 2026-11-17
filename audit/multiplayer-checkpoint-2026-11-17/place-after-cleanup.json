@@ -1,0 +1,1162 @@
+{
+  "models": [
+    {
+      "geometryChecksum": 3544725269,
+      "path": "Workspace.FlyHighLobby",
+      "descendants": 10277,
+      "parts": 9007
+    },
+    {
+      "geometryChecksum": 640139545,
+      "path": "Workspace.CloudPalace",
+      "descendants": 1674,
+      "parts": 1029
+    },
+    {
+      "geometryChecksum": 2770055484,
+      "path": "ReplicatedStorage.FlyHigh.Templates",
+      "descendants": 9402,
+      "parts": 4599
+    }
+  ],
+  "sources": [
+    {
+      "bytes": 6992,
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+      "checksum": 598347689,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 14903,
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+      "checksum": 204646171,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 1119,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+      "checksum": 4028192312,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 43435,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+      "checksum": 3054055043,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 153465,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "checksum": 2868279159,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 7703,
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+      "checksum": 3773344930,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 18173,
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+      "checksum": 4164441328,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 483,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+      "checksum": 1217732062,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 4291,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+      "checksum": 2598664146,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 4997,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+      "checksum": 1135044486,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 5639,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+      "checksum": 3199011002,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 32443,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+      "checksum": 2393543090,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 1527,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+      "checksum": 2209979477,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 21003,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+      "checksum": 3114534914,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 9912,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+      "checksum": 1868985958,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 39993,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "checksum": 2924312108,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 53947,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+      "checksum": 3908051237,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 150,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+      "checksum": 3087484813,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 84444,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "checksum": 224354711,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 2265,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+      "checksum": 705302529,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 15433,
+      "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+      "checksum": 664533499,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 7629,
+      "path": "ReplicatedStorage.FlyHigh.Modules.ObstacleAudioCatalog",
+      "checksum": 1568368982,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 6643,
+      "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+      "checksum": 3868655324,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 27302,
+      "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+      "checksum": 2281024114,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 40734,
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "checksum": 761272563,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 31763,
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "checksum": 3792373948,
+      "class": "Script"
+    },
+    {
+      "bytes": 1106,
+      "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+      "checksum": 3628377152,
+      "class": "Script"
+    },
+    {
+      "bytes": 22333,
+      "path": "ServerScriptService.FlyHighServer.DataManager",
+      "checksum": 2900916898,
+      "class": "Script"
+    },
+    {
+      "bytes": 3424,
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "checksum": 1658497856,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 4202,
+      "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+      "checksum": 1292403901,
+      "class": "Script"
+    },
+    {
+      "bytes": 6447,
+      "path": "ServerScriptService.FlyHighServer.JumpManager",
+      "checksum": 2339824063,
+      "class": "Script"
+    },
+    {
+      "bytes": 5736,
+      "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+      "checksum": 1859128266,
+      "class": "Script"
+    },
+    {
+      "bytes": 13036,
+      "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+      "checksum": 4100476353,
+      "class": "Script"
+    },
+    {
+      "bytes": 28284,
+      "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+      "checksum": 347489602,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 23728,
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "checksum": 1636972065,
+      "class": "Script"
+    },
+    {
+      "bytes": 3867,
+      "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+      "checksum": 1115856892,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 21767,
+      "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+      "checksum": 427131165,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 6607,
+      "path": "ServerScriptService.FlyHighServer.OverheadManager",
+      "checksum": 4031602069,
+      "class": "Script"
+    },
+    {
+      "bytes": 5337,
+      "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+      "checksum": 1277455045,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 3565,
+      "path": "ServerScriptService.FlyHighServer.PalaceManager",
+      "checksum": 4144066087,
+      "class": "Script"
+    },
+    {
+      "bytes": 5887,
+      "path": "ServerScriptService.FlyHighServer.PodManager",
+      "checksum": 3846509246,
+      "class": "Script"
+    },
+    {
+      "bytes": 2466,
+      "path": "ServerScriptService.FlyHighServer.ServerUtils",
+      "checksum": 1026229389,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 4904,
+      "path": "ServerScriptService.FlyHighServer.ShopManager",
+      "checksum": 112347215,
+      "class": "Script"
+    },
+    {
+      "bytes": 24192,
+      "path": "ServerScriptService.FlyHighServer.TetherManager",
+      "checksum": 588367190,
+      "class": "Script"
+    },
+    {
+      "bytes": 13642,
+      "path": "ServerScriptService.FlyHighServer.WeaponManager",
+      "checksum": 2118482303,
+      "class": "Script"
+    },
+    {
+      "bytes": 2991,
+      "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+      "checksum": 1635458769,
+      "class": "ModuleScript"
+    },
+    {
+      "bytes": 9885,
+      "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+      "checksum": 2522504201,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 16396,
+      "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+      "checksum": 2851808026,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 30994,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+      "checksum": 721953351,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 7219,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+      "checksum": 3970434460,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 4942,
+      "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+      "checksum": 155099712,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 14289,
+      "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+      "checksum": 2170703456,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 10661,
+      "path": "StarterPlayer.StarterPlayerScripts.ObstacleAudioController",
+      "checksum": 900819363,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 31657,
+      "path": "StarterPlayer.StarterPlayerScripts.PalaceCinematics",
+      "checksum": 678826217,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 3982,
+      "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+      "checksum": 2612325948,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 21007,
+      "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+      "checksum": 3333190832,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 9536,
+      "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+      "checksum": 1999249934,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 7795,
+      "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+      "checksum": 2832245825,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 46154,
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "checksum": 130964424,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 2907,
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponHotbarController",
+      "checksum": 1265024548,
+      "class": "LocalScript"
+    },
+    {
+      "bytes": 6023,
+      "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+      "checksum": 3628941959,
+      "class": "LocalScript"
+    }
+  ],
+  "environment": {
+    "clockTime": 14.5,
+    "streaming": true,
+    "lightingStyle": "Enum.LightingStyle.Realistic",
+    "brightness": 3,
+    "orientation": "Enum.ScreenOrientation.LandscapeSensor",
+    "autoJump": false
+  },
+  "terrain": {
+    "checksum": 1407463267,
+    "decoration": true,
+    "region": [
+      -256,
+      -16,
+      -256,
+      256,
+      80,
+      256
+    ],
+    "waterTransparency": 0.25,
+    "occupied": 71529,
+    "resolution": 4
+  },
+  "prompts": [
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.FloatingGarden.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.PalaceLantern.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SaturnVoyager.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.BalloonVariants.SkyKoi.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.EnvelopeWalkway.DescendPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Turun ke Gondola & Lepas Tali",
+      "distance": 28,
+      "hold": 0.30000001192092896,
+      "key": "Enum.KeyCode.Q"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HelmSeat.HelmPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kendalikan Balon (Pilot)",
+      "distance": 5,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole1.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole2.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole3.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole4.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": false,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole5.PatchPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tambal Lubang",
+      "distance": 9,
+      "hold": 3,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.ClimbPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Panjat ke Kubah Balon (Katrol)",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.F"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.DetachTetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Lepas Tali Pengaman",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.T"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.PullCrewPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Tarik Rekan ke Keranjang",
+      "distance": 10,
+      "hold": 0,
+      "key": "Enum.KeyCode.B"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.RepairRopePrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Perbaiki Tali yang Dilepas",
+      "distance": 10,
+      "hold": 4,
+      "key": "Enum.KeyCode.C"
+    },
+    {
+      "enabled": true,
+      "path": "ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.TetherPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Pasang Tali Pengaman",
+      "distance": 8,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.PalaceFurniture.RoyalSofa.LeftSeat.SitPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Duduk",
+      "distance": 6,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.PalaceFurniture.RoyalSofa.RightSeat.SitPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Duduk",
+      "distance": 6,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.PalaceFurniture.RoyalSwingLeft.Carriage.SitSeat.SitPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Duduk",
+      "distance": 6,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.PalaceFurniture.RoyalSwingRight.Carriage.SitSeat.SitPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Duduk",
+      "distance": 6,
+      "hold": 0,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.PhotoboothSpot.PhotoPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Ambil Foto Kemenangan",
+      "distance": 10,
+      "hold": 0.5,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.CloudPalace.ReturnPortal.ReturnPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Kembali ke Pulau Awal",
+      "distance": 10,
+      "hold": 1,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.FlyHighLobby.MatchmakingPods.Pod_A.FloorPad.PromptAnchor.StartPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Mulai Penerbangan",
+      "distance": 18,
+      "hold": 0.20000000298023224,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.FlyHighLobby.MatchmakingPods.Pod_B.FloorPad.PromptAnchor.StartPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Mulai Penerbangan",
+      "distance": 18,
+      "hold": 0.20000000298023224,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.FlyHighLobby.MatchmakingPods.Pod_C.FloorPad.PromptAnchor.StartPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Mulai Penerbangan",
+      "distance": 18,
+      "hold": 0.20000000298023224,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.FlyHighLobby.MatchmakingPods.Pod_D.FloorPad.PromptAnchor.StartPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Mulai Penerbangan",
+      "distance": 18,
+      "hold": 0.20000000298023224,
+      "key": "Enum.KeyCode.E"
+    },
+    {
+      "enabled": true,
+      "path": "Workspace.FlyHighLobby.MatchmakingPods.Pod_E.FloorPad.PromptAnchor.StartPrompt",
+      "style": "Enum.ProximityPromptStyle.Default",
+      "text": "Mulai Penerbangan",
+      "distance": 18,
+      "hold": 0.20000000298023224,
+      "key": "Enum.KeyCode.E"
+    }
+  ]
+}
