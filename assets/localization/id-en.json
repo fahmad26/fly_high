@@ -1745,7 +1745,7 @@
   },
   {
     "source": "Bahasa / Language",
-    "en": "Bahasa / Language"
+    "en": "Language"
   },
   {
     "source": "Otomatis (Roblox)",
@@ -1998,5 +1998,29 @@
   {
     "source": "⚠ %s",
     "en": "⚠ %s"
+  },
+  {
+    "source": "AMBIL HANDGUN",
+    "en": "PICK UP HANDGUN"
+  },
+  {
+    "source": "AMBIL AK-47",
+    "en": "PICK UP AK-47"
+  },
+  {
+    "source": "AKTIF",
+    "en": "ACTIVE"
+  },
+  {
+    "source": "BAHAYA",
+    "en": "DANGER"
+  },
+  {
+    "source": "koin",
+    "en": "coins"
+  },
+  {
+    "source": "BLN",
+    "en": "MONTH"
   }
 ]

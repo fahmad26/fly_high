@@ -1,6 +1,8 @@
 # Bahasa Fly High
 
-Sumber yang diedit: [id-en.json](id-en.json). Katalog ini berisi 500 pasangan Indonesia–English, termasuk 59 format dinamis. Jangan mengedit `LocalizationCatalog.luau` atau CSV hasil build secara terpisah.
+Sumber yang diedit: [id-en.json](id-en.json). Katalog ini berisi 506 pasangan Indonesia–English, termasuk 59 format dinamis. Jangan mengedit `LocalizationCatalog.luau` atau CSV hasil build secara terpisah.
+
+Audit copy lanjutan 18 November memperbaiki pickup uppercase, status/fragmen, label Language dan crest MONTH. [Hasil dan batas](../../audit/localization-copy-2026-11-18/README.md): 506 pemeriksaan katalog lulus; verifikasi UI pasca-perbaikan tertahan kegagalan pemuatan data. Jangan menganggap hasil geometri sebelumnya membuktikan terjemahan setiap teks benar.
 
 Revisi 18 November: fragmen kalimat harus tersedia tanpa separator yang sudah dibuang composer. Awalan ikon pesan ditangani format `⚡ %s`/`⚠ %s`; ZONA dan nomor puncak dapat diterjemahkan saat digabung dengan bagian lain. Uji string akhir yang benar-benar tampil, bukan hanya potongan literal. [QA](../../audit/localization-touch-2026-11-18/README.md). Snapshot impor Dashboard 17 November di bawah bersifat historis, belum diperiksa/diimpor ulang untuk katalog 500.
 

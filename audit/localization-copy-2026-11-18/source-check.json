@@ -1,0 +1,14 @@
+{
+  "changed": [
+    {
+      "sha256": "292793ac8239c915a7f1aec83af76524906ca7b3f1ccf662184ac132b3819699",
+      "path": "ReplicatedStorage.FlyHigh.Modules.LocalizationCatalog"
+    },
+    {
+      "sha256": "f7d0dc8df88f44db02adaf28862f8e06278bc8afa87d847983453709d8ce997d",
+      "path": "StarterPlayer.StarterPlayerScripts.LocalizationController"
+    }
+  ],
+  "edit": true,
+  "compileErrors": []
+}

@@ -9,7 +9,7 @@ local L = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Module
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 local records: { [Instance]: any } = {}
-local excludedNames = { NameLabel=true, PlayerName=true, Username=true, AvatarLetter=true, BadgeGlyph=true }
+local excludedNames = { NameLabel=true, PlayerName=true, Username=true, AvatarLetter=true }
 local screens = { FlyHighHUD=true, HUDInteractionPrompt=true, FlyHighCinematic=true }
 local worldRoots = { FlyHighLobby=true, CloudPalace=true }
 

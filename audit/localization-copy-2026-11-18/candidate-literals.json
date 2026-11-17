@@ -1,0 +1,2427 @@
+[
+  {
+    "source": "PENGATURAN SUARA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+        "line": 111
+      }
+    ]
+  },
+  {
+    "source": "Master mengatur seluruh musik & efek suara",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+        "line": 114
+      }
+    ]
+  },
+  {
+    "source": "Geser slider atau ketuk tombol speaker untuk bisu / buka suara",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+        "line": 117
+      }
+    ]
+  },
+  {
+    "source": "Master mengatur keseluruhan musik & efek suara",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau",
+        "line": 352
+      }
+    ]
+  },
+  {
+    "source": "+ 50 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 39
+      }
+    ]
+  },
+  {
+    "source": "1× Tali Awet",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 49
+      }
+    ]
+  },
+  {
+    "source": "+ 75 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 50
+      }
+    ]
+  },
+  {
+    "source": "+1 Tali Awet & +75 Sky Coins",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 51
+      }
+    ]
+  },
+  {
+    "source": "+ 100 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 62
+      }
+    ]
+  },
+  {
+    "source": "Tracer Cyan Langit (3 Hari) & +100 Sky Coins",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 63
+      }
+    ]
+  },
+  {
+    "source": "1× Turbo + 1× Tali",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 72
+      }
+    ]
+  },
+  {
+    "source": "+ 125 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 73
+      }
+    ]
+  },
+  {
+    "source": "+1 Turbo Gas, +1 Tali Awet & +125 Sky Coins",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 74
+      }
+    ]
+  },
+  {
+    "source": "+ 150 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 85
+      }
+    ]
+  },
+  {
+    "source": "Bingkai Tracker Awan Emas (7 Hari) & +150 Sky Coins",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 86
+      }
+    ]
+  },
+  {
+    "source": "+ 200 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 96
+      }
+    ]
+  },
+  {
+    "source": "HADIAH BESAR • 350 Koin (Duplikat +250 Koin)",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 109
+      }
+    ]
+  },
+  {
+    "source": "Kecepatan naik & kendali +25% selama 60 detik untuk satu balon.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 120
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 128
+      }
+    ]
+  },
+  {
+    "source": "Tali Awet",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 129
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 138
+      }
+    ]
+  },
+  {
+    "source": "KETAHANAN TALI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 130
+      }
+    ]
+  },
+  {
+    "source": "Kurangi pengikisan tali luar keranjang -30% (3.5 HP/s) sepanjang 1 penerbangan.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 131
+      }
+    ]
+  },
+  {
+    "source": "Jejak peluru biru langit terang (juga hadiah uji 3 hari di Hari ke-3).",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 175
+      }
+    ]
+  },
+  {
+    "source": "Jejak plasma ungu nebula dengan kilau magenta.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 199
+      }
+    ]
+  },
+  {
+    "source": "Label kehormatan emas di bawah Rekor & Puncak kepala pemain.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau",
+        "line": 212
+      }
+    ]
+  },
+  {
+    "source": "0 Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 83
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 185
+      }
+    ]
+  },
+  {
+    "source": "Absen tidak akan hangus walau sempat bolong!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 199
+      }
+    ]
+  },
+  {
+    "source": "HARI ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 240
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 343
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+        "line": 816
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+        "line": 851
+      }
+    ]
+  },
+  {
+    "source": "TERKUNCI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 249
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 378
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1038
+      }
+    ]
+  },
+  {
+    "source": "KLAIM HADIAH HARI INI!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 316
+      }
+    ]
+  },
+  {
+    "source": "Hadiah otomatis tersimpan aman di inventaris.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 321
+      }
+    ]
+  },
+  {
+    "source": " Koin",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 331
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 422
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 450
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 515
+      }
+    ]
+  },
+  {
+    "source": "KLAIM HADIAH HARI KE-%d!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 394
+      }
+    ]
+  },
+  {
+    "source": "MEMUAT DATA...",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 400
+      }
+    ]
+  },
+  {
+    "source": "SUDAH DIKLAIM • BESOK ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 407
+      }
+    ]
+  },
+  {
+    "source": "Streak tidak hangus jika terlewat · Reset harian 00:00 WIB",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 414
+      }
+    ]
+  },
+  {
+    "source": "Hadiah berhasil diklaim!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 441
+      }
+    ]
+  },
+  {
+    "source": "Klaim gagal.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/DailyLoginModal.luau",
+        "line": 441
+      }
+    ]
+  },
+  {
+    "source": "Tali Saya Mau Habis!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau",
+        "line": 9
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 59
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 91
+      }
+    ]
+  },
+  {
+    "source": "Saya yang Perbaiki!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau",
+        "line": 9
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 60
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 92
+      }
+    ]
+  },
+  {
+    "source": "TAMBAL BALON",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 9
+      }
+    ]
+  },
+  {
+    "source": "PERBAIKI TALI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 9
+      }
+    ]
+  },
+  {
+    "source": "AMBIL SENJATA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "source": "MULAI TERBANG",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 11
+      }
+    ]
+  },
+  {
+    "source": "KEMBALI KE PULAU",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 11
+      }
+    ]
+  },
+  {
+    "source": "PASANG TALI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 13
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 42
+      }
+    ]
+  },
+  {
+    "source": "LEPAS TALI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 13
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 43
+      }
+    ]
+  },
+  {
+    "source": "TAHAN",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 85
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 88
+      }
+    ]
+  },
+  {
+    "source": "Tahan · %.1f dtk",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 158
+      }
+    ]
+  },
+  {
+    "source": "Ketuk untuk memilih",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 158
+      }
+    ]
+  },
+  {
+    "source": "Tekan untuk memilih",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 158
+      }
+    ]
+  },
+  {
+    "source": "Sedang menahan…",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau",
+        "line": 227
+      }
+    ]
+  },
+  {
+    "source": "Tahan gas untuk lepas landas",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+        "line": 176
+      }
+    ]
+  },
+  {
+    "source": "Pilot belum lepas landas",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+        "line": 176
+      }
+    ]
+  },
+  {
+    "source": " dtk",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDLayout.luau",
+        "line": 177
+      }
+    ]
+  },
+  {
+    "source": "PULAU SENJA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 20
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+        "line": 662
+      }
+    ]
+  },
+  {
+    "source": "TOKO",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 27
+      }
+    ]
+  },
+  {
+    "source": "SETELAN",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 29
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 312
+      }
+    ]
+  },
+  {
+    "source": "TALI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "source": "SUARA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 34
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WarningAudioController.luau",
+        "line": 68
+      }
+    ]
+  },
+  {
+    "source": "BELI 1 KIT • 29 R$",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 47
+      }
+    ]
+  },
+  {
+    "source": "BELI 1 AK-47",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 48
+      }
+    ]
+  },
+  {
+    "source": "BELI 1 TURBO • 29 R$",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 49
+      }
+    ]
+  },
+  {
+    "source": "BELI 1 TALI • 19 R$",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 50
+      }
+    ]
+  },
+  {
+    "source": "TANDAI BAHAYA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 51
+      }
+    ]
+  },
+  {
+    "source": "Kru",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 641
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1540
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 355
+      }
+    ]
+  },
+  {
+    "source": "KRU • ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 642
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1570
+      }
+    ]
+  },
+  {
+    "source": "Selamat! Kru berhasil mencapai puncak langit 10.000 km",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 763
+      }
+    ]
+  },
+  {
+    "source": "Balon tidak selamat di tengah badai",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 763
+      }
+    ]
+  },
+  {
+    "source": "BALON HANCUR  ·  COBA LAGI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 770
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Kit • Cek Harga",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 835
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 AK-47 • Cek Harga",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 836
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Turbo • Cek Harga",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 837
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Tali • Cek Harga",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 838
+      }
+    ]
+  },
+  {
+    "source": "Memuat…",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 844
+      }
+    ]
+  },
+  {
+    "source": "Kit habis",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 863
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1063
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 410
+      }
+    ]
+  },
+  {
+    "source": "Memuat kit",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1063
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 408
+      }
+    ]
+  },
+  {
+    "source": "Perisai aktif",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1064
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 597
+      }
+    ]
+  },
+  {
+    "source": "MEMUAT ZONA",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1209
+      }
+    ]
+  },
+  {
+    "source": " · Balon Menurun!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1213
+      }
+    ]
+  },
+  {
+    "source": "Puncak · 10.000 km",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1222
+      }
+    ]
+  },
+  {
+    "source": "DERMAGA ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1227
+      }
+    ]
+  },
+  {
+    "source": "Pilih dermaga",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1230
+      }
+    ]
+  },
+  {
+    "source": "Mulai penerbangan",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1237
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WorldUISkins.luau",
+        "line": 150
+      }
+    ]
+  },
+  {
+    "source": "%d/3 kru · %s",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1238
+      }
+    ]
+  },
+  {
+    "source": "MEMUAT KONDISI",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1366
+      }
+    ]
+  },
+  {
+    "source": "BALON AMAN",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1367
+      }
+    ]
+  },
+  {
+    "source": "Tali Pengaman: ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1475
+      }
+    ]
+  },
+  {
+    "source": "TALI: ",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1475
+      }
+    ]
+  },
+  {
+    "source": "Tahan gas",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1508
+      }
+    ]
+  },
+  {
+    "source": "SEKALI PER TERBANG",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1602
+      }
+    ]
+  },
+  {
+    "source": "PERMANEN · RAK SETELAN",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1611
+      }
+    ]
+  },
+  {
+    "source": "BUFF +25% · 60 DETIK",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1620
+      }
+    ]
+  },
+  {
+    "source": "TAHAN TALI -30% · 1 FLIGHT",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1629
+      }
+    ]
+  },
+  {
+    "source": "TOKO SKY ADVENTURE",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1777
+      }
+    ]
+  },
+  {
+    "source": "Perkuat balon, perbekalan kru & kosmetik",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1784
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1786
+      }
+    ]
+  },
+  {
+    "source": "Pilih item untuk membeli lewat Roblox.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1794
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 546
+      }
+    ]
+  },
+  {
+    "source": "Kirim sinyal cepat ke kru balon",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1836
+      }
+    ]
+  },
+  {
+    "source": "Ketuk pesan untuk langsung kirim ke kru",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1844
+      }
+    ]
+  },
+  {
+    "source": "Tekan [V] untuk buka / tutup  ·  Klik pesan untuk kirim",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1844
+      }
+    ]
+  },
+  {
+    "source": "SENJATA BALON",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+        "line": 1852
+      }
+    ]
+  },
+  {
+    "source": "PUNCAK / REKOR",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/LeaderboardBoardRenderer.luau",
+        "line": 242
+      }
+    ]
+  },
+  {
+    "source": "Belum ada catatan pendakian.\nTerbangkan balonmu untuk merebut Peringkat #1!",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/LeaderboardBoardRenderer.luau",
+        "line": 262
+      }
+    ]
+  },
+  {
+    "source": "* %dx Puncak",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/LeaderboardBoardRenderer.luau",
+        "line": 465
+      }
+    ]
+  },
+  {
+    "source": "SEGERA HABIS",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 115
+      }
+    ]
+  },
+  {
+    "source": "Beli Robux",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 473
+      }
+    ]
+  },
+  {
+    "source": "Tab PERBEKALAN · Pakai saat terbang lewat ikon kiri HUD.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 548
+      }
+    ]
+  },
+  {
+    "source": "Data sedang dimuat...",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 569
+      },
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 597
+      }
+    ]
+  },
+  {
+    "source": "Pembelian gagal diproses.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 582
+      }
+    ]
+  },
+  {
+    "source": "Aksi kosmetik gagal.",
+    "locations": [
+      {
+        "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau",
+        "line": 624
+      }
+    ]
+  },
+  {
+    "source": "Hanya dapat dipakai saat terbang!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 391
+      }
+    ]
+  },
+  {
+    "source": "Data belum siap.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 394
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 350
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 421
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 459
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 40
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 54
+      }
+    ]
+  },
+  {
+    "source": "Turbo Gas tim masih aktif!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 397
+      }
+    ]
+  },
+  {
+    "source": "Batas pemakaian Turbo Gas per penerbangan habis.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 401
+      }
+    ]
+  },
+  {
+    "source": "Stok Turbo Gas kosong! Beli di Toko.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 404
+      }
+    ]
+  },
+  {
+    "source": "Turbo Gas aktif! (+25% kecepatan 60 detik)",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 415
+      }
+    ]
+  },
+  {
+    "source": "Tali Awet sudah aktif di penerbangan ini.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 419
+      }
+    ]
+  },
+  {
+    "source": "Stok Tali Awet kosong! Beli di Toko.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 422
+      }
+    ]
+  },
+  {
+    "source": "Tali Awet aktif (-30% pengikisan tali luar keranjang)!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 426
+      }
+    ]
+  },
+  {
+    "source": "Buff tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+        "line": 428
+      }
+    ]
+  },
+  {
+    "source": "Rekor (km)",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 116
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 190
+      }
+    ]
+  },
+  {
+    "source": "Sesi data berpindah atau berakhir. Silakan masuk kembali agar progres aman.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 125
+      }
+    ]
+  },
+  {
+    "source": "Data belum dapat dimuat dengan aman. Silakan masuk kembali.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 185
+      }
+    ]
+  },
+  {
+    "source": "Puncak",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 191
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+        "line": 602
+      }
+    ]
+  },
+  {
+    "source": "Pilihan senjata tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 253
+      }
+    ]
+  },
+  {
+    "source": "Pilihan senjata terkunci selama penerbangan.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 254
+      }
+    ]
+  },
+  {
+    "source": "Data sedang disimpan. Coba lagi sebentar.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 256
+      }
+    ]
+  },
+  {
+    "source": "AK-47 di inventaris belum cukup.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 262
+      }
+    ]
+  },
+  {
+    "source": "Pengaturan gagal disimpan. Coba lagi.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 275
+      }
+    ]
+  },
+  {
+    "source": "Hadiah hari ini sudah diklaim!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 357
+      }
+    ]
+  },
+  {
+    "source": "Reward harian tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 361
+      }
+    ]
+  },
+  {
+    "source": "Gagal menyimpan klaim. Coba sebentar lagi.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 412
+      }
+    ]
+  },
+  {
+    "source": "Hadiah Hari ke-%d diklaim!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 413
+      }
+    ]
+  },
+  {
+    "source": "%s (+%d Koin duplikat kosmetik!)",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 415
+      }
+    ]
+  },
+  {
+    "source": "Item perbekalan tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 423
+      }
+    ]
+  },
+  {
+    "source": "Sky Coins kurang (%d / %d Koin).",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 427
+      },
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 492
+      }
+    ]
+  },
+  {
+    "source": "Pembelian gagal disimpan. Coba lagi.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 444
+      }
+    ]
+  },
+  {
+    "source": "Aksi kosmetik tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 460
+      }
+    ]
+  },
+  {
+    "source": "Kategori kosmetik tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 461
+      }
+    ]
+  },
+  {
+    "source": "Kosmetik sudah dilepas.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 465
+      }
+    ]
+  },
+  {
+    "source": "Gagal melepas kosmetik.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 479
+      }
+    ]
+  },
+  {
+    "source": "Kosmetik tidak ditemukan.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 482
+      }
+    ]
+  },
+  {
+    "source": "Kamu sudah memiliki kosmetik ini secara permanen.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 491
+      }
+    ]
+  },
+  {
+    "source": "Kamu belum memiliki kosmetik ini.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 500
+      }
+    ]
+  },
+  {
+    "source": "Gagal menyimpan perubahan kosmetik.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/DataManager.luau",
+        "line": 515
+      }
+    ]
+  },
+  {
+    "source": "Kru tidak aktif",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "source": "Tunggu gerakan katrol selesai",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+        "line": 18
+      }
+    ]
+  },
+  {
+    "source": "Lompat kembali ke gondola",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+        "line": 24
+      }
+    ]
+  },
+  {
+    "source": "Kembali ke gondola [Q]",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+        "line": 26
+      }
+    ]
+  },
+  {
+    "source": "Lompat bersama untuk turun",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/JumpManager.luau",
+        "line": 28
+      }
+    ]
+  },
+  {
+    "source": "TOP 10 PUNCAK · ALL TIME",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/LeaderboardManager.luau",
+        "line": 89
+      }
+    ]
+  },
+  {
+    "source": "Semua Waktu · Puncak > Rekor km",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/LeaderboardManager.luau",
+        "line": 90
+      }
+    ]
+  },
+  {
+    "source": "TOP 10 PUNCAK · 1 BULAN",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/LeaderboardManager.luau",
+        "line": 96
+      }
+    ]
+  },
+  {
+    "source": "[Puncak: %dx]",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+        "line": 28
+      }
+    ]
+  },
+  {
+    "source": "[Rekor: %s]",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "source": "[Memuat Rekor...]",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/OverheadManager.luau",
+        "line": 94
+      }
+    ]
+  },
+  {
+    "source": "Kembali ke Pulau Awal",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PalaceManager.luau",
+        "line": 5
+      }
+    ]
+  },
+  {
+    "source": "Cutscene: Nyala/Mati",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PalaceManager.luau",
+        "line": 7
+      }
+    ]
+  },
+  {
+    "source": "%d / %d KRU",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+        "line": 47
+      }
+    ]
+  },
+  {
+    "source": "MASTER • Belum ada",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+        "line": 49
+      }
+    ]
+  },
+  {
+    "source": "Menyiapkan balon...",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+        "line": 52
+      }
+    ]
+  },
+  {
+    "source": "Tunggu balon di dermaga menjauh",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+        "line": 52
+      }
+    ]
+  },
+  {
+    "source": "Masuk ke dermaga untuk bergabung",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/PodManager.luau",
+        "line": 52
+      }
+    ]
+  },
+  {
+    "source": "Tersimpan untuk penerbangan berikutnya.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "source": "Aksi tidak dikenal.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 50
+      }
+    ]
+  },
+  {
+    "source": "Item tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 60
+      }
+    ]
+  },
+  {
+    "source": "Kategori tidak valid.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 64
+      }
+    ]
+  },
+  {
+    "source": "Aksi toko tidak dikenal.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 69
+      }
+    ]
+  },
+  {
+    "source": "Pembelian belum tersedia: Developer Product belum dikonfigurasi.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 75
+      }
+    ]
+  },
+  {
+    "source": "Produk siap. Publikasikan place ke experience Fly High untuk menguji pembelian.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 78
+      }
+    ]
+  },
+  {
+    "source": "Toko belum dapat dibuka. Silakan coba kembali.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 81
+      }
+    ]
+  },
+  {
+    "source": "1 AK-47 permanen ditambahkan ke inventaris.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 85
+      }
+    ]
+  },
+  {
+    "source": "1× Tali Awet ditambahkan ke perbekalan.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 87
+      }
+    ]
+  },
+  {
+    "source": "Pembelian berhasil ditambahkan.",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/ShopManager.luau",
+        "line": 98
+      }
+    ]
+  },
+  {
+    "source": "Stasiun Tali (%d/%d siap)",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 34
+      }
+    ]
+  },
+  {
+    "source": "Stasiun Tali",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 255
+      }
+    ]
+  },
+  {
+    "source": "Pasang Tali Pengaman",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 258
+      }
+    ]
+  },
+  {
+    "source": "Lepas Tali Pengaman",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 259
+      }
+    ]
+  },
+  {
+    "source": "Perbaiki Tali yang Dilepas",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 260
+      }
+    ]
+  },
+  {
+    "source": "Tambal Lubang",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 358
+      }
+    ]
+  },
+  {
+    "source": "Bahaya terdeteksi oleh arwah!",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/TetherManager.luau",
+        "line": 468
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 356
+      }
+    ]
+  },
+  {
+    "source": "Ambil AK-47",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+        "line": 191
+      }
+    ]
+  },
+  {
+    "source": "Ambil Handgun",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+        "line": 191
+      }
+    ]
+  },
+  {
+    "source": "Rak Senjata ",
+    "locations": [
+      {
+        "file": "audit/sources/ServerScriptService/FlyHighServer/WeaponManager.luau",
+        "line": 191
+      }
+    ]
+  },
+  {
+    "source": "KONDISI BALON:",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 154
+      }
+    ]
+  },
+  {
+    "source": "TALI AWET",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 238
+      }
+    ]
+  },
+  {
+    "source": "🔥 GAS / NAIK\n(Tahan)",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 255
+      }
+    ]
+  },
+  {
+    "source": "ANGIN TOPAN MENDEKAT DARI SISI KIRI! SIAPKAN MANUVER!",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 298
+      }
+    ]
+  },
+  {
+    "source": "Selesai",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 429
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 446
+      }
+    ]
+  },
+  {
+    "source": "Memuat",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 431
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 448
+      }
+    ]
+  },
+  {
+    "source": "Maks 2×",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 435
+      }
+    ]
+  },
+  {
+    "source": "Habis",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 437
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 452
+      }
+    ]
+  },
+  {
+    "source": "AKTIF",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 450
+      }
+    ]
+  },
+  {
+    "source": "+%d Koin%s",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 478
+      }
+    ]
+  },
+  {
+    "source": "Status: Tidak Bisa Naik (Hover / Turun 1.2x)",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 569
+      }
+    ]
+  },
+  {
+    "source": "Status: Bahaya (Turun 1.5x)",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 572
+      }
+    ]
+  },
+  {
+    "source": "Penerbangan selesai",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 595
+      }
+    ]
+  },
+  {
+    "source": "🛡️ Emergency Kit: Sudah Digunakan",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 600
+      }
+    ]
+  },
+  {
+    "source": "🛡️ Shield Tim Sedang Aktif!",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 604
+      }
+    ]
+  },
+  {
+    "source": "Bahaya",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 625
+      }
+    ]
+  },
+  {
+    "source": " dari ",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 625
+      }
+    ]
+  },
+  {
+    "source": "Waspada · %.1f dtk",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 628
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "line": 632
+      }
+    ]
+  },
+  {
+    "source": "Efek turun siap\ndalam %.1f detik",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 84
+      }
+    ]
+  },
+  {
+    "source": "LOMPAT BERSAMA\nTurunkan balon untuk menghindari badai",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 84
+      }
+    ]
+  },
+  {
+    "source": "Dinding Badai · %.0f dtk",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 94
+      }
+    ]
+  },
+  {
+    "source": "Posisi balon sedang dimuat",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 99
+      }
+    ]
+  },
+  {
+    "source": "Lepas gas agar balon turun",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 105
+      }
+    ]
+  },
+  {
+    "source": "Kembali ke gondola",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+        "line": 109
+      }
+    ]
+  },
+  {
+    "source": "10.000 km · Puncak ke-",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+        "line": 604
+      }
+    ]
+  },
+  {
+    "source": "Kru bangkit — kamu ikut sampai!",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+        "line": 606
+      }
+    ]
+  },
+  {
+    "source": " koin",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+        "line": 606
+      }
+    ]
+  },
+  {
+    "source": "🛒 TOKO & UPGRADE",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "source": "🎈 TOKO PERLENGKAPAN FLY HIGH",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 64
+      }
+    ]
+  },
+  {
+    "source": "Tambal semua lubang. Kebal 60 dtk. Sekali per terbang.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 104
+      }
+    ]
+  },
+  {
+    "source": "Dapatkan Emergency Kit (Klik Beli)",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 107
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Kit",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 108
+      }
+    ]
+  },
+  {
+    "source": "Satu AK-47 permanen. Pilih raknya di Setelan.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 116
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 AK-47",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 119
+      },
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 120
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Turbo Gas • 29 Robux",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 131
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Turbo",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 132
+      }
+    ]
+  },
+  {
+    "source": "Kurangi pengikisan tali luar -30% (3.5 HP/s) sepanjang 1 penerbangan.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 140
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Tali Awet • 19 Robux",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 143
+      }
+    ]
+  },
+  {
+    "source": "Beli 1 Tali",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 144
+      }
+    ]
+  },
+  {
+    "source": "Membuka toko...",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 230
+      }
+    ]
+  },
+  {
+    "source": "Data pemain sedang dimuat. Silakan coba sebentar lagi.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 236
+      }
+    ]
+  },
+  {
+    "source": "Pembelian sedang diverifikasi Roblox...",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 279
+      }
+    ]
+  },
+  {
+    "source": "Senjata Balon",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 326
+      }
+    ]
+  },
+  {
+    "source": "Untuk peluncuranmu sebagai Party Master.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 337
+      }
+    ]
+  },
+  {
+    "source": "AK-47 dimiliki: %d  ·  Di inventaris: %d",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 418
+      }
+    ]
+  },
+  {
+    "source": "Rak ",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 461
+      }
+    ]
+  },
+  {
+    "source": "Senjata terkunci saat terbang.",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 476
+      }
+    ]
+  },
+  {
+    "source": "Tulisan di atas pemain",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 492
+      }
+    ]
+  },
+  {
+    "source": "Cutscene: Mati",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/ShopClientController.luau",
+        "line": 532
+      }
+    ]
+  },
+  {
+    "source": "[G] Drop ke Rak  |  [R] Reload",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 81
+      }
+    ]
+  },
+  {
+    "source": "Tali Pengaman: 100% Durabilitas",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 126
+      }
+    ]
+  },
+  {
+    "source": "👁️ SPOT BAHAYA UNTUK TIM (KLIK DI SINI)",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 170
+      }
+    ]
+  },
+  {
+    "source": "Kamu arwah · arahkan kamera ke bahaya, lalu tandai untuk kru",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 181
+      }
+    ]
+  },
+  {
+    "source": "PING KRU",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 448
+      }
+    ]
+  },
+  {
+    "source": "Tali Pengaman: %d%%",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 502
+      }
+    ]
+  },
+  {
+    "source": "TALI %d%% | MINTA REKAN MENARIK",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 503
+      }
+    ]
+  },
+  {
+    "source": "SEDANG DITARIK KE KERANJANG",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 503
+      }
+    ]
+  },
+  {
+    "source": "TALI %d%% | SEGERA TURUN [Q]",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 507
+      }
+    ]
+  },
+  {
+    "source": "TALI MENIPIS: %d%%",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 508
+      }
+    ]
+  },
+  {
+    "source": "Bahaya ditandai! Kru melihat tanda di layar mereka",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 664
+      }
+    ]
+  },
+  {
+    "source": "BAHAYA • %dm",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 879
+      }
+    ]
+  },
+  {
+    "source": "BAHAYA",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 1097
+      }
+    ]
+  },
+  {
+    "source": "PASANG TALI [E]",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 1145
+      }
+    ]
+  },
+  {
+    "source": "LEPAS TALI [T]",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 1146
+      }
+    ]
+  },
+  {
+    "source": "TURUN & LEPAS TALI [Q]",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "line": 1148
+      }
+    ]
+  },
+  {
+    "source": "Pilih dermaga • Bentuk kru\nSiap terbang!",
+    "locations": [
+      {
+        "file": "audit/sources/StarterPlayer/StarterPlayerScripts/WorldUISkins.luau",
+        "line": 78
+      }
+    ]
+  }
+]
