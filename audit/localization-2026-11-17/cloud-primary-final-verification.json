@@ -1,0 +1,43 @@
+{
+  "universe": 10773510320,
+  "expected": 490,
+  "actual": 70,
+  "headers": [
+    "Key",
+    "Example",
+    "Source",
+    "Context",
+    "Game Locations",
+    "en",
+    "en translator type",
+    "en-us",
+    "en-us translator type",
+    "en-gb",
+    "en-gb translator type"
+  ],
+  "mismatchCount": 420,
+  "sample": [
+    [
+      "flyhigh_0071",
+      "Koneksi bermasalah. Coba lagi.",
+      "",
+      "",
+      "Connection problem. Try again."
+    ],
+    [
+      "flyhigh_0072",
+      "Gas Api Sekarang!",
+      "",
+      "",
+      "Fire up the burner!"
+    ],
+    [
+      "flyhigh_0073",
+      "Awas Tornado Menghindar!",
+      "",
+      "",
+      "Tornado! Steer clear!"
+    ]
+  ],
+  "parserNote": "UTF-8 BOM stripped before header lookup"
+}

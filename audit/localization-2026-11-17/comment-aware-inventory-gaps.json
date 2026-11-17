@@ -1,0 +1,27 @@
+[
+  {
+    "source": "TALI",
+    "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+    "line": 31
+  },
+  {
+    "source": "Memuat…",
+    "file": "audit/sources/ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau",
+    "line": 843
+  },
+  {
+    "source": "ISTANA AWAN · 10.000 km",
+    "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+    "line": 584
+  },
+  {
+    "source": "10.000 km · Puncak ke-",
+    "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+    "line": 604
+  },
+  {
+    "source": " koin",
+    "file": "audit/sources/StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+    "line": 606
+  }
+]

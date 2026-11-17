@@ -1,0 +1,22 @@
+{
+  "oldCount": 485,
+  "newCount": 488,
+  "existingRowsUnchanged": true,
+  "added": [
+    {
+      "key": "flyhigh_0486",
+      "source": "TAHAN",
+      "en": "HOLD"
+    },
+    {
+      "key": "flyhigh_0487",
+      "source": "Memproses…",
+      "en": "Processing…"
+    },
+    {
+      "key": "flyhigh_0488",
+      "source": "BEKAL",
+      "en": "SUPPLIES"
+    }
+  ]
+}

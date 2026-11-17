@@ -1,0 +1,1 @@
+Client probe composition attempted loadstring: unavailable in Client context. This was a QA fixture error, corrected by embedding the probe body directly. No production code used loadstring at runtime.

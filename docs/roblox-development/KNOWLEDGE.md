@@ -130,5 +130,8 @@ Untuk setiap klaim, simpan build, sumber/objek yang diuji, fixture, target dan a
 | Health 1/5 sulit terkena | Prediksi vertical harus mengikuti arah gerak aktual | [QA critical health](../../audit/docks-critical-health-2026-11-11/README.md) |
 | Driver menahan WASD | Otomasi harus melepaskan input saat pindah role | [Regresi perjalanan](../../audit/journey-regression-2026-11-11/README.md) |
 | Full journey gagal | Arrival fixture yang lulus tidak boleh menjadikan suite end-to-end hijau | [PROGRESS](../../PROGRESS.md) |
+| Lokalisasi render native | `Text` sumber dapat sengaja tetap Indonesia untuk parser legacy; periksa translator tabel dan screenshot. Jangan mengganti nama/chat atau memakai perubahan Text sebagai satu-satunya bukti bahasa | [QA L10N-01](../../audit/localization-2026-11-17/README.md) |
+| Impor cloud timeout tetapi 100% | Unduh ulang CSV, strip BOM, bandingkan daftar key/sumber/nilai dengan katalog. 100% terhadap 70 sumber bukan 490 sumber lengkap. Pisahkan katalog lokal, konfigurasi bahasa, impor dan Publish | [Ekspor aktual](../../audit/localization-2026-11-17/cloud-primary-final-verification.json) |
+| Save dialog selesai lebih dulu | Tunggu mtime/ukuran file stabil lalu parse/hash dan buka ulang. Pembacaan terlalu cepat bisa menangkap binary lama walau dialog sudah tutup | [Checkpoint lokalisasi](../../audit/localization-2026-11-17/checkpoint/reopen-report.json) |
 
 Offset occupancy 8 yang pernah dipakai pada fixture terrain tertentu adalah hasil kalibrasi build itu, bukan rumus umum “tinggi Roblox selalu +2”. Uji raycast ulang pada grid/material/region dan engine yang sedang digunakan.

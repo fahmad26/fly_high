@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-17T14:36:49.887Z",
+  "catalog": 490,
+  "dynamicTemplates": 55,
+  "regeneratedCatalogMatchesStudio": true,
+  "brokenLocalLinks": [],
+  "gitDiffCheck": "pass",
+  "status": "Local implementation and targeted QA complete; cloud manual mirror partial, not published or committed"
+}

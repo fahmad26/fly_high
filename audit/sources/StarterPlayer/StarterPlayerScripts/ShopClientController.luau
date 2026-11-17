@@ -8,6 +8,7 @@ local Config=require(modules.FlyHighConfig)
 local Assets=require(modules.HUDImageAssets)
 local ShopTabsController=require(modules:WaitForChild("ShopTabsController"))
 local DailyLoginModal=require(modules:WaitForChild("DailyLoginModal"))
+local Localization=require(modules:WaitForChild("Localization"))
 
 local localPlayer = Players.LocalPlayer
 local playerGui = localPlayer:WaitForChild("PlayerGui")
@@ -533,4 +534,45 @@ end
 cutsceneToggle.Activated:Connect(function() cutsceneEvent:FireServer(localPlayer:GetAttribute("CutscenesEnabled")==false) end)
 localPlayer:GetAttributeChangedSignal("CutscenesEnabled"):Connect(refreshCutscene)
 refreshCutscene()
+-- Display preference is client-only. It survives respawn, not a new game session.
+local languageButton=styleButton(settingsText("TextButton","LanguageButton",settings,"BAHASA",12,0,0,0,44),blue)
+addChoiceArt(languageButton)
+paintChoice(languageButton,"BAHASA",true,blue,Color3.fromRGB(96,165,250))
+languageButton.ZIndex=35
+local languagePicker=Instance.new("Frame")
+languagePicker.Name="LanguagePickerBox"
+languagePicker.BackgroundColor3=Color3.fromRGB(7,23,53)
+languagePicker.BackgroundTransparency=0.04
+languagePicker.BorderSizePixel=0
+languagePicker.ZIndex=40
+languagePicker.Visible=false
+languagePicker.Active=true
+languagePicker.Parent=settings
+local pickerCorner=Instance.new("UICorner",languagePicker)
+pickerCorner.CornerRadius=UDim.new(0,12)
+local pickerStroke=Instance.new("UIStroke",languagePicker)
+pickerStroke.Color=Color3.fromRGB(226,180,90)
+pickerStroke.Thickness=2
+local languageChoices={}
+for _,choice in {{"auto","Otomatis (Roblox)","LanguageAuto"},{"id","Bahasa Indonesia","LanguageIndonesian"},{"en","English","LanguageEnglish"}} do
+ local button=styleButton(settingsText("TextButton",choice[3],languagePicker,choice[2],13,0,0,1,44),blue)
+ button.ZIndex=42
+ addChoiceArt(button)
+ table.insert(languageChoices,{button=button,value=choice[1],caption=choice[2]})
+ button.Activated:Connect(function()
+  Localization.SetPreference(choice[1])
+  localPlayer:SetAttribute("LanguagePreference",choice[1])
+  languagePicker.Visible=false
+ end)
+end
+local function refreshLanguageChoices()
+ for _,choice in languageChoices do
+  local selected=Localization.GetPreference()==choice.value
+  paintChoice(choice.button,(selected and "✓ " or "")..choice.caption,selected)
+ end
+end
+languageButton.Activated:Connect(function() languagePicker.Visible=not languagePicker.Visible end)
+settings:GetPropertyChangedSignal("Visible"):Connect(function() if not settings.Visible then languagePicker.Visible=false end end)
+Localization.Observe(refreshLanguageChoices)
+refreshLanguageChoices()
 settings.Parent=screenGui

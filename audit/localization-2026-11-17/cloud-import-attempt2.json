@@ -1,0 +1,13 @@
+{
+  "universe": 10773510320,
+  "entries": 490,
+  "column": "en",
+  "preview": {
+    "added": 440,
+    "modified": 470,
+    "deleted": 0
+  },
+  "error": "upstream request timeout",
+  "status": "failed; partial application remains possible",
+  "observedAt": "2026-11-17T14:05:33.692Z"
+}

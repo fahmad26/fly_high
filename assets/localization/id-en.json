@@ -1,0 +1,1962 @@
+[
+  {
+    "source": "PENGATURAN SUARA",
+    "en": "AUDIO SETTINGS"
+  },
+  {
+    "source": "Master mengatur seluruh musik & efek suara",
+    "en": "Master controls all music & sound effects"
+  },
+  {
+    "source": "Geser slider atau ketuk tombol speaker untuk bisu / buka suara",
+    "en": "Drag sliders or tap the speaker to mute / unmute"
+  },
+  {
+    "source": "Semua audio dibisukan oleh Master",
+    "en": "All audio muted by Master"
+  },
+  {
+    "source": "Master mengatur keseluruhan musik & efek suara",
+    "en": "Master controls all music & sound effects"
+  },
+  {
+    "source": "BISU",
+    "en": "MUTED"
+  },
+  {
+    "source": "Penjelajah Fajar",
+    "en": "Dawn Explorer"
+  },
+  {
+    "source": "Taman Mengapung",
+    "en": "Floating Garden"
+  },
+  {
+    "source": "Koi Langit",
+    "en": "Sky Koi"
+  },
+  {
+    "source": "Pengelana Saturnus",
+    "en": "Saturn Voyager"
+  },
+  {
+    "source": "Lentera Istana",
+    "en": "Palace Lantern"
+  },
+  {
+    "source": "+ 50 Koin",
+    "en": "+ 50 Coins"
+  },
+  {
+    "source": "1× Tali Awet",
+    "en": "1× Reinforced Rope"
+  },
+  {
+    "source": "+ 75 Koin",
+    "en": "+ 75 Coins"
+  },
+  {
+    "source": "+1 Tali Awet & +75 Sky Coins",
+    "en": "+1 Reinforced Rope & +75 Sky Coins"
+  },
+  {
+    "source": "Tracer Cyan (3 Hr)",
+    "en": "Cyan Tracer (3 Days)"
+  },
+  {
+    "source": "+ 100 Koin",
+    "en": "+ 100 Coins"
+  },
+  {
+    "source": "Tracer Cyan Langit (3 Hari) & +100 Sky Coins",
+    "en": "Sky Cyan Tracer (3 Days) & +100 Sky Coins"
+  },
+  {
+    "source": "1× Turbo + 1× Tali",
+    "en": "1× Turbo + 1× Rope"
+  },
+  {
+    "source": "+ 125 Koin",
+    "en": "+ 125 Coins"
+  },
+  {
+    "source": "+1 Turbo Gas, +1 Tali Awet & +125 Sky Coins",
+    "en": "+1 Turbo Gas, +1 Reinforced Rope & +125 Sky Coins"
+  },
+  {
+    "source": "Bingkai Awan (7 Hr)",
+    "en": "Cloud Frame (7 Days)"
+  },
+  {
+    "source": "+ 150 Koin",
+    "en": "+ 150 Coins"
+  },
+  {
+    "source": "Bingkai Tracker Awan Emas (7 Hari) & +150 Sky Coins",
+    "en": "Golden Cloud Tracker Frame (7 Days) & +150 Sky Coins"
+  },
+  {
+    "source": "+ 200 Koin",
+    "en": "+ 200 Coins"
+  },
+  {
+    "source": "1× Emergency Kit + Bingkai Awan Emas",
+    "en": "1× Emergency Kit + Golden Cloud Frame"
+  },
+  {
+    "source": "HADIAH BESAR • 350 Koin (Duplikat +250 Koin)",
+    "en": "GRAND REWARD • 350 Coins (Duplicate +250 Coins)"
+  },
+  {
+    "source": "+1 Emergency Kit, Bingkai Awan Emas Permanen & +350 Sky Coins",
+    "en": "+1 Emergency Kit, Permanent Golden Cloud Frame & +350 Sky Coins"
+  },
+  {
+    "source": "BUFF KECEPATAN",
+    "en": "SPEED BOOST"
+  },
+  {
+    "source": "Kecepatan naik & kendali +25% selama 60 detik untuk satu balon.",
+    "en": "Boost ascent & steering speed by 25% for 60 seconds for one balloon."
+  },
+  {
+    "source": "Tali Awet",
+    "en": "Reinforced Rope"
+  },
+  {
+    "source": "KETAHANAN TALI",
+    "en": "ROPE DURABILITY"
+  },
+  {
+    "source": "Kurangi pengikisan tali luar keranjang -30% (3.5 HP/s) sepanjang 1 penerbangan.",
+    "en": "Reduce rope wear outside the basket by 30% (3.5 HP/s) for one flight."
+  },
+  {
+    "source": "Bingkai Awan Emas",
+    "en": "Golden Cloud Frame"
+  },
+  {
+    "source": "BINGKAI TRACKER",
+    "en": "TRACKER FRAME"
+  },
+  {
+    "source": "Lingkaran aura emas berkilau pada profilmu di Tracker Ketinggian seluruh server.",
+    "en": "A sparkling golden aura around your profile on the server Altitude Tracker."
+  },
+  {
+    "source": "Bingkai Aurora Langit",
+    "en": "Sky Aurora Frame"
+  },
+  {
+    "source": "Cincin cahaya cyan-zamrud futuristik di Tracker Ketinggian.",
+    "en": "A futuristic cyan-emerald ring on the Altitude Tracker."
+  },
+  {
+    "source": "Tracer Cyan Langit",
+    "en": "Sky Cyan Tracer"
+  },
+  {
+    "source": "TRACER PELURU 1P/3P",
+    "en": "1P/3P BULLET TRACER"
+  },
+  {
+    "source": "Jejak peluru biru langit terang (juga hadiah uji 3 hari di Hari ke-3).",
+    "en": "Bright sky-blue bullet trails (also a 3-day trial on Day 3)."
+  },
+  {
+    "source": "Tracer Emas Fajar",
+    "en": "Dawn Gold Tracer"
+  },
+  {
+    "source": "Lintasan tembakan cahaya surya keemasan menyala di angkasa.",
+    "en": "Golden sunlight trails blaze across the sky."
+  },
+  {
+    "source": "Tracer Ungu Aurora",
+    "en": "Aurora Purple Tracer"
+  },
+  {
+    "source": "Jejak plasma ungu nebula dengan kilau magenta.",
+    "en": "Nebula-purple plasma trails with a magenta shimmer."
+  },
+  {
+    "source": "Penjelajah Setia",
+    "en": "Loyal Explorer"
+  },
+  {
+    "source": "Gelar: Penjelajah Setia",
+    "en": "Title: Loyal Explorer"
+  },
+  {
+    "source": "GELAR OVERHEAD",
+    "en": "PLAYER TITLE"
+  },
+  {
+    "source": "Label kehormatan emas di bawah Rekor & Puncak kepala pemain.",
+    "en": "A golden title below the record or summit count above your avatar."
+  },
+  {
+    "source": "Penakluk Awan",
+    "en": "Cloud Conqueror"
+  },
+  {
+    "source": "Gelar: Penakluk Awan",
+    "en": "Title: Cloud Conqueror"
+  },
+  {
+    "source": "Label biru kristal bergengsi bagi penembus badai tertinggi.",
+    "en": "A prestigious crystal-blue title for storm conquerors."
+  },
+  {
+    "source": "0 Koin",
+    "en": "0 Coins"
+  },
+  {
+    "source": "HARIAN",
+    "en": "DAILY"
+  },
+  {
+    "source": "HADIAH HARIAN",
+    "en": "DAILY REWARDS"
+  },
+  {
+    "source": "Absen tidak akan hangus walau sempat bolong!",
+    "en": "Your progress stays safe if you miss a day!"
+  },
+  {
+    "source": "HARI ",
+    "en": "DAY "
+  },
+  {
+    "source": "TERKUNCI",
+    "en": "LOCKED"
+  },
+  {
+    "source": "KLAIM HADIAH HARI INI!",
+    "en": "CLAIM TODAY’S REWARD!"
+  },
+  {
+    "source": "Hadiah otomatis tersimpan aman di inventaris.",
+    "en": "Rewards are saved safely to your inventory."
+  },
+  {
+    "source": " Koin",
+    "en": " Coins"
+  },
+  {
+    "source": "✓ DIKLAIM",
+    "en": "✓ CLAIMED"
+  },
+  {
+    "source": "SIAP!",
+    "en": "READY!"
+  },
+  {
+    "source": "MENYIMPAN KLAIM...",
+    "en": "SAVING REWARD..."
+  },
+  {
+    "source": "KLAIM HADIAH HARI KE-%d!",
+    "en": "CLAIM DAY %d REWARD!"
+  },
+  {
+    "source": "MEMUAT DATA...",
+    "en": "LOADING DATA..."
+  },
+  {
+    "source": "SUDAH DIKLAIM • BESOK ",
+    "en": "CLAIMED • NEXT IN "
+  },
+  {
+    "source": "Streak tidak hangus jika terlewat · Reset harian 00:00 WIB",
+    "en": "Missed days keep your progress · Daily reset 00:00 UTC+7"
+  },
+  {
+    "source": "Hadiah berhasil diklaim!",
+    "en": "Reward claimed!"
+  },
+  {
+    "source": "Klaim gagal.",
+    "en": "Could not claim reward."
+  },
+  {
+    "source": "Koneksi bermasalah. Coba lagi.",
+    "en": "Connection problem. Try again."
+  },
+  {
+    "source": "Gas Api Sekarang!",
+    "en": "Fire up the burner!"
+  },
+  {
+    "source": "Awas Tornado Menghindar!",
+    "en": "Tornado! Steer clear!"
+  },
+  {
+    "source": "Tali Saya Mau Habis!",
+    "en": "My rope is running out!"
+  },
+  {
+    "source": "Saya yang Perbaiki!",
+    "en": "I’ll handle the repairs!"
+  },
+  {
+    "source": "Fokus Tembak Rintangan!",
+    "en": "Focus fire on obstacles!"
+  },
+  {
+    "source": "Pistol Biasa",
+    "en": "Handgun"
+  },
+  {
+    "source": "TAMBAL BALON",
+    "en": "PATCH BALLOON"
+  },
+  {
+    "source": "PERBAIKI TALI",
+    "en": "REPAIR ROPE"
+  },
+  {
+    "source": "PEGANG KEMUDI",
+    "en": "TAKE THE HELM"
+  },
+  {
+    "source": "AMBIL SENJATA",
+    "en": "PICK UP WEAPON"
+  },
+  {
+    "source": "MULAI TERBANG",
+    "en": "START FLIGHT"
+  },
+  {
+    "source": "KEMBALI KE PULAU",
+    "en": "RETURN TO ISLAND"
+  },
+  {
+    "source": "FOTO KEMENANGAN",
+    "en": "VICTORY PHOTO"
+  },
+  {
+    "source": "PASANG TALI",
+    "en": "ATTACH ROPE"
+  },
+  {
+    "source": "LEPAS TALI",
+    "en": "DETACH ROPE"
+  },
+  {
+    "source": "PANJAT KUBAH",
+    "en": "CLIMB ENVELOPE"
+  },
+  {
+    "source": "TURUN KE GONDOLA",
+    "en": "RETURN TO BASKET"
+  },
+  {
+    "source": "TARIK REKAN",
+    "en": "PULL CREWMATE"
+  },
+  {
+    "source": "Tahan · %.1f dtk",
+    "en": "Hold · %.1f sec"
+  },
+  {
+    "source": "Ketuk untuk memilih",
+    "en": "Tap to select"
+  },
+  {
+    "source": "Tekan untuk memilih",
+    "en": "Press to select"
+  },
+  {
+    "source": "Sedang menahan…",
+    "en": "Holding…"
+  },
+  {
+    "source": "Tahan gas untuk lepas landas",
+    "en": "Hold thrust to take off"
+  },
+  {
+    "source": "Pilot belum lepas landas",
+    "en": "Pilot has not taken off"
+  },
+  {
+    "source": " dtk",
+    "en": " sec"
+  },
+  {
+    "source": "istana awan",
+    "en": "cloud palace"
+  },
+  {
+    "source": "LANGIT CERAH",
+    "en": "CLEAR SKIES"
+  },
+  {
+    "source": "Zona 1",
+    "en": "Zone 1"
+  },
+  {
+    "source": "AWAN MENDUNG",
+    "en": "STORM CLOUDS"
+  },
+  {
+    "source": "Zona 2",
+    "en": "Zone 2"
+  },
+  {
+    "source": "PULAU SENJA",
+    "en": "SUNSET ISLES"
+  },
+  {
+    "source": "Zona 3",
+    "en": "Zone 3"
+  },
+  {
+    "source": "LANGIT BINTANG",
+    "en": "STARRY SKIES"
+  },
+  {
+    "source": "Zona 4",
+    "en": "Zone 4"
+  },
+  {
+    "source": "GERBANG SURGAWI",
+    "en": "CELESTIAL GATEWAY"
+  },
+  {
+    "source": "Zona 5",
+    "en": "Zone 5"
+  },
+  {
+    "source": "TOKO",
+    "en": "SHOP"
+  },
+  {
+    "source": "SETELAN",
+    "en": "SETTINGS"
+  },
+  {
+    "source": "SUARA",
+    "en": "AUDIO"
+  },
+  {
+    "source": "GAS NAIK",
+    "en": "THRUST"
+  },
+  {
+    "source": "GAS OTOMATIS",
+    "en": "AUTO THRUST"
+  },
+  {
+    "source": "LEPAS",
+    "en": "RELEASE"
+  },
+  {
+    "source": "ISI",
+    "en": "RELOAD"
+  },
+  {
+    "source": "NAIK KUBAH",
+    "en": "CLIMB"
+  },
+  {
+    "source": "BELI 1 KIT • 29 R$",
+    "en": "BUY 1 KIT • 29 R$"
+  },
+  {
+    "source": "BELI 1 AK-47",
+    "en": "BUY 1 AK-47"
+  },
+  {
+    "source": "BELI 1 TURBO • 29 R$",
+    "en": "BUY 1 TURBO • 29 R$"
+  },
+  {
+    "source": "BELI 1 TALI • 19 R$",
+    "en": "BUY 1 ROPE • 19 R$"
+  },
+  {
+    "source": "TANDAI BAHAYA",
+    "en": "MARK DANGER"
+  },
+  {
+    "source": "ARWAH • ",
+    "en": "SPIRIT • "
+  },
+  {
+    "source": "KRU • ",
+    "en": "CREW • "
+  },
+  {
+    "source": "Tiba di Istana Awan",
+    "en": "Reached Cloud Palace"
+  },
+  {
+    "source": "TIBA DI ISTANA AWAN!",
+    "en": "CLOUD PALACE REACHED!"
+  },
+  {
+    "source": "Selamat! Kru berhasil mencapai puncak langit 10.000 km",
+    "en": "Congratulations! Your crew reached the 10,000 km summit"
+  },
+  {
+    "source": "Balon tidak selamat di tengah badai",
+    "en": "The balloon was lost in the storm"
+  },
+  {
+    "source": "✓  PENERBANGAN SUKSES",
+    "en": "✓  FLIGHT COMPLETE"
+  },
+  {
+    "source": "BALON HANCUR  ·  COBA LAGI",
+    "en": "BALLOON LOST  ·  TRY AGAIN"
+  },
+  {
+    "source": "OTOMATIS: ON",
+    "en": "AUTO: ON"
+  },
+  {
+    "source": "OTOMATIS: OFF",
+    "en": "AUTO: OFF"
+  },
+  {
+    "source": "Beli 1 Kit • Cek Harga",
+    "en": "Buy 1 Kit • Check Price"
+  },
+  {
+    "source": "Beli 1 AK-47 • Cek Harga",
+    "en": "Buy 1 AK-47 • Check Price"
+  },
+  {
+    "source": "Beli 1 Turbo • Cek Harga",
+    "en": "Buy 1 Turbo • Check Price"
+  },
+  {
+    "source": "Beli 1 Tali • Cek Harga",
+    "en": "Buy 1 Rope • Check Price"
+  },
+  {
+    "source": "Gunakan Kredit",
+    "en": "Use Credit"
+  },
+  {
+    "source": "Pakai Kredit Gratis",
+    "en": "Use Free Credit"
+  },
+  {
+    "source": "lihat harga",
+    "en": "check price"
+  },
+  {
+    "source": "ISI ULANG",
+    "en": "RELOAD"
+  },
+  {
+    "source": "Kit habis",
+    "en": "No kits"
+  },
+  {
+    "source": "Memuat kit",
+    "en": "Loading kit"
+  },
+  {
+    "source": "Kit terpakai",
+    "en": "Kit used"
+  },
+  {
+    "source": "Perisai aktif",
+    "en": "Shield active"
+  },
+  {
+    "source": "MEMUAT ZONA",
+    "en": "LOADING ZONE"
+  },
+  {
+    "source": "Menghitung ketinggian...",
+    "en": "Calculating altitude..."
+  },
+  {
+    "source": " · Balon Menurun!",
+    "en": " · Descending!"
+  },
+  {
+    "source": " · Target Istana Awan",
+    "en": " · Reach Cloud Palace"
+  },
+  {
+    "source": "ISTANA AWAN",
+    "en": "CLOUD PALACE"
+  },
+  {
+    "source": "Puncak · 10.000 km",
+    "en": "Summit · 10,000 km"
+  },
+  {
+    "source": "DERMAGA ",
+    "en": "DOCK "
+  },
+  {
+    "source": "Pilih dermaga",
+    "en": "Choose a dock"
+  },
+  {
+    "source": "Mulai penerbangan",
+    "en": "Start flight"
+  },
+  {
+    "source": "Menunggu Master",
+    "en": "Waiting for Master"
+  },
+  {
+    "source": "%d/3 kru · %s",
+    "en": "%d/3 crew · %s"
+  },
+  {
+    "source": "MEMUAT KONDISI",
+    "en": "LOADING STATUS"
+  },
+  {
+    "source": "TERJUN BEBAS",
+    "en": "FREEFALL"
+  },
+  {
+    "source": "BALON AMAN",
+    "en": "BALLOON SAFE"
+  },
+  {
+    "source": "KONDISI LAMBUNG",
+    "en": "HULL STATUS"
+  },
+  {
+    "source": "▲ Naik optimal",
+    "en": "▲ Optimal ascent"
+  },
+  {
+    "source": "▲ Naik melambat",
+    "en": "▲ Slower ascent"
+  },
+  {
+    "source": "■ Gaya angkat seimbang",
+    "en": "■ Lift balanced"
+  },
+  {
+    "source": "▼ Turun 1,5×",
+    "en": "▼ Falling 1.5×"
+  },
+  {
+    "source": "▼ Turun 2,5×",
+    "en": "▼ Falling 2.5×"
+  },
+  {
+    "source": "▼ Terjun bebas",
+    "en": "▼ Freefall"
+  },
+  {
+    "source": "PISTOL",
+    "en": "HANDGUN"
+  },
+  {
+    "source": "MAGAZEN: %d",
+    "en": "MAGAZINE: %d"
+  },
+  {
+    "source": "Tali Pengaman: ",
+    "en": "Safety Rope: "
+  },
+  {
+    "source": "TALI: ",
+    "en": "ROPE: "
+  },
+  {
+    "source": "Tahan gas",
+    "en": "Hold thrust"
+  },
+  {
+    "source": "SEKALI PER TERBANG",
+    "en": "ONCE PER FLIGHT"
+  },
+  {
+    "source": "PERMANEN · RAK SETELAN",
+    "en": "PERMANENT · SETTINGS RACK"
+  },
+  {
+    "source": "BUFF +25% · 60 DETIK",
+    "en": "BOOST +25% · 60 SECONDS"
+  },
+  {
+    "source": "TAHAN TALI -30% · 1 FLIGHT",
+    "en": "ROPE WEAR -30% · 1 FLIGHT"
+  },
+  {
+    "source": "TOKO SKY ADVENTURE",
+    "en": "SKY ADVENTURE SHOP"
+  },
+  {
+    "source": "Perkuat balon, perbekalan kru & kosmetik",
+    "en": "Balloon supplies, crew upgrades & cosmetics"
+  },
+  {
+    "source": "Pilih item untuk membeli lewat Roblox.",
+    "en": "Choose an item to purchase through Roblox."
+  },
+  {
+    "source": "Kirim sinyal cepat ke kru balon",
+    "en": "Send a quick signal to your crew"
+  },
+  {
+    "source": "Ketuk pesan untuk langsung kirim ke kru",
+    "en": "Tap a message to send it to your crew"
+  },
+  {
+    "source": "Tekan [V] untuk buka / tutup  ·  Klik pesan untuk kirim",
+    "en": "Press [V] to open / close  ·  Click a message to send"
+  },
+  {
+    "source": "SENJATA BALON",
+    "en": "BALLOON LOADOUT"
+  },
+  {
+    "source": "Pendaki #",
+    "en": "Explorer #"
+  },
+  {
+    "source": "PUNCAK / REKOR",
+    "en": "SUMMITS / RECORD"
+  },
+  {
+    "source": "Belum ada catatan pendakian.\nTerbangkan balonmu untuk merebut Peringkat #1!",
+    "en": "No flight records yet.\nFly your balloon to claim the #1 spot!"
+  },
+  {
+    "source": "* %dx Puncak",
+    "en": "* %dx Summits"
+  },
+  {
+    "source": "UJI %d HR",
+    "en": "TRIAL %d DAYS"
+  },
+  {
+    "source": "UJI %d JAM",
+    "en": "TRIAL %d HOURS"
+  },
+  {
+    "source": "SEGERA HABIS",
+    "en": "EXPIRING SOON"
+  },
+  {
+    "source": "MILIKI: 0",
+    "en": "OWNED: 0"
+  },
+  {
+    "source": "MILIKI: ",
+    "en": "OWNED: "
+  },
+  {
+    "source": "Beli Robux",
+    "en": "Buy with Robux"
+  },
+  {
+    "source": "✓ DIPAKAI",
+    "en": "✓ EQUIPPED"
+  },
+  {
+    "source": "PAKAI",
+    "en": "EQUIP"
+  },
+  {
+    "source": "Tab PERBEKALAN · Pakai saat terbang lewat ikon kiri HUD.",
+    "en": "SUPPLIES tab · Use during flight from the left HUD."
+  },
+  {
+    "source": "Tab KOSMETIK · Visual murni tanpa mengubah kecepatan.",
+    "en": "COSMETICS tab · Visual only; does not affect speed."
+  },
+  {
+    "source": "Data sedang dimuat...",
+    "en": "Loading data..."
+  },
+  {
+    "source": "Pembelian gagal diproses.",
+    "en": "Could not process purchase."
+  },
+  {
+    "source": "Aksi kosmetik gagal.",
+    "en": "Cosmetic action failed."
+  },
+  {
+    "source": "Hanya dapat dipakai saat terbang!",
+    "en": "Only available during flight!"
+  },
+  {
+    "source": "Data belum siap.",
+    "en": "Data is not ready."
+  },
+  {
+    "source": "Turbo Gas tim masih aktif!",
+    "en": "Your team’s Turbo Gas is still active!"
+  },
+  {
+    "source": "Batas pemakaian Turbo Gas per penerbangan habis.",
+    "en": "Turbo Gas usage limit reached for this flight."
+  },
+  {
+    "source": "Stok Turbo Gas kosong! Beli di Toko.",
+    "en": "No Turbo Gas left! Visit the Shop."
+  },
+  {
+    "source": "Turbo Gas aktif! (+25% kecepatan 60 detik)",
+    "en": "Turbo Gas active! (+25% speed for 60 seconds)"
+  },
+  {
+    "source": "Tali Awet sudah aktif di penerbangan ini.",
+    "en": "Reinforced Rope is already active for this flight."
+  },
+  {
+    "source": "Stok Tali Awet kosong! Beli di Toko.",
+    "en": "No Reinforced Rope left! Visit the Shop."
+  },
+  {
+    "source": "Tali Awet aktif (-30% pengikisan tali luar keranjang)!",
+    "en": "Reinforced Rope active (-30% rope wear outside the basket)!"
+  },
+  {
+    "source": "Buff tidak valid.",
+    "en": "Invalid boost."
+  },
+  {
+    "source": "Zona %dk km",
+    "en": "Zone %dk km"
+  },
+  {
+    "source": "Rekor (km)",
+    "en": "Record (km)"
+  },
+  {
+    "source": "Sesi data berpindah atau berakhir. Silakan masuk kembali agar progres aman.",
+    "en": "Your data session ended or moved. Rejoin to keep your progress safe."
+  },
+  {
+    "source": "Data belum dapat dimuat dengan aman. Silakan masuk kembali.",
+    "en": "Your data could not load safely. Please rejoin."
+  },
+  {
+    "source": "Pilihan senjata tidak valid.",
+    "en": "Invalid weapon selection."
+  },
+  {
+    "source": "Pilihan senjata terkunci selama penerbangan.",
+    "en": "Weapon selection is locked during flight."
+  },
+  {
+    "source": "Data sedang disimpan. Coba lagi sebentar.",
+    "en": "Saving data. Please try again shortly."
+  },
+  {
+    "source": "AK-47 di inventaris belum cukup.",
+    "en": "Not enough AK-47s in your inventory."
+  },
+  {
+    "source": "Pengaturan gagal disimpan. Coba lagi.",
+    "en": "Could not save settings. Try again."
+  },
+  {
+    "source": "Sesi data berakhir.",
+    "en": "Your data session has ended."
+  },
+  {
+    "source": "Hadiah hari ini sudah diklaim!",
+    "en": "Today’s reward has already been claimed!"
+  },
+  {
+    "source": "Reward harian tidak valid.",
+    "en": "Invalid daily reward."
+  },
+  {
+    "source": "Gagal menyimpan klaim. Coba sebentar lagi.",
+    "en": "Could not save reward. Please try again shortly."
+  },
+  {
+    "source": "Hadiah Hari ke-%d diklaim!",
+    "en": "Day %d reward claimed!"
+  },
+  {
+    "source": "%s (+%d Koin duplikat kosmetik!)",
+    "en": "%s (+%d Coins for duplicate cosmetic!)"
+  },
+  {
+    "source": "Item perbekalan tidak valid.",
+    "en": "Invalid supply item."
+  },
+  {
+    "source": "Sky Coins kurang (%d / %d Koin).",
+    "en": "Not enough Sky Coins (%d / %d Coins)."
+  },
+  {
+    "source": "Pembelian gagal disimpan. Coba lagi.",
+    "en": "Could not save purchase. Try again."
+  },
+  {
+    "source": "1× %s ditambahkan ke perbekalan! (Stok: %d)",
+    "en": "1× %s added to supplies! (Stock: %d)"
+  },
+  {
+    "source": "Aksi kosmetik tidak valid.",
+    "en": "Invalid cosmetic action."
+  },
+  {
+    "source": "Kategori kosmetik tidak valid.",
+    "en": "Invalid cosmetic category."
+  },
+  {
+    "source": "Kosmetik sudah dilepas.",
+    "en": "Cosmetic already unequipped."
+  },
+  {
+    "source": "Kosmetik dilepas.",
+    "en": "Cosmetic unequipped."
+  },
+  {
+    "source": "Gagal melepas kosmetik.",
+    "en": "Could not unequip cosmetic."
+  },
+  {
+    "source": "Kosmetik tidak ditemukan.",
+    "en": "Cosmetic not found."
+  },
+  {
+    "source": "Kamu sudah memiliki kosmetik ini secara permanen.",
+    "en": "You already own this cosmetic permanently."
+  },
+  {
+    "source": "Kamu belum memiliki kosmetik ini.",
+    "en": "You do not own this cosmetic."
+  },
+  {
+    "source": "Gagal menyimpan perubahan kosmetik.",
+    "en": "Could not save cosmetic changes."
+  },
+  {
+    "source": " dibeli & dipasang!",
+    "en": " purchased & equipped!"
+  },
+  {
+    "source": " dipasang!",
+    "en": " equipped!"
+  },
+  {
+    "source": "Kru tidak aktif",
+    "en": "Crew inactive"
+  },
+  {
+    "source": "Menunggu karakter",
+    "en": "Waiting for character"
+  },
+  {
+    "source": "Lepas kemudi dahulu [H]",
+    "en": "Release the helm first [H]"
+  },
+  {
+    "source": "Selesaikan katrol / perbaikan",
+    "en": "Finish hauling / repairing"
+  },
+  {
+    "source": "Menunggu gondola",
+    "en": "Waiting for basket"
+  },
+  {
+    "source": "Tunggu gerakan katrol selesai",
+    "en": "Wait for hauling to finish"
+  },
+  {
+    "source": "Lompat kembali ke gondola",
+    "en": "Jump back into the basket"
+  },
+  {
+    "source": "Kembali ke gondola [Q]",
+    "en": "Return to basket [Q]"
+  },
+  {
+    "source": "Lompat bersama untuk turun",
+    "en": "Jump together to descend"
+  },
+  {
+    "source": "Reset Tgl 1 WIB · %s",
+    "en": "Resets on the 1st, UTC+7 · %s"
+  },
+  {
+    "source": "TOP 10 PUNCAK · ALL TIME",
+    "en": "TOP 10 SUMMITS · ALL TIME"
+  },
+  {
+    "source": "Semua Waktu · Puncak > Rekor km",
+    "en": "All Time · Summits > Altitude"
+  },
+  {
+    "source": "Pencapai 10.000 km selalu berada di peringkat atas",
+    "en": "Players who reach 10,000 km rank first"
+  },
+  {
+    "source": "TOP 10 PUNCAK · 1 BULAN",
+    "en": "TOP 10 SUMMITS · MONTHLY"
+  },
+  {
+    "source": "Otomatis di-reset setiap tanggal 1 pukul 00:00 WIB",
+    "en": "Resets on the 1st of each month at 00:00 UTC+7"
+  },
+  {
+    "source": "Paku Sihir",
+    "en": "Magic Spikes"
+  },
+  {
+    "source": "Angin Topan",
+    "en": "Tornado"
+  },
+  {
+    "source": "Awan Petir",
+    "en": "Thundercloud"
+  },
+  {
+    "source": "Puing Kuno",
+    "en": "Ancient Debris"
+  },
+  {
+    "source": "Gelombang Panas",
+    "en": "Heatwave"
+  },
+  {
+    "source": "Anomali Magnetik",
+    "en": "Magnetic Anomaly"
+  },
+  {
+    "source": "Kabut Hampa",
+    "en": "Void Fog"
+  },
+  {
+    "source": "Meteorit Mikro",
+    "en": "Micrometeorites"
+  },
+  {
+    "source": "Badai Gerbang Surgawi",
+    "en": "Celestial Gateway Storm"
+  },
+  {
+    "source": "[Puncak: %dx]",
+    "en": "[Summits: %dx]"
+  },
+  {
+    "source": "[Rekor: %s]",
+    "en": "[Record: %s]"
+  },
+  {
+    "source": "[Memuat Rekor...]",
+    "en": "[Loading record...]"
+  },
+  {
+    "source": "Kembali ke Pulau Awal",
+    "en": "Return to Starting Island"
+  },
+  {
+    "source": "Cutscene: Nyala/Mati",
+    "en": "Cutscene: On/Off"
+  },
+  {
+    "source": "%d / %d KRU",
+    "en": "%d / %d CREW"
+  },
+  {
+    "source": "MASTER • ",
+    "en": "MASTER • "
+  },
+  {
+    "source": "MASTER • Belum ada",
+    "en": "MASTER • None yet"
+  },
+  {
+    "source": "Menyiapkan balon...",
+    "en": "Preparing balloon..."
+  },
+  {
+    "source": "Tunggu balon di dermaga menjauh",
+    "en": "Wait for the balloon to clear the dock"
+  },
+  {
+    "source": "Siap berangkat bersama Master",
+    "en": "Ready to depart with Master"
+  },
+  {
+    "source": "Masuk ke dermaga untuk bergabung",
+    "en": "Enter the dock to join"
+  },
+  {
+    "source": "Tersimpan untuk penerbangan berikutnya.",
+    "en": "Saved for your next flight."
+  },
+  {
+    "source": "Tunggu sebentar sebelum klaim ulang.",
+    "en": "Wait a moment before claiming again."
+  },
+  {
+    "source": "Aksi tidak dikenal.",
+    "en": "Unknown action."
+  },
+  {
+    "source": "Terlalu cepat, coba sebentar lagi.",
+    "en": "Too fast. Try again shortly."
+  },
+  {
+    "source": "Item tidak valid.",
+    "en": "Invalid item."
+  },
+  {
+    "source": "Kategori tidak valid.",
+    "en": "Invalid category."
+  },
+  {
+    "source": "Aksi toko tidak dikenal.",
+    "en": "Unknown shop action."
+  },
+  {
+    "source": "Pembelian belum tersedia: Developer Product belum dikonfigurasi.",
+    "en": "Purchases unavailable: Developer Product not configured."
+  },
+  {
+    "source": "Produk siap. Publikasikan place ke experience Fly High untuk menguji pembelian.",
+    "en": "Product ready. Publish to the Fly High experience to test purchases."
+  },
+  {
+    "source": "Toko belum dapat dibuka. Silakan coba kembali.",
+    "en": "Could not open the Shop. Please try again."
+  },
+  {
+    "source": "Emergency Kit ditambahkan ke stok.",
+    "en": "Emergency Kit added to stock."
+  },
+  {
+    "source": "1 AK-47 permanen ditambahkan ke inventaris.",
+    "en": "1 permanent AK-47 added to your inventory."
+  },
+  {
+    "source": "1× Turbo Gas (+25%) ditambahkan ke perbekalan.",
+    "en": "1× Turbo Gas (+25%) added to supplies."
+  },
+  {
+    "source": "1× Tali Awet ditambahkan ke perbekalan.",
+    "en": "1× Reinforced Rope added to supplies."
+  },
+  {
+    "source": "Pembelian berhasil ditambahkan.",
+    "en": "Purchase added successfully."
+  },
+  {
+    "source": "Stasiun Tali (%d/%d siap)",
+    "en": "Rope Station (%d/%d ready)"
+  },
+  {
+    "source": "Stasiun Tali",
+    "en": "Rope Station"
+  },
+  {
+    "source": "Pasang Tali Pengaman",
+    "en": "Attach Safety Rope"
+  },
+  {
+    "source": "Lepas Tali Pengaman",
+    "en": "Detach Safety Rope"
+  },
+  {
+    "source": "Perbaiki Tali yang Dilepas",
+    "en": "Repair Detached Rope"
+  },
+  {
+    "source": "Tarik Rekan ke Keranjang",
+    "en": "Pull Crewmate into Basket"
+  },
+  {
+    "source": "Tambal Lubang",
+    "en": "Patch Hole"
+  },
+  {
+    "source": "Tarik Rekan",
+    "en": "Pull Crewmate"
+  },
+  {
+    "source": "Bahaya terdeteksi oleh arwah!",
+    "en": "A spirit spotted danger!"
+  },
+  {
+    "source": "Ambil AK-47",
+    "en": "Pick Up AK-47"
+  },
+  {
+    "source": "Ambil Handgun",
+    "en": "Pick Up Handgun"
+  },
+  {
+    "source": "Rak Senjata ",
+    "en": "Weapon Rack "
+  },
+  {
+    "source": "Ketinggian: 0 km / 10.000 km (0.0%)",
+    "en": "Altitude: 0 km / 10,000 km (0.0%)"
+  },
+  {
+    "source": "KONDISI BALON:",
+    "en": "BALLOON STATUS:"
+  },
+  {
+    "source": "💚 💚 💚 💚 💚 (5/5 Kesehatan)",
+    "en": "💚 💚 💚 💚 💚 (5/5 Health)"
+  },
+  {
+    "source": "Status: Penerbangan Normal",
+    "en": "Status: Normal Flight"
+  },
+  {
+    "source": "🛡️ Pakai Emergency Kit (1x/Game)",
+    "en": "🛡️ Use Emergency Kit (1x/Flight)"
+  },
+  {
+    "source": "TALI AWET",
+    "en": "REINFORCED ROPE"
+  },
+  {
+    "source": "🔥 GAS / NAIK\n(Tahan)",
+    "en": "🔥 THRUST / ASCEND\n(Hold)"
+  },
+  {
+    "source": "⚠️ PERINGATAN DARURAT: 3.0s ⚠️",
+    "en": "⚠️ EMERGENCY WARNING: 3.0s ⚠️"
+  },
+  {
+    "source": "ANGIN TOPAN MENDEKAT DARI SISI KIRI! SIAPKAN MANUVER!",
+    "en": "TORNADO APPROACHING FROM THE LEFT! GET READY TO STEER!"
+  },
+  {
+    "source": "GAS OTOMATIS: OFF [Z]",
+    "en": "AUTO THRUST: OFF [Z]"
+  },
+  {
+    "source": "LEPAS KEMUDI",
+    "en": "RELEASE HELM"
+  },
+  {
+    "source": "LEPAS KEMUDI [H]",
+    "en": "RELEASE HELM [H]"
+  },
+  {
+    "source": "Maks 2×",
+    "en": "Max 2×"
+  },
+  {
+    "source": "+%d Koin%s",
+    "en": "+%d Coins%s"
+  },
+  {
+    "source": "GAS OTOMATIS: ON",
+    "en": "AUTO THRUST: ON"
+  },
+  {
+    "source": "GAS OTOMATIS: OFF",
+    "en": "AUTO THRUST: OFF"
+  },
+  {
+    "source": "🏆 Tiba di Istana Awan!",
+    "en": "🏆 Cloud Palace Reached!"
+  },
+  {
+    "source": "✦ Bioma baru · ",
+    "en": "✦ New biome · "
+  },
+  {
+    "source": "✦ Tiba di Istana Awan!",
+    "en": "✦ Cloud Palace Reached!"
+  },
+  {
+    "source": "Ketinggian: %d km / 10.000 km (%.1f%%)",
+    "en": "Altitude: %d km / 10,000 km (%.1f%%)"
+  },
+  {
+    "source": "%s (%d/5 Kesehatan)",
+    "en": "%s (%d/5 Health)"
+  },
+  {
+    "source": "Status: Normal (Naik Optimal)",
+    "en": "Status: Normal (Optimal Ascent)"
+  },
+  {
+    "source": "Status: Naik Lambat",
+    "en": "Status: Slow Ascent"
+  },
+  {
+    "source": "Status: Tidak Bisa Naik (Hover / Turun 1.2x)",
+    "en": "Status: Cannot Rise (Hover / Fall 1.2x)"
+  },
+  {
+    "source": "Status: Bahaya (Turun 1.5x)",
+    "en": "Status: Danger (Fall 1.5x)"
+  },
+  {
+    "source": "Status: Kritis (Turun 2.5x)",
+    "en": "Status: Critical (Fall 2.5x)"
+  },
+  {
+    "source": "Status: ⚠️ TERJUN BEBAS! LAKUKAN CLUTCH SAVE!",
+    "en": "Status: ⚠️ FREEFALL! USE CLUTCH SAVE!"
+  },
+  {
+    "source": "🛡️ KEBAL SERANGAN: %.1fs",
+    "en": "🛡️ DAMAGE IMMUNITY: %.1fs"
+  },
+  {
+    "source": "Penerbangan selesai",
+    "en": "Flight complete"
+  },
+  {
+    "source": "🛡️ Emergency Kit: Sudah Digunakan",
+    "en": "🛡️ Emergency Kit: Already Used"
+  },
+  {
+    "source": "🛡️ Shield Tim Sedang Aktif!",
+    "en": "🛡️ Team Shield Active!"
+  },
+  {
+    "source": "⚠️ CLUTCH SAVE! KLIK SEKARANG!",
+    "en": "⚠️ CLUTCH SAVE! CLICK NOW!"
+  },
+  {
+    "source": "🛡️ EMERGENCY KIT · %d\nGUNAKAN",
+    "en": "🛡️ EMERGENCY KIT · %d\nUSE"
+  },
+  {
+    "source": "🛡️ Emergency Kit (Miliki: %d) [GUNAKAN]",
+    "en": "🛡️ Emergency Kit (Owned: %d) [USE]"
+  },
+  {
+    "source": " dari ",
+    "en": " of "
+  },
+  {
+    "source": "Waspada · %.1f dtk",
+    "en": "Warning · %.1f sec"
+  },
+  {
+    "source": "Tunggu gondola",
+    "en": "Wait for basket"
+  },
+  {
+    "source": "Efek turun siap\ndalam %.1f detik",
+    "en": "Descent ready\nin %.1f seconds"
+  },
+  {
+    "source": "LOMPAT BERSAMA\nTurunkan balon untuk menghindari badai",
+    "en": "JUMP TOGETHER\nLower the balloon to avoid the storm"
+  },
+  {
+    "source": "Dinding Badai · %.0f dtk",
+    "en": "Storm Wall · %.0f sec"
+  },
+  {
+    "source": "Dinding Badai",
+    "en": "Storm Wall"
+  },
+  {
+    "source": "Posisi balon sedang dimuat",
+    "en": "Loading balloon position"
+  },
+  {
+    "source": "Matikan gas otomatis",
+    "en": "Turn off auto thrust"
+  },
+  {
+    "source": "Tetap di bawah awan",
+    "en": "Stay below the clouds"
+  },
+  {
+    "source": "Lepas gas agar balon turun",
+    "en": "Release thrust to descend"
+  },
+  {
+    "source": "Lompat bersama · turun %d km",
+    "en": "Jump together · descend %d km"
+  },
+  {
+    "source": "Kembali ke gondola",
+    "en": "Return to basket"
+  },
+  {
+    "source": "Daratan Awal",
+    "en": "Starting Island"
+  },
+  {
+    "source": "Ketinggian 1 (0 - 2.000 km)",
+    "en": "Altitude 1 (0 - 2,000 km)"
+  },
+  {
+    "source": "Ketinggian 2 (2.000 - 4.000 km)",
+    "en": "Altitude 2 (2,000 - 4,000 km)"
+  },
+  {
+    "source": "Ketinggian 3 (4.000 - 6.000 km)",
+    "en": "Altitude 3 (4,000 - 6,000 km)"
+  },
+  {
+    "source": "Ketinggian 4 (6.000 - 8.000 km)",
+    "en": "Altitude 4 (6,000 - 8,000 km)"
+  },
+  {
+    "source": "Ketinggian 5 (8.000 - 10.000 km)",
+    "en": "Altitude 5 (8,000 - 10,000 km)"
+  },
+  {
+    "source": "Istana Awan (Tiba)",
+    "en": "Cloud Palace (Arrival)"
+  },
+  {
+    "source": "Istana Awan (Sanctuary)",
+    "en": "Cloud Palace (Sanctuary)"
+  },
+  {
+    "source": "ZONA ",
+    "en": "ZONE "
+  },
+  {
+    "source": "🛒 TOKO & UPGRADE",
+    "en": "🛒 SHOP & UPGRADES"
+  },
+  {
+    "source": "🎈 TOKO PERLENGKAPAN FLY HIGH",
+    "en": "🎈 FLY HIGH SUPPLIES SHOP"
+  },
+  {
+    "source": "Tambal semua lubang. Kebal 60 dtk. Sekali per terbang.",
+    "en": "Patch all holes. Shield for 60 sec. Once per flight."
+  },
+  {
+    "source": "Dapatkan Emergency Kit (Klik Beli)",
+    "en": "Get Emergency Kit (Click Buy)"
+  },
+  {
+    "source": "Beli 1 Kit",
+    "en": "Buy 1 Kit"
+  },
+  {
+    "source": "AK-47 Permanen",
+    "en": "Permanent AK-47"
+  },
+  {
+    "source": "Satu AK-47 permanen. Pilih raknya di Setelan.",
+    "en": "One permanent AK-47. Choose its rack in Settings."
+  },
+  {
+    "source": "Beli 1 AK-47",
+    "en": "Buy 1 AK-47"
+  },
+  {
+    "source": "Beli 1 Turbo Gas • 29 Robux",
+    "en": "Buy 1 Turbo Gas • 29 Robux"
+  },
+  {
+    "source": "Beli 1 Turbo",
+    "en": "Buy 1 Turbo"
+  },
+  {
+    "source": "Kurangi pengikisan tali luar -30% (3.5 HP/s) sepanjang 1 penerbangan.",
+    "en": "Reduce rope wear outside the basket by 30% (3.5 HP/s) for one flight."
+  },
+  {
+    "source": "Beli 1 Tali Awet • 19 Robux",
+    "en": "Buy 1 Reinforced Rope • 19 Robux"
+  },
+  {
+    "source": "Beli 1 Tali",
+    "en": "Buy 1 Rope"
+  },
+  {
+    "source": "lihat harga Roblox",
+    "en": "check Roblox price"
+  },
+  {
+    "source": "Membuka toko...",
+    "en": "Opening Shop..."
+  },
+  {
+    "source": "Data pemain sedang dimuat. Silakan coba sebentar lagi.",
+    "en": "Loading player data. Please try again shortly."
+  },
+  {
+    "source": "Pembelian dibatalkan.",
+    "en": "Purchase cancelled."
+  },
+  {
+    "source": "Pembelian sedang diverifikasi Roblox...",
+    "en": "Roblox is verifying your purchase..."
+  },
+  {
+    "source": "Senjata Balon",
+    "en": "Balloon Loadout"
+  },
+  {
+    "source": "Untuk peluncuranmu sebagai Party Master.",
+    "en": "For flights you launch as Party Master."
+  },
+  {
+    "source": "AK-47 dimiliki: %d  ·  Di inventaris: %d",
+    "en": "AK-47s owned: %d  ·  In inventory: %d"
+  },
+  {
+    "source": "✓ Handgun",
+    "en": "✓ Handgun"
+  },
+  {
+    "source": "Rak ",
+    "en": "Rack "
+  },
+  {
+    "source": "Senjata terkunci saat terbang.",
+    "en": "Weapons locked during flight."
+  },
+  {
+    "source": "Tulisan di atas pemain",
+    "en": "Player nameplates"
+  },
+  {
+    "source": "Tampil",
+    "en": "Show"
+  },
+  {
+    "source": "Nama: Tampil",
+    "en": "Names: Show"
+  },
+  {
+    "source": "Nama: Sembunyi",
+    "en": "Names: Hide"
+  },
+  {
+    "source": "Animasi: Penuh",
+    "en": "Motion: Full"
+  },
+  {
+    "source": "Animasi: Ringan",
+    "en": "Motion: Reduced"
+  },
+  {
+    "source": "Cutscene: Nyala",
+    "en": "Cutscene: On"
+  },
+  {
+    "source": "Cutscene: Mati",
+    "en": "Cutscene: Off"
+  },
+  {
+    "source": "GUGUS TOPAN",
+    "en": "TORNADO CLUSTER"
+  },
+  {
+    "source": "ARUS ES",
+    "en": "ICE CURRENT"
+  },
+  {
+    "source": "BADAI BARA",
+    "en": "EMBER STORM"
+  },
+  {
+    "source": "PUSARAN AURORA",
+    "en": "AURORA VORTEX"
+  },
+  {
+    "source": "BADAI GERBANG",
+    "en": "GATEWAY STORM"
+  },
+  {
+    "source": "\n↓  LEWATI DI BAWAH",
+    "en": "\n↓  PASS BELOW"
+  },
+  {
+    "source": "🔫 Pistol (Semi-Otomatis)",
+    "en": "🔫 Handgun (Semi-Automatic)"
+  },
+  {
+    "source": "[G] Drop ke Rak  |  [R] Reload",
+    "en": "[G] Return to Rack  |  [R] Reload"
+  },
+  {
+    "source": "🎯\nTEMBAK",
+    "en": "🎯\nFIRE"
+  },
+  {
+    "source": "Tali Pengaman: 100% Durabilitas",
+    "en": "Safety Rope: 100% Durability"
+  },
+  {
+    "source": "👁️ SPOT BAHAYA UNTUK TIM (KLIK DI SINI)",
+    "en": "👁️ MARK DANGER FOR YOUR TEAM (CLICK HERE)"
+  },
+  {
+    "source": "HANCUR!",
+    "en": "DESTROYED!"
+  },
+  {
+    "source": "KEBAL",
+    "en": "IMMUNE"
+  },
+  {
+    "source": "PING KRU",
+    "en": "CREW PING"
+  },
+  {
+    "source": "💬 PING [V]",
+    "en": "💬 PING [V]"
+  },
+  {
+    "source": "DROP [G / B]",
+    "en": "DROP [G / B]"
+  },
+  {
+    "source": "Tali Pengaman: %d%%",
+    "en": "Safety Rope: %d%%"
+  },
+  {
+    "source": "TALI %d%% | MINTA REKAN MENARIK",
+    "en": "ROPE %d%% | ASK YOUR CREW TO PULL"
+  },
+  {
+    "source": "SEDANG DITARIK KE KERANJANG",
+    "en": "BEING PULLED INTO THE BASKET"
+  },
+  {
+    "source": "TALI %d%% | SEGERA TURUN [Q]",
+    "en": "ROPE %d%% | DESCEND NOW [Q]"
+  },
+  {
+    "source": "TALI MENIPIS: %d%%",
+    "en": "ROPE LOW: %d%%"
+  },
+  {
+    "source": "BAHAYA • %dm",
+    "en": "DANGER • %dm"
+  },
+  {
+    "source": "Spot: ",
+    "en": "Mark: "
+  },
+  {
+    "source": "PASANG TALI [E]",
+    "en": "ATTACH ROPE [E]"
+  },
+  {
+    "source": "LEPAS TALI [T]",
+    "en": "DETACH ROPE [T]"
+  },
+  {
+    "source": "NAIK KE KUBAH [F]",
+    "en": "CLIMB ENVELOPE [F]"
+  },
+  {
+    "source": "TURUN & LEPAS TALI [Q]",
+    "en": "DESCEND & DETACH [Q]"
+  },
+  {
+    "source": "TARIK REKAN [B / R1]",
+    "en": "PULL CREWMATE [B / R1]"
+  },
+  {
+    "source": "Pilih dermaga • Bentuk kru\nSiap terbang!",
+    "en": "Choose a dock • Form a crew\nReady to fly!"
+  },
+  {
+    "source": "Khusus Party Master",
+    "en": "Party Master only"
+  },
+  {
+    "source": "DUDUK",
+    "en": "SIT"
+  },
+  {
+    "source": "Puncak",
+    "en": "Summits"
+  },
+  {
+    "source": "Rekor",
+    "en": "Record"
+  },
+  {
+    "source": "Arwah",
+    "en": "Spirit"
+  },
+  {
+    "source": "Kru",
+    "en": "Crew"
+  },
+  {
+    "source": "Bahaya",
+    "en": "Danger"
+  },
+  {
+    "source": "Habis",
+    "en": "Empty"
+  },
+  {
+    "source": "Memuat",
+    "en": "Loading"
+  },
+  {
+    "source": "Selesai",
+    "en": "Done"
+  },
+  {
+    "source": "PERBEKALAN",
+    "en": "SUPPLIES"
+  },
+  {
+    "source": "KOSMETIK",
+    "en": "COSMETICS"
+  },
+  {
+    "source": "Beli",
+    "en": "Buy"
+  },
+  {
+    "source": "MILIKI",
+    "en": "OWNED"
+  },
+  {
+    "source": "TUTUP",
+    "en": "CLOSE"
+  },
+  {
+    "source": "Pakai",
+    "en": "Use"
+  },
+  {
+    "source": "Aktif",
+    "en": "Active"
+  },
+  {
+    "source": "Tidak",
+    "en": "No"
+  },
+  {
+    "source": "Kembali",
+    "en": "Back"
+  },
+  {
+    "source": "Otomatis",
+    "en": "Auto"
+  },
+  {
+    "source": "Bahasa / Language",
+    "en": "Bahasa / Language"
+  },
+  {
+    "source": "Otomatis (Roblox)",
+    "en": "Auto (Roblox)"
+  },
+  {
+    "source": "Bahasa Indonesia",
+    "en": "Bahasa Indonesia"
+  },
+  {
+    "source": "English",
+    "en": "English"
+  },
+  {
+    "source": "Preferensi bahasa berlaku selama sesi ini.",
+    "en": "Language preference applies to this session."
+  },
+  {
+    "source": "Pengaturan",
+    "en": "Settings"
+  },
+  {
+    "source": "Siap",
+    "en": "Ready"
+  },
+  {
+    "source": "Dipasang",
+    "en": "Equipped"
+  },
+  {
+    "source": "Tidak ada",
+    "en": "None"
+  },
+  {
+    "source": "Belum ada",
+    "en": "None yet"
+  },
+  {
+    "source": "HARI %d",
+    "en": "DAY %d"
+  },
+  {
+    "source": "%d dtk",
+    "en": "%d sec"
+  },
+  {
+    "source": "%.1f dtk",
+    "en": "%.1f sec"
+  },
+  {
+    "source": "Rak %d",
+    "en": "Rack %d"
+  },
+  {
+    "source": "DERMAGA %s",
+    "en": "DOCK %s"
+  },
+  {
+    "source": "ARWAH • %s",
+    "en": "SPIRIT • %s"
+  },
+  {
+    "source": "KRU • %s",
+    "en": "CREW • %s"
+  },
+  {
+    "source": "HARI %d • %s",
+    "en": "DAY %d • %s"
+  },
+  {
+    "source": "SUDAH DIKLAIM • BESOK %s",
+    "en": "CLAIMED • NEXT IN %s"
+  },
+  {
+    "source": "%d Koin",
+    "en": "%d Coins"
+  },
+  {
+    "source": "+ %d Koin",
+    "en": "+ %d Coins"
+  },
+  {
+    "source": "MASTER • %s",
+    "en": "MASTER • %s"
+  },
+  {
+    "source": "★ %s",
+    "en": "★ %s"
+  },
+  {
+    "source": "✓ %s",
+    "en": "✓ %s"
+  },
+  {
+    "source": "%s dibeli & dipasang!",
+    "en": "%s purchased & equipped!"
+  },
+  {
+    "source": "%s dipasang!",
+    "en": "%s equipped!"
+  },
+  {
+    "source": "Spot: %s",
+    "en": "Mark: %s"
+  },
+  {
+    "source": "BAHASA",
+    "en": "LANGUAGE"
+  },
+  {
+    "source": "Pengaturan bahasa",
+    "en": "Language settings"
+  },
+  {
+    "source": "MILIKI: %d",
+    "en": "OWNED: %d"
+  },
+  {
+    "source": "BESOK",
+    "en": "TOMORROW"
+  },
+  {
+    "source": "PERMANEN",
+    "en": "PERMANENT"
+  },
+  {
+    "source": "Tutup",
+    "en": "Close"
+  },
+  {
+    "source": "TURUN",
+    "en": "DESCEND"
+  },
+  {
+    "source": "PENDAKI",
+    "en": "EXPLORER"
+  },
+  {
+    "source": "TALI: %d%% Durabilitas",
+    "en": "ROPE: %d%% Durability"
+  },
+  {
+    "source": "ISTANA AWAN TERCAPAI",
+    "en": "CLOUD PALACE REACHED"
+  },
+  {
+    "source": "10.000 km · Puncak ke-%d",
+    "en": "10,000 km · Summit #%d"
+  },
+  {
+    "source": "Kru bangkit — kamu ikut sampai!",
+    "en": "Crew revived — you made it too!"
+  },
+  {
+    "source": "+%d koin",
+    "en": "+%d coins"
+  },
+  {
+    "source": "%s dari %s",
+    "en": "%s from %s"
+  },
+  {
+    "source": "kiri",
+    "en": "the left"
+  },
+  {
+    "source": "kanan",
+    "en": "the right"
+  },
+  {
+    "source": "depan",
+    "en": "ahead"
+  },
+  {
+    "source": "belakang",
+    "en": "behind"
+  },
+  {
+    "source": "atas",
+    "en": "above"
+  },
+  {
+    "source": "bawah",
+    "en": "below"
+  },
+  {
+    "source": "10.000 km",
+    "en": "10,000 km"
+  },
+  {
+    "source": "DURABILITAS",
+    "en": "DURABILITY"
+  },
+  {
+    "source": "TAHAN",
+    "en": "HOLD"
+  },
+  {
+    "source": "Memproses…",
+    "en": "Processing…"
+  },
+  {
+    "source": "BEKAL",
+    "en": "SUPPLIES"
+  },
+  {
+    "source": "TALI",
+    "en": "ROPE"
+  },
+  {
+    "source": "Memuat…",
+    "en": "Loading…"
+  }
+]

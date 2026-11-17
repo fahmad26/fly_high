@@ -511,7 +511,16 @@ function Layout.Start(gui, player)
 			local contentH = titleH + titleGap + inventoryH + sectionGap + rackH * 2 + rowGap + prefGap + toggleH + sectionGap + footerH
 			local top = innerTop + math.max(0, math.floor((available - contentH) / 2))
 
-			box(settings:FindFirstChild("Title"), pad, top, innerWidth, titleH)
+			box(settings:FindFirstChild("Title"), pad, top, innerWidth - 106, titleH)
+			box(settings:FindFirstChild("LanguageButton"), mw - pad - 98, top - 8, 98, 44)
+			local languageBox = settings:FindFirstChild("LanguagePickerBox")
+			local languageW = math.min(innerWidth, 260)
+			box(languageBox, mw - pad - languageW, top + titleH + 6, languageW, 164)
+			if languageBox then
+				for i, name in { "LanguageAuto", "LanguageIndonesian", "LanguageEnglish" } do
+					box(languageBox:FindFirstChild(name), 8, 8 + (i - 1) * 50, languageW - 16, 44)
+				end
+			end
 			local invY = top + titleH + titleGap
 			local invPillW = math.min(innerWidth, 300)
 			box(settings:FindFirstChild("HUDInventoryPill"), (mw - invPillW) / 2, invY, invPillW, inventoryH)

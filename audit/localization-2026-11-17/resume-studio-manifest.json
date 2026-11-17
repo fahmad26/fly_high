@@ -1,0 +1,390 @@
+{
+  "tableEntries": 485,
+  "sources": [
+    {
+      "bytes": 4289,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+      "class": "ModuleScript",
+      "checksum": 1236844286
+    },
+    {
+      "bytes": 1118,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+      "class": "ModuleScript",
+      "checksum": 772819054
+    },
+    {
+      "bytes": 482,
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+      "class": "ModuleScript",
+      "checksum": 817804116
+    },
+    {
+      "bytes": 40475,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "class": "ModuleScript",
+      "checksum": 2063744736
+    },
+    {
+      "bytes": 40733,
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "class": "ModuleScript",
+      "checksum": 4057735113
+    },
+    {
+      "bytes": 84443,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "class": "ModuleScript",
+      "checksum": 1828905965
+    },
+    {
+      "bytes": 21590,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+      "class": "ModuleScript",
+      "checksum": 494376272
+    },
+    {
+      "bytes": 1526,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+      "class": "ModuleScript",
+      "checksum": 327270123
+    },
+    {
+      "bytes": 5639,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+      "class": "ModuleScript",
+      "checksum": 3199011002
+    },
+    {
+      "bytes": 4996,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+      "class": "ModuleScript",
+      "checksum": 945448956
+    },
+    {
+      "bytes": 153464,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "class": "ModuleScript",
+      "checksum": 3340680653
+    },
+    {
+      "bytes": 53946,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+      "class": "ModuleScript",
+      "checksum": 378726843
+    },
+    {
+      "bytes": 6992,
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+      "class": "ModuleScript",
+      "checksum": 598347689
+    },
+    {
+      "bytes": 14903,
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+      "class": "ModuleScript",
+      "checksum": 204646171
+    },
+    {
+      "bytes": 32443,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+      "class": "ModuleScript",
+      "checksum": 2393543090
+    },
+    {
+      "bytes": 7703,
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+      "class": "ModuleScript",
+      "checksum": 3773344930
+    },
+    {
+      "bytes": 18173,
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+      "class": "ModuleScript",
+      "checksum": 4164441328
+    },
+    {
+      "bytes": 27302,
+      "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+      "class": "ModuleScript",
+      "checksum": 2281024114
+    },
+    {
+      "bytes": 43435,
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+      "class": "ModuleScript",
+      "checksum": 3054055043
+    },
+    {
+      "bytes": 15433,
+      "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+      "class": "ModuleScript",
+      "checksum": 664533499
+    },
+    {
+      "bytes": 6640,
+      "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+      "class": "ModuleScript",
+      "checksum": 2499380158
+    },
+    {
+      "bytes": 7629,
+      "path": "ReplicatedStorage.FlyHigh.Modules.ObstacleAudioCatalog",
+      "class": "ModuleScript",
+      "checksum": 1568368982
+    },
+    {
+      "bytes": 2263,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+      "class": "ModuleScript",
+      "checksum": 1022132077
+    },
+    {
+      "bytes": 148,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+      "class": "ModuleScript",
+      "checksum": 2262721529
+    },
+    {
+      "bytes": 9908,
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+      "class": "ModuleScript",
+      "checksum": 3950714814
+    },
+    {
+      "bytes": 46675,
+      "path": "ReplicatedStorage.FlyHigh.Modules.LocalizationCatalog",
+      "class": "ModuleScript",
+      "checksum": 3508574092
+    },
+    {
+      "bytes": 2847,
+      "path": "ReplicatedStorage.FlyHigh.Modules.Localization",
+      "class": "ModuleScript",
+      "checksum": 2354627620
+    },
+    {
+      "bytes": 22333,
+      "path": "ServerScriptService.FlyHighServer.DataManager",
+      "class": "Script",
+      "checksum": 2900916898
+    },
+    {
+      "bytes": 6607,
+      "path": "ServerScriptService.FlyHighServer.OverheadManager",
+      "class": "Script",
+      "checksum": 4031602069
+    },
+    {
+      "bytes": 5886,
+      "path": "ServerScriptService.FlyHighServer.PodManager",
+      "class": "Script",
+      "checksum": 2329119796
+    },
+    {
+      "bytes": 31763,
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "class": "Script",
+      "checksum": 3792373948
+    },
+    {
+      "bytes": 13641,
+      "path": "ServerScriptService.FlyHighServer.WeaponManager",
+      "class": "Script",
+      "checksum": 4229013205
+    },
+    {
+      "bytes": 24191,
+      "path": "ServerScriptService.FlyHighServer.TetherManager",
+      "class": "Script",
+      "checksum": 3792194508
+    },
+    {
+      "bytes": 23726,
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "class": "Script",
+      "checksum": 301243789
+    },
+    {
+      "bytes": 4904,
+      "path": "ServerScriptService.FlyHighServer.ShopManager",
+      "class": "Script",
+      "checksum": 112347215
+    },
+    {
+      "bytes": 2464,
+      "path": "ServerScriptService.FlyHighServer.ServerUtils",
+      "class": "ModuleScript",
+      "checksum": 99541241
+    },
+    {
+      "bytes": 3564,
+      "path": "ServerScriptService.FlyHighServer.PalaceManager",
+      "class": "Script",
+      "checksum": 1296932477
+    },
+    {
+      "bytes": 4201,
+      "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+      "class": "Script",
+      "checksum": 820066899
+    },
+    {
+      "bytes": 3423,
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "class": "ModuleScript",
+      "checksum": 3824622710
+    },
+    {
+      "bytes": 6446,
+      "path": "ServerScriptService.FlyHighServer.JumpManager",
+      "class": "Script",
+      "checksum": 2023161621
+    },
+    {
+      "bytes": 5735,
+      "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+      "class": "Script",
+      "checksum": 186487744
+    },
+    {
+      "bytes": 1105,
+      "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+      "class": "Script",
+      "checksum": 3884316022
+    },
+    {
+      "bytes": 2989,
+      "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+      "class": "ModuleScript",
+      "checksum": 2821429821
+    },
+    {
+      "bytes": 28284,
+      "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+      "class": "ModuleScript",
+      "checksum": 347489602
+    },
+    {
+      "bytes": 3867,
+      "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+      "class": "ModuleScript",
+      "checksum": 1115856892
+    },
+    {
+      "bytes": 5336,
+      "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+      "class": "ModuleScript",
+      "checksum": 429162331
+    },
+    {
+      "bytes": 13036,
+      "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+      "class": "Script",
+      "checksum": 4100476353
+    },
+    {
+      "bytes": 21767,
+      "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+      "class": "ModuleScript",
+      "checksum": 427131165
+    },
+    {
+      "bytes": 30993,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+      "class": "LocalScript",
+      "checksum": 3275640477
+    },
+    {
+      "bytes": 46153,
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "class": "LocalScript",
+      "checksum": 3648183294
+    },
+    {
+      "bytes": 23055,
+      "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+      "class": "LocalScript",
+      "checksum": 34078573
+    },
+    {
+      "bytes": 16395,
+      "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+      "class": "LocalScript",
+      "checksum": 3600482576
+    },
+    {
+      "bytes": 4940,
+      "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+      "class": "LocalScript",
+      "checksum": 2701751788
+    },
+    {
+      "bytes": 9884,
+      "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+      "class": "LocalScript",
+      "checksum": 2288998431
+    },
+    {
+      "bytes": 7218,
+      "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+      "class": "LocalScript",
+      "checksum": 2853477202
+    },
+    {
+      "bytes": 7794,
+      "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+      "class": "LocalScript",
+      "checksum": 346126679
+    },
+    {
+      "bytes": 6022,
+      "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+      "class": "LocalScript",
+      "checksum": 3493881565
+    },
+    {
+      "bytes": 9535,
+      "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+      "class": "LocalScript",
+      "checksum": 1101787524
+    },
+    {
+      "bytes": 3981,
+      "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+      "class": "LocalScript",
+      "checksum": 2161569778
+    },
+    {
+      "bytes": 14289,
+      "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+      "class": "LocalScript",
+      "checksum": 2170703456
+    },
+    {
+      "bytes": 10661,
+      "path": "StarterPlayer.StarterPlayerScripts.ObstacleAudioController",
+      "class": "LocalScript",
+      "checksum": 900819363
+    },
+    {
+      "bytes": 31657,
+      "path": "StarterPlayer.StarterPlayerScripts.PalaceCinematics",
+      "class": "LocalScript",
+      "checksum": 678826217
+    },
+    {
+      "bytes": 2905,
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponHotbarController",
+      "class": "LocalScript",
+      "checksum": 166807760
+    },
+    {
+      "bytes": 4807,
+      "path": "StarterPlayer.StarterPlayerScripts.LocalizationController",
+      "class": "LocalScript",
+      "checksum": 3319444389
+    }
+  ],
+  "players": 1
+}

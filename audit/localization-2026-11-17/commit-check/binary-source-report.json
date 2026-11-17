@@ -1,0 +1,458 @@
+{
+  "place": "E:\\Antigravity\\Fly High\\Fly High.rbxl",
+  "bytes": 3523944,
+  "sha256": "1f2c35212637459699b53ba92a2da9616d9be77418eef6a7203729f61e779c16",
+  "normalization": "CRLF to LF, trimEnd; rolling Studio checksum is only supplemental",
+  "scripts": [
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "3119c1f743bb278454ceedf967d11f9e60135632df44948338859b636fcda1f9"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "c455970897aefe791073cd9d271af341745bbb89f5a6e5dd64479641c2b01c1f"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "a6c508649beb75410ba7349598e5f0200f51f25a1e780ef0398f8469d2d47427"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "f73276d32128f92f55d86fea7925847a43a71357489ac45dd37b78e656895bcc"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "aa4c088adb6da91320315a14fb56fb15862cb3c1099172fca0f4d9fcf7e81500"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "40aab7b0fa824106fe8e916ab5561ca3f5c3788db1fa64600ed270e567fea1af"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "025a4971a43dd95c91d241534df923f665bb665bad075567ec765def1ca3986d"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "decf140af84e05d6a0246d6080e35706440c2cad796aeeca7f40f4e93b0f20a5"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "4239c8c1a58f78053ee3e5df96e886aa22cd7972755eaa5f928149627a48b836"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "e1ebd5061357e3afc45cf10e1d43d20e6018a464753eadf479c827f337982ad4"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "13c513c0aa6f5a4e3a6487bbe30c96fd76612240235a79ddeb4bc5bcede917d0"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "3c3683460263a0ee6f24f6effe0f8e6ca9f6aeb715b65e06d2a7d31bab31d40f"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.ObstacleAudioController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "001cc43339e3ad915a3a872271030ef6cc708fc8a18fc32e26ce406f32a4988e"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.PalaceCinematics",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "adc3c8201fdd14e6410570ea5bb67475aba354b2113f7d56c1a487ad85326385"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponHotbarController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "b9fcd17f235cca9824ae54de71a40da37eca7e818f2ca9e123dacb443f6cefbd"
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.LocalizationController",
+      "class": "LocalScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "9e97599b190f166178d773c781f5584a6959e3a8ffdd07f9f69e3f1ee0c6b911"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "a110b0a30bf3a37f4f11f1fbe219a5a716422c368937bf58dc758b960864a474"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "bb2109d032d8961099b61dba94afa4028b103a6ea43fafe0158cf7c5138ca914"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "62d791d84492ac21de7d130ae3a0a16b95d6c11b2bd3d88ed3baea22204db925"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "ef335ae9ff327d4d8d5d7a6268111301534fd6b0760c9851e062d3964a54ba15"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "1c1912ae32c7e23028ca8ffbbf9d17862e0ff3d92933bf7b9b7dd0bed97de28c"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "e97b7ff1ccd6610b79608bbb3473c4197e0e1448d2cfb51c666439d656e92235"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "ac63c8ed08712cf6af6438edf9c05b8e93fb140fb4717e5a317d6a5fedb9de72"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "90511c513f62bc896af43cbf4f17e7f99af85608d37c68ee29c7d5fe7dc1cb08"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "9786bf4471aadeba2418a16f5e14f117a4db6458bdcabb131419bc6d8b50a94e"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "1ec5100d88ecba55ece6cfd9f9bf5cbf91eb8fa67528d86960dd0f8a268c1aad"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "f543fe425fbd14dbaa083809acbb1228f99f09eea404f614bb6ebb873c6b0ea8"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "2545c8bce40e193621b648cbe91b334c21bc441a1e6ccf3db80f9225468e429e"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "c19b1971a783714511e2ed2a1eb9753a57c880d8e21d6684cb113d9ced40c90b"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "ffc2d9a6bf86341e9f0424a8f1ad786e9d3a65d5d779c2cd14c8a01a8ea9e29c"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "b85e8c0e421252d86e19dc19740b2fa141258d0bba12a89c35b0ad672b468b14"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "6e0f872e00ff5c15e5928d415f16cab00a5694ec7857bd67d3771da235db12f2"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "bfa5853220c87ab77607c679e5d873b403f8298504eb0d388f49ad04bf5d9aaa"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "134da4a4f13838239e6a46c0ad445e1993f0f3b854cd56abeda26ff1e1f5519f"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "7db831ef61916fbc928334cf33f86d4b3ef818f42f8d17e9a61ba98b4a4551cd"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "39ff59c9de89bef8b5fd065a31b81494d5493ec0fa8513c6d9f027defdf559e6"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "88319614ff5f6d202690c03bf21bd41050943e909e2154b7e70b51cd60dc11b1"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.ObstacleAudioCatalog",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "33b08429b74a1b70bb4cca69bf3be7ad018ab2bc004776cac99e8ba7f7f775a9"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "1b9993c202162438dde1a6d3d2323849de5d2be433792f026ff9061024220ee5"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "6d0d0938f3f37380c216d31d1d2cf3be6a3520bd7d3878cac0bb815ddbfad51e"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "c963ce763cbb7c1a1d6170f3da0f10a14529a058af506e40966c82b132fea505"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.LocalizationCatalog",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "5f2ad8854da078e12a3a9a14d0718d5666bf60a9fa7c0b54d587208c915b0d9d"
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.Localization",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "127fe5cbfa12bf268db07df9035fab96b2ade43fa7f1120811887da841560afd"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ServerUtils",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "1ca75e716a0675bdeb4b9815aae96489e1f77b74b4078526f0fd719dd2733dd6"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "42e98bbaca5da26329aa034822d3b3e0614a924bf9c9f14ae5170843c609da57"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "310551fe6a6889b1119a75aa8ac2d6636abeded3eaf11882630d414115b3431c"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "63c75e6385c528e1c8acec0e77acda2e0a0e925fe1c85cceea3b4f1bb7f203d0"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "b0add4b1e87cef3e6aaafe4cf14c0777382c7dc00b94abe46411b105bfadafdf"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "796e7ae704a25582371e7ba267682419c43c2d338d59685533a0ffe870fb27e5"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+      "class": "ModuleScript",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "ab1eb8ff1ade44862a1a936cf122011ddc7b135d736bf9f60a2bfe45523d6aba"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.DataManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "bd858b5e6decf9cd992a2a94fd773972b1de86403af39f72eaa7f3e59182bed0"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.OverheadManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "720c8e6cb8871a0364f70d53cd73b31202bce4b7c7f721e67aa04b12402f02b7"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PodManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "d7df0fc997f492184b640ecf7cb2344628e9202f09d73536fe54ae25ac7453f9"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "f1189c07c09cff7723cd58c948d22e3bd87e8958f24da03a67c0c5745b234489"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.WeaponManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "d2c3c73a38441760320e88a9d5634a44742deabdadceb3531990a1ee5b74442e"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.TetherManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "d3a3f411640f159692af4d97764adc0eff4001e67fc1aec386e533220e7ba930"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "87df127b1a5cf02c61299755b159abfa84b27cc6dc5430c13faccfdee4cb2a21"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ShopManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "c26ddb3f74d56d55a89cceaae45bc2ca4a28f0169dc42f1629a44e6ab92b99d8"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PalaceManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "7972e965a9b0160857b7e03ebef6eb9afcfee92f3eebb4a45dd81acc7178ba97"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "4c35b404ccf8f65f1ffb5b1ecfdf30c47d46ab552a1d826e2b6dd08e374a8234"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.JumpManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "efaa53ad0a37b886e4a917a2b2bf7a548433968d273cbf988a25e571c43f1571"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "315267eef2443dfea48659c0a9b9b3421d53990e07b0b0d486c4db1eedf6a99c"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "8c968e15f664f1600dec9e390cc7b8436e8563d832754a4cfad120e31db07543"
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+      "class": "Script",
+      "mirrorEqual": true,
+      "studioChecksumMatches": true,
+      "sourceSha256": "d01dbe6be1c046876c86e524e34dd462d1b1692bbd0a41ce427017b580e9ed43"
+    }
+  ],
+  "missing": [],
+  "failures": []
+}
