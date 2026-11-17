@@ -314,7 +314,10 @@ local function applyHazard(item, flight, now)
 		flight.windSource = item.born
 		local distance = (flight.balloon.Envelope.Position - item.instance.PrimaryPart.Position).Magnitude
 		local strength = effect == "Tornado" and 25 * math.clamp(1 - distance / 33, 0, 1) or 25
-		flight.wind = Vector3.new(strength, 0, 0)
+		-- Push along the same world-space trajectory as the visible wind hazard.
+		local drift = Vector3.new(item.velocity.X, 0, item.velocity.Z)
+		if drift.Magnitude < 0.001 then return end
+		flight.wind = drift.Unit * strength
 		flight.windUntil = now + (effect == "Tornado" and 0.6 or 3)
 	elseif effect == "Fog" then
 		for _, player in ipairs(flight.players) do

@@ -86,38 +86,80 @@ function Repair.Start(player: Player)
 			elseif inputType == Enum.ProximityPromptInputType.Gamepad then padKeys[prompt.GamepadKeyCode] or Input:GetStringForKeyCode(prompt.GamepadKeyCode)
 			else Input:GetStringForKeyCode(prompt.KeyboardKeyCode)
 		if key == "" then key = "TAHAN" end
-		local capSize = if touch then 36 else 32
-		local cap = label("InputKey", key, 8, (height - capSize) / 2, capSize, capSize, if #key > 3 then 8 else (#key > 1 and 12 or 17), Color3.fromRGB(255, 230, 165))
+		local capSize = if touch then 40 else 34
+		local textX = 8 + capSize + 10
+		-- The key cap doubles as the hold gauge (playtest iPad 17 Nov: the old 2 px bar
+		-- under the text was invisible under a thumb). A teal disc fills it bottom-up.
+		local capRing = Instance.new("Frame")
+		capRing.Name = "InputRing"
+		capRing.Position = UDim2.fromOffset(8, (height - capSize) / 2)
+		capRing.Size = UDim2.fromOffset(capSize, capSize)
+		capRing.BackgroundColor3 = Color3.fromRGB(27, 62, 91)
+		capRing.BackgroundTransparency = 0.35
+		capRing.BorderSizePixel = 0
+		capRing.Parent = button
+		local ringCorner = Instance.new("UICorner")
+		ringCorner.CornerRadius = UDim.new(0.5, 0)
+		ringCorner.Parent = capRing
+		local ringStroke = Instance.new("UIStroke")
+		ringStroke.Name = "HoldRingStroke"
+		ringStroke.Color = Color3.fromRGB(255, 222, 146)
+		ringStroke.Thickness = 2
+		ringStroke.Transparency = 0.2
+		ringStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		ringStroke.Parent = capRing
+		local fill = Instance.new("Frame")
+		fill.Name = "HoldFill"
+		fill.Size = UDim2.fromScale(1, 1)
+		fill.BackgroundColor3 = Color3.fromRGB(79, 223, 204)
+		fill.BackgroundTransparency = 0.05
+		fill.BorderSizePixel = 0
+		fill.Visible = false
+		fill.Parent = capRing
+		local fillCorner = Instance.new("UICorner")
+		fillCorner.CornerRadius = UDim.new(0.5, 0)
+		fillCorner.Parent = fill
+		local fillGradient = Instance.new("UIGradient")
+		fillGradient.Rotation = -90
+		fillGradient.Parent = fill
+		local function setProgress(p: number)
+			p = math.clamp(p, 0, 1)
+			fill.Visible = p > 0.001
+			if p >= 0.999 then
+				fillGradient.Transparency = NumberSequence.new(0)
+			elseif p > 0.001 then
+				fillGradient.Transparency = NumberSequence.new({
+					NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(p, 0),
+					NumberSequenceKeypoint.new(math.min(p + 0.002, 0.999), 1), NumberSequenceKeypoint.new(1, 1),
+				})
+			end
+			ringStroke.Color = if p > 0.001 then Color3.fromRGB(79, 223, 204) else Color3.fromRGB(255, 222, 146)
+		end
+		local cap = label("InputKey", key, 0, 0, capSize, capSize, if #key > 3 then 9 else (#key > 1 and 12 or 17), Color3.fromRGB(255, 230, 165))
+		cap.Parent = capRing
+		cap.ZIndex = 3
 		cap.TextXAlignment = Enum.TextXAlignment.Center
-		cap.BackgroundColor3 = Color3.fromRGB(27, 62, 91)
-		cap.BackgroundTransparency = 0.55
-		local capCorner = Instance.new("UICorner")
-		capCorner.CornerRadius = UDim.new(0.5, 0)
-		capCorner.Parent = cap
+		cap.TextStrokeTransparency = 0.25
 		local function actionTitle()
 			return if prompt.Name == "PickupPrompt" and prompt.ActionText ~= "" then string.upper(prompt.ActionText) else titles[prompt.Name]
 		end
-		local title = label("Action", actionTitle(), 52, 7, width - 64, 19, if touch then 14 else 13, Color3.fromRGB(249, 248, 238))
+		local title = label("Action", actionTitle(), textX, 7, width - textX - 12, 19, if touch then 14 else 13, Color3.fromRGB(249, 248, 238))
 		local hint = if prompt.HoldDuration > 0 then string.format("Tahan · %.1f dtk", prompt.HoldDuration):gsub("%.", ",") else (if touch then "Ketuk untuk memilih" else "Tekan untuk memilih")
-		local detail = label("ActionDetail", hint, 52, 26, width - 64, 15, 11, Color3.fromRGB(177, 216, 229))
-		local track = Instance.new("Frame")
-		track.Name = "HoldTrack"
-		track.BackgroundColor3 = Color3.fromRGB(6, 15, 29)
-		track.BackgroundTransparency = 0.65
-		track.Visible = prompt.HoldDuration > 0
-		track.BorderSizePixel = 0
-		track.Position = UDim2.fromOffset(52, height - 7)
-		track.Size = UDim2.fromOffset(width - 68, 2)
-		track.ClipsDescendants = true
-		track.Parent = button
-		local fill = Instance.new("Frame")
-		fill.Name = "HoldFill"
-		fill.BackgroundColor3 = Color3.fromRGB(79, 223, 204)
-		fill.BorderSizePixel = 0
-		fill.Size = UDim2.fromScale(0, 1)
-		fill.Parent = track
+		local detail = label("ActionDetail", hint, textX, 26, width - textX - 12, 15, 11, Color3.fromRGB(177, 216, 229))
+		-- Size the pill to its (possibly translated or font-substituted) text so the
+		-- labels never run past the frame on iPad.
+		local function fitWidth()
+			local textW = math.max(title.TextBounds.X, detail.TextBounds.X)
+			local w = math.max(150, math.ceil(textX + textW + 16))
+			button.Size = UDim2.fromOffset(w, height)
+			title.Size = UDim2.fromOffset(w - textX - 10, 19)
+			detail.Size = UDim2.fromOffset(w - textX - 10, 15)
+		end
+		title:GetPropertyChangedSignal("TextBounds"):Connect(fitWidth)
+		detail:GetPropertyChangedSignal("TextBounds"):Connect(fitWidth)
+		task.defer(fitWidth)
 		local links: { RBXScriptConnection } = {}
-		local tween: Tween? = nil
+		local holdStarted: number? = nil
 		local pointer: InputObject? = nil
 		local closed = false
 		local pendingSequence = 0
@@ -125,8 +167,8 @@ function Repair.Start(player: Player)
 			if pointer then pointer = nil; prompt:InputHoldEnd() end
 		end
 		local function reset()
-			if tween then tween:Cancel(); tween = nil end
-			fill.Size = UDim2.fromScale(0, 1)
+			holdStarted = nil
+			setProgress(0)
 			detail.Text = hint
 		end
 		local function cleanup()
@@ -134,12 +176,14 @@ function Repair.Start(player: Player)
 			closed = true
 			for _, link in links do link:Disconnect() end
 			endPointer()
-			if tween then tween:Cancel() end
 			gui:Destroy()
 			entries[prompt] = nil
 		end
 		entries[prompt] = cleanup
 		table.insert(links, RunService.RenderStepped:Connect(function()
+			if holdStarted and prompt.HoldDuration > 0 then
+				setProgress((os.clock() - holdStarted) / prompt.HoldDuration)
+			end
 			local camera = workspace.CurrentCamera
 			if not camera or not anchor or not anchor.Parent then cleanup(); return end
 			local position = if anchor:IsA("Attachment") then anchor.WorldPosition else (anchor :: BasePart).Position
@@ -162,11 +206,13 @@ function Repair.Start(player: Player)
 		table.insert(links, prompt.PromptButtonHoldBegan:Connect(function()
 			reset()
 			detail.Text = "Sedang menahan…"
-			tween = TweenService:Create(fill, TweenInfo.new(prompt.HoldDuration, Enum.EasingStyle.Linear), { Size = UDim2.fromScale(1, 1) })
-			tween:Play()
+			holdStarted = os.clock()
 		end))
 		table.insert(links, prompt.PromptButtonHoldEnded:Connect(reset))
 		table.insert(links, prompt.Triggered:Connect(function()
+			holdStarted = nil
+			setProgress(1)
+			task.delay(0.35, function() if not closed and not holdStarted then setProgress(0) end end)
 			detail.Text = "Memproses…"
 			pendingSequence += 1
 			local token = pendingSequence

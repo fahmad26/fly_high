@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-11-17T16:43:27.696Z",
+  "compiled": 64,
+  "sourceCount": 64,
+  "changedSources": [],
+  "baseBuild": "Cloud v40; binary c96f7e20c2a3a62f3977135157985b8e93758874fdcd2f215adfded92880bc14",
+  "isEdit": true,
+  "device": "default",
+  "fixtureActual": "Solo, spawn/altitude warp and pause automatic spawns. Native hazard paths and native 3s/6s warning preserved. Anchored character follower except final rider case, which is unanchored and not followed. Progress/reward writes intercepted then restored.",
+  "result": "followup-results.json",
+  "runtimeSourceChanged": false
+}

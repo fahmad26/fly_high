@@ -152,6 +152,30 @@ RunService.PreSimulation:Connect(function(dt)
   end
  end
 end)
+-- Airborne crew keeps moving with their balloon. On the floor the humanoid
+-- follows the moving basket kinematically (its own world velocity stays ~0), but
+-- in the air nothing carries it, so a jump while the pilot steered landed players
+-- 7-12 studs off and often over the rail (playtest 17 Nov). While airborne near
+-- the own balloon, move the character by the balloon's horizontal velocity each
+-- physics step. The replicated velocity is smooth; the replicated CFrame steps.
+local AIR_STATES={[Enum.HumanoidStateType.Jumping]=true,[Enum.HumanoidStateType.Freefall]=true,
+ [Enum.HumanoidStateType.GettingUp]=true,[Enum.HumanoidStateType.FallingDown]=true}
+RunService.PreSimulation:Connect(function(dt)
+ local char=player.Character
+ local hum=char and char:FindFirstChildOfClass("Humanoid")
+ local hrp=char and char:FindFirstChild("HumanoidRootPart")
+ local ref=player:FindFirstChild("FlightBalloon")
+ local model=ref and ref.Value
+ local root=model and model.PrimaryPart
+ if not (hum and hrp and root) or hum.Health<=0 or player:GetAttribute("InFlight")~=true
+  or player:GetAttribute("FlightGhost")==true or hrp.Anchored or hum.Sit or hum.PlatformStand then return end
+ if hum.FloorMaterial~=Enum.Material.Air or not AIR_STATES[hum:GetState()] then return end
+ local rel=root.CFrame:PointToObjectSpace(hrp.Position)
+ if Vector2.new(rel.X,rel.Z).Magnitude>36 or rel.Y<-8 or rel.Y>72 then return end
+ local platform=root:GetVelocityAtPosition(hrp.Position)
+ local step=Vector3.new(platform.X,0,platform.Z)*math.min(dt,0.1)
+ if step.Magnitude<4 then hrp.CFrame+=step end
+end)
 local promptElapsed=0
 RunService.Heartbeat:Connect(function(dt)
  promptElapsed+=dt if promptElapsed<0.15 then return end promptElapsed=0

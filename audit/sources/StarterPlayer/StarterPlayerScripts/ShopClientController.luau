@@ -535,9 +535,10 @@ cutsceneToggle.Activated:Connect(function() cutsceneEvent:FireServer(localPlayer
 localPlayer:GetAttributeChangedSignal("CutscenesEnabled"):Connect(refreshCutscene)
 refreshCutscene()
 -- Display preference is client-only. It survives respawn, not a new game session.
-local languageButton=styleButton(settingsText("TextButton","LanguageButton",settings,"BAHASA",12,0,0,0,44),blue)
+-- Sits in the preference row (HUDLayout); the bilingual caption stays findable in either language.
+local languageButton=styleButton(settingsText("TextButton","LanguageButton",settings,"Bahasa / Language",13,0,0,1,44),blue)
 addChoiceArt(languageButton)
-paintChoice(languageButton,"BAHASA",true,blue,Color3.fromRGB(96,165,250))
+paintChoice(languageButton,"Bahasa / Language",true,blue,Color3.fromRGB(96,165,250))
 languageButton.ZIndex=35
 local languagePicker=Instance.new("Frame")
 languagePicker.Name="LanguagePickerBox"

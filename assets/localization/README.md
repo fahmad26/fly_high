@@ -1,6 +1,6 @@
 # Bahasa Fly High
 
-Sumber yang diedit: [id-en.json](id-en.json). Katalog ini berisi 490 pasangan Indonesia–English, termasuk 55 format dinamis. Jangan mengedit `LocalizationCatalog.luau` atau CSV hasil build secara terpisah.
+Sumber yang diedit: [id-en.json](id-en.json). Katalog ini berisi 493 pasangan Indonesia–English, termasuk 55 format dinamis. Jangan mengedit `LocalizationCatalog.luau` atau CSV hasil build secara terpisah.
 
 Jalankan `node tools/build-localization.cjs` dari akar repo setelah mengubah katalog. Generator memeriksa sumber duplikat dan jumlah parameter. Urutan menentukan key `flyhigh_0001` dst.; tambahkan entri di akhir agar key lama tetap stabil. `%s`, `%d` dan format angka menjadi capture Luau serta `{arg1}` dst. di CSV. Pertahankan markup dan parameter; nama pemain pada label peran memakai capture mentah.
 

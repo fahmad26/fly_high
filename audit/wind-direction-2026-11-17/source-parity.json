@@ -1,0 +1,322 @@
+[
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.Localization",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.LocalizationCatalog",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.ObstacleAudioCatalog",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.BalloonManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.DataManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.FlightSpace",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.JumpManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.OverheadManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.PalaceManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.PodManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ServerUtils",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ShopManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.TetherManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.WeaponManager",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.LocalizationController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.ObstacleAudioController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.PalaceCinematics",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.WeaponHotbarController",
+    "match": true,
+    "compile": true
+  },
+  {
+    "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+    "match": true,
+    "compile": true
+  }
+]

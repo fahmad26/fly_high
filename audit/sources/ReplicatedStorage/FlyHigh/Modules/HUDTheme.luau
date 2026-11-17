@@ -1559,15 +1559,18 @@ end
 				local textX = isGhost and (fullPanel and math.round(math.min(h * 1.08, w * 0.25)) or (iconX + iconSize + 8)) or (iconX + iconSize + 8)
 				local rightPad = math.round(h * 0.34)
 				local textW = math.max(1, w - textX - rightPad)
-				local topPad = math.max(7, math.round(h * 0.17))
-				local senderH = 14 + math.floor(textBoost / 2)
-				local msgH = math.max(16, h - topPad * 2 - senderH)
+				-- Keep both lines inside the frame art's inner border (its rim is ~20% of
+				-- the height); the block is centred instead of hugging the top edge.
+				local rim = math.max(9, math.round(h * 0.2))
+				local senderH = 12 + math.floor(textBoost / 2)
+				local msgH = math.max(14, math.min(20 + textBoost, h - rim * 2 - senderH))
+				local topPad = math.round((h - senderH - msgH) / 2)
 				box(r.sender, textX, topPad, textW, senderH)
 				r.sender.Text = (isGhost and "ARWAH • " or "KRU • ") .. sender
 				applyTextStyle(r.sender, { font = Enum.Font.GothamBlack, size = 11 + math.floor(textBoost / 2),
 					color = isGhost and Color3.fromRGB(255, 224, 130) or Color3.fromRGB(132, 232, 255),
 					strokeThickness = 1.6, align = Enum.TextXAlignment.Left, valign = Enum.TextYAlignment.Center, wrapped = false })
-				r.sender.TextTruncate = Enum.TextTruncate.AtEnd
+				fitLine(r.sender, math.floor(textBoost / 2), 9)
 				r.sender.ZIndex = z + 4
 				box(r.message, textX, topPad + senderH, textW, msgH)
 				r.message.Text = msg

@@ -4,6 +4,10 @@ Snapshot aktif per 17 November 2026, Asia/Jakarta. Bagian bertanggal di bawah "S
 
 ## Status terkini — 17 November 2026
 
+**Checkpoint Git iPad dan dorongan:** commit yang memuat pembaruan ini mencakup patch iPad AI lain, dorongan angin/dinding, katalog 493 teks, file lokal dan bukti QA. `Fly High.rbxl` 3.526.811 B, SHA-256 `c96f7e20c2a3a62f3977135157985b8e93758874fdcd2f215adfded92880bc14`; salinan terakhir diperiksa tetap berhash sama. 64 source binary cocok mirror; binary belum dibuka ulang. QA solo awal 21/21 dan lanjutan 31/31 (termasuk sampel warning), bukan perjalanan penuh/multiplayer/perangkat fisik. Catatan belum commit/push atau belum disimpan pada laporan run di bawah adalah status historis saat run. Tidak Publish pada checkpoint ini; impor cloud manual dan QA lanjutan tetap terbuka.
+
+**Dorongan angin dan Dinding Badai (17 November):** Tornado/Jetstream kini mendorong mengikuti lintasan horizontalnya. Dinding Badai memberi gust 3 dtk mengikuti sapuan saat satu benturan diterima, setengah kecepatan dinding (30 stud/dtk); proteksi/berhasil turun menghindar tetap berlaku. Hanya `ObstacleManager` dan `LargeChallengeManager` diubah; patch iPad AI lain dipertahankan. [QA](audit/wind-direction-2026-11-17/README.md): fixture solo 21/21, 64 compile/hash cocok mirror, Edit/default viewport/fixture bersih, Cloud v40 tersimpan tanpa Publish. File lokal disalin dari Studio setelah cleanup; parse binary/hash ada pada laporan QA, belum dibuka ulang. Belum commit/push; multiplayer/perangkat fisik/perjalanan alami belum diuji. Catatan iPad “belum disimpan” di bawah kini historis, tercakup simpan v40.
+
 **Checkpoint Git lokalisasi:** commit yang memuat pembaruan ini mencakup L10N-01, katalog, source, dokumentasi, bukti QA dan file lokal tersimpan ulang pukul 21:39 WIB: **3.523.944 B**, SHA-256 `1f2c35212637459699b53ba92a2da9616d9be77418eef6a7203729f61e779c16`. [Pemeriksaan sebelum commit](audit/localization-2026-11-17/commit-check/binary-source-report.json): 64 source binary cocok isi mirror dan checksum Studio QA. Binary terbaru belum dibuka ulang; penyebab selisih 1.109 B belum ditetapkan. Pembukaan ulang di bawah tetap bukti untuk hash `c5c1845c…`, bukan otomatis seluruh binary terbaru. Catatan belum commit/push pada laporan QA adalah status saat run; tidak ada Publish atau QA gameplay baru dalam checkpoint Git ini. Impor manual cloud tetap pekerjaan terbuka.
 
 **Lokalisasi Indonesia–English (L10N-01), 17 November:** katalog 490 teks/55 format, picker Auto/Indonesia/English di Setelan, gambar berhuruf memakai fallback teks English. Pilihan lokal sepanjang sesi; Auto memakai English untuk locale selain id. [Implementasi, QA dan kendala cloud](audit/localization-2026-11-17/README.md). Kedua universe `10773510320`/`10776821830` sudah source Indonesian + supported English, auto Strings & Products/Information On. Impor manual cloud utama timeout, ekspor aktual baru 70/490 key cocok; universe privat belum diimpor manual. Katalog dalam game lengkap dan tidak bergantung pada impor tersebut. File lokal **3.522.835 B**, SHA-256 `c5c1845c15ff66c98c96dcbb1acc924bffc36f94cfa86ddebe3e5167c44a0e12`, **dibuka ulang**: 64 source normalized SHA-256/class/path cocok mirror, 64 compile, tabel 490/id. Uji lima popup phone/tablet/desktop final lulus layout terarah; bukan perangkat fisik/perjalanan penuh/mixed-language clients. Edit/0 pemain/default viewport/fixture bersih. Belum commit/push atau Publish untuk fitur ini. Checkpoint 61-source di bawah adalah baseline **sebelum lokalisasi**, bukan binary terkini.
@@ -49,8 +53,18 @@ Checkpoint game: `442b728` ("Obstacle audio, palace cutscenes, asset round 6") d
 - Petak rumput tinggi round 6 dikembalikan ke LeafyGrass.
 - **Riwayat run: disimpan ke Cloud v22.** Pengguna kemudian menyimpan file lokal; source BalloonVFX/BiomeScenery tercakup dalam verifikasi checkpoint 61/61 di atas. Terrain belum dibandingkan lewat pembukaan ulang file. [Bukti](audit/playtest-fixes-2026-11-17/README.md).
 
+**Perbaikan playtest iPad (17 Nov, ±22:50 WIB), belum disimpan/commit:**
+- Panel arwah: tombol TANDAI BAHAYA tidak lagi tertutup art panel. Ada strip penjelasan. PING/V saat arwah langsung menandai bahaya.
+- Banner ping dan kapsul aksi custom muat dalam bingkai. Kapsul melebar mengikuti teks; progress tahan tampil di lingkaran tombol.
+- Damage tabrakan balon memakai siluet terlihat: 37–47 stud, sebelumnya silinder 60.
+- Lompatan di balon yang bergerak ikut terbawa balon: drift 5–26 → 0,2–2,5 stud.
+- Tombol Bahasa pindah ke baris preferensi Setelan.
+- 3 teks baru masuk katalog lokalisasi (493).
+- 9 source Studio = mirror. Place belum di-save; `.rbxl` lokal belum diperbarui. [Bukti](audit/playtest-ipad-2026-11-17/README.md).
+
 **Terbuka:**
-- Multi-pemain nyata: lompatan/efek bangkit dilihat kru lain, antrean dua balon.
+- Multi-pemain nyata: lompatan/efek bangkit dilihat kru lain, antrean dua balon, tabrakan dua balon dengan jarak kontak baru, panjat tali saat balon bergerak.
+- iPad/phone fisik untuk prompt, banner ping dan panel arwah yang baru.
 - Ponsel fisik dan performa montase (5 scene ±3.600 part selama ±4 dtk).
 - Tepi laut di kualitas grafik terendah.
 - Persistensi preferensi Cutscene.

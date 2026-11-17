@@ -49,6 +49,7 @@ function Manager.Spawn(zone,fd)
  local now=os.clock()
  local item={id=id,model=model,zone=zone,bottom=bottom,top=bottom+C.LARGE_HEIGHT,
   born=now,activeAt=now+C.LARGE_WARNING_SEC,expires=now+C.LARGE_WARNING_SEC+C.LARGE_START_Z*2/C.LARGE_SPEED,
+  velocity=Vector3.zAxis*C.LARGE_SPEED,
   warned=setmetatable({},{__mode="k"}),hit=setmetatable({},{__mode="k"}),lastZ=-C.LARGE_START_Z}
  table.insert(Manager.active,item)Manager.byZone[zone]=item
  for _,other in ipairs(live())do
@@ -97,12 +98,17 @@ Run.Heartbeat:Connect(function()
   if not item.activated then
    item.activated=true item.model:SetAttribute("Stage","Active")
   end
-  local z=-C.LARGE_START_Z+C.LARGE_SPEED*(now-item.activeAt)
+  local z=-C.LARGE_START_Z+item.velocity.Z*(now-item.activeAt)
   item.model:PivotTo(CFrame.new(0,item.bottom+C.LARGE_HEIGHT/2,z))
   for _,fd in ipairs(current)do
    if not item.hit[fd]and item.warned[fd]and now>=item.warned[fd]and Manager.Intersects(item,fd,item.lastZ,z)then
     item.hit[fd]=true
     if _G.FlyHighBalloonManager.ApplyPuncture(fd)then
+     -- Reuse the smoothed wind displacement: one gust in the curtain's sweep
+     -- direction per accepted hit. Shield/grace/arrival protection still gate it.
+     fd.windSource=item.id fd.windSince=now
+     fd.wind=Vector3.new(item.velocity.X,0,item.velocity.Z)*0.5
+     fd.windUntil=now+3
      fd.balloon:SetAttribute("StormHits",(fd.balloon:GetAttribute("StormHits")or 0)+1)
     end
    end

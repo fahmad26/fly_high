@@ -1,0 +1,14 @@
+[
+  {
+    "path": "ServerScriptService.FlyHighServer.BalloonManager",
+    "match": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+    "match": true
+  },
+  {
+    "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+    "match": true
+  }
+]

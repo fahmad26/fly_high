@@ -321,7 +321,8 @@ function Layout.Start(gui, player)
 		local ropeW = math.min(260, w - jumpSize - 2 * margin - 12)
 		place("TetherFrame", w < 500 and margin or (w - ropeW) / 2, h - 42 - textBoost, ropeW, 30 + textBoost)
 
-		local ghostFrame = place("GhostSpotterFrame", warningX, warningY + 68, math.min(320, warningW), 60)
+		-- Spirit panel; its explanation strip hangs 28 px below (GhostSpotHint).
+		local ghostFrame = place("GhostSpotterFrame", warningX, warningY + 68, math.min(340, warningW), 60)
 
 		-- 11. Crew Tactical Ping & Ghost Spot Banner
 		local pingBanner = get("CrewPingBanner")
@@ -337,9 +338,9 @@ function Layout.Start(gui, player)
 			local activeWarnH = ((storm and storm.Visible) or (alert and alert.Visible)) and 68
 				or ((notice and notice.Visible) and (46 + textBoost) or 0)
 			if ghostFrame and ghostFrame.Visible then
-				activeWarnH = math.max(activeWarnH, 68) + 68
+				activeWarnH = math.max(activeWarnH, 68) + 68 + 30
 			end
-			local pingH = (compact and 52 or 56) + textBoost
+			local pingH = (compact and 58 or 62) + textBoost
 			local pingW, pingX, pingY
 			local besideRight = not wide and not portrait and (w - (statusX + statusW + 10) - margin) >= 240
 			if besideRight then
@@ -506,21 +507,16 @@ function Layout.Start(gui, player)
 			local footerH = tight and 22 or 30
 			local prefGap = tight and 6 or 12
 			local toggleH = math.max(44, math.min(48, available - (titleH + titleGap + inventoryH + sectionGap + prefGap + sectionGap + footerH + rowGap + 2 * 44) - (tight and 6 or 12)))
-			local rackH = math.clamp(math.floor((available - (titleH + titleGap + inventoryH + sectionGap + prefGap + toggleH + sectionGap + footerH + rowGap)) / 2), 48, 60)
+			-- Four preference buttons in one row when they fit, otherwise a 2 x 2 grid.
+			local prefCols = innerWidth >= 380 and 4 or 2
+			local prefRows = 4 / prefCols
+			local prefBlockH = toggleH * prefRows + rowGap * (prefRows - 1)
+			local rackH = math.clamp(math.floor((available - (titleH + titleGap + inventoryH + sectionGap + prefGap + prefBlockH + sectionGap + footerH + rowGap)) / 2), 48, 60)
 			local rowH = tight and 44 or 46
-			local contentH = titleH + titleGap + inventoryH + sectionGap + rackH * 2 + rowGap + prefGap + toggleH + sectionGap + footerH
+			local contentH = titleH + titleGap + inventoryH + sectionGap + rackH * 2 + rowGap + prefGap + prefBlockH + sectionGap + footerH
 			local top = innerTop + math.max(0, math.floor((available - contentH) / 2))
 
-			box(settings:FindFirstChild("Title"), pad, top, innerWidth - 106, titleH)
-			box(settings:FindFirstChild("LanguageButton"), mw - pad - 98, top - 8, 98, 44)
-			local languageBox = settings:FindFirstChild("LanguagePickerBox")
-			local languageW = math.min(innerWidth, 260)
-			box(languageBox, mw - pad - languageW, top + titleH + 6, languageW, 164)
-			if languageBox then
-				for i, name in { "LanguageAuto", "LanguageIndonesian", "LanguageEnglish" } do
-					box(languageBox:FindFirstChild(name), 8, 8 + (i - 1) * 50, languageW - 16, 44)
-				end
-			end
+			box(settings:FindFirstChild("Title"), pad, top, innerWidth, titleH)
 			local invY = top + titleH + titleGap
 			local invPillW = math.min(innerWidth, 300)
 			box(settings:FindFirstChild("HUDInventoryPill"), (mw - invPillW) / 2, invY, invPillW, inventoryH)
@@ -547,12 +543,31 @@ function Layout.Start(gui, player)
 			local labelRow = firstRackY + 2 * rackH + rowGap + prefGap
 			local labelsTitle = settings:FindFirstChild("PlayerLabelsLabel")
 			if labelsTitle then labelsTitle.Visible = false end
-			local generalW = math.floor((innerWidth - colGap * 2) / 3)
-			box(settings:FindFirstChild("PlayerLabelsToggle"), pad, labelRow, generalW, toggleH)
-			box(settings:FindFirstChild("ReduceMotionToggle"), pad + generalW + colGap, labelRow, generalW, toggleH)
-			box(settings:FindFirstChild("CutsceneToggle"), pad + (generalW + colGap) * 2, labelRow, generalW, toggleH)
+			local prefGapX = prefCols == 4 and math.min(colGap, 8) or colGap
+			local generalW = math.floor((innerWidth - prefGapX * (prefCols - 1)) / prefCols)
+			local languageX, languageY
+			for i, name in { "PlayerLabelsToggle", "ReduceMotionToggle", "CutsceneToggle", "LanguageButton" } do
+				local col = (i - 1) % prefCols
+				local row = math.floor((i - 1) / prefCols)
+				local x = pad + col * (generalW + prefGapX)
+				local y = labelRow + row * (toggleH + rowGap)
+				box(settings:FindFirstChild(name), x, y, generalW, toggleH)
+				if name == "LanguageButton" then languageX, languageY = x, y end
+			end
+			-- The picker opens upward from the language button, right-aligned with it.
+			local languageBox = settings:FindFirstChild("LanguagePickerBox")
+			local languageW = math.min(innerWidth, 260)
+			local pickerH = 164
+			local pickerX = math.clamp(languageX + generalW - languageW, pad, mw - pad - languageW)
+			local pickerY = math.max(innerTop, languageY - pickerH - 6)
+			box(languageBox, pickerX, pickerY, languageW, pickerH)
+			if languageBox then
+				for i, name in { "LanguageAuto", "LanguageIndonesian", "LanguageEnglish" } do
+					box(languageBox:FindFirstChild(name), 8, 8 + (i - 1) * 50, languageW - 16, 44)
+				end
+			end
 
-			local footerY = labelRow + toggleH + sectionGap
+			local footerY = labelRow + prefBlockH + sectionGap
 			local footerW = math.min(innerWidth, 340)
 			box(settings:FindFirstChild("HUDWeaponFooterPill"), (mw - footerW) / 2, footerY, footerW, footerH)
 			box(settings:FindFirstChild("LaunchNote"), (mw - footerW) / 2 + 10, footerY, footerW - 20, footerH)

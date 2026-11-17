@@ -1,0 +1,27 @@
+{
+  "base": "e41cdcde9e680140ee5c215324fbaaff8feaae81",
+  "recordedAt": "2026-11-17T16:36:22.690Z",
+  "studio": "6adda177-a720-40b7-a9ae-95cace503005",
+  "universe": 10776821830,
+  "place": 97043730132219,
+  "cloudVersion": 40,
+  "productionChanged": [
+    "ObstacleManager",
+    "LargeChallengeManager"
+  ],
+  "compiled": 64,
+  "sourceShaParity": 64,
+  "run": "run2.json",
+  "passed": 21,
+  "total": 21,
+  "cleanup": {
+    "edit": true,
+    "running": false,
+    "device": "default",
+    "runtimeDriverRemoved": true
+  },
+  "localBinary": "c96f7e20c2a3a62f3977135157985b8e93758874fdcd2f215adfded92880bc14",
+  "binaryReopened": false,
+  "published": false,
+  "committed": false
+}

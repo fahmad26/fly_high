@@ -161,8 +161,11 @@ gCorner.Parent = ghostFrame
 
 local ghostSpotBtn = Instance.new("TextButton")
 ghostSpotBtn.Name = "SpotHazardButton"
+-- Above the panel art: at equal ZIndex the later-built panel raster covered the
+-- button and the panel read as an empty bar (iPad playtest 17 Nov).
+ghostSpotBtn.ZIndex = 4
 ghostSpotBtn.Size = UDim2.new(1, -20, 0, 44)
-ghostSpotBtn.Position = UDim2.new(0, 10, 0, 10)
+ghostSpotBtn.Position = UDim2.new(0, 10, 0, 8)
 ghostSpotBtn.BackgroundColor3 = Color3.fromRGB(240, 180, 20)
 ghostSpotBtn.Text = "👁️ SPOT BAHAYA UNTUK TIM (KLIK DI SINI)"
 ghostSpotBtn.TextColor3 = Color3.fromRGB(20, 20, 20)
@@ -174,6 +177,37 @@ ghostSpotBtn.Parent = ghostFrame
 local gBtnCorner = Instance.new("UICorner")
 gBtnCorner.CornerRadius = UDim.new(0, 8)
 gBtnCorner.Parent = ghostSpotBtn
+
+local GHOST_HINT = "Kamu arwah · arahkan kamera ke bahaya, lalu tandai untuk kru"
+-- Own caption strip under the panel art (the 9-slice art is built for one row).
+local ghostHint = Instance.new("TextLabel")
+ghostHint.Name = "GhostSpotHint"
+ghostHint.BackgroundColor3 = Color3.fromRGB(8, 20, 46)
+ghostHint.BackgroundTransparency = 0.2
+ghostHint.BorderSizePixel = 0
+ghostHint.Position = UDim2.new(0, 12, 1, 4)
+ghostHint.Size = UDim2.new(1, -24, 0, 24)
+ghostHint.ZIndex = 4
+local ghostHintCorner = Instance.new("UICorner")
+ghostHintCorner.CornerRadius = UDim.new(0, 8)
+ghostHintCorner.Parent = ghostHint
+local ghostHintPad = Instance.new("UIPadding")
+ghostHintPad.PaddingLeft = UDim.new(0, 8)
+ghostHintPad.PaddingRight = UDim.new(0, 8)
+ghostHintPad.PaddingTop = UDim.new(0, 3)
+ghostHintPad.PaddingBottom = UDim.new(0, 3)
+ghostHintPad.Parent = ghostHint
+ghostHint.Font = Enum.Font.GothamBold
+ghostHint.Text = GHOST_HINT
+ghostHint.TextColor3 = Color3.fromRGB(255, 232, 160)
+ghostHint.TextStrokeColor3 = Color3.fromRGB(4, 10, 24)
+ghostHint.TextStrokeTransparency = 0.35
+ghostHint.TextScaled = true
+ghostHint.Parent = ghostFrame
+local ghostHintSize = Instance.new("UITextSizeConstraint")
+ghostHintSize.MinTextSize = 9
+ghostHintSize.MaxTextSize = 13
+ghostHintSize.Parent = ghostHint
 
 local Config=require(ReplicatedStorage.FlyHigh.Modules.FlyHighConfig)
 local reloadRemote=remotes:WaitForChild("WeaponReloadEvent")
@@ -425,7 +459,11 @@ local function button(name,text,position,callback)
  local corner=Instance.new("UICorner")corner.CornerRadius=UDim.new(0,10)corner.Parent=b
  return b
 end
-local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),function() HUDMotion.Toggle(wheel) end)
+local isGhostNow, ghostSpot -- assigned with the spirit panel below
+local function pingInput()
+ if isGhostNow() then HUDMotion.SetVisible(wheel,false) ghostSpot() else HUDMotion.Toggle(wheel) end
+end
+local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),pingInput)
 local reloadButton=button("ReloadButton","RELOAD [R / X]",UDim2.new(1,-260,1,-225),function() if currentWeapon then reloadRemote:FireServer() end end)
 local dropButton=button("DropButton","DROP [G / B]",UDim2.new(1,-260,1,-270),function() weaponDropEvent:FireServer() end)
 local pingClose=button("PingCloseButton","Tutup",UDim2.fromOffset(0,0),function() HUDMotion.SetVisible(wheel,false) end)
@@ -444,7 +482,7 @@ UserInputService.InputBegan:Connect(function(input,gpe)
  elseif input.KeyCode==Enum.KeyCode.R or input.KeyCode==Enum.KeyCode.ButtonX then
   if currentWeapon then reloadRemote:FireServer() end
  elseif input.KeyCode==Enum.KeyCode.G or input.KeyCode==Enum.KeyCode.ButtonB then weaponDropEvent:FireServer()
- elseif input.KeyCode==Enum.KeyCode.V or input.KeyCode==Enum.KeyCode.DPadUp then HUDMotion.Toggle(wheel) end
+ elseif input.KeyCode==Enum.KeyCode.V or input.KeyCode==Enum.KeyCode.DPadUp then pingInput() end
 end)
 local function onCharacter(char)
  setWeapon(nil)
@@ -601,12 +639,32 @@ local function clearSpotMarkers()
  end
 end
 
-ghostSpotBtn.Activated:Connect(function()
+local ghostHintToken = 0
+local function ghostHintFlash(text)
+ ghostHintToken += 1
+ local token = ghostHintToken
+ ghostHint.Text = text
+ task.delay(2.2, function() if token == ghostHintToken then ghostHint.Text = GHOST_HINT end end)
+end
+local lastGhostSpot = 0
+isGhostNow = function()
+ return localPlayer:GetAttribute("FlightGhost") == true and localPlayer:GetAttribute("InFlight") == true
+end
+-- Spirits cannot send crew quick pings (the server ignores them), so every ping
+-- input while dead marks the danger in view instead.
+ghostSpot = function()
+ if os.clock() - lastGhostSpot < 2 then
+  ghostHintFlash("Tunggu sebentar sebelum menandai lagi")
+  return
+ end
  local pos = spotTargetPosition()
  if pos then
+  lastGhostSpot = os.clock()
   tacticalPingEvent:FireServer("GhostSpot", pos, "")
+  ghostHintFlash("Bahaya ditandai! Kru melihat tanda di layar mereka")
  end
-end)
+end
+ghostSpotBtn.Activated:Connect(ghostSpot)
 local wasGhost=false
 local HUD_BLOCKER_NAMES = {
  AltimeterFrame = true,

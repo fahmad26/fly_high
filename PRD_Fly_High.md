@@ -451,6 +451,7 @@ Revisi ini menggantikan aturan lama yang bertentangan pada bagian sebelumnya.
 | Sapuan | Z=-260 menuju Z=260, 60 stud/detik; aktif sekitar 8,67 detik |
 | Cara menghindar | Turunkan balon ke bawah awan; HUD menampilkan sisa penurunan yang diperlukan |
 | Kerusakan | Maksimal 1 lubang per gelombang per balon; grace period dan shield tetap berlaku |
+| Dorongan saat terkena | Sekali per benturan yang diterima, horizontal mengikuti sapuan dinding, 30 stud/detik selama 3 detik dengan ramp/fade halus. Shield/grace/perlindungan kedatangan atau berhasil turun menghindar mencegah dorongan dinding. Kemudi dan batas koridor tetap berlaku. |
 | Senjata | Awan tidak dapat dihancurkan dengan tembakan |
 | Pengulangan | Milestone yang sudah diperingatkan tidak dipicu ulang oleh flight yang sama saat turun lalu naik |
 | Batas global | Satu gelombang aktif per milestone, maksimal dua gelombang bersamaan |
