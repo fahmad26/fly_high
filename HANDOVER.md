@@ -4,7 +4,7 @@ Snapshot aktif per 17 November 2026, Asia/Jakarta. Bagian bertanggal di bawah "S
 
 ## Status terkini — 17 November 2026
 
-Checkpoint Git: commit "Obstacle audio, palace cutscenes, asset round 6" di atas `57f7e31`, di-push ke `origin/main`. Berisi `Fly High.rbxl` lokal (3.490.832 B, SHA-256 `f19c846e…c8e3`, belum dibuka ulang di Studio), mirror `audit/sources` yang cocok dengan Studio, sumber Blender/GLB, dan bukti audit di bawah. `assets/marketing/` dan duplikat ekspor `assets/models/scenery/generated/` sengaja tidak di-commit.
+Checkpoint game: `442b728` ("Obstacle audio, palace cutscenes, asset round 6") di atas `57f7e31`; remote `origin/main` diverifikasi memuat commit ini pada 17 November. Berisi `Fly High.rbxl` lokal (3.490.832 B, SHA-256 `f19c846e…c8e3`, belum dibuka ulang di Studio), mirror `audit/sources` yang cocok dengan Studio menurut checkpoint tersebut, sumber Blender/GLB, dan bukti audit di bawah. Checkpoint arsip berikutnya memasukkan `assets/marketing/` sebagai **draft belum disetujui**, serta ekspor `assets/models/scenery/generated/` yang sebelumnya dikecualikan. Ini bukan perubahan gameplay atau verifikasi Studio baru. Status marketing: `ART-01` di PROGRESS.
 
 **Efek suara rintangan (AUDIO-01):**
 - `ObstacleAudioCatalog` + `ObstacleAudioController`: 23 aset PSE/APM untuk 9 musuh, 9 hazard dan Dinding Badai.

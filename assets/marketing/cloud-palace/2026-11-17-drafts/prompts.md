@@ -1,0 +1,24 @@
+# Prompt sesi revisi 3D
+
+Metode: built-in image_gen. Prompt ikon adalah permintaan yang terinterupsi, bukan bukti output selesai.
+
+## v3ThumbnailPrompt
+
+Create ONE WIDE 16:9 3D-rendered promotional illustration for the Roblox cooperative balloon adventure "Fly High: Cloud Palace". Full bleed, target 1920x1080.
+Use the TWO attached game screenshots as SHAPE references: image 1 shows the broad angular wooden gondola with low slatted rails and brass trim; image 2 shows the real palace design with tall narrow white towers, small onion-shaped gold domes and blue arches. Discard all screenshot UI. Build a new deliberately staged 3D promotional scene, not a screenshot collage.
+
+The visual must look like thoughtfully made Roblox 3D key art: dimensional geometry, visible perspective, cast shadows, simple clean matte surfaces and softly beveled edges. Classic BLOCKY Roblox avatars with flat facial graphics and rigid cuboid arms/legs. Clear stylization and restrained material detail. Neither a 2D painting nor photoreal fabric, plush toys, LEGO figures, Pixar people, porcelain faces, or a glossy generic fantasy poster.
+
+Capture one lively moment at the basket rail: a team is climbing out of a storm toward the palace. The wide walnut basket cuts diagonally across the lower-left and center, camera CLOSE at rail height with a moderate wide lens, making the avatars immediately readable. An appealing classic Roblox captain with a simple yellow head, short black geometric hair, navy torso and red scarf firmly steers a small wooden helm, eyes focused on the route. Beside the captain a second Roblox player in a white-and-black PANDA HOOD and simple light-grey blocky outfit leans back pulling a single taut rope, alert and determined. TWO crew, different silhouettes and poses; both fully inside the basket. Simple flat Roblox facial expressions, not exaggerated screaming or posed toothy smiles. Keep hands coherent, gripping wheel/rope.
+Above them, dominating upper-left/middle, is a WHITE AND ORANGE KOI-SHAPED hot-air balloon with smooth inflated panel geometry, a few large orange patches, orange fins and forked tail, tiny black eyes and a natural small koi mouth. It must feel like a fantastical FISH-shaped balloon, NOT a smiling baby whale, plush mascot or shiny toy. The fish is turned three-quarter right, reaching toward the destination. Four clean tensioned suspension ropes and an ochre burner visibly attach it to the broad basket, no elaborate rigging.
+The destination occupies the RIGHT middle distance: the screenshot's coherent ivory towered Cloud Palace, tall central tower with small gold onion dome above lower gold-domed turrets and sky-blue pointed windows, set on a single cumulus island. Two broad turquoise waterfalls descend from its terrace. Readable compact silhouette, not an enormous mosque dome, cluttered spires, or realistic fantasy city.
+
+Art-direct the sky in two large value masses: indigo-grey storm cloud on far lower left behind the crew, clean pale blue sky around the fish, and warm cream sunlight on the palace. A few large cloud shapes lead diagonally upward-right. One small distant lightning flash inside storm cloud only. Real depth, a clear route, breathing room around palace. Restrained palette: navy, warm ivory, koi vermilion, turquoise, small gold accents. Matte wood, flat cloth colors, soft controlled shadows. No ubiquitous orange rim lighting, bloom, glitter or saturated sunset.
+Leave upper-right sky for exact title "FLY HIGH", bold compact white sans-serif capitals with thin navy shadow, smaller "CLOUD PALACE" beneath. Simple flat typography in a reserved clear area ABOVE palace, with comfortable margins. No banner or metallic bevel.
+
+Keep the scene crisp and graphic while fully THREE-DIMENSIONAL. Characterful and specific to this game. No HUD, badges, arrows, currency, watermarks, photoreal surface microtextures, baroque decoration or tiny noisy flying objects. One finished thumbnail.
+
+## v3ThumbnailEditPrompt
+
+Edit this 3D Roblox thumbnail with ONE targeted correction: there are currently FOUR crew members, while the game supports at most THREE. Remove ONLY the small BLUE-HOODIE AVATAR WITH THE BACKWARDS BLUE CAP at the back left (the one raising a hand to the forehead). Reconstruct the dark storm cloud, open air and basket background naturally in that exact space. Keep exactly THREE remaining crew: red-hoodie brown-haired avatar at far left, navy captain with red scarf in center, white panda-hood rope-puller at right. Preserve their appearance, positions, anatomy, expressions and interactions exactly. Preserve the entire 3D style, composition, lighting, koi balloon, ropes, burner, wood/brass basket, castle, waterfall, typography 'FLY HIGH' / 'CLOUD PALACE', frame and 16:9 size. No other redesign. It must stay a clean fully three-dimensional Roblox promo image, not 2D art.
+

@@ -1,0 +1,58 @@
+{
+  "game": "Fly High: Cloud Palace",
+  "created": "2026-11-16",
+  "method": "Built-in image_gen: two independent image generations; Sharp used only for export sizing and colourspace conversion.",
+  "type": "Illustrated marketing key art; not an in-game screenshot.",
+  "published": false,
+  "files": [
+    {
+      "name": "icon-master-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2344572,
+      "sha256": "eaaa7d97080330df595c2339a1d183e33d57c297aedc85c76aa15440566702c8"
+    },
+    {
+      "name": "thumbnail-master-v1.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2554477,
+      "sha256": "7530c711c4f2cff70ab3b9e20d16de1dce79629b00bbd68c0387d62f324ca085"
+    },
+    {
+      "name": "icon-1024-v1.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 2381790,
+      "sha256": "de79a661c91a3d178e0c0bb1d00394fdd63cb9c11a2cfd5371634831eb84f1e3"
+    },
+    {
+      "name": "icon-512-v1.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 619159,
+      "sha256": "54207632d5bf839ddf552f257607f6ae3cf6d3b4b97bc45f49da8f1bd96f76b8"
+    },
+    {
+      "name": "thumbnail-1920x1080-v1.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 5187275,
+      "sha256": "3e7227d21fcd47a9223b290924e4d2beff7501650baeafedac0dd155ba9ddfed"
+    },
+    {
+      "name": "qa-icon-150.png",
+      "width": 150,
+      "height": 150,
+      "bytes": 60599,
+      "sha256": "87fc35890b2bd91e242ad8c70b8604f661ca166301327617e5828091a8bc2d6e"
+    },
+    {
+      "name": "qa-thumbnail-384x216.png",
+      "width": 384,
+      "height": 216,
+      "bytes": 235264,
+      "sha256": "8b2b44d012c0c2ee37c0a6b545ed90d319cb55c65eeca76a6e7b90679ed3c353"
+    }
+  ]
+}
