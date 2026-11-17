@@ -73,7 +73,7 @@ function Art.Pose(copy: Model, phase: number, speed: number, amplitude: number):
 	local pose: Pose = {model = copy, wings = {}, phase = phase, speed = speed, amplitude = amplitude}
 	local origin = copy:GetPivot()
 	for _, piece in copy:GetDescendants() do
-		if piece:IsA("BasePart") and piece.Name == "Wing" then
+		if piece:IsA("BasePart") and (piece.Name == "Wing" or piece.Name == "WingTip") then
 			local rest = origin:ToObjectSpace(piece.CFrame)
 			local side = if rest.X < 0 then -1 else 1
 			table.insert(pose.wings, {part = piece, rest = rest, side = side,

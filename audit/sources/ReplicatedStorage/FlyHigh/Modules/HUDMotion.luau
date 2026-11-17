@@ -64,6 +64,7 @@ local settingsStaggerOrder = {
 	AK47Slot2 = 4,
 	PlayerLabelsToggle = 5,
 	ReduceMotionToggle = 6,
+	CutsceneToggle = 7,
 }
 
 local pingStaggerOrder = {

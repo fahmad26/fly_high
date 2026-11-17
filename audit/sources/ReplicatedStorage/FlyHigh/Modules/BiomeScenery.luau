@@ -308,13 +308,13 @@ end
 -- is a tiling cloud-deck texture on two invisible layers, seamless across a 5x5 grid of 2.040-stud tiles.
 local CLOUD_DECK = "rbxassetid://88219497565542" -- FH_CloudDeck (decal 116548342084060)
 
-local function cloudSea(parent, km, tint)
+local function cloudSea(parent, km, tint, darken)
 	local sea = model(parent, "CloudSea")
 	-- Opaque floor under the deck so gaps show deep cloud shadow, never the revealed seabed square.
 	local floor = Instance.new("Part")
 	floor.Name = "CloudSeaFloor"
 	floor.Size = Vector3.new(2040, 1, 2040)
-	floor.Color = tint:Lerp(Color3.new(0, 0, 0), 0.45)
+	floor.Color = tint:Lerp(Color3.new(0, 0, 0), darken or 0.45)
 	floor.Material = Enum.Material.SmoothPlastic
 	floor.Anchored = true
 	floor.CanCollide = false
@@ -538,7 +538,42 @@ local function buildSculptedIslandTerrain(parent, cf, scale, palette, keepTemple
 		-- blocky arch clashed with the PBR island (review 16 Nov 19:30). Temple ruins are added as
 		-- separate semi-realistic models (see templeRuin) instead.
 		local archTemplate = assets:FindFirstChild("RuinArch")
-		if keepTempleRuins and archTemplate and ivoryPart then
+		local columnKit = assets:FindFirstChild("SunsetColumns")
+		if keepTempleRuins and columnKit and ivoryPart then
+			-- Colonnade of broken fluted columns on the temple plinth; the half-broken arch read as a
+			-- question mark from the flight path (review 17 Nov).
+			local foot = ivoryPart.Position - Vector3.new(0, ivoryPart.Size.Y / 2 + 4.5 * scale, 0)
+			local row = CFrame.new(foot) * CFrame.Angles(0, yaw, 0)
+			local colonnade = Instance.new("Model")
+			colonnade.Name = "TempleColonnade"
+			local stone = palette.ivory or rgb(238, 220, 186)
+			for k, spec in { { -21, 1.0, "ColumnTall" }, { -7, 1.18, "ColumnTall" }, { 7, 0.82, "ColumnTall" }, { 21, 1.3, "ColumnStump" } } do
+				local x, h, name = spec[1], spec[2], spec[3]
+				local template = columnKit:FindFirstChild(name)
+				if template then
+					local piece = template:Clone()
+					local s = scale * 2.3 * h
+					piece.Size = template.Size * s
+					piece.CFrame = row * CFrame.new(x * scale, 0, 0) * CFrame.Angles(0, k * 0.9, 0)
+						* CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * s)
+					piece.Color = stone:Lerp(palette.sandstone or stone, k * 0.06)
+					piece.Parent = colonnade
+				end
+			end
+			for _, spec in { { "ColumnDrum", Vector3.new(14, 0, 11), 0.6 }, { "ColumnCapital", Vector3.new(-14, 0, 10), 1.9 } } do
+				local template = columnKit:FindFirstChild(spec[1])
+				if template then
+					local piece = template:Clone()
+					local s = scale * 2.3
+					piece.Size = template.Size * s
+					piece.CFrame = row * CFrame.new(spec[2] * scale) * CFrame.Angles(spec[1] == "ColumnCapital" and 0.4 or 0, spec[3], 0.15)
+						* CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * s)
+					piece.Color = palette.sandstone or stone
+					piece.Parent = colonnade
+				end
+			end
+			colonnade.Parent = base
+		elseif keepTempleRuins and archTemplate and ivoryPart then
 			local arch = archTemplate:Clone()
 			arch.Name = "TempleRuinArch"
 			arch:ScaleTo(scale * 0.82)
@@ -730,7 +765,8 @@ local function buildFloatingRockIslet(parent, cf, width, hasWaterfall, seed, sty
 	local scale = math.clamp(width / 108, 0.32, 0.68)
 
 	local terrain = buildSculptedIslandTerrain(islet, cf, scale, {
-		basalt = style.stone,
+		-- Warmer stone: seen from the lobby the undersides read as plain grey cones (review 17 Nov).
+		basalt = style.stone:Lerp(style.cliff, 0.3),
 		cliff = style.cliff,
 		moss = rgb(80, 148, 86),
 		cloudColor = rgb(252, 246, 232),
@@ -767,6 +803,18 @@ local function buildFloatingRockIslet(parent, cf, width, hasWaterfall, seed, sty
 	end
 
 	local topY = 12.5 * scale
+	-- Roots and vines spilling over the rim break up the bare underside (same kit as the Sunset islands).
+	local rootKit = getEnvironmentAssets()
+	rootKit = rootKit and rootKit:FindFirstChild("HangingRoots")
+	for k = 1, rootKit and 3 or 0 do
+		local a = k * 2.1 + seed * 0.37
+		local rimR = 34 * scale * (style.rim and style.rim.X or 1)
+		local roots = rootKit:Clone()
+		roots.Name = "IsletRoots"
+		roots:ScaleTo(math.max(0.2, (16 + k * 4) * scale / 30))
+		roots:PivotTo(cf * CFrame.new(math.cos(a) * rimR, topY - 3 * scale, math.sin(a) * rimR) * CFrame.Angles(0, a, 0))
+		roots.Parent = islet
+	end
 	if style.canopy ~= false then
 		natureAsset(islet, "BroadleafTree", "CanopyTree",
 			cf * CFrame.new(-8 * scale, topY, -4 * scale) * CFrame.Angles(0, random:NextNumber(0, 6.28), 0),
@@ -1463,8 +1511,9 @@ local function stormCloud(parent, kit, mists, name, origin, yaw, scale)
 	local size = cloud.Size
 	table.insert(mists, stormMist(parent, cloud.CFrame * CFrame.new(0, -size.Y * 0.44, 0),
 		Vector3.new(size.X * 0.55, 6, size.Z * 0.45), {
-			name = "CloudBaseMist", color = rgb(70, 68, 90), size = math.max(28, size.X * 0.22),
-			alpha = 0.55, life = 40, count = 10, speed = 0.4,
+			-- Lighter, thinner and smaller: the dark puffs read as a flat plate under every cloud (review 17 Nov).
+			name = "CloudBaseMist", color = rgb(126, 122, 156), size = math.max(20, size.X * 0.15),
+			alpha = 0.74, life = 40, count = 7, speed = 0.4,
 		}))
 	if split then
 		-- No soft shell on the veil: a scaled copy reads as an outlined plate from above (review 15 Nov).
@@ -2049,6 +2098,35 @@ local function buildBrokenStoneBridge(parent, startPos, finishPos, seed)
 	return bridge
 end
 
+-- Broken fluted column kit (EnvironmentAssets.SunsetColumns, asset 115927584511158). footCf is the base of the
+-- piece; returns nil when the kit is missing so callers can keep their fallback.
+local function ruinColumn(parent, name, footCf, scale, color)
+	local assets = getEnvironmentAssets()
+	local kit = assets and assets:FindFirstChild("SunsetColumns")
+	local template = kit and kit:FindFirstChild(name)
+	if not template then return nil end
+	local piece = template:Clone()
+	piece.Size = template.Size * scale
+	piece.CFrame = footCf * CFrame.new((template:GetAttribute("SourceCenter") or Vector3.zero) * scale)
+	piece.Color = color
+	piece.Anchored = true
+	piece.CanCollide = false
+	piece.CanTouch = false
+	piece.CanQuery = false
+	piece.CastShadow = false
+	piece.Parent = parent
+	return piece
+end
+
+-- A small ruin group: one standing broken column, a stump, a fallen drum and a toppled capital.
+local function columnRuins(parent, footCf, scale, stone, accent)
+	if not ruinColumn(parent, "ColumnTall", footCf * CFrame.Angles(0, 0, 0.06), scale * 1.15, stone) then return false end
+	ruinColumn(parent, "ColumnStump", footCf * CFrame.new(5.2 * scale, 0, 2.4 * scale) * CFrame.Angles(0, 0.7, -0.04), scale, stone)
+	ruinColumn(parent, "ColumnDrum", footCf * CFrame.new(2.6 * scale, -0.25 * scale, 6.2 * scale) * CFrame.Angles(0, 1.9, 0), scale, stone:Lerp(accent, 0.15))
+	ruinColumn(parent, "ColumnCapital", footCf * CFrame.new(-3.6 * scale, -0.2 * scale, 4.4 * scale) * CFrame.Angles(0.42, 0.5, 0.18), scale, accent)
+	return true
+end
+
 local function skyIsles(parent)
 	cloudSea(parent, 2900, rgb(255, 206, 186)) -- 275-775 studs below across 4.000-6.000 km
 	local basaltCol = rgb(92, 62, 82)
@@ -2116,14 +2194,21 @@ local function skyIsles(parent)
 				local x, height, z, tilt = table.unpack(columnSpec)
 				local base = cf * CFrame.new(x * scale, 12 * scale, z * scale)
 				local ruined = base * CFrame.Angles(0, 0, tilt)
-				part(island, "RuinPedestal", Vector3.new(10, 3.4, 10) * scale, base, sandstoneCol, sandstoneMat)
-				part(island, "BrokenPillar", Vector3.new(height, 6.3, 6.3) * scale,
-					ruined * CFrame.new(0, height * scale * 0.5, 0) * CFrame.Angles(0, 0, math.pi / 2),
-					ivoryCol:Lerp(cliffCol, 0.28), limestoneMat, cylinder)
-				part(island, "FracturedCapital", Vector3.new(7, 3.4, 6.4) * scale,
-					ruined * CFrame.new(0.4 * scale, height * scale, 0) * CFrame.Angles(0, 0.30, tilt),
-					sandstoneCol, sandstoneMat, "Wedge")
+				-- Fluted broken columns replace the plain cylinders (review 17 Nov).
+				local stone = ivoryCol:Lerp(cliffCol, 0.28)
+				local kitScale = height * scale / 8 * 1.15
+				local placed = ruinColumn(island, height > 14 and "ColumnTall" or "ColumnStump",
+					base * CFrame.new(0, -1.2 * scale, 0) * CFrame.Angles(0, x * 0.1, tilt * 0.35),
+					height > 14 and kitScale or kitScale * 2.2, stone)
+				if not placed then
+					part(island, "RuinPedestal", Vector3.new(10, 3.4, 10) * scale, base, sandstoneCol, sandstoneMat)
+					part(island, "BrokenPillar", Vector3.new(height, 6.3, 6.3) * scale,
+						ruined * CFrame.new(0, height * scale * 0.5, 0) * CFrame.Angles(0, 0, math.pi / 2),
+						stone, limestoneMat, cylinder)
+				end
 			end
+			ruinColumn(island, "ColumnDrum", cf * CFrame.new(4 * scale, 11.4 * scale, 14 * scale) * CFrame.Angles(0, 0.4, 0), 4.2 * scale, ivoryCol:Lerp(cliffCol, 0.35))
+			ruinColumn(island, "ColumnCapital", cf * CFrame.new(-16 * scale, 11.6 * scale, 12 * scale) * CFrame.Angles(0.35, 1.1, 0.2), 4.2 * scale, sandstoneCol)
 		end
 		if terrain and spec.shelf then
 			local rim = terrain:FindFirstChild("SculptedCliffRim")
@@ -2163,6 +2248,9 @@ local function skyIsles(parent)
 			archKit = archKit and archKit:FindFirstChild("RuinArch")
 			if island:FindFirstChild("TempleRuinArch", true) then
 				-- nothing extra
+			elseif columnRuins(island, cf * CFrame.new(-14 * scale, topY - 0.6 * scale, -8 * scale) * CFrame.Angles(0, i * 1.3, 0),
+				1.35 * scale, ivoryCol:Lerp(cliffCol, 0.3), sandstoneCol) then
+				-- Column group instead of the shrunken arch, which read as a hook/question mark (review 17 Nov).
 			elseif archKit then
 				local small = archKit:Clone()
 				small.Name = "SmallRuinArch"
@@ -2188,6 +2276,17 @@ local function skyIsles(parent)
 					phase = b * math.pi, speed = 0.45, radius = 5 * scale, bob = 1.3 * scale,
 					pose = HabitatArt.Pose(bee, b, 24, 0.23)}) end
 			end
+		end
+		-- Extra ground cover so island tops do not read as bare turf discs (review 17 Nov).
+		for j = 1, 5 do
+			local a = j * 2.39996 + i
+			local r = (9 + (j % 3) * 7) * scale
+			natureAsset(island, "Flower", "SunsetMeadowFlower", cf * CFrame.new(math.cos(a) * r, topY, math.sin(a) * r),
+				math.clamp(2.4 * scale, 1.1, 1.7), function(d)
+					if d.Name == "PetalCorolla" then d.Color = j % 2 == 0 and rgb(255, 196, 120) or rgb(246, 150, 168) end
+				end)
+			natureAsset(island, "Fern", "SunsetUndergrowth", cf * CFrame.new(math.cos(a + 1.2) * (r + 5 * scale), topY, math.sin(a + 1.2) * (r + 5 * scale)),
+				math.clamp(2.0 * scale, 1.0, 1.6))
 		end
 		for j = 1, 3 do
 			local a = (j - 1) * math.pi * 2 / 3 + i * 0.5
@@ -2278,6 +2377,9 @@ local function skyIsles(parent)
 		}, false)
 		if idx == 1 then
 			local arch = anchorCf * CFrame.new(-2, 6, 0) * CFrame.Angles(0, -0.4, 0)
+			-- Fluted column ruins: the lone pier with a quarter arch read as a hook (review 17 Nov).
+			local columns = columnRuins(anchorIsle, arch * CFrame.new(-8, -0.4, -2), 1.6, ivoryCol:Lerp(sandstoneCol, 0.2), sandstoneCol)
+			if not columns then
 			part(anchorIsle, "ArchRemnantPier", Vector3.new(6, 13, 7),
 				arch * CFrame.new(-10, 6.5, 0), sandstoneCol, sandstoneMat)
 			for segment = 0, 4 do
@@ -2288,6 +2390,7 @@ local function skyIsles(parent)
 					ivoryCol:Lerp(sandstoneCol, segment * 0.10), limestoneMat)
 			end
 			ruinRelief(anchorIsle, arch * CFrame.new(-10, 10, 3.55), 1.1)
+			end
 			local rootStart = (arch * CFrame.new(-8, -1, 2)).Position
 			local rootMid = (arch * CFrame.new(-13, -12, 5)).Position
 			if not hangingRoots(anchorIsle, rootStart, 24, 0.6, "HangingRoot") then
@@ -3192,7 +3295,16 @@ local function gateway(parent)
 
 	-- Sea of cloud far below the gateway. Without it the view under the horizon was a flat haze colour with a
 	-- hard line against the blue sky (review 15 Nov, 8.500-9.500 km). MeshParts cap at 2048 studs, so tile 3x3.
-	cloudSea(parent, 6900, rgb(255, 242, 222)) -- 275-775 studs below the gondola across 8.000-10.000 km
+	cloudSea(parent, 6900, rgb(255, 242, 222), 0.12) -- 275-775 studs below the gondola across 8.000-10.000 km
+	-- Low cloud banks on the deck so the view under the horizon has shape, not a flat haze plane (review 17 Nov).
+	local deckY = altitude(6900) - 6
+	local bankColors = { rgb(255, 246, 228), rgb(250, 234, 214), rgb(236, 226, 228) }
+	for i = 1, 14 do
+		local a = i * 2.39996
+		local r = 520 + (i % 4) * 190
+		band(parent, "GatewayDeckBank", Vector3.new(math.cos(a) * r, deckY, math.sin(a) * r),
+			Vector3.new(380 + (i % 3) * 90, 64 + (i % 2) * 20, 210), bankColors, 4100 + i * 13, i % 3 == 0 and "wisp" or nil)
+	end
 
 	local palace = workspace:FindFirstChild("CloudPalace")
 	local silhouette = model(parent, "PalaceSilhouette")
@@ -3241,9 +3353,16 @@ local function gateway(parent)
 					local drop = (outlet.Position.Y > summitDock.Position.Y + 25 and 36 or 97) * scale
 					local width = outlet.Size.X * scale
 					local water = beam(socket(carrier, Vector3.zero), socket(carrier, Vector3.new(0, -drop, 1.4)),
-						width, width * 0.68, ColorSequence.new(rgb(136, 220, 243), rgb(217, 246, 253)), waterFade)
-					water.LightEmission = 0.28
+						width, width * 1.45, ColorSequence.new(rgb(150, 224, 245), rgb(232, 248, 255)), waterFade)
+					-- Streaked, flowing texture and a spray widening at the foot instead of a flat strip (review 17 Nov).
+					water.Texture = "rbxasset://textures/particles/smoke_main.dds"
+					water.TextureMode = Enum.TextureMode.Stretch
+					water.TextureSpeed = 1.1
+					water.LightEmission = 0.32
 					table.insert(ribbons, water)
+					band(silhouette, "VistaFallMist", carrier.Position - Vector3.new(0, drop * 0.92, 0),
+						Vector3.new(width * 3.2, 9, width * 2.6), { rgb(244, 250, 255), rgb(230, 240, 248), rgb(255, 255, 255) },
+						1700 + #ribbons, "wisp")
 				end
 			end
 		end

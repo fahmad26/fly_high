@@ -26,9 +26,10 @@ local function land(fd)
  local keep=workspace.CloudPalace.CastleKeep
  fd.balloon:SetAttribute("ArrivalState","Docking")
  local origin=fd.root.Position
- move(fd,CFrame.new(origin.X,dock.Position.Y+20,120),.8,fd.arrivalPassengers)
- move(fd,CFrame.new(dock.Position.X,dock.Position.Y+20,120),1,fd.arrivalPassengers)
- move(fd,CFrame.new(dock.Position+Vector3.new(0,1.7,0)),1,fd.arrivalPassengers)
+ -- Slower approach gives the client arrival cutscene (CINE-01) time to frame the palace; ~4.8 s total.
+ move(fd,CFrame.new(origin.X,dock.Position.Y+20,120),1.6,fd.arrivalPassengers)
+ move(fd,CFrame.new(dock.Position.X,dock.Position.Y+20,120),1.8,fd.arrivalPassengers)
+ move(fd,CFrame.new(dock.Position+Vector3.new(0,1.7,0)),1.4,fd.arrivalPassengers)
  -- Each player loads independently; a departing/disconnected player cannot stall the queue.
  local pending=0
  local open=true
@@ -37,20 +38,40 @@ local function land(fd)
   pending+=1
   task.spawn(function()
    local ok,err=pcall(function()
-    if fd.dead[p] or not U.Alive(p)then p:LoadCharacterAsync()end
+    local revived=fd.dead[p] or not U.Alive(p)
+    if revived then p:LoadCharacterAsync()end
     local character=p.Character
     local root=character and character:WaitForChild("HumanoidRootPart",8)
     if not open or p.Parent~=Players or not root or p.Character~=character then return end
     U.Unseat(p)
     local arrival=dock.Position+Vector3.new((i-(#fd.players+1)/2)*5,5,-8)
-    character:PivotTo(CFrame.lookAt(arrival,Vector3.new(keep.Position.X,arrival.Y,keep.Position.Z)))
+    local target=CFrame.lookAt(arrival,Vector3.new(keep.Position.X,arrival.Y,keep.Position.Z))
     local item=fd.arrivalPassengers[p]
+    if not revived and item and item.root==root and root.Anchored then
+     -- Crew hop from the deck onto the dock (CINE-01) instead of teleporting; root stays anchored.
+     local from=root.CFrame
+     local rootToPivot=root.CFrame:ToObjectSpace(character:GetPivot())
+     local hop,elapsed=0.75,0
+     while elapsed<hop and open and p.Parent==Players and p.Character==character and root.Parent do
+      elapsed+=Run.Heartbeat:Wait()
+      local a=math.clamp(elapsed/hop,0,1)
+      local cf=from:Lerp(target,a*a*(3-2*a))+Vector3.new(0,4*7*a*(1-a),0)
+      character:PivotTo(cf*rootToPivot)
+     end
+     if not open or p.Parent~=Players or p.Character~=character or not root.Parent then return end
+    end
+    character:PivotTo(target)
     root.Anchored=item and item.root==root and item.anchored or false
     root.AssemblyLinearVelocity=Vector3.zero
     p:SetAttribute("FlightGhost",false)
     p:SetAttribute("ArrivalPending",nil)
     p:SetAttribute("PalaceArrival",nil)
     p:SetAttribute("PalaceArrival",arrival)
+    -- Fallen crew rise at the dock (CINE-01): clients play the revival effect for this character.
+    if revived then
+     p:SetAttribute("ArrivalRevived",true)
+     task.delay(12,function()if p.Parent==Players and p.Character==character then p:SetAttribute("ArrivalRevived",nil)end end)
+    end
    end)
    if not ok then warn("Palace arrival: "..tostring(err))end
    pending-=1

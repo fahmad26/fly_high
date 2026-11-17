@@ -1,6 +1,6 @@
 # Cutscene Istana Awan Fly High
 
-Tanggal: 16 November 2026, Asia/Jakarta. **Status: konsep disetujui pengguna (23:29 WIB), belum diimplementasikan.** Status implementasi dan QA mengikuti baris CINE-01 di [PROGRESS](../../../PROGRESS.md). Aturan kemenangan tim yang mendasari ada di [flight-arrival](../flight-arrival/design.md).
+Tanggal: 16 November 2026, Asia/Jakarta. **Status: konsep disetujui pengguna (23:29 WIB), diimplementasikan 17 November 2026 ([QA](../../../audit/palace-cutscenes-audio-2026-11-17/README.md)).** Status implementasi dan QA mengikuti baris CINE-01 di [PROGRESS](../../../PROGRESS.md). Aturan kemenangan tim yang mendasari ada di [flight-arrival](../flight-arrival/design.md).
 
 ## Keputusan pengguna
 
@@ -8,7 +8,7 @@ Tanggal: 16 November 2026, Asia/Jakarta. **Status: konsep disetujui pengguna (23
 - Durasi: tiba sekitar 8 detik, turun sekitar 6 detik.
 - **Tidak ada versi singkat** (23:35 WIB). Setiap tayangan memakai versi lengkap.
 - Kru yang gugur tetap seperti sekarang: dapat puncak (`AddSummit`), tidak dapat koin kedatangan `PALACE_ARRIVAL`.
-- Cutscene turun memakai montase lima zona.
+- Cutscene turun memakai montase lima zona. Implementasi 17 Nov memakai scenery asli tiap bioma (lihat catatan implementasi di bawah).
 
 ## Kondisi saat dokumen ditulis
 
@@ -46,11 +46,11 @@ Hasil inspeksi source Studio, read-only:
 | Waktu | Adegan | Isi |
 | --- | --- | --- |
 | 0–1 dtk | Masuk portal | Kamera mundur, awan berpusar, karakter larut menjadi cahaya |
-| 1–4 dtk | Jatuh pulang (montase lima zona) | Menembus kosmik → senja → badai → langit → laut, masing-masing sekitar 0,6 detik, sebagai rekap perjalanan |
+| 1–5 dtk | Jatuh pulang (montase lima zona) | Menembus Gerbang Surgawi → kosmik → senja → badai → fajar di kolom terbang asli, ±0,76 detik per zona (lebih lambat di tengah zona), dengan label "ZONA n · NAMA" |
 | 4–6 dtk | Mendarat | Tiba di dek kompas spawn dengan kepulan awan; kamera menukik dari atas lalu kembali ke belakang pemain; kontrol kembali |
 
 - **Teleport sebenarnya:** terjadi di awal montase, tertutup kilatan putih. Server memuat area `LobbySpawn` lebih dulu (`RequestStreamAroundAsync`), lalu memindahkan karakter. Atribut dan sinkronisasi altitude tetap sama seperti `ReturnPrompt` sekarang.
-- **Montase:** memakai latar warna/langit tiap zona (preset dari `BiomeLightingController`) dan lapisan awan atau partikel yang lewat. Tidak memuat ulang scenery penuh, agar ringan di ponsel.
+- **Montase (diubah 17 Nov):** rencana awal hanya memakai latar warna + lapisan awan buatan. Hasilnya terlalu abstrak, jadi versi terpasang memakai scenery asli. `BiomeLightingController` mode `CinematicAltitudeKm` membangun kelima scene (satu per frame, di balik whiteout), menampilkan hanya lantai awan zona aktif, dan mengikuti pencahayaan/air dari ketinggian kamera. Biaya ponsel perlu diukur.
 - **Pemain lain:** di istana melihat kilatan portal; di lobby melihat pemain turun dengan kepulan awan.
 - **Musik:** keluar dari fase istana mengikuti logika `MusicController` yang ada (posisi pemain di bawah `LOWER_WORLD_Y`).
 

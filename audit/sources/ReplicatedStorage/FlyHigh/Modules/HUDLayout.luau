@@ -528,9 +528,10 @@ function Layout.Start(gui, player)
 			local labelRow = firstRackY + 2 * rackH + rowGap + prefGap
 			local labelsTitle = settings:FindFirstChild("PlayerLabelsLabel")
 			if labelsTitle then labelsTitle.Visible = false end
-			local generalW = math.floor((innerWidth - colGap) / 2)
+			local generalW = math.floor((innerWidth - colGap * 2) / 3)
 			box(settings:FindFirstChild("PlayerLabelsToggle"), pad, labelRow, generalW, toggleH)
 			box(settings:FindFirstChild("ReduceMotionToggle"), pad + generalW + colGap, labelRow, generalW, toggleH)
+			box(settings:FindFirstChild("CutsceneToggle"), pad + (generalW + colGap) * 2, labelRow, generalW, toggleH)
 
 			local footerY = labelRow + toggleH + sectionGap
 			local footerW = math.min(innerWidth, 340)

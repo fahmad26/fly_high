@@ -65,6 +65,8 @@ local function add(model, position, velocity, name, effect, delaySeconds, lifesp
 	local shootable = health ~= nil
 	model.Name = name
 	model:SetAttribute("IsObstacle", true)
+	-- Client cues (ObstacleAudioController) key on the effect, not on the display name.
+	model:SetAttribute("ObstacleEffect", effect)
 	model:SetAttribute("Shootable", shootable)
 	model:SetAttribute("Health", health or 0)
 	if health ~= nil then
@@ -326,6 +328,7 @@ local function applyHazard(item, flight, now)
 end
 
 local function activate(item)
+	item.instance:SetAttribute("HazardActive", true)
 	for _, beam in ipairs(item.beams) do
 		if beam.Name == "ActiveBeam" then
 			beam.Enabled = item.effect ~= "Storm"
@@ -516,6 +519,7 @@ RunService.Heartbeat:Connect(function(dt)
 			local warning = index <= #stormCells and index or nil
 			if strike ~= item.strike or warning ~= item.strikeWarning then
 				item.strike, item.strikeWarning = strike, warning
+				model:SetAttribute("Strike", strike or 0)
 				for _, beam in ipairs(item.beams) do
 					local number = beam:GetAttribute("Strike")
 					if number then beam.Enabled = number == strike end
@@ -575,3 +579,4 @@ RunService.Heartbeat:Connect(function(dt)
 		item.previousAge = age
 	end
 end)
+

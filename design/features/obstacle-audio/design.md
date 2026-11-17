@@ -1,6 +1,6 @@
 # Efek suara rintangan Fly High
 
-Tanggal: 16 November 2026, Asia/Jakarta. **Status: konsep disetujui pengguna (23:29 WIB), belum diimplementasikan.** Status implementasi dan QA mengikuti baris AUDIO-01 di [PROGRESS](../../../PROGRESS.md).
+Tanggal: 16 November 2026, Asia/Jakarta. **Status: konsep disetujui pengguna (23:29 WIB), diimplementasikan 17 November 2026 ([QA](../../../audit/palace-cutscenes-audio-2026-11-17/README.md)).** Status implementasi dan QA mengikuti baris AUDIO-01 di [PROGRESS](../../../PROGRESS.md).
 
 ## Keputusan pengguna
 

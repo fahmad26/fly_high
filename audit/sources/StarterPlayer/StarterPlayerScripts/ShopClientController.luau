@@ -522,4 +522,15 @@ end
 motionToggle.Activated:Connect(function() localPlayer:SetAttribute("ReduceHUDMotion",localPlayer:GetAttribute("ReduceHUDMotion")~=true) end)
 localPlayer:GetAttributeChangedSignal("ReduceHUDMotion"):Connect(refreshMotion)
 refreshMotion()
+-- Istana cutscenes (CINE-01): server-owned preference so the portal timing follows it.
+local cutsceneEvent=game:GetService("ReplicatedStorage").FlyHigh.Remotes:WaitForChild("CutscenePreferenceEvent")
+local cutsceneToggle=styleButton(settingsText("TextButton","CutsceneToggle",settings,"Cutscene: Nyala",13,0,0,1,44),blue)
+addChoiceArt(cutsceneToggle)
+local function refreshCutscene()
+ local on=localPlayer:GetAttribute("CutscenesEnabled")~=false
+ paintChoice(cutsceneToggle,on and "Cutscene: Nyala" or "Cutscene: Mati",on)
+end
+cutsceneToggle.Activated:Connect(function() cutsceneEvent:FireServer(localPlayer:GetAttribute("CutscenesEnabled")==false) end)
+localPlayer:GetAttributeChangedSignal("CutscenesEnabled"):Connect(refreshCutscene)
+refreshCutscene()
 settings.Parent=screenGui

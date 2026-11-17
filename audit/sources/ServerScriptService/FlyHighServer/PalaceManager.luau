@@ -4,13 +4,38 @@ local portal=workspace:WaitForChild("CloudPalace"):WaitForChild("ReturnPortal")
 local prompt=portal:FindFirstChild("ReturnPrompt") or Instance.new("ProximityPrompt",portal)
 prompt.Name="ReturnPrompt" prompt.ActionText="Kembali ke Pulau Awal" prompt.HoldDuration=0.3
 prompt.MaxActivationDistance=12 prompt.RequiresLineOfSight=false
-prompt.Triggered:Connect(function(p)
- if not U.Alive(p) or not U.Near(p,portal,14) or U.Flight(p) then return end
- p.Character:PivotTo(workspace.FlyHighLobby.LobbySpawn.CFrame+Vector3.new(0,4,0))
- p:SetAttribute("FlightGhost",false)
- p:SetAttribute("PalaceArrival",nil)
- game.ReplicatedStorage.FlyHigh.Remotes.FlightStateSyncEvent:FireClient(p,{altitudeKm=0,holes=0,invulnTime=0,shieldTime=0})
+-- Cutscene preference (SETELAN "Cutscene: Nyala/Mati"). Server-owned so the portal timing follows it.
+local preference=game.ReplicatedStorage.FlyHigh.Remotes:WaitForChild("CutscenePreferenceEvent")
+local function initPreference(p) if p:GetAttribute("CutscenesEnabled")==nil then p:SetAttribute("CutscenesEnabled",true) end end
+Players.PlayerAdded:Connect(initPreference)
+for _,p in ipairs(Players:GetPlayers()) do initPreference(p) end
+preference.OnServerEvent:Connect(function(p,enabled)
+ if typeof(enabled)=="boolean" then p:SetAttribute("CutscenesEnabled",enabled) end
 end)
+
+local RETURN_COVER_SEC=1 -- portal swirl before the move; the client montage hides the jump (CINE-01)
+local returning={}
+prompt.Triggered:Connect(function(p)
+ if returning[p] or not U.Alive(p) or not U.Near(p,portal,14) or U.Flight(p) then return end
+ returning[p]=true
+ local character=p.Character
+ local landing=workspace.FlyHighLobby.LobbySpawn.CFrame+Vector3.new(0,4,0)
+ local cinematic=p:GetAttribute("CutscenesEnabled")~=false
+ if cinematic then
+  p:SetAttribute("ReturnSequence",workspace:GetServerTimeNow())
+  task.wait(RETURN_COVER_SEC)
+ end
+ pcall(function() p:RequestStreamAroundAsync(landing.Position,4) end)
+ if p.Parent==Players and p.Character==character and U.Alive(p) and not U.Flight(p) then
+  p.Character:PivotTo(landing)
+  p:SetAttribute("FlightGhost",false)
+  p:SetAttribute("PalaceArrival",nil)
+  game.ReplicatedStorage.FlyHigh.Remotes.FlightStateSyncEvent:FireClient(p,{altitudeKm=0,holes=0,invulnTime=0,shieldTime=0})
+  p:SetAttribute("ReturnLandedAt",workspace:GetServerTimeNow())
+ end
+ returning[p]=nil
+end)
+Players.PlayerRemoving:Connect(function(p) returning[p]=nil end)
 
 -- Palace furniture uses real seats so dismounting follows the player's normal jump controls.
 local furniture=workspace.CloudPalace:WaitForChild("PalaceFurniture")

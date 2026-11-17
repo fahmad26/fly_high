@@ -35,8 +35,42 @@ local function biomeAt(km)
 	return math.clamp(math.floor(km / Config.BIOME_STEP_KM) + 1, 1, BIOME_COUNT)
 end
 
-local function updateScenery(km)
+-- PalaceCinematics portal descent sets CinematicAltitudeKm on the local player: every biome is kept
+-- built at full opacity (one new build per tick to avoid a hitch) and lighting/water follow that height.
+local function cinematicKm()
+	local value = localPlayer:GetAttribute("CinematicAltitudeKm")
+	return typeof(value) == "number" and value or nil
+end
+
+local function updateScenery(km, cinematic)
 	local opacity = {}
+	if cinematic then
+		local now = os.clock()
+		local built = false
+		local current = biomeAt(km)
+		for index = BIOME_COUNT, 1, -1 do
+			local entry = scenes[index]
+			if not entry and not built then
+				built = true
+				local model, update = Scenery.Build(index)
+				update(km, now, 1)
+				model.Parent = sceneryRoot
+				entry = { model = model, update = update }
+				scenes[index] = entry
+			elseif entry then
+				entry.update(km, now, 1)
+			end
+			-- Each biome's cloud floor sits inside the zone below it; only the current zone keeps its floor.
+			if entry then
+				entry.sea = entry.sea or entry.model:FindFirstChild("CloudSea")
+				if entry.sea then entry.sea.Parent = index == current and entry.model or nil end
+			end
+		end
+		return
+	end
+	for _, entry in scenes do
+		if entry.sea and entry.sea.Parent ~= entry.model then entry.sea.Parent = entry.model end
+	end
 	local step = Config.BIOME_STEP_KM
 	local boundary = math.floor((km + TRANSITION_KM) / step)
 	local distance = km - boundary * step
@@ -126,6 +160,46 @@ local stormWaterColor = Color3.fromRGB(72, 36, 65)
 local sunsetWaterColor = Color3.fromRGB(83, 62, 44)
 local lastWaterFade, lastWaterTint = 0, 0
 
+-- Sea skirt (review 17 Nov): with StreamingEnabled the client only holds terrain water ~1.024 studs around the
+-- player, so from 500-1.500 km the sea ended in a stepped square edge with grey void beyond. A client-only plane
+-- just under the water surface continues the sea outside the streamed area; it leaves a hole over the home island
+-- so shallow water and beaches keep their terrain look, and it fades with the water horizon.
+local SEA_COLOR = Color3.fromRGB(8, 158, 220) -- renders like the terrain water at distance
+local seaSkirt = Instance.new("Folder")
+seaSkirt.Name = "ClientSeaSkirt"
+local seaTiles = {}
+do
+	local function tile(x0, z0, x1, z1)
+		local p = Instance.new("Part")
+		p.Name = "SeaSkirt"
+		p.Anchored = true
+		p.CanCollide = false
+		p.CanTouch = false
+		p.CanQuery = false
+		p.CastShadow = false
+		p.Material = Enum.Material.SmoothPlastic
+		p.Reflectance = 0
+		p.Color = SEA_COLOR
+		p.Size = Vector3.new(x1 - x0, 1, z1 - z0)
+		p.CFrame = CFrame.new((x0 + x1) / 2, -1.1, (z0 + z1) / 2)
+		p.Parent = seaSkirt
+		table.insert(seaTiles, p)
+	end
+	local OUTER, MID, HOLE = 8192, 2048, 640
+	for gx = -OUTER, OUTER - 2048, 2048 do
+		for gz = -OUTER, OUTER - 2048, 2048 do
+			if not (gx >= -MID and gx < MID and gz >= -MID and gz < MID) then tile(gx, gz, gx + 2048, gz + 2048) end
+		end
+	end
+	for _, x in { -MID, 0 } do
+		tile(x, HOLE, x + 2048, MID)
+		tile(x, -MID, x + 2048, -HOLE)
+	end
+	tile(-MID, -HOLE, -HOLE, HOLE)
+	tile(HOLE, -HOLE, MID, HOLE)
+end
+seaSkirt.Parent = workspace
+
 local function updateWaterHorizon(km)
 	local t = math.clamp((km - 1550) / 660, 0, 1)
 	local fade = math.round(t * t * (3 - 2 * t) * 40) / 40
@@ -136,15 +210,24 @@ local function updateWaterHorizon(km)
 	terrain.WaterTransparency = baseWaterTransparency + (1 - baseWaterTransparency) * fade
 	terrain.WaterReflectance = baseWaterReflectance * (1 - fade)
 	terrain.WaterColor = baseWaterColor:Lerp(stormWaterColor:Lerp(sunsetWaterColor, tint), fade)
+	local skirtColor = SEA_COLOR:Lerp(stormWaterColor:Lerp(sunsetWaterColor, tint), fade)
+	for _, p in seaTiles do
+		p.Transparency = fade
+		p.Color = skirtColor
+	end
+	seaSkirt.Parent = fade < 1 and workspace or nil
 end
 
+local applyBiomeRef -- assigned after applyBiome is defined
 local elapsed = 0
 local animation = RunService.Heartbeat:Connect(function(dt)
 	elapsed += dt
-	if elapsed < 0.1 then return end
+	local cine = cinematicKm()
+	if not cine and elapsed < 0.1 then return end
 	elapsed = 0
-	updateScenery(altitudeKm)
-	updateWaterHorizon(altitudeKm)
+	updateScenery(cine or altitudeKm, cine ~= nil)
+	updateWaterHorizon(cine or altitudeKm)
+	if cine then applyBiomeRef(biomeAt(cine), 0.35) end
 	local camera = workspace.CurrentCamera
 	if camera then
 		local flightCeiling = Config.GROUND_Y + Config.MAX_ALTITUDE_KM * Config.STUDS_PER_KM
@@ -157,6 +240,7 @@ end)
 script.Destroying:Connect(function()
 	animation:Disconnect()
 	updateWaterHorizon(0)
+	seaSkirt:Destroy()
 	if sky and baseSunSize then
 		sky.SunAngularSize = baseSunSize
 		sky.MoonAngularSize = baseMoonSize
@@ -271,13 +355,13 @@ local function transitionFog(target, seconds, dense)
 	end
 end
 
-local function applyBiome(biomeIndex)
+local function applyBiome(biomeIndex, seconds)
 	if currentBiome == biomeIndex then return end
 	currentBiome = biomeIndex
 	local cfg = BIOME_SETTINGS[biomeIndex]
 	if not cfg then return end
 
-	local tweenInfo = TweenInfo.new(5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+	local tweenInfo = TweenInfo.new(seconds or 5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 	if activeTween then activeTween:Cancel() end
 	activeTween = TweenService:Create(Lighting, tweenInfo, {
 		ClockTime = cfg.ClockTime,
@@ -312,13 +396,16 @@ local function applyBiome(biomeIndex)
 		})
 		atmosphereColorTween:Play()
 	end
-	if not fogActive then transitionFog(cfg.FogEnd, 5, false) end
+	if not fogActive then transitionFog(cfg.FogEnd, seconds or 5, false) end
 end
+
+applyBiomeRef = applyBiome
 
 local function restoreLobbyLighting()
 	fogVersion += 1 -- Invalidate delayed fog restoration from the previous flight.
 	fogActive = false
 	altitudeKm = 0
+	if cinematicKm() then return end -- the portal montage restores the lobby when it clears its altitude
 	currentBiome = 0
 	updateScenery(0)
 	applyBiome(1)
@@ -330,12 +417,27 @@ flightSyncEvent.OnClientEvent:Connect(function(data)
 		return
 	end
 	altitudeKm = data.isVictory and Config.MAX_ALTITUDE_KM or data.altitudeKm or 0
+	if cinematicKm() then return end
 	applyBiome(biomeAt(altitudeKm))
 end)
 
 -- Initial Dawn
 updateScenery(0)
 applyBiome(1)
+
+-- Leaving the portal montage: return scenery, lighting and water to the real altitude.
+local wasCinematic = false
+localPlayer:GetAttributeChangedSignal("CinematicAltitudeKm"):Connect(function()
+	local cinematic = cinematicKm() ~= nil
+	if cinematic == wasCinematic then return end
+	wasCinematic = cinematic
+	currentBiome = 0
+	if not cinematic then
+		updateScenery(altitudeKm)
+		updateWaterHorizon(altitudeKm)
+		applyBiome(biomeAt(altitudeKm), 0.8)
+	end
+end)
 
 localPlayer.CharacterAdded:Connect(function()
 	-- Ghost spotters still belong to the active flight and keep its biome.

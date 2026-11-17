@@ -1,10 +1,45 @@
 # Handover Fly High
 
-Snapshot aktif per 15 November 2026, Asia/Jakarta. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
+Snapshot aktif per 17 November 2026, Asia/Jakarta. Bagian bertanggal di bawah "Status terkini" bersifat historis: catatan "belum commit" di dalamnya sudah tercakup oleh commit `57f7e31` dan commit 17 November. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
+
+## Status terkini — 17 November 2026
+
+Checkpoint Git: commit "Obstacle audio, palace cutscenes, asset round 6" di atas `57f7e31`, di-push ke `origin/main`. Berisi `Fly High.rbxl` lokal (3.490.832 B, SHA-256 `f19c846e…c8e3`, belum dibuka ulang di Studio), mirror `audit/sources` yang cocok dengan Studio, sumber Blender/GLB, dan bukti audit di bawah. `assets/marketing/` dan duplikat ekspor `assets/models/scenery/generated/` sengaja tidak di-commit.
+
+**Efek suara rintangan (AUDIO-01):**
+- `ObstacleAudioCatalog` + `ObstacleAudioController`: 23 aset PSE/APM untuk 9 musuh, 9 hazard dan Dinding Badai.
+- Suara lubang/tambal balon tidak diubah.
+- Sesi dengar pengguna belum dilakukan. [Bukti dan manifes](audit/palace-cutscenes-audio-2026-11-17/README.md).
+
+**Cutscene Istana (CINE-01), `PalaceCinematics`:**
+- **Tiba:** ±8 dtk. Docking balon diperlambat jadi ±4,8 dtk. Kru melompat ke dermaga lalu bersorak (`cheer`). Shot kamera di-blend. Kartu memakai bingkai 9-slice + crest HUD.
+- **Kru gugur bangkit:** pilar cahaya dua lapis, cincin, bulu. Hadiah tetap: puncak dihitung, tanpa koin kedatangan.
+- **Portal turun:** ±6 dtk lewat scenery asli kelima bioma. `BiomeLightingController` memakai mode `CinematicAltitudeKm`, dengan nama zona.
+- **Aturan:** tidak bisa dilewati. Sakelar SETELAN "Cutscene: Nyala/Mati" (bawaan Nyala) belum disimpan ke DataStore.
+- **Musik:** Jubilation → Happy Ending di `MusicController` sudah ada sebelumnya dan tidak diubah.
+
+**Aset round 6:**
+- StormBat/FireBee v6 (aset 113741592165135 / 115566779938714). Template lama ada di `ServerStorage.ObstacleMeshes_Legacy.*_v5`.
+- Kit kolom patah senja `EnvironmentAssets.SunsetColumns` (115927584511158) menggantikan pilar silinder, busur kuil "tanda tanya" dan busur seperempat.
+- CloudBaseMist badai lebih terang. Dek awan Gateway terang + gumpalan. Air terjun siluet istana bertekstur.
+- `DockMooring` di 5 Pod, tanpa collision/query/touch.
+- 16 petak rumput Terrain (LeafyGrass → Grass, 483 voxel).
+- Batu melayang fajar lebih hangat + akar gantung.
+- `ClientSeaSkirt` untuk tepi laut, efektif di kualitas grafik menengah ke atas. [Bukti](audit/asset-round6-cutscene-polish-2026-11-17/README.md).
+
+**Catatan alat:** `execute_luau` Client memulihkan `CameraType` di akhir panggilan. Untuk fixture kamera, pakai `BindToRenderStep` dan pulihkan lewat `task.delay`. Play Solo beruntun bisa ditendang DataManager ("Data belum dapat dimuat dengan aman"); tunggu ±1 menit lalu ulangi.
+
+**Terbuka:**
+- Multi-pemain nyata: lompatan/efek bangkit dilihat kru lain, antrean dua balon.
+- Ponsel fisik dan performa montase (5 scene ±3.600 part selama ±4 dtk).
+- Tepi laut di kualitas grafik terendah.
+- Persistensi preferensi Cutscene.
+- Sesi dengar audio.
+- Poin 8 review lama (ponsel/low graphics) tetap ditunda pengguna.
 
 ## Konsep efek suara rintangan dan cutscene Istana — 16 November 2026, 23:29 WIB
 
-Disetujui pengguna, belum diimplementasikan:
+Disetujui pengguna; kini terpasang (lihat Status terkini):
 - [Efek suara rintangan](design/features/obstacle-audio/design.md): seluruh musuh dan hazard, termasuk Dinding Badai. Hanya menambah suara yang belum ada; suara lubang/tambal balon tidak diubah.
 - [Cutscene Istana Awan](design/features/palace-cutscenes/design.md): tiba sekitar 8 detik, kru gugur bangkit (hadiah tetap seperti sekarang), dan portal turun sekitar 6 detik dengan montase lima zona. Tanpa versi singkat dan tidak bisa dilewati; ada sakelar Nyala/Mati di SETELAN (bawaan Nyala).
 
