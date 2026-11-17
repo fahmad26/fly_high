@@ -130,11 +130,21 @@ function Layout.Start(gui, player)
 			and math.min(w - 2 * margin, math.clamp(w * 0.34, 340, 412) + 8 * textBoost)
 			or math.min(w - 2 * margin, math.clamp(w * 0.30, 300, 376) + 8 * textBoost)
 		local topH = (topW < 340 and inFlight and 62 or 58) + 2 * textBoost
-		place("AltimeterFrame", (w - topW) / 2, altY, topW, topH)
+		-- Lift only the centre header into the unoccupied native topbar strip.
+		-- Other HUD surfaces keep CoreUISafeInsets; narrow screens fall back below it.
+		local headerX, headerY = (w - topW) / 2, altY
+		local topbar = guiService:GetInsetArea(Enum.ScreenInsets.TopbarSafeInsets)
+		local left = math.max(margin, topbar.Min.X - gui.AbsolutePosition.X + 8)
+		local right = math.min(w - margin, topbar.Max.X - gui.AbsolutePosition.X - 8)
+		if right - left >= topW and topbar.Height > 0 then
+			headerX = math.clamp(headerX, left, right - topW)
+			headerY = topbar.Min.Y - gui.AbsolutePosition.Y + 6
+		end
+		place("AltimeterFrame", headerX, headerY, topW, topH)
 
 		local statusW = portrait and w - 2 * margin or 224 + 6 * textBoost
 		local wide = w >= 960 and (w - topW) / 2 >= margin + statusW + 12
-		local headerBottom = altY + topH
+		local headerBottom = headerY + topH
 		local statusY = wide and altY or headerBottom + 8
 		local statusH = 64 + 2 * textBoost
 		local tileW = 50 + textBoost

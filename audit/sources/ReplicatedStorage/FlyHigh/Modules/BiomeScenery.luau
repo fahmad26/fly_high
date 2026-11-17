@@ -3170,7 +3170,8 @@ local function palaceUpperSky(parent, anchor)
 	-- they now sail in the open air between them.
 	local routes = {
 		{ "CloudSailer", Vector3.new(-380, -205, -230), Vector3.new(42, 6, 32), 84, 0.35, 1.08 },
-		{ "CloudKetch", Vector3.new(150, -250, 140), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
+		-- Moved out of the flight corridor (|x|,|z| <= 120 + balloon width): it sailed through balloons (review 17 Nov).
+		{ "CloudKetch", Vector3.new(250, -250, 140), Vector3.new(36, 7, 44), 96, 2.1, 0.98 },
 		{ "CloudCutter", Vector3.new(440, -120, -190), Vector3.new(38, 8, 40), 108, 4.2, 0.88 },
 		{ "CloudSailer", Vector3.new(187, 66, -159), Vector3.new(42, 6, 39), 88, 0.12, 1.04 },
 		{ "CloudKetch", Vector3.new(425, 278, -715), Vector3.new(160, 13, 70), 133, 2.9, 0.92 },

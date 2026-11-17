@@ -13,7 +13,7 @@ Permintaan pengguna (09:07 WIB): "Oke, silakan lakukan semuanya ya". Ini mencaku
 | 5 | Awan badai berdasar piring gelap | `CloudBaseMist` dibuat lebih terang (126,122,156), lebih tipis (α 0,74) dan lebih kecil. | [sebelum](12-storm-cloud-plates-before.jpg) |
 | 6 | Bawah horizon Gerbang Surgawi kosong | Lantai lautan awan jauh lebih terang (`cloudSea` darken 0,12), ditambah 14 gumpalan `GatewayDeckBank`. Air terjun siluet istana kini bertekstur mengalir, melebar di kaki, dan berkabut. | [sebelum](13-gateway-before.jpg), [sesudah (Edit)](14-gateway-deck-after-edit.jpg) |
 | 7 | Dermaga Pod polos | `DockMooring` di kelima Pod: 9 bollard kayu bercincin kuningan, tali `RopeConstraint` di antaranya (sisi naik tetap terbuka), dan 2 tiang lentera di mulut dermaga. Semua tanpa collision/query/touch. | [sebelum](15-dock-before.jpg), [sesudah](16-dock-mooring-after.jpg) |
-| 8 | Rumput rata, batu melayang abu-abu | 16 petak Terrain LeafyGrass → Grass (483 voxel, seed 1711, rumput tinggi dekoratif). Batu pulau melayang fajar lebih hangat, ditambah 3 akar gantung per pulau. | [rumput](17-lobby-grass-patches.jpg), [batu](18-dawn-islet-warm-stone.jpg) |
+| 8 | Rumput rata, batu melayang abu-abu (petak rumput **dikembalikan** 17 Nov siang karena rumput tinggi menembus dek/jalan, lihat [perbaikan playtest](../playtest-fixes-2026-11-17/README.md)) | 16 petak Terrain LeafyGrass → Grass (483 voxel, seed 1711, rumput tinggi dekoratif). Batu pulau melayang fajar lebih hangat, ditambah 3 akar gantung per pulau. | [rumput](17-lobby-grass-patches.jpg), [batu](18-dawn-islet-warm-stone.jpg) |
 
 ## Cutscene
 

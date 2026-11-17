@@ -3,6 +3,7 @@ local RunService=game:GetService("RunService")
 local RS=game:GetService("ReplicatedStorage")
 local Input=game:GetService("UserInputService")
 local BalloonVFX=require(RS:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("BalloonVFX"))
+require(RS.FlyHigh.Modules:WaitForChild("HUDRepairPrompts")).Start(Players.LocalPlayer)
 local touches={}
 local touchBegan=Input.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.Touch then touches[i]=true end end)
 local touchEnded=Input.InputEnded:Connect(function(i)touches[i]=nil end)
@@ -35,6 +36,7 @@ local function register(model)
    -- Mask new prompts before the first visibility pass; otherwise every
    -- server-enabled station action briefly appears during replication.
    o.Enabled=false entry.prompts[o]=true
+   if o.Name=="PatchPrompt" or o.Name=="RepairRopePrompt" then o.Style=Enum.ProximityPromptStyle.Custom end
    if o.Name=="PatchPrompt"then
     local number=tonumber(o.Parent.Name:match("%d+"))
     if number then

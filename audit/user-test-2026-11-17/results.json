@@ -1,0 +1,44 @@
+{
+  "build": "6f6dc64 + temporary Studio-only patch",
+  "date": "2026-11-17",
+  "environment": "Roblox Studio Windows Solo, Fikki2621; no physical-device QA",
+  "studioId": "19e8e11d-4de2-4a8c-8d15-273a513980a4",
+  "sourceParity": {
+    "DataManager": true,
+    "BalloonManager": true,
+    "LeaderboardManager": true
+  },
+  "attempt1": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"horizontalStudsPerSec\":0,\"expectedHorizontal\":120,\"expectedUp\":66.66666666666667,\"holes\":0,\"items\":{\"Turbo\":1,\"AK\":1,\"Rope\":1,\"Kit\":1,\"AKSlot1\":true},\"damageBlocked\":{\"Tornado\":true,\"SelfShot\":true,\"Collision\":true,\"WildBird\":true},\"pass\":false,\"fixture\":\"Studio Solo scripted launch Pod_C, 1500 km, auto gas; not a natural journey\",\"upKmPerSec\":0,\"build\":\"6f6dc64 + temporary user-test patch\"}"
+      }
+    ],
+    "isError": false
+  },
+  "attempt2": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"horizontalStudsPerSec\":124.33168221323543,\"damageBlocked\":{\"Tornado\":true,\"SelfShot\":true,\"Collision\":true,\"WildBird\":true},\"expectedUp\":66.66666666666667,\"holes\":0,\"expectedHorizontal\":120,\"pass\":true,\"fixture\":\"Solo scripted Pod_C launch; wait boarding, anchor/carry player at 1500 km, 0.3 s sample; no full-journey QA\",\"upKmPerSec\":69.072304129223,\"build\":\"6f6dc64 + temporary patch\"}"
+      }
+    ],
+    "isError": false
+  },
+  "cleanup": "Play stopped; runtime scripts and reports discarded with Play; Edit test flag retained intentionally for user testing. Place not saved or published.",
+  "sha256": {
+    "DataManager": {
+      "baseline": "bd858b5e6decf9cd992a2a94fd773972b1de86403af39f72eaa7f3e59182bed0",
+      "patched": "409d51c59632676a6fe25802a7233ac345c3edb53332f49c325c491d044a79d7"
+    },
+    "BalloonManager": {
+      "baseline": "f1189c07c09cff7723cd58c948d22e3bd87e8958f24da03a67c0c5745b234489",
+      "patched": "70b69518a8222236a00e3d3f95aa002dbe5dd8df543e0bac24e8daaa0ce30198"
+    },
+    "LeaderboardManager": {
+      "baseline": "d01dbe6be1c046876c86e524e34dd462d1b1692bbd0a41ce427017b580e9ed43",
+      "patched": "455d3d12bbe302914e8b6475994a5f6a6d82a73aca9bf054a98295969c6d7d5c"
+    }
+  }
+}

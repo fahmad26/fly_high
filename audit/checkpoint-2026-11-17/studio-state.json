@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-17",
+  "studioId": "5847b091-658c-4cee-b661-28c5ea116a09",
+  "mode": "Edit",
+  "buildBase": "6f6dc64 plus current dirty checkpoint",
+  "fixture": "read-only source compile and fixture scan; no Play session",
+  "rawResponse": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":0,\"scripts\":61,\"compileErrors\":[],\"fixtures\":[]}"
+      }
+    ],
+    "isError": false
+  }
+}

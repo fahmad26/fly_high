@@ -10,6 +10,7 @@ local AudioMixer = require(script.Parent.AudioMixer)
 local Motion = require(script.Parent.HUDMotion)
 local AltitudeTracker = require(script.Parent.HUDAltitudeTracker)
 local FlyHighConfig = require(script.Parent.FlyHighConfig)
+local Chrome = require(script.Parent.HUDTopChrome)
 local Theme = {}
 
 local BIOME_ZONES = {
@@ -799,7 +800,7 @@ end
 			end
 			if r.kind == "card" and h < 236 then background = "speed" end
 			local fullPanel = false
-			if background and r.kind ~= "status" and r.kind ~= "card" and not modalPanelSet[o.Name] then
+			if background and r.kind ~= "alt" and r.kind ~= "status" and r.kind ~= "card" and not modalPanelSet[o.Name] then
 				fullPanel = raster(o, background, z, nil, completeKey, nil)
 			end
 
@@ -1165,16 +1166,18 @@ end
 						speed.BackgroundTransparency = 1
 					end
 
-					-- 1. Balloon Icon on Left (Pure transparency, perfectly centered!)
+					Chrome.Panel(o, z)
+					-- Popup-style flat balloon medallion; preserve compact telemetry.
 					local narrow = w < 380
-					local iconSize = narrow and 32 or compact and 40 or 44
+					local iconSize = math.min(h - 8, narrow and 44 or 48)
 					box(r.emblem, 12, (h - iconSize) / 2, iconSize, iconSize)
-					local loaded = use(r.art, "art_balloon")
-					r.glyph.Visible = not loaded
-					r.emblem.Visible = not fullPanel
+					r.art.Visible = false
+					r.glyph.Visible = false
+					r.emblem.Visible = true
+					Chrome.Emblem(r.emblem, z + 3)
 					ztree(r.emblem, z + 3)
 
-					local headingX = fullPanel and math.max(iconSize + 18, h + 4) or iconSize + 18
+					local headingX = iconSize + 22
 					local rightInset = narrow and 14 or 16
 					local gap = narrow and 8 or 10
 					local centerY = h / 2
@@ -1514,7 +1517,7 @@ end
 				local alertInset = fullPanel and math.round(math.min(h * 1.04, w * 0.25)) or 44
 				local contentWidth = math.max(1, w - alertInset - 16)
 				local titleHeight, detailHeight = 22 + math.floor(textBoost / 2), 17 + math.floor(textBoost / 2)
-				local top = (h - titleHeight - detailHeight) / 2
+				local top = math.max(7, (h - titleHeight - detailHeight) / 2 - 4)
 				if title then
 					box(title, alertInset, top, contentWidth, titleHeight)
 					applyTextStyle(title, { font = Enum.Font.GothamBlack, size = 16, strokeThickness = 2,

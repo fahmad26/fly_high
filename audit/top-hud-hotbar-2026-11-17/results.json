@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-17",
+  "baseline": "6f6dc64 + pre-existing dirty prompt/header/scenery work",
+  "environment": "Windows Studio Solo Fikki2621; desktop, iPhone17Pro and iPadProM5 landscape simulation",
+  "fixture": "Client-only InFlight/HUD state injections and cloned local weapon Tools; no server action/persistent inventory/altitude changes.",
+  "header": {
+    "desktop": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"coreSize\":\"1066.40002, 478\",\"warning\":{\"size\":\"356.656403, 58.9514694\",\"textFits\":true,\"pos\":\"355, 13\"},\"status\":{\"size\":\"225.304535, 64.3727264\",\"pos\":\"11, 8\"},\"rows\":{\"1\":{\"raised\":true,\"flying\":false,\"safe\":true,\"topMargin\":6,\"pos\":\"373, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"320, 58\"},\"2\":{\"raised\":true,\"flying\":true,\"safe\":true,\"topMargin\":6,\"pos\":\"352, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"363, 58\"}},\"viewport\":\"1066.40002, 536\",\"topbar\":\"208, -58, 1066.40002, 0\"}"
+        }
+      ],
+      "isError": false
+    },
+    "phone": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"coreSize\":\"749, 323\",\"warning\":{\"size\":\"418.968719, 58.4607506\",\"textFits\":true,\"pos\":\"76.0000153, 85\"},\"status\":{\"size\":\"225.322464, 64.3778458\",\"pos\":\"69, 14\"},\"rows\":{\"1\":{\"raised\":true,\"flying\":false,\"safe\":true,\"topMargin\":6,\"pos\":\"225, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"300, 58\"},\"2\":{\"raised\":true,\"flying\":true,\"safe\":true,\"topMargin\":6,\"pos\":\"216, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"340, 58\"}},\"viewport\":\"749, 381\",\"topbar\":\"208, -58, 749, 0\"}"
+        }
+      ],
+      "isError": false
+    },
+    "tablet": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"coreSize\":\"1375, 972\",\"warning\":{\"size\":\"399.267395, 58.1457405\",\"textFits\":true,\"pos\":\"488.999969, 13\"},\"status\":{\"size\":\"225.254242, 64.3583527\",\"pos\":\"17, 8\"},\"rows\":{\"1\":{\"raised\":true,\"flying\":false,\"safe\":true,\"topMargin\":6,\"pos\":\"500, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"376, 58\"},\"2\":{\"raised\":true,\"flying\":true,\"safe\":true,\"topMargin\":6,\"pos\":\"482, -52\",\"detailFits\":true,\"titleFits\":true,\"size\":\"412, 58\"}},\"viewport\":\"1375, 1030\",\"topbar\":\"208, -58, 1375, 0\"}"
+        }
+      ],
+      "isError": false
+    },
+    "narrowLayoutOnly": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"y\":8,\"x\":12,\"inside320\":true,\"qaOnly\":true,\"fallback\":true,\"width\":296}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "hotbar": {
+    "desktop": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"viewport\":\"1066.40002, 536\",\"touch\":false,\"rows\":{\"1\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"Pistol\"},\"8\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"AK47\"},\"3\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"Pistol\"},\"2\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"Pistol\"},\"5\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"AK47\"},\"4\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"Pistol\"},\"7\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"AK47\"},\"6\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"AK47\"}}}"
+        }
+      ],
+      "isError": false
+    },
+    "phone": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"viewport\":\"749, 381\",\"touch\":true,\"rows\":{\"1\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"Pistol\"},\"8\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"AK47\"},\"3\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"Pistol\"},\"2\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"Pistol\"},\"5\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"AK47\"},\"4\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"Pistol\"},\"7\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"AK47\"},\"6\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"AK47\"}}}"
+        }
+      ],
+      "isError": false
+    },
+    "tablet": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"viewport\":\"1375, 1030\",\"touch\":true,\"rows\":{\"1\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"Pistol\"},\"8\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"AK47\"},\"3\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"Pistol\"},\"2\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"Pistol\"},\"5\":{\"parent\":\"Backpack\",\"state\":\"backpack\",\"hidden\":true,\"weapon\":\"AK47\"},\"4\":{\"backpackRestored\":true,\"state\":\"removed\",\"weapon\":\"Pistol\"},\"7\":{\"state\":\"unequipped\",\"hidden\":true,\"weapon\":\"AK47\"},\"6\":{\"state\":\"equipped\",\"reloadVisible\":true,\"customAmmoVisible\":true,\"dropVisible\":true,\"equipped\":true,\"hidden\":true,\"weapon\":\"AK47\"}}}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "initialFailure": {
+    "status": "failed, reported only in session",
+    "message": "Initial attempt to listen to StarterGui.CoreGuiChangedSignal failed for LocalScript (RobloxScript capability). Listener removed; final play session console empty.",
+    "rawConsoleSaved": false
+  },
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":0,\"device\":\"default\",\"fixtures\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "save": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Saved: Saved to Roblox."
+      },
+      {
+        "type": "text",
+        "text": "{\"location\":\"Cloud\",\"status\":\"Saved\",\"version\":27,\"message\":\"Saved to Roblox.\"}"
+      }
+    ],
+    "isError": false
+  },
+  "limitations": [
+    "Simulated phone/tablet, no physical devices.",
+    "Weapon tests verify Tool parent and custom control visibility, not real server firing/reload/drop outcomes.",
+    "Local rbxl not reopened/compared."
+  ],
+  "sources": {
+    "HUDLayout": {
+      "sha256": "a4264b4e370bbb22b47882ac7fb1cc31cdf9ea9a3a02883199cb3954cd682bb9",
+      "bytes": 39993
+    },
+    "WeaponHotbarController": {
+      "sha256": "1ce591a38b8e780fbf6b1d4ab70ef15fb8872d32bd9ce3cba8b74546e888fc32",
+      "bytes": 2906
+    }
+  },
+  "finalConsole": {
+    "content": [
+      {
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "isError": false
+  }
+}

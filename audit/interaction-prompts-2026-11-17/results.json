@@ -1,0 +1,161 @@
+{
+  "baseline": "6f6dc64 + prior uncommitted HUD work",
+  "date": "2026-11-17",
+  "environment": "Windows Studio Solo, Fikki2621; desktop and LandscapeSensor iPhone/iPad simulator",
+  "fixture": "Client-only world prompts for 13 families plus dynamic AK47 label. No real flight or server gameplay completions.",
+  "earlyDesktopWrongCoordinateMetric": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"viewport\":\"1066.40002, 536\",\"rows\":{\"1\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TAMBAL BALON\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PatchPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"3\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PEGANG KEMUDI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"HelmPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"2\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PERBAIKI TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"RepairRopePrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"5\":{\"prompt\":\"PickupPromptAK47\",\"title\":\"AMBIL AK-47\",\"titleFits\":true},\"4\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"AMBIL HANDGUN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PickupPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"7\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"KEMBALI KE PULAU\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"ReturnPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"6\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"MULAI TERBANG\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"StartPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"9\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"DUDUK\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"SitPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"8\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"FOTO KEMENANGAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PhotoPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"14\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TARIK REKAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PullCrewPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"13\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TURUN KE GONDOLA\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"DescendPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"12\":{\"enabled\":true,\"anchorError\":58.480323791503909,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PANJAT KUBAH\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"ClimbPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"11\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"LEPAS TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"DetachTetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"10\":{\"enabled\":true,\"anchorError\":58.480262756347659,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PASANG TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"TetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true}},\"touch\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "preFixPhoneFailure": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"viewport\":\"749, 381\",\"rows\":{\"1\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TAMBAL BALON\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PatchPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"3\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PEGANG KEMUDI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"HelmPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"2\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PERBAIKI TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"RepairRopePrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"5\":{\"prompt\":\"PickupPromptAK47\",\"title\":\"AMBIL AK-47\",\"titleFits\":true},\"4\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"AMBIL HANDGUN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PickupPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"7\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"KEMBALI KE PULAU\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ReturnPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"6\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"MULAI TERBANG\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"StartPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"9\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"DUDUK\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"SitPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"8\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"FOTO KEMENANGAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PhotoPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"14\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TARIK REKAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PullCrewPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"13\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TURUN KE GONDOLA\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DescendPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"12\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PANJAT KUBAH\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ClimbPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"11\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"LEPAS TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DetachTetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"10\":{\"enabled\":true,\"anchorError\":65.64645385742188,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PASANG TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"TetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true}},\"touch\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "desktop": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"viewport\":\"1066.40002, 536\",\"rows\":{\"1\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TAMBAL BALON\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PatchPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"3\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PEGANG KEMUDI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"HelmPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"2\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PERBAIKI TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"RepairRopePrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"5\":{\"prompt\":\"PickupPromptAK47\",\"title\":\"AMBIL AK-47\",\"titleFits\":true},\"4\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"AMBIL HANDGUN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PickupPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"7\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"KEMBALI KE PULAU\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"ReturnPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"6\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"MULAI TERBANG\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"StartPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"9\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"DUDUK\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"SitPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"8\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"FOTO KEMENANGAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PhotoPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"14\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TARIK REKAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"PullCrewPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"13\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TURUN KE GONDOLA\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"DescendPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"12\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PANJAT KUBAH\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"ClimbPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"11\":{\"enabled\":true,\"anchorError\":0.5200148224830627,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"LEPAS TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"DetachTetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"10\":{\"enabled\":true,\"anchorError\":0.5199866890907288,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PASANG TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":50,\"prompt\":\"TetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true}},\"touch\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "phone": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"viewport\":\"749, 381\",\"rows\":{\"1\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TAMBAL BALON\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PatchPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"3\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PEGANG KEMUDI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"HelmPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"2\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PERBAIKI TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"RepairRopePrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"5\":{\"prompt\":\"PickupPromptAK47\",\"title\":\"AMBIL AK-47\",\"titleFits\":true},\"4\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"AMBIL HANDGUN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PickupPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"7\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"KEMBALI KE PULAU\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ReturnPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"6\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"MULAI TERBANG\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"StartPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"9\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"DUDUK\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"SitPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"8\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"FOTO KEMENANGAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PhotoPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"14\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TARIK REKAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PullCrewPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"13\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TURUN KE GONDOLA\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DescendPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"12\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PANJAT KUBAH\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ClimbPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"11\":{\"enabled\":true,\"anchorError\":0.5063526034355164,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"LEPAS TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DetachTetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"10\":{\"enabled\":true,\"anchorError\":0.50636225938797,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PASANG TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"TetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true}},\"touch\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "tablet": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"viewport\":\"1375, 1030\",\"rows\":{\"1\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TAMBAL BALON\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PatchPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"3\":{\"enabled\":true,\"anchorError\":0.6402513980865479,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PEGANG KEMUDI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"HelmPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"2\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PERBAIKI TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"RepairRopePrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"5\":{\"prompt\":\"PickupPromptAK47\",\"title\":\"AMBIL AK-47\",\"titleFits\":true},\"4\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"AMBIL HANDGUN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PickupPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"7\":{\"enabled\":true,\"anchorError\":0.6402513980865479,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"KEMBALI KE PULAU\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ReturnPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"6\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"MULAI TERBANG\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"StartPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"9\":{\"enabled\":true,\"anchorError\":0.6402513980865479,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"DUDUK\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"SitPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"8\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"FOTO KEMENANGAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PhotoPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"14\":{\"enabled\":true,\"anchorError\":0.6402513980865479,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TARIK REKAN\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"PullCrewPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"13\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"TURUN KE GONDOLA\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DescendPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"12\":{\"enabled\":true,\"anchorError\":0.6402513980865479,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PANJAT KUBAH\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"ClimbPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"11\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":false,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"LEPAS TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"DetachTetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true},\"10\":{\"enabled\":true,\"anchorError\":0.6403276920318604,\"capsule\":0.5,\"ui\":true,\"track\":true,\"capSquare\":true,\"width\":196,\"circle\":0.5,\"title\":\"PASANG TALI\",\"style\":\"Custom\",\"titleFits\":true,\"height\":52,\"prompt\":\"TetherPrompt\",\"bg\":0.6499999761581421,\"detailFits\":true}},\"touch\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "tap": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"tapTriggered\":1,\"style\":\"Custom\"}"
+      }
+    ],
+    "isError": false
+  },
+  "keyboardHold": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"patchTriggers\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "phonePickup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"pickupTriggers\":1,\"action\":\"Ambil AK-47\",\"holdDuration\":0.20000000298023225}"
+      }
+    ],
+    "isError": false
+  },
+  "phoneRope": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ropeTriggers\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "lifecycle": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"photoHudHidden\":true,\"earlyTriggers\":0,\"photoHudResumed\":true,\"ropePartial\":0.06671679019927979,\"ropeCancelled\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "disableCleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"before\":1,\"afterDisable\":0,\"removedStyle\":\"Custom\"}"
+      }
+    ],
+    "isError": false
+  },
+  "inventoryAndCleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"device\":\"default\",\"fixture\":[],\"inventory\":{\"ReturnPrompt\":{\"paths\":{\"1\":\"Workspace.CloudPalace.ReturnPortal.ReturnPrompt\"},\"actions\":{\"Kembali ke Pulau Awal\":true},\"count\":1},\"PullCrewPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.PullCrewPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.PullCrewPrompt\"},\"actions\":{\"Tarik Rekan ke Keranjang\":true},\"count\":6},\"ClimbPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.ClimbPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.ClimbPrompt\"},\"actions\":{\"Panjat ke Kubah Balon (Katrol)\":true},\"count\":6},\"StartPrompt\":{\"paths\":{\"1\":\"Workspace.FlyHighLobby.MatchmakingPods.Pod_A.FloorPad.PromptAnchor.StartPrompt\",\"2\":\"Workspace.FlyHighLobby.MatchmakingPods.Pod_B.FloorPad.PromptAnchor.StartPrompt\"},\"actions\":{\"Mulai Penerbangan\":true},\"count\":5},\"HelmPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HelmSeat.HelmPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.HelmSeat.HelmPrompt\"},\"actions\":{\"Kendalikan Balon (Pilot)\":true},\"count\":6},\"TetherPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.TetherPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.TetherPrompt\"},\"actions\":{\"Pasang Tali Pengaman\":true},\"count\":6},\"PatchPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole1.PatchPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.HoleSlots.Hole2.PatchPrompt\"},\"actions\":{\"Tambal Lubang\":true},\"count\":30},\"DescendPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.EnvelopeWalkway.DescendPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.EnvelopeWalkway.DescendPrompt\"},\"actions\":{\"Turun ke Gondola & Lepas Tali\":true},\"count\":6},\"RepairRopePrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.RepairRopePrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.RepairRopePrompt\"},\"actions\":{\"Perbaiki Tali yang Dilepas\":true},\"count\":6},\"DetachTetherPrompt\":{\"paths\":{\"1\":\"ReplicatedStorage.FlyHigh.Templates.HotAirBalloon.TetherStation.DetachTetherPrompt\",\"2\":\"ReplicatedStorage.FlyHigh.Templates.BalloonVariants.DawnExplorer.TetherStation.DetachTetherPrompt\"},\"actions\":{\"Lepas Tali Pengaman\":true},\"count\":6},\"PhotoPrompt\":{\"paths\":{\"1\":\"Workspace.CloudPalace.PhotoboothSpot.PhotoPrompt\"},\"actions\":{\"Ambil Foto Kemenangan\":true},\"count\":1},\"SitPrompt\":{\"paths\":{\"1\":\"Workspace.CloudPalace.PalaceFurniture.RoyalSofa.LeftSeat.SitPrompt\",\"2\":\"Workspace.CloudPalace.PalaceFurniture.RoyalSofa.RightSeat.SitPrompt\"},\"actions\":{\"Duduk\":true},\"count\":4}},\"players\":0}"
+      }
+    ],
+    "isError": false
+  },
+  "save": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Saved: Saved to Roblox."
+      },
+      {
+        "type": "text",
+        "text": "{\"location\":\"Cloud\",\"status\":\"Saved\",\"version\":25,\"message\":\"Saved to Roblox.\"}"
+      }
+    ],
+    "isError": false
+  },
+  "flightControllerUnchanged": true,
+  "review": "Full flight-controller replacement was rejected before mutation. Safe resolution leaves the controller unchanged and uses its existing startup through the repair-module compatibility shim.",
+  "sourceParity": "The two presentation modules and unchanged controller match mirrors after CRLF-to-LF/trimEnd normalization.",
+  "limitations": [
+    "No physical touch/gamepad test.",
+    "Prompt trigger tests do not prove server action outcomes.",
+    "Local rbxl not reopened or shown equal to Cloud v25."
+  ],
+  "hashes": {
+    "HUDInteractionPrompts": "be01e75fd51de0468773cac524c06bdb69d49d27f92f04bd233e111da6ec813c",
+    "HUDRepairPrompts": "276905c95ceb613e1c117ae1eeaf5f276bfb63daf8a4ea05408f8a8468d7f671"
+  },
+  "finalSave": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Saved: Saved to Roblox."
+      },
+      {
+        "type": "text",
+        "text": "{\"location\":\"Cloud\",\"status\":\"Saved\",\"version\":26,\"message\":\"Saved to Roblox.\"}"
+      }
+    ],
+    "isError": false
+  },
+  "finalShimVerification": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"modulePresent\":true,\"compile\":true,\"source\":\"--!strict\\n-- Compatibility entry point for the shared world-action presentation.\\nreturn require(script.Parent:WaitForChild(\\\"HUDInteractionPrompts\\\"))\\n\\n\"}"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "baseline": "6f6dc64",
+  "date": "2026-11-17",
+  "fixture": "Client-only layout state injections and local world prompts; no real flight or persistent profile mutations.",
+  "desktop": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"view\":\"1066.40002, 536\",\"touch\":false,\"header\":{\"1\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT CERAH\",\"titleFits\":true,\"detailFits\":true,\"alt\":0},\"3\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"PULAU SENJA\",\"titleFits\":true,\"detailFits\":true,\"alt\":4400},\"2\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"AWAN MENDUNG\",\"titleFits\":true,\"detailFits\":true,\"alt\":2400},\"5\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"GERBANG SURGAWI\",\"titleFits\":true,\"detailFits\":true,\"alt\":8400},\"4\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT BINTANG\",\"titleFits\":true,\"detailFits\":true,\"alt\":6400}},\"alerts\":{\"18\":{\"surface\":\"StormChallengePanel\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"9\":{\"surface\":\"AlertBanner\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.153593063354493},\"1\":{\"surface\":\"AlertBanner\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.707008361816407},\"15\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.74772834777832},\"3\":{\"surface\":\"AlertBanner\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.432855606079102},\"2\":{\"surface\":\"StormChallengePanel\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"5\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.1201171875},\"4\":{\"surface\":\"StormChallengePanel\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"7\":{\"surface\":\"AlertBanner\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.000625610351563},\"6\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"14\":{\"surface\":\"StormChallengePanel\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"8\":{\"surface\":\"StormChallengePanel\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"16\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"17\":{\"surface\":\"AlertBanner\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.510894775390625},\"13\":{\"surface\":\"AlertBanner\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.727943420410157},\"12\":{\"surface\":\"StormChallengePanel\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"11\":{\"surface\":\"AlertBanner\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.46677017211914},\"10\":{\"surface\":\"StormChallengePanel\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14}}}"
+      }
+    ],
+    "isError": false
+  },
+  "phone": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"view\":\"749, 381\",\"touch\":true,\"header\":{\"1\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT CERAH\",\"titleFits\":true,\"detailFits\":true,\"alt\":0},\"3\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"PULAU SENJA\",\"titleFits\":true,\"detailFits\":true,\"alt\":4400},\"2\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"AWAN MENDUNG\",\"titleFits\":true,\"detailFits\":true,\"alt\":2400},\"5\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"GERBANG SURGAWI\",\"titleFits\":true,\"detailFits\":true,\"alt\":8400},\"4\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT BINTANG\",\"titleFits\":true,\"detailFits\":true,\"alt\":6400}},\"alerts\":{\"18\":{\"surface\":\"StormChallengePanel\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"9\":{\"surface\":\"AlertBanner\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.15247917175293},\"1\":{\"surface\":\"AlertBanner\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.512548446655274},\"15\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.42997932434082},\"3\":{\"surface\":\"AlertBanner\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.74759292602539},\"2\":{\"surface\":\"StormChallengePanel\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"5\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.726783752441407},\"4\":{\"surface\":\"StormChallengePanel\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"7\":{\"surface\":\"AlertBanner\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.463272094726563},\"6\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"14\":{\"surface\":\"StormChallengePanel\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"8\":{\"surface\":\"StormChallengePanel\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"16\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"17\":{\"surface\":\"AlertBanner\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.710100173950196},\"13\":{\"surface\":\"AlertBanner\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.1199951171875},\"12\":{\"surface\":\"StormChallengePanel\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"11\":{\"surface\":\"AlertBanner\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.000534057617188},\"10\":{\"surface\":\"StormChallengePanel\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14}}}"
+      }
+    ],
+    "isError": false
+  },
+  "tablet": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"view\":\"1375, 1030\",\"touch\":true,\"header\":{\"1\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT CERAH\",\"titleFits\":true,\"detailFits\":true,\"alt\":0},\"3\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"PULAU SENJA\",\"titleFits\":true,\"detailFits\":true,\"alt\":4400},\"2\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"AWAN MENDUNG\",\"titleFits\":true,\"detailFits\":true,\"alt\":2400},\"5\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"GERBANG SURGAWI\",\"titleFits\":true,\"detailFits\":true,\"alt\":8400},\"4\":{\"speedFits\":true,\"frameLoaded\":true,\"title\":\"LANGIT BINTANG\",\"titleFits\":true,\"detailFits\":true,\"alt\":6400}},\"alerts\":{\"18\":{\"surface\":\"StormChallengePanel\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"9\":{\"surface\":\"AlertBanner\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.087697982788086},\"1\":{\"surface\":\"AlertBanner\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.592483520507813},\"15\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.513702392578125},\"3\":{\"surface\":\"AlertBanner\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.769012451171875},\"2\":{\"surface\":\"StormChallengePanel\",\"name\":\"Angin Topan\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"5\":{\"surface\":\"AlertBanner\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.678863525390625},\"4\":{\"surface\":\"StormChallengePanel\",\"name\":\"Sambaran Petir\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"7\":{\"surface\":\"AlertBanner\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.38723373413086},\"6\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Es\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"14\":{\"surface\":\"StormChallengePanel\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"8\":{\"surface\":\"StormChallengePanel\",\"name\":\"Gelombang Panas\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"16\":{\"surface\":\"StormChallengePanel\",\"name\":\"Hujan Meteor\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"17\":{\"surface\":\"AlertBanner\",\"name\":\"Dinding Badai\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.749198913574219},\"13\":{\"surface\":\"AlertBanner\",\"name\":\"Anomali Magnetik\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.191595077514649},\"12\":{\"surface\":\"StormChallengePanel\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14},\"11\":{\"surface\":\"AlertBanner\",\"name\":\"Kabut Tebal\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14.005659103393555},\"10\":{\"surface\":\"StormChallengePanel\",\"name\":\"Pusaran Angin\",\"titleFits\":true,\"detailFits\":true,\"bottomMargin\":14}}}"
+      }
+    ],
+    "isError": false
+  },
+  "keyboard": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"cards\":{\"1\":{\"progress\":0,\"name\":\"TAMBAL BALON\",\"detail\":\"Memproses…\"}},\"keyboardTriggers\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "mobilePointer": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"width\":216,\"ropeTriggered\":1,\"progress\":0,\"bg\":0.3499999940395355,\"detail\":\"Memproses…\"}"
+      }
+    ],
+    "isError": false
+  },
+  "limitations": [
+    "Game is LandscapeSensor; portrait not a supported orientation and was not emulated.",
+    "Touch-enabled simulator with mouse pointer injection; no physical touch or gamepad test.",
+    "World-prompt fixtures verify input signals, not server repair completion on a real flight."
+  ],
+  "cleanup": {
+    "mode": "Edit",
+    "players": 0,
+    "device": "default",
+    "fixtures": [],
+    "userTestFlag": null
+  },
+  "sources": {
+    "HUDTheme": {
+      "sha256": "654462999ac9761b10e77943965214118a98bc940a6de75becbab4dd63fd71ee",
+      "bytes": 84444
+    },
+    "HUDTopChrome": {
+      "sha256": "9cada35adaec55f4c7d200c001b003298ca6903edf5c5f5e6a2e2ca1cbdcb09b",
+      "bytes": 2264
+    },
+    "HUDRepairPrompts": {
+      "sha256": "aa66bcd547f9c14104b8b3ed8ac4b9338b45da5840a675236a45f0a7c24ef324",
+      "bytes": 6764
+    },
+    "BalloonFleetAnimator": {
+      "sha256": "8fe03b2b28c321cc36f41d72f21c1750fc3bf023b945d424da7dd112eaeba214",
+      "bytes": 9885
+    }
+  },
+  "persistence": {
+    "location": "Cloud",
+    "version": 24,
+    "published": false,
+    "localBinaryVerified": false
+  }
+}

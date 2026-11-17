@@ -613,15 +613,75 @@ function BalloonVFX.Attach(model: Model)
 	local basketBottomY = if basket and basket:IsA("BasePart")
 		then root.CFrame:PointToObjectSpace(basket.Position).Y - basket.Size.Y * 0.5
 		else -1
-	local domeTopY = envRelPos.Y + envSize.Y * 0.5 + 4.5
-	local domeBottomY = basketBottomY - 3.0
-	local domeHeight = math.max(52, domeTopY - domeBottomY)
+	-- Shield ellipsoid fitted to the balloon's visible geometry (skins differ: lotus/koi/saturn envelopes
+	-- reach higher or wider than the hidden Envelope part). A Ball part is always a sphere, which left the
+	-- envelope top outside the shield (review 17 Nov), so the shell is an ellipsoid mesh.
+	local holeFolder = model:FindFirstChild("HoleSlots")
+	-- Points on each part's inscribed ellipsoid: envelopes are round, so box corners would overinflate the shell.
+	local directions = {}
+	for _, x in { -1, 0, 1 } do
+		for _, y in { -1, 0, 1 } do
+			for _, z in { -1, 0, 1 } do
+				local d = Vector3.new(x, y, z)
+				if d.Magnitude > 0 then table.insert(directions, d.Unit) end
+			end
+		end
+	end
+	local corners = {}
+	for _, x in { -1, 1 } do
+		for _, y in { -1, 1 } do
+			for _, z in { -1, 1 } do
+				table.insert(corners, Vector3.new(x, y, z))
+			end
+		end
+	end
+	local samples = {}
+	local visTop, visBottom = -math.huge, math.huge
+	for _, p in model:GetDescendants() do
+		if p:IsA("BasePart") and p ~= root and p.Transparency < 0.95 and not (holeFolder and p:IsDescendantOf(holeFolder)) then
+			local cf = root.CFrame:ToObjectSpace(p.CFrame)
+			local h = p.Size * 0.5
+			-- Block parts (basket floor, rails, posts) are boxes: their corners must stay inside too.
+			local boxy = p:IsA("Part") and p.Shape == Enum.PartType.Block
+			for _, d in boxy and corners or directions do
+				local c = cf * (h * d)
+				table.insert(samples, c)
+				visTop = math.max(visTop, c.Y)
+				visBottom = math.min(visBottom, c.Y)
+			end
+		end
+	end
+	if #samples == 0 then
+		visTop = envRelPos.Y + envSize.Y * 0.5
+		visBottom = basketBottomY
+	end
+	local domeTopY = visTop + 3
+	local domeBottomY = math.min(visBottom, basketBottomY) - 3
 	local domeCenterY = (domeTopY + domeBottomY) * 0.5
-	local domeWidth = math.max(envSize.X, envSize.Z, 28) + 12
+	local radiusY = (domeTopY - domeBottomY) * 0.5
+	local radiusXZ = math.max(envSize.X, envSize.Z, 28) * 0.5 + 6
+	local fit = 1
+	for _, c in samples do
+		local r = Vector2.new(c.X, c.Z).Magnitude
+		local dy = c.Y - domeCenterY
+		fit = math.max(fit, math.sqrt((r / radiusXZ) ^ 2 + (dy / radiusY) ^ 2))
+	end
+	-- Grow the horizontal radius first (the shell should hug the height), then both if still needed.
+	radiusXZ *= math.min(fit, 1.6)
+	fit = 1
+	for _, c in samples do
+		local r = Vector2.new(c.X, c.Z).Magnitude
+		local dy = c.Y - domeCenterY
+		fit = math.max(fit, math.sqrt((r / radiusXZ) ^ 2 + (dy / radiusY) ^ 2))
+	end
+	radiusXZ *= fit * 1.06
+	radiusY *= fit * 1.04
+	local domeWidth = radiusXZ * 2
+	local domeHeight = radiusY * 2
 
 	local shieldShell = makeNonPhysicalPart(
 		"ShieldShell",
-		Enum.PartType.Ball,
+		Enum.PartType.Block,
 		Vector3.new(domeWidth, domeHeight, domeWidth),
 		Enum.Material.ForceField,
 		Color3.fromRGB(122, 250, 206),
@@ -630,6 +690,10 @@ function BalloonVFX.Attach(model: Model)
 		root.CFrame * CFrame.new(0, domeCenterY, 0),
 		root
 	)
+	local shieldMesh = Instance.new("SpecialMesh")
+	shieldMesh.MeshType = Enum.MeshType.Sphere
+	shieldMesh.Parent = shieldShell
+	shieldShell:SetAttribute("ShieldFit", string.format("%.1fx%.1f@%.1f", domeWidth, domeHeight, domeCenterY))
 
 	local shieldLight = Instance.new("PointLight")
 	shieldLight.Name = "ShieldAuraLight"

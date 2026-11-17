@@ -4,6 +4,12 @@ Snapshot aktif per 17 November 2026, Asia/Jakarta. Bagian bertanggal di bawah "S
 
 ## Status terkini — 17 November 2026
 
+**Checkpoint file lokal, 17 November:** pengguna menyimpan Studio ke `Fly High.rbxl` (3.495.644 B, SHA-256 `d5e1eed6295891ddba751603916490ab60903285621c50214a933a7f14f9603a`). Source dalam binary diperiksa langsung terhadap mirror dan sesi Studio; [bukti checkpoint](audit/checkpoint-2026-11-17/README.md) mencatat hasil serta batasnya. Catatan Cloud v22–v27 dan “belum file lokal/commit” pada laporan run di bawah adalah historis. File belum dibuka ulang di Studio untuk membandingkan geometri/Terrain/properti; kesamaan seluruh place tidak diklaim. Checkpoint Git berikut mencakup HUD/prompt/hotbar, rollback mode tes, serta perbaikan VFX/scenery dari AI lain. Tidak Publish atau Playtest baru pada verifikasi penyimpanan ini.
+
+**HUD dan prompt dunia:** header tengah kini naik ke area kosong topbar (margin atas 6 px, clamp aman native controls/notch, fallback layar sempit); native Backpack UI disembunyikan selama Pistol/AK47 ada di Character/Backpack. Kontrol amunisi/reload/drop custom tetap terlihat. [QA terbaru UI-01](audit/top-hud-hotbar-2026-11-17/README.md): desktop/iPhone/iPad + transisi Tool lulus fixture; dua source compile/cocok mirror. Cloud v27 tersimpan; source file lokal kini diverifikasi 61/61 dalam checkpoint di atas. Belum Publish dan belum verifikasi ulang seluruh geometri. Prompt 13 keluarga tetap memakai renderer kapsul dari [revisi sebelumnya](audit/interaction-prompts-2026-11-17/README.md). Edit/0 pemain/default viewport pulih, fixture bersih. Perubahan AI lain dipertahankan.
+
+**Mode tes pengguna sudah dikembalikan (17 November):** tiga source Studio dipulihkan persis ke baseline sebelum tes dan lolos compile; mirror kembali sama dengan HEAD, attribute `FlyHighUserTest` dihapus. Kebal/kecepatan 4×/stok mock tidak aktif lagi. Inventory persisten tidak diubah selama tes atau rollback. Studio Edit, 0 pemain, tanpa fixture. Tidak save/publish/commit atau Playtest ulang pada rollback ini. [Bukti TEST-01](audit/user-test-2026-11-17/rollback-results.json).
+
 Checkpoint game: `442b728` ("Obstacle audio, palace cutscenes, asset round 6") di atas `57f7e31`; remote `origin/main` diverifikasi memuat commit ini pada 17 November. Berisi `Fly High.rbxl` lokal (3.490.832 B, SHA-256 `f19c846e…c8e3`, belum dibuka ulang di Studio), mirror `audit/sources` yang cocok dengan Studio menurut checkpoint tersebut, sumber Blender/GLB, dan bukti audit di bawah. Checkpoint arsip berikutnya memasukkan `assets/marketing/` sebagai **draft belum disetujui**, serta ekspor `assets/models/scenery/generated/` yang sebelumnya dikecualikan. Ini bukan perubahan gameplay atau verifikasi Studio baru. Status marketing: `ART-01` di PROGRESS.
 
 **Efek suara rintangan (AUDIO-01):**
@@ -28,6 +34,12 @@ Checkpoint game: `442b728` ("Obstacle audio, palace cutscenes, asset round 6") d
 - `ClientSeaSkirt` untuk tepi laut, efektif di kualitas grafik menengah ke atas. [Bukti](audit/asset-round6-cutscene-polish-2026-11-17/README.md).
 
 **Catatan alat:** `execute_luau` Client memulihkan `CameraType` di akhir panggilan. Untuk fixture kamera, pakai `BindToRenderStep` dan pulihkan lewat `task.delay`. Play Solo beruntun bisa ditendang DataManager ("Data belum dapat dimuat dengan aman"); tunggu ±1 menit lalu ulangi.
+
+**Perbaikan playtest (17 Nov, 11:20 WIB):**
+- Pelindung Emergency Kit kini ellipsoid yang pas dengan geometri tiap skin balon. Sebelumnya Ball selalu bola dan memotong puncak lotus/koi.
+- `CloudKetch` Gateway digeser keluar koridor terbang.
+- Petak rumput tinggi round 6 dikembalikan ke LeafyGrass.
+- **Riwayat run: disimpan ke Cloud v22.** Pengguna kemudian menyimpan file lokal; source BalloonVFX/BiomeScenery tercakup dalam verifikasi checkpoint 61/61 di atas. Terrain belum dibandingkan lewat pembukaan ulang file. [Bukti](audit/playtest-fixes-2026-11-17/README.md).
 
 **Terbuka:**
 - Multi-pemain nyata: lompatan/efek bangkit dilihat kru lain, antrean dua balon.

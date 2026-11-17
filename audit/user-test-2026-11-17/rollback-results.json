@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-17",
+  "build": "6f6dc64 baseline restored",
+  "environment": "Windows Roblox Studio Edit, 0 players",
+  "sourceBaselineExact": {
+    "DataManager": true,
+    "BalloonManager": true,
+    "LeaderboardManager": true
+  },
+  "compile": 3,
+  "flagRemoved": true,
+  "runtimeFixtures": [],
+  "persistentInventoryChanged": false,
+  "playtest": "Not rerun: exact baseline source restoration and compile verified; no persistent profile read/write requested.",
+  "placeSaved": false,
+  "published": false
+}

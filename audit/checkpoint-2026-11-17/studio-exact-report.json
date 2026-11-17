@@ -1,0 +1,439 @@
+{
+  "scripts": 61,
+  "pieces": [
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonThemes",
+      "first": 1,
+      "last": 1119,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+      "first": 35997,
+      "last": 40734,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDMotion",
+      "first": 35997,
+      "last": 53947,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "first": 35997,
+      "last": 72004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTheme",
+      "first": 71997,
+      "last": 84444,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+      "first": 1,
+      "last": 150,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+      "first": 1,
+      "last": 27302,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+      "first": 1,
+      "last": 32443,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDGlyphs",
+      "first": 1,
+      "last": 1527,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioMixer",
+      "first": 1,
+      "last": 6992,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+      "first": 1,
+      "last": 2265,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlightControlMath",
+      "first": 1,
+      "last": 483,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.SceneryHabitatArt",
+      "first": 1,
+      "last": 6643,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+      "first": 1,
+      "last": 5639,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDAdventureArt",
+      "first": 1,
+      "last": 4997,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDLayout",
+      "first": 35997,
+      "last": 39993,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+      "first": 1,
+      "last": 7703,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+      "first": 1,
+      "last": 4291,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+      "first": 1,
+      "last": 18173,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+      "first": 1,
+      "last": 14903,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+      "first": 1,
+      "last": 15433,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "first": 35997,
+      "last": 72004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "first": 71997,
+      "last": 108004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "first": 107997,
+      "last": 144004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BiomeScenery",
+      "first": 143997,
+      "last": 153465,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+      "first": 35997,
+      "last": 43435,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDImageAssets",
+      "first": 1,
+      "last": 21003,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.ObstacleAudioCatalog",
+      "first": 1,
+      "last": 7629,
+      "equal": true
+    },
+    {
+      "path": "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+      "first": 1,
+      "last": 9912,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.LeaderboardManager",
+      "first": 1,
+      "last": 13036,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.JumpManager",
+      "first": 1,
+      "last": 6447,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.IslandWildlifeController",
+      "first": 1,
+      "last": 4202,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.DataManager",
+      "first": 1,
+      "last": 22333,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleMotion",
+      "first": 1,
+      "last": 3867,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "first": 1,
+      "last": 23728,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PalaceManager",
+      "first": 1,
+      "last": 3565,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+      "first": 1,
+      "last": 2991,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.WeaponManager",
+      "first": 1,
+      "last": 13642,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "first": 1,
+      "last": 31763,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PodManager",
+      "first": 1,
+      "last": 5887,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.OverheadManager",
+      "first": 1,
+      "last": 6607,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.TetherManager",
+      "first": 1,
+      "last": 24192,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.PalaceArrival",
+      "first": 1,
+      "last": 5337,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ServerUtils",
+      "first": 1,
+      "last": 2466,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ShopManager",
+      "first": 1,
+      "last": 4904,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.CrewAccessGuard",
+      "first": 1,
+      "last": 1106,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.LargeChallengeManager",
+      "first": 1,
+      "last": 5736,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleArt",
+      "first": 1,
+      "last": 28284,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleVisuals",
+      "first": 1,
+      "last": 21767,
+      "equal": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "first": 1,
+      "last": 3424,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.PalaceCinematics",
+      "first": 1,
+      "last": 31657,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.StormCurtainPresentation",
+      "first": 1,
+      "last": 9536,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.MusicController",
+      "first": 1,
+      "last": 14289,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.FlightHUDController",
+      "first": 1,
+      "last": 30994,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.ShopClientController",
+      "first": 1,
+      "last": 21007,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "first": 1,
+      "last": 36004,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponClientController",
+      "first": 35997,
+      "last": 46154,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WorldUISkins",
+      "first": 1,
+      "last": 6023,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WeaponHotbarController",
+      "first": 1,
+      "last": 2907,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.WarningAudioController",
+      "first": 1,
+      "last": 7795,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.PalacePresentation",
+      "first": 1,
+      "last": 3982,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+      "first": 1,
+      "last": 4942,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.FlightJumpController",
+      "first": 1,
+      "last": 7219,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.ObstacleAudioController",
+      "first": 1,
+      "last": 10661,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.BalloonFleetAnimator",
+      "first": 1,
+      "last": 9885,
+      "equal": true
+    },
+    {
+      "path": "StarterPlayer.StarterPlayerScripts.BiomeLightingController",
+      "first": 1,
+      "last": 16396,
+      "equal": true
+    }
+  ],
+  "allEqual": true,
+  "normalization": "none; UTF-8 bytes from stored source compared directly with overlapping Studio source pieces"
+}
