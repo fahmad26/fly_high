@@ -4,7 +4,9 @@ local RunService=game:GetService("RunService")
 local Http=game:GetService("HttpService")
 local RS=game:GetService("ReplicatedStorage")
 local Catalog=require(RS.FlyHigh.Modules.DailyAndShopCatalog)
+local Config=require(RS.FlyHigh.Modules.FlyHighConfig)
 local U=require(script.Parent.ServerUtils)
+local BadgeManager=require(script.Parent.BadgeManager)
 local remotes=RS.FlyHigh.Remotes
 local offline=RunService:IsStudio() and game.GameId==0
 local store=not offline and DS:GetDataStore("FlyHigh_PlayerData_v1") or nil
@@ -15,31 +17,34 @@ _G.FlyHighDataManager=Manager
 local function number(v)
  return type(v)=="number" and v==v and math.clamp(math.floor(v),0,1e9) or 0
 end
-local function cleanOwned(tbl)
+local function cleanOwned(tbl,userId)
  local out={}
  if type(tbl)~="table" then return out end
  for k,v in pairs(tbl) do
-  if type(k)=="string" and v==true and Catalog.COSMETICS_BY_KEY[k] then out[k]=true end
+  local item=Catalog.COSMETICS_BY_KEY[k]
+  if type(k)=="string" and v==true and item and Catalog.CanAccessCosmetic(item,userId) then out[k]=true end
  end
  return out
 end
-local function cleanTemp(tbl)
+local function cleanTemp(tbl,userId)
  local out={}
  if type(tbl)~="table" then return out end
  local now=os.time()
  for k,v in pairs(tbl) do
-  if type(k)=="string" and type(v)=="number" and v==v and v>now and Catalog.COSMETICS_BY_KEY[k] then
+  local item=Catalog.COSMETICS_BY_KEY[k]
+  if type(k)=="string" and type(v)=="number" and v==v and v>now and item and Catalog.CanAccessCosmetic(item,userId) then
    out[k]=math.floor(v)
   end
  end
  return out
 end
-local function cleanEquipped(tbl)
+local function cleanEquipped(tbl,userId)
  local src=type(tbl)=="table" and tbl or {}
  local out={frame="none",tracer="none",title="none"}
  for _,cat in ipairs({"frame","tracer","title"}) do
   local id=src[cat]
-  if type(id)=="string" and id~="none" and Catalog.GetCosmetic(cat,id) then out[cat]=id end
+  local item=type(id)=="string" and id~="none" and Catalog.GetCosmetic(cat,id) or nil
+  if item and Catalog.CanAccessCosmetic(item,userId) then out[cat]=id end
  end
  return out
 end
@@ -77,7 +82,7 @@ local function ensureMonthlyBucket(d,nowUnix)
  end
  return false
 end
-local function clean(d)
+local function clean(d,userId)
  d=type(d)=="table" and d or {}
  local owned=number(d.AKOwned==nil and d.AKCredits or d.AKOwned)
  local slot1=owned>=1 and d.AKSlot1==true
@@ -85,10 +90,11 @@ local function clean(d)
  local progress=d.DailyProgress==nil and 1 or number(d.DailyProgress)
  local cleaned={MaxAltitude=math.min(10000,number(d.MaxAltitude)),SummitCount=number(d.SummitCount),
   MonthlyKey=number(d.MonthlyKey),MonthlySummitCount=number(d.MonthlySummitCount),MonthlyMaxAltitude=math.min(10000,number(d.MonthlyMaxAltitude)),
+  ObstaclesDestroyed=number(d.ObstaclesDestroyed),
   EmergencyKits=number(d.EmergencyKits),AKOwned=owned,AKSlot1=slot1,AKSlot2=slot2,ShowPlayerLabels=d.ShowPlayerLabels~=false,
   SkyCoins=number(d.SkyCoins),DailyProgress=math.clamp(progress<1 and 1 or progress,1,7),
   LastDailyClaimDay=number(d.LastDailyClaimDay),SpeedBoostStock=number(d.SpeedBoostStock),RopeBuffStock=number(d.RopeBuffStock),
-  OwnedCosmetics=cleanOwned(d.OwnedCosmetics),TempCosmetics=cleanTemp(d.TempCosmetics),EquippedCosmetics=cleanEquipped(d.EquippedCosmetics),
+  OwnedCosmetics=cleanOwned(d.OwnedCosmetics,userId),TempCosmetics=cleanTemp(d.TempCosmetics,userId),EquippedCosmetics=cleanEquipped(d.EquippedCosmetics,userId),
   Receipts=type(d.Receipts)=="table" and d.Receipts or {},Session=d.Session}
  pruneExpiredTemp(cleaned)
  ensureMonthlyBucket(cleaned)
@@ -105,7 +111,7 @@ end
 local function attributes(p,d)
  pruneExpiredTemp(d)
  ensureMonthlyBucket(d)
- for _,key in ipairs({"MaxAltitude","SummitCount","MonthlyKey","MonthlySummitCount","MonthlyMaxAltitude","EmergencyKits","AKOwned","AKSlot1","AKSlot2","ShowPlayerLabels","SkyCoins","DailyProgress","LastDailyClaimDay","SpeedBoostStock","RopeBuffStock"}) do p:SetAttribute(key,d[key]) end
+ for _,key in ipairs({"MaxAltitude","SummitCount","MonthlyKey","MonthlySummitCount","MonthlyMaxAltitude","ObstaclesDestroyed","EmergencyKits","AKOwned","AKSlot1","AKSlot2","ShowPlayerLabels","SkyCoins","DailyProgress","LastDailyClaimDay","SpeedBoostStock","RopeBuffStock"}) do p:SetAttribute(key,d[key]) end
  p:SetAttribute("DailyClaimedToday",d.LastDailyClaimDay>=Catalog.GetUTC7Day())
  p:SetAttribute("EquippedFrame",d.EquippedCosmetics.frame)
  p:SetAttribute("EquippedTracer",d.EquippedCosmetics.tracer)
@@ -138,7 +144,7 @@ local function write(p,s,data,release)
   local ownershipLost=false
   local ok,result=pcall(function()
    return store:UpdateAsync("User_"..p.UserId,function(old)
-    old=clean(old)
+    old=clean(old,p.UserId)
     ownershipLost=not old.Session or old.Session.Id~=token
     if ownershipLost then return nil end
     return data
@@ -167,18 +173,18 @@ local function added(p)
  if sessions[p] then return end
  p:SetAttribute("DataReady",false)
  local data
- if offline then data=clean(nil)
+ if offline then data=clean(nil,p.UserId)
  else
   for attempt=1,3 do
    local ok,result=pcall(function()
     return store:UpdateAsync("User_"..p.UserId,function(old)
-     local d=clean(old)
+     local d=clean(old,p.UserId)
      if d.Session and d.Session.Id~=token and (d.Session.Expires or 0)>os.time() then return nil end
      d.Session={Id=token,Expires=os.time()+180}
      return d
     end)
    end)
-   if ok and result then data=clean(result) break end
+   if ok and result then data=clean(result,p.UserId) break end
    if attempt<3 then task.wait(attempt*2) end
   end
  end
@@ -190,6 +196,7 @@ local function added(p)
  local a=Instance.new("IntValue") a.Name="Rekor (km)" a.Parent=stats
  local b=Instance.new("IntValue") b.Name="Puncak" b.Parent=stats
  attributes(p,data) p:SetAttribute("DataReady",true)
+ BadgeManager.CheckDataMilestones(p,data)
 end
 function Manager.UpdateAltitude(p,km)
  local s=sessions[p]
@@ -199,6 +206,9 @@ function Manager.UpdateAltitude(p,km)
   local changed=rolled
   if floored>s.data.MaxAltitude then s.data.MaxAltitude=floored changed=true end
   if floored>s.data.MonthlyMaxAltitude then s.data.MonthlyMaxAltitude=floored changed=true end
+  if floored>=Config.BADGE_THRESHOLDS.AltitudeVoyagerKm then
+   BadgeManager.Award(p,"StratosphereVoyager")
+  end
   if changed then
    attributes(p,s.data)
    if _G.FlyHighLeaderboardManager and _G.FlyHighLeaderboardManager.RecordPlayer then
@@ -213,10 +223,35 @@ function Manager.AddSummit(p)
  s.data.SummitCount+=1 s.data.MaxAltitude=10000
  s.data.MonthlySummitCount+=1 s.data.MonthlyMaxAltitude=10000
  attributes(p,s.data)
+ if s.data.SummitCount>=Config.BADGE_THRESHOLDS.SummitPioneer then
+  BadgeManager.Award(p,"PalacePioneer")
+ end
+ if s.data.SummitCount>=Config.BADGE_THRESHOLDS.SummitSovereign then
+  BadgeManager.Award(p,"SkySovereign")
+ end
+ BadgeManager.Award(p,"StratosphereVoyager")
  if _G.FlyHighLeaderboardManager and _G.FlyHighLeaderboardManager.RecordPlayer then
   _G.FlyHighLeaderboardManager.RecordPlayer(p,s.data,true)
  end
  task.spawn(Manager.Save,p,false)
+end
+function Manager.RecordObstacleDestroyed(p)
+ local s=sessions[p]
+ if not writable(s) then return 0 end
+ s.data.ObstaclesDestroyed=math.clamp((s.data.ObstaclesDestroyed or 0)+1,0,1e9)
+ attributes(p,s.data)
+ if s.data.ObstaclesDestroyed>=Config.BADGE_THRESHOLDS.ObstaclesDefender then
+  BadgeManager.Award(p,"SkyDefender")
+ end
+ if not s.obstacleSaveQueued then
+  s.obstacleSaveQueued=true
+  task.delay(4,function()
+   if sessions[p]~=s then return end
+   s.obstacleSaveQueued=nil
+   if writable(s) then Manager.Save(p,false) end
+  end)
+ end
+ return s.data.ObstaclesDestroyed
 end
 function Manager.GetLeaderboardData(p)
  local s=sessions[p] if not s or not s.data then return nil end
@@ -480,6 +515,7 @@ function Manager.CosmeticAction(p,action,category,itemId)
  end
  local item=type(itemId)=="string" and Catalog.GetCosmetic(category,itemId) or nil
  if not item then return false,"Kosmetik tidak ditemukan." end
+ if not Catalog.CanAccessCosmetic(item,p.UserId) then return false,"Kosmetik tidak tersedia untuk akunmu." end
  while s.busy do task.wait(0.05) end
  if sessions[p]~=s or not writable(s) then return false,"Sesi data berakhir." end
  local now=os.time()

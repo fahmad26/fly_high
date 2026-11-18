@@ -1,0 +1,58 @@
+{
+  "game": "Fly High: Cloud Palace",
+  "created": "2026-11-18",
+  "method": "image-generator subagent fresh redesign from scratch (inspired by assets/icon.jpg & assets/thumbnail.jpg); Pillow 13.0.0 Lanczos used only for PNG export & Roblox sizing.",
+  "type": "Illustrated 3D marketing key art; not an in-game screenshot.",
+  "published": false,
+  "files": [
+    {
+      "name": "icon-master-v2.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 1425135,
+      "sha256": "cbb8281bbd4141d7ad2343789853e87119f0b52de3aec185fcd3037913ac71f9"
+    },
+    {
+      "name": "icon-1024-v2.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 1425135,
+      "sha256": "cbb8281bbd4141d7ad2343789853e87119f0b52de3aec185fcd3037913ac71f9"
+    },
+    {
+      "name": "icon-512-v2.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 407918,
+      "sha256": "d1f5c80e432ca3d96ccfabc8fd353d16f73fd42b1fb7c72f4ac66c9be4d06fc1"
+    },
+    {
+      "name": "qa-icon-150.png",
+      "width": 150,
+      "height": 150,
+      "bytes": 46330,
+      "sha256": "44f595df848fbe93cce1d1458cff1929d00a345d27671d9a8a1a4cea113896c1"
+    },
+    {
+      "name": "thumbnail-master-v2.png",
+      "width": 1376,
+      "height": 768,
+      "bytes": 1475586,
+      "sha256": "244113fc5786337ec3e0110852840a5b7bab696af13cb5bd5a43aa7a24bd1c1a"
+    },
+    {
+      "name": "thumbnail-1920x1080-v2.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 2517892,
+      "sha256": "d55ab5b2cc3183df3e49926274e2a6157289ee50cb67d1ad1e5c42ad6a4f2b99"
+    },
+    {
+      "name": "qa-thumbnail-384x216.png",
+      "width": 384,
+      "height": 216,
+      "bytes": 144274,
+      "sha256": "7ba118050ee2be4a639186f8a3733a59552c58f5ad778fa59ea858cd3535f70c"
+    }
+  ]
+}

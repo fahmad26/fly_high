@@ -7,6 +7,7 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Debris = game:GetService("Debris")
 local AdventureCatalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("HUDAdventureCatalog"))
+local TouchInputGuard = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("TouchInputGuard"))
 
 local localPlayer = Players.LocalPlayer
 local mouse = localPlayer:GetMouse()
@@ -374,7 +375,7 @@ local function spotTargetPosition()
  local anchorPos = anchorPart and anchorPart.Position
 
  local autoPos = findAutoAimTarget(camera, true, nil)
- if autoPos and (not anchorPos or (autoPos - anchorPos).Magnitude <= 270) then
+ if autoPos and (not anchorPos or (autoPos - anchorPos).Magnitude <= 265) then
   return autoPos
  end
 
@@ -419,7 +420,7 @@ beginFire = function()
  if currentWeapon and currentWeapon:GetAttribute("IsAutomatic") then isFiringAuto=true end
 end
 mobileShootBtn.InputBegan:Connect(function(input)
- if fireButtonInput or (input.UserInputType~=Enum.UserInputType.MouseButton1 and input.UserInputType~=Enum.UserInputType.Touch) then return end
+ if fireButtonInput or not TouchInputGuard.IsDirectBegin(mobileShootBtn, input) then return end
  fireButtonInput=input
  beginFire()
 end)
@@ -461,7 +462,16 @@ local function button(name,text,position,callback)
 end
 local isGhostNow, ghostSpot -- assigned with the spirit panel below
 local function pingInput()
- if isGhostNow() then HUDMotion.SetVisible(wheel,false) ghostSpot() else HUDMotion.Toggle(wheel) end
+ if localPlayer:GetAttribute("InFlight") ~= true then
+  if wheel.Visible and wheel:GetAttribute("HUDMotionClosing") ~= true then HUDMotion.SetVisible(wheel,false) end
+  return
+ end
+ if isGhostNow() then
+  if wheel.Visible and wheel:GetAttribute("HUDMotionClosing") ~= true then HUDMotion.SetVisible(wheel,false) end
+  ghostSpot()
+ else
+  HUDMotion.Toggle(wheel)
+ end
 end
 local pingButton=button("PingButton","💬 PING [V]",UDim2.new(0,20,1,-155),pingInput)
 local reloadButton=button("ReloadButton","RELOAD [R / X]",UDim2.new(1,-260,1,-225),function() if currentWeapon then reloadRemote:FireServer() end end)
@@ -497,6 +507,48 @@ setWeaponPresentation=require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentati
 if localPlayer.Character then onCharacter(localPlayer.Character) end
 localPlayer.CharacterAdded:Connect(onCharacter)
 tetherEvent.OnClientEvent:Connect(function(data)
+ if data.rescueLanded then
+  local char = localPlayer.Character
+  local hrp = char and char:FindFirstChild("HumanoidRootPart")
+  local hum = char and char:FindFirstChildOfClass("Humanoid")
+  local floor = data.balloon and data.balloon:FindFirstChild("BasketFloor")
+  if hrp and hum and floor and floor:IsA("BasePart") and typeof(data.localOffset) == "Vector3" then
+   local function uprightFloorCFrame(localPos: Vector3): CFrame
+    local look = hrp.CFrame.LookVector
+    local flat = Vector3.new(look.X, 0, look.Z)
+    local rot = flat.Magnitude > 0.01 and CFrame.lookAt(Vector3.zero, flat.Unit) or CFrame.identity
+    return CFrame.new(floor.CFrame:PointToWorldSpace(localPos)) * rot
+   end
+   hum.PlatformStand = false
+   hum.Sit = false
+   hum.Jump = false
+   hrp.CFrame = uprightFloorCFrame(data.localOffset)
+   hrp.AssemblyLinearVelocity = floor.AssemblyLinearVelocity
+   hrp.AssemblyAngularVelocity = Vector3.zero
+   hum:ChangeState(Enum.HumanoidStateType.Running)
+   task.spawn(function()
+    local deadline = os.clock() + 0.85
+    while os.clock() < deadline and char.Parent and hrp.Parent and hum.Parent and floor.Parent do
+     RunService.Stepped:Wait()
+     local rel = floor.CFrame:PointToObjectSpace(hrp.Position)
+     local halfX = math.max(2, floor.Size.X / 2 - 2.5)
+     local halfZ = math.max(2, floor.Size.Z / 2 - 2.5)
+     local outOfBounds = math.abs(rel.X) > halfX or math.abs(rel.Z) > halfZ
+     local sinking = rel.Y < data.localOffset.Y - 0.45
+     if hum.FloorMaterial == Enum.Material.Air or outOfBounds or sinking then
+      local clamped = Vector3.new(math.clamp(rel.X, -halfX, halfX), data.localOffset.Y, math.clamp(rel.Z, -halfZ, halfZ))
+      hrp.CFrame = uprightFloorCFrame(clamped)
+      hrp.AssemblyLinearVelocity = floor.AssemblyLinearVelocity
+      hrp.AssemblyAngularVelocity = Vector3.zero
+      hum.PlatformStand = false
+      hum.Sit = false
+      hum.Jump = false
+      hum:ChangeState(Enum.HumanoidStateType.Running)
+     end
+    end
+   end)
+  end
+ end
  tetherFrame.Visible=data.isTethered==true
  local dur=math.clamp(data.durability or 0,0,100)
  tetherLabel.Text=string.format("Tali Pengaman: %d%%",math.floor(dur))
@@ -653,6 +705,7 @@ end
 -- Spirits cannot send crew quick pings (the server ignores them), so every ping
 -- input while dead marks the danger in view instead.
 ghostSpot = function()
+ if not isGhostNow() then return end
  if os.clock() - lastGhostSpot < 2 then
   ghostHintFlash("Tunggu sebentar sebelum menandai lagi")
   return
@@ -829,11 +882,15 @@ RunService:BindToRenderStep(aimRenderStep,Enum.RenderPriority.Camera.Value+1,fun
  reloadButton.Visible=currentWeapon~=nil dropButton.Visible=currentWeapon~=nil
  local inFlight=localPlayer:GetAttribute("InFlight")==true
  local ghost=localPlayer:GetAttribute("FlightGhost")==true and inFlight
+ if (ghost or not inFlight) and wheel.Visible and wheel:GetAttribute("HUDMotionClosing") ~= true then HUDMotion.SetVisible(wheel,false) end
  ghostFrame.Visible=ghost
  if ghost then
   local ref=localPlayer:FindFirstChild("FlightBalloon")
   if ref and ref.Value and ref.Value.PrimaryPart then Workspace.CurrentCamera.CameraSubject=ref.Value.PrimaryPart end
  elseif wasGhost then
+  ghostHintToken+=1
+  ghostHint.Text=GHOST_HINT
+  lastGhostSpot=0
   local hum=localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
   if hum then Workspace.CurrentCamera.CameraSubject=hum end
  end

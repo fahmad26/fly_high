@@ -105,7 +105,22 @@ local FlyHighConfig = {
 		[3] = { ascend_rate = 0.0, descend_mult = 1.5, can_ascend = false }, -- Gas only mitigates descent
 		[4] = { ascend_rate = 0.0, descend_mult = 2.5, can_ascend = false },
 		[5] = { ascend_rate = 0.0, descend_mult = 5.0, can_ascend = false }, -- Freefall
-	}
+	},
+
+	-- Experience Badges (awarded authoritatively on the server)
+	BADGE_IDS = table.freeze({
+		FirstFlight = 1985513006821695,
+		PalacePioneer = 2228896968502208,
+		StratosphereVoyager = 612666145539186,
+		SkyDefender = 1171146342737589,
+		SkySovereign = 133927492139337,
+	}),
+	BADGE_THRESHOLDS = table.freeze({
+		SummitPioneer = 1,
+		AltitudeVoyagerKm = 5000,
+		ObstaclesDefender = 10,
+		SummitSovereign = 10,
+	}),
 }
 
 return FlyHighConfig

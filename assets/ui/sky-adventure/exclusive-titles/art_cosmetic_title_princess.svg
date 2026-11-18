@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="400" viewBox="0 0 240 200">
+  <defs>
+    <radialGradient id="ppHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.50"/>
+      <stop offset="55%" stop-color="#9333EA" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1E0933" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="32%" stop-color="#FBCFE8"/>
+      <stop offset="66%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </linearGradient>
+    <linearGradient id="tiaraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="45%" stop-color="#F472B6"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+    <linearGradient id="roseGem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F9A8D4"/>
+      <stop offset="100%" stop-color="#BE185D"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#ppHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#roseGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.75" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#FBCFE8" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Graceful Floral Filigree Wings -->
+  <path d="M58 124 C32 106, 26 78, 42 54 C46 72, 56 83, 72 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M182 124 C208 106, 214 78, 198 54 C194 72, 184 83, 168 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M68 122 C48 112, 42 94, 48 76 C56 87, 65 95, 76 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <path d="M172 122 C192 112, 198 94, 192 76 C184 87, 175 95, 164 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <!-- Imperial Rose-Gold Tiara -->
+  <path d="M64 128 C67 98, 79 79, 92 92 C102 64, 112 50, 120 42 C128 50, 138 64, 148 92 C161 79, 173 98, 176 128 Z" fill="url(#tiaraGrad)" stroke="#FFF1F2" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M77 123 C81 102, 88 90, 97 99 C106 77, 113 65, 120 57 C127 65, 134 77, 143 99 C152 90, 159 102, 163 123 Z" fill="#FFF1F2" fill-opacity="0.22"/>
+  <!-- Pearl & Champagne Tiara Base Rim -->
+  <path d="M63 130 Q120 142 177 130" stroke="url(#roseGold)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="84" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="102" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="120" cy="136" r="4.6" fill="#FEF3C7" stroke="#B45309" stroke-width="1.2"/>
+  <circle cx="138" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="156" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <!-- Center Rose Diamond & Star Tips -->
+  <polygon points="120,72 133,96 120,118 107,96" fill="url(#roseGem)" stroke="#FDE68A" stroke-width="2.2"/>
+  <polygon points="120,79 127,96 120,110 113,96" fill="#FFFFFF" fill-opacity="0.52"/>
+  <circle cx="91" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="149" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="120" cy="36" r="6.2" fill="#FFF1F2" stroke="#F59E0B" stroke-width="1.6"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#F9A8D4"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#FDE68A"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FBCFE8"/>
+</svg>

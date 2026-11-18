@@ -12,6 +12,7 @@ local AltitudeTracker = require(script.Parent.HUDAltitudeTracker)
 local FlyHighConfig = require(script.Parent.FlyHighConfig)
 local Chrome = require(script.Parent.HUDTopChrome)
 local Localization = require(script.Parent.Localization)
+local TouchInputGuard = require(script.Parent.TouchInputGuard)
 local Theme = {}
 
 local BIOME_ZONES = {
@@ -442,7 +443,7 @@ end
 	resultPillLbl.Size = UDim2.new(1, -16, 1, 0)
 	resultPillLbl.Position = UDim2.fromOffset(8, 0)
 	resultPillLbl.ZIndex = 21
-	local lastResult, resultUntil = nil, 0
+	local lastResult, resultUntil, lastArrivalResult = nil, 0, nil
 
 	local function connect(signal, fn)
 		local c = signal:Connect(fn)
@@ -522,7 +523,7 @@ end
 				table.insert(r.links, signal:Connect(fn))
 			end
 			link(o.InputBegan, function(i)
-				if o.Active and (i.UserInputType == Enum.UserInputType.Touch or i.UserInputType == Enum.UserInputType.MouseButton1) then
+				if o.Active and TouchInputGuard.IsDirectBegin(o, i) then
 					r.pressed = true
 					r.input = i
 				end
@@ -770,8 +771,17 @@ end
 			resultPillLbl.Text = won and "✓  PENERBANGAN SUKSES" or "BALON HANCUR  ·  COBA LAGI"
 			resultPillLbl.TextColor3 = won and Color3.fromRGB(167, 243, 208) or Color3.fromRGB(254, 202, 202)
 		end
+		local arrivalPos = player:GetAttribute("PalaceArrival")
+		if outcome == "result_victory" and player:GetAttribute("CutscenesEnabled") == false
+			and typeof(arrivalPos) == "Vector3" and arrivalPos ~= lastArrivalResult then
+			lastArrivalResult = arrivalPos
+			resultUntil = os.clock() + 4
+		end
 		lastResult = outcome
-		result.Visible = outcome ~= nil and outcome ~= false and os.clock() < resultUntil
+		local suppressedForCutscene = outcome == "result_victory"
+			and player:GetAttribute("ArrivalPending") == true
+			and player:GetAttribute("CutscenesEnabled") ~= false
+		result.Visible = outcome ~= nil and outcome ~= false and os.clock() < resultUntil and not suppressedForCutscene
 		if result.Visible then
 			local won = outcome == "result_victory"
 			applyModalChrome(result, won and "modal_frame_9slice" or "modal_frame_crimson_9slice", won and "crest_victory" or "crest_gameover", 17)

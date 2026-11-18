@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <radialGradient id="bBg_4" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#991B1B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRim_4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="48%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+    <clipPath id="circleClip_4">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <!-- Dark Outer Framing Safe Backing (visible in square 1:1 preview & Figma, circular safe center aligns to Roblox Circle Mask) -->
+  <rect width="512" height="512" rx="44" fill="#06122B"/>
+  <!-- Circular Medallion Backdrop -->
+  <g clip-path="url(#circleClip_4)">
+    <circle cx="256" cy="256" r="228" fill="url(#bBg_4)"/>
+    
+          <!-- Dramatic Defense Shockwave Ring -->
+          <circle cx="256" cy="242" r="134" fill="#EF4444" fill-opacity="0.16"/>
+          <circle cx="256" cy="242" r="112" stroke="#F87171" stroke-width="5" stroke-dasharray="16 10" fill="none"/>
+          <circle cx="256" cy="242" r="76" stroke="#FDE047" stroke-width="4" fill="none"/>
+          <!-- Crosshair Reticle Lines -->
+          <line x1="256" y1="100" x2="256" y2="154" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="256" y1="330" x2="256" y2="384" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="114" y1="242" x2="168" y2="242" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="344" y1="242" x2="398" y2="242" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <!-- Shattered Wyvern/Obstacle Burst Core -->
+          <polygon points="256,160 280,210 334,196 300,242 338,286 280,276 256,326 232,276 174,286 212,242 178,196 232,210" fill="#F97316" stroke="#FFFBEB" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="256,188 270,222 306,214 282,242 304,270 270,264 256,296 242,264 208,270 230,242 206,214 242,222" fill="#FEF08A"/>
+          <!-- Flying Shattered Shards -->
+          <polygon points="154,154 176,144 170,172" fill="#38BDF8" stroke="#E0F2FE" stroke-width="2"/>
+          <polygon points="356,154 334,142 342,170" fill="#38BDF8" stroke="#E0F2FE" stroke-width="2"/>
+          <polygon points="158,334 184,322 174,348" fill="#A855F7" stroke="#F3E8FF" stroke-width="2"/>
+          <!-- Tactical Counter Badge -->
+          <rect x="196" y="348" width="120" height="46" rx="23" fill="#091534" stroke="#FDE047" stroke-width="3.5"/>
+          <text x="256" y="379" text-anchor="middle" class="head" font-size="24" fill="#FFFFFF">10× HIT</text>
+        
+  </g>
+  <!-- Bevel Outer Ring + Inner Accent Hairline -->
+  <circle cx="256" cy="256" r="230" stroke="url(#bRim_4)" stroke-width="16" fill="none"/>
+  <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+  <circle cx="256" cy="256" r="241" stroke="#040B1C" stroke-width="4" fill="none"/>
+</svg>

@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Catalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("DailyAndShopCatalog"))
+local AdventureCatalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("HUDAdventureCatalog"))
 
 local function formatAltitude(km)
 	km = km or 0
@@ -10,7 +11,8 @@ end
 local function updateOverheadTitle(player, billboard)
 	local titleLabel = billboard:FindFirstChild("TitleLabel")
 	local masterLabel = billboard:FindFirstChild("MasterLabel")
-	local cosmeticLabel = billboard:FindFirstChild("CosmeticTitleLabel")
+	local cosmeticPill = billboard:FindFirstChild("CosmeticTitlePill")
+	local cosmeticLabel = cosmeticPill and cosmeticPill:FindFirstChild("CosmeticTitleLabel") or billboard:FindFirstChild("CosmeticTitleLabel")
 	local nameLabel = billboard:FindFirstChild("NameLabel")
 	if not titleLabel then return end
 
@@ -19,6 +21,9 @@ local function updateOverheadTitle(player, billboard)
 	local isMaster = player:GetAttribute("IsMaster") or false
 	local equippedTitleId = player:GetAttribute("EquippedTitle")
 	local cosmeticItem = type(equippedTitleId) == "string" and Catalog.GetCosmetic("title", equippedTitleId) or nil
+	if cosmeticItem and not Catalog.CanAccessCosmetic(cosmeticItem, player.UserId) then
+		cosmeticItem = nil
+	end
 
 	if masterLabel then
 		masterLabel.Visible = isMaster
@@ -35,22 +40,86 @@ local function updateOverheadTitle(player, billboard)
 	end
 
 	local hasTitle = cosmeticItem ~= nil
-	if cosmeticLabel then
-		cosmeticLabel.Visible = hasTitle
+	local pal = cosmeticItem and cosmeticItem.luxuryPalette
+	local isLuxury = hasTitle and cosmeticItem.luxuryStyle ~= nil and pal ~= nil
+	if cosmeticPill and cosmeticLabel then
+		cosmeticPill.Visible = hasTitle
+		local bgGrad = cosmeticPill:FindFirstChild("RoyalBgGradient")
+		local rim = cosmeticPill:FindFirstChildOfClass("UIStroke")
+		local rimGrad = rim and rim:FindFirstChild("RoyalRimGradient")
+		local crest = cosmeticPill:FindFirstChild("RoyalCrest")
+		local sparkle = cosmeticPill:FindFirstChild("RoyalSparkle")
+		local sizeCap = cosmeticLabel:FindFirstChildOfClass("UITextSizeConstraint")
+
 		if hasTitle and cosmeticItem then
-			cosmeticLabel.Text = "★ " .. (cosmeticItem.titleText or cosmeticItem.name)
-			cosmeticLabel.TextColor3 = cosmeticItem.primaryColor or Color3.fromRGB(254, 240, 138)
-			cosmeticLabel.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
-			local rim = cosmeticLabel:FindFirstChildOfClass("UIStroke")
-			if rim then
-				rim.Color = cosmeticItem.primaryColor or Color3.fromRGB(251, 191, 36)
+			if isLuxury and pal then
+				cosmeticPill.Size = UDim2.new(0.96, 0, 0, 24)
+				cosmeticPill.Position = UDim2.new(0.02, 0, 0, 37)
+				cosmeticPill.BackgroundColor3 = Color3.new(1, 1, 1)
+				cosmeticPill.BackgroundTransparency = 0.04
+				if bgGrad then
+					bgGrad.Color = ColorSequence.new({
+						ColorSequenceKeypoint.new(0, pal.pillTop),
+						ColorSequenceKeypoint.new(0.5, pal.pillMid),
+						ColorSequenceKeypoint.new(1, pal.pillBottom),
+					})
+					bgGrad.Enabled = true
+				end
+				if rim then
+					rim.Color = Color3.new(1, 1, 1)
+					rim.Thickness = 2.1
+				end
+				if rimGrad then
+					rimGrad.Color = ColorSequence.new({
+						ColorSequenceKeypoint.new(0, pal.rimA),
+						ColorSequenceKeypoint.new(0.5, pal.rimB),
+						ColorSequenceKeypoint.new(1, pal.rimC),
+					})
+					rimGrad.Enabled = true
+				end
+				if crest then
+					local sprite = AdventureCatalog[cosmeticItem.artKey]
+					crest.Image = sprite and sprite[1] or ""
+					crest.Visible = sprite ~= nil
+				end
+				if sparkle then
+					for _, arm in ipairs(sparkle:GetChildren()) do
+						if arm:IsA("Frame") then arm.BackgroundColor3 = pal.rimA end
+					end
+					sparkle.Visible = true
+				end
+				cosmeticLabel.Position = UDim2.fromOffset(26, 0)
+				cosmeticLabel.Size = UDim2.new(1, -46, 1, 0)
+				cosmeticLabel.Text = cosmeticItem.titleText or cosmeticItem.name
+				cosmeticLabel.TextColor3 = pal.textColor
+				cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(10, 12, 34)
+				if sizeCap then sizeCap.MaxTextSize = 12 end
+			else
+				cosmeticPill.Size = UDim2.new(0.86, 0, 0, 18)
+				cosmeticPill.Position = UDim2.new(0.07, 0, 0, 38)
+				cosmeticPill.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
+				cosmeticPill.BackgroundTransparency = 0.12
+				if bgGrad then bgGrad.Enabled = false end
+				if rimGrad then rimGrad.Enabled = false end
+				if rim then
+					rim.Color = cosmeticItem.primaryColor or Color3.fromRGB(251, 191, 36)
+					rim.Thickness = 1.3
+				end
+				if crest then crest.Visible = false end
+				if sparkle then sparkle.Visible = false end
+				cosmeticLabel.Position = UDim2.fromOffset(6, 0)
+				cosmeticLabel.Size = UDim2.new(1, -12, 1, 0)
+				cosmeticLabel.Text = "★ " .. (cosmeticItem.titleText or cosmeticItem.name)
+				cosmeticLabel.TextColor3 = cosmeticItem.primaryColor or Color3.fromRGB(254, 240, 138)
+				cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(6, 18, 44)
+				if sizeCap then sizeCap.MaxTextSize = 11 end
 			end
 		end
 	end
 	if nameLabel then
-		nameLabel.Position = UDim2.new(0, 0, 0, hasTitle and 60 or 36)
+		nameLabel.Position = UDim2.new(0, 0, 0, hasTitle and (isLuxury and 65 or 60) or 36)
 	end
-	billboard.Size = UDim2.new(0, 220, 0, hasTitle and 84 or 65)
+	billboard.Size = UDim2.new(0, isLuxury and 252 or 220, 0, hasTitle and (isLuxury and 92 or 84) or 65)
 end
 
 local function setupOverheadGui(player, character)
@@ -63,7 +132,7 @@ local function setupOverheadGui(player, character)
 
 	local billboard = Instance.new("BillboardGui")
 	billboard.Name = "OverheadGui"
-	billboard.Size = UDim2.new(0, 200, 0, 65)
+	billboard.Size = UDim2.new(0, 220, 0, 65)
 	billboard.StudsOffset = Vector3.new(0, 2.5, 0)
 	billboard.AlwaysOnTop = true
 	billboard.MaxDistance = 100
@@ -100,12 +169,81 @@ local function setupOverheadGui(player, character)
 	titleLabel.Parent = billboard
 
 	-- Cosmetic Overhead Title Pill (below Rekor/Puncak)
+	local cosmeticPill = Instance.new("Frame")
+	cosmeticPill.Name = "CosmeticTitlePill"
+	cosmeticPill.Size = UDim2.new(0.86, 0, 0, 18)
+	cosmeticPill.Position = UDim2.new(0.07, 0, 0, 38)
+	cosmeticPill.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
+	cosmeticPill.BackgroundTransparency = 0.12
+	cosmeticPill.BorderSizePixel = 0
+	cosmeticPill.Visible = false
+	cosmeticPill.Parent = billboard
+	local cCorner = Instance.new("UICorner")
+	cCorner.CornerRadius = UDim.new(1, 0)
+	cCorner.Parent = cosmeticPill
+	local bgGrad = Instance.new("UIGradient")
+	bgGrad.Name = "RoyalBgGradient"
+	bgGrad.Rotation = 90
+	bgGrad.Enabled = false
+	bgGrad.Parent = cosmeticPill
+	local cStroke = Instance.new("UIStroke")
+	cStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	cStroke.Thickness = 1.3
+	cStroke.Color = Color3.fromRGB(251, 191, 36)
+	cStroke.Parent = cosmeticPill
+	local rimGrad = Instance.new("UIGradient")
+	rimGrad.Name = "RoyalRimGradient"
+	rimGrad.Rotation = 18
+	rimGrad.Enabled = false
+	rimGrad.Parent = cStroke
+
+	local royalCrest = Instance.new("ImageLabel")
+	royalCrest.Name = "RoyalCrest"
+	royalCrest.BackgroundTransparency = 1
+	royalCrest.BorderSizePixel = 0
+	royalCrest.ScaleType = Enum.ScaleType.Fit
+	royalCrest.AnchorPoint = Vector2.new(0, 0.5)
+	royalCrest.Position = UDim2.new(0, 5, 0.5, 0)
+	royalCrest.Size = UDim2.fromOffset(18, 18)
+	royalCrest.ZIndex = 2
+	royalCrest.Visible = false
+	royalCrest.Parent = cosmeticPill
+
+	-- Pure geometric 4-point star avoids missing Unicode glyph boxes on iOS/iPadOS fonts.
+	local royalSparkle = Instance.new("Frame")
+	royalSparkle.Name = "RoyalSparkle"
+	royalSparkle.BackgroundTransparency = 1
+	royalSparkle.BorderSizePixel = 0
+	royalSparkle.AnchorPoint = Vector2.new(1, 0.5)
+	royalSparkle.Position = UDim2.new(1, -6, 0.5, 0)
+	royalSparkle.Size = UDim2.fromOffset(12, 12)
+	royalSparkle.ZIndex = 2
+	royalSparkle.Visible = false
+	royalSparkle.Parent = cosmeticPill
+	for _, spec in ipairs({
+		{ w = 12, h = 2, r = 0 },
+		{ w = 2, h = 12, r = 0 },
+		{ w = 5, h = 5, r = 45 },
+	}) do
+		local arm = Instance.new("Frame")
+		arm.BackgroundColor3 = Color3.new(1, 1, 1)
+		arm.BorderSizePixel = 0
+		arm.AnchorPoint = Vector2.new(0.5, 0.5)
+		arm.Position = UDim2.fromScale(0.5, 0.5)
+		arm.Size = UDim2.fromOffset(spec.w, spec.h)
+		arm.Rotation = spec.r
+		arm.ZIndex = 2
+		local c = Instance.new("UICorner")
+		c.CornerRadius = UDim.new(1, 0)
+		c.Parent = arm
+		arm.Parent = royalSparkle
+	end
+
 	local cosmeticLabel = Instance.new("TextLabel")
 	cosmeticLabel.Name = "CosmeticTitleLabel"
-	cosmeticLabel.Size = UDim2.new(0.86, 0, 0, 18)
-	cosmeticLabel.Position = UDim2.new(0.07, 0, 0, 38)
-	cosmeticLabel.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
-	cosmeticLabel.BackgroundTransparency = 0.12
+	cosmeticLabel.Position = UDim2.fromOffset(6, 0)
+	cosmeticLabel.Size = UDim2.new(1, -12, 1, 0)
+	cosmeticLabel.BackgroundTransparency = 1
 	cosmeticLabel.BorderSizePixel = 0
 	cosmeticLabel.Text = ""
 	cosmeticLabel.TextColor3 = Color3.fromRGB(254, 240, 138)
@@ -113,16 +251,14 @@ local function setupOverheadGui(player, character)
 	cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(6, 18, 44)
 	cosmeticLabel.Font = Enum.Font.GothamBlack
 	cosmeticLabel.TextSize = 11
-	cosmeticLabel.Visible = false
-	cosmeticLabel.Parent = billboard
-	local cCorner = Instance.new("UICorner")
-	cCorner.CornerRadius = UDim.new(1, 0)
-	cCorner.Parent = cosmeticLabel
-	local cStroke = Instance.new("UIStroke")
-	cStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	cStroke.Thickness = 1.3
-	cStroke.Color = Color3.fromRGB(251, 191, 36)
-	cStroke.Parent = cosmeticLabel
+	cosmeticLabel.TextScaled = true
+	cosmeticLabel.TextWrapped = false
+	cosmeticLabel.ZIndex = 2
+	cosmeticLabel.Parent = cosmeticPill
+	local cSizeCap = Instance.new("UITextSizeConstraint")
+	cSizeCap.MinTextSize = 8
+	cSizeCap.MaxTextSize = 11
+	cSizeCap.Parent = cosmeticLabel
 
 	-- Name Label
 	local nameLabel = Instance.new("TextLabel")

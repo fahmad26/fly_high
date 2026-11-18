@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="400" viewBox="0 0 240 200">
+  <defs>
+    <radialGradient id="pgHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.52"/>
+      <stop offset="55%" stop-color="#1D4ED8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#06132E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="35%" stop-color="#FDE047"/>
+      <stop offset="72%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="pWing" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="48%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="pSapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BAE6FD"/>
+      <stop offset="45%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#pgHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#pGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.72" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#7DD3FC" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Sweeping Royal Celestial Wings -->
+  <path d="M68 118 C40 112, 22 92, 16 62 C33 72, 49 77, 72 78 C54 88, 52 101, 68 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M74 128 C52 126, 36 113, 30 92 C43 99, 55 101, 70 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <path d="M172 118 C200 112, 218 92, 224 62 C207 72, 191 77, 168 78 C186 88, 188 101, 172 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M166 128 C188 126, 204 113, 210 92 C197 99, 185 101, 170 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <!-- Sunburst rays -->
+  <line x1="120" y1="18" x2="120" y2="33" stroke="#FEF08A" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="92" y1="26" x2="100" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="148" y1="26" x2="140" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <!-- Imperial Gold Crown -->
+  <path d="M68 130 L57 70 L90 94 L120 44 L150 94 L183 70 L172 130 Z" fill="url(#pGold)" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M80 124 L74 88 L95 103 L120 62 L145 103 L166 88 L160 124 Z" fill="#FEF3C7" fill-opacity="0.22"/>
+  <rect x="65" y="128" width="110" height="17" rx="5" fill="#92400E" stroke="url(#pGold)" stroke-width="2.5"/>
+  <!-- Sapphire Center Faceted Diamond -->
+  <polygon points="120,76 135,100 120,121 105,100" fill="url(#pSapphire)" stroke="#F0F9FF" stroke-width="2.2"/>
+  <polygon points="120,82 128,100 120,114 112,100" fill="#E0F2FE" fill-opacity="0.45"/>
+  <!-- Side Jewels & Crown Tips -->
+  <circle cx="88" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="120" cy="136.5" r="4.8" fill="#BAE6FD" stroke="#FFFFFF" stroke-width="1.4"/>
+  <circle cx="152" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="57" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <circle cx="120" cy="39" r="6.8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8"/>
+  <circle cx="183" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#FDE047"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#7DD3FC"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FEF08A"/>
+</svg>

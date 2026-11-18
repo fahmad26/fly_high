@@ -13,6 +13,7 @@ local pilotControlEvent = remotes:WaitForChild("PilotControlEvent")
 local flightActionEvent=remotes:WaitForChild("FlightActionEvent")
 local ControlMath=require(ReplicatedStorage.FlyHigh.Modules.FlightControlMath)
 local Localization=require(ReplicatedStorage.FlyHigh.Modules.Localization)
+local TouchInputGuard=require(ReplicatedStorage.FlyHigh.Modules.TouchInputGuard)
 local preparingBoarding={}
 flightActionEvent.OnClientEvent:Connect(function(action,balloon,payload)
  if action=="ReleaseRejectedHelm"then
@@ -370,9 +371,6 @@ end)
 local isGasHeld = false
 local gasInput
 local gamepadGas=false
-local function isPointer(input)
- return input.UserInputType==Enum.UserInputType.Touch or input.UserInputType==Enum.UserInputType.MouseButton1
-end
 
 -- Gas button inputs (Mouse + Touch support)
 local function setGas(held)
@@ -385,7 +383,7 @@ local function setGas(held)
 end
 
 gasBtn.InputBegan:Connect(function(input)
- if not gasInput and isPointer(input) then
+ if not gasInput and TouchInputGuard.IsDirectBegin(gasBtn, input) then
   gasInput=input
   setGas(true)
  end
@@ -720,7 +718,68 @@ RunService.RenderStepped:Connect(function()
 	end
 end)
 
--- Persistent palace is streamed to clients so its local photo prompt is available.
+-- Persistent palace is streamed to clients so its local photo prompt is available,
+-- and native Roblox Captures (Screenshot & Video) cleanly hide the HUD while capturing.
+local CaptureService = game:GetService("CaptureService")
+local photoHidden = false
+local captureDepth = 0
+local savedPrompts: { [ScreenGui]: boolean } = {}
+local savedTouchEnabled: boolean? = nil
+
+local function applyHudVisibility()
+ local visible = (not photoHidden) and (captureDepth == 0)
+ screenGui:SetAttribute("HiddenForCapture", captureDepth > 0)
+ screenGui.Enabled = visible
+ for g, wasEnabled in pairs(savedPrompts) do
+  if g.Parent then
+   g.Enabled = if captureDepth > 0 then false else wasEnabled
+  else
+   savedPrompts[g] = nil
+  end
+ end
+ if captureDepth == 0 then
+  table.clear(savedPrompts)
+ end
+end
+
+playerGui.ChildAdded:Connect(function(child)
+ if captureDepth > 0 and child:IsA("ScreenGui") and child.Name == "HUDInteractionPrompt" then
+  savedPrompts[child] = child.Enabled
+  child.Enabled = false
+ end
+end)
+
+CaptureService.CaptureBegan:Connect(function(captureType)
+ if captureDepth == 0 then
+  for _, child in ipairs(playerGui:GetChildren()) do
+   if child:IsA("ScreenGui") and child.Name == "HUDInteractionPrompt" then
+    savedPrompts[child] = child.Enabled
+   end
+  end
+ end
+ captureDepth += 1
+ if captureType == Enum.CaptureType.Screenshot and savedTouchEnabled == nil then
+  local touchGui = playerGui:FindFirstChild("TouchGui")
+  if touchGui and touchGui:IsA("ScreenGui") then
+   savedTouchEnabled = touchGui.Enabled
+   touchGui.Enabled = false
+  end
+ end
+ applyHudVisibility()
+end)
+
+CaptureService.CaptureEnded:Connect(function(captureType)
+ captureDepth = math.max(0, captureDepth - 1)
+ if captureType == Enum.CaptureType.Screenshot and savedTouchEnabled ~= nil then
+  local touchGui = playerGui:FindFirstChild("TouchGui")
+  if touchGui and touchGui:IsA("ScreenGui") then
+   touchGui.Enabled = savedTouchEnabled
+  end
+  savedTouchEnabled = nil
+ end
+ applyHudVisibility()
+end)
+
 task.spawn(function()
  local palace=workspace:WaitForChild("CloudPalace")
  local prompt=palace:WaitForChild("PhotoboothSpot"):WaitForChild("PhotoPrompt")
@@ -728,8 +787,14 @@ task.spawn(function()
  prompt.Triggered:Connect(function(player)
   if player and player~=localPlayer then return end
   photoVersion+=1 local version=photoVersion
-  screenGui.Enabled=false
-  task.delay(8,function() if version==photoVersion then screenGui.Enabled=true end end)
+  photoHidden=true
+  applyHudVisibility()
+  task.delay(8,function()
+   if version==photoVersion then
+    photoHidden=false
+    applyHudVisibility()
+   end
+  end)
  end)
 end)
 -- Vertical all-flyers server altitude tracker & live flight sync

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <radialGradient id="bBg_2" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#091534"/>
+    </radialGradient>
+    <linearGradient id="bRim_2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="48%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <clipPath id="circleClip_2">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <!-- Dark Outer Framing Safe Backing (visible in square 1:1 preview & Figma, circular safe center aligns to Roblox Circle Mask) -->
+  <rect width="512" height="512" rx="44" fill="#06122B"/>
+  <!-- Circular Medallion Backdrop -->
+  <g clip-path="url(#circleClip_2)">
+    <circle cx="256" cy="256" r="228" fill="url(#bBg_2)"/>
+    
+          <!-- Golden Sky Halo Rays -->
+          <circle cx="256" cy="222" r="145" fill="#FDE047" fill-opacity="0.20"/>
+          <circle cx="256" cy="222" r="108" stroke="#FEF08A" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 6" fill="none"/>
+          <!-- Cloud Base & Twin Turquoise Waterfalls -->
+          <path d="M168 318 L188 424 H214 L198 318 Z" fill="#22D3EE" fill-opacity="0.85"/>
+          <path d="M298 318 L282 424 H308 L328 318 Z" fill="#22D3EE" fill-opacity="0.85"/>
+          <path d="M104 316 C116 286, 156 282, 178 298 C202 276, 238 278, 256 296 C274 278, 310 276, 334 298 C356 282, 396 286, 408 316 C400 338, 376 346, 348 340 L164 340 C136 346, 112 338, 104 316 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="3"/>
+          <!-- Marble Cloud Palace with 3 Golden Domes -->
+          <rect x="164" y="216" width="184" height="72" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="3"/>
+          <rect x="216" y="168" width="80" height="120" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="3"/>
+          <!-- Side Domes -->
+          <path d="M166 216 C166 184, 206 184, 206 216 Z" fill="#FBBF24" stroke="#92400E" stroke-width="2.5"/>
+          <path d="M306 216 C306 184, 346 184, 346 216 Z" fill="#FBBF24" stroke="#92400E" stroke-width="2.5"/>
+          <!-- Grand Central Golden Dome & Spire -->
+          <path d="M214 170 C214 114, 298 114, 298 170 Z" fill="#FDE047" stroke="#92400E" stroke-width="3"/>
+          <line x1="256" y1="96" x2="256" y2="122" stroke="#FFFBEB" stroke-width="4" stroke-linecap="round"/>
+          <!-- Arch Windows & Gate -->
+          <path d="M238 288 V244 C238 232, 274 232, 274 244 V288 Z" fill="#0284C7" stroke="#F59E0B" stroke-width="3"/>
+          <rect x="180" y="236" width="16" height="32" rx="8" fill="#38BDF8"/>
+          <rect x="316" y="236" width="16" height="32" rx="8" fill="#38BDF8"/>
+          <!-- Summit Banner Ribbon "I" -->
+          <circle cx="256" cy="94" r="10" fill="#FFFBEB" stroke="#D97706" stroke-width="2.5"/>
+          <path d="M132 152 L137 164 L149 169 L137 174 L132 186 L127 174 L115 169 L127 164 Z" fill="#FEF08A"/>
+          <path d="M380 152 L385 164 L397 169 L385 174 L380 186 L375 174 L363 169 L375 164 Z" fill="#FEF08A"/>
+        
+  </g>
+  <!-- Bevel Outer Ring + Inner Accent Hairline -->
+  <circle cx="256" cy="256" r="230" stroke="url(#bRim_2)" stroke-width="16" fill="none"/>
+  <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+  <circle cx="256" cy="256" r="241" stroke="#040B1C" stroke-width="4" fill="none"/>
+</svg>

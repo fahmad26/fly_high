@@ -1,0 +1,406 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="880" viewBox="0 0 1420 880" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <linearGradient id="bgMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050E24"/>
+      <stop offset="100%" stop-color="#091B42"/>
+    </linearGradient>
+    <linearGradient id="frameRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="50%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#F472B6"/>
+    </linearGradient>
+    <linearGradient id="princePanelBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#091A42"/>
+      <stop offset="100%" stop-color="#122C66"/>
+    </linearGradient>
+    <linearGradient id="princessPanelBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#240A38"/>
+      <stop offset="100%" stop-color="#4A1563"/>
+    </linearGradient>
+    <linearGradient id="goldRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="45%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="roseRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="45%" stop-color="#F472B6"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="goldBtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="princePillBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1F4D"/>
+      <stop offset="50%" stop-color="#1D4496"/>
+      <stop offset="100%" stop-color="#0B1F4D"/>
+    </linearGradient>
+    <linearGradient id="princessPillBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2E0E45"/>
+      <stop offset="50%" stop-color="#6B217A"/>
+      <stop offset="100%" stop-color="#2E0E45"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="2" y="2" width="1416" height="876" rx="24" fill="url(#bgMain)" stroke="url(#frameRim)" stroke-width="3"/>
+
+  <!-- Header -->
+  <text x="48" y="64" class="head" font-size="30" fill="#FEF9E7">FLY HIGH: CLOUD PALACE — GELAR ROYAL EKSKLUSIF</text>
+  <text x="48" y="92" class="body" font-size="15" fill="#93C5FD">Desain Figma/Vektor Mewah untuk Toko Tab Kosmetik &amp; Pill Overhead ID / EN (Harga 0 Koin, Terkunci Per User ID)</text>
+
+  <!-- LEFT PANEL: PANGERAN LANGIT / PRINCE OF THE SKY -->
+  <rect x="44" y="120" width="650" height="716" rx="20" fill="url(#princePanelBg)" stroke="url(#goldRim)" stroke-width="2.5"/>
+  <rect x="68" y="144" width="388" height="32" rx="16" fill="#040B1C" fill-opacity="0.78" stroke="#F59E0B" stroke-width="1.4"/>
+  <text x="86" y="165" class="black" font-size="12" fill="#FDE047">AKSES EKSKLUSIF · HANYA USER ID 8635452105</text>
+
+  <text x="68" y="206" class="black" font-size="12" fill="#7DD3FC">1. PRATINJAU KARTU TOKO (TAB KOSMETIK)</text>
+
+  <!-- Luxury Shop Card Prince -->
+  <rect x="68" y="220" width="602" height="122" rx="16" fill="#0A1A40" stroke="url(#goldRim)" stroke-width="2.4"/>
+  <!-- Corner filigree accents -->
+  <path d="M74 238 L74 226 L86 226" stroke="#FEF08A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M664 238 L664 226 L652 226" stroke="#FEF08A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M74 324 L74 336 L86 336" stroke="#FEF08A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M664 324 L664 336 L652 336" stroke="#FEF08A" stroke-width="2" stroke-linecap="round"/>
+  <!-- ThumbStage -->
+  <rect x="82" y="234" width="96" height="94" rx="12" fill="#050F2B" stroke="url(#goldRim)" stroke-width="1.8"/>
+  <g transform="translate(80, 239) scale(0.42)">
+  <defs>
+    <radialGradient id="pgHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.52"/>
+      <stop offset="55%" stop-color="#1D4ED8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#06132E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="35%" stop-color="#FDE047"/>
+      <stop offset="72%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="pWing" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="48%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="pSapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BAE6FD"/>
+      <stop offset="45%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#pgHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#pGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.72" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#7DD3FC" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Sweeping Royal Celestial Wings -->
+  <path d="M68 118 C40 112, 22 92, 16 62 C33 72, 49 77, 72 78 C54 88, 52 101, 68 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M74 128 C52 126, 36 113, 30 92 C43 99, 55 101, 70 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <path d="M172 118 C200 112, 218 92, 224 62 C207 72, 191 77, 168 78 C186 88, 188 101, 172 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M166 128 C188 126, 204 113, 210 92 C197 99, 185 101, 170 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <!-- Sunburst rays -->
+  <line x1="120" y1="18" x2="120" y2="33" stroke="#FEF08A" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="92" y1="26" x2="100" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="148" y1="26" x2="140" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <!-- Imperial Gold Crown -->
+  <path d="M68 130 L57 70 L90 94 L120 44 L150 94 L183 70 L172 130 Z" fill="url(#pGold)" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M80 124 L74 88 L95 103 L120 62 L145 103 L166 88 L160 124 Z" fill="#FEF3C7" fill-opacity="0.22"/>
+  <rect x="65" y="128" width="110" height="17" rx="5" fill="#92400E" stroke="url(#pGold)" stroke-width="2.5"/>
+  <!-- Sapphire Center Faceted Diamond -->
+  <polygon points="120,76 135,100 120,121 105,100" fill="url(#pSapphire)" stroke="#F0F9FF" stroke-width="2.2"/>
+  <polygon points="120,82 128,100 120,114 112,100" fill="#E0F2FE" fill-opacity="0.45"/>
+  <!-- Side Jewels & Crown Tips -->
+  <circle cx="88" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="120" cy="136.5" r="4.8" fill="#BAE6FD" stroke="#FFFFFF" stroke-width="1.4"/>
+  <circle cx="152" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="57" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <circle cx="120" cy="39" r="6.8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8"/>
+  <circle cx="183" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#FDE047"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#7DD3FC"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FEF08A"/>
+</g>
+  <text x="194" y="250" class="black" font-size="11" fill="#FDE047">ROYAL EXCLUSIVE · GELAR OVERHEAD</text>
+  <text x="194" y="274" class="head" font-size="17" fill="#FFFFFF">Pangeran Langit / Prince of the Sky</text>
+  <text x="194" y="295" class="body" font-size="12" fill="#CBD5E1">Mahkota safir langit bercahaya emas. Dapat dibeli seharga</text>
+  <text x="194" y="313" class="body" font-size="12" fill="#BAE6FD">0 Koin eksklusif hanya untuk akun User ID 8635452105.</text>
+  <!-- 0 Koin Button -->
+  <rect x="538" y="256" width="114" height="48" rx="12" fill="url(#goldBtn)" stroke="#FFFBEB" stroke-width="1.8"/>
+  <circle cx="564" cy="280" r="8" fill="#B45309" stroke="#FFFBEB" stroke-width="1.5"/>
+  <circle cx="564" cy="280" r="4" fill="#FDE047"/>
+  <text x="580" y="286" class="head" font-size="15" fill="#451A03">0 Koin</text>
+
+  <text x="68" y="376" class="black" font-size="12" fill="#7DD3FC">2. PRATINJAU OVERHEAD BILLBOARD (BAHASA INDONESIA &amp; ENGLISH)</text>
+  <rect x="68" y="390" width="602" height="264" rx="16" fill="#071330" stroke="#38BDF8" stroke-opacity="0.35" stroke-width="1.4"/>
+
+  <!-- ID Overhead Mock -->
+  <text x="218" y="422" text-anchor="middle" class="black" font-size="11" fill="#94A3B8">BAHASA INDONESIA</text>
+  <text x="218" y="446" text-anchor="middle" class="head" font-size="13" fill="#FDE047">PARTY MASTER</text>
+  <text x="218" y="468" text-anchor="middle" class="head" font-size="16" fill="#FFD700">[Puncak: 3x]</text>
+  <rect x="108" y="482" width="220" height="42" rx="21" fill="url(#princePillBg)" stroke="url(#goldRim)" stroke-width="2.4"/>
+  <rect x="112" y="486" width="212" height="34" rx="17" stroke="#7DD3FC" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M126 508 L124 498 L130 503 L135 495 L140 503 L146 498 L144 508 Z" fill="#FDE047" stroke="#78350F" stroke-width="1"/>
+  <text x="223" y="509" text-anchor="middle" class="regal" font-size="14" fill="#FEF3C7">Pangeran Langit</text>
+  <text x="307" y="508" text-anchor="middle" class="body" font-size="13" fill="#7DD3FC">✦</text>
+  <text x="218" y="546" text-anchor="middle" class="body" font-size="13" fill="#FFFFFF">Fikki2621 (@Fikki2621)</text>
+  <!-- Avatar Head block -->
+  <rect x="196" y="564" width="44" height="44" rx="10" fill="#FACC15" stroke="#FFFBEB" stroke-width="2"/>
+  <circle cx="209" cy="583" r="3" fill="#0F172A"/>
+  <circle cx="227" cy="583" r="3" fill="#0F172A"/>
+  <path d="M210 594 Q218 601 226 594" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- EN Overhead Mock -->
+  <text x="518" y="422" text-anchor="middle" class="black" font-size="11" fill="#94A3B8">ENGLISH</text>
+  <text x="518" y="446" text-anchor="middle" class="head" font-size="13" fill="#FDE047">PARTY MASTER</text>
+  <text x="518" y="468" text-anchor="middle" class="head" font-size="16" fill="#FFD700">[Summit: 3x]</text>
+  <rect x="404" y="482" width="228" height="42" rx="21" fill="url(#princePillBg)" stroke="url(#goldRim)" stroke-width="2.4"/>
+  <rect x="408" y="486" width="220" height="34" rx="17" stroke="#7DD3FC" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M420 508 L418 498 L424 503 L429 495 L434 503 L440 498 L438 508 Z" fill="#FDE047" stroke="#78350F" stroke-width="1"/>
+  <text x="524" y="509" text-anchor="middle" class="regal" font-size="13.5" fill="#FEF3C7">Prince of the Sky</text>
+  <text x="612" y="508" text-anchor="middle" class="body" font-size="13" fill="#7DD3FC">✦</text>
+  <text x="518" y="546" text-anchor="middle" class="body" font-size="13" fill="#FFFFFF">Fikki2621 (@Fikki2621)</text>
+  <rect x="496" y="564" width="44" height="44" rx="10" fill="#FACC15" stroke="#FFFBEB" stroke-width="2"/>
+  <circle cx="509" cy="583" r="3" fill="#0F172A"/>
+  <circle cx="527" cy="583" r="3" fill="#0F172A"/>
+  <path d="M510 594 Q518 601 526 594" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- Spec Footer Box Prince -->
+  <rect x="68" y="672" width="602" height="142" rx="14" fill="#040B1F" fill-opacity="0.72" stroke="#1E3A8A" stroke-width="1.2"/>
+  <g transform="translate(82, 686) scale(0.55)">
+  <defs>
+    <radialGradient id="pgHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.52"/>
+      <stop offset="55%" stop-color="#1D4ED8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#06132E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="35%" stop-color="#FDE047"/>
+      <stop offset="72%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <linearGradient id="pWing" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="48%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="pSapphire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BAE6FD"/>
+      <stop offset="45%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#pgHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#pGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.72" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#7DD3FC" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Sweeping Royal Celestial Wings -->
+  <path d="M68 118 C40 112, 22 92, 16 62 C33 72, 49 77, 72 78 C54 88, 52 101, 68 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M74 128 C52 126, 36 113, 30 92 C43 99, 55 101, 70 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <path d="M172 118 C200 112, 218 92, 224 62 C207 72, 191 77, 168 78 C186 88, 188 101, 172 118 Z" fill="url(#pWing)" stroke="#E0F2FE" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M166 128 C188 126, 204 113, 210 92 C197 99, 185 101, 170 102 Z" fill="url(#pWing)" stroke="#BAE6FD" stroke-width="1.4" opacity="0.9"/>
+  <!-- Sunburst rays -->
+  <line x1="120" y1="18" x2="120" y2="33" stroke="#FEF08A" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="92" y1="26" x2="100" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="148" y1="26" x2="140" y2="39" stroke="#BAE6FD" stroke-width="2" stroke-linecap="round"/>
+  <!-- Imperial Gold Crown -->
+  <path d="M68 130 L57 70 L90 94 L120 44 L150 94 L183 70 L172 130 Z" fill="url(#pGold)" stroke="#78350F" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M80 124 L74 88 L95 103 L120 62 L145 103 L166 88 L160 124 Z" fill="#FEF3C7" fill-opacity="0.22"/>
+  <rect x="65" y="128" width="110" height="17" rx="5" fill="#92400E" stroke="url(#pGold)" stroke-width="2.5"/>
+  <!-- Sapphire Center Faceted Diamond -->
+  <polygon points="120,76 135,100 120,121 105,100" fill="url(#pSapphire)" stroke="#F0F9FF" stroke-width="2.2"/>
+  <polygon points="120,82 128,100 120,114 112,100" fill="#E0F2FE" fill-opacity="0.45"/>
+  <!-- Side Jewels & Crown Tips -->
+  <circle cx="88" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="120" cy="136.5" r="4.8" fill="#BAE6FD" stroke="#FFFFFF" stroke-width="1.4"/>
+  <circle cx="152" cy="136.5" r="4" fill="#38BDF8" stroke="#E0F2FE" stroke-width="1.2"/>
+  <circle cx="57" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <circle cx="120" cy="39" r="6.8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8"/>
+  <circle cx="183" cy="65" r="5.5" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#FDE047"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#7DD3FC"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FEF08A"/>
+</g>
+  <text x="234" y="704" class="black" font-size="13" fill="#FEF08A">Spesifikasi Teknis &amp; Elemen Mewah:</text>
+  <text x="234" y="728" class="body" font-size="11.2" fill="#E2E8F0">• Key katalog: <tspan fill="#7DD3FC">title:prince_of_the_sky</tspan> · Harga: <tspan fill="#FDE047">0 Koin</tspan></text>
+  <text x="234" y="750" class="body" font-size="11.2" fill="#E2E8F0">• Whitelist UserId: <tspan fill="#FDE047">8635452105</tspan> (tersembunyi &amp; ditolak server untuk akun lain)</text>
+  <text x="234" y="772" class="body" font-size="11.2" fill="#E2E8F0">• Pill overhead: gradien safir-indigo, border emas ganda + ikon mahkota</text>
+  <text x="234" y="794" class="body" font-size="11.2" fill="#E2E8F0">• Ekspor aset toko: <tspan fill="#BAE6FD">art_cosmetic_title_prince.svg</tspan> (240×200 / 480×400)</text>
+
+  <!-- RIGHT PANEL: PUTRI LANGIT / PRINCESS OF THE SKY -->
+  <rect x="726" y="120" width="650" height="716" rx="20" fill="url(#princessPanelBg)" stroke="url(#roseRim)" stroke-width="2.5"/>
+  <rect x="750" y="144" width="448" height="32" rx="16" fill="#040B1C" fill-opacity="0.78" stroke="#F472B6" stroke-width="1.4"/>
+  <text x="768" y="165" class="black" font-size="12" fill="#FBCFE8">AKSES EKSKLUSIF · USER ID 9294134678 &amp; 8635452105</text>
+
+  <text x="750" y="206" class="black" font-size="12" fill="#FDE68A">1. PRATINJAU KARTU TOKO (TAB KOSMETIK)</text>
+
+  <!-- Luxury Shop Card Princess -->
+  <rect x="750" y="220" width="602" height="122" rx="16" fill="#2A0E42" stroke="url(#roseRim)" stroke-width="2.4"/>
+  <path d="M756 238 L756 226 L768 226" stroke="#FBCFE8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M1346 238 L1346 226 L1334 226" stroke="#FBCFE8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M756 324 L756 336 L768 336" stroke="#FBCFE8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M1346 324 L1346 336 L1334 336" stroke="#FBCFE8" stroke-width="2" stroke-linecap="round"/>
+  <rect x="764" y="234" width="96" height="94" rx="12" fill="#180729" stroke="url(#roseRim)" stroke-width="1.8"/>
+  <g transform="translate(762, 239) scale(0.42)">
+  <defs>
+    <radialGradient id="ppHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.50"/>
+      <stop offset="55%" stop-color="#9333EA" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1E0933" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="32%" stop-color="#FBCFE8"/>
+      <stop offset="66%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </linearGradient>
+    <linearGradient id="tiaraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="45%" stop-color="#F472B6"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+    <linearGradient id="roseGem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F9A8D4"/>
+      <stop offset="100%" stop-color="#BE185D"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#ppHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#roseGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.75" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#FBCFE8" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Graceful Floral Filigree Wings -->
+  <path d="M58 124 C32 106, 26 78, 42 54 C46 72, 56 83, 72 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M182 124 C208 106, 214 78, 198 54 C194 72, 184 83, 168 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M68 122 C48 112, 42 94, 48 76 C56 87, 65 95, 76 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <path d="M172 122 C192 112, 198 94, 192 76 C184 87, 175 95, 164 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <!-- Imperial Rose-Gold Tiara -->
+  <path d="M64 128 C67 98, 79 79, 92 92 C102 64, 112 50, 120 42 C128 50, 138 64, 148 92 C161 79, 173 98, 176 128 Z" fill="url(#tiaraGrad)" stroke="#FFF1F2" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M77 123 C81 102, 88 90, 97 99 C106 77, 113 65, 120 57 C127 65, 134 77, 143 99 C152 90, 159 102, 163 123 Z" fill="#FFF1F2" fill-opacity="0.22"/>
+  <!-- Pearl & Champagne Tiara Base Rim -->
+  <path d="M63 130 Q120 142 177 130" stroke="url(#roseGold)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="84" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="102" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="120" cy="136" r="4.6" fill="#FEF3C7" stroke="#B45309" stroke-width="1.2"/>
+  <circle cx="138" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="156" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <!-- Center Rose Diamond & Star Tips -->
+  <polygon points="120,72 133,96 120,118 107,96" fill="url(#roseGem)" stroke="#FDE68A" stroke-width="2.2"/>
+  <polygon points="120,79 127,96 120,110 113,96" fill="#FFFFFF" fill-opacity="0.52"/>
+  <circle cx="91" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="149" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="120" cy="36" r="6.2" fill="#FFF1F2" stroke="#F59E0B" stroke-width="1.6"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#F9A8D4"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#FDE68A"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FBCFE8"/>
+</g>
+  <text x="876" y="250" class="black" font-size="11" fill="#FBCFE8">IMPERIAL DUO EXCLUSIVE · GELAR OVERHEAD</text>
+  <text x="876" y="274" class="head" font-size="17" fill="#FFFFFF">Putri Langit / Princess of the Sky</text>
+  <text x="876" y="295" class="body" font-size="12" fill="#FCE7F3">Tiara kristal mawar berbalut kilau champagne. Gratis 0 Koin</text>
+  <text x="876" y="313" class="body" font-size="12" fill="#FDE68A">khusus untuk akun 9294134678 dan 8635452105.</text>
+  <rect x="1220" y="256" width="114" height="48" rx="12" fill="url(#goldBtn)" stroke="#FFF1F2" stroke-width="1.8"/>
+  <circle cx="1246" cy="280" r="8" fill="#B45309" stroke="#FFFBEB" stroke-width="1.5"/>
+  <circle cx="1246" cy="280" r="4" fill="#FDE047"/>
+  <text x="1262" y="286" class="head" font-size="15" fill="#451A03">0 Koin</text>
+
+  <text x="750" y="376" class="black" font-size="12" fill="#FDE68A">2. PRATINJAU OVERHEAD BILLBOARD (BAHASA INDONESIA &amp; ENGLISH)</text>
+  <rect x="750" y="390" width="602" height="264" rx="16" fill="#1B0A2E" stroke="#F472B6" stroke-opacity="0.38" stroke-width="1.4"/>
+
+  <!-- ID Overhead Mock Princess -->
+  <text x="898" y="422" text-anchor="middle" class="black" font-size="11" fill="#C4B5FD">BAHASA INDONESIA</text>
+  <text x="898" y="446" text-anchor="middle" class="head" font-size="13" fill="#FDE047">PARTY MASTER</text>
+  <text x="898" y="468" text-anchor="middle" class="head" font-size="16" fill="#FFD700">[Puncak: 3x]</text>
+  <rect x="788" y="482" width="220" height="42" rx="21" fill="url(#princessPillBg)" stroke="url(#roseRim)" stroke-width="2.4"/>
+  <rect x="792" y="486" width="212" height="34" rx="17" stroke="#FFF1F2" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M804 508 C805 501, 808 498, 811 501 C813 496, 815 495, 816 494 C817 495, 819 496, 821 501 C824 498, 827 501, 828 508 Z" fill="#F9A8D4" stroke="#FFF1F2" stroke-width="1"/>
+  <text x="904" y="509" text-anchor="middle" class="regal" font-size="14" fill="#FCE7F3">Putri Langit</text>
+  <text x="986" y="508" text-anchor="middle" class="body" font-size="13" fill="#FDE68A">✦</text>
+  <text x="898" y="546" text-anchor="middle" class="body" font-size="13" fill="#FFFFFF">Akun (@9294134678)</text>
+  <rect x="876" y="564" width="44" height="44" rx="10" fill="#FDE047" stroke="#FBCFE8" stroke-width="2"/>
+  <circle cx="889" cy="583" r="3" fill="#0F172A"/>
+  <circle cx="907" cy="583" r="3" fill="#0F172A"/>
+  <path d="M890 594 Q898 601 906 594" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- EN Overhead Mock Princess -->
+  <text x="1200" y="422" text-anchor="middle" class="black" font-size="11" fill="#C4B5FD">ENGLISH</text>
+  <text x="1200" y="446" text-anchor="middle" class="head" font-size="13" fill="#FDE047">PARTY MASTER</text>
+  <text x="1200" y="468" text-anchor="middle" class="head" font-size="16" fill="#FFD700">[Summit: 3x]</text>
+  <rect x="1080" y="482" width="240" height="42" rx="21" fill="url(#princessPillBg)" stroke="url(#roseRim)" stroke-width="2.4"/>
+  <rect x="1084" y="486" width="232" height="34" rx="17" stroke="#FFF1F2" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M1094 508 C1095 501, 1098 498, 1101 501 C1103 496, 1105 495, 1106 494 C1107 495, 1109 496, 1111 501 C1114 498, 1117 501, 1118 508 Z" fill="#F9A8D4" stroke="#FFF1F2" stroke-width="1"/>
+  <text x="1204" y="509" text-anchor="middle" class="regal" font-size="13" fill="#FCE7F3">Princess of the Sky</text>
+  <text x="1302" y="508" text-anchor="middle" class="body" font-size="13" fill="#FDE68A">✦</text>
+  <text x="1200" y="546" text-anchor="middle" class="body" font-size="13" fill="#FFFFFF">Akun (@9294134678)</text>
+  <rect x="1178" y="564" width="44" height="44" rx="10" fill="#FDE047" stroke="#FBCFE8" stroke-width="2"/>
+  <circle cx="1191" cy="583" r="3" fill="#0F172A"/>
+  <circle cx="1209" cy="583" r="3" fill="#0F172A"/>
+  <path d="M1192 594 Q1200 601 1208 594" stroke="#0F172A" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- Spec Footer Box Princess -->
+  <rect x="750" y="672" width="602" height="142" rx="14" fill="#140624" fill-opacity="0.78" stroke="#7E22CE" stroke-width="1.2"/>
+  <g transform="translate(764, 686) scale(0.55)">
+  <defs>
+    <radialGradient id="ppHalo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.50"/>
+      <stop offset="55%" stop-color="#9333EA" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1E0933" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="32%" stop-color="#FBCFE8"/>
+      <stop offset="66%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </linearGradient>
+    <linearGradient id="tiaraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="45%" stop-color="#F472B6"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+    <linearGradient id="roseGem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#F9A8D4"/>
+      <stop offset="100%" stop-color="#BE185D"/>
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="100" r="88" fill="url(#ppHalo)"/>
+  <circle cx="120" cy="100" r="76" stroke="url(#roseGold)" stroke-width="2.2" stroke-dasharray="6 4" stroke-opacity="0.75" fill="none"/>
+  <circle cx="120" cy="100" r="65" stroke="#FBCFE8" stroke-width="1.2" stroke-opacity="0.45" fill="none"/>
+  <!-- Graceful Floral Filigree Wings -->
+  <path d="M58 124 C32 106, 26 78, 42 54 C46 72, 56 83, 72 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M182 124 C208 106, 214 78, 198 54 C194 72, 184 83, 168 91" stroke="url(#roseGold)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M68 122 C48 112, 42 94, 48 76 C56 87, 65 95, 76 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <path d="M172 122 C192 112, 198 94, 192 76 C184 87, 175 95, 164 100 Z" fill="#F9A8D4" fill-opacity="0.45" stroke="#FCE7F3" stroke-width="1.4"/>
+  <!-- Imperial Rose-Gold Tiara -->
+  <path d="M64 128 C67 98, 79 79, 92 92 C102 64, 112 50, 120 42 C128 50, 138 64, 148 92 C161 79, 173 98, 176 128 Z" fill="url(#tiaraGrad)" stroke="#FFF1F2" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M77 123 C81 102, 88 90, 97 99 C106 77, 113 65, 120 57 C127 65, 134 77, 143 99 C152 90, 159 102, 163 123 Z" fill="#FFF1F2" fill-opacity="0.22"/>
+  <!-- Pearl & Champagne Tiara Base Rim -->
+  <path d="M63 130 Q120 142 177 130" stroke="url(#roseGold)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="84" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="102" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="120" cy="136" r="4.6" fill="#FEF3C7" stroke="#B45309" stroke-width="1.2"/>
+  <circle cx="138" cy="135" r="3.8" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <circle cx="156" cy="132" r="3.6" fill="#FFF1F2" stroke="#DB2777" stroke-width="1"/>
+  <!-- Center Rose Diamond & Star Tips -->
+  <polygon points="120,72 133,96 120,118 107,96" fill="url(#roseGem)" stroke="#FDE68A" stroke-width="2.2"/>
+  <polygon points="120,79 127,96 120,110 113,96" fill="#FFFFFF" fill-opacity="0.52"/>
+  <circle cx="91" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="149" cy="105" r="5" fill="#FDE68A" stroke="#FFF1F2" stroke-width="1.4"/>
+  <circle cx="120" cy="36" r="6.2" fill="#FFF1F2" stroke="#F59E0B" stroke-width="1.6"/>
+  <!-- Sparkles -->
+  <path d="M36 42 L39 50 L47 53 L39 56 L36 64 L33 56 L25 53 L33 50 Z" fill="#F9A8D4"/>
+  <path d="M204 42 L206.5 48.5 L213 51 L206.5 53.5 L204 60 L201.5 53.5 L195 51 L201.5 48.5 Z" fill="#FDE68A"/>
+  <path d="M120 154 L122.5 160.5 L129 163 L122.5 165.5 L120 172 L117.5 165.5 L111 163 L117.5 160.5 Z" fill="#FBCFE8"/>
+</g>
+  <text x="916" y="704" class="black" font-size="13" fill="#FBCFE8">Spesifikasi Teknis &amp; Elemen Mewah:</text>
+  <text x="916" y="728" class="body" font-size="11.2" fill="#E2E8F0">• Key katalog: <tspan fill="#FDE68A">title:princess_of_the_sky</tspan> · Harga: <tspan fill="#FDE047">0 Koin</tspan></text>
+  <text x="916" y="750" class="body" font-size="11.2" fill="#E2E8F0">• Whitelist UserId: <tspan fill="#FBCFE8">(9294134678, 8635452105)</tspan> (tersembunyi untuk publik)</text>
+  <text x="916" y="772" class="body" font-size="11.2" fill="#E2E8F0">• Pill overhead: gradien velvet ungu-plum, stroke rose-gold + tiara berlian</text>
+  <text x="916" y="794" class="body" font-size="11.2" fill="#E2E8F0">• Ekspor aset toko: <tspan fill="#FBCFE8">art_cosmetic_title_princess.svg</tspan> (240×200 / 480×400)</text>
+</svg>

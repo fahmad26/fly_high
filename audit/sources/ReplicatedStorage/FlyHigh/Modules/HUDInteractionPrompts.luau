@@ -4,6 +4,7 @@ local Prompts = game:GetService("ProximityPromptService")
 local Input = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
+local TouchInputGuard = require(script.Parent.TouchInputGuard)
 local Repair = {}
 local titles: { [string]: string } = {
  PatchPrompt="TAMBAL BALON", RepairRopePrompt="PERBAIKI TALI",
@@ -214,7 +215,7 @@ function Repair.Start(player: Player)
 				point.Y + prompt.UIOffset.Y - gui.AbsolutePosition.Y)
 		end))
 		table.insert(links, button.InputBegan:Connect(function(i)
-			if pointer or (i.UserInputType ~= Enum.UserInputType.Touch and i.UserInputType ~= Enum.UserInputType.MouseButton1) then return end
+			if pointer or not TouchInputGuard.IsDirectBegin(button, i) then return end
 			pointer = i
 			prompt:InputHoldBegin()
 		end))

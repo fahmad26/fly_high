@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <radialGradient id="bBg_5" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#581C87"/>
+      <stop offset="100%" stop-color="#091534"/>
+    </radialGradient>
+    <linearGradient id="bRim_5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="48%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+    <clipPath id="circleClip_5">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <!-- Dark Outer Framing Safe Backing (visible in square 1:1 preview & Figma, circular safe center aligns to Roblox Circle Mask) -->
+  <rect width="512" height="512" rx="44" fill="#06122B"/>
+  <!-- Circular Medallion Backdrop -->
+  <g clip-path="url(#circleClip_5)">
+    <circle cx="256" cy="256" r="228" fill="url(#bBg_5)"/>
+    
+          <!-- Imperial Golden & Violet Aureole -->
+          <circle cx="256" cy="240" r="154" fill="#C084FC" fill-opacity="0.22"/>
+          <!-- Grand Celestial Seraph Wings -->
+          <path d="M168 308 C108 290, 74 238, 66 172 C98 192, 130 202, 174 204 C138 228, 136 266, 168 308 Z" fill="#FDE047" stroke="#FFFBEB" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M344 308 C404 290, 438 238, 446 172 C414 192, 382 202, 338 204 C374 228, 376 266, 344 308 Z" fill="#FDE047" stroke="#FFFBEB" stroke-width="3" stroke-linejoin="round"/>
+          <!-- Sovereign Crown Framed Over Cloud Palace Silhouette -->
+          <path d="M162 248 L142 152 L202 192 L256 112 L310 192 L370 152 L350 248 Z" fill="#FBBF24" stroke="#FFFBEB" stroke-width="4" stroke-linejoin="round"/>
+          <rect x="158" y="246" width="196" height="28" rx="8" fill="#78350F" stroke="#FEF08A" stroke-width="3"/>
+          <!-- Center Royal Diamond -->
+          <polygon points="256,164 280,204 256,238 232,204" fill="#38BDF8" stroke="#FFFBEB" stroke-width="3"/>
+          <circle cx="142" cy="144" r="9" fill="#FFFBEB"/>
+          <circle cx="256" cy="102" r="11" fill="#FFFBEB"/>
+          <circle cx="370" cy="144" r="9" fill="#FFFBEB"/>
+          <!-- Miniature Cloud Palace Emblem Below Crown -->
+          <path d="M168 326 C182 302, 212 302, 228 312 C244 296, 268 296, 284 312 C300 302, 330 302, 344 326 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/>
+          <path d="M236 306 C236 278, 276 278, 276 306 Z" fill="#FDE047" stroke="#78350F" stroke-width="2"/>
+          <!-- Imperial 10x Ribbon -->
+          <rect x="160" y="344" width="192" height="50" rx="25" fill="#2E1065" stroke="#FEF08A" stroke-width="4"/>
+          <text x="256" y="378" text-anchor="middle" class="head" font-size="25" fill="#FEF08A">10× SUMMIT</text>
+        
+  </g>
+  <!-- Bevel Outer Ring + Inner Accent Hairline -->
+  <circle cx="256" cy="256" r="230" stroke="url(#bRim_5)" stroke-width="16" fill="none"/>
+  <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+  <circle cx="256" cy="256" r="241" stroke="#040B1C" stroke-width="4" fill="none"/>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <radialGradient id="bBg_1" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRim_1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="48%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <clipPath id="circleClip_1">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <!-- Dark Outer Framing Safe Backing (visible in square 1:1 preview & Figma, circular safe center aligns to Roblox Circle Mask) -->
+  <rect width="512" height="512" rx="44" fill="#06122B"/>
+  <!-- Circular Medallion Backdrop -->
+  <g clip-path="url(#circleClip_1)">
+    <circle cx="256" cy="256" r="228" fill="url(#bBg_1)"/>
+    
+          <!-- Sunburst & clouds behind balloon -->
+          <circle cx="256" cy="210" r="142" fill="#38BDF8" fill-opacity="0.18"/>
+          <path d="M120 356 C135 328, 175 322, 198 336 C215 316, 250 315, 272 332 C296 312, 344 316, 362 340 C384 334, 412 344, 418 368 L112 368 Z" fill="#F0F9FF" fill-opacity="0.92"/>
+          <!-- Small green dock isle hint -->
+          <ellipse cx="256" cy="378" rx="115" ry="26" fill="#0369A1" fill-opacity="0.45"/>
+          <path d="M188 370 Q256 350 324 370 L312 384 Q256 376 200 384 Z" fill="#22C55E" stroke="#166534" stroke-width="3"/>
+          <!-- Classic Crimson & Gold Balloon rising -->
+          <path d="M190 198 C184 134, 218 92, 256 92 C294 92, 328 134, 322 198 C316 238, 286 264, 274 276 H238 C226 264, 196 238, 190 198 Z" fill="#E11D48" stroke="#FFFBEB" stroke-width="4"/>
+          <path d="M222 98 C210 144, 214 216, 240 274 M256 92 V276 M290 98 C302 144, 298 216, 272 274" stroke="#FDE047" stroke-width="4" fill="none"/>
+          <path d="M256 278 L250 296 H262 Z" fill="#FBBF24"/>
+          <line x1="240" y1="276" x2="236" y2="306" stroke="#FEF3C7" stroke-width="3"/>
+          <line x1="272" y1="276" x2="276" y2="306" stroke="#FEF3C7" stroke-width="3"/>
+          <!-- SQUARE (KOTAK) wooden basket -->
+          <rect x="230" y="306" width="52" height="38" rx="4" fill="#B45309" stroke="#FDE047" stroke-width="3.2"/>
+          <line x1="230" y1="319" x2="282" y2="319" stroke="#78350F" stroke-width="2.5"/>
+          <line x1="230" y1="331" x2="282" y2="331" stroke="#78350F" stroke-width="2.5"/>
+          <!-- Stars & Compass Spark -->
+          <path d="M138 148 L143 160 L155 165 L143 170 L138 182 L133 170 L121 165 L133 160 Z" fill="#FEF08A"/>
+          <path d="M376 132 L380 142 L390 146 L380 150 L376 160 L372 150 L362 146 L372 142 Z" fill="#BAE6FD"/>
+        
+  </g>
+  <!-- Bevel Outer Ring + Inner Accent Hairline -->
+  <circle cx="256" cy="256" r="230" stroke="url(#bRim_1)" stroke-width="16" fill="none"/>
+  <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+  <circle cx="256" cy="256" r="241" stroke="#040B1C" stroke-width="4" fill="none"/>
+</svg>

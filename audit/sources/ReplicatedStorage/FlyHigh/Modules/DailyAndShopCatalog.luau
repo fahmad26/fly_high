@@ -203,6 +203,62 @@ Catalog.COSMETICS = {
 		secondaryColor = Color3.fromRGB(236, 72, 153),
 	},
 	{
+		id = "prince_of_sky",
+		category = "title",
+		key = "title:prince_of_sky",
+		titleText = "Pangeran Langit",
+		name = "Gelar: Pangeran Langit",
+		tag = "GELAR ROYAL EKSKLUSIF",
+		description = "Mahkota safir langit bercahaya emas. Eksklusif seharga 0 Koin.",
+		price = 0,
+		artKey = "art_cosmetic_title_prince",
+		exclusiveUserIds = { 8635452105 },
+		luxuryStyle = "royal_prince",
+		primaryColor = Color3.fromRGB(251, 191, 36),
+		secondaryColor = Color3.fromRGB(56, 189, 248),
+		luxuryPalette = {
+			cardTop = Color3.fromRGB(20, 52, 128),
+			cardMid = Color3.fromRGB(13, 35, 92),
+			cardBottom = Color3.fromRGB(7, 20, 56),
+			rimA = Color3.fromRGB(254, 240, 138),
+			rimB = Color3.fromRGB(245, 158, 11),
+			rimC = Color3.fromRGB(56, 189, 248),
+			pillTop = Color3.fromRGB(23, 62, 150),
+			pillMid = Color3.fromRGB(11, 32, 86),
+			pillBottom = Color3.fromRGB(6, 18, 52),
+			textColor = Color3.fromRGB(254, 243, 199),
+			strokeColor = Color3.fromRGB(251, 191, 36),
+		},
+	},
+	{
+		id = "princess_of_sky",
+		category = "title",
+		key = "title:princess_of_sky",
+		titleText = "Putri Langit",
+		name = "Gelar: Putri Langit",
+		tag = "GELAR ROYAL EKSKLUSIF",
+		description = "Tiara kristal mawar berbalut kilau champagne. Eksklusif seharga 0 Koin.",
+		price = 0,
+		artKey = "art_cosmetic_title_princess",
+		exclusiveUserIds = { 9294134678, 8635452105 },
+		luxuryStyle = "royal_princess",
+		primaryColor = Color3.fromRGB(253, 212, 165),
+		secondaryColor = Color3.fromRGB(244, 114, 182),
+		luxuryPalette = {
+			cardTop = Color3.fromRGB(102, 28, 126),
+			cardMid = Color3.fromRGB(67, 17, 92),
+			cardBottom = Color3.fromRGB(35, 10, 56),
+			rimA = Color3.fromRGB(254, 240, 214),
+			rimB = Color3.fromRGB(244, 114, 182),
+			rimC = Color3.fromRGB(251, 191, 36),
+			pillTop = Color3.fromRGB(118, 30, 138),
+			pillMid = Color3.fromRGB(68, 16, 90),
+			pillBottom = Color3.fromRGB(36, 9, 54),
+			textColor = Color3.fromRGB(255, 241, 247),
+			strokeColor = Color3.fromRGB(249, 168, 212),
+		},
+	},
+	{
 		id = "faithful_explorer",
 		category = "title",
 		key = "title:faithful_explorer",
@@ -244,6 +300,19 @@ end
 function Catalog.GetCosmetic(category: string, id: string)
 	local cat = Catalog.COSMETICS_BY_CATEGORY[category]
 	return cat and cat[id] or nil
+end
+
+function Catalog.CanAccessCosmetic(item, userId: number?): boolean
+	if not item then
+		return false
+	end
+	if type(item.exclusiveUserIds) ~= "table" then
+		return true
+	end
+	if type(userId) ~= "number" then
+		return false
+	end
+	return table.find(item.exclusiveUserIds, userId) ~= nil
 end
 
 function Catalog.GetUTC7Day(unixTime: number?): number

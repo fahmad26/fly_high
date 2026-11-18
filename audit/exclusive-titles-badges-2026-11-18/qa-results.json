@@ -1,0 +1,110 @@
+{
+  "identity": {
+    "runId": "exclusive-titles-badges-2026-11-18",
+    "date": "2026-11-18T22:45:00+07:00",
+    "timezone": "Asia/Jakarta (WIB, UTC+7)"
+  },
+  "build": {
+    "baseCommit": "9950b85",
+    "remoteRef": "origin/main (9950b85, unpushed local edits present)",
+    "studioInstanceId": "1fc749f2-5a8f-4d20-8f58-c9a3897f2f64",
+    "placeId": 97043730132219,
+    "universeId": 10776821830,
+    "placeFile": {
+      "path": "E:/Antigravity/Fly High/Fly High.rbxl",
+      "bytes": 3532605,
+      "sha256": "1381cfd2b5f5d40653c0f8452cd8491693610e6bfa024f1543a548670a582819",
+      "mtime": "2026-11-18T22:44:23.716605+07:00",
+      "reopenedVerified": false
+    },
+    "parityAll": {
+      "totalScripts": 65,
+      "symNormMatch": 65,
+      "fails": 0,
+      "compileFails": 0,
+      "editorMatchAll": true
+    },
+    "changedSources": {
+      "ServerScriptService/FlyHighServer/BadgeManager.luau": {"normBytes": 4823, "sha256": "786aee92c59eef5d7001091f93ac4dbd299d4edd8174fc09ff8d27f8070aea9c"},
+      "ServerScriptService/FlyHighServer/DataManager.luau": {"normBytes": 23905, "sha256": "e5c9a5d5ae082ba7b38b2c35dbb77b1bf925365c426d7bc6d18da0634b08642d"},
+      "ServerScriptService/FlyHighServer/OverheadManager.luau": {"normBytes": 11320, "sha256": "81f9e57c76a9f8b912d26f2bc7cf8a233838fa3e3f0fd4dba5767a6d79085177"},
+      "ServerScriptService/FlyHighServer/WeaponManager.luau": {"normBytes": 13899, "sha256": "51fc40111f138f230afdff5fe0dca053706d767bf400e55ede7a0752b24934a"},
+      "ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau": {"normBytes": 9973, "sha256": "09f3bf20ab93061c00527bd03fa37b34bfa6a7c39e57f003000c240c9e7556f2"},
+      "ReplicatedStorage/FlyHigh/Modules/FlyHighConfig.luau": {"normBytes": 4704, "sha256": "2d3fc0a4bb9b99abe7eb44181baf2e3cf491d635768890a2fbe4f7ae1fb3c8c0"},
+      "ReplicatedStorage/FlyHigh/Modules/HUDAdventureCatalog.luau": {"normBytes": 5802, "sha256": "7e31f749e9da07a4503e8b1d2fdd65b400de411390809d245476a1c1cff1a1b8"},
+      "ReplicatedStorage/FlyHigh/Modules/LocalizationCatalog.luau": {"normBytes": 49359, "sha256": "776089715457b9597646381c30232a933c0809980cbb6f643121d1819e722fa1"},
+      "ReplicatedStorage/FlyHigh/Modules/ShopTabsController.luau": {"normBytes": 29085, "sha256": "d0cb922b27539f6f29bb088931036bbb566fd57bbdc0c7be12dfcc1cc171d7b3"}
+    }
+  },
+  "uploadedAssets": {
+    "art_cosmetic_title_prince": "rbxassetid://107428339594877",
+    "art_cosmetic_title_princess": "rbxassetid://95518013683213",
+    "assetFetchStatusPrince": "Success",
+    "assetFetchStatusPrincess": "Success"
+  },
+  "exclusiveTitlesTest": {
+    "accessMatrix": {
+      "prince_for_8635452105": true,
+      "prince_for_9294134678": false,
+      "prince_for_99999999": false,
+      "princess_for_9294134678": true,
+      "princess_for_8635452105": true,
+      "princess_for_99999999": false,
+      "regular_for_99999999": true
+    },
+    "clientShopAndOverhead_Fikki2621_8635452105": {
+      "coinsBefore": 2590,
+      "coinsAfter": 2590,
+      "buyPrince": {"ok": true, "message": "Gelar: Pangeran Langit dibeli & dipasang!"},
+      "buyPrincess": {"ok": true, "message": "Gelar: Putri Langit dibeli & dipasang!"},
+      "desktopFits": {"princeTitleFits": true, "princeDescFits": true, "princeTagFits": true, "princessTitleFits": true, "princessDescFits": true, "princessTagFits": true},
+      "narrow360Fits": {"princeTitleFits": true, "princeDescFits": true, "princeTagFits": true, "princessTitleFits": true, "princessDescFits": true, "princessTagFits": true},
+      "overheadPrince": {"pillVisible": true, "size": "241x24", "crestLoaded": true, "sparkleVisible": true, "bgGradEnabled": true, "rimGradEnabled": true, "textId": "Pangeran Langit", "textEn": "Prince of the Sky", "boundsX": 86, "labelW": 195.9},
+      "overheadPrincess": {"pillVisible": true, "size": "241x24", "crestLoaded": true, "sparkleVisible": true, "bgGradEnabled": true, "rimGradEnabled": true, "textId": "Putri Langit", "textEn": "Princess of the Sky", "boundsX": 96, "labelW": 195.9}
+    }
+  },
+  "badgesTest": {
+    "badgeApiInfo": {
+      "FirstFlight": {"id": 1985513006821695, "okInfo": true, "name": "First Flight", "isEnabled": true, "okHas": true},
+      "PalacePioneer": {"id": 2228896968502208, "okInfo": true, "name": "Palace Pioneer", "isEnabled": true, "okHas": true},
+      "StratosphereVoyager": {"id": 612666145539186, "okInfo": true, "name": "Stratosphere Voyager", "isEnabled": true, "okHas": true},
+      "SkyDefender": {"id": 1171146342737589, "okInfo": true, "name": "Sky Defender", "isEnabled": true, "okHas": true},
+      "SkySovereign": {"id": 133927492139337, "okInfo": true, "name": "Sky Sovereign", "isEnabled": true, "okHas": true}
+    },
+    "studioLiveAwardBadgeLimitation": "BadgeService:AwardBadge returns false in Roblox Studio Play Solo (verified live API GetBadgeInfoAsync/UserHasBadgeAsync OK; actual AwardBadge requires published Roblox live server)",
+    "realWeaponKillTest": {
+      "flightAltKm": 550,
+      "obsBefore": 0,
+      "weaponFireSent": true,
+      "enemyAliveAfter": false,
+      "obsAfterShot": 1
+    },
+    "thresholdAndDedupTestsWithSpyExecutor": {
+      "skyDefender_at9": false,
+      "skyDefender_at10": true,
+      "skyDefender_callsAfter11": 1,
+      "voyager_at4999": false,
+      "voyager_at5000": true,
+      "voyager_callsAfter5001": 1,
+      "tier0": {"first": true, "pioneer": false, "voyager": false, "defender": false, "sovereign": false},
+      "tier1": {"pioneer": true, "sovereign": false},
+      "tier9": {"pioneer": true, "sovereign": false},
+      "tier10": {"first": true, "pioneer": true, "voyager": true, "defender": true, "sovereign": true}
+    }
+  },
+  "dataStoreRestore": {
+    "sessionNil": true,
+    "summits": 15,
+    "maxAlt": 10000,
+    "obs": 0,
+    "owned": {"title:faithful_explorer": true},
+    "equipped": {"frame": "none", "title": "faithful_explorer", "tracer": "cyan_sky"}
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "players": 0,
+    "leftovers": [],
+    "camPos": "0, 48, 25",
+    "screenshot": "audit/exclusive-titles-badges-2026-11-18/edit-restored.jpg"
+  }
+}

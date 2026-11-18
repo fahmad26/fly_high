@@ -1,0 +1,503 @@
+﻿{
+    "finishedUTC":  "2026-11-18T18:24:29Z",
+    "errors":  [
+
+               ],
+    "success":  true,
+    "gameId":  10776821830,
+    "metrics":  {
+                    "phaseA_stats":  {
+                                         "afterDead":  {
+                                                           "puncak":  3,
+                                                           "inFlight":  false,
+                                                           "ghost":  false,
+                                                           "summitsAttr":  3,
+                                                           "focus":  "nil",
+                                                           "palaceArrival":  true,
+                                                           "coins":  570
+                                                       },
+                                         "afterAlive":  {
+                                                            "puncak":  3,
+                                                            "inFlight":  false,
+                                                            "ghost":  false,
+                                                            "summitsAttr":  3,
+                                                            "focus":  "nil",
+                                                            "palaceArrival":  true,
+                                                            "coins":  1120
+                                                        }
+                                     },
+                    "phaseB_return":  {
+                                          "sample":  {
+                                                         "endTransparency":  0,
+                                                         "endWalkSpeed":  16,
+                                                         "fadedOutSeen":  true,
+                                                         "sceneryMax":  5,
+                                                         "whiteoutSeen":  true,
+                                                         "cinematicStillRunning":  false,
+                                                         "zonesSeen":  [
+                                                                           "ZONA 5 Â· GERBANG SURGAWI",
+                                                                           "ZONA 4 Â· LANGIT BINTANG",
+                                                                           "ZONA 3 Â· PULAU SENJA",
+                                                                           "ZONA 2 Â· AWAN MENDUNG",
+                                                                           "ZONA 1 Â· LANGIT CERAH"
+                                                                       ],
+                                                         "endCamType":  "Custom",
+                                                         "cinematicSeen":  true,
+                                                         "endCharY":  12.89799976348877,
+                                                         "endHudEnabled":  true
+                                                     },
+                                          "trig":  {
+                                                       "ok":  true,
+                                                       "enabled":  true,
+                                                       "trig":  1
+                                                   }
+                                      },
+                    "clientErrors":  {
+                                         "Player1":  {
+                                                         "gameErrors":  [
+
+                                                                        ],
+                                                         "platformErrors":  [
+
+                                                                            ]
+                                                     },
+                                         "Player2":  {
+                                                         "gameErrors":  [
+
+                                                                        ],
+                                                         "platformErrors":  [
+
+                                                                            ]
+                                                     }
+                                     },
+                    "phaseA":  {
+                                   "beforeAlive":  {
+                                                       "puncak":  2,
+                                                       "inFlight":  true,
+                                                       "ghost":  false,
+                                                       "summitsAttr":  2,
+                                                       "focus":  "nil",
+                                                       "palaceArrival":  false,
+                                                       "coins":  970
+                                                   },
+                                   "beforeDead":  {
+                                                      "puncak":  2,
+                                                      "inFlight":  true,
+                                                      "ghost":  true,
+                                                      "summitsAttr":  2,
+                                                      "focus":  "Workspace.Balloon_Player2.RootPart",
+                                                      "palaceArrival":  false,
+                                                      "coins":  570
+                                                  },
+                                   "alive":  {
+                                                 "cardLine2":  "+150 koin",
+                                                 "cardVisibleSeen":  true,
+                                                 "cinematicStillRunning":  false,
+                                                 "cardLinesOverlap":  false,
+                                                 "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                 "endViewport":  "1094.40002, 558.400024",
+                                                 "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                 "cardCrestOverlapsTitle":  false,
+                                                 "hudResultDuringCine":  false,
+                                                 "hudHiddenDuringCine":  true,
+                                                 "endWalkSpeed":  16,
+                                                 "endJumpPower":  50,
+                                                 "endCamType":  "Custom",
+                                                 "hudResultAfterCine":  false,
+                                                 "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                 "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                 "cinematicSeen":  true,
+                                                 "cardLine1":  "10.000 km Â· Puncak ke-3 Â· 0:05",
+                                                 "endHudEnabled":  true,
+                                                 "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                 "revivalRingSeen":  true
+                                             },
+                                   "dead":  {
+                                                "cardLine2":  "Kru bangkit â€” kamu ikut sampai!",
+                                                "cardVisibleSeen":  true,
+                                                "cinematicStillRunning":  false,
+                                                "cardLinesOverlap":  false,
+                                                "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                "endViewport":  "1094.40002, 558.400024",
+                                                "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                "cardCrestOverlapsTitle":  false,
+                                                "hudResultDuringCine":  false,
+                                                "hudHiddenDuringCine":  true,
+                                                "endWalkSpeed":  16,
+                                                "endJumpPower":  50,
+                                                "endCamType":  "Custom",
+                                                "hudResultAfterCine":  false,
+                                                "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                "cinematicSeen":  true,
+                                                "cardLine1":  "10.000 km Â· Puncak ke-3 Â· 0:05",
+                                                "endHudEnabled":  true,
+                                                "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                "revivalRingSeen":  true
+                                            }
+                               },
+                    "phaseC_allAlive":  {
+                                            "p2":  {
+                                                       "cardLine2":  "+150 koin",
+                                                       "cardVisibleSeen":  true,
+                                                       "cinematicStillRunning":  false,
+                                                       "cardLinesOverlap":  false,
+                                                       "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                       "endViewport":  "1094.40002, 558.400024",
+                                                       "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                       "cardCrestOverlapsTitle":  false,
+                                                       "hudResultDuringCine":  false,
+                                                       "hudHiddenDuringCine":  true,
+                                                       "endWalkSpeed":  16,
+                                                       "endJumpPower":  50,
+                                                       "endCamType":  "Custom",
+                                                       "hudResultAfterCine":  false,
+                                                       "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                       "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                       "cinematicSeen":  true,
+                                                       "cardLine1":  "10.000 km Â· Puncak ke-4 Â· 0:01",
+                                                       "endHudEnabled":  true,
+                                                       "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                       "revivalRingSeen":  false
+                                                   },
+                                            "after1":  {
+                                                           "puncak":  4,
+                                                           "inFlight":  false,
+                                                           "ghost":  false,
+                                                           "summitsAttr":  4,
+                                                           "focus":  "nil",
+                                                           "palaceArrival":  true,
+                                                           "coins":  1410
+                                                       },
+                                            "after2":  {
+                                                           "puncak":  4,
+                                                           "inFlight":  false,
+                                                           "ghost":  false,
+                                                           "summitsAttr":  4,
+                                                           "focus":  "nil",
+                                                           "palaceArrival":  true,
+                                                           "coins":  860
+                                                       },
+                                            "p1":  {
+                                                       "cardLine2":  "+150 koin",
+                                                       "cardVisibleSeen":  true,
+                                                       "cinematicStillRunning":  false,
+                                                       "cardLinesOverlap":  false,
+                                                       "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                       "endViewport":  "1094.40002, 558.400024",
+                                                       "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                       "cardCrestOverlapsTitle":  false,
+                                                       "hudResultDuringCine":  false,
+                                                       "hudHiddenDuringCine":  true,
+                                                       "endWalkSpeed":  16,
+                                                       "endJumpPower":  50,
+                                                       "endCamType":  "Custom",
+                                                       "hudResultAfterCine":  false,
+                                                       "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                       "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                       "cinematicSeen":  true,
+                                                       "cardLine1":  "10.000 km Â· Puncak ke-4 Â· 0:01",
+                                                       "endHudEnabled":  true,
+                                                       "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                       "revivalRingSeen":  false
+                                                   }
+                                        }
+                },
+    "startedUTC":  "2026-11-18T18:23:21Z",
+    "run":  "palace-portal-2026-11-19",
+    "checks":  [
+                   {
+                       "pass":  true,
+                       "name":  "2_clients_ready",
+                       "detail":  2
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "hud_ready_Player2",
+                       "detail":  true
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "hud_ready_Player1",
+                       "detail":  true
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_launched",
+                       "detail":  {
+                                      "ok":  true,
+                                      "enabled":  false,
+                                      "trig":  1
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_dead_respawned_and_parked",
+                       "detail":  "Workspace.Balloon_Player2.RootPart"
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_dead_revived_at_dock",
+                       "detail":  {
+                                      "puncak":  3,
+                                      "inFlight":  false,
+                                      "ghost":  false,
+                                      "summitsAttr":  3,
+                                      "focus":  "nil",
+                                      "palaceArrival":  true,
+                                      "coins":  570
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_alive_at_dock",
+                       "detail":  {
+                                      "puncak":  3,
+                                      "inFlight":  false,
+                                      "ghost":  false,
+                                      "summitsAttr":  3,
+                                      "focus":  "nil",
+                                      "palaceArrival":  true,
+                                      "coins":  1120
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_coins_only_survivor",
+                       "detail":  {
+                                      "aliveDelta":  150,
+                                      "deadDelta":  0
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_both_summit_plus_1",
+                       "detail":  {
+                                      "deadSummit":  1,
+                                      "aliveSummit":  1
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_dead_cutscene_and_revival_card",
+                       "detail":  {
+                                      "cardLine2":  "Kru bangkit â€” kamu ikut sampai!",
+                                      "cardVisibleSeen":  true,
+                                      "cinematicStillRunning":  false,
+                                      "cardLinesOverlap":  false,
+                                      "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                      "endViewport":  "1094.40002, 558.400024",
+                                      "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                      "cardCrestOverlapsTitle":  false,
+                                      "hudResultDuringCine":  false,
+                                      "hudHiddenDuringCine":  true,
+                                      "endWalkSpeed":  16,
+                                      "endJumpPower":  50,
+                                      "endCamType":  "Custom",
+                                      "hudResultAfterCine":  false,
+                                      "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                      "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                      "cinematicSeen":  true,
+                                      "cardLine1":  "10.000 km Â· Puncak ke-3 Â· 0:05",
+                                      "endHudEnabled":  true,
+                                      "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                      "revivalRingSeen":  true
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_dead_card_no_crest_title_overlap",
+                       "detail":  {
+                                      "cardLine2":  "Kru bangkit â€” kamu ikut sampai!",
+                                      "cardVisibleSeen":  true,
+                                      "cinematicStillRunning":  false,
+                                      "cardLinesOverlap":  false,
+                                      "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                      "endViewport":  "1094.40002, 558.400024",
+                                      "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                      "cardCrestOverlapsTitle":  false,
+                                      "hudResultDuringCine":  false,
+                                      "hudHiddenDuringCine":  true,
+                                      "endWalkSpeed":  16,
+                                      "endJumpPower":  50,
+                                      "endCamType":  "Custom",
+                                      "hudResultAfterCine":  false,
+                                      "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                      "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                      "cinematicSeen":  true,
+                                      "cardLine1":  "10.000 km Â· Puncak ke-3 Â· 0:05",
+                                      "endHudEnabled":  true,
+                                      "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                      "revivalRingSeen":  true
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_alive_cutscene_and_coin_card",
+                       "detail":  {
+                                      "cardLine2":  "+150 koin",
+                                      "cardVisibleSeen":  true,
+                                      "cinematicStillRunning":  false,
+                                      "cardLinesOverlap":  false,
+                                      "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                      "endViewport":  "1094.40002, 558.400024",
+                                      "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                      "cardCrestOverlapsTitle":  false,
+                                      "hudResultDuringCine":  false,
+                                      "hudHiddenDuringCine":  true,
+                                      "endWalkSpeed":  16,
+                                      "endJumpPower":  50,
+                                      "endCamType":  "Custom",
+                                      "hudResultAfterCine":  false,
+                                      "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                      "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                      "cinematicSeen":  true,
+                                      "cardLine1":  "10.000 km Â· Puncak ke-3 Â· 0:05",
+                                      "endHudEnabled":  true,
+                                      "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                      "revivalRingSeen":  true
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseA_controls_restored_both",
+                       "detail":  {
+                                      "alive":  16,
+                                      "dead":  16
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseB_portal_prompt_triggered",
+                       "detail":  {
+                                      "ok":  true,
+                                      "enabled":  true,
+                                      "trig":  1
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseB_cutscene_played_and_5_biomes_built",
+                       "detail":  {
+                                      "endTransparency":  0,
+                                      "endWalkSpeed":  16,
+                                      "fadedOutSeen":  true,
+                                      "sceneryMax":  5,
+                                      "whiteoutSeen":  true,
+                                      "cinematicStillRunning":  false,
+                                      "zonesSeen":  [
+                                                        "ZONA 5 Â· GERBANG SURGAWI",
+                                                        "ZONA 4 Â· LANGIT BINTANG",
+                                                        "ZONA 3 Â· PULAU SENJA",
+                                                        "ZONA 2 Â· AWAN MENDUNG",
+                                                        "ZONA 1 Â· LANGIT CERAH"
+                                                    ],
+                                      "endCamType":  "Custom",
+                                      "cinematicSeen":  true,
+                                      "endCharY":  12.89799976348877,
+                                      "endHudEnabled":  true
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseB_char_faded_and_restored",
+                       "detail":  {
+                                      "endTransparency":  0,
+                                      "endWalkSpeed":  16,
+                                      "fadedOutSeen":  true,
+                                      "sceneryMax":  5,
+                                      "whiteoutSeen":  true,
+                                      "cinematicStillRunning":  false,
+                                      "zonesSeen":  [
+                                                        "ZONA 5 Â· GERBANG SURGAWI",
+                                                        "ZONA 4 Â· LANGIT BINTANG",
+                                                        "ZONA 3 Â· PULAU SENJA",
+                                                        "ZONA 2 Â· AWAN MENDUNG",
+                                                        "ZONA 1 Â· LANGIT CERAH"
+                                                    ],
+                                      "endCamType":  "Custom",
+                                      "cinematicSeen":  true,
+                                      "endCharY":  12.89799976348877,
+                                      "endHudEnabled":  true
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseB_fast_return_cutscene_off",
+                       "detail":  {
+                                      "ok":  true,
+                                      "enabled":  true,
+                                      "trig":  1
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseC_launched",
+                       "detail":  {
+                                      "ok":  true,
+                                      "enabled":  false,
+                                      "trig":  1
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseC_both_landed_and_rewarded",
+                       "detail":  {
+                                      "p2CoinDelta":  150,
+                                      "p1CoinDelta":  150
+                                  }
+                   },
+                   {
+                       "pass":  true,
+                       "name":  "phaseC_no_revival_and_both_coin_cards",
+                       "detail":  {
+                                      "p2":  {
+                                                 "cardLine2":  "+150 koin",
+                                                 "cardVisibleSeen":  true,
+                                                 "cinematicStillRunning":  false,
+                                                 "cardLinesOverlap":  false,
+                                                 "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                 "endViewport":  "1094.40002, 558.400024",
+                                                 "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                 "cardCrestOverlapsTitle":  false,
+                                                 "hudResultDuringCine":  false,
+                                                 "hudHiddenDuringCine":  true,
+                                                 "endWalkSpeed":  16,
+                                                 "endJumpPower":  50,
+                                                 "endCamType":  "Custom",
+                                                 "hudResultAfterCine":  false,
+                                                 "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                 "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                 "cinematicSeen":  true,
+                                                 "cardLine1":  "10.000 km Â· Puncak ke-4 Â· 0:01",
+                                                 "endHudEnabled":  true,
+                                                 "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                 "revivalRingSeen":  false
+                                             },
+                                      "p1":  {
+                                                 "cardLine2":  "+150 koin",
+                                                 "cardVisibleSeen":  true,
+                                                 "cinematicStillRunning":  false,
+                                                 "cardLinesOverlap":  false,
+                                                 "titleTextSeen":  "ISTANA AWAN Â· 10.000 km",
+                                                 "endViewport":  "1094.40002, 558.400024",
+                                                 "cardTitle":  "ISTANA AWAN TERCAPAI",
+                                                 "cardCrestOverlapsTitle":  false,
+                                                 "hudResultDuringCine":  false,
+                                                 "hudHiddenDuringCine":  true,
+                                                 "endWalkSpeed":  16,
+                                                 "endJumpPower":  50,
+                                                 "endCamType":  "Custom",
+                                                 "hudResultAfterCine":  false,
+                                                 "titleLabelRect":  "404.573486328125,347.3090515136719 285.2530822753906x30.153600692749023",
+                                                 "crestRect":  "500.7634582519531,297.8571472167969 92.87309265136719x41.00889587402344",
+                                                 "cinematicSeen":  true,
+                                                 "cardLine1":  "10.000 km Â· Puncak ke-4 Â· 0:01",
+                                                 "endHudEnabled":  true,
+                                                 "cardRect":  "381.3551940917969,318.3616027832031 331.68963623046875x120.6144027709961",
+                                                 "revivalRingSeen":  false
+                                             }
+                                  }
+                   }
+               ]
+}

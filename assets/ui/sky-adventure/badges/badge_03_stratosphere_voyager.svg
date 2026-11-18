@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <radialGradient id="bBg_3" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRim_3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="48%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+    <clipPath id="circleClip_3">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <!-- Dark Outer Framing Safe Backing (visible in square 1:1 preview & Figma, circular safe center aligns to Roblox Circle Mask) -->
+  <rect width="512" height="512" rx="44" fill="#06122B"/>
+  <!-- Circular Medallion Backdrop -->
+  <g clip-path="url(#circleClip_3)">
+    <circle cx="256" cy="256" r="228" fill="url(#bBg_3)"/>
+    
+          <!-- Twilight Sunset Horizon Glow & Stars -->
+          <ellipse cx="256" cy="322" rx="185" ry="90" fill="#F97316" fill-opacity="0.34"/>
+          <circle cx="152" cy="146" r="4" fill="#FEF08A"/>
+          <circle cx="364" cy="134" r="4" fill="#E9D5FF"/>
+          <path d="M352 156 L357 168 L369 173 L357 178 L352 190 L347 178 L335 173 L347 168 Z" fill="#FDE047"/>
+          <!-- Diagonal Altitude Ascent Track & Double Up-Chevrons -->
+          <path d="M126 306 L176 256 L226 306" stroke="#FDBA74" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
+          <path d="M286 246 L336 196 L386 246" stroke="#FDE047" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
+          <!-- Stratosphere Balloon High Above Clouds -->
+          <path d="M204 176 C198 118, 228 84, 256 84 C284 84, 314 118, 308 176 C302 212, 276 232, 268 242 H244 C236 232, 210 212, 204 176 Z" fill="#F59E0B" stroke="#FFFBEB" stroke-width="3.6"/>
+          <path d="M228 90 C220 132, 224 196, 246 240 M256 84 V242 M284 90 C292 132, 288 196, 266 240" stroke="#7C3AED" stroke-width="3.5" fill="none"/>
+          <rect x="236" y="262" width="40" height="28" rx="4" fill="#92400E" stroke="#FDE047" stroke-width="2.6"/>
+          <line x1="246" y1="242" x2="242" y2="262" stroke="#FEF3C7" stroke-width="2.5"/>
+          <line x1="266" y1="242" x2="270" y2="262" stroke="#FEF3C7" stroke-width="2.5"/>
+          <!-- Twilight Cloud Layer -->
+          <path d="M108 326 C126 298, 174 294, 198 312 C224 294, 288 294, 314 312 C338 294, 386 298, 404 326 L388 352 H124 Z" fill="#FED7AA" fill-opacity="0.88"/>
+          <!-- Crisp 5000 KM Pill Plate inside Badge -->
+          <rect x="164" y="348" width="184" height="48" rx="24" fill="#1E1B4B" stroke="#FDE047" stroke-width="3.5"/>
+          <text x="256" y="381" text-anchor="middle" class="head" font-size="25" fill="#FEF08A">5,000 KM</text>
+        
+  </g>
+  <!-- Bevel Outer Ring + Inner Accent Hairline -->
+  <circle cx="256" cy="256" r="230" stroke="url(#bRim_3)" stroke-width="16" fill="none"/>
+  <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+  <circle cx="256" cy="256" r="241" stroke="#040B1C" stroke-width="4" fill="none"/>
+</svg>

@@ -1,0 +1,121 @@
+{
+  "identity": {
+    "runId": "tether-rescue-capture-hud-2026-11-18",
+    "date": "2026-11-18T21:32:00+07:00",
+    "timezone": "Asia/Jakarta (WIB, UTC+7)"
+  },
+  "build": {
+    "baseCommit": "9950b85",
+    "remoteRef": "origin/main (9950b85, unpushed local edits present)",
+    "studioInstanceId": "1fc749f2-5a8f-4d20-8f58-c9a3897f2f64",
+    "placeId": 97043730132219,
+    "universeId": 10776821830,
+    "placeFile": {
+      "path": "E:/Antigravity/Fly High/Fly High.rbxl",
+      "bytes": 3528111,
+      "sha256": "b6d4bbd85ec32e7bc9d90639f17fb16a497ba944b8aece7fb067eea8d941c09e",
+      "mtime": "2026-11-18T21:29:49.572040+07:00",
+      "reopenedVerified": false
+    },
+    "modifiedSources": [
+      {
+        "path": "ServerScriptService/FlyHighServer/TetherManager.luau",
+        "bytesLF": 25659,
+        "sha256LF": "20f787ea031f07df7af24a713d2ce6887c121619d99fcbf9d39e9fb9b56e4bd9",
+        "studioExactByteMatch": true
+      },
+      {
+        "path": "StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+        "bytesLF": 50498,
+        "sha256LF": "75530fbe270a0f323dafb9ca07653d6e4647ee8d831680a631bf54bfd895681d",
+        "studioExactByteMatch": true
+      },
+      {
+        "path": "StarterPlayer/StarterPlayerScripts/FlightHUDController.luau",
+        "bytesLF": 32987,
+        "sha256LF": "40e9fcaa1e0018d77bff024ac6807dd176c7a8da6b735fe31f4b11837a07612a",
+        "studioExactByteMatch": true
+      }
+    ],
+    "parityAll": {
+      "totalScripts": 64,
+      "symNormMatch": 64,
+      "fails": 0,
+      "compileFail": 0,
+      "editorMatchAll": true
+    }
+  },
+  "environment": {
+    "studioMode": "Play Solo (1 Client)",
+    "player": "Fikki2621",
+    "userId": 8635452105,
+    "dataReady": true
+  },
+  "tetherRescueTest": {
+    "fixture": "Pod_A LaunchBalloon + lifted targetPosition (+90 studs) + mockRescuer table with ephemeral U.Alive wrapper + continuous Heartbeat stress (jumpDropRemaining=24, wind=(28,0,-24), engineerTilt=(0.11,0,-0.11))",
+    "serverResult": {
+      "ok": true,
+      "stageAfterPull": "Rescuing",
+      "graceSeconds": 1.133,
+      "droppedDuringPost": false,
+      "postGraceStage": "Basket",
+      "postGraceInBasket": true,
+      "minRelY": 2.54,
+      "maxRelY": 5.52,
+      "maxAbsX": 7.67,
+      "maxAbsZ": 3.8,
+      "airCountAfterGrace": 0,
+      "postGraceFallCaught": true,
+      "samples": [
+        {"t": 0, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-3.00,2.98,0.36", "floorMat": "WoodPlanks", "balloonY": 78.9, "balloonVel": "27.9,-17.8,-23.9"},
+        {"t": 0.22, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-7.67,5.52,3.81", "floorMat": "Air", "balloonY": 74.71, "balloonVel": "26.8,-17.1,-23.0"},
+        {"t": 0.42, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.29,2.55,-1.77", "floorMat": "WoodPlanks", "balloonY": 71.42, "balloonVel": "28.2,-17.9,-24.1"},
+        {"t": 0.62, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.27,2.56,-1.75", "floorMat": "WoodPlanks", "balloonY": 67.84, "balloonVel": "27.9,-17.7,-23.9"},
+        {"t": 0.82, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.23,2.56,-1.71", "floorMat": "WoodPlanks", "balloonY": 64.18, "balloonVel": "27.8,-17.7,-23.9"},
+        {"t": 1.02, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.20,2.55,-1.68", "floorMat": "WoodPlanks", "balloonY": 60.69, "balloonVel": "27.8,-17.6,-23.8"},
+        {"t": 1.22, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.18,2.55,-1.65", "floorMat": "WoodPlanks", "balloonY": 57.12, "balloonVel": "27.8,-17.6,-23.8"},
+        {"t": 1.42, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.14,2.56,-1.62", "floorMat": "WoodPlanks", "balloonY": 53.57, "balloonVel": "27.9,-17.7,-23.9"},
+        {"t": 1.62, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.11,2.55,-1.59", "floorMat": "WoodPlanks", "balloonY": 49.99, "balloonVel": "27.9,-17.6,-23.9"},
+        {"t": 1.82, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.08,2.56,-1.56", "floorMat": "WoodPlanks", "balloonY": 46.42, "balloonVel": "28.0,-17.7,-23.9"},
+        {"t": 2.02, "stage": "Basket", "needsRescue": false, "inBasket": true, "rel": "-0.05,2.56,-1.53", "floorMat": "WoodPlanks", "balloonY": 42.77, "balloonVel": "27.6,-17.5,-23.7"}
+      ]
+    },
+    "clientResult": {
+      "rescueLandedEventReceived": true,
+      "localOffset": "-2.5, 2.6930010318756104, 0",
+      "humStateAtEvent": "Freefall",
+      "postSamplesCount": 16,
+      "allSamplesRunningOnWoodPlanks": true,
+      "relYRange": [2.54, 2.56]
+    },
+    "priorFailedPrototypeObservation": "v1 attempt placed server CFrame clamp inside Heartbeat after independentOwner; lagged server CFrame teleported client -2.49 studs below BasketFloor at dt=0.5s, fixed in v2 by keeping CFrame ownership strictly on client Stepped window + centered (localX=+-2.5, Z=0) target + 1.15s server fell grace"
+  },
+  "nativeCaptureHudTest": {
+    "programmaticCaptureScreenshot": {
+      "callbackFired": true,
+      "gotId": true,
+      "captureBeganFiredCount": 0,
+      "captureEndedFiredCount": 0
+    },
+    "nativeAlt1Screenshot": {
+      "fixture": "Ephemeral _QACapturePromptPart (StartPrompt Custom)",
+      "before": {"hudEnabled": true, "hiddenAttr": false, "promptEnabled": true, "promptBtnVis": true},
+      "during": {"captureBegan": "Screenshot", "hudEnabled": false, "hiddenAttr": true, "promptEnabled": false},
+      "after": {"captureEnded": "Screenshot", "hudEnabled": true, "hiddenAttr": false, "promptEnabled": true}
+    },
+    "videoHotkeysStudioLimitation": {
+      "f12Log": [],
+      "alt2Log": [],
+      "note": "CaptureType.Video requires Roblox Client native Captures UI; TouchGui handling not runtime-exercised in desktop Studio Play Solo"
+    },
+    "consoleGameErrors": 0
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "players": 0,
+    "leftovers": [],
+    "camPos": "0, 48, 25",
+    "camType": "Fixed",
+    "screenshot": "audit/tether-rescue-capture-hud-2026-11-18/edit-restored.jpg"
+  }
+}

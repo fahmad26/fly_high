@@ -125,22 +125,32 @@ local function dockCelebration(dock)
 	sound("Pixies", 0.55, 1, pointAt(top, 7), 6)
 end
 
+local fadeTokens = setmetatable({}, { __mode = "k" })
 local function fadeCharacter(character, from, to, seconds)
 	if not character then return end
+	local token = (fadeTokens[character] or 0) + 1
+	fadeTokens[character] = token
 	local parts = {}
-	for _, d in character:GetDescendants() do
-		if d:IsA("BasePart") or d:IsA("Decal") then table.insert(parts, d) end
+	local function track(inst)
+		if inst:IsA("BasePart") or inst:IsA("Decal") then table.insert(parts, inst) end
 	end
+	for _, d in character:GetDescendants() do track(d) end
+	local addedConn = character.DescendantAdded:Connect(function(d)
+		if fadeTokens[character] ~= token then return end
+		track(d)
+	end)
 	local start = os.clock()
 	task.spawn(function()
-		while true do
-			local a = math.clamp((os.clock() - start) / seconds, 0, 1)
+		while fadeTokens[character] == token and character.Parent do
+			local a = seconds <= 0 and 1 or math.clamp((os.clock() - start) / seconds, 0, 1)
+			local val = from + (to - from) * a
 			for _, p in parts do
-				if p.Parent then p.LocalTransparencyModifier = from + (to - from) * a end
+				if p.Parent then p.LocalTransparencyModifier = val end
 			end
 			if a >= 1 then break end
 			RunService.RenderStepped:Wait()
 		end
+		addedConn:Disconnect()
 	end)
 end
 
@@ -316,24 +326,30 @@ title.TextStrokeTransparency = 1
 local card = Instance.new("Frame")
 card.Name = "ArrivalCard"
 card.AnchorPoint = Vector2.new(0.5, 1)
-card.Position = UDim2.fromScale(0.5, 0.86)
-card.Size = UDim2.fromScale(0.42, 0.2)
+card.Position = UDim2.fromScale(0.5, 0.89)
+card.Size = UDim2.fromScale(0.46, 0.24)
 card.BackgroundColor3 = Color3.fromRGB(10, 30, 74)
 card.BackgroundTransparency = 0.06
 card.Visible = false
 card.Parent = gui
+local cardScale = Instance.new("UIScale")
+cardScale.Scale = 1
+cardScale.Parent = card
 Instance.new("UICorner", card).CornerRadius = UDim.new(0, 14)
 local stroke = Instance.new("UIStroke", card)
 stroke.Color = Color3.fromRGB(255, 214, 128)
 stroke.Thickness = 2
+local cardSizeCap = Instance.new("UISizeConstraint", card)
+cardSizeCap.MinSize = Vector2.new(296, 108)
+cardSizeCap.MaxSize = Vector2.new(440, 158)
 local cardRatio = Instance.new("UIAspectRatioConstraint", card)
-cardRatio.AspectRatio = 2.9
-local cardTitle = label(card, UDim2.new(0.86, 0, 0.3, 0), Enum.Font.FredokaOne, Color3.fromRGB(255, 226, 150))
-cardTitle.Position = UDim2.fromScale(0.07, 0.19)
+cardRatio.AspectRatio = 2.75
+local cardTitle = label(card, UDim2.new(0.86, 0, 0.25, 0), Enum.Font.FredokaOne, Color3.fromRGB(255, 226, 150))
+cardTitle.Position = UDim2.fromScale(0.07, 0.24)
 local cardLine1 = label(card, UDim2.new(0.86, 0, 0.17, 0), Enum.Font.GothamBold)
-cardLine1.Position = UDim2.fromScale(0.07, 0.5)
+cardLine1.Position = UDim2.fromScale(0.07, 0.52)
 local cardLine2 = label(card, UDim2.new(0.86, 0, 0.17, 0), Enum.Font.GothamBold, Color3.fromRGB(190, 230, 255))
-cardLine2.Position = UDim2.fromScale(0.07, 0.69)
+cardLine2.Position = UDim2.fromScale(0.07, 0.72)
 for _, l in { cardTitle, cardLine1, cardLine2 } do l.ZIndex = 3 end
 -- Same chrome as the HUD popups (Sky Adventure 9-slice frame + victory crest); plain frame if not loaded.
 local cardCrest = Instance.new("ImageLabel")
@@ -341,8 +357,8 @@ cardCrest.Name = "CardCrest"
 cardCrest.BackgroundTransparency = 1
 cardCrest.ScaleType = Enum.ScaleType.Fit
 cardCrest.AnchorPoint = Vector2.new(0.5, 0.5)
-cardCrest.Position = UDim2.fromScale(0.5, 0.02)
-cardCrest.Size = UDim2.fromScale(0.34, 0.42)
+cardCrest.Position = UDim2.fromScale(0.5, 0)
+cardCrest.Size = UDim2.fromScale(0.28, 0.34)
 cardCrest.ZIndex = 4
 cardCrest.Image = AdventureCatalog.crest_victory and AdventureCatalog.crest_victory[1] or ""
 cardCrest.Parent = card
@@ -388,6 +404,7 @@ end
 local running = false
 local hiddenGuis = {}
 local currentShot
+local resetOverlays
 
 local function setBars(open, seconds)
 	local h = open and BAR or 0
@@ -417,7 +434,9 @@ local function enterCinematic()
 	end
 	holdMovement(true)
 	card.Visible = false
+	cardScale.Scale = 1
 	whiteout.BackgroundTransparency = 1
+	if resetOverlays then resetOverlays() end
 	gui.Enabled = true
 	setBars(true, 0.5)
 	local camera = workspace.CurrentCamera
@@ -449,6 +468,9 @@ end
 local function exitCinematic(blend)
 	local camera = workspace.CurrentCamera
 	local final = behindPlayer()
+	if blend and card.Visible then
+		TweenService:Create(cardScale, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0.9 }):Play()
+	end
 	if blend and final and currentShot then
 		local from = camera.CFrame
 		local start = os.clock()
@@ -466,7 +488,9 @@ local function exitCinematic(blend)
 	if final then camera.CFrame = final end
 	setBars(false, 0.4)
 	setWhite(0, 0.2)
+	if resetOverlays then resetOverlays() end
 	card.Visible = false
+	cardScale.Scale = 1
 	task.delay(0.45, function() if not running then gui.Enabled = false end end)
 	for g in hiddenGuis do
 		if g.Parent then g.Enabled = true end
@@ -478,7 +502,7 @@ local function exitCinematic(blend)
 end
 
 -- Run a sequence with a hard watchdog so the camera and controls always come back.
-local function guarded(limit, body)
+local function guarded(limit, body, skipExitBlend)
 	if running then return end
 	enterCinematic()
 	local done = false
@@ -493,7 +517,7 @@ local function guarded(limit, body)
 	if not ok then warn("[PalaceCinematics] " .. tostring(err)) end
 	if not done then
 		done = true
-		exitCinematic(ok)
+		exitCinematic(ok and not skipExitBlend)
 	end
 end
 
@@ -605,7 +629,9 @@ local function runArrival()
 					.. (flightSeconds and (" · " .. formatTime(flightSeconds)) or "")
 				cardLine2.Text = fallen and "Kru bangkit — kamu ikut sampai!" or ("+" .. Economy.COINS.PALACE_ARRIVAL .. " koin")
 				dressCard()
+				cardScale.Scale = 0.84
 				card.Visible = true
+				TweenService:Create(cardScale, TweenInfo.new(0.32, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
 			end
 			if dockStart and now >= dockStart + ARRIVAL_SECONDS and landed and now >= landed + (fallen and 3.6 or 3) then return end
 			if dockStart and now > dockStart + 16 then return end
@@ -681,21 +707,47 @@ local function fallKm(u)
 	return top + (bottom - top) * g
 end
 
-local zoneLabel = label(gui, UDim2.fromScale(0.7, 0.07))
+local zoneLabel = label(gui, UDim2.fromScale(0.56, 0.072))
 zoneLabel.Name = "ZoneLabel"
 zoneLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 zoneLabel.Position = UDim2.fromScale(0.5, 0.82)
+zoneLabel.BackgroundColor3 = Color3.fromRGB(8, 22, 54)
+zoneLabel.BackgroundTransparency = 1
 zoneLabel.TextTransparency = 1
 zoneLabel.TextStrokeTransparency = 1
+local zonePad = Instance.new("UIPadding", zoneLabel)
+zonePad.PaddingLeft = UDim.new(0, 18)
+zonePad.PaddingRight = UDim.new(0, 18)
+zonePad.PaddingTop = UDim.new(0, 4)
+zonePad.PaddingBottom = UDim.new(0, 4)
+Instance.new("UICorner", zoneLabel).CornerRadius = UDim.new(1, 0)
+local zoneStroke = Instance.new("UIStroke", zoneLabel)
+zoneStroke.Color = Color3.fromRGB(147, 210, 255)
+zoneStroke.Thickness = 1.6
+zoneStroke.Transparency = 1
+local zoneCap = Instance.new("UISizeConstraint", zoneLabel)
+zoneCap.MinSize = Vector2.new(230, 34)
+zoneCap.MaxSize = Vector2.new(480, 50)
 local zoneLabelVersion = 0
+resetOverlays = function()
+	zoneLabelVersion += 1
+	title.TextTransparency = 1
+	title.TextStrokeTransparency = 1
+	zoneLabel.BackgroundTransparency = 1
+	zoneLabel.TextTransparency = 1
+	zoneLabel.TextStrokeTransparency = 1
+	zoneStroke.Transparency = 1
+end
 local function flashZone(index)
 	zoneLabelVersion += 1
 	local version = zoneLabelVersion
 	zoneLabel.Text = "ZONA " .. index .. " · " .. ZONE_LABELS[index]
-	TweenService:Create(zoneLabel, TweenInfo.new(0.12), { TextTransparency = 0, TextStrokeTransparency = 0.45 }):Play()
+	TweenService:Create(zoneLabel, TweenInfo.new(0.12), { BackgroundTransparency = 0.24, TextTransparency = 0, TextStrokeTransparency = 0.45 }):Play()
+	TweenService:Create(zoneStroke, TweenInfo.new(0.12), { Transparency = 0.25 }):Play()
 	task.delay(0.55, function()
 		if version ~= zoneLabelVersion then return end
-		TweenService:Create(zoneLabel, TweenInfo.new(0.2), { TextTransparency = 1, TextStrokeTransparency = 1 }):Play()
+		TweenService:Create(zoneLabel, TweenInfo.new(0.2), { BackgroundTransparency = 1, TextTransparency = 1, TextStrokeTransparency = 1 }):Play()
+		TweenService:Create(zoneStroke, TweenInfo.new(0.2), { Transparency = 1 }):Play()
 	end)
 end
 
@@ -801,7 +853,7 @@ local function runReturn()
 			end)
 		end
 		task.wait(1.5)
-	end)
+	end, true)
 	localPlayer:SetAttribute("CinematicAltitudeKm", nil)
 	local character = localPlayer.Character
 	if character then fadeCharacter(character, 0, 0, 0.01) end

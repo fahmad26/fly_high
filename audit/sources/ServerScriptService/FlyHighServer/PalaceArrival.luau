@@ -63,6 +63,8 @@ local function land(fd)
     character:PivotTo(target)
     root.Anchored=item and item.root==root and item.anchored or false
     root.AssemblyLinearVelocity=Vector3.zero
+    if p.ReplicationFocus==fd.root then p.ReplicationFocus=nil end
+    if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
     p:SetAttribute("FlightGhost",false)
     p:SetAttribute("ArrivalPending",nil)
     p:SetAttribute("PalaceArrival",nil)

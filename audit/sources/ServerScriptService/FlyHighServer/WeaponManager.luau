@@ -290,7 +290,12 @@ remotes.WeaponFireEvent.OnServerEvent:Connect(function(p,_clientOrigin,target,cl
   local targetName=model.Name
   model:SetAttribute("Health",hp)
   if hp<=0 then
+   local firstKill=not model:GetAttribute("_CountedKill")
+   model:SetAttribute("_CountedKill",true)
    model:Destroy()
+   if firstKill and _G.FlyHighDataManager and _G.FlyHighDataManager.RecordObstacleDestroyed then
+    _G.FlyHighDataManager.RecordObstacleDestroyed(p)
+   end
    impact={kind="Kill",color=hitColor,normal=hit.Normal,targetName=targetName}
   else
    impact={kind="Hit",target=model,color=hitColor,normal=hit.Normal,targetName=targetName}

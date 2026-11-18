@@ -317,10 +317,19 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 	cosPad.Parent = cosScroll
 
 	local cosmeticRows = {}
-	for idx, item in ipairs(Catalog.COSMETICS) do
+	local uid = player.UserId
+	local visibleOrder = 0
+	for _, item in ipairs(Catalog.COSMETICS) do
+		if not Catalog.CanAccessCosmetic(item, uid) then
+			continue
+		end
+		visibleOrder += 1
+		local pal = item.luxuryPalette
+		local isLuxury = (item.luxuryStyle ~= nil and pal ~= nil)
+
 		local row = Instance.new("Frame")
 		row.Name = "CosmeticRow_" .. item.category .. "_" .. item.id
-		row.LayoutOrder = idx
+		row.LayoutOrder = visibleOrder
 		row.Size = UDim2.new(1, 0, 0, 86)
 		row.BackgroundColor3 = Color3.new(1, 1, 1)
 		row.BorderSizePixel = 0
@@ -329,24 +338,56 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		local rc = Instance.new("UICorner")
 		rc.CornerRadius = UDim.new(0, 14)
 		rc.Parent = row
-		local rowStroke = stroke(row, Color3.fromRGB(59, 130, 246), 2, 0.14)
+		local rowStroke = stroke(
+			row,
+			if isLuxury then Color3.new(1, 1, 1) else Color3.fromRGB(59, 130, 246),
+			if isLuxury then 2.4 else 2,
+			if isLuxury then 0.04 else 0.14
+		)
+		local rimGrad = nil
+		if isLuxury and pal then
+			rimGrad = Instance.new("UIGradient")
+			rimGrad.Rotation = 22
+			rimGrad.Color = ColorSequence.new({
+				ColorSequenceKeypoint.new(0, pal.rimA),
+				ColorSequenceKeypoint.new(0.5, pal.rimB),
+				ColorSequenceKeypoint.new(1, pal.rimC),
+			})
+			rimGrad.Parent = rowStroke
+		end
 		local rowGrad = Instance.new("UIGradient")
 		rowGrad.Rotation = 90
-		rowGrad.Color = ColorSequence.new(Color3.fromRGB(12, 35, 82), Color3.fromRGB(7, 23, 58))
+		if isLuxury and pal then
+			rowGrad.Color = ColorSequence.new({
+				ColorSequenceKeypoint.new(0, pal.cardTop),
+				ColorSequenceKeypoint.new(0.5, pal.cardMid),
+				ColorSequenceKeypoint.new(1, pal.cardBottom),
+			})
+		else
+			rowGrad.Color = ColorSequence.new(Color3.fromRGB(12, 35, 82), Color3.fromRGB(7, 23, 58))
+		end
 		rowGrad.Parent = row
 
 		local artStage = Instance.new("Frame")
 		artStage.Name = "ThumbStage"
 		artStage.Size = UDim2.fromOffset(66, 66)
 		artStage.Position = UDim2.fromOffset(10, 10)
-		artStage.BackgroundColor3 = Color3.fromRGB(6, 20, 51)
+		artStage.BackgroundColor3 = if isLuxury then Color3.new(1, 1, 1) else Color3.fromRGB(6, 20, 51)
 		artStage.BorderSizePixel = 0
 		artStage.ZIndex = 24
 		artStage.Parent = row
 		local ac = Instance.new("UICorner")
 		ac.CornerRadius = UDim.new(0, 11)
 		ac.Parent = artStage
-		stroke(artStage, item.primaryColor, 1.5, 0.25)
+		if isLuxury and pal then
+			local stageGrad = Instance.new("UIGradient")
+			stageGrad.Rotation = 135
+			stageGrad.Color = ColorSequence.new(pal.cardTop, pal.cardBottom)
+			stageGrad.Parent = artStage
+			stroke(artStage, pal.rimA, 2, 0.1)
+		else
+			stroke(artStage, item.primaryColor, 1.5, 0.25)
+		end
 
 		local artImg = Instance.new("ImageLabel")
 		artImg.Name = "ThumbImage"
@@ -371,7 +412,8 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 		tagCap.MaxTextSize = 10
 		tagCap.Parent = tagLbl
 
-		local titleLbl = makeLabel(row, "ItemTitle", item.name, 14, Enum.Font.GothamBlack, Color3.new(1, 1, 1), Enum.TextXAlignment.Left)
+		local titleColor = if isLuxury and pal then pal.textColor else Color3.new(1, 1, 1)
+		local titleLbl = makeLabel(row, "ItemTitle", item.name, 14, Enum.Font.GothamBlack, titleColor, Enum.TextXAlignment.Left)
 		titleLbl.Position = UDim2.fromOffset(86, 26)
 		titleLbl.Size = UDim2.new(1, -214, 0, 20)
 		titleLbl.TextWrapped = false
@@ -401,9 +443,12 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 
 		cosmeticRows[item.key] = {
 			item = item,
+			isLuxury = isLuxury,
+			pal = pal,
 			row = row,
 			thumb = artStage,
 			stroke = rowStroke,
+			rimGrad = rimGrad,
 			tag = tagLbl,
 			title = titleLbl,
 			desc = descLbl,
@@ -494,20 +539,28 @@ function ShopTabsController.Attach(shopModal: Frame, player: Player, setFeedback
 			local isEquipped = ownedAny and equippedByCat[it.category] == it.id
 
 			if isEquipped then
-				cr.stroke.Color = Color3.fromRGB(16, 185, 129)
+				cr.stroke.Color = cr.isLuxury and Color3.new(1, 1, 1) or Color3.fromRGB(16, 185, 129)
+				if cr.rimGrad then cr.rimGrad.Enabled = true end
 				cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(63, 230, 125), Color3.fromRGB(18, 128, 56))
 				cr.actRim.Color = Color3.fromRGB(134, 239, 172)
 				cr.actLbl.Text = "✓ DIPAKAI"
 			elseif ownedAny then
-				cr.stroke.Color = Color3.fromRGB(56, 189, 248)
+				cr.stroke.Color = cr.isLuxury and Color3.new(1, 1, 1) or Color3.fromRGB(56, 189, 248)
+				if cr.rimGrad then cr.rimGrad.Enabled = true end
 				cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(56, 189, 248), Color3.fromRGB(2, 132, 199))
 				cr.actRim.Color = Color3.fromRGB(125, 211, 252)
 				cr.actLbl.Text = "PAKAI"
 			else
-				cr.stroke.Color = Color3.fromRGB(59, 130, 246)
+				cr.stroke.Color = cr.isLuxury and Color3.new(1, 1, 1) or Color3.fromRGB(59, 130, 246)
+				if cr.rimGrad then cr.rimGrad.Enabled = true end
 				if coins >= it.price then
-					cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(253, 224, 71), Color3.fromRGB(180, 83, 9))
-					cr.actRim.Color = Color3.fromRGB(254, 240, 138)
+					if cr.isLuxury and cr.pal then
+						cr.actGrad.Color = ColorSequence.new(cr.pal.rimA, cr.pal.rimB)
+						cr.actRim.Color = cr.pal.rimA
+					else
+						cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(253, 224, 71), Color3.fromRGB(180, 83, 9))
+						cr.actRim.Color = Color3.fromRGB(254, 240, 138)
+					end
 				else
 					cr.actGrad.Color = ColorSequence.new(Color3.fromRGB(51, 65, 85), Color3.fromRGB(30, 41, 59))
 					cr.actRim.Color = Color3.fromRGB(100, 116, 139)

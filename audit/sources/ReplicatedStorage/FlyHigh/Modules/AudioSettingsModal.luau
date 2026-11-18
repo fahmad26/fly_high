@@ -6,6 +6,7 @@ local AdventureArt = require(Modules:WaitForChild("HUDAdventureArt"))
 local AudioMixer = require(Modules:WaitForChild("AudioMixer"))
 local Glyphs = require(Modules:WaitForChild("HUDGlyphs"))
 local HUDMotion = require(Modules:WaitForChild("HUDMotion"))
+local TouchInputGuard = require(Modules:WaitForChild("TouchInputGuard"))
 
 local AudioModal = {}
 
@@ -324,7 +325,7 @@ function AudioModal.Ensure(screenGui: ScreenGui, player: Player): Frame
 		end
 
 		sliderHit.InputBegan:Connect(function(input)
-			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			if not activeDrag and TouchInputGuard.IsDirectBegin(sliderHit, input) then
 				activeDrag = { key = spec.key, track = track, input = input }
 				applyPointerX(input.Position.X)
 				refreshAll()

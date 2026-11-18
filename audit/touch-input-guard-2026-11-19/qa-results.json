@@ -1,0 +1,72 @@
+{
+  "runId": "touch-input-guard-2026-11-19",
+  "finishedWIB": "2026-11-19T01:50:51+07:00",
+  "studioId": "6e240f19-beea-4042-9663-5e7d94ab1350",
+  "placeId": 97043730132219,
+  "universeId": 10776821830,
+  "viewport": "2090.0 x 752.0",
+  "scriptCount": 66,
+  "compileErrors": [],
+  "parityCheckCount": 66,
+  "parityMismatches": [],
+  "sha256Matches": {
+    "ReplicatedStorage/FlyHigh/Modules/TouchInputGuard.luau": { "bytes": 3029, "sha256Prefix": "017b1b1a2305318c", "exact": true },
+    "ReplicatedStorage/FlyHigh/Modules/HUDInteractionPrompts.luau": { "bytes": 12707, "sha256Prefix": "0532ed02f7f5dd19", "exact": true },
+    "ReplicatedStorage/FlyHigh/Modules/HUDMotion.luau": { "bytes": 53949, "sha256Prefix": "ccb2e3f200c8f895", "exact": true },
+    "ReplicatedStorage/FlyHigh/Modules/HUDTheme.luau": { "bytes": 85269, "sha256Prefix": "1e9d3ecf5e4320b2", "exact": true },
+    "ReplicatedStorage/FlyHigh/Modules/AudioSettingsModal.luau": { "bytes": 14937, "sha256Prefix": "67bd5606370d9817", "exact": true },
+    "StarterPlayer/StarterPlayerScripts/FlightHUDController.luau": { "bytes": 33047, "sha256Prefix": "388cd52fadcc2755", "exact": true },
+    "StarterPlayer/StarterPlayerScripts/WeaponClientController.luau": { "bytes": 51112, "sha256Prefix": "050e5782fa641a41", "exact": true }
+  },
+  "reproBeforeFix": {
+    "ActionTargetDrag": "ActionTarget.InputBegan type=MouseMovement state=Change pos=(978,415)",
+    "ShopToggleButtonDrag": "Shop.InputBegan type=MouseMovement state=Change pos=(43,179)",
+    "DirectClickOrder": [
+      "ShopBtn.InputBegan type=MouseMovement state=Change pos=(38,158)",
+      "ShopBtn.InputBegan type=MouseButton1 state=Begin pos=(43,179)",
+      "UIS.InputBegan type=MouseButton1 state=Begin gpe=true pos=(43,179)",
+      "ShopBtn.Activated"
+    ]
+  },
+  "unitChecks": {
+    "touchChangeRejected": true,
+    "touchBeginAcceptedA": true,
+    "sameTouchSameButtonAccepted": true,
+    "sameTouchDifferentButtonRejected": true,
+    "secondFingerDirectAcceptedB": true,
+    "mouseBeginAccepted": true,
+    "mouseMovementRejected": true,
+    "keyboardRejected": true
+  },
+  "liveInteractions": {
+    "actionTargetDragIntoPrompt": { "dragLogs": [], "inFlight": false, "shopModalVisible": false },
+    "actionTargetDirectHold350ms": { "logsAfterDirectHold": ["PromptHoldBegan", "PromptHoldBegan", "PromptHoldEnded", "PromptHoldEnded", "PromptTriggered", "PromptTriggered"], "inFlight": true },
+    "shopToggleDirectClick": { "shopVisibleAfterDirectClick": true },
+    "audioMasterSliderDirectClick": { "audioModalVisible": true, "masterAfterCenterClick": 0.5, "musicUnchanged": 0.6 },
+    "gasButtonDragAndDirect": { "gasEvents": ["direct:255,140,40", "direct:240,100,30"] }
+  },
+  "liveMatrix": {
+    "ShopToggleButton": { "exists": true, "dragRejected": true, "directAccepted": true, "sameBtnSecondListenerAccepted": true, "mouseDragRejected": true, "mouseClickAccepted": true },
+    "GasButton": { "exists": true, "dragRejected": true, "directAccepted": true, "sameBtnSecondListenerAccepted": true, "otherBtnHijackRejected": true, "mouseDragRejected": true, "mouseClickAccepted": true },
+    "AudioSliderHit": { "exists": true, "dragRejected": true, "directAccepted": true, "sameBtnSecondListenerAccepted": true, "otherBtnHijackRejected": true, "mouseDragRejected": true, "mouseClickAccepted": true },
+    "MobileShootButton": { "exists": true, "dragRejected": true, "directAccepted": true, "sameBtnSecondListenerAccepted": true, "otherBtnHijackRejected": true, "mouseDragRejected": true, "mouseClickAccepted": true }
+  },
+  "consoleGameErrors": 0,
+  "cleanup": {
+    "mode": "Edit",
+    "playerCount": 0,
+    "leftovers": [],
+    "camera": { "type": "Fixed", "pos": [0, 48, 25] },
+    "screenshot": "audit/touch-input-guard-2026-11-19/edit-restored.jpg"
+  },
+  "savedPlace": {
+    "path": "E:/Antigravity/Fly High/Fly High.rbxl",
+    "bytes": 3534527,
+    "sha256": "B2EE9143C0276DF7180D4BE5CBBEF63A742273CE01CFD90B95A8742F11CE66D9"
+  },
+  "limitations": [
+    "VirtualInputManager:SendTouchEvent requires RobloxScript security capability and could not be invoked from Studio MCP Assistant.",
+    "Physical iPad touchscreen drag feel remains open for final verification on device.",
+    "Fly High.rbxl saved locally, not reopened from disk, not committed/pushed, and not published to Cloud."
+  ]
+}

@@ -12,6 +12,7 @@ local HttpService = game:GetService("HttpService")
 local Art = require(script.Parent.HUDAdventureArt)
 local AudioMixer = require(script.Parent.AudioMixer)
 local RopeWarnings = require(script.Parent.FlyHighConfig).AUDIO_WARNINGS
+local TouchInputGuard = require(script.Parent.TouchInputGuard)
 
 local Motion = {}
 local sessions: {[ScreenGui]: any} = setmetatable({}, {__mode = "k"}) :: any
@@ -647,7 +648,7 @@ function Motion.Start(gui: ScreenGui, player: Player): any
 			end
 			local btn = o :: GuiButton
 			linkBtn(btn.InputBegan, function(i: InputObject)
-				if eligible(o) and (i.UserInputType == Enum.UserInputType.Touch or i.UserInputType == Enum.UserInputType.MouseButton1 or i.KeyCode == Enum.KeyCode.ButtonA) then
+				if eligible(o) and (TouchInputGuard.IsDirectBegin(btn, i) or i.KeyCode == Enum.KeyCode.ButtonA) then
 					r.pressed = true
 					r.input = i
 					tween(r, 0.89, 1, 0.065, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)

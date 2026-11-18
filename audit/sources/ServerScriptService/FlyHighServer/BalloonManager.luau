@@ -91,6 +91,24 @@ local function renderHoles(fd)
   h.PatchPrompt.Enabled=fd.holeSet[i]==true and fd.holes<Config.MAX_HOLES and not fd.isVictory and not fd.isGameOver
  end
 end
+local function releaseGhostFocus(fd,p)
+ local parked=fd.ghostParkedChars and fd.ghostParkedChars[p]
+ if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
+ if p.Parent~=Players then return end
+ if not U.Flight(p) or U.Flight(p)==fd then
+  if p.ReplicationFocus==fd.root then p.ReplicationFocus=nil end
+  local hrp=parked and parked.Parent and parked:FindFirstChild("HumanoidRootPart")
+  if hrp then
+   task.spawn(function()
+    pcall(function() p:RequestStreamAroundAsync(hrp.Position,3) end)
+    if hrp.Parent and p.Parent==Players and (not U.Flight(p) or U.Flight(p)==fd) then
+     hrp.AssemblyLinearVelocity=Vector3.zero
+     hrp.Anchored=false
+    end
+   end)
+  end
+ end
+end
 function Manager.EndFlight(fd,victory)
  if fd.isGameOver or fd.isVictory then return end
  fd.isVictory=victory==true fd.isGameOver=not victory
@@ -109,6 +127,7 @@ function Manager.EndFlight(fd,victory)
   p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false) p:SetAttribute("CrewRole",nil)
   p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
   if p.Parent==Players then
+   if not victory then releaseGhostFocus(fd,p) end
    _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p] or 0)
    if victory then
     _G.FlyHighDataManager.AddSummit(p)
@@ -190,7 +209,7 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
  nextFlightId+=1
  local fd={flightId=nextFlightId,balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
   burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,baseFlameColor=b.Burner.BurnerNozzle.BurnerFlame.Color,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
-  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},left={},personalBest={},connections={},
+  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},left={},ghostParkedChars={},personalBest={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
   holes=0,holeSet={},selfShotHoles={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
   usedKits={},awardedBiomes={},actionCoins={},turboTime=0,turboOwner=nil,turboUses={},ropeBuffUsers={},
@@ -227,15 +246,32 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
   hrp.CFrame=CFrame.new(start+offset)
   p:SetAttribute("BoardingFlight",true)
   table.insert(fd.connections,p.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+   if fd.dead[p] then return end
    if not fd.isVictory and not fd.isGameOver then
     fd.personalBest[p]=math.max(fd.personalBest[p] or 0,math.clamp((fd.root.Position.Y-Config.GROUND_Y)/Config.STUDS_PER_KM,0,Config.MAX_ALTITUDE_KM))
     _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p])
    end
    fd.dead[p]=true p:SetAttribute("FlightGhost",true) p:SetAttribute("CrewRole",nil)
+   -- Stream hazards around the moving balloon so ghosts stay able to spot threats at 4k-10k km.
+   if p.Parent==Players and not fd.isVictory and not fd.isGameOver and fd.root.Parent then
+    p.ReplicationFocus=fd.root
+   end
    if fd.pilot==p then fd.pilot=nil fd.isGasActive=false fd.pilotSteer=Vector3.zero end
    _G.FlyHighTetherManager.CleanupPlayer(p)
    _G.FlyHighWeaponManager.CleanupPlayer(p)
    broadcastFlights(true)
+  end))
+  table.insert(fd.connections,p.CharacterAdded:Connect(function(char)
+   if not fd.dead[p] or fd.isVictory or fd.isGameOver or not fd.balloon.Parent or p.Parent~=Players then return end
+   local hrp=char:WaitForChild("HumanoidRootPart",5)
+   if hrp and hrp.Parent and fd.dead[p] and not fd.isVictory and not fd.isGameOver and fd.balloon.Parent and p.Parent==Players then
+    -- Anchor the respawned lobby body so streaming out Lobby at >4k km cannot drop it into the void.
+    hrp.AssemblyLinearVelocity=Vector3.zero
+    hrp.AssemblyAngularVelocity=Vector3.zero
+    hrp.Anchored=true
+    fd.ghostParkedChars[p]=char
+    p.ReplicationFocus=fd.root
+   end
   end))
  end
  b.Parent=workspace
@@ -286,6 +322,7 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
   for _,c in ipairs(fd.connections) do c:Disconnect() end
   for _,p in ipairs(fd.players) do
    if not U.Flight(p) or U.Flight(p)==fd then
+    releaseGhostFocus(fd,p)
     p:SetAttribute("InFlight",false) p:SetAttribute("FlightGhost",false) p:SetAttribute("IsMaster",false)
     p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
    end
@@ -480,7 +517,7 @@ remotes.FlightActionEvent.OnServerEvent:Connect(function(p,action,value)
 end)
 
 Players.PlayerRemoving:Connect(function(p)
- local fd=U.Flight(p)if not fd then return end fd.dead[p]=true fd.left=fd.left or {} fd.left[p]=true
+ local fd=U.Flight(p)if not fd then return end fd.dead[p]=true fd.left=fd.left or {} fd.left[p]=true if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
  local item=fd.boarding and fd.boarding[p]
  if item then
   if item.root.Parent then item.root.Anchored=item.anchored end fd.boarding[p]=nil

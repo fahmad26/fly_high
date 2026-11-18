@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1780" height="744" viewBox="0 0 1780 744" fill="none">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap');
+  .head { font-family: 'Fredoka', 'Fredoka One', 'Segoe UI', sans-serif; font-weight: 700; }
+  .regal { font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif; font-weight: 700; }
+  .body { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 700; }
+  .black { font-family: 'Nunito', 'Segoe UI', sans-serif; font-weight: 900; }
+</style>
+  <defs>
+    <linearGradient id="bsBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050E24"/>
+      <stop offset="100%" stop-color="#091B42"/>
+    </linearGradient>
+    <linearGradient id="bsRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+    
+    <radialGradient id="bBgCard_0" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRimCard_0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="48%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <clipPath id="circleClipCard_0">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+    <radialGradient id="bBgCard_1" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#091534"/>
+    </radialGradient>
+    <linearGradient id="bRimCard_1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="48%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <clipPath id="circleClipCard_1">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+    <radialGradient id="bBgCard_2" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRimCard_2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="48%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+    <clipPath id="circleClipCard_2">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+    <radialGradient id="bBgCard_3" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#991B1B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+    <linearGradient id="bRimCard_3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="48%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+    <clipPath id="circleClipCard_3">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+    <radialGradient id="bBgCard_4" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#581C87"/>
+      <stop offset="100%" stop-color="#091534"/>
+    </radialGradient>
+    <linearGradient id="bRimCard_4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="48%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+    <clipPath id="circleClipCard_4">
+      <circle cx="256" cy="256" r="228"/>
+    </clipPath>
+  </defs>
+  <rect x="2" y="2" width="1776" height="740" rx="24" fill="url(#bsBg)" stroke="url(#bsRim)" stroke-width="3"/>
+  <text x="40" y="60" class="head" font-size="28" fill="#FEF9E7">FLY HIGH: CLOUD PALACE — 5 EXPERIENCE BADGES (1:1 · 512×512)</text>
+  <text x="40" y="88" class="body" font-size="14.5" fill="#93C5FD">Desain Vektor Siap Impor ke Figma &amp; Unggah Roblox Badge (Bingkai Aman Lingkaran, Name &amp; Description English Ringkas)</text>
+  
+  <g transform="translate(40, 126)">
+    <rect x="0" y="0" width="320" height="584" rx="18" fill="#0A193C" stroke="url(#bRimCard_0)" stroke-width="2"/>
+    <text x="20" y="34" class="black" font-size="11" fill="#93C5FD">BADGE #1 · DIMENSI 1:1 (512×512)</text>
+    <g transform="translate(22, 50) scale(0.54)">
+      <rect width="512" height="512" rx="44" fill="#06122B"/>
+      <g clip-path="url(#circleClipCard_0)">
+        <circle cx="256" cy="256" r="228" fill="url(#bBgCard_0)"/>
+        
+          <!-- Sunburst & clouds behind balloon -->
+          <circle cx="256" cy="210" r="142" fill="#38BDF8" fill-opacity="0.18"/>
+          <path d="M120 356 C135 328, 175 322, 198 336 C215 316, 250 315, 272 332 C296 312, 344 316, 362 340 C384 334, 412 344, 418 368 L112 368 Z" fill="#F0F9FF" fill-opacity="0.92"/>
+          <!-- Small green dock isle hint -->
+          <ellipse cx="256" cy="378" rx="115" ry="26" fill="#0369A1" fill-opacity="0.45"/>
+          <path d="M188 370 Q256 350 324 370 L312 384 Q256 376 200 384 Z" fill="#22C55E" stroke="#166534" stroke-width="3"/>
+          <!-- Classic Crimson & Gold Balloon rising -->
+          <path d="M190 198 C184 134, 218 92, 256 92 C294 92, 328 134, 322 198 C316 238, 286 264, 274 276 H238 C226 264, 196 238, 190 198 Z" fill="#E11D48" stroke="#FFFBEB" stroke-width="4"/>
+          <path d="M222 98 C210 144, 214 216, 240 274 M256 92 V276 M290 98 C302 144, 298 216, 272 274" stroke="#FDE047" stroke-width="4" fill="none"/>
+          <path d="M256 278 L250 296 H262 Z" fill="#FBBF24"/>
+          <line x1="240" y1="276" x2="236" y2="306" stroke="#FEF3C7" stroke-width="3"/>
+          <line x1="272" y1="276" x2="276" y2="306" stroke="#FEF3C7" stroke-width="3"/>
+          <!-- SQUARE (KOTAK) wooden basket -->
+          <rect x="230" y="306" width="52" height="38" rx="4" fill="#B45309" stroke="#FDE047" stroke-width="3.2"/>
+          <line x1="230" y1="319" x2="282" y2="319" stroke="#78350F" stroke-width="2.5"/>
+          <line x1="230" y1="331" x2="282" y2="331" stroke="#78350F" stroke-width="2.5"/>
+          <!-- Stars & Compass Spark -->
+          <path d="M138 148 L143 160 L155 165 L143 170 L138 182 L133 170 L121 165 L133 160 Z" fill="#FEF08A"/>
+          <path d="M376 132 L380 142 L390 146 L380 150 L376 160 L372 150 L362 146 L372 142 Z" fill="#BAE6FD"/>
+        
+      </g>
+      <circle cx="256" cy="256" r="230" stroke="url(#bRimCard_0)" stroke-width="16" fill="none"/>
+      <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+    </g>
+    <text x="20" y="362" class="black" font-size="10.5" fill="#FDE047">SYARAT: MASUK EXPERIENCE</text>
+    <text x="20" y="394" class="head" font-size="22" fill="#FFFFFF">First Flight</text>
+    <line x1="20" y1="412" x2="300" y2="412" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text x="20" y="438" class="black" font-size="10.5" fill="#7DD3FC">ENGLISH DESCRIPTION:</text>
+    <foreignObject x="20" y="448" width="280" height="118">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Nunito, Segoe UI, sans-serif; font-size: 13.5px; line-height: 1.45; color: #E2E8F0; font-weight: 600;">Set foot on the departure dock and begin your journey into the skies of Fly High.</div>
+    </foreignObject>
+  </g>
+  <g transform="translate(384, 126)">
+    <rect x="0" y="0" width="320" height="584" rx="18" fill="#0A193C" stroke="url(#bRimCard_1)" stroke-width="2"/>
+    <text x="20" y="34" class="black" font-size="11" fill="#93C5FD">BADGE #2 · DIMENSI 1:1 (512×512)</text>
+    <g transform="translate(22, 50) scale(0.54)">
+      <rect width="512" height="512" rx="44" fill="#06122B"/>
+      <g clip-path="url(#circleClipCard_1)">
+        <circle cx="256" cy="256" r="228" fill="url(#bBgCard_1)"/>
+        
+          <!-- Golden Sky Halo Rays -->
+          <circle cx="256" cy="222" r="145" fill="#FDE047" fill-opacity="0.20"/>
+          <circle cx="256" cy="222" r="108" stroke="#FEF08A" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 6" fill="none"/>
+          <!-- Cloud Base & Twin Turquoise Waterfalls -->
+          <path d="M168 318 L188 424 H214 L198 318 Z" fill="#22D3EE" fill-opacity="0.85"/>
+          <path d="M298 318 L282 424 H308 L328 318 Z" fill="#22D3EE" fill-opacity="0.85"/>
+          <path d="M104 316 C116 286, 156 282, 178 298 C202 276, 238 278, 256 296 C274 278, 310 276, 334 298 C356 282, 396 286, 408 316 C400 338, 376 346, 348 340 L164 340 C136 346, 112 338, 104 316 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="3"/>
+          <!-- Marble Cloud Palace with 3 Golden Domes -->
+          <rect x="164" y="216" width="184" height="72" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="3"/>
+          <rect x="216" y="168" width="80" height="120" rx="6" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="3"/>
+          <!-- Side Domes -->
+          <path d="M166 216 C166 184, 206 184, 206 216 Z" fill="#FBBF24" stroke="#92400E" stroke-width="2.5"/>
+          <path d="M306 216 C306 184, 346 184, 346 216 Z" fill="#FBBF24" stroke="#92400E" stroke-width="2.5"/>
+          <!-- Grand Central Golden Dome & Spire -->
+          <path d="M214 170 C214 114, 298 114, 298 170 Z" fill="#FDE047" stroke="#92400E" stroke-width="3"/>
+          <line x1="256" y1="96" x2="256" y2="122" stroke="#FFFBEB" stroke-width="4" stroke-linecap="round"/>
+          <!-- Arch Windows & Gate -->
+          <path d="M238 288 V244 C238 232, 274 232, 274 244 V288 Z" fill="#0284C7" stroke="#F59E0B" stroke-width="3"/>
+          <rect x="180" y="236" width="16" height="32" rx="8" fill="#38BDF8"/>
+          <rect x="316" y="236" width="16" height="32" rx="8" fill="#38BDF8"/>
+          <!-- Summit Banner Ribbon "I" -->
+          <circle cx="256" cy="94" r="10" fill="#FFFBEB" stroke="#D97706" stroke-width="2.5"/>
+          <path d="M132 152 L137 164 L149 169 L137 174 L132 186 L127 174 L115 169 L127 164 Z" fill="#FEF08A"/>
+          <path d="M380 152 L385 164 L397 169 L385 174 L380 186 L375 174 L363 169 L375 164 Z" fill="#FEF08A"/>
+        
+      </g>
+      <circle cx="256" cy="256" r="230" stroke="url(#bRimCard_1)" stroke-width="16" fill="none"/>
+      <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+    </g>
+    <text x="20" y="362" class="black" font-size="10.5" fill="#FDE047">SYARAT: MENCAPAI PUNCAK 1X</text>
+    <text x="20" y="394" class="head" font-size="22" fill="#FFFFFF">Palace Pioneer</text>
+    <line x1="20" y1="412" x2="300" y2="412" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text x="20" y="438" class="black" font-size="10.5" fill="#7DD3FC">ENGLISH DESCRIPTION:</text>
+    <foreignObject x="20" y="448" width="280" height="118">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Nunito, Segoe UI, sans-serif; font-size: 13.5px; line-height: 1.45; color: #E2E8F0; font-weight: 600;">Touch down at the Cloud Palace summit for the very first time.</div>
+    </foreignObject>
+  </g>
+  <g transform="translate(728, 126)">
+    <rect x="0" y="0" width="320" height="584" rx="18" fill="#0A193C" stroke="url(#bRimCard_2)" stroke-width="2"/>
+    <text x="20" y="34" class="black" font-size="11" fill="#93C5FD">BADGE #3 · DIMENSI 1:1 (512×512)</text>
+    <g transform="translate(22, 50) scale(0.54)">
+      <rect width="512" height="512" rx="44" fill="#06122B"/>
+      <g clip-path="url(#circleClipCard_2)">
+        <circle cx="256" cy="256" r="228" fill="url(#bBgCard_2)"/>
+        
+          <!-- Twilight Sunset Horizon Glow & Stars -->
+          <ellipse cx="256" cy="322" rx="185" ry="90" fill="#F97316" fill-opacity="0.34"/>
+          <circle cx="152" cy="146" r="4" fill="#FEF08A"/>
+          <circle cx="364" cy="134" r="4" fill="#E9D5FF"/>
+          <path d="M352 156 L357 168 L369 173 L357 178 L352 190 L347 178 L335 173 L347 168 Z" fill="#FDE047"/>
+          <!-- Diagonal Altitude Ascent Track & Double Up-Chevrons -->
+          <path d="M126 306 L176 256 L226 306" stroke="#FDBA74" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
+          <path d="M286 246 L336 196 L386 246" stroke="#FDE047" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.45"/>
+          <!-- Stratosphere Balloon High Above Clouds -->
+          <path d="M204 176 C198 118, 228 84, 256 84 C284 84, 314 118, 308 176 C302 212, 276 232, 268 242 H244 C236 232, 210 212, 204 176 Z" fill="#F59E0B" stroke="#FFFBEB" stroke-width="3.6"/>
+          <path d="M228 90 C220 132, 224 196, 246 240 M256 84 V242 M284 90 C292 132, 288 196, 266 240" stroke="#7C3AED" stroke-width="3.5" fill="none"/>
+          <rect x="236" y="262" width="40" height="28" rx="4" fill="#92400E" stroke="#FDE047" stroke-width="2.6"/>
+          <line x1="246" y1="242" x2="242" y2="262" stroke="#FEF3C7" stroke-width="2.5"/>
+          <line x1="266" y1="242" x2="270" y2="262" stroke="#FEF3C7" stroke-width="2.5"/>
+          <!-- Twilight Cloud Layer -->
+          <path d="M108 326 C126 298, 174 294, 198 312 C224 294, 288 294, 314 312 C338 294, 386 298, 404 326 L388 352 H124 Z" fill="#FED7AA" fill-opacity="0.88"/>
+          <!-- Crisp 5000 KM Pill Plate inside Badge -->
+          <rect x="164" y="348" width="184" height="48" rx="24" fill="#1E1B4B" stroke="#FDE047" stroke-width="3.5"/>
+          <text x="256" y="381" text-anchor="middle" class="head" font-size="25" fill="#FEF08A">5,000 KM</text>
+        
+      </g>
+      <circle cx="256" cy="256" r="230" stroke="url(#bRimCard_2)" stroke-width="16" fill="none"/>
+      <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+    </g>
+    <text x="20" y="362" class="black" font-size="10.5" fill="#FDE047">SYARAT: MENCAPAI KETINGGIAN 5000 KM</text>
+    <text x="20" y="394" class="head" font-size="22" fill="#FFFFFF">Stratosphere Voyager</text>
+    <line x1="20" y1="412" x2="300" y2="412" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text x="20" y="438" class="black" font-size="10.5" fill="#7DD3FC">ENGLISH DESCRIPTION:</text>
+    <foreignObject x="20" y="448" width="280" height="118">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Nunito, Segoe UI, sans-serif; font-size: 13.5px; line-height: 1.45; color: #E2E8F0; font-weight: 600;">Climb past 5,000 km and soar into the twilight stratosphere.</div>
+    </foreignObject>
+  </g>
+  <g transform="translate(1072, 126)">
+    <rect x="0" y="0" width="320" height="584" rx="18" fill="#0A193C" stroke="url(#bRimCard_3)" stroke-width="2"/>
+    <text x="20" y="34" class="black" font-size="11" fill="#93C5FD">BADGE #4 · DIMENSI 1:1 (512×512)</text>
+    <g transform="translate(22, 50) scale(0.54)">
+      <rect width="512" height="512" rx="44" fill="#06122B"/>
+      <g clip-path="url(#circleClipCard_3)">
+        <circle cx="256" cy="256" r="228" fill="url(#bBgCard_3)"/>
+        
+          <!-- Dramatic Defense Shockwave Ring -->
+          <circle cx="256" cy="242" r="134" fill="#EF4444" fill-opacity="0.16"/>
+          <circle cx="256" cy="242" r="112" stroke="#F87171" stroke-width="5" stroke-dasharray="16 10" fill="none"/>
+          <circle cx="256" cy="242" r="76" stroke="#FDE047" stroke-width="4" fill="none"/>
+          <!-- Crosshair Reticle Lines -->
+          <line x1="256" y1="100" x2="256" y2="154" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="256" y1="330" x2="256" y2="384" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="114" y1="242" x2="168" y2="242" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <line x1="344" y1="242" x2="398" y2="242" stroke="#FEF08A" stroke-width="8" stroke-linecap="round"/>
+          <!-- Shattered Wyvern/Obstacle Burst Core -->
+          <polygon points="256,160 280,210 334,196 300,242 338,286 280,276 256,326 232,276 174,286 212,242 178,196 232,210" fill="#F97316" stroke="#FFFBEB" stroke-width="3.5" stroke-linejoin="round"/>
+          <polygon points="256,188 270,222 306,214 282,242 304,270 270,264 256,296 242,264 208,270 230,242 206,214 242,222" fill="#FEF08A"/>
+          <!-- Flying Shattered Shards -->
+          <polygon points="154,154 176,144 170,172" fill="#38BDF8" stroke="#E0F2FE" stroke-width="2"/>
+          <polygon points="356,154 334,142 342,170" fill="#38BDF8" stroke="#E0F2FE" stroke-width="2"/>
+          <polygon points="158,334 184,322 174,348" fill="#A855F7" stroke="#F3E8FF" stroke-width="2"/>
+          <!-- Tactical Counter Badge -->
+          <rect x="196" y="348" width="120" height="46" rx="23" fill="#091534" stroke="#FDE047" stroke-width="3.5"/>
+          <text x="256" y="379" text-anchor="middle" class="head" font-size="24" fill="#FFFFFF">10× HIT</text>
+        
+      </g>
+      <circle cx="256" cy="256" r="230" stroke="url(#bRimCard_3)" stroke-width="16" fill="none"/>
+      <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+    </g>
+    <text x="20" y="362" class="black" font-size="10.5" fill="#FDE047">SYARAT: MENGHANCURKAN 10 RINTANGAN</text>
+    <text x="20" y="394" class="head" font-size="22" fill="#FFFFFF">Sky Defender</text>
+    <line x1="20" y1="412" x2="300" y2="412" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text x="20" y="438" class="black" font-size="10.5" fill="#7DD3FC">ENGLISH DESCRIPTION:</text>
+    <foreignObject x="20" y="448" width="280" height="118">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Nunito, Segoe UI, sans-serif; font-size: 13.5px; line-height: 1.45; color: #E2E8F0; font-weight: 600;">Shoot down 10 airborne threats protecting your balloon and crew.</div>
+    </foreignObject>
+  </g>
+  <g transform="translate(1416, 126)">
+    <rect x="0" y="0" width="320" height="584" rx="18" fill="#0A193C" stroke="url(#bRimCard_4)" stroke-width="2"/>
+    <text x="20" y="34" class="black" font-size="11" fill="#93C5FD">BADGE #5 · DIMENSI 1:1 (512×512)</text>
+    <g transform="translate(22, 50) scale(0.54)">
+      <rect width="512" height="512" rx="44" fill="#06122B"/>
+      <g clip-path="url(#circleClipCard_4)">
+        <circle cx="256" cy="256" r="228" fill="url(#bBgCard_4)"/>
+        
+          <!-- Imperial Golden & Violet Aureole -->
+          <circle cx="256" cy="240" r="154" fill="#C084FC" fill-opacity="0.22"/>
+          <!-- Grand Celestial Seraph Wings -->
+          <path d="M168 308 C108 290, 74 238, 66 172 C98 192, 130 202, 174 204 C138 228, 136 266, 168 308 Z" fill="#FDE047" stroke="#FFFBEB" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M344 308 C404 290, 438 238, 446 172 C414 192, 382 202, 338 204 C374 228, 376 266, 344 308 Z" fill="#FDE047" stroke="#FFFBEB" stroke-width="3" stroke-linejoin="round"/>
+          <!-- Sovereign Crown Framed Over Cloud Palace Silhouette -->
+          <path d="M162 248 L142 152 L202 192 L256 112 L310 192 L370 152 L350 248 Z" fill="#FBBF24" stroke="#FFFBEB" stroke-width="4" stroke-linejoin="round"/>
+          <rect x="158" y="246" width="196" height="28" rx="8" fill="#78350F" stroke="#FEF08A" stroke-width="3"/>
+          <!-- Center Royal Diamond -->
+          <polygon points="256,164 280,204 256,238 232,204" fill="#38BDF8" stroke="#FFFBEB" stroke-width="3"/>
+          <circle cx="142" cy="144" r="9" fill="#FFFBEB"/>
+          <circle cx="256" cy="102" r="11" fill="#FFFBEB"/>
+          <circle cx="370" cy="144" r="9" fill="#FFFBEB"/>
+          <!-- Miniature Cloud Palace Emblem Below Crown -->
+          <path d="M168 326 C182 302, 212 302, 228 312 C244 296, 268 296, 284 312 C300 302, 330 302, 344 326 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/>
+          <path d="M236 306 C236 278, 276 278, 276 306 Z" fill="#FDE047" stroke="#78350F" stroke-width="2"/>
+          <!-- Imperial 10x Ribbon -->
+          <rect x="160" y="344" width="192" height="50" rx="25" fill="#2E1065" stroke="#FEF08A" stroke-width="4"/>
+          <text x="256" y="378" text-anchor="middle" class="head" font-size="25" fill="#FEF08A">10× SUMMIT</text>
+        
+      </g>
+      <circle cx="256" cy="256" r="230" stroke="url(#bRimCard_4)" stroke-width="16" fill="none"/>
+      <circle cx="256" cy="256" r="214" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2.5" fill="none"/>
+    </g>
+    <text x="20" y="362" class="black" font-size="10.5" fill="#FDE047">SYARAT: MENCAPAI PUNCAK 10X</text>
+    <text x="20" y="394" class="head" font-size="22" fill="#FFFFFF">Sky Sovereign</text>
+    <line x1="20" y1="412" x2="300" y2="412" stroke="#1E3A8A" stroke-width="1.5"/>
+    <text x="20" y="438" class="black" font-size="10.5" fill="#7DD3FC">ENGLISH DESCRIPTION:</text>
+    <foreignObject x="20" y="448" width="280" height="118">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Nunito, Segoe UI, sans-serif; font-size: 13.5px; line-height: 1.45; color: #E2E8F0; font-weight: 600;">Reach the Cloud Palace summit 10 times. A true master of the skies.</div>
+    </foreignObject>
+  </g>
+</svg>
