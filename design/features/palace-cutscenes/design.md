@@ -31,6 +31,7 @@ Hasil inspeksi source Studio, read-only:
 - **Saat `ArrivalState = Queued`:** kamera berputar mengelilingi istana sampai giliran tiba. Layar tidak boleh terlihat beku.
 - **Sinkronisasi:** adegan 2–7 detik mengikuti `ArrivalState = Docking` dan posisi balon asli, bukan timer terpisah. Kartu penutup muncul setelah atribut `PalaceArrival` pemain terisi.
 - **Selama cutscene:** HUD disembunyikan dan ada bar sinematik di atas dan bawah layar. Kontrol sudah dikunci oleh docking server.
+- **Layout kartu kedatangan, 19 November:** pusatkan kartu secara horizontal di area aman dengan jarak yang mengikuti tinggi layar dari bar hitam bawah. Batasi lebar dan tinggi supaya kartu mengecil pada viewport pendek. Fokus kamera menjaga avatar tetap terbaca di atas ikon. Tampilkan judul pengantar saat mendekat dan sembunyikan ketika kartu ringkasan tampil. Letakkan blok tiga baris di bawah ikon dengan jarak yang cukup ke tepi bawah panel. [QA desktop dan emulator](../../../audit/arrival-popup-preview-2026-11-19/README.md).
 
 ## 2. Kru yang gugur bangkit di Istana
 

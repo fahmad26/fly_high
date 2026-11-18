@@ -1,0 +1,208 @@
+{
+  "studio": "e55b4fd4-8743-40e2-ab9b-349e7a61b36b",
+  "place": 97043730132219,
+  "basePlaceSha256": "4c67978a775a82d64c63a6106521b4c98d606de3bd53ba34e4b53e5aba43c7a2",
+  "sourceSha256": "aea7d7713e70f297327532cff99f5415cac6ed9df3b45e2eca3675cb96dc4c40",
+  "placeSha256": "1782d9689cc2ac3b10c8eee95daa28bc752f56c257d9d8b8bcb623e05dada05c",
+  "placeBytes": 3534689,
+  "saved": true,
+  "results": {
+    "desktop": {
+      "visible": true,
+      "safeLeft": 835,
+      "screenInsets": "Enum.ScreenInsets.DeviceSafeInsets",
+      "cardBottom": 592.0000152587891,
+      "labels": [
+        {
+          "textBounds": "356, 33",
+          "textBottom": 65.13156318664551,
+          "textTop": 32.13156318664551,
+          "display": "CLOUD PALACE REACHED",
+          "text": "ISTANA AWAN TERCAPAI",
+          "fits": true,
+          "size": "361.200012, 36.8421059"
+        },
+        {
+          "textBounds": "325, 25",
+          "textBottom": 93.55262184143066,
+          "textTop": 68.55262184143066,
+          "display": "10,000 km · Summit #15 · 0:00",
+          "text": "10.000 km · Puncak ke-15 · 0:00",
+          "fits": true,
+          "size": "361.200012, 25.0526314"
+        },
+        {
+          "textBounds": "111, 25",
+          "textBottom": 123.02631568908691,
+          "textTop": 98.02631568908691,
+          "display": "+150 coins",
+          "text": "+150 koin",
+          "fits": true,
+          "size": "361.200012, 25.0526314"
+        }
+      ],
+      "safeOrigin": "0, -58",
+      "barTop": 618.7999877929688,
+      "crestTop": 419.5789489746094,
+      "safeRight": 835,
+      "fallen": false,
+      "clearance": 26.799972534179688,
+      "size": "420, 147.368423",
+      "viewport": "2090, 752",
+      "safeSize": "2090, 752",
+      "headY": 347.8833923339844,
+      "titleHidden": true,
+      "bottomTextInset": 24.342107310913093
+    },
+    "android": {
+      "visible": true,
+      "safeLeft": 198.37200927734375,
+      "screenInsets": "Enum.ScreenInsets.DeviceSafeInsets",
+      "cardBottom": 229.74999237060547,
+      "labels": [
+        {
+          "textBounds": "260, 24",
+          "textBottom": 47.692790031433105,
+          "textTop": 23.692790031433105,
+          "display": "CLOUD PALACE REACHED",
+          "text": "ISTANA AWAN TERCAPAI",
+          "fits": true,
+          "size": "265.100159, 27.039999"
+        },
+        {
+          "textBounds": "241, 18",
+          "textBottom": 68.48800277709961,
+          "textTop": 50.48800277709961,
+          "display": "10,000 km · Summit #15 · 0:00",
+          "text": "10.000 km · Puncak ke-15 · 0:00",
+          "fits": true,
+          "size": "265.100159, 18.3871994"
+        },
+        {
+          "textBounds": "82, 18",
+          "textBottom": 90.11999130249023,
+          "textTop": 72.11999130249023,
+          "display": "+150 coins",
+          "text": "+150 koin",
+          "fits": true,
+          "size": "265.100159, 18.3871994"
+        }
+      ],
+      "safeOrigin": "0, -58",
+      "barTop": 246.20001220703125,
+      "crestTop": 103.20278930664062,
+      "safeRight": 198.37200927734375,
+      "fallen": false,
+      "clearance": 16.45001983642578,
+      "size": "308.255981, 108.159996",
+      "viewport": "705, 338",
+      "safeSize": "705, 338",
+      "headY": 122.10791015625,
+      "titleHidden": true,
+      "bottomTextInset": 18.040004697509772
+    },
+    "iphone": {
+      "visible": true,
+      "safeLeft": 200.76400756835938,
+      "screenInsets": "Enum.ScreenInsets.DeviceSafeInsets",
+      "cardBottom": 267.37501525878906,
+      "labels": [
+        {
+          "textBounds": "296, 27",
+          "textBottom": 53.73357582092285,
+          "textTop": 26.73357582092285,
+          "display": "CLOUD PALACE REACHED",
+          "text": "ISTANA AWAN TERCAPAI",
+          "fits": true,
+          "size": "298.825897, 30.4799995"
+        },
+        {
+          "textBounds": "269, 20",
+          "textBottom": 77.05601024627686,
+          "textTop": 57.056010246276855,
+          "display": "10,000 km · Summit #15 · 0:00",
+          "text": "10.000 km · Puncak ke-15 · 0:00",
+          "fits": true,
+          "size": "298.825897, 20.7264004"
+        },
+        {
+          "textBounds": "91, 20",
+          "textBottom": 101.44001293182373,
+          "textTop": 81.44001293182373,
+          "display": "+150 coins",
+          "text": "+150 koin",
+          "fits": true,
+          "size": "298.825897, 20.7264004"
+        }
+      ],
+      "safeOrigin": "0, -58",
+      "barTop": 284.8999938964844,
+      "crestTop": 124.72862243652344,
+      "safeRight": 200.76400756835938,
+      "fallen": false,
+      "clearance": 17.524978637695312,
+      "size": "347.471985, 121.919998",
+      "viewport": "749, 381",
+      "safeSize": "749, 381",
+      "headY": 132.9202423095703,
+      "titleHidden": true,
+      "bottomTextInset": 20.479985068176276
+    },
+    "ipad": {
+      "visible": true,
+      "safeLeft": 477.5,
+      "screenInsets": "Enum.ScreenInsets.DeviceSafeInsets",
+      "cardBottom": 836.1250152587891,
+      "labels": [
+        {
+          "textBounds": "356, 33",
+          "textBottom": 65.13156318664551,
+          "textTop": 32.13156318664551,
+          "display": "CLOUD PALACE REACHED",
+          "text": "ISTANA AWAN TERCAPAI",
+          "fits": true,
+          "size": "361.200012, 36.8421059"
+        },
+        {
+          "textBounds": "325, 25",
+          "textBottom": 93.55262184143066,
+          "textTop": 68.55262184143066,
+          "display": "10,000 km · Summit #15 · 0:00",
+          "text": "10.000 km · Puncak ke-15 · 0:00",
+          "fits": true,
+          "size": "361.200012, 25.0526314"
+        },
+        {
+          "textBounds": "358, 25",
+          "textBottom": 123.02631568908691,
+          "textTop": 98.02631568908691,
+          "display": "Crew revived — you made it too!",
+          "text": "Kru bangkit — kamu ikut sampai!",
+          "fits": true,
+          "size": "361.200012, 25.0526314"
+        }
+      ],
+      "safeOrigin": "0, -58",
+      "barTop": 869.9000244140625,
+      "crestTop": 663.7039794921875,
+      "safeRight": 477.5,
+      "fallen": true,
+      "clearance": 33.77500915527344,
+      "size": "420, 147.368423",
+      "viewport": "1375, 1031",
+      "safeSize": "1375, 1031",
+      "headY": 554.1937866210938,
+      "titleHidden": true,
+      "bottomTextInset": 24.342107310913093
+    }
+  },
+  "cleanup": {
+    "players": 0,
+    "running": false,
+    "sha": "aea7d7713e70f297327532cff99f5415cac6ed9df3b45e2eca3675cb96dc4c40",
+    "viewport": "2090, 752",
+    "testPlayers": 1,
+    "fixture": false,
+    "compile": true
+  }
+}

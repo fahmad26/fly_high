@@ -274,7 +274,7 @@ end
 local gui = Instance.new("ScreenGui")
 gui.Name = "FlyHighCinematic"
 gui.ResetOnSpawn = false
-gui.IgnoreGuiInset = true
+gui.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
 gui.DisplayOrder = 60
 gui.Enabled = false
 gui.Parent = playerGui
@@ -290,6 +290,7 @@ local function bar(anchorY)
 	return f
 end
 local topBar, bottomBar = bar(0), bar(1)
+bottomBar.Name = "BottomBar"
 local BAR = lowFx and 0.07 or 0.1
 
 local whiteout = Instance.new("Frame")
@@ -326,8 +327,9 @@ title.TextStrokeTransparency = 1
 local card = Instance.new("Frame")
 card.Name = "ArrivalCard"
 card.AnchorPoint = Vector2.new(0.5, 1)
-card.Position = UDim2.fromScale(0.5, 0.89)
-card.Size = UDim2.fromScale(0.46, 0.24)
+-- Leave a proportional gap above the bottom bar, plus room for its frame.
+card.Position = UDim2.new(0.5, 0, 1 - BAR - 0.025, -8)
+card.Size = UDim2.new(1, -36, 0.32, 0)
 card.BackgroundColor3 = Color3.fromRGB(10, 30, 74)
 card.BackgroundTransparency = 0.06
 card.Visible = false
@@ -339,17 +341,17 @@ Instance.new("UICorner", card).CornerRadius = UDim.new(0, 14)
 local stroke = Instance.new("UIStroke", card)
 stroke.Color = Color3.fromRGB(255, 214, 128)
 stroke.Thickness = 2
-local cardSizeCap = Instance.new("UISizeConstraint", card)
-cardSizeCap.MinSize = Vector2.new(296, 108)
-cardSizeCap.MaxSize = Vector2.new(440, 158)
+local cardLimit = Instance.new("UISizeConstraint", card)
+cardLimit.MaxSize = Vector2.new(420, 148)
 local cardRatio = Instance.new("UIAspectRatioConstraint", card)
-cardRatio.AspectRatio = 2.75
+cardRatio.AspectRatio = 2.85
+cardRatio.AspectType = Enum.AspectType.FitWithinMaxSize
 local cardTitle = label(card, UDim2.new(0.86, 0, 0.25, 0), Enum.Font.FredokaOne, Color3.fromRGB(255, 226, 150))
-cardTitle.Position = UDim2.fromScale(0.07, 0.24)
+cardTitle.Position = UDim2.fromScale(0.07, 0.205)
 local cardLine1 = label(card, UDim2.new(0.86, 0, 0.17, 0), Enum.Font.GothamBold)
-cardLine1.Position = UDim2.fromScale(0.07, 0.52)
+cardLine1.Position = UDim2.fromScale(0.07, 0.465)
 local cardLine2 = label(card, UDim2.new(0.86, 0, 0.17, 0), Enum.Font.GothamBold, Color3.fromRGB(190, 230, 255))
-cardLine2.Position = UDim2.fromScale(0.07, 0.72)
+cardLine2.Position = UDim2.fromScale(0.07, 0.665)
 for _, l in { cardTitle, cardLine1, cardLine2 } do l.ZIndex = 3 end
 -- Same chrome as the HUD popups (Sky Adventure 9-slice frame + victory crest); plain frame if not loaded.
 local cardCrest = Instance.new("ImageLabel")
@@ -417,6 +419,7 @@ local function setWhite(alpha, seconds)
 end
 
 local function showTitle(text, seconds)
+	title.Visible = true
 	title.Text = text
 	TweenService:Create(title, TweenInfo.new(0.5), { TextTransparency = 0, TextStrokeTransparency = 0.5 }):Play()
 	task.delay(seconds, function()
@@ -574,15 +577,17 @@ local function runArrival()
 			local arrival = localPlayer:GetAttribute("PalaceArrival")
 			local focus = typeof(arrival) == "Vector3" and arrival or (D + Vector3.new(0, 5, 0))
 			local tl = now - landed
+			-- Keep the crew above the crest when the card occupies more of a short viewport.
+			local compactHeadroom = 4 * math.clamp((460 - gui.AbsoluteSize.Y) / 122, 0, 1)
 			if fallen then
 				-- Wider and higher first so the light pillar of the revival reads, then settle on the crew.
 				local w = 1 - ease(tl / 2.4)
 				local dist = 20 + 10 * w - tl * 1.0
 				return "landed", CFrame.lookAt(focus - out * dist + right * 5 + Vector3.new(0, 4 + 5 * w + tl * 0.4, 0),
-					focus - Vector3.new(0, 3.2 - 9 * w, 0))
+					focus - Vector3.new(0, 3.2 + compactHeadroom - 9 * w, 0))
 			end
 			-- From the keep side so the crew faces the camera; aim low so they sit above the card.
-			return "landed", CFrame.lookAt(focus - out * (20 - tl * 1.2) + right * 5 + Vector3.new(0, 4 + tl * 0.4, 0), focus - Vector3.new(0, 3.2, 0))
+			return "landed", CFrame.lookAt(focus - out * (20 - tl * 1.2) + right * 5 + Vector3.new(0, 4 + tl * 0.4, 0), focus - Vector3.new(0, 3.2 + compactHeadroom, 0))
 		end
 		-- Every change of shot is a short camera move from the previous framing instead of a hard cut.
 		local lastPhase, lastCF, blendFrom, blendStart
@@ -605,7 +610,9 @@ local function runArrival()
 			if not dockStart then
 				if state == "Docking" or state == "Departing" then
 					dockStart = now
-					task.delay(1.2, function() if running then showTitle("ISTANA AWAN · 10.000 km", 2.6) end end)
+					task.delay(1.2, function()
+						if running and not landed then showTitle("ISTANA AWAN · 10.000 km", 2.6) end
+					end)
 				elseif now - started > 60 or not balloon.Parent then
 					return
 				end
@@ -629,6 +636,7 @@ local function runArrival()
 					.. (flightSeconds and (" · " .. formatTime(flightSeconds)) or "")
 				cardLine2.Text = fallen and "Kru bangkit — kamu ikut sampai!" or ("+" .. Economy.COINS.PALACE_ARRIVAL .. " koin")
 				dressCard()
+				title.Visible = false
 				cardScale.Scale = 0.84
 				card.Visible = true
 				TweenService:Create(cardScale, TweenInfo.new(0.32, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()

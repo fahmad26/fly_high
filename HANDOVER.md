@@ -2,7 +2,13 @@
 
 Snapshot aktif per 19 November 2026, Asia/Jakarta. Catatan run terdahulu mempertahankan status Git/QA pada waktu run; status fitur aktual mengikuti PROGRESS. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
 
-## Status terkini — 19 November 2026 (01:51 WIB)
+## Kartu kedatangan Istana Awan — 19 November 2026
+
+Kartu cutscene mengikuti area aman layar dengan jarak dari bar hitam bawah. Judul pengantar ditutup saat kartu muncul, kamera memberi ruang untuk avatar pada layar pendek, dan ketiga baris teks dinaikkan di dalam kartu. Play Solo dengan simulasi pendaratan lulus di desktop serta emulator iPhone, Galaxy A06, dan iPad Pro. [Screenshot, hasil QA, dan batas pengujian](audit/arrival-popup-preview-2026-11-19/README.md).
+
+`PalaceCinematics` di Studio cocok dengan mirror berdasarkan SHA-256 source yang dinormalisasi. Studio menyimpan `Fly High.rbxl` lokal dengan SHA-256 `1782d9689cc2ac3b10c8eee95daa28bc752f56c257d9d8b8bcb623e05dada05c`. File belum dibuka ulang setelah simpan. Riwayat berikut mencatat build dan status Git pada waktu masing-masing pengujian.
+
+## Checkpoint sebelumnya — 19 November 2026 (01:51 WIB)
 
 - **Perbaikan Bug Touch-Drag Kamera iPad Masuk ke Tombol HUD (`TouchInputGuard`, `UI-01`):** [audit/touch-input-guard-2026-11-19/README.md](audit/touch-input-guard-2026-11-19/README.md)
   - Repro di `Play Solo` mengonfirmasi drag pointer aktif yang dimulai di luar tombol lalu masuk ke `ActionTarget` (`START FLIGHT`) atau `ShopToggleButton` memicu `GuiObject.InputBegan` dengan `UserInputState = Change`. Pada iPad/layar sentuh, gerak jari tetap memakai `Enum.UserInputType.Touch`, sehingga handler lama ikut memencet tombol HUD saat pemain memutar kamera.
