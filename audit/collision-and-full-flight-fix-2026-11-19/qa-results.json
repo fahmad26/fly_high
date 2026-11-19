@@ -1,0 +1,132 @@
+{
+  "runId": "collision-and-full-flight-fix-2026-11-19",
+  "timestamp": "2026-11-19T22:42:40+07:00",
+  "timezone": "Asia/Jakarta (UTC+7)",
+  "baseCommit": "03a5c5c",
+  "environment": {
+    "studioId": "3d4a4955-a9d0-4129-b534-cee6f160ea6a",
+    "mode": "Play Solo (pre-disconnect) -> user saved local .rbxl at 22:30:32 WIB -> direct zstd binary verification",
+    "numberOfPlayers": 1,
+    "placeId": 97043730132219,
+    "universeId": 10776821830,
+    "dataManagerWritesStubbedInMemory": true
+  },
+  "modifiedFiles": [
+    {
+      "path": "ServerScriptService.FlyHighServer.FlightSpace",
+      "mirror": "audit/sources/ServerScriptService/FlyHighServer/FlightSpace.luau",
+      "diskBytes": 9014,
+      "binBytes": 9013,
+      "normSha256": "d24aca1193590dbbd4bd0d942c3741f625f3ffa6e8fbc12bb45e3c3c9b61acc0",
+      "normEqual": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.BalloonManager",
+      "mirror": "audit/sources/ServerScriptService/FlyHighServer/BalloonManager.luau",
+      "diskBytes": 33260,
+      "binBytes": 33259,
+      "normSha256": "89a4a84bcc2337bcb374eec896f1755e6873cfb843981ccd03bc2a92e51c4c68",
+      "normEqual": true
+    },
+    {
+      "path": "ServerScriptService.FlyHighServer.ObstacleManager",
+      "mirror": "audit/sources/ServerScriptService/FlyHighServer/ObstacleManager.luau",
+      "diskBytes": 25552,
+      "binBytes": 25552,
+      "normSha256": "9a33679d1f1b6b7d2656ee0834f4c784afc783c83d84288c307f8ccbf41db252",
+      "exactSha256": "d7387d123c449c6de4c5cb1f5f40550fa6b584d7674f342635238ccb9575a8d0",
+      "normEqual": true,
+      "exactEqual": true
+    }
+  ],
+  "parityAndBinaryPlace": {
+    "studioPreQaCompileFailCount": 0,
+    "studioPreQaMirrorParity": "66/66",
+    "savedPlacePath": "E:/Antigravity/Fly High/Fly High.rbxl",
+    "savedPlaceBytes": 3540508,
+    "savedPlaceMtime": "2026-11-19T22:30:32+07:00",
+    "savedPlaceSha256": "427ea1c230fcf1aa09044064bd9ac8ae25462d0f145a96531866ef123de3cd92",
+    "binaryScriptsParsed": 66,
+    "mirrorScriptsCount": 66,
+    "binaryNormMismatches": 0,
+    "binaryQaNamesLeftover": [],
+    "binaryWorkspaceHasQaAttr": false,
+    "binaryTestServiceNumberOfPlayers": 1,
+    "placeReopenedInStudio": false
+  },
+  "suite1TwoBalloonCollisions": {
+    "status": "PASS",
+    "cases": {
+      "case1A_side": {
+        "pair": "DawnExplorer vs DawnExplorer",
+        "nearMiss": { "flatDist": 35.75, "touchExpected": 35.2, "visualGap": 0.077, "holes": "0/0" },
+        "contact": { "flatDist": 35.48, "visualGap": 0.001, "parts": "HandropeLashing <-> HandropeLashing", "holes": "1/1" },
+        "recontact5_6sHoles": 1,
+        "contactClearedAfterPullback": true,
+        "screenshot": "audit/collision-and-full-flight-fix-2026-11-19/collision-side-fixed.jpg"
+      },
+      "case1B_sideSaturn": {
+        "pair": "DawnExplorer vs SaturnVoyager",
+        "flatDist": 38.98,
+        "touchExpected": 37.12,
+        "visualGap": 0,
+        "parts": "envelope_geom <-> Ring",
+        "holes": "1/1"
+      },
+      "case1C_topDown": {
+        "flat0": { "maxSingleTickXZJump": 0, "firstDamage": { "dy": 52.71, "flatDist": 0, "visualGap": 0.3, "holes": "1/1" }, "endPos": [0, 102.43, 0], "endVisualGap": 0.033, "endHoldHoles": "1/1", "contactsClearedAfterClimb": true },
+        "flat6": { "maxSingleTickXZJump": 0, "firstDamage": { "dy": 52.7, "flatDist": 6, "visualGap": 0.288, "holes": "1/1" }, "endPos": [6, 102.61, 0], "endVisualGap": 0.196 },
+        "screenshot": "audit/collision-and-full-flight-fix-2026-11-19/collision-top-down-fixed.jpg"
+      },
+      "case1D_bottomUp": {
+        "flat0": { "maxSingleTickXZJump": 0.126, "firstDamage": { "dy": -53.17, "flatDist": 0, "visualGap": 0.746, "holes": "1/1" }, "endPos": [0, 67.57, 0], "endVisualGap": 0.095 },
+        "flat6": { "maxSingleTickXZJump": 0, "firstDamage": { "dy": -53.11, "flatDist": 6, "visualGap": 0.704, "holes": "1/1" }, "endPos": [6, 67.57, 0], "endVisualGap": 0.106 },
+        "screenshot": "audit/collision-and-full-flight-fix-2026-11-19/collision-bottom-up-fixed.jpg"
+      },
+      "case1E_diagonal14": {
+        "startPos": [14, 112, 0],
+        "endPos": [14, 102.56, 0],
+        "maxSingleTickXZJump": 0,
+        "firstDamage": { "dy": 52.7, "flatDist": 14, "fdAHoles": 1, "fdBHoles": 1 }
+      }
+    }
+  },
+  "suite2FullNaturalSoloFlight": {
+    "status": "PARTIAL_OBSERVED_TO_5407KM",
+    "reasonTruncated": "Roblox Studio disconnected after user saved Fly High.rbxl at 2026-11-19T22:30:32+07:00; 5407->10000 km (Zones 4-5, StormCurtain 7200/9000, CloudPalace arrival, ReturnPortal) not observed in session.",
+    "pod": "Pod_A",
+    "isMaster": true,
+    "latestObserved": {
+      "elapsedSec": 649,
+      "altitudeKm": 5217.61,
+      "maxAltitudeKm": 5407.09,
+      "health": 100,
+      "inFlight": true,
+      "isGameOver": false,
+      "isVictory": false,
+      "holes": 1,
+      "maxHoles": 2,
+      "repairsCompleted": 59,
+      "ropeRepairs": 16,
+      "ropeRepairAttempts": 38,
+      "ropeMinDurability": 21.7,
+      "equipAttempts": 7,
+      "equipSuccess": 7,
+      "clientShotsFired": 29,
+      "enemiesDestroyed": 7,
+      "mockCoins": 110,
+      "biomeCrossings": { "2000": 201.2, "4000": 470.8 },
+      "stormCurtains": [
+        { "zoneKm": 1800, "warnedAtAlt": 1816.6, "safeRootY": 422.8, "finished": true, "dodged": true, "hit": false },
+        { "zoneKm": 3600, "warnedAtAlt": 3621.5, "safeRootY": 872.7, "finished": true, "dodged": true, "hit": false },
+        { "zoneKm": 5400, "warnedAtAlt": 5406.3, "safeRootY": 1322.8, "finished": true, "dodged": true, "hit": false }
+      ],
+      "gameScriptConsoleErrors": 0
+    },
+    "screenshots": [
+      "audit/collision-and-full-flight-fix-2026-11-19/flight-zone1-dawn.jpg",
+      "audit/collision-and-full-flight-fix-2026-11-19/flight-zone2-storm.jpg",
+      "audit/collision-and-full-flight-fix-2026-11-19/flight-zone3-sunset.jpg"
+    ]
+  }
+}

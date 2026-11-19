@@ -633,10 +633,41 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 	poolFolder.Name = "WeaponAudioPool"
 	poolFolder.Parent = owner
 	poolFolder:SetAttribute("ShotCount", 0)
+	local dead = false
+
+	local function makePoolSound(name, soundId, speed, volume, parent, rangeMin, rangeMax)
+		local s = Instance.new("Sound")
+		s.Name = name
+		s.SoundId = soundId
+		s.PlaybackSpeed = speed
+		s.Volume = volume
+		s.RollOffMinDistance = rangeMin or 12
+		s.RollOffMaxDistance = rangeMax or 240
+		s.Looped = false
+		s.SoundGroup = sfxGroup
+		s.Parent = parent
+		return s
+	end
+
+	local function playTrimmedSound(snd, slot, token, speed, volume, cutSec)
+		if not snd then return end
+		snd:Stop()
+		snd.PlaybackSpeed = speed
+		snd.Volume = volume
+		snd.TimePosition = 0
+		snd:Play()
+		if cutSec and cutSec > 0 then
+			task.delay(cutSec, function()
+				if not dead and slot.token == token and snd.Parent then
+					snd:Stop()
+				end
+			end)
+		end
+	end
 
 	local shotTemplate = audioAssets:WaitForChild("PistolShot")
 	local emitters = {}
-	local sounds = {}
+	local shotAudioBank = {}
 	local index = 0
 	for _ = 1, 8 do
 		local p = Instance.new("Part")
@@ -657,25 +688,21 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		s.SoundGroup = sfxGroup
 		s.Parent = p
 		table.insert(emitters, p)
-		table.insert(sounds, s)
+		table.insert(shotAudioBank, {
+			token = 0,
+			baseShot = s,
+			cyanZap = makePoolSound("CyanShotZapSFX", "rbxassetid://9116276051", 1.75, 0.56, p, 10, 140),
+			cyanZip = makePoolSound("CyanShotZipSFX", "rbxasset://sounds/electronicpingshort.wav", 2.0, 0.22, p, 10, 140),
+			goldBlaze = makePoolSound("GoldShotBlazeSFX", "rbxassetid://9116316301", 1.95, 0.54, p, 10, 140),
+			goldSwish = makePoolSound("GoldShotSwishSFX", "rbxassetid://9126283592", 1.72, 0.36, p, 10, 140),
+			violetWhomp = makePoolSound("VioletShotWhompSFX", "rbxassetid://9119873304", 1.85, 0.52, p, 10, 140),
+			violetPulse = makePoolSound("VioletShotBeepSFX", "rbxassetid://9119100090", 1.62, 0.30, p, 10, 140),
+		})
 	end
 
 	local impactEmitters = {}
 	local impactAudioBank = {}
 	local impactIndex = 0
-	local function makePoolSound(name, soundId, speed, volume, parent)
-		local s = Instance.new("Sound")
-		s.Name = name
-		s.SoundId = soundId
-		s.PlaybackSpeed = speed
-		s.Volume = volume
-		s.RollOffMinDistance = 12
-		s.RollOffMaxDistance = 240
-		s.Looped = false
-		s.SoundGroup = sfxGroup
-		s.Parent = parent
-		return s
-	end
 	for _ = 1, 6 do
 		local p = Instance.new("Part")
 		p.Name = "ImpactEmitter"
@@ -697,44 +724,126 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		killBoom.Parent = p
 		table.insert(impactEmitters, p)
 		table.insert(impactAudioBank, {
+			token = 0,
 			hitTick = makePoolSound("HitTickSFX", "rbxasset://sounds/clickfast.wav", 1.28, 0.62, p),
 			hitPunch = makePoolSound("HitPunchSFX", "rbxasset://sounds/switch.wav", 0.72, 0.52, p),
 			killBoom = killBoom,
 			killChime = makePoolSound("KillChimeSFX", "rbxasset://sounds/electronicpingshort.wav", 1.38, 0.48, p),
 			immunePing = makePoolSound("ImmunePingSFX", "rbxasset://sounds/button.wav", 1.9, 0.6, p),
 			immuneClank = makePoolSound("ImmuneClankSFX", "rbxasset://sounds/switch.wav", 2.35, 0.68, p),
+			cyanZap = makePoolSound("CyanImpactZapSFX", "rbxassetid://9116276051", 1.85, 0.48, p),
+			cyanKillZap = makePoolSound("CyanKillZapSFX", "rbxassetid://9116277954", 1.25, 0.58, p),
+			cyanShatter = makePoolSound("CyanImpactShatterSFX", "rbxassetid://9114855870", 1.85, 0.28, p),
+			goldBlaze = makePoolSound("GoldImpactBlazeSFX", "rbxassetid://9116316301", 1.90, 0.46, p),
+			goldChime = makePoolSound("GoldImpactChimeSFX", "rbxasset://sounds/electronicpingshort.wav", 1.55, 0.30, p),
+			goldBoom = makePoolSound("GoldKillBoomSFX", "rbxassetid://9125484743", 1.55, 0.45, p),
+			violetWhomp = makePoolSound("VioletImpactWhompSFX", "rbxassetid://9119873304", 2.05, 0.46, p),
+			violetSparkle = makePoolSound("VioletImpactPixiesSFX", "rbxassetid://1847063040", 1.65, 0.36, p),
 		})
 	end
 
-	local preload = table.clone(sounds)
+	local preload = {}
 	if reloadSound then table.insert(preload, reloadSound) end
+	for _, slot in ipairs(shotAudioBank) do
+		for k, s in pairs(slot) do
+			if k ~= "token" and typeof(s) == "Instance" and s:IsA("Sound") then table.insert(preload, s) end
+		end
+	end
 	for _, slot in ipairs(impactAudioBank) do
-		for _, s in pairs(slot) do table.insert(preload, s) end
+		for k, s in pairs(slot) do
+			if k ~= "token" and typeof(s) == "Instance" and s:IsA("Sound") then table.insert(preload, s) end
+		end
 	end
 	task.spawn(function()
 		pcall(function() game:GetService("ContentProvider"):PreloadAsync(preload) end)
 	end)
 
-	local function playImpactSound(kind, pos)
+	local function playShotSound(pos, weaponName, tracerId)
+		if #emitters == 0 then return end
+		index = index % #emitters + 1
+		emitters[index].Position = pos
+		local bank = shotAudioBank[index]
+		bank.token += 1
+		local token = bank.token
+		local isAK = weaponName == "AK47"
+		local jitter = (math.random() - 0.5) * 0.06
+		local tid = tracerId or "default"
+		local played = {}
+
+		if tid == "cyan_sky" then
+			playTrimmedSound(bank.baseShot, bank, token, (isAK and 1.12 or 1.24) + jitter, 0.42, nil)
+			playTrimmedSound(bank.cyanZap, bank, token, 1.65 + math.random() * 0.2, 0.56, 0.22)
+			playTrimmedSound(bank.cyanZip, bank, token, 1.95 + math.random() * 0.15, 0.22, nil)
+			played = { bank.baseShot.Name, bank.cyanZap.Name, bank.cyanZip.Name }
+		elseif tid == "dawn_gold" then
+			playTrimmedSound(bank.baseShot, bank, token, (isAK and 0.78 or 0.85) + jitter, 0.52, nil)
+			playTrimmedSound(bank.goldBlaze, bank, token, 1.85 + math.random() * 0.2, 0.54, 0.20)
+			playTrimmedSound(bank.goldSwish, bank, token, 1.65 + math.random() * 0.15, 0.36, 0.20)
+			played = { bank.baseShot.Name, bank.goldBlaze.Name, bank.goldSwish.Name }
+		elseif tid == "aurora_violet" then
+			playTrimmedSound(bank.baseShot, bank, token, (isAK and 0.72 or 0.78) + jitter, 0.38, nil)
+			playTrimmedSound(bank.violetWhomp, bank, token, 1.75 + math.random() * 0.2, 0.52, 0.24)
+			playTrimmedSound(bank.violetPulse, bank, token, 1.55 + math.random() * 0.17, 0.30, 0.16)
+			played = { bank.baseShot.Name, bank.violetWhomp.Name, bank.violetPulse.Name }
+		else
+			playTrimmedSound(bank.baseShot, bank, token, isAK and 0.90 or 1.00, 0.65, nil)
+			played = { bank.baseShot.Name }
+		end
+
+		poolFolder:SetAttribute("ShotCount", (poolFolder:GetAttribute("ShotCount") or 0) + 1)
+		poolFolder:SetAttribute("LastShotTracer", tid)
+		poolFolder:SetAttribute("LastShotSoundIds", table.concat(played, ","))
+	end
+
+	local function playImpactSound(kind, pos, tracerId)
 		if #impactEmitters == 0 then return end
 		impactIndex = impactIndex % #impactEmitters + 1
 		impactEmitters[impactIndex].Position = pos
 		local bank = impactAudioBank[impactIndex]
-		local function playOne(snd)
-			snd:Stop()
-			snd.TimePosition = 0
-			snd:Play()
+		bank.token += 1
+		local token = bank.token
+		local tid = tracerId or "default"
+		local played = {}
+		local function playOne(snd, speed, vol, cutSec)
+			if not snd then return end
+			playTrimmedSound(snd, bank, token, speed or snd.PlaybackSpeed, vol or snd.Volume, cutSec)
+			table.insert(played, snd.Name)
 		end
-		if kind == "Kill" then
-			playOne(bank.killBoom)
-			playOne(bank.killChime)
-		elseif kind == "Immune" then
-			playOne(bank.immunePing)
-			playOne(bank.immuneClank)
+
+		if kind == "Immune" then
+			playOne(bank.immunePing, 1.9, 0.6, nil)
+			playOne(bank.immuneClank, 2.35, 0.68, nil)
+		elseif kind == "Kill" then
+			playOne(bank.killBoom, 0.54, 0.78, nil)
+			playOne(bank.killChime, 1.38, 0.48, nil)
+			if tid == "cyan_sky" then
+				playOne(bank.cyanKillZap, 1.25, 0.58, 0.45)
+				playOne(bank.cyanShatter, 1.35, 0.46, 0.55)
+			elseif tid == "dawn_gold" then
+				playOne(bank.goldBoom, 1.55, 0.45, 0.65)
+				playOne(bank.goldBlaze, 1.35, 0.55, 0.55)
+			elseif tid == "aurora_violet" then
+				playOne(bank.violetWhomp, 1.25, 0.55, 0.58)
+				playOne(bank.violetSparkle, 1.35, 0.48, 0.58)
+			end
 		elseif kind == "Hit" then
-			playOne(bank.hitTick)
-			playOne(bank.hitPunch)
+			playOne(bank.hitTick, 1.28, 0.62, nil)
+			playOne(bank.hitPunch, 0.72, 0.52, nil)
+			if tid == "cyan_sky" then
+				playOne(bank.cyanZap, 1.85, 0.48, 0.22)
+				playOne(bank.cyanShatter, 1.85, 0.28, 0.22)
+			elseif tid == "dawn_gold" then
+				playOne(bank.goldBlaze, 1.90, 0.46, 0.24)
+				playOne(bank.goldChime, 1.55, 0.30, nil)
+			elseif tid == "aurora_violet" then
+				playOne(bank.violetWhomp, 2.05, 0.46, 0.24)
+				playOne(bank.violetSparkle, 1.65, 0.36, 0.26)
+			end
 		end
+
+		poolFolder:SetAttribute("LastImpactTracer", tid)
+		poolFolder:SetAttribute("LastImpactKind", kind)
+		poolFolder:SetAttribute("LastImpactSoundIds", table.concat(played, ","))
 	end
 
 	local function flashModelHighlight(model, fillColor, outlineColor, durationSec)
@@ -833,69 +942,315 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		Debris:AddItem(host, 0.85)
 	end
 
-	local function spawnImpactEffect(pos, shotDir, impact)
+	local function spawnLightningArc(originPos, endPos, color, duration)
+		local p1 = originPos:Lerp(endPos, 0.33) + Vector3.new(math.random(-11, 11) / 10, math.random(-11, 11) / 10, math.random(-11, 11) / 10)
+		local p2 = originPos:Lerp(endPos, 0.67) + Vector3.new(math.random(-11, 11) / 10, math.random(-11, 11) / 10, math.random(-11, 11) / 10)
+		local pts = { originPos, p1, p2, endPos }
+		for s = 1, 3 do
+			local a, b = pts[s], pts[s + 1]
+			local segVec = b - a
+			local segLen = math.max(0.1, segVec.Magnitude)
+			local seg = makeVfxPart("WeaponTracerArc", Enum.PartType.Block, Vector3.new(0.11, 0.11, segLen), CFrame.lookAt(a:Lerp(b, 0.5), b), color, 0.04)
+			TweenService:Create(seg, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+				Size = Vector3.new(0.03, 0.03, segLen),
+				Transparency = 1,
+			}):Play()
+			Debris:AddItem(seg, duration + 0.03)
+		end
+	end
+
+	local function spawnTracerPulseRing(cf, primaryColor, secondaryColor, tracerId, alt)
+		if player:GetAttribute("ReduceHUDMotion") == true then return end
+		local cam = Workspace.CurrentCamera
+		if not cam or (cf.Position - cam.CFrame.Position).Magnitude > 160 then return end
+		local col = primaryColor
+		local initW = 0.55
+		local endW = 2.3
+		local thickness = 0.10
+		local dur = 0.18
+		local ringCF = cf * CFrame.Angles(0, math.pi / 2, 0)
+		if tracerId == "dawn_gold" then
+			initW = 0.60
+			endW = 2.5
+			thickness = 0.12
+			dur = 0.20
+			col = alt and secondaryColor or primaryColor
+		elseif tracerId == "aurora_violet" then
+			initW = 0.65
+			endW = 2.6
+			thickness = 0.11
+			dur = 0.22
+			col = alt and secondaryColor or primaryColor
+			ringCF = cf * CFrame.Angles(math.rad(alt and -25 or 25), math.pi / 2, 0)
+		end
+		local ring = makeVfxPart("TracerPulseRing", Enum.PartType.Cylinder, Vector3.new(thickness, initW, initW), ringCF, col, 0.18)
+		TweenService:Create(ring, TweenInfo.new(dur, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = Vector3.new(0.05, endW, endW),
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(ring, dur + 0.03)
+	end
+
+	local function spawnImpactEffect(pos, shotDir, impact, tracerId)
 		if type(impact) ~= "table" or type(impact.kind) ~= "string" then return end
 		local kind = impact.kind
 		local normal = (typeof(impact.normal) == "Vector3" and impact.normal.Magnitude > 0.01) and impact.normal.Unit or (-shotDir)
 		local accent = typeof(impact.color) == "Color3" and impact.color or Color3.fromRGB(255, 196, 70)
+		local tid = tracerId or "default"
+		local reduceMotion = player:GetAttribute("ReduceHUDMotion") == true
 
-		playImpactSound(kind, pos)
+		playImpactSound(kind, pos, tid)
+
+		local refAxis = math.abs(normal.Y) > 0.9 and Vector3.xAxis or Vector3.yAxis
+		local t1 = normal:Cross(refAxis).Unit
+		local t2 = normal:Cross(t1).Unit
 
 		if kind == "Hit" then
-			local core = makeVfxPart("WeaponHitBurst", Enum.PartType.Ball, Vector3.new(0.45, 0.45, 0.45), CFrame.new(pos), Color3.fromRGB(255, 226, 112), 0.08)
-			TweenService:Create(core, TweenInfo.new(0.16, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-				Size = Vector3.new(2.6, 2.6, 2.6),
-				Transparency = 1,
-			}):Play()
-			Debris:AddItem(core, 0.18)
-
-			for s = 1, 5 do
-				local spreadDir = (normal + Vector3.new(math.random(-70, 70) / 100, math.random(-70, 70) / 100, math.random(-70, 70) / 100)).Unit
-				local shard = makeVfxPart("WeaponHitSpark", Enum.PartType.Block, Vector3.new(0.16, 0.16, 0.65), CFrame.lookAt(pos, pos + spreadDir), s % 2 == 0 and Color3.fromRGB(255, 240, 150) or accent, 0.05)
-				TweenService:Create(shard, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-					CFrame = CFrame.lookAt(pos + spreadDir * 3.4, pos + spreadDir * 4.4),
-					Size = Vector3.new(0.05, 0.05, 0.25),
+			if tid == "cyan_sky" then
+				local core = makeVfxPart("TracerImpactCore", Enum.PartType.Ball, Vector3.new(0.5, 0.5, 0.5), CFrame.new(pos), Color3.fromRGB(224, 249, 255), 0.05)
+				TweenService:Create(core, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(3.0, 3.0, 3.0), Transparency = 1 }):Play()
+				Debris:AddItem(core, 0.20)
+				if not reduceMotion then
+					local ring = makeVfxPart("TracerImpactRing", Enum.PartType.Cylinder, Vector3.new(0.14, 1.1, 1.1), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(56, 189, 248), 0.12)
+					TweenService:Create(ring, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(0.06, 5.8, 5.8), Transparency = 1 }):Play()
+					Debris:AddItem(ring, 0.24)
+					for a = 1, 4 do
+						local ang = (a / 4) * math.pi * 2 + math.random() * 0.5
+						local radial = (normal * 0.35 + t1 * math.cos(ang) + t2 * math.sin(ang)).Unit
+						spawnLightningArc(pos, pos + radial * (4.5 + math.random() * 2.0), a % 2 == 0 and Color3.fromRGB(224, 249, 255) or Color3.fromRGB(56, 189, 248), 0.20)
+					end
+				end
+				for s = 1, 6 do
+					local sd = (normal + Vector3.new(math.random(-80, 80) / 100, math.random(-80, 80) / 100, math.random(-80, 80) / 100)).Unit
+					local shard = makeVfxPart("TracerImpactShard", Enum.PartType.Block, Vector3.new(0.16, 0.16, 0.72), CFrame.lookAt(pos, pos + sd), s % 2 == 0 and Color3.fromRGB(224, 249, 255) or Color3.fromRGB(56, 189, 248), 0.05)
+					TweenService:Create(shard, TweenInfo.new(0.20, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.lookAt(pos + sd * 4.2, pos + sd * 5.2),
+						Size = Vector3.new(0.04, 0.04, 0.22),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(shard, 0.22)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(224, 249, 255), Color3.fromRGB(2, 132, 199), 14, 0, 1.05)
+				flashModelHighlight(impact.target, Color3.fromRGB(56, 189, 248), Color3.fromRGB(224, 249, 255), 0.15)
+			elseif tid == "dawn_gold" then
+				local core = makeVfxPart("TracerImpactCore", Enum.PartType.Ball, Vector3.new(0.55, 0.55, 0.55), CFrame.new(pos), Color3.fromRGB(255, 250, 214), 0.04)
+				TweenService:Create(core, TweenInfo.new(0.20, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(3.2, 3.2, 3.2), Transparency = 1 }):Play()
+				Debris:AddItem(core, 0.22)
+				if not reduceMotion then
+					local ring = makeVfxPart("TracerImpactRing", Enum.PartType.Cylinder, Vector3.new(0.16, 1.0, 1.0), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(249, 115, 22), 0.12)
+					TweenService:Create(ring, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(0.06, 5.6, 5.6), Transparency = 1 }):Play()
+					Debris:AddItem(ring, 0.26)
+					for b = 0, 3 do
+						local ang = b * (math.pi / 4)
+						local rayDir = (t1 * math.cos(ang) + t2 * math.sin(ang)).Unit
+						local w = (b % 2 == 0) and 0.20 or 0.14
+						local ray = makeVfxPart("TracerImpactStarRay", Enum.PartType.Block, Vector3.new(w, w, 0.6), CFrame.lookAt(pos, pos + rayDir), b % 2 == 0 and Color3.fromRGB(255, 248, 200) or Color3.fromRGB(250, 204, 21), 0.04)
+						TweenService:Create(ray, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+							Size = Vector3.new(0.04, 0.04, 7.2),
+							Transparency = 1,
+						}):Play()
+						Debris:AddItem(ray, 0.26)
+					end
+				end
+				for s = 1, 6 do
+					local sd = (normal + Vector3.new(math.random(-80, 80) / 100, math.random(-80, 80) / 100, math.random(-80, 80) / 100)).Unit
+					local ember = makeVfxPart("TracerImpactEmber", Enum.PartType.Block, Vector3.new(0.18, 0.18, 0.75), CFrame.lookAt(pos, pos + sd), s % 2 == 0 and Color3.fromRGB(250, 204, 21) or Color3.fromRGB(249, 115, 22), 0.05)
+					TweenService:Create(ember, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.lookAt(pos + sd * 4.4, pos + sd * 5.4),
+						Size = Vector3.new(0.05, 0.05, 0.24),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(ember, 0.24)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(254, 240, 138), Color3.fromRGB(249, 115, 22), 15, 3, 1.1)
+				flashModelHighlight(impact.target, Color3.fromRGB(250, 204, 21), Color3.fromRGB(255, 248, 214), 0.16)
+			elseif tid == "aurora_violet" then
+				local core = makeVfxPart("TracerImpactCore", Enum.PartType.Ball, Vector3.new(0.5, 0.5, 0.5), CFrame.new(pos), Color3.fromRGB(245, 224, 255), 0.04)
+				TweenService:Create(core, TweenInfo.new(0.20, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(3.0, 3.0, 3.0), Transparency = 1 }):Play()
+				Debris:AddItem(core, 0.22)
+				if not reduceMotion then
+					for rIdx, spec in ipairs({ { 32, Color3.fromRGB(192, 132, 252) }, { -32, Color3.fromRGB(236, 72, 153) } }) do
+						local tilt = (CFrame.lookAt(pos, pos + normal) * CFrame.Angles(math.rad(spec[1]), 0, math.rad(rIdx * 35)) * CFrame.Angles(0, math.pi / 2, 0))
+						local ring = makeVfxPart("TracerImpactRiftRing", Enum.PartType.Cylinder, Vector3.new(0.14, 0.9, 0.9), tilt, spec[2], 0.10)
+						TweenService:Create(ring, TweenInfo.new(0.26, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+							Size = Vector3.new(0.06, 6.0, 6.0),
+							CFrame = tilt * CFrame.Angles(math.rad(65), 0, 0),
+							Transparency = 1,
+						}):Play()
+						Debris:AddItem(ring, 0.28)
+					end
+				end
+				for s = 1, 6 do
+					local sd = (normal + Vector3.new(math.random(-85, 85) / 100, math.random(-85, 85) / 100, math.random(-85, 85) / 100)).Unit
+					local col = s % 3 == 0 and Color3.fromRGB(255, 240, 255) or (s % 2 == 0 and Color3.fromRGB(236, 72, 153) or Color3.fromRGB(192, 132, 252))
+					local crystal = makeVfxPart("TracerImpactCrystal", Enum.PartType.Block, Vector3.new(0.32, 0.32, 0.32), CFrame.new(pos) * CFrame.Angles(math.pi / 4, math.pi / 4, 0), col, 0.05)
+					TweenService:Create(crystal, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.new(pos + sd * 4.5) * CFrame.Angles(math.pi * 1.4, math.pi * 1.1, 0),
+						Size = Vector3.new(0.08, 0.08, 0.08),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(crystal, 0.26)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(232, 196, 255), Color3.fromRGB(236, 72, 153), 15, 2, 1.1)
+				flashModelHighlight(impact.target, Color3.fromRGB(192, 132, 252), Color3.fromRGB(236, 72, 153), 0.16)
+			else
+				local core = makeVfxPart("WeaponHitBurst", Enum.PartType.Ball, Vector3.new(0.45, 0.45, 0.45), CFrame.new(pos), Color3.fromRGB(255, 226, 112), 0.08)
+				TweenService:Create(core, TweenInfo.new(0.16, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = Vector3.new(2.6, 2.6, 2.6),
 					Transparency = 1,
 				}):Play()
-				Debris:AddItem(shard, 0.2)
+				Debris:AddItem(core, 0.18)
+
+				for s = 1, 5 do
+					local spreadDir = (normal + Vector3.new(math.random(-70, 70) / 100, math.random(-70, 70) / 100, math.random(-70, 70) / 100)).Unit
+					local shard = makeVfxPart("WeaponHitSpark", Enum.PartType.Block, Vector3.new(0.16, 0.16, 0.65), CFrame.lookAt(pos, pos + spreadDir), s % 2 == 0 and Color3.fromRGB(255, 240, 150) or accent, 0.05)
+					TweenService:Create(shard, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.lookAt(pos + spreadDir * 3.4, pos + spreadDir * 4.4),
+						Size = Vector3.new(0.05, 0.05, 0.25),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(shard, 0.2)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(255, 232, 128), accent, 9, 0, 0.9)
+				flashModelHighlight(impact.target, Color3.fromRGB(255, 224, 102), Color3.new(1, 1, 1), 0.13)
 			end
-			emitBurstParticles(pos, Color3.fromRGB(255, 232, 128), accent, 9, 0, 0.9)
-			flashModelHighlight(impact.target, Color3.fromRGB(255, 224, 102), Color3.new(1, 1, 1), 0.13)
 
 		elseif kind == "Kill" then
-			local inner = makeVfxPart("WeaponKillCore", Enum.PartType.Ball, Vector3.new(0.9, 0.9, 0.9), CFrame.new(pos), Color3.fromRGB(255, 248, 210), 0.05)
-			TweenService:Create(inner, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-				Size = Vector3.new(5.2, 5.2, 5.2),
-				Transparency = 1,
-			}):Play()
-			Debris:AddItem(inner, 0.24)
-
-			local outer = makeVfxPart("WeaponKillExplosion", Enum.PartType.Ball, Vector3.new(1.2, 1.2, 1.2), CFrame.new(pos), accent, 0.22)
-			TweenService:Create(outer, TweenInfo.new(0.32, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-				Size = Vector3.new(9.2, 9.2, 9.2),
-				Transparency = 1,
-			}):Play()
-			Debris:AddItem(outer, 0.34)
-
-			local ring = makeVfxPart("WeaponKillShockRing", Enum.PartType.Cylinder, Vector3.new(0.22, 1.6, 1.6), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(255, 214, 102), 0.18)
-			TweenService:Create(ring, TweenInfo.new(0.30, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-				Size = Vector3.new(0.08, 11.5, 11.5),
-				Transparency = 1,
-			}):Play()
-			Debris:AddItem(ring, 0.32)
-
-			for k = 1, 9 do
-				local phi = (k / 9) * math.pi * 2 + math.random() * 0.4
-				local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
-				local piece = makeVfxPart("WeaponKillDebris", Enum.PartType.Block, Vector3.new(0.55, 0.45, 0.75), CFrame.lookAt(pos, pos + radial), k % 3 == 0 and Color3.fromRGB(255, 210, 88) or accent, 0.05)
-				TweenService:Create(piece, TweenInfo.new(0.38, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-					CFrame = CFrame.new(pos + radial * math.random(7, 13)) * CFrame.Angles(math.random() * 4, math.random() * 4, math.random() * 4),
-					Size = Vector3.new(0.12, 0.12, 0.12),
+			if tid == "cyan_sky" then
+				local inner = makeVfxPart("TracerImpactKillCore", Enum.PartType.Ball, Vector3.new(1.0, 1.0, 1.0), CFrame.new(pos), Color3.fromRGB(232, 252, 255), 0.04)
+				TweenService:Create(inner, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(6.0, 6.0, 6.0), Transparency = 1 }):Play()
+				Debris:AddItem(inner, 0.26)
+				local outer = makeVfxPart("TracerImpactKillNova", Enum.PartType.Ball, Vector3.new(1.4, 1.4, 1.4), CFrame.new(pos), Color3.fromRGB(56, 189, 248), 0.18)
+				TweenService:Create(outer, TweenInfo.new(0.34, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(10.5, 10.5, 10.5), Transparency = 1 }):Play()
+				Debris:AddItem(outer, 0.36)
+				if not reduceMotion then
+					for rIdx, spec in ipairs({ { 18, Color3.fromRGB(224, 249, 255) }, { -26, Color3.fromRGB(2, 132, 199) } }) do
+						local rcf = CFrame.lookAt(pos, pos + normal) * CFrame.Angles(math.rad(spec[1]), 0, math.rad(rIdx * 40)) * CFrame.Angles(0, math.pi / 2, 0)
+						local ring = makeVfxPart("TracerImpactKillRing", Enum.PartType.Cylinder, Vector3.new(0.24, 1.6, 1.6), rcf, spec[2], 0.14)
+						TweenService:Create(ring, TweenInfo.new(0.34, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(0.08, 13.5, 13.5), Transparency = 1 }):Play()
+						Debris:AddItem(ring, 0.36)
+					end
+					for a = 1, 6 do
+						local phi = (a / 6) * math.pi * 2 + math.random() * 0.35
+						local radial = Vector3.new(math.cos(phi), (math.random() - 0.3) * 0.85, math.sin(phi)).Unit
+						spawnLightningArc(pos, pos + radial * math.random(8, 12), a % 2 == 0 and Color3.fromRGB(224, 249, 255) or Color3.fromRGB(56, 189, 248), 0.28)
+					end
+				end
+				for k = 1, 10 do
+					local phi = (k / 10) * math.pi * 2 + math.random() * 0.4
+					local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
+					local piece = makeVfxPart("TracerImpactKillShard", Enum.PartType.Block, Vector3.new(0.55, 0.45, 0.85), CFrame.lookAt(pos, pos + radial), k % 2 == 0 and Color3.fromRGB(224, 249, 255) or Color3.fromRGB(56, 189, 248), 0.05)
+					TweenService:Create(piece, TweenInfo.new(0.40, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.new(pos + radial * math.random(8, 14)) * CFrame.Angles(math.random() * 4, math.random() * 4, math.random() * 4),
+						Size = Vector3.new(0.12, 0.12, 0.12),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(piece, 0.42)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(224, 249, 255), Color3.fromRGB(56, 189, 248), 24, 6, 1.5)
+			elseif tid == "dawn_gold" then
+				local inner = makeVfxPart("TracerImpactKillCore", Enum.PartType.Ball, Vector3.new(1.2, 1.2, 1.2), CFrame.new(pos), Color3.fromRGB(255, 252, 224), 0.04)
+				TweenService:Create(inner, TweenInfo.new(0.26, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(6.6, 6.6, 6.6), Transparency = 1 }):Play()
+				Debris:AddItem(inner, 0.28)
+				local outer = makeVfxPart("TracerImpactKillNova", Enum.PartType.Ball, Vector3.new(1.5, 1.5, 1.5), CFrame.new(pos), Color3.fromRGB(249, 115, 22), 0.18)
+				TweenService:Create(outer, TweenInfo.new(0.36, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(11.2, 11.2, 11.2), Transparency = 1 }):Play()
+				Debris:AddItem(outer, 0.38)
+				if not reduceMotion then
+					local ring = makeVfxPart("TracerImpactKillRing", Enum.PartType.Cylinder, Vector3.new(0.24, 1.8, 1.8), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(250, 204, 21), 0.12)
+					TweenService:Create(ring, TweenInfo.new(0.34, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(0.08, 14.2, 14.2), Transparency = 1 }):Play()
+					Debris:AddItem(ring, 0.36)
+					for b = 1, 6 do
+						local phi = (b / 6) * math.pi * 2
+						local rayDir = (t1 * math.cos(phi) + t2 * math.sin(phi) + normal * (b % 2 == 0 and 0.35 or -0.25)).Unit
+						local rayLen = 13 + (b % 2) * 3
+						local ray = makeVfxPart("TracerImpactKillStarRay", Enum.PartType.Block, Vector3.new(0.28, 0.28, 1.0), CFrame.lookAt(pos + rayDir * 0.5, pos + rayDir * 1.5), b % 2 == 0 and Color3.fromRGB(255, 248, 200) or Color3.fromRGB(250, 204, 21), 0.04)
+						TweenService:Create(ray, TweenInfo.new(0.32, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+							CFrame = CFrame.lookAt(pos + rayDir * (rayLen * 0.5), pos + rayDir * rayLen),
+							Size = Vector3.new(0.05, 0.05, rayLen),
+							Transparency = 1,
+						}):Play()
+						Debris:AddItem(ray, 0.34)
+					end
+				end
+				for k = 1, 10 do
+					local phi = (k / 10) * math.pi * 2 + math.random() * 0.4
+					local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
+					local piece = makeVfxPart("TracerImpactKillDebris", Enum.PartType.Block, Vector3.new(0.6, 0.5, 0.8), CFrame.lookAt(pos, pos + radial), k % 2 == 0 and Color3.fromRGB(250, 204, 21) or Color3.fromRGB(249, 115, 22), 0.05)
+					TweenService:Create(piece, TweenInfo.new(0.42, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.new(pos + radial * math.random(8, 14)) * CFrame.Angles(math.random() * 4, math.random() * 4, math.random() * 4),
+						Size = Vector3.new(0.14, 0.14, 0.14),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(piece, 0.44)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(254, 240, 138), Color3.fromRGB(249, 115, 22), 24, 8, 1.55)
+			elseif tid == "aurora_violet" then
+				local inner = makeVfxPart("TracerImpactKillCore", Enum.PartType.Ball, Vector3.new(1.1, 1.1, 1.1), CFrame.new(pos), Color3.fromRGB(248, 228, 255), 0.04)
+				TweenService:Create(inner, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(6.4, 6.4, 6.4), Transparency = 1 }):Play()
+				Debris:AddItem(inner, 0.26)
+				local outer = makeVfxPart("TracerImpactKillNova", Enum.PartType.Ball, Vector3.new(1.5, 1.5, 1.5), CFrame.new(pos), Color3.fromRGB(192, 132, 252), 0.20)
+				TweenService:Create(outer, TweenInfo.new(0.36, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = Vector3.new(11.2, 11.2, 11.2), Transparency = 1 }):Play()
+				Debris:AddItem(outer, 0.38)
+				if not reduceMotion then
+					for rIdx, spec in ipairs({ { 30, 0, Color3.fromRGB(192, 132, 252) }, { -35, 55, Color3.fromRGB(236, 72, 153) }, { 65, -40, Color3.fromRGB(240, 210, 255) } }) do
+						local tilt = CFrame.lookAt(pos, pos + normal) * CFrame.Angles(math.rad(spec[1]), math.rad(spec[2]), 0) * CFrame.Angles(0, math.pi / 2, 0)
+						local ring = makeVfxPart("TracerImpactKillGyroRing", Enum.PartType.Cylinder, Vector3.new(0.20, 1.4, 1.4), tilt, spec[3], 0.10)
+						TweenService:Create(ring, TweenInfo.new(0.36, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+							Size = Vector3.new(0.06, 14.5, 14.5),
+							CFrame = tilt * CFrame.Angles(math.rad(80), math.rad(rIdx * 30), 0),
+							Transparency = 1,
+						}):Play()
+						Debris:AddItem(ring, 0.38)
+					end
+				end
+				for k = 1, 10 do
+					local phi = (k / 10) * math.pi * 2 + math.random() * 0.4
+					local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
+					local col = k % 3 == 0 and Color3.fromRGB(255, 240, 255) or (k % 2 == 0 and Color3.fromRGB(236, 72, 153) or Color3.fromRGB(192, 132, 252))
+					local crystal = makeVfxPart("TracerImpactKillCrystal", Enum.PartType.Block, Vector3.new(0.65, 0.65, 0.65), CFrame.new(pos) * CFrame.Angles(math.pi / 4, math.pi / 4, 0), col, 0.05)
+					TweenService:Create(crystal, TweenInfo.new(0.42, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.new(pos + radial * math.random(8, 14)) * CFrame.Angles(math.pi * 1.8, math.pi * 1.4, 0),
+						Size = Vector3.new(0.12, 0.12, 0.12),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(crystal, 0.44)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(240, 210, 255), Color3.fromRGB(236, 72, 153), 24, 8, 1.55)
+			else
+				local inner = makeVfxPart("WeaponKillCore", Enum.PartType.Ball, Vector3.new(0.9, 0.9, 0.9), CFrame.new(pos), Color3.fromRGB(255, 248, 210), 0.05)
+				TweenService:Create(inner, TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = Vector3.new(5.2, 5.2, 5.2),
 					Transparency = 1,
 				}):Play()
-				Debris:AddItem(piece, 0.4)
+				Debris:AddItem(inner, 0.24)
+
+				local outer = makeVfxPart("WeaponKillExplosion", Enum.PartType.Ball, Vector3.new(1.2, 1.2, 1.2), CFrame.new(pos), accent, 0.22)
+				TweenService:Create(outer, TweenInfo.new(0.32, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = Vector3.new(9.2, 9.2, 9.2),
+					Transparency = 1,
+				}):Play()
+				Debris:AddItem(outer, 0.34)
+
+				local ring = makeVfxPart("WeaponKillShockRing", Enum.PartType.Cylinder, Vector3.new(0.22, 1.6, 1.6), CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0), Color3.fromRGB(255, 214, 102), 0.18)
+				TweenService:Create(ring, TweenInfo.new(0.30, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+					Size = Vector3.new(0.08, 11.5, 11.5),
+					Transparency = 1,
+				}):Play()
+				Debris:AddItem(ring, 0.32)
+
+				for k = 1, 9 do
+					local phi = (k / 9) * math.pi * 2 + math.random() * 0.4
+					local radial = Vector3.new(math.cos(phi), (math.random() - 0.35) * 0.9, math.sin(phi)).Unit
+					local piece = makeVfxPart("WeaponKillDebris", Enum.PartType.Block, Vector3.new(0.55, 0.45, 0.75), CFrame.lookAt(pos, pos + radial), k % 3 == 0 and Color3.fromRGB(255, 210, 88) or accent, 0.05)
+					TweenService:Create(piece, TweenInfo.new(0.38, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+						CFrame = CFrame.new(pos + radial * math.random(7, 13)) * CFrame.Angles(math.random() * 4, math.random() * 4, math.random() * 4),
+						Size = Vector3.new(0.12, 0.12, 0.12),
+						Transparency = 1,
+					}):Play()
+					Debris:AddItem(piece, 0.4)
+				end
+				emitBurstParticles(pos, Color3.fromRGB(255, 232, 130), accent, 18, 8, 1.45)
 			end
-			emitBurstParticles(pos, Color3.fromRGB(255, 232, 130), accent, 18, 8, 1.45)
 
 		elseif kind == "Immune" then
 			local shieldCF = CFrame.lookAt(pos, pos + normal) * CFrame.Angles(0, math.pi / 2, 0)
@@ -952,7 +1307,6 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 	end
 
 	local active = {}
-	local dead = false
 	local event = remote.OnClientEvent:Connect(function(shooter, origin, target, impact)
 		if dead or typeof(origin) ~= "Vector3" or typeof(target) ~= "Vector3" then return end
 		local camera = Workspace.CurrentCamera
@@ -976,94 +1330,284 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		local direction = delta.Unit
 		local distance = delta.Magnitude
 
-		index = index % #emitters + 1
-		emitters[index].Position = start
-		local sound = sounds[index]
-		sound:Stop()
-		sound.TimePosition = 0
-		local tool = shooter and shooter.Character and shooter.Character:FindFirstChildOfClass("Tool")
-		sound.PlaybackSpeed = tool and tool.Name == "AK47" and 0.9 or 1
-		sound:Play()
-		poolFolder:SetAttribute("ShotCount", poolFolder:GetAttribute("ShotCount") + 1)
-
 		local tracerAttr = shooter and shooter:GetAttribute("EquippedTracer")
 		local tracerDef = if type(tracerAttr) == "string" and tracerAttr ~= ""
 			then DailyAndShopCatalog.GetCosmetic("tracer", tracerAttr)
 			else nil
+		local tracerId = tracerDef and tracerDef.id or "default"
+		local isCosmetic = tracerDef ~= nil
+		local tool = shooter and shooter.Character and shooter.Character:FindFirstChildOfClass("Tool")
+		playShotSound(start, tool and tool.Name or "Pistol", tracerId)
 
+		local primaryColor = if tracerDef then tracerDef.primaryColor else Color3.fromRGB(255, 206, 72)
+		local secondaryColor = if tracerDef then tracerDef.secondaryColor else Color3.fromRGB(224, 108, 24)
+		local coreColor = if tracerDef
+			then primaryColor:Lerp(Color3.new(1, 1, 1), 0.62)
+			else Color3.fromRGB(255, 248, 214)
+
+		local flashSize = firstPersonShot and Vector3.new(0.20, 0.20, 0.20) or Vector3.new(0.32, 0.32, 0.32)
 		local flash = Instance.new("Part")
 		flash.Name = "WeaponMuzzleFlash"
 		flash.Shape = Enum.PartType.Ball
-		flash.Size = firstPersonShot and Vector3.new(0.18, 0.18, 0.18) or Vector3.new(0.26, 0.26, 0.26)
-		flash.Color = if tracerDef then tracerDef.primaryColor else Color3.fromRGB(255, 215, 130)
+		flash.Size = flashSize
+		flash.Color = coreColor
 		flash.Material = Enum.Material.Neon
+		flash.Transparency = 0.05
 		flash.Position = start
 		flash.Anchored = true
 		flash.CanCollide = false
 		flash.CanTouch = false
 		flash.CanQuery = false
+		flash.CastShadow = false
 		flash.Parent = Workspace
-		Debris:AddItem(flash, 0.07)
+		local flashHalo = Instance.new("Part")
+		flashHalo.Name = "WeaponMuzzleHalo"
+		flashHalo.Shape = Enum.PartType.Ball
+		flashHalo.Size = flashSize * 1.9
+		flashHalo.Color = primaryColor
+		flashHalo.Material = Enum.Material.Neon
+		flashHalo.Transparency = 0.35
+		flashHalo.Position = start
+		flashHalo.Anchored = true
+		flashHalo.CanCollide = false
+		flashHalo.CanTouch = false
+		flashHalo.CanQuery = false
+		flashHalo.CastShadow = false
+		flashHalo.Parent = Workspace
 		local light = Instance.new("PointLight")
-		light.Color = flash.Color
-		light.Brightness = 1.3
-		light.Range = 5
+		light.Color = primaryColor
+		light.Brightness = 2.0
+		light.Range = 8
 		light.Parent = flash
+		TweenService:Create(flash, TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = flashSize * 0.35,
+			Transparency = 1,
+		}):Play()
+		TweenService:Create(flashHalo, TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = flashSize * 2.35,
+			Transparency = 1,
+		}):Play()
+		Debris:AddItem(flash, 0.09)
+		Debris:AddItem(flashHalo, 0.09)
+
+		local upAxis = math.abs(direction.Y) > 0.995 and Vector3.xAxis or Vector3.yAxis
+		local originCF = CFrame.lookAt(start, start + direction, upAxis)
+		local minStart = math.min(0.35, distance * 0.1)
+
+		local root = Instance.new("Part")
+		root.Name = "FlyingBulletTracer"
+		root.Size = Vector3.new(0.1, 0.1, 0.1)
+		root.Transparency = 1
+		root.Anchored = true
+		root.CanCollide = false
+		root.CanTouch = false
+		root.CanQuery = false
+		root.CastShadow = false
+		root.CFrame = originCF
+
+		local originAtt = Instance.new("Attachment", root)
+		originAtt.Name = "TracerOrigin"
+		originAtt.Position = Vector3.new(0, 0, -minStart)
+		local tailAtt = Instance.new("Attachment", root)
+		tailAtt.Name = "TracerTail"
+		tailAtt.Position = originAtt.Position
+		local headAtt = Instance.new("Attachment", root)
+		headAtt.Name = "TracerHead"
+		headAtt.Position = originAtt.Position
+
+		local coreW0 = 0.07
+		local coreW1 = isCosmetic and 0.34 or 0.26
+		local coreBeam = Instance.new("Beam")
+		coreBeam.Name = "BulletCoreBeam"
+		coreBeam.Attachment0 = tailAtt
+		coreBeam.Attachment1 = headAtt
+		coreBeam.FaceCamera = true
+		coreBeam.LightEmission = 1
+		coreBeam.LightInfluence = 0
+		coreBeam.Segments = 1
+		coreBeam.Width0 = coreW0
+		coreBeam.Width1 = coreW1
+		coreBeam.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, primaryColor),
+			ColorSequenceKeypoint.new(0.55, coreColor),
+			ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1)),
+		})
+		coreBeam.Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 1),
+			NumberSequenceKeypoint.new(0.22, 0.08),
+			NumberSequenceKeypoint.new(0.9, 0),
+			NumberSequenceKeypoint.new(1, 0.05),
+		})
+		coreBeam.Parent = root
+
+		local auraW0 = 0.16
+		local auraW1 = isCosmetic and 0.96 or 0.72
+		local auraBeam = Instance.new("Beam")
+		auraBeam.Name = "BulletAuraBeam"
+		auraBeam.Attachment0 = tailAtt
+		auraBeam.Attachment1 = headAtt
+		auraBeam.FaceCamera = true
+		auraBeam.LightEmission = 0.42
+		auraBeam.LightInfluence = 0
+		auraBeam.Segments = 1
+		auraBeam.Width0 = auraW0
+		auraBeam.Width1 = auraW1
+		auraBeam.Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, secondaryColor),
+			ColorSequenceKeypoint.new(0.55, primaryColor),
+			ColorSequenceKeypoint.new(1, coreColor),
+		})
+		auraBeam.Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 1),
+			NumberSequenceKeypoint.new(0.2, 0.45),
+			NumberSequenceKeypoint.new(0.8, 0.18),
+			NumberSequenceKeypoint.new(1, 0.32),
+		})
+		auraBeam.Parent = root
+
+		local traceW0 = 0.07
+		local traceW1 = isCosmetic and 0.22 or 0.16
+		local traceBeam = Instance.new("Beam")
+		traceBeam.Name = "BulletTraceBeam"
+		traceBeam.Attachment0 = originAtt
+		traceBeam.Attachment1 = headAtt
+		traceBeam.FaceCamera = true
+		traceBeam.LightEmission = 0.55
+		traceBeam.LightInfluence = 0
+		traceBeam.Segments = 1
+		traceBeam.Width0 = traceW0
+		traceBeam.Width1 = traceW1
+		traceBeam.Color = ColorSequence.new(secondaryColor, primaryColor)
+		traceBeam.Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 0.82),
+			NumberSequenceKeypoint.new(0.35, 0.48),
+			NumberSequenceKeypoint.new(1, 0.62),
+		})
+		traceBeam.Parent = root
 
 		local streak = Instance.new("Part")
 		streak.Name = "FlyingBullet"
 		streak.Shape = Enum.PartType.Ball
-		streak.Size = Vector3.new(0.24, 0.24, 0.85)
-		streak.Color = if tracerDef then tracerDef.primaryColor else Color3.fromRGB(255, 208, 86)
+		local boltW = isCosmetic and 0.28 or 0.22
+		streak.Size = Vector3.new(boltW, boltW, 0.65)
+		streak.Color = coreColor
 		streak.Material = Enum.Material.Neon
 		streak.Anchored = true
 		streak.CanCollide = false
 		streak.CanTouch = false
 		streak.CanQuery = false
-		streak.CFrame = CFrame.lookAt(start, start + direction)
+		streak.CastShadow = false
+		streak.CFrame = originCF * CFrame.new(0, 0, -minStart)
+		streak.Parent = root
 
-		local a0 = Instance.new("Attachment", streak)
-		a0.Position = Vector3.new(-0.12, 0, 0.3)
-		local a1 = Instance.new("Attachment", streak)
-		a1.Position = Vector3.new(0.12, 0, 0.3)
-		local trail = Instance.new("Trail", streak)
-		trail.Name = "BulletTrail"
-		trail.Attachment0 = a0
-		trail.Attachment1 = a1
-		trail.FaceCamera = true
-		trail.Lifetime = 0.12
-		trail.MinLength = 0.05
-		trail.LightEmission = 1
-		trail.Color = ColorSequence.new(streak.Color, if tracerDef then tracerDef.secondaryColor else Color3.fromRGB(195, 116, 37))
-		trail.Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.05), NumberSequenceKeypoint.new(1, 1) })
-
-		local glow = Instance.new("BillboardGui", streak)
+		local glow = Instance.new("BillboardGui")
 		glow.Name = "BulletGlow"
-		glow.Size = UDim2.fromOffset(6, 6)
+		glow.Size = if tracerId == "dawn_gold"
+			then UDim2.fromOffset(14, 14)
+			elseif isCosmetic then UDim2.fromOffset(12, 12)
+			else UDim2.fromOffset(10, 10)
 		glow.AlwaysOnTop = false
 		glow.MaxDistance = 520
 		glow.LightInfluence = 0
-		local dot = Instance.new("Frame", glow)
-		dot.Size = UDim2.fromScale(1, 1)
-		dot.BackgroundColor3 = streak.Color
-		dot.BorderSizePixel = 0
-		Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
+		local dotHalo = Instance.new("Frame", glow)
+		dotHalo.Name = "GlowHalo"
+		dotHalo.Size = UDim2.fromScale(1, 1)
+		dotHalo.BackgroundColor3 = primaryColor
+		dotHalo.BackgroundTransparency = 0.35
+		dotHalo.BorderSizePixel = 0
+		Instance.new("UICorner", dotHalo).CornerRadius = UDim.new(1, 0)
+		local dotInner = Instance.new("Frame", dotHalo)
+		dotInner.Name = "GlowCore"
+		dotInner.AnchorPoint = Vector2.new(0.5, 0.5)
+		dotInner.Position = UDim2.fromScale(0.5, 0.5)
+		dotInner.Size = UDim2.fromScale(0.55, 0.55)
+		dotInner.BackgroundColor3 = coreColor
+		dotInner.BorderSizePixel = 0
+		Instance.new("UICorner", dotInner).CornerRadius = UDim.new(1, 0)
+		if tracerId == "dawn_gold" then
+			for _, barSize in ipairs({ UDim2.fromScale(1.15, 0.16), UDim2.fromScale(0.16, 1.15) }) do
+				local flareBar = Instance.new("Frame", glow)
+				flareBar.Name = "SunFlareCross"
+				flareBar.AnchorPoint = Vector2.new(0.5, 0.5)
+				flareBar.Position = UDim2.fromScale(0.5, 0.5)
+				flareBar.Size = barSize
+				flareBar.BackgroundColor3 = coreColor
+				flareBar.BackgroundTransparency = 0.15
+				flareBar.BorderSizePixel = 0
+				Instance.new("UICorner", flareBar).CornerRadius = UDim.new(1, 0)
+			end
+		end
+		glow.Parent = streak
 
-		streak.Parent = Workspace
-		local duration = math.clamp(distance / 360, 0.035, 0.65)
+		local sparks
+		if isCosmetic and distance <= 520 and (start - camera.CFrame.Position).Magnitude <= 140
+			and player:GetAttribute("ReduceHUDMotion") ~= true then
+			sparks = Instance.new("ParticleEmitter")
+			sparks.Name = "TracerSparks"
+			sparks.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+			sparks.Color = ColorSequence.new(coreColor, secondaryColor)
+			sparks.LightEmission = 0.9
+			sparks.Size = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.42),
+				NumberSequenceKeypoint.new(1, 0),
+			})
+			sparks.Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.1),
+				NumberSequenceKeypoint.new(1, 1),
+			})
+			sparks.Lifetime = NumberRange.new(0.12, 0.2)
+			sparks.Rate = 48
+			sparks.Speed = NumberRange.new(1, 4)
+			sparks.SpreadAngle = Vector2.new(180, 180)
+			sparks.LockedToPart = false
+			sparks.Parent = streak
+		end
+
+		root.Parent = Workspace
+		local duration = math.clamp(distance / 360, 0.04, 0.62)
+		local fadeDuration = isCosmetic and 0.24 or 0.18
+		local streakLen = math.clamp(distance * (isCosmetic and 0.28 or 0.24), isCosmetic and 18 or 14, isCosmetic and 54 or 46)
 		table.insert(active, {
-			part = streak,
+			root = root,
+			originCF = originCF,
+			originAtt = originAtt,
+			tailAtt = tailAtt,
+			headAtt = headAtt,
+			coreBeam = coreBeam,
+			auraBeam = auraBeam,
+			traceBeam = traceBeam,
+			coreW0 = coreW0,
+			coreW1 = coreW1,
+			auraW0 = auraW0,
+			auraW1 = auraW1,
+			traceW0 = traceW0,
+			traceW1 = traceW1,
+			bolt = streak,
+			boltW = boltW,
+			glow = glow,
+			sparks = sparks,
+			isCosmetic = isCosmetic,
+			tracerId = tracerId,
+			primaryColor = primaryColor,
+			secondaryColor = secondaryColor,
+			pulseStage = 0,
 			start = start,
 			direction = direction,
+			minStart = minStart,
 			distance = distance,
+			streakLen = streakLen,
 			elapsed = 0,
 			duration = duration,
+			fadeDuration = fadeDuration,
+			impacted = false,
+			impactTailDist = minStart,
+			impactScale = 1,
 			impact = impact,
 			isLocalShooter = shooter == player,
 		})
-		if #active > 32 then
+		if #active > 36 then
 			local oldest = table.remove(active, 1)
-			oldest.part:Destroy()
+			oldest.root:Destroy()
 		end
 	end)
 
@@ -1071,27 +1615,67 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		for i = #active, 1, -1 do
 			local a = active[i]
 			a.elapsed += dt
-			if not a.part.Parent then
+			if not a.root.Parent then
 				table.remove(active, i)
 			elseif a.elapsed >= a.duration then
-				local endPos = a.start + a.direction * a.distance
-				a.part.CFrame = CFrame.lookAt(endPos, endPos + a.direction)
-				a.part.Transparency = 1
-				a.part.BulletGlow.Enabled = false
-				a.part.BulletTrail.Enabled = false
-				if a.impact then
-					spawnImpactEffect(endPos, a.direction, a.impact)
-					if a.isLocalShooter and type(onLocalImpact) == "function" then
-						task.spawn(onLocalImpact, a.impact)
+				if not a.impacted then
+					a.impacted = true
+					a.impactTailDist = math.max(a.minStart, a.distance - a.streakLen)
+					a.impactScale = math.clamp(1 + a.distance / 260, 1, 2.2)
+					a.headAtt.Position = Vector3.new(0, 0, -a.distance)
+					a.bolt.Transparency = 1
+					a.glow.Enabled = false
+					if a.sparks then a.sparks.Enabled = false end
+					if a.impact then
+						local endPos = a.start + a.direction * a.distance
+						spawnImpactEffect(endPos, a.direction, a.impact, a.tracerId)
+						if a.isLocalShooter and type(onLocalImpact) == "function" then
+							task.spawn(onLocalImpact, a.impact)
+						end
 					end
 				end
-				Debris:AddItem(a.part, 0.13)
-				table.remove(active, i)
+				local fadeT = math.clamp((a.elapsed - a.duration) / a.fadeDuration, 0, 1)
+				if fadeT >= 1 then
+					a.root:Destroy()
+					table.remove(active, i)
+				else
+					local eased = 1 - (1 - fadeT) ^ 2
+					local tailDist = a.impactTailDist + (a.distance - a.impactTailDist) * eased
+					local shrink = 1 - fadeT
+					a.tailAtt.Position = Vector3.new(0, 0, -tailDist)
+					a.coreBeam.Width0 = a.coreW0 * a.impactScale * shrink
+					a.coreBeam.Width1 = a.coreW1 * a.impactScale * shrink
+					a.auraBeam.Width0 = a.auraW0 * a.impactScale * shrink
+					a.auraBeam.Width1 = a.auraW1 * a.impactScale * shrink
+					a.traceBeam.Width0 = a.traceW0 * shrink
+					a.traceBeam.Width1 = a.traceW1 * shrink
+					a.traceBeam.Transparency = NumberSequence.new(0.48 + 0.52 * fadeT, 1)
+				end
 			else
 				local fraction = a.elapsed / a.duration
-				local center = a.start + a.direction * (a.distance * fraction)
-				a.part.CFrame = CFrame.lookAt(center, center + a.direction)
-				a.part.Transparency = 0.02 + fraction * 0.12
+				local headDist = a.distance * fraction
+				local tailDist = math.max(a.minStart, headDist - a.streakLen)
+				local distScale = math.clamp(1 + headDist / 260, 1, 2.2)
+				a.headAtt.Position = Vector3.new(0, 0, -headDist)
+				a.tailAtt.Position = Vector3.new(0, 0, -tailDist)
+				a.coreBeam.Width0 = a.coreW0 * distScale
+				a.coreBeam.Width1 = a.coreW1 * distScale
+				a.auraBeam.Width0 = a.auraW0 * distScale
+				a.auraBeam.Width1 = a.auraW1 * distScale
+				local boltLen = math.min(a.distance, math.clamp(headDist * 0.45, 0.55, a.isCosmetic and 3.8 or 3.0))
+				local boltPosCF = a.originCF * CFrame.new(0, 0, -math.max(a.minStart, headDist - boltLen * 0.35))
+				a.bolt.Size = Vector3.new(a.boltW, a.boltW, boltLen)
+				a.bolt.CFrame = boltPosCF
+				a.bolt.Transparency = 0.02 + fraction * 0.08
+				if a.isCosmetic and a.distance >= 24 then
+					if a.pulseStage == 0 and fraction >= 0.28 then
+						a.pulseStage = 1
+						spawnTracerPulseRing(boltPosCF, a.primaryColor, a.secondaryColor, a.tracerId, false)
+					elseif a.pulseStage == 1 and fraction >= 0.62 then
+						a.pulseStage = 2
+						spawnTracerPulseRing(boltPosCF, a.primaryColor, a.secondaryColor, a.tracerId, true)
+					end
+				end
 			end
 		end
 	end)
@@ -1103,7 +1687,7 @@ function Presentation.Start(player, remote, owner, _hud, onLocalImpact)
 		render:Disconnect()
 		for _, p in emitters do p:Destroy() end
 		for _, p in impactEmitters do p:Destroy() end
-		for _, a in active do a.part:Destroy() end
+		for _, a in active do a.root:Destroy() end
 	end)
 
 	return setWeapon

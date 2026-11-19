@@ -102,8 +102,8 @@ Run.Heartbeat:Connect(function()
   item.model:PivotTo(CFrame.new(0,item.bottom+C.LARGE_HEIGHT/2,z))
   for _,fd in ipairs(current)do
    if not item.hit[fd]and item.warned[fd]and now>=item.warned[fd]and Manager.Intersects(item,fd,item.lastZ,z)then
-    item.hit[fd]=true
     if _G.FlyHighBalloonManager.ApplyPuncture(fd)then
+     item.hit[fd]=true
      -- Reuse the smoothed wind displacement: one gust in the curtain's sweep
      -- direction per accepted hit. Shield/grace/arrival protection still gate it.
      fd.windSource=item.id fd.windSince=now

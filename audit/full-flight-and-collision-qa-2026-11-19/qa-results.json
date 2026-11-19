@@ -1,0 +1,146 @@
+{
+  "runDate": "2026-11-19T21:45:11+07:00",
+  "studioId": "3d4a4955-a9d0-4129-b534-cee6f160ea6a",
+  "qaOnly": true,
+  "productionModified": false,
+  "placeSaved": false,
+  "gitCommitted": false,
+  "gitPushed": false,
+  "publishedToCloud": false,
+  "editPreCheck": {
+    "playerCount": 0,
+    "numberOfPlayers": 1,
+    "qaLeftovers": [],
+    "collisionGroupRegistered": true,
+    "balloonsPhysicallyCollidableEdit": true,
+    "balloonsPhysicallyCollidableRuntime": false,
+    "balloonProfiles": {
+      "DawnExplorer": { "loBin": -1, "hiBin": 12, "yRangeRelRoot": [-4, 52], "widestReach": 19.8, "widestBandY": 0, "basketReach": 19.8, "bbSize": [46.74, 52.41, 46.74] },
+      "PalaceLantern": { "loBin": -1, "hiBin": 12, "yRangeRelRoot": [-4, 52], "widestReach": 19.8, "widestBandY": 0, "basketReach": 19.8, "bbSize": [46.74, 52.41, 46.74] },
+      "SkyKoi": { "loBin": -1, "hiBin": 11, "yRangeRelRoot": [-4, 48], "widestReach": 19.8, "widestBandY": 0, "basketReach": 19.8, "bbSize": [46.74, 47.41, 46.74] },
+      "FloatingGarden": { "loBin": -1, "hiBin": 12, "yRangeRelRoot": [-4, 52], "widestReach": 20.45, "widestBandY": 36, "basketReach": 19.8, "bbSize": [49.09, 52.41, 49.09] },
+      "SaturnVoyager": { "loBin": -1, "hiBin": 12, "yRangeRelRoot": [-4, 52], "widestReach": 22.86, "widestBandY": 32, "basketReach": 19.8, "bbSize": [46.74, 49.41, 46.74] }
+    }
+  },
+  "suite1_TwoBalloonCollisions": {
+    "physicalContactRequiredForDamage": false,
+    "mechanism": "PhysicsService FlyHighBalloons vs FlyHighBalloons collidable=false; mathematical silhouette check via FlightSpace.ContactDistance + BalloonManager.ResolveCollisions",
+    "case1A_sideDawnExplorerVsDawnExplorer": {
+      "nearMiss": { "flatDist": 38.1, "touchExpected": 37.3, "visualGap": 2.34, "closestParts": "SafetyHandrope <-> SafetyHandrope", "fdAHoles": 0, "fdBHoles": 0 },
+      "contact": { "flatDist": 37.88, "touchExpected": 37.3, "visualGap": 2.253, "closestParts": "SafetyHandrope <-> SafetyHandrope", "fdAHoles": 1, "fdBHoles": 1, "contactFlagSet": true },
+      "recontactWhileStuck5_8s": { "fdAHoles": 1 },
+      "pullbackFlatDist": 49.7,
+      "contactClearedAfterPullback": true,
+      "screenshot": "collision-side-contact.jpg"
+    },
+    "case1B_sideDawnExplorerVsSaturnVoyager": {
+      "flatDist": 39.93,
+      "touchExpected": 39.09,
+      "visualGap": 0.078,
+      "closestParts": "envelope_geom <-> Ring",
+      "fdAHoles": 1,
+      "fdBHoles": 1,
+      "screenshot": "collision-side-saturn.jpg"
+    },
+    "case1C_topDownDescending": {
+      "flat0": {
+        "startPosA": [0, 115, 0],
+        "dummyPosB": [0, 50, 0],
+        "firstClampOrSnap": { "dy": 56.31, "flatDistBefore": 0.27, "targetXZ": [27.6, 0], "visualGap": 3.899, "closestParts": "HullFascia <-> envelope_geom" },
+        "maxSingleTickXZJump": 5.25,
+        "firstDamage": { "dy": 52.33, "flatDist": 27.66, "touchDist": 26.6, "visualGap": 0, "fdAHoles": 1, "fdBHoles": 1 },
+        "endPosA": [28.14, 102.25, 0]
+      },
+      "flat6": {
+        "startPosA": [6, 115, 0],
+        "dummyPosB": [0, 50, 0],
+        "firstClampOrSnap": { "dy": 56.31, "flatDistBefore": 6.33, "targetXZ": [26.6, 0], "visualGap": 3.901, "closestParts": "HullFascia <-> envelope_geom" },
+        "maxSingleTickXZJump": 4.11,
+        "firstDamage": { "dy": 52.32, "flatDist": 26.66, "touchDist": 26.6, "visualGap": 0, "fdAHoles": 1, "fdBHoles": 1 },
+        "endPosA": [27.32, 102.24, 0],
+        "screenshot": "collision-top-down.jpg"
+      }
+    },
+    "case1D_bottomUpAscending": {
+      "flat0_isolatedRetest": {
+        "startPosA": [0, 56, 0],
+        "dummyPosB": [0, 120, 0],
+        "firstClamp": { "dy": -56.77, "flatDist": 1.81, "xzJump": 1.13, "pos": [1.81, 63.23, 0] },
+        "maxXZJump": 1.665,
+        "endPos": [27.6, 66.05, 0],
+        "endHoles": { "fdA": 0, "fdB": 0 },
+        "bugNote": "ClampMovement evaluates proposed.Y (entering -56 band) and pushes A laterally out to X=27.6 before root.Position.Y catches up; ResolveCollisions evaluates lagged root.Position.Y (-56.77 -> nil ContactDistance), causing A to slide past B with 0 damage to either balloon."
+      },
+      "flat6": {
+        "startPosA": [6, 54, 0],
+        "dummyPosB": [0, 120, 0],
+        "firstClampOrSnap": { "dy": -56.82, "flatDistBefore": 6.33, "targetXZ": [26.6, 0], "visualGap": 4.412, "closestParts": "envelope_geom <-> HullFascia" },
+        "maxSingleTickXZJump": 4.11,
+        "firstDamage": { "dy": -52.81, "flatDist": 26.59, "touchDist": 26.6, "visualGap": 0.399, "fdAHoles": 1, "fdBHoles": 1 },
+        "endPosA": [29.81, 68.89, 0.06],
+        "screenshot": "collision-bottom-up.jpg"
+      }
+    },
+    "case1E_diagonalOffset14": {
+      "startPosA": [14, 115, 0],
+      "dummyPosB": [0, 50, 0],
+      "firstClampOrSnap": { "dy": 56.33, "flatDistBefore": 14.12, "targetXZ": [26.6, 0], "visualGap": 3.915, "closestParts": "HullFascia <-> envelope_geom" },
+      "maxSingleTickXZJump": 2.4,
+      "firstDamage": { "dy": 52.34, "flatDist": 26.66, "touchDist": 26.6, "visualGap": 0, "fdAHoles": 1, "fdBHoles": 1 },
+      "endPosA": [27.32, 102.27, 0]
+    }
+  },
+  "suite2_FullNaturalSoloFlight": {
+    "completedTo10000km": false,
+    "run1": {
+      "podDetected": "Pod_A",
+      "isMasterDetected": true,
+      "elapsedSec": 82.4,
+      "maxAltitudeKm": 1037.79,
+      "endAltitudeKm": 1037.79,
+      "outcome": "GameOver (BreakRope / low rope depletion at ~18.7% -> 0% during hole 5 attempt)",
+      "holesAtEnd": 1,
+      "repairsCompletedCoins": 5,
+      "enemiesDestroyed": 4,
+      "mockCoins": 50,
+      "punctures": [
+        { "atSec": 40.3, "altKm": 658.7, "holesAfter": 1, "nearThreat": "WildBird", "nearDist": 146.7 },
+        { "atSec": 51.1, "altKm": 775.95, "holesAfter": 1, "nearThreat": "Angin Topan", "nearDist": 35.2 },
+        { "atSec": 60.5, "altKm": 865.99, "holesAfter": 1, "nearThreat": "WildBird", "nearDist": 37.4 },
+        { "atSec": 74.6, "altKm": 995.22, "holesAfter": 1, "nearThreat": "WildBird", "nearDist": 37.7 }
+      ]
+    },
+    "run2": {
+      "podDetected": "Pod_A",
+      "isMasterDetected": true,
+      "elapsedSec": 79.7,
+      "maxAltitudeKm": 841.6,
+      "endAltitudeKm": 816.47,
+      "outcome": "GameOver (ropeMinDurability hit 0.6% -> 0% BreakRope -> FatalRopeFall=true while descending/repairing 3 holes)",
+      "holesAtEnd": 3,
+      "maxHoles": 3,
+      "repairsCompleted": 4,
+      "ropeRepairs": 0,
+      "ropeMinDurability": 0.6,
+      "shotsFired": 2,
+      "enemiesDestroyed": 1,
+      "mockCoins": 40,
+      "punctures": [
+        { "atSec": 25.5, "altKm": 418.88, "holeSlot": 1, "holesAfter": 1, "nearThreat": "Angin Topan", "nearDist": 38.1 },
+        { "atSec": 38.7, "altKm": 577.1, "holeSlot": 1, "holesAfter": 1, "nearThreat": "WildBird", "nearDist": 57.7 },
+        { "atSec": 45.6, "altKm": 631.33, "holeSlot": 2, "holesAfter": 2, "nearThreat": "unknown (enemy destroyed on impact)", "nearDist": "inf" },
+        { "atSec": 51.9, "altKm": 716.01, "holeSlot": 1, "holesAfter": 1, "nearThreat": "Angin Topan", "nearDist": 43.0 },
+        { "atSec": 59.9, "altKm": 784.04, "holeSlot": 1, "holesAfter": 1, "nearThreat": "WildBird", "nearDist": 44.3 },
+        { "atSec": 67.1, "altKm": 840.04, "holeSlot": 2, "holesAfter": 2, "nearThreat": "unknown (enemy destroyed on impact)", "nearDist": "inf" },
+        { "atSec": 74.3, "altKm": 841.6, "holeSlot": 3, "holesAfter": 3, "nearThreat": "WildBird", "nearDist": 45.6 }
+      ]
+    }
+  },
+  "consoleAndEditCleanup": {
+    "gameScriptRuntimeErrors": 0,
+    "editPlayerCount": 0,
+    "testServiceNumberOfPlayers": 1,
+    "qaLeftovers": 0,
+    "editScreenshot": "edit-restored.jpg"
+  }
+}

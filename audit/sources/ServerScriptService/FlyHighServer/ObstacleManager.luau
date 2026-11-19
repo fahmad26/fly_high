@@ -26,7 +26,7 @@ local function flights()
  local bm=_G.FlyHighBalloonManager
  local out={}
  for _,fd in ipairs(bm and bm.activeFlights or {}) do
-  if not fd.isGameOver and not fd.isVictory and Manager.GetBand(fd.altitudeKm) then table.insert(out,fd) end
+  if fd.balloon.Parent and fd.balloon:FindFirstChild("Envelope") and not fd.isGameOver and not fd.isVictory and Manager.GetBand(fd.altitudeKm) then table.insert(out,fd) end
  end
  return out
 end
@@ -275,59 +275,93 @@ function Manager.SpawnBand(index, fd, hazard)
 	return item
 end
 
-local function touches(item, center, first, last, age)
-	local offset = center - last
+local function touches(item, flight, first, last, age)
+	local envPos = flight.balloon.Envelope.Position
+	local rootPos = flight.root.Position
+	local bx, bz = envPos.X, envPos.Z
+	local lowY = rootPos.Y
+	local highY = envPos.Y + 19
+	local spineMinY = rootPos.Y + 4
+	local spineMaxY = envPos.Y + 12
 	local effect = item.effect
-	if effect == "Lightning" then
-		return Motion.InColumn(offset, Motion.LightningLow, Motion.LightningHigh)
+	if effect == "Tornado" then
+		return lowY <= last.Y + 20 and highY >= last.Y - 23
+			and Motion.DistanceToPath2D(bx, bz, first, last) <= 27
+	elseif effect == "Lightning" then
+		return lowY <= last.Y + 36 and highY >= last.Y - 22
+			and Vector2.new(bx - last.X, bz - last.Z).Magnitude <= Motion.LightningRadius + 1
 	elseif effect == "Storm" then
-		if offset.Magnitude < Motion.StormRadius then return true end
+		if Motion.DistanceToSpine(bx, bz, spineMinY, spineMaxY, last, last) <= Motion.StormRadius then
+			return true
+		end
 		local x = stormCells[item.strike]
-		return x ~= nil and Motion.InColumn(offset - Vector3.new(x, 0, 0), -28, 54)
+		return x ~= nil and lowY <= last.Y + 39 and highY >= last.Y - 13
+			and Vector2.new(bx - (last.X + x), bz - last.Z).Magnitude <= Motion.LightningRadius + 1
 	elseif effect == "Debris" then
 		for _, ruin in ipairs(item.groups) do
-			if (center - ruin:GetPivot().Position).Magnitude <= 23 then return true end
+			if Motion.PointToSpineDistance(ruin:GetPivot().Position, bx, bz, spineMinY, spineMaxY) <= 22 then
+				return true
+			end
 		end
 		return false
 	elseif effect == "Meteor" then
-		for _, sweep in pairs(item.laneSweeps) do
-			if Motion.DistanceToPath(center, sweep.first, sweep.last) <= Motion.MeteorRadius then return true end
+		for _, sweep in pairs(item.laneSweeps or {}) do
+			if Motion.DistanceToSpine(bx, bz, spineMinY, spineMaxY, sweep.first, sweep.last) <= Motion.MeteorRadius then
+				return true
+			end
 		end
 		return false
-	elseif effect == "Wind" or effect == "Heat" then
-		return math.abs(offset.X) <= 41 and math.abs(offset.Y) <= 23
-			and (math.abs(offset.Z) <= 23 or Motion.DistanceToPath(center, first, last) <= 23)
-	elseif effect == "Magnetic" and age < 0.35 then
-		return false
+	elseif effect == "Wind" then
+		return lowY <= last.Y + 25 and highY >= last.Y - 25
+			and bx >= math.min(first.X, last.X) - 43 and bx <= math.max(first.X, last.X) + 43
+			and math.abs(bz - last.Z) <= 27
+	elseif effect == "Heat" then
+		return lowY <= last.Y + 25 and highY >= last.Y - 25
+			and math.abs(bx - last.X) <= 43
+			and bz >= math.min(first.Z, last.Z) - 25 and bz <= math.max(first.Z, last.Z) + 27
+	elseif effect == "Magnetic" then
+		if age < 0.35 then return false end
+		return Motion.DistanceToSpine(bx, bz, spineMinY, spineMaxY, first, last) <= 33
+	elseif effect == "Fog" then
+		return Motion.DistanceToSpine(bx, bz, spineMinY, spineMaxY, first, last) <= 33
 	end
-	local radius = (item.shootable or effect == "Spike") and 18 or 33
-	return Motion.DistanceToPath(center, first, last) < radius
+	return Motion.DistanceToSpine(bx, bz, spineMinY, spineMaxY, first, last) <= 19
 end
 
 local function applyHazard(item, flight, now)
-	if flight.invulnTime > 0 then return end
+	if flight.isGameOver or flight.isVictory
+		or flight.invulnTime > 0
+		or flight.shieldTime > 0
+		or flight.balloon:GetAttribute("ArrivalProtected")
+		or flight.altitudeKm < Config.SAFE_TAKEOFF_KM then
+		return false
+	end
+	local punctured = _G.FlyHighBalloonManager.ApplyPuncture(flight)
+	if not punctured and flight.holes < Config.MAX_HOLES then
+		return false
+	end
 	local effect = item.effect
 	if effect == "Magnetic" then
 		flight.reverseUntil = now + 4
 	elseif effect == "Wind" or effect == "Tornado" then
-		if flight.windSource ~= item.born or now >= (flight.windUntil or 0) then flight.windSince = now end
+		if flight.windSource ~= item.born or now >= (flight.windUntil or 0) then
+			flight.windSince = now
+		end
 		flight.windSource = item.born
-		local distance = (flight.balloon.Envelope.Position - item.instance.PrimaryPart.Position).Magnitude
-		local strength = effect == "Tornado" and 25 * math.clamp(1 - distance / 33, 0, 1) or 25
-		-- Push along the same world-space trajectory as the visible wind hazard.
 		local drift = Vector3.new(item.velocity.X, 0, item.velocity.Z)
-		if drift.Magnitude < 0.001 then return end
-		flight.wind = drift.Unit * strength
-		flight.windUntil = now + (effect == "Tornado" and 0.6 or 3)
+		if drift.Magnitude >= 0.001 then
+			local strength = effect == "Tornado" and 28 or 25
+			flight.wind = drift.Unit * strength
+			flight.windUntil = now + (effect == "Tornado" and 2.0 or 3.0)
+		end
 	elseif effect == "Fog" then
 		for _, player in ipairs(flight.players) do
 			if player.Parent == game.Players then
 				remotes.HazardAlertEvent:FireClient(player, {hazardName = "Kabut Hampa", effect = "Fog", duration = 5})
 			end
 		end
-	else
-		_G.FlyHighBalloonManager.ApplyPuncture(flight)
 	end
+	return true
 end
 
 local function activate(item)
@@ -412,6 +446,14 @@ local function updateMeteor(item, age)
 		end
 	end
 end
+local function bandIsSoloOnly(list)
+ if #list == 0 then return false end
+ for _, fd in ipairs(list) do
+  if #(fd.players or {}) > 1 then return false end
+ end
+ return true
+end
+
 local nextEnemy, nextHazard, waveStep = {}, {}, {}
 local nextHazardCheck = os.clock() + 2.5
 task.spawn(function()
@@ -436,18 +478,23 @@ task.spawn(function()
 					if not stormBlocksSpawn(fd, now) then table.insert(eligible, fd) end
 				end
 				local step = waveStep[band] or 1
+				local soloOnly = bandIsSoloOnly(eligible)
 				local count = pacing.enemyWave[step]
+				if soloOnly then count = math.max(1, count - 1) end
+				local enemyInterval = soloOnly and (pacing.enemyInterval * 1.45) or pacing.enemyInterval
 				if #eligible > 0 and #Manager.activeObstacles + count <= obstacleLimit then
 					spawnEnemyWave(band, eligible[math.random(1, #eligible)], count)
 					waveStep[band] = step % #pacing.enemyWave + 1
-					nextEnemy[band] = now + pacing.enemyInterval
+					nextEnemy[band] = now + enemyInterval
 				end
 			end
 			if checkHazards then
-				nextHazard[band] = nextHazard[band] or now + pacing.hazardInterval
+				local soloOnly = bandIsSoloOnly(crew)
+				local hazardInterval = soloOnly and (pacing.hazardInterval * 1.25) or pacing.hazardInterval
+				nextHazard[band] = nextHazard[band] or now + hazardInterval
 				if now >= nextHazard[band] then
 					Manager.SpawnBand(band, crew[math.random(1, #crew)], true)
-					nextHazard[band] = now + pacing.hazardInterval
+					nextHazard[band] = now + hazardInterval
 				end
 			end
 		end
@@ -502,6 +549,7 @@ RunService.Heartbeat:Connect(function(dt)
 			end
 		elseif item.effect == "Meteor" then
 			updateMeteor(item, age)
+			nextPose = previous
 		elseif item.path then
 			nextPose = CFrame.new(item.origin.Position + item.velocity * age)
 		end
@@ -572,11 +620,15 @@ RunService.Heartbeat:Connect(function(dt)
 		end
 
 		for _, flight in ipairs(current) do
-			if (item.effect == "Tornado" or not item.hit[flight])
-				and touches(item, flight.balloon.Envelope.Position, previous.Position, nextPose.Position, age) then
-				item.hit[flight] = true
-				applyHazard(item, flight, now)
-				if item.shootable or item.effect == "Spike" then model:Destroy() break end
+			if not item.hit[flight] and touches(item, flight, previous.Position, nextPose.Position, age) then
+				local applied = applyHazard(item, flight, now)
+				if applied then
+					item.hit[flight] = true
+				end
+				if item.shootable or item.effect == "Spike" then
+					model:Destroy()
+					break
+				end
 			end
 		end
 		item.previousAge = age

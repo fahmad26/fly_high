@@ -1,0 +1,270 @@
+{
+  "runDate": "2026-11-19T21:16:53+07:00",
+  "studioId": "3d4a4955-a9d0-4129-b534-cee6f160ea6a",
+  "place": {
+    "filePath": "E:/Antigravity/Fly High/Fly High.rbxl",
+    "bytes": 3540071,
+    "lastWriteTime": "2026-11-19T21:16:53.9326375+07:00",
+    "sha256": "db3c5c7aa73a66f34995dfa051d72deac175052afc5846da67d941b841e9ab8a",
+    "reopenedAfterSave": false,
+    "gitCommitted": false,
+    "gitPushed": false,
+    "publishedToCloud": false
+  },
+  "parityAndCompile": {
+    "shaSelfTest": "ok",
+    "totalScripts": 66,
+    "compileFailCount": 0,
+    "normalizedLfTrimEndMatches": 66,
+    "normalizedMismatches": 0,
+    "testServiceNumberOfPlayers": 1,
+    "editedScripts": [
+      {
+        "name": "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation",
+        "studioBytes": 71071,
+        "mirrorBytes": 71071,
+        "studioSha256": "3fc57204666106d6a8691dc656f5ab849b370a4fed042f4241e019cbdc7eae80",
+        "mirrorSha256": "3fc57204666106d6a8691dc656f5ab849b370a4fed042f4241e019cbdc7eae80",
+        "exactRawMatch": true
+      },
+      {
+        "name": "ServerScriptService.FlyHighServer.OverheadManager",
+        "studioBytes": 12160,
+        "mirrorBytes": 12161,
+        "studioSha256": "ab393fcc163a640a41924c369b5e11bc9428dddcda85a5bf4edcaa84b726751f",
+        "mirrorSha256": "b9d63d214439c38119c6d6f89304e71ad19ed5e6d6465dc9549fc73fff151f0d",
+        "exactNormalizedTrimEndMatch": true,
+        "note": "Mirror has 1 trailing LF byte; body identical"
+      }
+    ]
+  },
+  "suiteA_OverheadTitleWidth": {
+    "environment": "Studio Play Solo Windows (Fikki2621, viewport 2090x752)",
+    "dataStoreWritesStubbed": true,
+    "billboardSize": [220, "84 or 92"],
+    "pillAnchor": [0.5, 0],
+    "note": "Studio MCP screen_capture omits BillboardGui instances (confirmed across 3 captures); layout, TextBounds, TextFits, and Localization verified live in client VM.",
+    "matrix": [
+      {
+        "titleId": "faithful_explorer",
+        "locale": "id",
+        "pillWidth": 126,
+        "pillHeight": 18,
+        "labelSizeX": 110,
+        "localizedText": "★ Penjelajah Setia",
+        "textBoundsX": 94,
+        "marginPx": 16,
+        "marginRatio": 0.145,
+        "textFits": true,
+        "titleLocalizedText": "[Puncak: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "faithful_explorer",
+        "locale": "en",
+        "pillWidth": 126,
+        "pillHeight": 18,
+        "labelSizeX": 110,
+        "localizedText": "★ Loyal Explorer",
+        "textBoundsX": 86,
+        "marginPx": 24,
+        "marginRatio": 0.218,
+        "textFits": true,
+        "titleLocalizedText": "[Summits: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "cloud_conqueror",
+        "locale": "id",
+        "pillWidth": 134,
+        "pillHeight": 18,
+        "labelSizeX": 118,
+        "localizedText": "★ Penakluk Awan",
+        "textBoundsX": 94,
+        "marginPx": 24,
+        "marginRatio": 0.203,
+        "textFits": true,
+        "titleLocalizedText": "[Puncak: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "cloud_conqueror",
+        "locale": "en",
+        "pillWidth": 134,
+        "pillHeight": 18,
+        "labelSizeX": 118,
+        "localizedText": "★ Cloud Conqueror",
+        "textBoundsX": 101,
+        "marginPx": 17,
+        "marginRatio": 0.144,
+        "textFits": true,
+        "titleLocalizedText": "[Summits: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "prince_of_sky",
+        "locale": "id",
+        "pillWidth": 164,
+        "pillHeight": 24,
+        "labelSizeX": 118,
+        "crestVisible": true,
+        "sparkleVisible": true,
+        "gapCrestToLabel": 2,
+        "gapLabelToSparkle": 4,
+        "localizedText": "Pangeran Langit",
+        "textBoundsX": 87,
+        "marginPx": 31,
+        "marginRatio": 0.263,
+        "textFits": true,
+        "titleLocalizedText": "[Puncak: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "prince_of_sky",
+        "locale": "en",
+        "pillWidth": 164,
+        "pillHeight": 24,
+        "labelSizeX": 118,
+        "crestVisible": true,
+        "sparkleVisible": true,
+        "gapCrestToLabel": 2,
+        "gapLabelToSparkle": 4,
+        "localizedText": "Prince of the Sky",
+        "textBoundsX": 90,
+        "marginPx": 28,
+        "marginRatio": 0.237,
+        "textFits": true,
+        "titleLocalizedText": "[Summits: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "princess_of_sky",
+        "locale": "id",
+        "pillWidth": 174,
+        "pillHeight": 24,
+        "labelSizeX": 128,
+        "crestVisible": true,
+        "sparkleVisible": true,
+        "gapCrestToLabel": 2,
+        "gapLabelToSparkle": 4,
+        "localizedText": "Putri Langit",
+        "textBoundsX": 63,
+        "marginPx": 65,
+        "marginRatio": 0.508,
+        "textFits": true,
+        "titleLocalizedText": "[Puncak: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      },
+      {
+        "titleId": "princess_of_sky",
+        "locale": "en",
+        "pillWidth": 174,
+        "pillHeight": 24,
+        "labelSizeX": 128,
+        "crestVisible": true,
+        "sparkleVisible": true,
+        "gapCrestToLabel": 2,
+        "gapLabelToSparkle": 4,
+        "localizedText": "Princess of the Sky",
+        "textBoundsX": 102,
+        "marginPx": 26,
+        "marginRatio": 0.203,
+        "textFits": true,
+        "titleLocalizedText": "[Summits: 15x]",
+        "titleFits": true,
+        "nameFits": true
+      }
+    ]
+  },
+  "suiteB_TracerAudioAndImpactVfx": {
+    "audioPoolPath": "Players.Fikki2621.PlayerScripts.WeaponClientController.WeaponAudioPool",
+    "shotEmitters": 8,
+    "shotSoundsLoaded": "56/56",
+    "impactEmitters": 6,
+    "impactSoundsLoaded": "84/84",
+    "allSoundGroupSFX": true,
+    "cases": [
+      {
+        "tracer": "default",
+        "kind": "Hit",
+        "lastShotSoundIds": "Gunshot",
+        "lastImpactSoundIds": "HitTickSFX,HitPunchSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,WeaponHitBurst,WeaponHitSpark x5,WeaponImpactParticles"
+      },
+      {
+        "tracer": "default",
+        "kind": "Kill",
+        "lastShotSoundIds": "Gunshot",
+        "lastImpactSoundIds": "KillBoomSFX,KillChimeSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,WeaponKillCore,WeaponKillExplosion,WeaponKillShockRing,WeaponKillDebris x9,WeaponImpactParticles"
+      },
+      {
+        "tracer": "cyan_sky",
+        "kind": "Hit",
+        "lastShotSoundIds": "Gunshot,CyanShotZapSFX,CyanShotZipSFX",
+        "lastImpactSoundIds": "HitTickSFX,HitPunchSFX,CyanImpactZapSFX,CyanImpactShatterSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactCore,TracerImpactRing,WeaponTracerArc x12,TracerImpactShard x6,WeaponImpactParticles"
+      },
+      {
+        "tracer": "cyan_sky",
+        "kind": "Kill",
+        "lastShotSoundIds": "Gunshot,CyanShotZapSFX,CyanShotZipSFX",
+        "lastImpactSoundIds": "KillBoomSFX,KillChimeSFX,CyanKillZapSFX,CyanImpactShatterSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactKillCore,TracerImpactKillNova,TracerImpactKillRing x2,WeaponTracerArc x18,TracerImpactKillShard x10,WeaponImpactParticles",
+        "screenshot": "impact-cyan-sky-hit-kill.jpg"
+      },
+      {
+        "tracer": "dawn_gold",
+        "kind": "Hit",
+        "lastShotSoundIds": "Gunshot,GoldShotBlazeSFX,GoldShotSwishSFX",
+        "lastImpactSoundIds": "HitTickSFX,HitPunchSFX,GoldImpactBlazeSFX,GoldImpactChimeSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactCore,TracerImpactRing,TracerImpactStarRay x4,TracerImpactEmber x6,WeaponImpactParticles"
+      },
+      {
+        "tracer": "dawn_gold",
+        "kind": "Kill",
+        "lastShotSoundIds": "Gunshot,GoldShotBlazeSFX,GoldShotSwishSFX",
+        "lastImpactSoundIds": "KillBoomSFX,KillChimeSFX,GoldKillBoomSFX,GoldImpactBlazeSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactKillCore,TracerImpactKillNova,TracerImpactKillRing,TracerImpactKillStarRay x6,TracerImpactKillDebris x10,WeaponImpactParticles",
+        "screenshot": "impact-dawn-gold-hit-kill.jpg"
+      },
+      {
+        "tracer": "aurora_violet",
+        "kind": "Hit",
+        "lastShotSoundIds": "Gunshot,VioletShotWhompSFX,VioletShotBeepSFX",
+        "lastImpactSoundIds": "HitTickSFX,HitPunchSFX,VioletImpactWhompSFX,VioletImpactPixiesSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactCore,TracerImpactRiftRing x2,TracerImpactCrystal x6,WeaponImpactParticles"
+      },
+      {
+        "tracer": "aurora_violet",
+        "kind": "Kill",
+        "lastShotSoundIds": "Gunshot,VioletShotWhompSFX,VioletShotBeepSFX",
+        "lastImpactSoundIds": "KillBoomSFX,KillChimeSFX,VioletImpactWhompSFX,VioletImpactPixiesSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,TracerImpactKillCore,TracerImpactKillNova,TracerImpactKillGyroRing x3,TracerImpactKillCrystal x10,WeaponImpactParticles",
+        "screenshot": "impact-aurora-violet-hit-kill.jpg"
+      },
+      {
+        "tracer": "aurora_violet",
+        "kind": "Immune",
+        "lastShotSoundIds": "Gunshot,VioletShotWhompSFX,VioletShotBeepSFX",
+        "lastImpactSoundIds": "ImmunePingSFX,ImmuneClankSFX",
+        "vfx": "WeaponMuzzleFlash,WeaponMuzzleHalo,FlyingBulletTracer,TracerPulseRing,WeaponImmuneShieldDisc,WeaponImmuneShieldHalo,WeaponRicochetBolt,WeaponImmuneSpark x6,WeaponImpactParticles"
+      }
+    ],
+    "leftoverVfxAfter1_6s": 0,
+    "gameScriptErrorsInConsole": 0
+  },
+  "editCleanup": {
+    "playerCount": 0,
+    "testServiceNumberOfPlayers": 1,
+    "qaLeftovers": 0,
+    "editScreenshot": "edit-restored.jpg"
+  }
+}

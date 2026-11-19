@@ -3,6 +3,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Catalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("DailyAndShopCatalog"))
 local AdventureCatalog = require(ReplicatedStorage:WaitForChild("FlyHigh"):WaitForChild("Modules"):WaitForChild("HUDAdventureCatalog"))
 
+local TITLE_PILL_WIDTHS = {
+	faithful_explorer = 126,
+	cloud_conqueror = 134,
+	prince_of_sky = 164,
+	princess_of_sky = 174,
+}
+
 local function formatAltitude(km)
 	km = km or 0
 	return string.format("%d km", math.floor(km))
@@ -52,9 +59,11 @@ local function updateOverheadTitle(player, billboard)
 		local sizeCap = cosmeticLabel:FindFirstChildOfClass("UITextSizeConstraint")
 
 		if hasTitle and cosmeticItem then
+			local pillWidth = TITLE_PILL_WIDTHS[cosmeticItem.id] or (isLuxury and 174 or 138)
+			cosmeticPill.AnchorPoint = Vector2.new(0.5, 0)
 			if isLuxury and pal then
-				cosmeticPill.Size = UDim2.new(0.96, 0, 0, 24)
-				cosmeticPill.Position = UDim2.new(0.02, 0, 0, 37)
+				cosmeticPill.Size = UDim2.fromOffset(pillWidth, 24)
+				cosmeticPill.Position = UDim2.new(0.5, 0, 0, 37)
 				cosmeticPill.BackgroundColor3 = Color3.new(1, 1, 1)
 				cosmeticPill.BackgroundTransparency = 0.04
 				if bgGrad then
@@ -88,15 +97,15 @@ local function updateOverheadTitle(player, billboard)
 					end
 					sparkle.Visible = true
 				end
-				cosmeticLabel.Position = UDim2.fromOffset(26, 0)
+				cosmeticLabel.Position = UDim2.fromOffset(24, 0)
 				cosmeticLabel.Size = UDim2.new(1, -46, 1, 0)
 				cosmeticLabel.Text = cosmeticItem.titleText or cosmeticItem.name
 				cosmeticLabel.TextColor3 = pal.textColor
 				cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(10, 12, 34)
 				if sizeCap then sizeCap.MaxTextSize = 12 end
 			else
-				cosmeticPill.Size = UDim2.new(0.86, 0, 0, 18)
-				cosmeticPill.Position = UDim2.new(0.07, 0, 0, 38)
+				cosmeticPill.Size = UDim2.fromOffset(pillWidth, 18)
+				cosmeticPill.Position = UDim2.new(0.5, 0, 0, 38)
 				cosmeticPill.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
 				cosmeticPill.BackgroundTransparency = 0.12
 				if bgGrad then bgGrad.Enabled = false end
@@ -107,8 +116,8 @@ local function updateOverheadTitle(player, billboard)
 				end
 				if crest then crest.Visible = false end
 				if sparkle then sparkle.Visible = false end
-				cosmeticLabel.Position = UDim2.fromOffset(6, 0)
-				cosmeticLabel.Size = UDim2.new(1, -12, 1, 0)
+				cosmeticLabel.Position = UDim2.fromOffset(8, 0)
+				cosmeticLabel.Size = UDim2.new(1, -16, 1, 0)
 				cosmeticLabel.Text = "★ " .. (cosmeticItem.titleText or cosmeticItem.name)
 				cosmeticLabel.TextColor3 = cosmeticItem.primaryColor or Color3.fromRGB(254, 240, 138)
 				cosmeticLabel.TextStrokeColor3 = Color3.fromRGB(6, 18, 44)
@@ -119,7 +128,7 @@ local function updateOverheadTitle(player, billboard)
 	if nameLabel then
 		nameLabel.Position = UDim2.new(0, 0, 0, hasTitle and (isLuxury and 65 or 60) or 36)
 	end
-	billboard.Size = UDim2.new(0, isLuxury and 252 or 220, 0, hasTitle and (isLuxury and 92 or 84) or 65)
+	billboard.Size = UDim2.new(0, 220, 0, hasTitle and (isLuxury and 92 or 84) or 65)
 end
 
 local function setupOverheadGui(player, character)
@@ -171,8 +180,9 @@ local function setupOverheadGui(player, character)
 	-- Cosmetic Overhead Title Pill (below Rekor/Puncak)
 	local cosmeticPill = Instance.new("Frame")
 	cosmeticPill.Name = "CosmeticTitlePill"
-	cosmeticPill.Size = UDim2.new(0.86, 0, 0, 18)
-	cosmeticPill.Position = UDim2.new(0.07, 0, 0, 38)
+	cosmeticPill.AnchorPoint = Vector2.new(0.5, 0)
+	cosmeticPill.Size = UDim2.fromOffset(134, 18)
+	cosmeticPill.Position = UDim2.new(0.5, 0, 0, 38)
 	cosmeticPill.BackgroundColor3 = Color3.fromRGB(11, 28, 66)
 	cosmeticPill.BackgroundTransparency = 0.12
 	cosmeticPill.BorderSizePixel = 0
@@ -203,8 +213,8 @@ local function setupOverheadGui(player, character)
 	royalCrest.BorderSizePixel = 0
 	royalCrest.ScaleType = Enum.ScaleType.Fit
 	royalCrest.AnchorPoint = Vector2.new(0, 0.5)
-	royalCrest.Position = UDim2.new(0, 5, 0.5, 0)
-	royalCrest.Size = UDim2.fromOffset(18, 18)
+	royalCrest.Position = UDim2.new(0, 6, 0.5, 0)
+	royalCrest.Size = UDim2.fromOffset(16, 16)
 	royalCrest.ZIndex = 2
 	royalCrest.Visible = false
 	royalCrest.Parent = cosmeticPill
@@ -215,15 +225,15 @@ local function setupOverheadGui(player, character)
 	royalSparkle.BackgroundTransparency = 1
 	royalSparkle.BorderSizePixel = 0
 	royalSparkle.AnchorPoint = Vector2.new(1, 0.5)
-	royalSparkle.Position = UDim2.new(1, -6, 0.5, 0)
-	royalSparkle.Size = UDim2.fromOffset(12, 12)
+	royalSparkle.Position = UDim2.new(1, -7, 0.5, 0)
+	royalSparkle.Size = UDim2.fromOffset(11, 11)
 	royalSparkle.ZIndex = 2
 	royalSparkle.Visible = false
 	royalSparkle.Parent = cosmeticPill
 	for _, spec in ipairs({
-		{ w = 12, h = 2, r = 0 },
-		{ w = 2, h = 12, r = 0 },
-		{ w = 5, h = 5, r = 45 },
+		{ w = 11, h = 2, r = 0 },
+		{ w = 2, h = 11, r = 0 },
+		{ w = 4, h = 4, r = 45 },
 	}) do
 		local arm = Instance.new("Frame")
 		arm.BackgroundColor3 = Color3.new(1, 1, 1)

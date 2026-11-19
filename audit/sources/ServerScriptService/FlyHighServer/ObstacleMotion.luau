@@ -27,6 +27,55 @@ function Motion.DistanceToPath(point, first, last)
 	return (point - (first + travel * progress)).Magnitude
 end
 
+function Motion.PointToSpineDistance(point, bx, bz, minY, maxY)
+	local cy = math.clamp(point.Y, minY, maxY)
+	return (point - Vector3.new(bx, cy, bz)).Magnitude
+end
+
+function Motion.DistanceToSpine(bx, bz, minY, maxY, first, last)
+	local best = Motion.PointToSpineDistance(first, bx, bz, minY, maxY)
+	local endDist = Motion.PointToSpineDistance(last, bx, bz, minY, maxY)
+	if endDist < best then best = endDist end
+
+	local travel = last - first
+	local lenSq = travel:Dot(travel)
+	if lenSq <= 1e-8 then
+		return best
+	end
+
+	local function check(t)
+		if t > 0 and t < 1 then
+			local d = Motion.PointToSpineDistance(first + travel * t, bx, bz, minY, maxY)
+			if d < best then best = d end
+		end
+	end
+
+	local xzLenSq = travel.X * travel.X + travel.Z * travel.Z
+	if xzLenSq > 1e-8 then
+		check(((bx - first.X) * travel.X + (bz - first.Z) * travel.Z) / xzLenSq)
+	end
+
+	check((Vector3.new(bx, minY, bz) - first):Dot(travel) / lenSq)
+	check((Vector3.new(bx, maxY, bz) - first):Dot(travel) / lenSq)
+
+	if math.abs(travel.Y) > 1e-4 then
+		check((minY - first.Y) / travel.Y)
+		check((maxY - first.Y) / travel.Y)
+	end
+
+	return best
+end
+
+function Motion.DistanceToPath2D(bx, bz, first, last)
+	local tx, tz = last.X - first.X, last.Z - first.Z
+	local lenSq = tx * tx + tz * tz
+	if lenSq == 0 then
+		return Vector2.new(bx - first.X, bz - first.Z).Magnitude
+	end
+	local t = math.clamp(((bx - first.X) * tx + (bz - first.Z) * tz) / lenSq, 0, 1)
+	return Vector2.new(bx - (first.X + tx * t), bz - (first.Z + tz * t)).Magnitude
+end
+
 function Motion.InColumn(offset, low, high)
 	return offset.Y >= low and offset.Y <= high
 		and Vector2.new(offset.X, offset.Z).Magnitude <= Motion.LightningRadius

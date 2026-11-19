@@ -374,29 +374,18 @@ function Manager.AwardActionCoins(fd,p,amount,reason)
  return allow
 end
 function Manager.ResolveCollisions(fd,proposed)
- local clamped=Space.ClampMovement(fd,proposed,Manager.activeFlights)
-  if (proposed-clamped).Magnitude>.01 then
-   for _,other in ipairs(Manager.activeFlights)do
-    if other~=fd and other.balloon.Parent then
-     local d=fd.root.Position-other.root.Position
-     -- Damage only when the visible silhouettes actually meet (FlightSpace.ContactDistance).
-     local touch=Space.ContactDistance(fd,other,-d)
-     local near=touch~=nil and Vector2.new(d.X,d.Z).Magnitude<touch+1
-     if near and not fd.contacts[other.balloon]then
-      fd.contacts[other.balloon]=true other.contacts[fd.balloon]=true
-      Manager.ApplyPuncture(fd,"Collision")Manager.ApplyPuncture(other,"Collision")
-     end
-    end
-   end
+ local clamped,hitFlights=Space.ClampMovement(fd,proposed,Manager.activeFlights)
+ for other in pairs(hitFlights or {})do
+  if other.balloon.Parent and not fd.contacts[other.balloon] and (fd.root.Position-clamped).Magnitude<=1.25 then
+   fd.contacts[other.balloon]=true other.contacts[fd.balloon]=true
+   Manager.ApplyPuncture(fd,"Collision")Manager.ApplyPuncture(other,"Collision")
   end
-  for other in pairs(fd.contacts)do
-   local otherRoot=other.PrimaryPart
-   local d=otherRoot and (otherRoot.Position-fd.root.Position)
-   local otherFlight=nil
-   for _,candidate in ipairs(Manager.activeFlights)do if candidate.balloon==other then otherFlight=candidate break end end
-   local touch=d and otherFlight and Space.ContactDistance(fd,otherFlight,d)
-   if not other.Parent or not d or not touch or Vector2.new(d.X,d.Z).Magnitude>touch+6 then fd.contacts[other]=nil end
-  end
+ end
+ for other in pairs(fd.contacts)do
+  local otherFlight=nil
+  for _,candidate in ipairs(Manager.activeFlights)do if candidate.balloon==other then otherFlight=candidate break end end
+  if not other.Parent or not otherFlight or Space.Separated(fd,otherFlight,6) then fd.contacts[other]=nil end
+ end
  return clamped
 end
 

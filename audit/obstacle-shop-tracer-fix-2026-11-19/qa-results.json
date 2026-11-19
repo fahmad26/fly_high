@@ -1,0 +1,131 @@
+{
+  "runId": "obstacle-shop-tracer-fix-2026-11-19",
+  "timestamp": "2026-11-19T20:38:30+07:00",
+  "timezone": "Asia/Jakarta (WIB, UTC+7)",
+  "studioId": "3d4a4955-a9d0-4129-b534-cee6f160ea6a",
+  "baseCommit": "03a5c5c",
+  "place": {
+    "filePath": "E:/Antigravity/Fly High/Fly High.rbxl",
+    "sizeBytes": 3536681,
+    "mtime": "2026-11-19T20:38:30+07:00",
+    "sha256": "51dd5545c0f25cb10c30af191a329ebdec508927a35b8b8eb9fb60187496c2c0",
+    "reopenedFromDisk": false,
+    "publishedToCloud": false
+  },
+  "git": {
+    "branch": "main",
+    "head": "03a5c5c",
+    "committed": false,
+    "pushed": false
+  },
+  "parityAndCompile": {
+    "totalScripts": 66,
+    "compileFailCount": 0,
+    "allScriptManifestMismatches": 0,
+    "normalization": "UTF-8, CRLF->LF, trailing newlines stripped",
+    "editedScriptsSha256": {
+      "ServerScriptService/FlyHighServer/ObstacleMotion.luau": {
+        "len": 5378,
+        "sha256": "f86bc265df2edc1e0cc3482f448878b7270968a02df1d431ea1df4aa48e782fd",
+        "exact": true
+      },
+      "ServerScriptService/FlyHighServer/ObstacleManager.luau": {
+        "len": 25061,
+        "sha256": "567b34d39e1194983c97b7c7a00b97ea2a7d506f1e9b1405f2b37b6816956695",
+        "exact": true
+      },
+      "ServerScriptService/FlyHighServer/LargeChallengeManager.luau": {
+        "len": 6071,
+        "sha256": "d6e37e0eedb78c53b1ba5cfcf3b027677bb47970453d9d334cbddd205c90c3d4",
+        "exact": true
+      },
+      "ReplicatedStorage/FlyHigh/Modules/DailyAndShopCatalog.luau": {
+        "len": 9967,
+        "sha256": "7c0e1c7c97f0ef4cee98560cbda6b630caea83d4ec1fc2cf8a0974df3d9a8970",
+        "exact": true
+      },
+      "ReplicatedStorage/FlyHigh/Modules/WeaponPresentation.luau": {
+        "len": 48055,
+        "sha256": "4dde8367e53ba041afe12e2ae22f557b23100ffe9f6feee0438a2c4943a89abc",
+        "exact": true
+      }
+    }
+  },
+  "environment": {
+    "mode": "Play Solo",
+    "clients": 1,
+    "player": "Fikki2621",
+    "userId": 8635452105,
+    "gameId": 10776821830,
+    "placeId": 97043730132219,
+    "platform": "Windows Studio"
+  },
+  "suiteA_obstaclesAndHazards": {
+    "fixture": "_QA_SuiteA temporary server driver (deleted post-run); ObstacleManager.Paused=true, LargeChallengeManager.Paused=true; DataManager GrantCoins/UpdateAltitude/AddSummit/RecordObstacleDestroyed stubbed during test so live DataStore was untouched; balloon warped cleanly at 500 km, 1805 km (StormCurtain), and 150 km (safe zone)",
+    "passed": 20,
+    "total": 20,
+    "results": [
+      { "name": "1a_tornado_envelope", "pass": true, "detail": { "holes": 1, "windMag": 28, "windLeft": 1.737166, "invuln": 4.732874 } },
+      { "name": "1b_tornado_basket", "pass": true, "detail": { "holes": 1 } },
+      { "name": "1c_tornado_invuln_expiry", "pass": true, "detail": { "during": 0, "after": 1 } },
+      { "name": "1d_tornado_no_duplicate", "pass": true, "detail": { "holes": 1 } },
+      { "name": "1e_tornado_shield_blocks", "pass": true, "detail": { "holes": 0, "windUntil": 0 } },
+      { "name": "2_lightning", "pass": true, "detail": { "holes": 1 } },
+      { "name": "3_wind_basket", "pass": true, "detail": { "holes": 1, "windMag": 25.0 } },
+      { "name": "4_debris_basket", "pass": true, "detail": { "holes": 1 } },
+      { "name": "5_heat_basket", "pass": true, "detail": { "holes": 1 } },
+      { "name": "6_magnetic_puncture_reverse", "pass": true, "detail": { "holes": 1, "revLeft": 3.778346 } },
+      { "name": "7_fog_puncture", "pass": true, "detail": { "holes": 1 } },
+      { "name": "8_meteor_hit_no_drift", "pass": true, "detail": { "holes": 1, "parentDrift": 0 } },
+      { "name": "9a_storm_core", "pass": true, "detail": { "holes": 1 } },
+      { "name": "9b_storm_strike_cell", "pass": true, "detail": { "holes": 1, "strike": 1 } },
+      { "name": "10a_enemy_wildbird_basket", "pass": true, "detail": { "holes": 1, "destroyed": true } },
+      { "name": "10b_drone_spike_basket", "pass": true, "detail": { "spikeFired": true, "holes": 1, "destroyed": true } },
+      { "name": "10c_enemy_phoenix", "pass": true, "detail": { "holes": 1, "destroyed": true } },
+      { "name": "11a_storm_curtain_hit", "pass": true, "detail": { "holes": 1, "stormHits": 1, "windLeft": 2.79258 } },
+      { "name": "11b_storm_curtain_invuln_expiry", "pass": true, "detail": { "during": 0, "after": 1 } },
+      { "name": "12_safe_takeoff_blocks", "pass": true, "detail": { "applied": false, "holes": 0 } }
+    ]
+  },
+  "suiteB_shopCoinPrices": {
+    "fixture": "Live ShopModal via ShopToggleButton + TabPerbekalanButton + TabKosmetikButton in Play Solo; no mutating coin/cosmetic purchase RPC invoked because gameId=10776821830 uses live DataStore (read-only Catalog + rendered UI verification)",
+    "catalogPricesVerified": {
+      "turbo_gas": { "old": 120, "new": 150, "renderedSource": "150 Koin", "renderedLocalized": "150 Coins", "textFits": true },
+      "tali_awet": { "old": 100, "new": 100, "renderedSource": "100 Koin", "renderedLocalized": "100 Coins", "textFits": true },
+      "frame:gold_cloud": { "old": 300, "new": 300, "uiStateForFikki2621": "✓ DIPAKAI (temp)", "textFits": true },
+      "frame:aurora_teal": { "old": 350, "new": 350, "renderedSource": "350 Koin", "textFits": true },
+      "tracer:cyan_sky": { "old": 350, "new": 525, "uiStateForFikki2621": "✓ DIPAKAI (temp trial)", "textFits": true },
+      "tracer:dawn_gold": { "old": 400, "new": 600, "renderedSource": "600 Koin", "renderedLocalized": "600 Coins", "textFits": true },
+      "tracer:aurora_violet": { "old": 450, "new": 675, "renderedSource": "675 Koin", "renderedLocalized": "675 Coins", "textFits": true },
+      "title:prince_of_sky": { "old": 0, "new": 0, "renderedSource": "0 Koin", "renderedLocalized": "0 Coins", "textFits": true },
+      "title:princess_of_sky": { "old": 0, "new": 0, "renderedSource": "0 Koin", "renderedLocalized": "0 Coins", "textFits": true },
+      "title:faithful_explorer": { "old": 500, "new": 1000, "uiStateForFikki2621": "✓ DIPAKAI (owned)", "textFits": true },
+      "title:cloud_conqueror": { "old": 650, "new": 1300, "renderedSource": "1300 Koin", "renderedLocalized": "1300 Coins", "textFits": true }
+    },
+    "screenshots": [
+      "audit/obstacle-shop-tracer-fix-2026-11-19/shop-perbekalan-prices.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/shop-kosmetik-tracers.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/shop-kosmetik-titles.jpg"
+    ]
+  },
+  "suiteC_bulletTracers": {
+    "fixture": "_QA_SuiteC server + _QA_CamAim client script (both deleted cleanly post-run); Pistol equipped on hovering Pod_A balloon at 500 km; DataManager writes stubbed; EquippedTracer temporarily overridden in-memory per shot burst and restored to cyan_sky",
+    "gameScriptErrors": 0,
+    "leftoverTracersAfter1_5s": 0,
+    "screenshots": [
+      "audit/obstacle-shop-tracer-fix-2026-11-19/tracer-default-1p.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/tracer-cyan-1p.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/tracer-dawn-gold-1p.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/tracer-aurora-violet-1p.jpg",
+      "audit/obstacle-shop-tracer-fix-2026-11-19/tracer-dawn-gold-3p-side.jpg"
+    ]
+  },
+  "cleanup": {
+    "mode": "Edit",
+    "playerCount": 0,
+    "testNumberOfPlayers": 1,
+    "leftovers": [],
+    "cameraPosition": [0, 48, 25],
+    "editScreenshot": "audit/obstacle-shop-tracer-fix-2026-11-19/edit-restored.jpg"
+  }
+}
