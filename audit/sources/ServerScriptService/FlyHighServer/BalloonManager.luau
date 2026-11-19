@@ -91,9 +91,11 @@ local function renderHoles(fd)
   h.PatchPrompt.Enabled=fd.holeSet[i]==true and fd.holes<Config.MAX_HOLES and not fd.isVictory and not fd.isGameOver
  end
 end
-local function releaseGhostFocus(fd,p)
+local function releaseGhostFocus(fd,p,respawnIfDespawned)
  local parked=fd.ghostParkedChars and fd.ghostParkedChars[p]
  if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
+ local wasDespawned=fd.ghostDespawned and fd.ghostDespawned[p]==true
+ if fd.ghostDespawned then fd.ghostDespawned[p]=nil end
  if p.Parent~=Players then return end
  if not U.Flight(p) or U.Flight(p)==fd then
   if p.ReplicationFocus==fd.root then p.ReplicationFocus=nil end
@@ -104,6 +106,13 @@ local function releaseGhostFocus(fd,p)
     if hrp.Parent and p.Parent==Players and (not U.Flight(p) or U.Flight(p)==fd) then
      hrp.AssemblyLinearVelocity=Vector3.zero
      hrp.Anchored=false
+    end
+   end)
+  end
+  if respawnIfDespawned and (wasDespawned or not p.Character or not p.Character.Parent) then
+   task.spawn(function()
+    if p.Parent==Players and not U.Flight(p) and (not p.Character or not p.Character.Parent) then
+     pcall(function() p:LoadCharacterAsync() end)
     end
    end)
   end
@@ -127,7 +136,7 @@ function Manager.EndFlight(fd,victory)
   p:SetAttribute("IsMaster",false) p:SetAttribute("InFlight",false) p:SetAttribute("CrewRole",nil)
   p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
   if p.Parent==Players then
-   if not victory then releaseGhostFocus(fd,p) end
+   if not victory then releaseGhostFocus(fd,p,true) end
    _G.FlyHighDataManager.UpdateAltitude(p,fd.personalBest[p] or 0)
    if victory then
     _G.FlyHighDataManager.AddSummit(p)
@@ -209,7 +218,7 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
  nextFlightId+=1
  local fd={flightId=nextFlightId,balloon=b,root=root,alignPos=root.AlignPosition,alignOri=root.AlignOrientation,
   burnerFlame=b.Burner.BurnerNozzle.BurnerFlame,baseFlameColor=b.Burner.BurnerNozzle.BurnerFlame.Color,burnerLight=b.Burner.BurnerLight,sirenLight=b.EmergencySiren.SirenLight,
-  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},left={},ghostParkedChars={},personalBest={},connections={},
+  groundY=Config.GROUND_Y,players=table.clone(players),master=master,characters={},dead={},left={},ghostParkedChars={},ghostDespawned={},landingGraceUntil={},personalBest={},connections={},
   pilot=nil,pilotSteer=Vector3.zero,isGasActive=false,autoGas=false,groundedSince=os.clock(),contacts=setmetatable({},{__mode="k"}),altitudeKm=0,hasLiftedOff=false,
   holes=0,holeSet={},selfShotHoles={},invulnTime=0,shieldTime=0,isFreefalling=false,isGameOver=false,isVictory=false,
   usedKits={},awardedBiomes={},actionCoins={},turboTime=0,turboOwner=nil,turboUses={},ropeBuffUsers={},
@@ -263,16 +272,54 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
   end))
   table.insert(fd.connections,p.CharacterAdded:Connect(function(char)
    if not fd.dead[p] or fd.isVictory or fd.isGameOver or not fd.balloon.Parent or p.Parent~=Players then return end
-   local hrp=char:WaitForChild("HumanoidRootPart",5)
-   if hrp and hrp.Parent and fd.dead[p] and not fd.isVictory and not fd.isGameOver and fd.balloon.Parent and p.Parent==Players then
-    -- Anchor the respawned lobby body so streaming out Lobby at >4k km cannot drop it into the void.
-    hrp.AssemblyLinearVelocity=Vector3.zero
-    hrp.AssemblyAngularVelocity=Vector3.zero
-    hrp.Anchored=true
-    fd.ghostParkedChars[p]=char
-    p.ReplicationFocus=fd.root
+   fd.ghostDespawned[p]=true
+   p.ReplicationFocus=fd.root
+   local function hidePart(d)
+    if d:IsA("BasePart") then
+     d.Transparency=1 d.CanCollide=false d.CanTouch=false d.CanQuery=false d.CastShadow=false d.Anchored=true
+    elseif d:IsA("Decal") or d:IsA("Texture") then
+     d.Transparency=1
+    elseif d:IsA("BillboardGui") or d:IsA("SurfaceGui") then
+     d.Enabled=false
+    end
    end
+   for _,d in ipairs(char:GetDescendants()) do hidePart(d) end
+   local conn
+   conn=char.DescendantAdded:Connect(hidePart)
+   task.defer(function()
+    if conn then conn:Disconnect() end
+    if p.Parent==Players and fd.dead[p] and not fd.isVictory and not fd.isGameOver and fd.balloon.Parent then
+     if p.Character==char then p.Character=nil end
+     if char.Parent then char:Destroy() end
+     p.ReplicationFocus=fd.root
+    end
+   end)
   end))
+ end
+ -- Smoothly nudge non-crew bystanders just outside the launching balloon's rim so they never get trapped inside or warped to LobbySpawn.
+ local excludeLaunch={b}
+ for _,pl in ipairs(Players:GetPlayers()) do if pl.Character then table.insert(excludeLaunch,pl.Character) end end
+ for _,fl in ipairs(Manager.activeFlights) do if fl.balloon then table.insert(excludeLaunch,fl.balloon) end end
+ local launchCast=RaycastParams.new()
+ launchCast.FilterType=Enum.RaycastFilterType.Exclude
+ launchCast.FilterDescendantsInstances=excludeLaunch
+ for _,other in ipairs(Players:GetPlayers()) do
+  if not table.find(players,other) and U.Alive(other) and not U.Flight(other) then
+   local oRoot=other.Character and other.Character:FindFirstChild("HumanoidRootPart")
+   if oRoot then
+    local rel=oRoot.Position-start
+    if math.abs(rel.X)<16.5 and math.abs(rel.Z)<16.5 and rel.Y>-4 and rel.Y<16 then
+     U.Unseat(other)
+     local flat=Vector3.new(rel.X,0,rel.Z)
+     local dir=flat.Magnitude>0.1 and flat.Unit or Vector3.new(0,0,1)
+     local wxz=start+dir*17.5
+     local hit=workspace:Raycast(Vector3.new(wxz.X,math.max(oRoot.Position.Y+6,start.Y+6),wxz.Z),Vector3.new(0,-60,0),launchCast)
+     local safeY=(hit and not (hit.Instance:IsA("Terrain") and hit.Material==Enum.Material.Water) and hit.Position.Y>=8) and (hit.Position.Y+3.2) or (start.Y+1.5)
+     other.Character:PivotTo(CFrame.new(wxz.X,safeY,wxz.Z)*(oRoot.CFrame-oRoot.CFrame.Position))
+     oRoot.AssemblyLinearVelocity=Vector3.zero
+    end
+   end
+  end
  end
  b.Parent=workspace
  local helm=b.HelmSeat
@@ -322,7 +369,7 @@ function Manager.LaunchBalloon(players,master,spawnOrigin,podName)
   for _,c in ipairs(fd.connections) do c:Disconnect() end
   for _,p in ipairs(fd.players) do
    if not U.Flight(p) or U.Flight(p)==fd then
-    releaseGhostFocus(fd,p)
+    releaseGhostFocus(fd,p,true)
     p:SetAttribute("InFlight",false) p:SetAttribute("FlightGhost",false) p:SetAttribute("IsMaster",false)
     p:SetAttribute("TurboRemaining",0) p:SetAttribute("RopeBuffActive",false) p:SetAttribute("UsedTurboCount",0)
    end
@@ -506,7 +553,7 @@ remotes.FlightActionEvent.OnServerEvent:Connect(function(p,action,value)
 end)
 
 Players.PlayerRemoving:Connect(function(p)
- local fd=U.Flight(p)if not fd then return end fd.dead[p]=true fd.left=fd.left or {} fd.left[p]=true if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
+ local fd=U.Flight(p)if not fd then return end fd.dead[p]=true fd.left=fd.left or {} fd.left[p]=true if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end if fd.ghostDespawned then fd.ghostDespawned[p]=nil end
  local item=fd.boarding and fd.boarding[p]
  if item then
   if item.root.Parent then item.root.Anchored=item.anchored end fd.boarding[p]=nil
@@ -528,7 +575,11 @@ RunService.Heartbeat:Connect(function(dt)
   for _,p in ipairs(fd.players) do
    if U.Alive(p,fd) then
     local hrp=p.Character.HumanoidRootPart
-    if os.clock()>(fd.boardingUntil or 0) and (fd.root.Position.Y-hrp.Position.Y>35 or (hrp.Position-fd.root.Position).Magnitude>90) then
+    local tm=_G.FlyHighTetherManager
+    local tether=tm and tm.activeTethers[p.UserId]
+    local nowCheck=os.clock()
+    local grace=(tether and (tether.winch or tether.hanging or (tether.landingGraceUntil and nowCheck<tether.landingGraceUntil))) or (fd.landingGraceUntil and fd.landingGraceUntil[p] and nowCheck<fd.landingGraceUntil[p])
+    if not grace and nowCheck>(fd.boardingUntil or 0) and (fd.root.Position.Y-hrp.Position.Y>35 or (hrp.Position-fd.root.Position).Magnitude>90) then
      p.Character:FindFirstChildOfClass("Humanoid").Health=0
     else alive+=1 end
    end

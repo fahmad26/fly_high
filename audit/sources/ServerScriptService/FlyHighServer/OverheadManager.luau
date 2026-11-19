@@ -132,6 +132,7 @@ local function updateOverheadTitle(player, billboard)
 end
 
 local function setupOverheadGui(player, character)
+	if player:GetAttribute("FlightGhost") == true and player:GetAttribute("InFlight") == true then return end
 	local head = character:WaitForChild("Head", 10)
 	if not head then return end
 

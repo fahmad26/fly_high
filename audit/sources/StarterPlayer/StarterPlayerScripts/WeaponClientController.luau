@@ -497,6 +497,9 @@ end)
 local function onCharacter(char)
  setWeapon(nil)
  local hum=char:WaitForChild("Humanoid")hum.Died:Connect(function()setWeapon(nil)end)
+ if not isGhostNow() and Workspace.CurrentCamera and Workspace.CurrentCamera.CameraType==Enum.CameraType.Custom then
+  Workspace.CurrentCamera.CameraSubject=hum
+ end
  char.ChildAdded:Connect(function(child)
   if child:IsA("Tool") and Config.WEAPONS[child.Name] then setWeapon(child) end
  end)
@@ -506,44 +509,80 @@ end
 setWeaponPresentation=require(ReplicatedStorage.FlyHigh.Modules.WeaponPresentation).Start(localPlayer,weaponFireEvent,script,screenGui,onLocalWeaponImpact)
 if localPlayer.Character then onCharacter(localPlayer.Character) end
 localPlayer.CharacterAdded:Connect(onCharacter)
+local winchLandingToken = 0
 tetherEvent.OnClientEvent:Connect(function(data)
- if data.rescueLanded then
+ local landedKind = data.winchLanded or (data.rescueLanded and "Basket" or nil)
+ if landedKind == "Basket" or landedKind == "Catwalk" then
+  winchLandingToken += 1
+  local token = winchLandingToken
   local char = localPlayer.Character
   local hrp = char and char:FindFirstChild("HumanoidRootPart")
   local hum = char and char:FindFirstChildOfClass("Humanoid")
-  local floor = data.balloon and data.balloon:FindFirstChild("BasketFloor")
-  if hrp and hum and floor and floor:IsA("BasePart") and typeof(data.localOffset) == "Vector3" then
-   local function uprightFloorCFrame(localPos: Vector3): CFrame
+  local balloon = data.balloon
+  local anchorPart = landedKind == "Basket"
+   and (balloon and balloon:FindFirstChild("BasketFloor"))
+   or (balloon and (balloon.PrimaryPart or balloon:FindFirstChild("RootPart")))
+  if hrp and hum and anchorPart and anchorPart:IsA("BasePart") and typeof(data.localOffset) == "Vector3" then
+   local function uprightAnchorCFrame(localPos: Vector3): CFrame
     local look = hrp.CFrame.LookVector
     local flat = Vector3.new(look.X, 0, look.Z)
     local rot = flat.Magnitude > 0.01 and CFrame.lookAt(Vector3.zero, flat.Unit) or CFrame.identity
-    return CFrame.new(floor.CFrame:PointToWorldSpace(localPos)) * rot
+    return CFrame.new(anchorPart.CFrame:PointToWorldSpace(localPos)) * rot
    end
-   hum.PlatformStand = false
-   hum.Sit = false
-   hum.Jump = false
-   hrp.CFrame = uprightFloorCFrame(data.localOffset)
-   hrp.AssemblyLinearVelocity = floor.AssemblyLinearVelocity
-   hrp.AssemblyAngularVelocity = Vector3.zero
-   hum:ChangeState(Enum.HumanoidStateType.Running)
    task.spawn(function()
-    local deadline = os.clock() + 0.85
-    while os.clock() < deadline and char.Parent and hrp.Parent and hum.Parent and floor.Parent do
+    local waitAnchorUntil = os.clock() + 1.0
+    while hrp.Anchored and os.clock() < waitAnchorUntil and token == winchLandingToken and char.Parent and hrp.Parent and hum.Parent do
      RunService.Stepped:Wait()
-     local rel = floor.CFrame:PointToObjectSpace(hrp.Position)
-     local halfX = math.max(2, floor.Size.X / 2 - 2.5)
-     local halfZ = math.max(2, floor.Size.Z / 2 - 2.5)
-     local outOfBounds = math.abs(rel.X) > halfX or math.abs(rel.Z) > halfZ
-     local sinking = rel.Y < data.localOffset.Y - 0.45
-     if hum.FloorMaterial == Enum.Material.Air or outOfBounds or sinking then
-      local clamped = Vector3.new(math.clamp(rel.X, -halfX, halfX), data.localOffset.Y, math.clamp(rel.Z, -halfZ, halfZ))
-      hrp.CFrame = uprightFloorCFrame(clamped)
-      hrp.AssemblyLinearVelocity = floor.AssemblyLinearVelocity
-      hrp.AssemblyAngularVelocity = Vector3.zero
-      hum.PlatformStand = false
-      hum.Sit = false
-      hum.Jump = false
-      hum:ChangeState(Enum.HumanoidStateType.Running)
+    end
+    if token ~= winchLandingToken or not char.Parent or not hrp.Parent or not hum.Parent or not anchorPart.Parent or hrp.Anchored then
+     return
+    end
+    hum.PlatformStand = false
+    hum.Sit = false
+    hum.Jump = false
+    hrp.CFrame = uprightAnchorCFrame(data.localOffset)
+    hrp.AssemblyLinearVelocity = Vector3.zero
+    hrp.AssemblyAngularVelocity = Vector3.zero
+    hum:ChangeState(Enum.HumanoidStateType.Running)
+
+    local deadline = os.clock() + 0.85
+    while os.clock() < deadline and token == winchLandingToken and char.Parent and hrp.Parent and hum.Parent and anchorPart.Parent and not hrp.Anchored and hum.Health > 0 do
+     RunService.Stepped:Wait()
+     if token ~= winchLandingToken or not char.Parent or not hrp.Parent or not hum.Parent or not anchorPart.Parent or hrp.Anchored or hum.Health <= 0 then
+      break
+     end
+     local rel = anchorPart.CFrame:PointToObjectSpace(hrp.Position)
+     if landedKind == "Basket" then
+      local halfX = math.max(2, anchorPart.Size.X / 2 - 2.5)
+      local halfZ = math.max(2, anchorPart.Size.Z / 2 - 2.5)
+      local outOfBounds = math.abs(rel.X) > halfX or math.abs(rel.Z) > halfZ
+      local sinking = rel.Y < data.localOffset.Y - 0.45
+      if hum.FloorMaterial == Enum.Material.Air or outOfBounds or sinking then
+       local clamped = Vector3.new(math.clamp(rel.X, -halfX, halfX), data.localOffset.Y, math.clamp(rel.Z, -halfZ, halfZ))
+       hrp.CFrame = uprightAnchorCFrame(clamped)
+       hrp.AssemblyLinearVelocity = Vector3.zero
+       hrp.AssemblyAngularVelocity = Vector3.zero
+       hum.PlatformStand = false
+       hum.Sit = false
+       hum.Jump = false
+       hum:ChangeState(Enum.HumanoidStateType.Running)
+      end
+     else
+      local flat = Vector2.new(rel.X, rel.Z)
+      local r = flat.Magnitude
+      local outOfRing = r < 14.9 or r > 17.1
+      local sinking = rel.Y < data.localOffset.Y - 0.5
+      if hum.FloorMaterial == Enum.Material.Air or outOfRing or sinking then
+       local dir = r > 0.05 and flat.Unit or Vector2.new(data.localOffset.X, data.localOffset.Z).Unit
+       local clamped = Vector3.new(dir.X * 16.0, data.localOffset.Y, dir.Y * 16.0)
+       hrp.CFrame = uprightAnchorCFrame(clamped)
+       hrp.AssemblyLinearVelocity = Vector3.zero
+       hrp.AssemblyAngularVelocity = Vector3.zero
+       hum.PlatformStand = false
+       hum.Sit = false
+       hum.Jump = false
+       hum:ChangeState(Enum.HumanoidStateType.Running)
+      end
      end
     end
    end)

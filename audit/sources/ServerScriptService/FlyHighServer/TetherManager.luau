@@ -86,7 +86,7 @@ function Manager.CancelRopeRepair(p)
  end
 end
 
-function Manager.CleanupPlayer(p)
+function Manager.CleanupPlayer(p,landingPayload)
  if Manager.rescuers[p] then Manager.CancelPull(Manager.rescuers[p])end
  Manager.CancelRopeRepair(p)
  local t=Manager.activeTethers[p.UserId]
@@ -116,7 +116,7 @@ function Manager.CleanupPlayer(p)
  end
  independentOwner(t,true)
  stationText(t.pool)
- if p.Parent==Players then remotes.TetherEvent:FireClient(p,{isTethered=false,isRepairingRope=false})end
+ if p.Parent==Players then remotes.TetherEvent:FireClient(p,landingPayload or {isTethered=false,isRepairingRope=false})end
 end
 
 function Manager.CleanupBalloon(b)
@@ -210,7 +210,7 @@ end
 
 local function basketStandHeight(hum,hrp)
  local leg=hum.RigType==Enum.HumanoidRigType.R6 and hum.Parent and hum.Parent:FindFirstChild("Left Leg")
- return hum.HipHeight+hrp.Size.Y/2+(leg and leg.Size.Y or 0)+0.12
+ return hum.HipHeight+hrp.Size.Y/2+(leg and leg.Size.Y or 0)+0.03
 end
 
 local function uprightCFrameAt(worldPos,facingSource)
@@ -241,7 +241,7 @@ local function travel(p,b,descending,rescue)
  t.oldAnchored=t.hrp.Anchored t.oldAutoRotate=t.hum.AutoRotate
  t.collisionGroups={}
  for _,part in p.Character:GetDescendants()do if part:IsA("BasePart")then t.collisionGroups[part]=part.CollisionGroup part.CollisionGroup="FlyHighWinching"end end
- t.hrp.Anchored=true t.hum.AutoRotate=false t.hum.Jump=false t.repair=nil t.rescueGraceUntil=nil
+ t.hrp.Anchored=true t.hum.AutoRotate=false t.hum.Jump=false t.repair=nil t.landingGraceUntil=nil
  t.stage=rescue and "Rescuing"or(descending and "Descending"or "Climbing")
  t.winch={from=b.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position),to=destination,elapsed=0,detach=descending and not rescue,rescue=rescue,localFloorOffset=localFloorOffset}
  syncTether(t,U.InBasket(t.hrp,floor))
@@ -443,34 +443,48 @@ RunService.Heartbeat:Connect(function(dt)
    end
    -- Replicate the settled landing pose before returning physics ownership.
    if w.elapsed>=Config.WINCH_MOVE_DURATION_SEC+Config.WINCH_SETTLE_DURATION_SEC then
-    t.hrp.Anchored=t.oldAnchored t.hrp.AssemblyLinearVelocity=fd.root.AssemblyLinearVelocity t.hrp.AssemblyAngularVelocity=Vector3.zero
+    t.hrp.CFrame=uprightCFrameAt(worldPos,fd.root.CFrame)
+    t.hrp.Anchored=t.oldAnchored t.hrp.AssemblyLinearVelocity=Vector3.zero t.hrp.AssemblyAngularVelocity=Vector3.zero
     restoreCollisions(t)
     t.hum.AutoRotate=t.oldAutoRotate t.hum.Sit=false t.hum.PlatformStand=false t.hum.Jump=false
     t.hum:ChangeState(Enum.HumanoidStateType.Running)
     t.hum:Move(Vector3.zero,false)t.winch=nil
+    t.landingGraceUntil=os.clock()+1.25
+    if fd.landingGraceUntil then fd.landingGraceUntil[p]=t.landingGraceUntil end
     independentOwner(t,false)
-    if w.detach then Manager.CleanupPlayer(p)continue end
+    if w.detach then
+     Manager.CleanupPlayer(p,{
+      isTethered=false,isRepairingRope=false,insideBasket=true,stage="Basket",
+      winchLanded="Basket",balloon=fd.balloon,localOffset=w.localFloorOffset
+     })
+     continue
+    end
     if w.rescue then
      local rescuer=t.helper
      t.needsRescue=false t.stage="Basket"releaseHelper(t)
-     t.rescueGraceUntil=os.clock()+1.15
      remotes.TetherEvent:FireClient(p,{
       isTethered=true,durability=t.durability,insideBasket=true,stage="Basket",ropeSlot=t.slot.index,
-      rescueLanded=true,balloon=fd.balloon,localOffset=w.localFloorOffset
+      rescueLanded=true,winchLanded="Basket",balloon=fd.balloon,localOffset=w.localFloorOffset
      })
      if rescuer and _G.FlyHighBalloonManager then
       _G.FlyHighBalloonManager.AwardActionCoins(fd,rescuer,DailyCatalog.COINS.RESCUE_CREW,"Tarik Rekan")
      end
-    else t.stage="Catwalk"end
+    else
+     t.stage="Catwalk"
+     remotes.TetherEvent:FireClient(p,{
+      isTethered=true,durability=t.durability,insideBasket=false,stage="Catwalk",ropeSlot=t.slot.index,
+      winchLanded="Catwalk",balloon=fd.balloon,localOffset=w.to
+     })
+    end
    end
   end
   local floor=t.balloon.BasketFloor
   local floorRel=floor.CFrame:PointToObjectSpace(t.hrp.Position)
   local inside=U.InBasket(t.hrp,floor)
-  local graceActive=t.rescueGraceUntil and os.clock()<t.rescueGraceUntil
+  local graceActive=t.landingGraceUntil and os.clock()<t.landingGraceUntil
   if not t.winch and not t.needsRescue and not graceActive then
    local q=t.balloon.PrimaryPart.CFrame:PointToObjectSpace(t.hrp.Position)
-   local fell=t.stage=="Catwalk"and(q.Y<catwalkHeight(t.balloon)-1 or Vector2.new(q.X,q.Z).Magnitude>21)
+   local fell=t.stage=="Catwalk"and(q.Y<catwalkHeight(t.balloon)-2.2 or Vector2.new(q.X,q.Z).Magnitude>21)
     or t.stage=="Basket"and(floorRel.Y<-1.5 or math.abs(floorRel.X)>floor.Size.X/2+1.5 or math.abs(floorRel.Z)>floor.Size.Z/2+1.5)
    if fell then hang(t)elseif inside then t.stage="Basket"end
   end

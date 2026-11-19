@@ -65,6 +65,7 @@ local function land(fd)
     root.AssemblyLinearVelocity=Vector3.zero
     if p.ReplicationFocus==fd.root then p.ReplicationFocus=nil end
     if fd.ghostParkedChars then fd.ghostParkedChars[p]=nil end
+    if fd.ghostDespawned then fd.ghostDespawned[p]=nil end
     p:SetAttribute("FlightGhost",false)
     p:SetAttribute("ArrivalPending",nil)
     p:SetAttribute("PalaceArrival",nil)

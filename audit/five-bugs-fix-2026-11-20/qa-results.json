@@ -1,0 +1,185 @@
+{
+  "runDate": "2026-11-20",
+  "timezone": "Asia/Jakarta",
+  "environment": {
+    "studioId": "62413064-d35d-4c65-ba51-2f7fda1c2e38",
+    "placeId": 97043730132219,
+    "universeId": 10776821830,
+    "baseGitCommit": "bda5b15",
+    "gitCommitted": true,
+    "gitPushed": true,
+    "cloudSaveLocation": "TeamCreate",
+    "cloudSaveVersion": 69,
+    "cloudPublished": false,
+    "localRbxlUpdated": true,
+    "localRbxlBytes": 3541776,
+    "localRbxlSha256": "9cd2da3a6a6c8a439e18a5841efd7060876f1b8cb4ed597d7efe36e1dd0c3c03",
+    "localRbxlMtime": "2026-11-20T02:09:38+07:00",
+    "localRbxlParity": "66/66 normalized, 0 mismatches, 0 QA leftovers",
+    "localRbxlReopened": false,
+    "mode": "Play Solo (Windows, 1 player)",
+    "player": "Fikki2621",
+    "testServiceNumberOfPlayers": 1,
+    "dataManagerWrites": "stubbed in memory",
+    "obstaclesAndLargeChallengePaused": true
+  },
+  "editedFiles": [
+    "ServerScriptService/FlyHighServer/CrewAccessGuard.luau",
+    "ServerScriptService/FlyHighServer/PodManager.luau",
+    "ServerScriptService/FlyHighServer/BalloonManager.luau",
+    "ServerScriptService/FlyHighServer/PalaceArrival.luau",
+    "ServerScriptService/FlyHighServer/OverheadManager.luau",
+    "ServerScriptService/FlyHighServer/JumpManager.luau",
+    "ServerScriptService/FlyHighServer/TetherManager.luau",
+    "StarterPlayer/StarterPlayerScripts/FlightJumpController.luau",
+    "StarterPlayer/StarterPlayerScripts/PalaceCinematics.luau",
+    "StarterPlayer/StarterPlayerScripts/WeaponClientController.luau",
+    "StarterPlayer/StarterPlayerScripts/BalloonFleetAnimator.luau"
+  ],
+  "studioEditParity": {
+    "totalScripts": 66,
+    "matchedNormalized": 66,
+    "mismatches": 0,
+    "extraInStudio": 0,
+    "compileFail": 0,
+    "testServiceNumberOfPlayers": 1,
+    "editLeftoverCount": 0
+  },
+  "tests": {
+    "test1_bug1_stacked_close_balloons": {
+      "passed": true,
+      "belowTeleports": 0,
+      "satInitially": true,
+      "helmUnseated": 0,
+      "helmHoldTicks": 20,
+      "aboveTeleports": 0,
+      "sideTeleports": 0,
+      "dummyAlive": true,
+      "health": 100,
+      "realPos": [-13.984535217285157, 100.22129821777344, 0.000006740814114891691],
+      "dummyPos": [-13.965923309326172, 54.644859313964847, -0.0000012590139704116155],
+      "clientOtherBalloonCollidableParts": 0,
+      "clientBarriers": [{"name": "Barrier_Balloon_OtherTeam", "canCollide": true}],
+      "screenshot": "bug1-stacked-balloons-free-move.jpg"
+    },
+    "test2_bug2_sofa_swing_jump_dismount_and_helm_guard": {
+      "passed": true,
+      "sofa": {
+        "seatName": "LeftSeat",
+        "jumpButton": {"sit": false, "seatName": "nil", "state": "Enum.HumanoidStateType.Running"},
+        "keyboardSpace": {"sit": false, "seatName": "nil", "state": "Enum.HumanoidStateType.Running"}
+      },
+      "swing": {
+        "seatName": "SitSeat",
+        "jumpButton": {"sit": false, "seatName": "nil", "state": "Enum.HumanoidStateType.Running", "hingeTarget": 3.4440081119537355},
+        "keyboardSpace": {"sit": false, "seatName": "nil", "state": "Enum.HumanoidStateType.Running", "hingeTarget": 13.794206619262696}
+      },
+      "helmSeatGuard": {
+        "seatName": "HelmSeat",
+        "isPilot": true,
+        "keyboardSpace": {"sit": true, "seatName": "HelmSeat", "state": "Enum.HumanoidStateType.Seated"}
+      },
+      "screenshot": "bug2-seat-swing-dismount.jpg"
+    },
+    "test3_bug3_climb_descend_under_knockback": {
+      "passed": true,
+      "prep": {"attached": true, "stage": "Basket", "pos": [-80.00016784667969, 139.00450134277345, 70]},
+      "climbRun1ScreenshotSession": {
+        "reachedCatwalk": true,
+        "stage": "Catwalk",
+        "fellOrHung": false,
+        "needsRescue": false,
+        "health": 100,
+        "maxBalloonSpeedXZ": 132.34,
+        "lastSample": {"velXZ": 19.7, "floor": "WoodPlanks", "r": 16.19, "relY": 24.57, "stage": "Catwalk", "needsRescue": false},
+        "screenshot": "bug3-climb-descend-under-knockback.jpg"
+      },
+      "climb": {
+        "reachedCatwalk": true,
+        "stage": "Catwalk",
+        "fellOrHung": false,
+        "needsRescue": false,
+        "health": 100,
+        "maxBalloonSpeedXZ": 130.79,
+        "lastSample": {"velXZ": 19.24, "floor": "WoodPlanks", "r": 16.26, "relY": 24.57, "stage": "Catwalk", "needsRescue": false}
+      },
+      "descend": {
+        "detached": true,
+        "stage": "Detached",
+        "descFell": false,
+        "outsideCount": 0,
+        "health": 100,
+        "maxBalloonSpeedXZ": 115.81,
+        "lastSample": {"velXZ": 20.33, "floor": "WoodPlanks", "r": 2.61, "relY": 2.57, "stage": "Detached", "needsRescue": false}
+      }
+    },
+    "test4_bug4_spectating_ghost_no_lobby_body": {
+      "passed": true,
+      "killGhost": {
+        "flightGhost": true,
+        "inFlight": true,
+        "repFocusMatchesRoot": true,
+        "characterIsNil": true,
+        "wsModelsNamedPlayer": 0,
+        "overheadAtLobby": 0,
+        "ghostDespawnedFlag": true,
+        "clientCameraSubject": "Workspace.Balloon_Fikki2621.RootPart",
+        "clientGhostFrameVisible": true,
+        "screenshot": "bug4-ghost-no-lobby-body.jpg"
+      },
+      "gameOverRespawn": {
+        "hasCharacter": true,
+        "health": 100,
+        "distToLobby": 2.51,
+        "repFocusIsNil": true,
+        "flightGhost": false,
+        "clientCameraSubject": "Workspace.Fikki2621.Humanoid"
+      },
+      "victoryRevival": {
+        "nilDuringGhost": true,
+        "palaceArrived": true,
+        "arrivalRevived": true,
+        "hasCharacter": true,
+        "health": 100,
+        "distToDock": 8.53,
+        "flightGhost": false,
+        "repFocusIsNil": true
+      }
+    },
+    "test5_bug5_outsider_blocked_by_barrier_and_rim_push": {
+      "passed": true,
+      "subtest5A_barrierWalk": {
+        "enteredBasket": false,
+        "walkMinDistXZ": 15.99,
+        "afterWalkToLobby": 76.18,
+        "clientBarriers": [{"name": "Barrier_Balloon_OtherTeam", "canCollide": true}]
+      },
+      "subtest5B_crewAccessGuardRimPush": {
+        "afterPushDistToPod": 17.66,
+        "afterPushToLobby": 74.66,
+        "health": 100
+      },
+      "screenshot": "bug5-outsider-barrier-at-dock.jpg"
+    }
+  },
+  "consoleOutputObserved": [
+    "[BadgeManager] Studio skipped live badge grant SkySovereign (133927492139337) for 8635452105; verified active via API.",
+    "AssistantCommand:13 & AssistantCommand:15 (initial read-only Plugin-VM probe typos, not game scripts)",
+    "Players.Fikki2621.PlayerScripts._QA_FiveBugsClient:122: attempt to index nil with 'Parent' (initial QA harness typo fixed in Step 1)",
+    "ServerScriptService.FlyHighServer.BalloonManager:356: HelmPrompt is not a valid member of VehicleSeat \"HelmSeat\" (pre-existing Occupant teardown signal when cleanupFlights destroyed Balloon while player sat in HelmSeat; 0 errors in any of the 11 edited code blocks)"
+  ],
+  "cleanupAndEditRestore": {
+    "playSoloStopped": true,
+    "currentStudioMode": "Edit",
+    "testServiceNumberOfPlayers": 1,
+    "leftoverCount": 0,
+    "localPlayerInEdit": "Fikki2621",
+    "cameraRestored": true,
+    "screenshot": "edit-restored.jpg"
+  },
+  "qaLimitations": [
+    "Subtest 5C (LaunchBalloon non-crew bystander rim nudge across Players:GetPlayers()) requires >=2 real players and was not executed in 1-player Play Solo.",
+    "True multi-client (2-3 real players) verification of stacked balloons, spectating ghost non-visibility from a living teammate viewport, outsider physical walking against another team's live balloon, and physical mobile/tablet touch dismount remain open.",
+    "Both Team Create v69 and updated local Fly High.rbxl (3,541,776 B, SHA-256 9cd2da3a6a6c8a439e18a5841efd7060876f1b8cb4ed597d7efe36e1dd0c3c03) have not yet been reopened in a new Studio session."
+  ]
+}

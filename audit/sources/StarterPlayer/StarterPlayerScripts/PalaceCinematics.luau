@@ -386,7 +386,11 @@ local function holdMovement(on)
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	if on then
 		if humanoid and not held[humanoid] then
-			held[humanoid] = { walk = humanoid.WalkSpeed, jump = humanoid.JumpPower, height = humanoid.JumpHeight }
+			local sp = game:GetService("StarterPlayer")
+			local walk = humanoid.WalkSpeed > 0 and humanoid.WalkSpeed or (sp.CharacterWalkSpeed > 0 and sp.CharacterWalkSpeed or 16)
+			local jump = humanoid.JumpPower > 0 and humanoid.JumpPower or (sp.CharacterJumpPower > 0 and sp.CharacterJumpPower or 50)
+			local height = humanoid.JumpHeight > 0 and humanoid.JumpHeight or (sp.CharacterJumpHeight > 0 and sp.CharacterJumpHeight or 7.2)
+			held[humanoid] = { walk = walk, jump = jump, height = height }
 			humanoid.WalkSpeed = 0
 			humanoid.JumpPower = 0
 			humanoid.JumpHeight = 0

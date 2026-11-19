@@ -55,7 +55,21 @@ function Manager.Request(p)
 end
 local rate=U.RateLimiter(.15)
 remote.OnServerEvent:Connect(function(p,action)
- if action=="Request"and rate(p)then Manager.Request(p)end
+ if action=="Request"and rate(p)then Manager.Request(p)
+ elseif action=="DismountSeat"and rate(p)then
+  local char=p.Character
+  local hum=char and char:FindFirstChildOfClass("Humanoid")
+  local seat=hum and hum.SeatPart
+  if hum and hum.Health>0 and seat and seat.Name~="HelmSeat"then
+   U.Unseat(p)
+   local root=char:FindFirstChild("HumanoidRootPart")
+   if root and not root.Anchored then
+    root.CFrame=CFrame.new(root.Position+Vector3.new(0,1.2,0))*(root.CFrame-root.CFrame.Position)
+    root.AssemblyAngularVelocity=Vector3.zero
+    pcall(function()root:SetNetworkOwner(p)end)
+   end
+  end
+ end
 end)
 local elapsed=0
 Run.Heartbeat:Connect(function(dt)

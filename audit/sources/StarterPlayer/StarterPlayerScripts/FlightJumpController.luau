@@ -42,20 +42,37 @@ local function bind(char)
  hum=char:WaitForChild("Humanoid")originalJump=hum:GetStateEnabled(Enum.HumanoidStateType.Jumping)lastEnabled=nil active=nil
 end
 if p.Character then bind(p.Character)end p.CharacterAdded:Connect(bind)
+local function tryDismountNonHelmSeat(targetHum)
+ if not targetHum or not targetHum.Parent or targetHum.Health<=0 then return false end
+ local seat=targetHum.SeatPart
+ if not (targetHum.Sit or seat) then return false end
+ if seat and seat.Name=="HelmSeat" then return false end
+ targetHum:SetStateEnabled(Enum.HumanoidStateType.Jumping,true)
+ if targetHum.JumpPower<=0 then targetHum.JumpPower=50 end
+ if targetHum.JumpHeight<=0 then targetHum.JumpHeight=7.2 end
+ targetHum.Sit=false
+ targetHum.Jump=true
+ targetHum:ChangeState(Enum.HumanoidStateType.Jumping)
+ jump:FireServer("DismountSeat")
+ return true
+end
 local function request()
  if not hum or hum.Health<=0 then return end
+ if tryDismountNonHelmSeat(hum) then return end
  if p:GetAttribute("InFlight")and p:GetAttribute("FlightJumpAllowed")~=true then hum.Jump=false return end
  if p:GetAttribute("InFlight")then jump:FireServer("Request")end
 end
 Input.JumpRequest:Connect(request)
 local jumpTap=0
 button.Activated:Connect(function()
+ if tryDismountNonHelmSeat(hum) then return end
  jumpTap+=1 local token=jumpTap local targetHum=hum
  -- Moving floors can report Air for a single frame; buffer one tap, never grant an air jump.
  task.spawn(function()
   local deadline=os.clock()+.2
   repeat
    if token~=jumpTap or targetHum~=hum or not targetHum or not targetHum.Parent or targetHum.Health<=0 then return end
+   if tryDismountNonHelmSeat(targetHum) then return end
    if p:GetAttribute("InFlight")and(p:GetAttribute("FlightJumpAllowed")~=true or p:GetAttribute("FlightGhost")==true)then return end
    if targetHum.FloorMaterial~=Enum.Material.Air and targetHum:GetStateEnabled(Enum.HumanoidStateType.Jumping)then
     request()
@@ -78,7 +95,7 @@ Run.Heartbeat:Connect(function(dt)
  local enable=allowed and originalJump
  if hum and hum.Parent and lastEnabled~=enable then hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,enable)lastEnabled=enable end
  if hum and not allowed then hum.Jump=false end
- panel.Visible=hum~=nil and hum.Health>0 and not(p:GetAttribute("InFlight")==true and p:GetAttribute("FlightGhost")==true)and not (hum and hum.SeatPart and hum.SeatPart.Name=="HelmSeat")
+ panel.Visible=hum~=nil and hum.Parent~=nil and hum.Health>0 and not(p:GetAttribute("InFlight")==true and p:GetAttribute("FlightGhost")==true)and not (hum and hum.SeatPart and hum.SeatPart.Name=="HelmSeat")
  local remaining=math.max(0,(p:GetAttribute("FlightJumpReadyAt")or 0)-workspace:GetServerTimeNow())
  button.Active=allowed
  hint.Text=not allowed and (p:GetAttribute("FlightJumpReason")or "Tunggu gondola")or(remaining>0 and string.format("Efek turun siap\ndalam %.1f detik",remaining)or "LOMPAT BERSAMA\nTurunkan balon untuk menghindari badai")

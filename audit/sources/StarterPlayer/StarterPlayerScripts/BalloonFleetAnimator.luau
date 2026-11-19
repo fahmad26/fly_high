@@ -12,23 +12,57 @@ local player=Players.LocalPlayer
 local remotes=RS:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local pods=workspace:WaitForChild("FlyHighLobby"):WaitForChild("MatchmakingPods")
 local flights={} local previews={} local attached=false local holes=0 local tetherStage
+local barrierFolder=workspace:FindFirstChild("FlyHighLocalBarriers")
+if not barrierFolder then
+ barrierFolder=Instance.new("Folder")
+ barrierFolder.Name="FlyHighLocalBarriers"
+ barrierFolder.Parent=workspace
+end
+script.Destroying:Connect(function() if barrierFolder and barrierFolder.Parent then barrierFolder:Destroy() end end)
 remotes.TetherEvent.OnClientEvent:Connect(function(data)
  local wasWinching=tetherStage=="Climbing"or tetherStage=="Descending"or tetherStage=="Rescuing"
- if wasWinching and (data.stage=="Catwalk"or data.stage=="Basket"or data.isTethered==false)then
+ if not (data.winchLanded or data.rescueLanded) and wasWinching and (data.stage=="Catwalk"or data.stage=="Basket"or data.isTethered==false)then
   local character=player.Character
   local hum=character and character:FindFirstChildOfClass("Humanoid")
   if hum and hum.Health>0 and not character:GetAttribute("FatalRopeFall")then
    hum.Sit=false hum.PlatformStand=false hum.Jump=false
-   hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+   hum:ChangeState(Enum.HumanoidStateType.Running)
   end
  end
  attached = data.isTethered == true
  tetherStage = data.stage
 end)
 remotes.FlightStateSyncEvent.OnClientEvent:Connect(function(data) holes=data.holes or 0 if data.isGameOver or data.isVictory then attached=false end end)
+local function restoreHullCollide(entry)
+ if not entry.hullDisabled then return end
+ for part,orig in pairs(entry.hullOriginalCollide) do
+  if part.Parent then part.CanCollide=orig end
+ end
+ table.clear(entry.hullOriginalCollide)
+ entry.hullDisabled=false
+end
+local function disableHullCollide(entry)
+ if entry.hullDisabled then return end
+ for _,part in ipairs(entry.model:GetDescendants()) do
+  if part:IsA("BasePart") and part.CanCollide then
+   entry.hullOriginalCollide[part]=true
+   part.CanCollide=false
+  end
+ end
+ entry.hullDisabled=true
+end
 local function register(model)
  if not model:IsA("Model") or flights[model] or not model:GetAttribute("BalloonThemeId") or model:GetAttribute("IsFleetPreview") then return end
- local entry={model=model,prompts={},motors={},connections={}}
+ local barrier=Instance.new("Part")
+ barrier.Name="Barrier_"..model.Name
+ barrier.Size=Vector3.new(30.4,15.5,30.4)
+ barrier.Anchored=true
+ barrier.CanCollide=false
+ barrier.CanQuery=false
+ barrier.CanTouch=false
+ barrier.Transparency=1
+ barrier.CastShadow=false
+ local entry={model=model,prompts={},motors={},connections={},barrier=barrier,hullOriginalCollide={},hullDisabled=false}
  flights[model]=entry
  BalloonVFX.Attach(model)
  local function add(o)
@@ -85,6 +119,8 @@ local function register(model)
  table.insert(entry.connections,model.DescendantAdded:Connect(add))
  table.insert(entry.connections,model.Destroying:Connect(function()
   BalloonVFX.Detach(model)
+  restoreHullCollide(entry)
+  if entry.barrier and entry.barrier.Parent then entry.barrier:Destroy() else entry.barrier:Destroy() end
   for _,c in ipairs(entry.connections) do c:Disconnect() end flights[model]=nil
  end))
 end
@@ -134,6 +170,8 @@ RunService.PreSimulation:Connect(function(dt)
  for model,entry in pairs(flights) do
   if not model.Parent then
    BalloonVFX.Detach(model)
+   restoreHullCollide(entry)
+   if entry.barrier then entry.barrier:Destroy() end
    for _,c in ipairs(entry.connections) do c:Disconnect() end flights[model]=nil
   else
    local root=model.PrimaryPart
@@ -160,21 +198,57 @@ end)
 -- physics step. The replicated velocity is smooth; the replicated CFrame steps.
 local AIR_STATES={[Enum.HumanoidStateType.Jumping]=true,[Enum.HumanoidStateType.Freefall]=true,
  [Enum.HumanoidStateType.GettingUp]=true,[Enum.HumanoidStateType.FallingDown]=true}
+local lastFollowModel,lastFollowRootPos=nil,nil
 RunService.PreSimulation:Connect(function(dt)
  local char=player.Character
  local hum=char and char:FindFirstChildOfClass("Humanoid")
  local hrp=char and char:FindFirstChild("HumanoidRootPart")
  local ref=player:FindFirstChild("FlightBalloon")
  local model=ref and ref.Value
+ local inFlight=player:GetAttribute("InFlight")==true
+ for bModel,entry in pairs(flights) do
+  local bRoot=bModel.PrimaryPart
+  local isOther=bModel.Parent~=nil and bRoot~=nil and bModel~=model and bModel:GetAttribute("ArrivalState")==nil
+  if not isOther then
+   entry.barrier.CanCollide=false
+   entry.barrier.Parent=nil
+   restoreHullCollide(entry)
+  else
+   if inFlight and model~=nil then
+    disableHullCollide(entry)
+   else
+    restoreHullCollide(entry)
+   end
+   entry.barrier.CFrame=bRoot.CFrame*CFrame.new(0,6.5,0)
+   entry.barrier.Parent=barrierFolder
+   local trappedInside=false
+   if hrp then
+    local rel=bRoot.CFrame:PointToObjectSpace(hrp.Position)
+    trappedInside=math.abs(rel.X)<14.6 and math.abs(rel.Z)<14.6 and rel.Y>-1.0 and rel.Y<13.8
+   end
+   entry.barrier.CanCollide=not trappedInside
+  end
+ end
  local root=model and model.PrimaryPart
- if not (hum and hrp and root) or hum.Health<=0 or player:GetAttribute("InFlight")~=true
+ local deltaXZ=Vector3.zero
+ if inFlight and model and root then
+  local rootPos=root.Position
+  if lastFollowModel==model and lastFollowRootPos then
+   local diff=rootPos-lastFollowRootPos
+   deltaXZ=Vector3.new(diff.X,0,diff.Z)
+  end
+  lastFollowModel=model
+  lastFollowRootPos=rootPos
+ else
+  lastFollowModel=nil
+  lastFollowRootPos=nil
+ end
+ if not (hum and hrp and root) or hum.Health<=0 or not inFlight
   or player:GetAttribute("FlightGhost")==true or hrp.Anchored or hum.Sit or hum.PlatformStand then return end
- if hum.FloorMaterial~=Enum.Material.Air or not AIR_STATES[hum:GetState()] then return end
+ if hum.FloorMaterial~=Enum.Material.Air or (not AIR_STATES[hum:GetState()] and tetherStage~="Catwalk") then return end
  local rel=root.CFrame:PointToObjectSpace(hrp.Position)
  if Vector2.new(rel.X,rel.Z).Magnitude>36 or rel.Y<-8 or rel.Y>72 then return end
- local platform=root:GetVelocityAtPosition(hrp.Position)
- local step=Vector3.new(platform.X,0,platform.Z)*math.min(dt,0.1)
- if step.Magnitude<4 then hrp.CFrame+=step end
+ if deltaXZ.Magnitude>0 and deltaXZ.Magnitude<12 then hrp.CFrame+=deltaXZ end
 end)
 local promptElapsed=0
 RunService.Heartbeat:Connect(function(dt)
