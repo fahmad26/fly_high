@@ -1,0 +1,133 @@
+{
+  "auditDate": "2026-11-20T03:00:25+07:00",
+  "feature": "WelcomeSign Interactive Tutorial Board & Bilingual 3-Tab TutorialModal",
+  "baseCommit": "bb8a63f",
+  "studioId": "c3777d67-8edf-4329-8e0d-c6eb7688e8ef",
+  "placeId": 97043730132219,
+  "universeId": 10776821830,
+  "environment": "Roblox Studio Play Solo (Windows, 1 player Fikki2621, DataManager writes stubbed in memory, QA viewport simulation attributes for phone/tablet cells)",
+  "localization": {
+    "catalogEntries": 542,
+    "addedTutorialAndWelcomeEntries": 28,
+    "dynamicTemplates": 59,
+    "generatedVia": "Python (tools/build-localization.cjs logic; node CLI not installed on host PATH)"
+  },
+  "parityAndCompile": {
+    "totalScripts": 67,
+    "compileFail": 0,
+    "studioMirrorMatched": 67,
+    "mismatches": 0,
+    "extraOnDisk": [],
+    "midQaDefectFixed": "Renamed tutorial cards Card1..3 -> TutCard1..3 (TutorialModal, HUDLayout) and excluded TutorialModal from HUDTheme Shop card skinning so HUDCardStage no longer covers IconSlot icons."
+  },
+  "checks": {
+    "welcomeSignWalk": {
+      "reached": true,
+      "distToBoard": 5.53,
+      "hasPrompt": true,
+      "promptEnabled": true
+    },
+    "boardAndPromptLocalization": {
+      "id": {
+        "promptDisplay": "CARA BERMAIN",
+        "fits": true,
+        "visible": true
+      },
+      "en": {
+        "promptDisplay": "HOW TO PLAY",
+        "fits": true,
+        "visible": true
+      }
+    },
+    "interactiveTriggerAndTabs": {
+      "keyPressEOpened": true,
+      "scrimVisible": true,
+      "activeTabInitial": "basics",
+      "hudCardStageCount": 0,
+      "frameLoaded": true,
+      "crestLoaded": true,
+      "closeLoaded": true,
+      "rolesClickMouseInput": {
+        "activeTab": "roles",
+        "scrollCanvasPos": [0, 0]
+      },
+      "survivalClickMouseInput": {
+        "activeTab": "survival",
+        "all9IconsLoaded": true
+      },
+      "enTranslationOnModal": {
+        "titleLocalizedText": "HOW TO PLAY",
+        "survivalCard1LocalizedText": "Storm Curtain — Jump to Drop Fast",
+        "fits": true
+      }
+    },
+    "mutualExclusionAndAutoClose": {
+      "openShop": {
+        "shopVisible": true,
+        "tutorialVisible": false,
+        "shopCard1StageExists": true
+      },
+      "reopenTutorial": {
+        "tutVisible": true,
+        "shopVisible": false,
+        "scrimVisible": true
+      },
+      "inFlightAutoClose": {
+        "inFlight": true,
+        "tutVisible": false,
+        "scrimVisible": false
+      },
+      "closeButtonClick": {
+        "tutVisible": false,
+        "scrimVisible": false
+      }
+    },
+    "responsiveMatrix30": {
+      "viewports": [
+        "1920x1080 desktop",
+        "1366x768 laptop",
+        "1024x768 iPad touch",
+        "844x390 phone landscape touch",
+        "390x844 phone portrait touch"
+      ],
+      "tabs": ["basics", "roles", "survival"],
+      "languages": ["id", "en"],
+      "totalCells": 30,
+      "passed": 30,
+      "failures": []
+    },
+    "consoleOutput": {
+      "gameScriptErrors": 0,
+      "notes": "[BadgeManager] Studio skipped live badge grant SkySovereign (133927492139337) for 8635452105; verified active via API."
+    }
+  },
+  "cleanupAndSave": {
+    "studioMode": "Edit",
+    "testServiceNumberOfPlayers": 1,
+    "leftoverCount": 0,
+    "welcomeSignPrompt": {
+      "hasPrompt": true,
+      "actionText": "Cara Bermain",
+      "objectText": "Papan Panduan"
+    },
+    "savePlace": {
+      "status": "Saved",
+      "location": "LocalFile",
+      "filePath": "E:/Antigravity/Fly High/Fly High.rbxl",
+      "binaryBytes": 3547491,
+      "mtime": "2026-11-20T03:00:06.5856161+07:00",
+      "binarySha256": "f17d2986fc85dbcd2d3303f1797d9485c8902574b12092ae37256557afdb77b9"
+    },
+    "binaryParserReport": "audit/tutorial-board-popup-2026-11-20/binary-source-report.json",
+    "reopenedInFreshStudio": false
+  },
+  "screenshots": [
+    "audit/tutorial-board-popup-2026-11-20/01-welcome-board-and-prompt.jpg",
+    "audit/tutorial-board-popup-2026-11-20/02-tutorial-tab1-basics-id.jpg",
+    "audit/tutorial-board-popup-2026-11-20/03-tutorial-tab2-roles-id.jpg",
+    "audit/tutorial-board-popup-2026-11-20/04-tutorial-tab3-survival-en.jpg",
+    "audit/tutorial-board-popup-2026-11-20/05-tutorial-phone-portrait-en.jpg",
+    "audit/tutorial-board-popup-2026-11-20/06-tutorial-ipad-roles-id.jpg",
+    "audit/tutorial-board-popup-2026-11-20/edit-restored.jpg"
+  ]
+}

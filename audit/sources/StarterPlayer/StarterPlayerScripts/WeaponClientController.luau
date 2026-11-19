@@ -791,6 +791,7 @@ local HUD_BLOCKER_NAMES = {
 }
 local MODAL_BLOCKER_NAMES = {
  HUDModalScrim = true,
+ TutorialModal = true,
  TacticalPingWheel = true,
  ShopModal = true,
  WeaponSettingsModal = true,

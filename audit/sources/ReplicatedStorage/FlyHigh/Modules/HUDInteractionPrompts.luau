@@ -13,7 +13,7 @@ local titles: { [string]: string } = {
  PhotoPrompt="FOTO KEMENANGAN", SitPrompt="DUDUK",
  TetherPrompt="PASANG TALI", DetachTetherPrompt="LEPAS TALI",
  ClimbPrompt="PANJAT KUBAH", DescendPrompt="TURUN KE GONDOLA",
- PullCrewPrompt="TARIK REKAN",
+ PullCrewPrompt="TARIK REKAN", TutorialPrompt="CARA BERMAIN",
 }
 local padKeys: { [Enum.KeyCode]: string } = {
  [Enum.KeyCode.ButtonA]="A", [Enum.KeyCode.ButtonB]="B", [Enum.KeyCode.ButtonX]="X", [Enum.KeyCode.ButtonY]="Y",

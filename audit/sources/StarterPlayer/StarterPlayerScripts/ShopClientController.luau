@@ -8,6 +8,7 @@ local Config=require(modules.FlyHighConfig)
 local Assets=require(modules.HUDImageAssets)
 local ShopTabsController=require(modules:WaitForChild("ShopTabsController"))
 local DailyLoginModal=require(modules:WaitForChild("DailyLoginModal"))
+local TutorialModal=require(modules:WaitForChild("TutorialModal"))
 local Localization=require(modules:WaitForChild("Localization"))
 
 local localPlayer = Players.LocalPlayer
@@ -239,6 +240,7 @@ local function request(item)
 end
 local refreshShopTabs=ShopTabsController.Attach(shopModal,localPlayer,function(msg) feedback.Text=msg or "" end,request)
 DailyLoginModal.Ensure(screenGui,localPlayer)
+TutorialModal.Ensure(screenGui,localPlayer)
 local function refreshPrices()
  if loading or os.clock()-refreshedAt<60 then return end
  loading=true

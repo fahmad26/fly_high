@@ -55,6 +55,7 @@ local configs = {
 	SettingsCloseButton = { "close", "", "close", "round" },
 	AudioCloseButton = { "close", "", "close", "round" },
 	PingCloseButton = { "close", "", "close", "round" },
+	TutorialCloseButton = { "close", "", "close", "round" },
 	Ping1 = { "gas", "Gas Api Sekarang!", "ping1", "ping" },
 	Ping2 = { "warning", "Awas Tornado Menghindar!", "ping2", "ping" },
 	Ping3 = { "rope", "Tali Saya Mau Habis!", "ping3", "ping" },
@@ -226,6 +227,7 @@ local surfaceKeys = {
 	StormChallengePanel = "storm",
 	ShopModal = "shop_panel",
 	DailyLoginModal = "ping_panel",
+	TutorialModal = "ping_panel",
 	WeaponSettingsModal = "ping_panel",
 	AudioSettingsModal = "ping_panel",
 	TacticalPingWheel = "ping_panel",
@@ -346,6 +348,7 @@ local pingTileColors = {
 local modalPanelSet = {
 	ShopModal = true,
 	DailyLoginModal = true,
+	TutorialModal = true,
 	WeaponSettingsModal = true,
 	AudioSettingsModal = true,
 	TacticalPingWheel = true,
@@ -691,7 +694,7 @@ end
 			build(o, "ping_banner")
 		elseif o.Name == "WeaponReticle" then
 			build(o, "reticle")
-		elseif o.Name == "Card1" or o.Name == "Card2" or o.Name == "Card3" or o.Name == "Card4" then
+		elseif (o.Name == "Card1" or o.Name == "Card2" or o.Name == "Card3" or o.Name == "Card4") and not o:FindFirstAncestor("TutorialModal") then
 			build(o, "card")
 		elseif surfaceKeys[o.Name] then
 			build(o, "panel")
@@ -1832,6 +1835,26 @@ end
 					if dFooter then
 						fitLine(dFooter, math.min(1, textBoost), 8)
 						dFooter.ZIndex = z + 4
+					end
+				elseif o.Name == "TutorialModal" then
+					applyModalChrome(o, "modal_frame_9slice", "crest_victory", z)
+					local tTitle = o:FindFirstChild("TutorialTitle")
+					if tTitle then
+						applyTextStyle(tTitle, { font = Enum.Font.GothamBlack, size = 21, color = Color3.fromRGB(255, 246, 209), strokeThickness = 2.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(tTitle, math.min(2, textBoost), 13)
+						tTitle.ZIndex = z + 4
+					end
+					local tSub = o:FindFirstChild("TutorialSubtitle")
+					if tSub then
+						applyTextStyle(tSub, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(147, 197, 253), strokeThickness = 1.2, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(tSub, math.min(1, textBoost), 8)
+						tSub.ZIndex = z + 4
+					end
+					local tFooter = o:FindFirstChild("TutorialFooterHint")
+					if tFooter then
+						applyTextStyle(tFooter, { font = Enum.Font.GothamBold, size = 12, color = Color3.fromRGB(186, 220, 255), strokeThickness = 1.1, wrapped = false, align = Enum.TextXAlignment.Center })
+						fitLine(tFooter, math.min(1, textBoost), 8)
+						tFooter.ZIndex = z + 4
 					end
 				elseif o.Name == "TacticalPingWheel" then
 					applyModalChrome(o, "modal_frame_9slice", "crest_ping", z)

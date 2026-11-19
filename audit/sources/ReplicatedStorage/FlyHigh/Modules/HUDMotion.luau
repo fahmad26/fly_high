@@ -20,6 +20,7 @@ local sessions: {[ScreenGui]: any} = setmetatable({}, {__mode = "k"}) :: any
 local modalNames = {
 	ShopModal = true,
 	DailyLoginModal = true,
+	TutorialModal = true,
 	WeaponSettingsModal = true,
 	TacticalPingWheel = true,
 	AudioSettingsModal = true,
@@ -29,6 +30,7 @@ local panels = {
 	AltimeterFrame = true,
 	ShopModal = true,
 	DailyLoginModal = true,
+	TutorialModal = true,
 	WeaponSettingsModal = true,
 	TacticalPingWheel = true,
 	AudioSettingsModal = true,
@@ -459,7 +461,7 @@ function Motion.Start(gui: ScreenGui, player: Player): any
 		r.input = nil
 		r.popUntil = now + 0.16
 		r.rotPulseAt = now
-		r.rotPulseDir = (o.Name == "CloseButton" or o.Name == "DailyCloseButton" or o.Name == "SettingsCloseButton" or o.Name == "AudioCloseButton" or o.Name == "PingCloseButton") and -4 or 2.6
+		r.rotPulseDir = (o.Name == "CloseButton" or o.Name == "DailyCloseButton" or o.Name == "SettingsCloseButton" or o.Name == "AudioCloseButton" or o.Name == "PingCloseButton" or o.Name == "TutorialCloseButton") and -4 or 2.6
 		if not reduced() then
 			r.values.Value = 0.90
 			tween(r, if r.hover then 1.08 else 1.0, 1, 0.30, Enum.EasingStyle.Back, Enum.EasingDirection.Out)

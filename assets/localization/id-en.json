@@ -2022,5 +2022,149 @@
   {
     "source": "BLN",
     "en": "MONTH"
+  },
+  {
+    "source": "Pangeran Langit",
+    "en": "Prince of the Sky"
+  },
+  {
+    "source": "Gelar: Pangeran Langit",
+    "en": "Title: Prince of the Sky"
+  },
+  {
+    "source": "Mahkota safir langit bercahaya emas. Eksklusif seharga 0 Koin.",
+    "en": "Sapphire sky crown glowing with gold. Exclusive at 0 Coins."
+  },
+  {
+    "source": "Putri Langit",
+    "en": "Princess of the Sky"
+  },
+  {
+    "source": "Gelar: Putri Langit",
+    "en": "Title: Princess of the Sky"
+  },
+  {
+    "source": "Tiara kristal mawar berbalut kilau champagne. Eksklusif seharga 0 Koin.",
+    "en": "Rose crystal tiara wrapped in champagne shimmer. Exclusive at 0 Coins."
+  },
+  {
+    "source": "GELAR ROYAL EKSKLUSIF",
+    "en": "ROYAL EXCLUSIVE TITLE"
+  },
+  {
+    "source": "Kosmetik tidak tersedia untuk akunmu.",
+    "en": "This cosmetic is not available for your account."
+  },
+  {
+    "source": "1. Masuk Dermaga  •  2. Bagi Peran\n3. Capai Istana Awan (10.000 km)!",
+    "en": "1. Join a Dock  •  2. Pick Roles\n3. Reach Cloud Palace (10,000 km)!"
+  },
+  {
+    "source": "Tekan [E] / Ketuk untuk Cara Bermain",
+    "en": "Press [E] / Tap for How to Play"
+  },
+  {
+    "source": "CARA BERMAIN",
+    "en": "HOW TO PLAY"
+  },
+  {
+    "source": "Cara Bermain",
+    "en": "How to Play"
+  },
+  {
+    "source": "Papan Panduan",
+    "en": "Guide Board"
+  },
+  {
+    "source": "Panduan singkat 3 langkah menuju Istana Awan",
+    "en": "Quick 3-step guide to Cloud Palace"
+  },
+  {
+    "source": "DASAR",
+    "en": "BASICS"
+  },
+  {
+    "source": "PERAN",
+    "en": "ROLES"
+  },
+  {
+    "source": "BERTAHAN",
+    "en": "SURVIVAL"
+  },
+  {
+    "source": "1 peran aktif per pemain · Bisa berganti peran kapan saja",
+    "en": "1 active role per player · Switch roles anytime"
+  },
+  {
+    "source": "1. Masuk Dermaga (1–3 Pemain)",
+    "en": "1. Join a Dock (1–3 Players)"
+  },
+  {
+    "source": "Pilih salah satu dari 5 dermaga (Pod A–E). Pemain pertama jadi Party Master untuk menekan Mulai Terbang.",
+    "en": "Step onto any of the 5 docks (Pod A–E). The first player becomes Party Master to start the flight."
+  },
+  {
+    "source": "2. Capai Istana Awan (10.000 km)",
+    "en": "2. Reach Cloud Palace (10,000 km)"
+  },
+  {
+    "source": "Terbang melewati 5 zona langit hingga 10.000 km. Di bawah 300 km bebas rintangan alam, tapi hindari tabrakan balon lain.",
+    "en": "Ascend through 5 sky zones to 10,000 km. Below 300 km has no natural hazards, but avoid other balloons."
+  },
+  {
+    "source": "3. Waspadai 5 Lubang Balon",
+    "en": "3. Watch Out for 5 Holes"
+  },
+  {
+    "source": "Makin banyak lubang, balon makin cepat turun. Di 5 lubang balon terjun bebas — tambal sebelum menyentuh tanah!",
+    "en": "More holes make the balloon sink faster. At 5 holes it enters freefall — repair before hitting the ground!"
+  },
+  {
+    "source": "Pilot — Kemudi & Gas",
+    "en": "Pilot — Helm & Gas"
+  },
+  {
+    "source": "Duduk di kemudi [E], gerak (WASD/Analog), tahan GAS untuk naik ([Z] Auto-Gas), dan tekan [H] untuk berdiri.",
+    "en": "Sit at the helm [E], steer (WASD/Stick), hold GAS to rise ([Z] Auto-Gas), and press [H] to stand up."
+  },
+  {
+    "source": "Gunner — Tembak Rintangan",
+    "en": "Gunner — Shoot Hazards"
+  },
+  {
+    "source": "Ambil senjata di rak [E], tembak musuh terbang ([R] reload, [G] taruh). Hazard cuaca kebal peluru — jangan tembak balon sendiri!",
+    "en": "Grab a gun at the rack [E], shoot flying foes ([R] reload, [G] drop). Weather hazards are immune — don't shoot your own balloon!"
+  },
+  {
+    "source": "Engineer — Tali & Tambal",
+    "en": "Engineer — Rope & Repair"
+  },
+  {
+    "source": "Pasang tali [E] → Panjat [F] → tahan [E] di lubang → Turun [Q]. Jangan biarkan tali 0%! Tahan [C] perbaiki tali, [B] tarik rekan.",
+    "en": "Attach rope [E] → Climb [F] → hold [E] on holes → Descend [Q]. Never let rope hit 0%! Hold [C] to repair rope, [B] to pull crew."
+  },
+  {
+    "source": "Dinding Badai — Lompat Turun Cepat",
+    "en": "Storm Curtain — Jump to Drop Fast"
+  },
+  {
+    "source": "Saat peringatan Dinding Badai muncul, kru non-Pilot cukup Lompat (Space/Tombol Lompat) agar balon turun melewati celah bawah.",
+    "en": "When a Storm Curtain warning appears, non-Pilot crew Jump (Space/Jump Button) to drop quickly through the lower gap."
+  },
+  {
+    "source": "Perbekalan & Clutch Save",
+    "en": "Supplies & Clutch Save"
+  },
+  {
+    "source": "Emergency Kit menambal semua lubang + perisai 60 dtk (bisa dipakai saat terjun bebas!). Turbo Gas & Tali Awet membantu perjalanan.",
+    "en": "Emergency Kit repairs all holes + 60s shield (works during freefall!). Turbo Gas & Reinforced Rope boost your journey."
+  },
+  {
+    "source": "Mode Arwah (Ghost Spotter)",
+    "en": "Spirit Mode (Ghost Spotter)"
+  },
+  {
+    "source": "Jika gugur saat rekan masih hidup, tekan [V] untuk menandai bahaya. Jika tim mencapai 10.000 km, kamu ikut hidup kembali & menang!",
+    "en": "If you fall while crewmates live, press [V] to mark dangers. If your team reaches 10,000 km, you revive at the top and win too!"
   }
 ]

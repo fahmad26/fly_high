@@ -1,0 +1,136 @@
+﻿{
+  "binaryBytes": 3547491,
+  "binarySha256": "f17d2986fc85dbcd2d3303f1797d9485c8902574b12092ae37256557afdb77b9",
+  "binaryScripts": 67,
+  "mirrorScripts": 67,
+  "testService": {
+    "AttributesSerialize": "00000000",
+    "_has_QA_attr": false,
+    "Name": "TestService",
+    "NumberOfPlayers": [
+      1
+    ]
+  },
+  "workspaceProps": {
+    "AttributesSerialize": "00000000",
+    "_has_QA_attr": false,
+    "Name": "Workspace"
+  },
+  "qaNames": [],
+  "mismatches": [],
+  "normOnlyCount": 28,
+  "normOnly": [
+    "ReplicatedStorage.FlyHigh.Modules.AudioSettingsModal",
+    "ReplicatedStorage.FlyHigh.Modules.BalloonVFX",
+    "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog",
+    "ReplicatedStorage.FlyHigh.Modules.DailyLoginModal",
+    "ReplicatedStorage.FlyHigh.Modules.FlyHighConfig",
+    "ReplicatedStorage.FlyHigh.Modules.HUDAdventureCatalog",
+    "ReplicatedStorage.FlyHigh.Modules.HUDAltitudeTracker",
+    "ReplicatedStorage.FlyHigh.Modules.HUDInteractionPrompts",
+    "ReplicatedStorage.FlyHigh.Modules.HUDRepairPrompts",
+    "ReplicatedStorage.FlyHigh.Modules.HUDTopChrome",
+    "ReplicatedStorage.FlyHigh.Modules.LeaderboardBoardRenderer",
+    "ReplicatedStorage.FlyHigh.Modules.ShopTabsController",
+    "ReplicatedStorage.FlyHigh.Modules.TutorialModal",
+    "ServerScriptService.FlyHighServer.BadgeManager",
+    "ServerScriptService.FlyHighServer.BalloonManager",
+    "ServerScriptService.FlyHighServer.CrewAccessGuard",
+    "ServerScriptService.FlyHighServer.DataManager",
+    "ServerScriptService.FlyHighServer.FlightSpace",
+    "ServerScriptService.FlyHighServer.LeaderboardManager",
+    "ServerScriptService.FlyHighServer.ObstacleArt",
+    "ServerScriptService.FlyHighServer.ObstacleMotion",
+    "ServerScriptService.FlyHighServer.ObstacleVisuals",
+    "ServerScriptService.FlyHighServer.OverheadManager",
+    "ServerScriptService.FlyHighServer.ServerUtils",
+    "ServerScriptService.FlyHighServer.ShopManager",
+    "ServerScriptService.FlyHighServer.WeaponRackPresentation",
+    "StarterPlayer.StarterPlayerScripts.IslandNatureAnimator",
+    "StarterPlayer.StarterPlayerScripts.WeaponHotbarController"
+  ],
+  "missingInBinary": [],
+  "extraInBinary": [],
+  "targetDetails": {
+    "ReplicatedStorage.FlyHigh.Modules.DailyAndShopCatalog": {
+      "exact": false,
+      "normEqual": true,
+      "diskSha": "15cc7e648ed09afd700ea027d38332ab033a761740c95dcc64a26d0b66cd0dcc",
+      "binSha": "7c0e1c7c97f0ef4cee98560cbda6b630caea83d4ec1fc2cf8a0974df3d9a8970",
+      "diskNormSha": "7c0e1c7c97f0ef4cee98560cbda6b630caea83d4ec1fc2cf8a0974df3d9a8970",
+      "binNormSha": "7c0e1c7c97f0ef4cee98560cbda6b630caea83d4ec1fc2cf8a0974df3d9a8970",
+      "diskBytes": 9976,
+      "binBytes": 9975
+    },
+    "ReplicatedStorage.FlyHigh.Modules.WeaponPresentation": {
+      "exact": true,
+      "normEqual": true,
+      "diskSha": "3fc57204666106d6a8691dc656f5ab849b370a4fed042f4241e019cbdc7eae80",
+      "binSha": "3fc57204666106d6a8691dc656f5ab849b370a4fed042f4241e019cbdc7eae80",
+      "diskNormSha": "ac9b5766607ef4a551ec3f4be6b255d86a54edcdf94f246917745bdb14da51ac",
+      "binNormSha": "ac9b5766607ef4a551ec3f4be6b255d86a54edcdf94f246917745bdb14da51ac",
+      "diskBytes": 71071,
+      "binBytes": 71071
+    },
+    "ServerScriptService.FlyHighServer.BalloonManager": {
+      "exact": false,
+      "normEqual": true,
+      "diskSha": "18d85b49d2f6d48cd6e99057984e543ef663e4b3ab5cdac8728212745fdf4a25",
+      "binSha": "4ada7934641840fb16920e4677928a1397952e20adb4b49f0338b77372f3094d",
+      "diskNormSha": "4ada7934641840fb16920e4677928a1397952e20adb4b49f0338b77372f3094d",
+      "binNormSha": "4ada7934641840fb16920e4677928a1397952e20adb4b49f0338b77372f3094d",
+      "diskBytes": 36034,
+      "binBytes": 36033
+    },
+    "ServerScriptService.FlyHighServer.FlightSpace": {
+      "exact": false,
+      "normEqual": true,
+      "diskSha": "b028629a60784c136c184dc6ce248872cb1ce8f69965be81af6ee157392fab3d",
+      "binSha": "d24aca1193590dbbd4bd0d942c3741f625f3ffa6e8fbc12bb45e3c3c9b61acc0",
+      "diskNormSha": "d24aca1193590dbbd4bd0d942c3741f625f3ffa6e8fbc12bb45e3c3c9b61acc0",
+      "binNormSha": "d24aca1193590dbbd4bd0d942c3741f625f3ffa6e8fbc12bb45e3c3c9b61acc0",
+      "diskBytes": 9014,
+      "binBytes": 9013
+    },
+    "ServerScriptService.FlyHighServer.LargeChallengeManager": {
+      "exact": true,
+      "normEqual": true,
+      "diskSha": "eb7004dd9b8290a6560b987f035a8d50c3c65d1e8e61ecd4f4e45ff7174f8569",
+      "binSha": "eb7004dd9b8290a6560b987f035a8d50c3c65d1e8e61ecd4f4e45ff7174f8569",
+      "diskNormSha": "d6e37e0eedb78c53b1ba5cfcf3b027677bb47970453d9d334cbddd205c90c3d4",
+      "binNormSha": "d6e37e0eedb78c53b1ba5cfcf3b027677bb47970453d9d334cbddd205c90c3d4",
+      "diskBytes": 6072,
+      "binBytes": 6072
+    },
+    "ServerScriptService.FlyHighServer.ObstacleManager": {
+      "exact": true,
+      "normEqual": true,
+      "diskSha": "d7387d123c449c6de4c5cb1f5f40550fa6b584d7674f342635238ccb9575a8d0",
+      "binSha": "d7387d123c449c6de4c5cb1f5f40550fa6b584d7674f342635238ccb9575a8d0",
+      "diskNormSha": "9a33679d1f1b6b7d2656ee0834f4c784afc783c83d84288c307f8ccbf41db252",
+      "binNormSha": "9a33679d1f1b6b7d2656ee0834f4c784afc783c83d84288c307f8ccbf41db252",
+      "diskBytes": 25552,
+      "binBytes": 25552
+    },
+    "ServerScriptService.FlyHighServer.ObstacleMotion": {
+      "exact": false,
+      "normEqual": true,
+      "diskSha": "547181faaf20dbf2242863cdfb7c678bb12fa3ebe450f9a7de7d0b0b9507cbcd",
+      "binSha": "f86bc265df2edc1e0cc3482f448878b7270968a02df1d431ea1df4aa48e782fd",
+      "diskNormSha": "f86bc265df2edc1e0cc3482f448878b7270968a02df1d431ea1df4aa48e782fd",
+      "binNormSha": "f86bc265df2edc1e0cc3482f448878b7270968a02df1d431ea1df4aa48e782fd",
+      "diskBytes": 5379,
+      "binBytes": 5378
+    },
+    "ServerScriptService.FlyHighServer.OverheadManager": {
+      "exact": false,
+      "normEqual": true,
+      "diskSha": "50558bd3fca7ef36cb4e5aeb717c8ddc48697d796f191b3b858aa51102f6131f",
+      "binSha": "ebe4e0eb6d0b1827c4b5544a3fc10578e604c552dde392ccc712b4b390a53d57",
+      "diskNormSha": "ebe4e0eb6d0b1827c4b5544a3fc10578e604c552dde392ccc712b4b390a53d57",
+      "binNormSha": "ebe4e0eb6d0b1827c4b5544a3fc10578e604c552dde392ccc712b4b390a53d57",
+      "diskBytes": 12268,
+      "binBytes": 12267
+    }
+  }
+}

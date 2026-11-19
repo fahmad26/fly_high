@@ -373,11 +373,12 @@ function Layout.Start(gui, player)
 			pingBanner.ZIndex = 16
 		end
 
-		-- 12. Modals (ShopModal, WeaponSettingsModal, AudioSettingsModal & TacticalPingWheel)
+		-- 12. Modals (TutorialModal, ShopModal, WeaponSettingsModal, AudioSettingsModal & TacticalPingWheel)
 		local modal = get("ShopModal")
 		local wheel = get("TacticalPingWheel")
 		local settings = get("WeaponSettingsModal")
 		local audioModal = get("AudioSettingsModal")
+		local tutorialModal = get("TutorialModal")
 		-- 10. Right-Side Vertical Server Altitude Tracker (All-flyers, non-overlapping across devices)
 		local tracker = get("ServerAltitudeTracker")
 		if tracker then
@@ -457,7 +458,7 @@ function Layout.Start(gui, player)
 		end
 
 		local popups = {}
-		for _, name in { "DailyLoginModal", "ShopModal", "TacticalPingWheel", "WeaponSettingsModal", "AudioSettingsModal" } do
+		for _, name in { "TutorialModal", "DailyLoginModal", "ShopModal", "TacticalPingWheel", "WeaponSettingsModal", "AudioSettingsModal" } do
 			local popup = get(name)
 			if popup then table.insert(popups, popup) end
 		end
@@ -936,6 +937,99 @@ function Layout.Start(gui, player)
 				pFooter.Visible = showFooter
 				box(pFooter, pad, firstRow + rows * rowHeight + (rows - 1) * gap + footerGap, innerW, footerH)
 				pFooter.ZIndex = 24
+			end
+		end
+
+		if tutorialModal then
+			local phonePortrait = w < 540 and h >= 430
+			local phoneLandscape = h < 430
+			local targetW = phonePortrait and 374 or 580
+			local targetH = phonePortrait and 540 or (phoneLandscape and 368 or 474)
+			local mw, mh, pad, topPad, bottomPad = placeModalFrame(tutorialModal, targetW, targetH, "TutorialCloseButton")
+			local innerW = mw - pad * 2
+			local available = mh - topPad - bottomPad
+			local tight = available < 300
+			local titleH = tight and 22 or 26
+			local subH = tight and 0 or 16
+			local tabH = tight and 30 or 34
+			local headerGap = tight and 6 or 10
+			local showFooter = available >= 260
+			local footerGap = showFooter and (tight and 5 or 8) or 0
+			local footerH = showFooter and 18 or 0
+
+			box(tutorialModal:FindFirstChild("TutorialTitle"), pad, topPad, innerW, titleH)
+			local sub = tutorialModal:FindFirstChild("TutorialSubtitle")
+			if sub then
+				sub.Visible = subH > 0
+				box(sub, pad, topPad + titleH + 2, innerW, subH)
+			end
+			local tabY = topPad + titleH + (subH > 0 and (2 + subH) or 0) + 6
+			local tabBar = tutorialModal:FindFirstChild("TutorialTabBar")
+			if tabBar then
+				box(tabBar, pad, tabY, innerW, tabH)
+				tabBar.ZIndex = 24
+			end
+
+			local cardsY = tabY + tabH + headerGap
+			local cardsAreaH = math.max(120, (mh - bottomPad - footerH - footerGap) - cardsY)
+			local cardsArea = tutorialModal:FindFirstChild("TutorialCardsArea")
+			if cardsArea then
+				box(cardsArea, pad, cardsY, innerW, cardsAreaH)
+				cardsArea.ZIndex = 23
+				local strokeInset = 3
+				local cardGap = tight and 7 or 9
+				local availH = cardsAreaH - strokeInset * 2
+				local minCardH = phonePortrait and 112 or (phoneLandscape and 86 or 88)
+				local cardH = math.max(minCardH, math.floor((availH - 2 * cardGap) / 3))
+				local totalH = 3 * cardH + 2 * cardGap
+				local needScroll = (totalH + strokeInset * 2) > cardsAreaH
+				local cardW = innerW - strokeInset * 2 - (needScroll and 10 or 0)
+				if cardsArea:IsA("ScrollingFrame") then
+					cardsArea.CanvasSize = UDim2.fromOffset(0, totalH + strokeInset * 2)
+					cardsArea.ScrollingEnabled = needScroll
+					cardsArea.ScrollBarThickness = needScroll and 5 or 0
+				end
+				for _, pageName in { "PageBasics", "PageRoles", "PageSurvival" } do
+					local pf = cardsArea:FindFirstChild(pageName)
+					if pf then
+						pf.Position = UDim2.fromOffset(0, 0)
+						pf.Size = UDim2.new(1, 0, 0, totalH + strokeInset * 2)
+						for cardIdx = 1, 3 do
+							local card = pf:FindFirstChild("TutCard" .. cardIdx)
+							if card then
+								local cardY = strokeInset + (cardIdx - 1) * (cardH + cardGap)
+								box(card, strokeInset, cardY, cardW, cardH)
+								local iconSize = (phonePortrait or not tight) and 54 or 46
+								local iconPadX = tight and 10 or 12
+								local iconSlot = card:FindFirstChild("IconSlot")
+								if iconSlot then
+									box(iconSlot, iconPadX, math.floor((cardH - iconSize) / 2), iconSize, iconSize)
+								end
+								local textX = iconPadX + iconSize + (tight and 10 or 12)
+								local textW = math.max(80, cardW - textX - iconPadX)
+								local topTextPad = tight and 7 or 9
+								local titleLineH = tight and 18 or 20
+								local bodyGap = tight and 2 or 4
+								local bodyY = topTextPad + titleLineH + bodyGap
+								local bodyH = math.max(36, cardH - bodyY - topTextPad)
+								box(card:FindFirstChild("CardTitle"), textX, topTextPad, textW, titleLineH)
+								local cBody = card:FindFirstChild("CardBody")
+								if cBody then
+									box(cBody, textX, bodyY, textW, bodyH)
+									if cBody:IsA("TextLabel") then
+										cBody.TextSize = (phonePortrait or phoneLandscape) and 12 or 13
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+
+			local footer = tutorialModal:FindFirstChild("TutorialFooterHint")
+			if footer then
+				footer.Visible = showFooter
+				box(footer, pad, mh - bottomPad - footerH, innerW, footerH)
 			end
 		end
 

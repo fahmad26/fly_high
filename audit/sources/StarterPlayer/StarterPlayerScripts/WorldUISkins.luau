@@ -59,10 +59,10 @@ local function styleWelcomeSign(gui)
 	if not title then return end
 
 	title.Text = "FLY HIGH"
-	title.Position = UDim2.fromScale(0.1, 0.22)
-	title.Size = UDim2.fromScale(0.8, 0.33)
+	title.Position = UDim2.fromScale(0.08, 0.14)
+	title.Size = UDim2.fromScale(0.84, 0.26)
 	title.Font = Enum.Font.FredokaOne
-	title.TextSize = 96
+	title.TextSize = 82
 	title.TextScaled = false
 	title.TextWrapped = false
 	title.TextColor3 = Color3.fromRGB(255, 221, 134)
@@ -73,17 +73,45 @@ local function styleWelcomeSign(gui)
 	title.BackgroundTransparency = 1
 	title.ZIndex = 2
 
-	local subtitle = Instance.new("TextLabel")
+	local subtitle = gui:FindFirstChild("WelcomeInstructions") or Instance.new("TextLabel")
 	subtitle.Name = "WelcomeInstructions"
-	subtitle.Text = "Pilih dermaga • Bentuk kru\nSiap terbang!"
-	subtitle.Position = UDim2.fromScale(0.1, 0.52)
-	subtitle.Size = UDim2.fromScale(0.8, 0.34)
+	subtitle.Text = "1. Masuk Dermaga  •  2. Bagi Peran\n3. Capai Istana Awan (10.000 km)!"
+	subtitle.Position = UDim2.fromScale(0.08, 0.41)
+	subtitle.Size = UDim2.fromScale(0.84, 0.31)
 	subtitle.Font = Enum.Font.Nunito
-	subtitle.TextSize = 52
+	subtitle.TextSize = 40
+	subtitle.TextScaled = true
+	subtitle.TextWrapped = true
 	subtitle.TextColor3 = Color3.fromRGB(222, 241, 255)
+	subtitle.TextStrokeColor3 = Color3.fromRGB(4, 12, 28)
+	subtitle.TextStrokeTransparency = 0.55
 	subtitle.BackgroundTransparency = 1
 	subtitle.ZIndex = 2
 	subtitle.Parent = gui
+	local subConstraint = subtitle:FindFirstChildOfClass("UITextSizeConstraint") or Instance.new("UITextSizeConstraint")
+	subConstraint.MinTextSize = 18
+	subConstraint.MaxTextSize = 42
+	subConstraint.Parent = subtitle
+
+	local hint = gui:FindFirstChild("WelcomePromptHint") or Instance.new("TextLabel")
+	hint.Name = "WelcomePromptHint"
+	hint.Text = "Tekan [E] / Ketuk untuk Cara Bermain"
+	hint.Position = UDim2.fromScale(0.1, 0.74)
+	hint.Size = UDim2.fromScale(0.8, 0.14)
+	hint.Font = Enum.Font.GothamBlack
+	hint.TextSize = 26
+	hint.TextScaled = true
+	hint.TextWrapped = false
+	hint.TextColor3 = Color3.fromRGB(254, 240, 138)
+	hint.TextStrokeColor3 = Color3.fromRGB(4, 12, 28)
+	hint.TextStrokeTransparency = 0.45
+	hint.BackgroundTransparency = 1
+	hint.ZIndex = 2
+	hint.Parent = gui
+	local hintConstraint = hint:FindFirstChildOfClass("UITextSizeConstraint") or Instance.new("UITextSizeConstraint")
+	hintConstraint.MinTextSize = 14
+	hintConstraint.MaxTextSize = 26
+	hintConstraint.Parent = hint
 end
 
 local function dockLabel(gui, name, x, y, width, height, font, size, color)
