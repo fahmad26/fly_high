@@ -208,6 +208,28 @@ local function catwalkHeight(b)
  return frame:PointToObjectSpace(walkway.Position).Y+walkway.Size.X/2
 end
 
+-- The invisible BambooGuard ring was 2.5 studs tall. Humanoids step onto any ledge below their
+-- collidable torso, so avatars with a hip height above ~2.5 walked up onto it and off the catwalk.
+-- Stand the guards on the deck and raise them well above any avatar hip height (flight disables jumping).
+local CATWALK_GUARD_HEIGHT=10
+local function raiseCatwalkGuards(b)
+ local rig=b:FindFirstChild("BambooRigging")
+ if not rig or not b.PrimaryPart or not b:FindFirstChild("EnvelopeWalkway")then return end
+ local frame=b.PrimaryPart.CFrame
+ local deck=catwalkHeight(b)
+ for _,g in rig:GetChildren()do
+  if g.Name=="BambooGuard"and g:IsA("BasePart")and g.Size.Y<CATWALK_GUARD_HEIGHT then
+   -- Re-seat through disabled WeldConstraints so only the guard moves, never the balloon assembly.
+   local welds={}
+   for _,j in g:GetJoints()do if j:IsA("WeldConstraint")and j.Enabled then j.Enabled=false table.insert(welds,j)end end
+   local q=frame:ToObjectSpace(g.CFrame)
+   g.Size=Vector3.new(g.Size.X,CATWALK_GUARD_HEIGHT,g.Size.Z)
+   g.CFrame=frame*CFrame.new(q.X,deck+CATWALK_GUARD_HEIGHT/2,q.Z)*q.Rotation
+   for _,j in welds do j.Enabled=true end
+  end
+ end
+end
+
 local function basketStandHeight(hum,hrp)
  local leg=hum.RigType==Enum.HumanoidRigType.R6 and hum.Parent and hum.Parent:FindFirstChild("Left Leg")
  return hum.HipHeight+hrp.Size.Y/2+(leg and leg.Size.Y or 0)+0.03
@@ -264,6 +286,7 @@ end
 function Manager.SetupBalloonTethers(b,count)
  if b:GetAttribute("TethersSetup")then return end
  b:SetAttribute("TethersSetup",true)
+ raiseCatwalkGuards(b)
  local station=b.TetherStation local floor=b.BasketFloor local walkway=b.EnvelopeWalkway
  local function prompt(name,action,key,hold)
   local p=station:FindFirstChild(name)or Instance.new("ProximityPrompt")

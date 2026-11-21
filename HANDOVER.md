@@ -1,6 +1,54 @@
 # Handover Fly High
 
-Snapshot aktif per 20 November 2026 (03:10 WIB), Asia/Jakarta ([`Fly High.rbxl`](Fly%20High.rbxl) lokal `3.547.491` B tersimpan langsung via Studio lokal; dikonsolidasikan ke commit & push Git `main` 20 Nov; **belum Publish Cloud dan belum disinkronkan ke Team Create v69 sebelumnya**). Catatan run terdahulu mempertahankan status Git/QA pada waktu run; status fitur aktual mengikuti PROGRESS. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
+Snapshot aktif per 21 November 2026 (16:40 WIB), Asia/Jakarta: [`Fly High.rbxl`](Fly%20High.rbxl) lokal (`3.590.804` B) disimpan pengguna 21 Nov 16:16 WIB, SHA-256 `120a7ad6…71b59432`; parser offline: 67/67 source sama persis dengan mirror setelah normalisasi (LF, spasi akhir), objek/model belum dibuka ulang. Studio yang dipakai adalah place Cloud `97043730132219` (PlaceVersion 76, belum di-save/publish oleh Claude); dikonsolidasikan ke commit & push `main` 21 Nov. Snapshot sebelumnya: 20 November 2026 (03:10 WIB), `3.547.491` B. Catatan run terdahulu mempertahankan status Git/QA pada waktu run; status fitur aktual mengikuti PROGRESS. Dokumen ini menggabungkan ringkasan AI_CONTEXT dan handover teknis. Progres fitur dipelihara di [PROGRESS](PROGRESS.md), aturan produk di [PRD](PRD_Fly_High.md).
+
+## Senjata v2, viewmodel, HUD senjata, pulau kecil — 21 November 2026 (12:00–16:30 WIB)
+
+**Senjata dan viewmodel (`GAME-05`)**
+- Mesh Handgun/AK-47 baru dari Blender (sumber: `assets/models/weapons/FlyHigh_Weapons_v2.blend`, `.fbx`) diunggah sebagai asset `139558185278029`/`105907948969808` dan dipasang ke `Templates.Weapons.*`. Visual lama dicadangkan di `ServerStorage.WeaponsLegacy_20261121`.
+- Viewmodel 1P memakai `createWeaponView` + `ViewModelArms`. Pose hanya diatur lewat `viewProfiles` di `WeaponPresentation`. Nilainya hasil fitting otomatis dengan [`tools/qa/vm_harness.lua`](tools/qa/vm_harness.lua):
+  - Distance field dari `AssetService:CreateEditableMeshAsync` mesh senjata. Jangan pakai `GetPartsInPart` dengan collision MeshPart untuk cek tembus, karena hull-nya menggembung ±0,1 stud.
+  - Telapak didorong keluar, lalu jari ditutup sampai menyentuh. Tangan kanan menjadi kapsul penghalang bagi tangan kiri.
+  - Tekuk pergelangan dicek dengan `H.bends` (target ≤ 35°). `thumbChain` dicari dengan grid search (thumbs-forward).
+  - `armsScale` 0,038; `gunScale` Pistol 0,95, AK 1,15. Mesh lengan tidak bisa dibaca EditableMesh (bukan aset akun), jadi ketebalan jari diasumsikan 0,032 stud.
+- Cara menilai: zoom kamera 1P (FOV ±32 dari posisi mata yang sama) dan close-up 4 sisi. Jangan mendekatkan senjata ke kamera (<1,2 stud untuk pistol).
+- Sisa: IK 3P tangan kiri masih ±0,5 stud dari `LeftHandGripTarget` (kode IK server tidak diubah), phone/tablet, multi-klien. [Audit v2](audit/weapon-v2-2026-11-21/README.md), [audit jari](audit/fingers-hud-islets-2026-11-21/README.md).
+
+**HUD senjata (`UI-01`)**
+- `WeaponClientController.onCharacter` dipanggil sebelum `isGhostNow` di-assign (±baris 741). Error `:500 attempt to call a nil value` mematikan script, sehingga Reload/Release tampil tanpa senjata, sementara panah ghost spot dan tombol tali tidak pernah dibuat. Kini di-guard.
+- Pelajaran: jangan memanggil fungsi yang di-assign belakangan di jalur init tanpa guard, dan cek LogService client saat Play.
+
+**Pulau kecil (`WORLD-01`)**
+- `BiomeScenery.kitTopSwap(..., topY, beachRise)`: dengan `beachRise`, kubah pasir naik dari garis air (y = 0). `CoastalIslet` memakai `2.6 + width*0.025, 3`; headland tetap memakai default lama.
+
+**Data akun uji (`DATA-01`)**
+- Akun Fikki2621: AKOwned=1, slot 1 = AK-47. Receipt QA: `QA_StudioGrant_AK47_20261121`.
+
+## Catwalk atas balon: tidak lagi terpeleset — 21 November 2026 (±03:00 WIB)
+
+Penyebab ada dua:
+1. Pagar tak terlihat `BambooRigging.BambooGuard` hanya 2,5 stud. Avatar berpinggul tinggi melangkah naik ke atasnya lalu jatuh ke luar ring.
+2. `engineerTilt` dan kemudi membuat balon miring hingga 10,3°. Muka pagar condong ke luar sehingga sensor lantai Humanoid memanjatnya, juga pada avatar standar.
+
+Perbaikan:
+- `TetherManager.raiseCatwalkGuards` menjadikan pagar 10 stud saat launch, untuk semua varian. Template tidak diubah.
+- `BalloonFleetAnimator` (hanya saat tahap tali `Catwalk`) membuang komponen input yang mengarah keluar di r > 16,2.
+- Di `Heartbeat`, HRP ditahan ≤ +0,6 stud di atas tinggi berdiri dan r ≤ 16,9. Jatuh sungguhan (>3 stud di bawah) tetap diserahkan ke logika hang/rescue.
+
+`MaxSlopeAngle` terbukti tidak efektif dan tidak dipakai. QA Play Solo: avatar pengguna dan avatar blok, keyboard asli, kemiringan sampai 10,3°, 0 jatuh; tambal lubang, turun dan lepas tali tetap jalan. Batas: belum diuji pilot sungguhan, 2+ klien, maupun sentuh/iPad. 67/67 parity. Masuk checkpoint 21 Nov (rbxl 16:16 WIB dan commit). [Bukti](audit/catwalk-slip-fix-2026-11-21/README.md).
+
+## Awan "es" di plaza Istana — 20 November 2026 (±21:15 WIB), tersimpan oleh pengguna 22:04 WIB
+
+`CloudPalace.PalaceApproach.ApproachMist` (Y 2593,12 → 2590,62) dan `ApproachShadow` (2573,89 → 2571,39) diturunkan 2,5 stud. Sebelumnya alas datar mist berdiri di atas marmer plaza, dan gerigi ungu shadow mencuat 1,5 stud di atas lantai, sehingga terlihat seperti bongkahan es. Jalur jalan kaki dermaga, plaza dan awan lulus di Play Solo. Air terjun istana sempat didesain ulang tiga kali (`PalaceFall`, `PalaceWallFountain`, `PalaceWallCascade`). Atas permintaan pengguna, semuanya dibatalkan dan `SummitScenery.PalaceWaterfall` dikembalikan ke kondisi semula: 57 instance yang terhapus dipulihkan dari `Fly High.rbxl` (20:58) lewat parser rbxl offline, dan jumlah per kelas cocok dengan file. Recording undo "RebuildPalaceWaterfall" tertinggal *in progress*, jadi jangan mengandalkan Ctrl+Z. Disimpan pengguna 22:04 WIB, masuk checkpoint 21 Nov. [Bukti](audit/palace-approach-ice-2026-11-20/README.md).
+
+## Cek ulang Bug 1 balon bertumpuk — 20 November 2026 (±21:00 WIB), QA saja
+
+Bug tidak tereproduksi di HEAD `d90e0e0`. Diuji di Play Solo dengan satu balon tetangga tanpa kru, baik diam maupun bergerak kinematik, dy 50–60 stud:
+- **Pemain di balon atas dan bawah:** jalan di keranjang, memegang kemudi, naik tali ke catwalk, satu lap catwalk, lalu turun. Semuanya lulus dengan 0 teleport server.
+- **Belum diuji:** 2 klien nyata dan kemiringan balon tetangga akibat kemudi pilot.
+- **Temuan sampingan:** status kebal di panel kondisi tampil "KEBAL SERANGAN" saat bahasa English.
+
+Tidak ada perubahan source, save, atau commit. [Bukti](audit/stacked-balloons-recheck-2026-11-20/README.md).
 
 ## Papan Tutorial Spawn (`WelcomeSign` + `TutorialPrompt`) & Popup 3-Tab Bilingual (`TutorialModal`) — 20 November 2026 (03:00 WIB)
 
@@ -515,6 +563,7 @@ Checkpoint reparasi/role pada commit 4409385: TetherManager, BalloonFleetAnimato
 | Gameplay QA baru | Tidak dijalankan pada tugas perapian dokumentasi |
 
 Manifest per source, metode pembandingan dan SHA-256 place ada di [baseline dokumentasi](audit/documentation-baseline-2026-11-11.json). Ulangi pemeriksaan setelah source atau place berubah.
+
 
 ## Menentukan sumber acuan
 

@@ -497,7 +497,9 @@ end)
 local function onCharacter(char)
  setWeapon(nil)
  local hum=char:WaitForChild("Humanoid")hum.Died:Connect(function()setWeapon(nil)end)
- if not isGhostNow() and Workspace.CurrentCamera and Workspace.CurrentCamera.CameraType==Enum.CameraType.Custom then
+ -- isGhostNow is assigned further down; the first onCharacter call runs before that, so guard it
+ -- (calling nil here used to kill this script: no Reload/Drop hiding, no tether buttons).
+ if not (isGhostNow and isGhostNow()) and Workspace.CurrentCamera and Workspace.CurrentCamera.CameraType==Enum.CameraType.Custom then
   Workspace.CurrentCamera.CameraSubject=hum
  end
  char.ChildAdded:Connect(function(child)

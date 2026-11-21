@@ -943,7 +943,7 @@ end
 
 -- Swap a low-poly landmark body (faceted Rock + Grass cap) for an IslandKit PBR rock + turf pair fitted to the
 -- old cap footprint (review 16 Nov 19:30: sea atolls and the headland still read as low-poly cones).
-local function kitTopSwap(target, topName, rockName, rockTint, turfTint, topY)
+local function kitTopSwap(target, topName, rockName, rockTint, turfTint, topY, beachRise)
 	local top = target and target:FindFirstChild(topName)
 	local kit = getEnvironmentAssets()
 	kit = kit and kit:FindFirstChild("IslandKit")
@@ -982,8 +982,12 @@ local function kitTopSwap(target, topName, rockName, rockTint, turfTint, topY)
 		local flat = target:FindFirstChild(name)
 		if flat then flat:Destroy() end
 	end
-	local beach = part(target, "BeachMound", Vector3.new(footX * 1.22, 3.2, footZ * 1.22),
-		CFrame.new(p.X, 0.35, p.Z) * CFrame.Angles(0, yaw, 0), rgb(232, 214, 176), sandMat or Enum.Material.Sand, ball)
+	-- Low sea islets pass beachRise: the sand dome then rises from the waterline (y = 0) to just under the turf
+	-- edge, so the islet reads as a grassy hump on a beach instead of a rock chunk on a flat sand plate
+	-- (review 21 Nov 15:56: "pulau-pulau kecil tampak aneh").
+	local beachSpread = beachRise and 1.35 or 1.22
+	local beach = part(target, "BeachMound", Vector3.new(footX * beachSpread, beachRise and beachRise * 2 or 3.2, footZ * beachSpread),
+		CFrame.new(p.X, beachRise and 0 or 0.35, p.Z) * CFrame.Angles(0, yaw, 0), rgb(232, 214, 176), sandMat or Enum.Material.Sand, ball)
 	local shallows = part(target, "ShallowReef", Vector3.new(footX * 1.6, 1.2, footZ * 1.6),
 		CFrame.new(p.X, -0.9, p.Z) * CFrame.Angles(0, yaw, 0), rgb(96, 214, 206), Enum.Material.SmoothPlastic, ball)
 	shallows.Transparency = 0.35
@@ -1051,7 +1055,7 @@ local function dawn(parent)
 			1.15 * meshScale)
 		if sculptedDawn then
 			shiftProps(island, sculptedDawn,
-				kitTopSwap(sculptedDawn, "Grass", "Rock", rgb(226, 216, 198), rgb(196, 226, 170), 4.5 + width * 0.06))
+				kitTopSwap(sculptedDawn, "Grass", "Rock", rgb(226, 216, 198), rgb(196, 226, 170), 2.6 + width * 0.025, 3))
 		end
 		island.WorldPivot = cf
 	end

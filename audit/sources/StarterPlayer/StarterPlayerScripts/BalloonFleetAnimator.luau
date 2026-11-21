@@ -11,7 +11,7 @@ script.Destroying:Connect(function()touchBegan:Disconnect()touchEnded:Disconnect
 local player=Players.LocalPlayer
 local remotes=RS:WaitForChild("FlyHigh"):WaitForChild("Remotes")
 local pods=workspace:WaitForChild("FlyHighLobby"):WaitForChild("MatchmakingPods")
-local flights={} local previews={} local attached=false local holes=0 local tetherStage
+local flights={} local previews={} local attached=false local holes=0 local tetherStage local catwalkStandY
 local barrierFolder=workspace:FindFirstChild("FlyHighLocalBarriers")
 if not barrierFolder then
  barrierFolder=Instance.new("Folder")
@@ -29,10 +29,70 @@ remotes.TetherEvent.OnClientEvent:Connect(function(data)
    hum:ChangeState(Enum.HumanoidStateType.Running)
   end
  end
+ if data.winchLanded=="Catwalk" and typeof(data.localOffset)=="Vector3" then catwalkStandY=data.localOffset.Y end
  attached = data.isTethered == true
  tetherStage = data.stage
 end)
 remotes.FlightStateSyncEvent.OnClientEvent:Connect(function(data) holes=data.holes or 0 if data.isGameOver or data.isVictory then attached=false end end)
+-- Catwalk guard rails. The balloon tilts up to ~10 degrees toward the engineer, so the invisible guard face
+-- leans outward. The humanoid floor sensor then reads that face as ground and lifts the body up the guard and
+-- over the ring (tall avatars also stepped straight onto the old 2.5-stud guard). Flight disables jumping, so on
+-- the catwalk the root never needs to rise above standing height or reach the guard: steer outward input along
+-- the ring, and hold the root down/inside if physics still pushes it there.
+local CATWALK_GUIDE_RADIUS=16.2
+local CATWALK_MAX_RADIUS=16.9
+local CATWALK_HEAD_ROOM=0.6
+local function catwalkContext()
+ if tetherStage~="Catwalk" then return end
+ local character=player.Character
+ local hum=character and character:FindFirstChildOfClass("Humanoid")
+ local hrp=character and character:FindFirstChild("HumanoidRootPart")
+ local ref=player:FindFirstChild("FlightBalloon")
+ local root=ref and ref.Value and ref.Value.PrimaryPart
+ if not (hum and hrp and root) or hum.Health<=0 or hrp.Anchored or hum.Sit or hum.PlatformStand then return end
+ return hum,hrp,root,ref.Value
+end
+RunService:BindToRenderStep("FlyHighCatwalkGuide",Enum.RenderPriority.Input.Value+1,function()
+ local hum,hrp,root=catwalkContext()
+ if not hum then return end
+ local move=hum.MoveDirection
+ if move.Magnitude<0.01 then return end
+ local rel=root.CFrame:PointToObjectSpace(hrp.Position)
+ local flat=Vector3.new(rel.X,0,rel.Z)
+ local radius=flat.Magnitude
+ if radius<=CATWALK_GUIDE_RADIUS or radius>24 then return end
+ local outward=root.CFrame:VectorToWorldSpace(flat/radius)
+ local push=move:Dot(outward)
+ if push<=0 then return end
+ local along=move-outward*push
+ along=Vector3.new(along.X,0,along.Z)
+ hum:Move(along.Magnitude>0.05 and along.Unit*move.Magnitude or Vector3.zero,false)
+end)
+script.Destroying:Connect(function() RunService:UnbindFromRenderStep("FlyHighCatwalkGuide") end)
+RunService.Heartbeat:Connect(function()
+ local hum,hrp,root,model=catwalkContext()
+ if not hum then return end
+ local frame=root.CFrame
+ local standY=catwalkStandY
+ local walkway=model:FindFirstChild("EnvelopeWalkway")
+ if walkway then standY=frame:PointToObjectSpace(walkway.Position).Y+walkway.Size.X/2+hum.HipHeight+hrp.Size.Y/2 end
+ if not standY then return end
+ local rel=frame:PointToObjectSpace(hrp.Position)
+ -- Already well below the deck: a genuine fall, leave it to the server rope/hang logic.
+ if rel.Y<standY-3 then return end
+ local flat=Vector3.new(rel.X,0,rel.Z)
+ local radius=flat.Magnitude
+ local maxY=standY+CATWALK_HEAD_ROOM
+ if rel.Y<=maxY and radius<=CATWALK_MAX_RADIUS then return end
+ local clamped=radius>CATWALK_MAX_RADIUS and flat*(CATWALK_MAX_RADIUS/radius) or flat
+ hrp.CFrame=hrp.CFrame.Rotation+frame:PointToWorldSpace(Vector3.new(clamped.X,math.min(rel.Y,maxY),clamped.Z))
+ local base=root:GetVelocityAtPosition(hrp.Position)
+ local v=frame:VectorToObjectSpace(hrp.AssemblyLinearVelocity-base)
+ local outward=radius>0.01 and flat/radius or Vector3.zero
+ local out=math.max(0,v:Dot(outward))
+ v=v-outward*out
+ hrp.AssemblyLinearVelocity=base+frame:VectorToWorldSpace(Vector3.new(v.X,math.min(v.Y,0),v.Z))
+end)
 local function restoreHullCollide(entry)
  if not entry.hullDisabled then return end
  for part,orig in pairs(entry.hullOriginalCollide) do
